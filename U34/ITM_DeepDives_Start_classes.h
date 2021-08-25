@@ -1,0 +1,39 @@
+// WidgetBlueprintGeneratedClass ITM_DeepDives_Start.ITM_DeepDives_Start_C
+// Size: 0x290 (Inherited: 0x230)
+struct UITM_DeepDives_Start_C : UUserWidget {
+	struct FPointerToUberGraphFrame UberGraphFrame; // 0x230(0x08)
+	struct UITM_DeepDives_Launcher_C* Hard_Launcher; // 0x238(0x08)
+	struct UITM_OnlineRestricted_C* ITM_OnlineRestricted; // 0x240(0x08)
+	struct UITM_ServerList_Warning_C* ITM_ServerList_Warning; // 0x248(0x08)
+	struct UITM_DeepDives_Launcher_C* Normal_Launcher; // 0x250(0x08)
+	struct UBasic_RadioButton_C* OptionPrivate; // 0x258(0x08)
+	struct UBasic_RadioButton_C* OptionPublic; // 0x260(0x08)
+	struct UBasic_RadioButton_C* OptionSolo; // 0x268(0x08)
+	struct UBasic_PasswordField_C* PasswordField; // 0x270(0x08)
+	struct FMulticastInlineDelegate OnJoinMission; // 0x278(0x10)
+	struct FTimerHandle DeepDivesServerTimeout; // 0x288(0x08)
+
+	void UpdateOptions(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.UpdateOptions
+	void OnFailure_00D4455F48B21EAE6492C6AB27B0D8F5(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.OnFailure_00D4455F48B21EAE6492C6AB27B0D8F5
+	void OnSuccess_00D4455F48B21EAE6492C6AB27B0D8F5(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.OnSuccess_00D4455F48B21EAE6492C6AB27B0D8F5
+	void OnFailure_14795847495E51F942775B86C1C4BCCF(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.OnFailure_14795847495E51F942775B86C1C4BCCF
+	void OnSuccess_14795847495E51F942775B86C1C4BCCF(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.OnSuccess_14795847495E51F942775B86C1C4BCCF
+	void BndEvt__OptionPublic_K2Node_ComponentBoundEvent_0_OnCheckStateChanged__DelegateSignature(bool IsChecked); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__OptionPublic_K2Node_ComponentBoundEvent_0_OnCheckStateChanged__DelegateSignature
+	void BndEvt__OptionPrivate_K2Node_ComponentBoundEvent_1_OnCheckStateChanged__DelegateSignature(bool IsChecked); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__OptionPrivate_K2Node_ComponentBoundEvent_1_OnCheckStateChanged__DelegateSignature
+	void BndEvt__OptionSolo_K2Node_ComponentBoundEvent_2_OnCheckStateChanged__DelegateSignature(bool IsChecked); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__OptionSolo_K2Node_ComponentBoundEvent_2_OnCheckStateChanged__DelegateSignature
+	void Start Mission(struct UDeepDive* mission); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.Start Mission
+	void BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_5_OnStartMission__DelegateSignature(struct UDeepDive* DeepDive); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_5_OnStartMission__DelegateSignature
+	void BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_6_OnStartMission__DelegateSignature(struct UDeepDive* DeepDive); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_6_OnStartMission__DelegateSignature
+	void Open(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.Open
+	void BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_3_OnJoinMission__DelegateSignature(bool EliteDeepDive); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_3_OnJoinMission__DelegateSignature
+	void BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_4_OnJoinMission__DelegateSignature(bool EliteDeepDive); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_4_OnJoinMission__DelegateSignature
+	void Construct(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.Construct
+	void PreConstruct(bool IsDesignTime); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.PreConstruct
+	void BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_7_OnRefresh__DelegateSignature(bool success); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_7_OnRefresh__DelegateSignature
+	void OnTimeout(); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.OnTimeout
+	void RefreshTimeout(bool success); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.RefreshTimeout
+	void BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_8_OnRefresh__DelegateSignature(bool success); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_8_OnRefresh__DelegateSignature
+	void ExecuteUbergraph_ITM_DeepDives_Start(int32_t EntryPoint); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.ExecuteUbergraph_ITM_DeepDives_Start
+	void OnJoinMission__DelegateSignature(bool EliteDeepDive); // Function ITM_DeepDives_Start.ITM_DeepDives_Start_C.OnJoinMission__DelegateSignature
+};
+

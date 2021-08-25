@@ -1,0 +1,36 @@
+// WidgetBlueprintGeneratedClass HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C
+// Size: 0x2d8 (Inherited: 0x250)
+struct UHUD_TabPlayerListEntry_InteractableV2_C : UFSDUserWidget {
+	struct FPointerToUberGraphFrame UberGraphFrame; // 0x250(0x08)
+	struct UWidgetAnimation* Exit; // 0x258(0x08)
+	struct UWidgetAnimation* Enter; // 0x260(0x08)
+	struct UBasic_ButtonCutCorner_C* BTN_Gamercard; // 0x268(0x08)
+	struct UBasic_ButtonCutCorner_C* BTN_Kick; // 0x270(0x08)
+	struct UBasic_ButtonCutCorner_C* BTN_mute; // 0x278(0x08)
+	struct UBasic_ButtonCutCorner_C* BTN_Respawn_Spacerig; // 0x280(0x08)
+	struct UBasic_ButtonCutCorner_C* BTN_unmute; // 0x288(0x08)
+	struct UButton* Button_Hover; // 0x290(0x08)
+	struct UHUD_TabPlayerListEntryV2_C* entry; // 0x298(0x08)
+	struct UHorizontalBox* HorizontalBox_Actions; // 0x2a0(0x08)
+	struct UWidgetSwitcher* MuteSwitcher; // 0x2a8(0x08)
+	struct AFSDPlayerState* PlayerState; // 0x2b0(0x08)
+	struct APlayerController* PlayerController; // 0x2b8(0x08)
+	struct FText KickReason; // 0x2c0(0x18)
+
+	void SetPlayer(struct AFSDPlayerState* State); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.SetPlayer
+	void OnPlayerSet(); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.OnPlayerSet
+	void OnPlayerCharacterSpawned_Event(struct APlayerCharacter* PlayerCharacter); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.OnPlayerCharacterSpawned_Event
+	void Update Mute Button(); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.Update Mute Button
+	void PreConstruct(bool IsDesignTime); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.PreConstruct
+	void BndEvt__Button_1_K2Node_ComponentBoundEvent_4_OnButtonHoverEvent__DelegateSignature(); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.BndEvt__Button_1_K2Node_ComponentBoundEvent_4_OnButtonHoverEvent__DelegateSignature
+	void BndEvt__Button_1_K2Node_ComponentBoundEvent_5_OnButtonHoverEvent__DelegateSignature(); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.BndEvt__Button_1_K2Node_ComponentBoundEvent_5_OnButtonHoverEvent__DelegateSignature
+	void CheckHover(); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.CheckHover
+	void BndEvt__BTN_mute_K2Node_ComponentBoundEvent_0_OnClicked__DelegateSignature(struct UBasic_ButtonCutCorner_C* Button); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.BndEvt__BTN_mute_K2Node_ComponentBoundEvent_0_OnClicked__DelegateSignature
+	void BndEvt__BTN_unmute_K2Node_ComponentBoundEvent_2_OnClicked__DelegateSignature(struct UBasic_ButtonCutCorner_C* Button); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.BndEvt__BTN_unmute_K2Node_ComponentBoundEvent_2_OnClicked__DelegateSignature
+	void BndEvt__BTN_Gamercard_K2Node_ComponentBoundEvent_7_OnClicked__DelegateSignature(struct UBasic_ButtonCutCorner_C* Button); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.BndEvt__BTN_Gamercard_K2Node_ComponentBoundEvent_7_OnClicked__DelegateSignature
+	void BndEvt__BTN_Kick_K2Node_ComponentBoundEvent_11_OnClicked__DelegateSignature(struct UBasic_ButtonCutCorner_C* Button); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.BndEvt__BTN_Kick_K2Node_ComponentBoundEvent_11_OnClicked__DelegateSignature
+	void BndEvt__BTN_Respawn_Spacerig_K2Node_ComponentBoundEvent_15_OnClicked__DelegateSignature(struct UBasic_ButtonCutCorner_C* Button); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.BndEvt__BTN_Respawn_Spacerig_K2Node_ComponentBoundEvent_15_OnClicked__DelegateSignature
+	void OnFinished(); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.OnFinished
+	void ExecuteUbergraph_HUD_TabPlayerListEntry_InteractableV2(int32_t EntryPoint); // Function HUD_TabPlayerListEntry_InteractableV2.HUD_TabPlayerListEntry_InteractableV2_C.ExecuteUbergraph_HUD_TabPlayerListEntry_InteractableV2
+};
+
