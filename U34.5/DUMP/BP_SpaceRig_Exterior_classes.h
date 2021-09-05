@@ -1,0 +1,27 @@
+// BlueprintGeneratedClass BP_SpaceRig_Exterior.BP_SpaceRig_Exterior_C
+// Size: 0x2d0 (Inherited: 0x220)
+struct ABP_SpaceRig_Exterior_C : AActor {
+	UStaticMeshComponent* Launch_Blink_Light1; // 0x220(0x08)
+	UStaticMeshComponent* Launch_Blink_Light7; // 0x228(0x08)
+	UStaticMeshComponent* Launch_Blink_Light6; // 0x230(0x08)
+	UStaticMeshComponent* Launch_Blink_Light5; // 0x238(0x08)
+	UStaticMeshComponent* Launch_Blink_Light4; // 0x240(0x08)
+	UStaticMeshComponent* Launch_Blink_Light3; // 0x248(0x08)
+	UStaticMeshComponent* Launch_Blink_Light2; // 0x250(0x08)
+	UStaticMeshComponent* Launch_Blink_Light_Parent; // 0x258(0x08)
+	UParticleSystemComponent* P_SpaceRig_Exterior_Smoke_Vent; // 0x260(0x08)
+	USpotLightComponent* SpotLight; // 0x268(0x08)
+	USpotLightComponent* Area spotlight2; // 0x270(0x08)
+	USpotLightComponent* Area spotlight1; // 0x278(0x08)
+	USpotLightComponent* Area spotlight; // 0x280(0x08)
+	USpotLightComponent* SpotLight3; // 0x288(0x08)
+	USpotLightComponent* SpotLight2; // 0x290(0x08)
+	USpotLightComponent* SpotLight1; // 0x298(0x08)
+	UParticleSystemComponent* P_SpaceRig_Exterior_Smoke1; // 0x2a0(0x08)
+	UParticleSystemComponent* P_SpaceRig_Exterior_Smaller_Smoke; // 0x2a8(0x08)
+	UParticleSystemComponent* P_SpaceRig_Exterior_Smoke_Chimney; // 0x2b0(0x08)
+	UStaticMeshComponent* SM_ConeMesh; // 0x2b8(0x08)
+	UStaticMeshComponent* SM_SpaceRig_ext; // 0x2c0(0x08)
+	USceneComponent* DefaultSceneRoot; // 0x2c8(0x08)
+};
+

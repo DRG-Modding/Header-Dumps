@@ -1,0 +1,46 @@
+// AnimBlueprintGeneratedClass ABP_CaveLeech.ABP_CaveLeech_C
+// Size: 0xde8 (Inherited: 0x2b0)
+struct UABP_CaveLeech_C : UCaveLeechAnimInstance {
+	FPointerToUberGraphFrame UberGraphFrame; // 0x2b0(0x08)
+	FAnimNode_Root AnimGraphNode_Root; // 0x2b8(0x30)
+	FAnimNode_ModifyBone AnimGraphNode_ModifyBone_3; // 0x2e8(0x108)
+	FAnimNode_ConvertComponentToLocalSpace AnimGraphNode_ComponentToLocalSpace; // 0x3f0(0x20)
+	FAnimNode_ConvertLocalToComponentSpace AnimGraphNode_LocalToComponentSpace; // 0x410(0x20)
+	FAnimNode_ModifyBone AnimGraphNode_ModifyBone_2; // 0x430(0x108)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_14; // 0x538(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_13; // 0x560(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_12; // 0x588(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_11; // 0x5b0(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_10; // 0x5d8(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_9; // 0x600(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_8; // 0x628(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_7; // 0x650(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_6; // 0x678(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_5; // 0x6a0(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_4; // 0x6c8(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_3; // 0x6f0(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult_2; // 0x718(0x28)
+	FAnimNode_TransitionResult AnimGraphNode_TransitionResult; // 0x740(0x28)
+	FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_7; // 0x768(0x78)
+	FAnimNode_StateResult AnimGraphNode_StateResult_8; // 0x7e0(0x30)
+	FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_6; // 0x810(0x78)
+	FAnimNode_StateResult AnimGraphNode_StateResult_7; // 0x888(0x30)
+	FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_5; // 0x8b8(0x78)
+	FAnimNode_StateResult AnimGraphNode_StateResult_6; // 0x930(0x30)
+	FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_4; // 0x960(0x78)
+	FAnimNode_StateResult AnimGraphNode_StateResult_5; // 0x9d8(0x30)
+	FAnimNode_StateResult AnimGraphNode_StateResult_4; // 0xa08(0x30)
+	FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_3; // 0xa38(0x78)
+	FAnimNode_StateResult AnimGraphNode_StateResult_3; // 0xab0(0x30)
+	FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_2; // 0xae0(0x78)
+	FAnimNode_StateResult AnimGraphNode_StateResult_2; // 0xb58(0x30)
+	FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer; // 0xb88(0x78)
+	FAnimNode_StateResult AnimGraphNode_StateResult; // 0xc00(0x30)
+	FAnimNode_StateMachine AnimGraphNode_StateMachine; // 0xc30(0xb0)
+	FAnimNode_ModifyBone AnimGraphNode_ModifyBone; // 0xce0(0x108)
+
+	void AnimGraph(FPoseLink AnimGraph);
+	void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_CaveLeech_AnimGraphNode_ModifyBone_7BF9942D493BC04186C584833405AC30();
+	void ExecuteUbergraph_ABP_CaveLeech(int32_t EntryPoint);
+};
+
