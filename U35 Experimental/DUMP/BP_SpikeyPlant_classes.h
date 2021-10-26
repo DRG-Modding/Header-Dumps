@@ -1,0 +1,60 @@
+// BlueprintGeneratedClass BP_SpikeyPlant.BP_SpikeyPlant_C
+// Size: 0x309 (Inherited: 0x220)
+struct ABP_SpikeyPlant_C : AActor {
+	UPROPERTY(BlueprintReadWrite) FPointerToUberGraphFrame UberGraphFrame; 
+	UPROPERTY(BlueprintReadWrite) UDamageComponent* Damage; 
+	UPROPERTY(BlueprintReadWrite) USimpleObjectInfoComponent* SimpleObjectInfo; 
+	UPROPERTY(BlueprintReadWrite) UOutlineComponent* outline; 
+	UPROPERTY(BlueprintReadWrite) USkeletalMeshComponent* Plant; 
+	UPROPERTY(BlueprintReadWrite) UTerrainPlacementComponent* terrainPlacement; 
+	UPROPERTY(BlueprintReadWrite) UTerrainDetectComponent* TerrainDetect; 
+	UPROPERTY(BlueprintReadWrite) USphereComponent* Spike Free Area; 
+	UPROPERTY(BlueprintReadWrite) USphereComponent* Spike Spawn Area; 
+	UPROPERTY(BlueprintReadWrite) USimpleHealthComponent* SimpleHealth; 
+	UPROPERTY(BlueprintReadWrite) USceneComponent* DefaultSceneRoot; 
+	UPROPERTY(BlueprintReadWrite) float Retract_spikes_extract_12C035484D9FA60A9729318F1FE2B43F; 
+	UPROPERTY(BlueprintReadWrite) enum class ETimelineDirection Retract_spikes__Direction_12C035484D9FA60A9729318F1FE2B43F; 
+	UPROPERTY(BlueprintReadWrite) UTimelineComponent* Retract spikes; 
+	UPROPERTY(BlueprintReadWrite) float Extrude_spikes_extract_506BA7914733C21AE25E36ACEB72E417; 
+	UPROPERTY(BlueprintReadWrite) enum class ETimelineDirection Extrude_spikes__Direction_506BA7914733C21AE25E36ACEB72E417; 
+	UPROPERTY(BlueprintReadWrite) UTimelineComponent* Extrude spikes; 
+	UPROPERTY(BlueprintReadWrite) int32_t Max Amount Of Spikes; 
+	UPROPERTY(BlueprintReadWrite) int32_t Min amount Of Spikes; 
+	UPROPERTY(BlueprintReadWrite) bool IsExtruded; 
+	UPROPERTY(BlueprintReadWrite) float Seconds Between Extrusion; 
+	UPROPERTY(BlueprintReadWrite) bool IsActive; 
+	UPROPERTY(BlueprintReadWrite) FTimerHandle ActiveTimer; 
+	UPROPERTY(BlueprintReadWrite) TArray<USkeletalMeshComponent*> AnimatedSpikeMeshes; 
+	UPROPERTY(BlueprintReadWrite) FMulticastInlineDelegate Change state; 
+	UPROPERTY(BlueprintReadWrite) TArray<UCapsuleComponent*> Capsule colliders; 
+	UPROPERTY(BlueprintReadWrite) float SpikeScale; 
+	UPROPERTY(BlueprintReadWrite) bool PlayerIsNearby; 
+	UPROPERTY(BlueprintReadWrite) int32_t SpikeSeed; 
+	UPROPERTY(BlueprintReadWrite) TArray<FTransform> SpikeTransforms; 
+	UPROPERTY(BlueprintReadWrite) bool SpikesAreSet; 
+
+	UFUNCTION(BlueprintCallable) void OnRep_SpikesAreSet();
+	UFUNCTION(BlueprintCallable) void OnRep_SpikeSeed();
+	UFUNCTION(BlueprintCallable) void Set Spikes to terrain();
+	UFUNCTION(BlueprintCallable) void OnRep_IsExtruded();
+	UFUNCTION(BlueprintCallable) void UserConstructionScript();
+	UFUNCTION(BlueprintCallable) void Extrude spikes__FinishedFunc();
+	UFUNCTION(BlueprintCallable) void Extrude spikes__UpdateFunc();
+	UFUNCTION(BlueprintCallable) void Extrude spikes__HitActors__EventFunc();
+	UFUNCTION(BlueprintCallable) void Retract spikes__FinishedFunc();
+	UFUNCTION(BlueprintCallable) void Retract spikes__UpdateFunc();
+	UFUNCTION(BlueprintCallable) void Retract spikes__DeactivateHit__EventFunc();
+	UFUNCTION(BlueprintCallable) void ReceiveBeginPlay();
+	UFUNCTION(BlueprintCallable) void Spike extrusion();
+	UFUNCTION(BlueprintCallable) void BndEvt__SimpleHealth_K2Node_ComponentBoundEvent_3_DeathSig__DelegateSignature(UHealthComponentBase* HealthComponent);
+	UFUNCTION(BlueprintCallable) void BndEvt__TerrainDetect_K2Node_ComponentBoundEvent_0_PointRemovedEvent__DelegateSignature();
+	UFUNCTION(BlueprintCallable) void BndEvt__SimpleHealth_K2Node_ComponentBoundEvent_1_HitSig__DelegateSignature(float Damage, UDamageClass* DamageClass, AActor* DamageCauser, bool anyHealthLost);
+	UFUNCTION(BlueprintCallable) void ExtrudeSpikes();
+	UFUNCTION(BlueprintCallable) void Retract Spike event();
+	UFUNCTION(BlueprintCallable) void Raytrace for terrain placement();
+	UFUNCTION(BlueprintCallable) void On Spike Capsule Overlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32_t OtherBodyIndex, bool bFromSweep, FHitResult SweepResult);
+	UFUNCTION(BlueprintCallable) void PlayerNearby(APlayerCharacter* Player, bool enteredTrigger);
+	UFUNCTION(BlueprintCallable) void ExecuteUbergraph_BP_SpikeyPlant(int32_t EntryPoint);
+	UFUNCTION(BlueprintCallable) void Change state__DelegateSignature(bool Is Extruded, bool Is Triggered);
+};
+

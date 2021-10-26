@@ -1,0 +1,60 @@
+// BlueprintGeneratedClass BP_Heartstone_DefensiveCrystal.BP_Heartstone_DefensiveCrystal_C
+// Size: 0x308 (Inherited: 0x220)
+struct ABP_Heartstone_DefensiveCrystal_C : AActor {
+	UPROPERTY(BlueprintReadWrite) FPointerToUberGraphFrame UberGraphFrame; 
+	UPROPERTY(BlueprintReadWrite) UParticleSystemComponent* ParticleSystem; 
+	UPROPERTY(BlueprintReadWrite) UTerrainPlacementComponent* terrainPlacement; 
+	UPROPERTY(BlueprintReadWrite) UPointLightComponent* FillLight; 
+	UPROPERTY(BlueprintReadWrite) UPointLightComponent* PointLight; 
+	UPROPERTY(BlueprintReadWrite) UTerrainDetectComponent* TerrainDetect3; 
+	UPROPERTY(BlueprintReadWrite) UAudioComponent* AudioChargeUp; 
+	UPROPERTY(BlueprintReadWrite) USimpleObjectInfoComponent* SimpleObjectInfo; 
+	UPROPERTY(BlueprintReadWrite) UAudioComponent* AudioGrow; 
+	UPROPERTY(BlueprintReadWrite) UPathfinderCollisionComponent* PathfinderCollision; 
+	UPROPERTY(BlueprintReadWrite) UStaticMeshComponent* Spike_SM; 
+	UPROPERTY(BlueprintReadWrite) UTerrainDetectComponent* TerrainDetect2; 
+	UPROPERTY(BlueprintReadWrite) UAudioComponent* AudioBeam; 
+	UPROPERTY(BlueprintReadWrite) UStaticMeshComponent* Beam; 
+	UPROPERTY(BlueprintReadWrite) USceneComponent* BeamRoot; 
+	UPROPERTY(BlueprintReadWrite) UBillboardComponent* AttackOrigin; 
+	UPROPERTY(BlueprintReadWrite) UDamageComponent* Damage; 
+	UPROPERTY(BlueprintReadWrite) USceneComponent* DefaultSceneRoot; 
+	UPROPERTY(BlueprintReadWrite) float GrowLight_SoundVolume_AB5D1D304F66D83F8F0760B4A43F79FC; 
+	UPROPERTY(BlueprintReadWrite) float GrowLight_LightIntensity_AB5D1D304F66D83F8F0760B4A43F79FC; 
+	UPROPERTY(BlueprintReadWrite) enum class ETimelineDirection GrowLight__Direction_AB5D1D304F66D83F8F0760B4A43F79FC; 
+	UPROPERTY(BlueprintReadWrite) UTimelineComponent* GrowLight; 
+	UPROPERTY(BlueprintReadWrite) AActor* JEB; 
+	UPROPERTY(BlueprintReadWrite) FTimerHandle DamageTimer; 
+	UPROPERTY(BlueprintReadWrite) bool IsAttackingJEB; 
+	UPROPERTY(BlueprintReadWrite) float LightIntensity; 
+	UPROPERTY(BlueprintReadWrite) ABP_EscortDestination_C* Heartstone; 
+	UPROPERTY(BlueprintReadWrite) bool FinishedCarving; 
+	UPROPERTY(BlueprintReadWrite) bool DoGrow; 
+	UPROPERTY(BlueprintReadWrite) int32_t NumPointsRemoved; 
+	UPROPERTY(BlueprintReadWrite) float LightStartIntensity; 
+	UPROPERTY(BlueprintReadWrite) FVector LaserImpactLocation; 
+	UPROPERTY(BlueprintReadWrite) UParticleSystemComponent* LaserImpactParticles; 
+
+	UFUNCTION(BlueprintCallable) void OnRep_NumPointsRemoved();
+	UFUNCTION(BlueprintCallable) void IsDestroyed(bool isDestoyed);
+	UFUNCTION(BlueprintCallable) void OnRep_DoGrow();
+	UFUNCTION(BlueprintCallable) void OnRep_FinishedCarving();
+	UFUNCTION(BlueprintCallable) void OnRep_IsAttackingJEB();
+	UFUNCTION(BlueprintCallable) void CheckLOStoJEB(bool HaveLOStoJEB);
+	UFUNCTION(BlueprintCallable) void GrowLight__FinishedFunc();
+	UFUNCTION(BlueprintCallable) void GrowLight__UpdateFunc();
+	UFUNCTION(BlueprintCallable) void ReceiveBeginPlay();
+	UFUNCTION(BlueprintCallable) void CheckIfCanAttackJEB();
+	UFUNCTION(BlueprintCallable) void DamageJEB();
+	UFUNCTION(BlueprintCallable) void Grow();
+	UFUNCTION(BlueprintCallable) void BndEvt__TerrainDetect2_K2Node_ComponentBoundEvent_3_PointRemovedEvent__DelegateSignature();
+	UFUNCTION(BlueprintCallable) void TurnOnBeamDamage();
+	UFUNCTION(BlueprintCallable) void MoveMesh();
+	UFUNCTION(BlueprintCallable) void ShootBeam();
+	UFUNCTION(BlueprintCallable) void BndEvt__TerrainDetect3_K2Node_ComponentBoundEvent_0_PointRemovedEvent__DelegateSignature();
+	UFUNCTION(BlueprintCallable) void ReceiveDestroyed();
+	UFUNCTION(BlueprintCallable) void StopBeam();
+	UFUNCTION(BlueprintCallable) void DisableBeamer();
+	UFUNCTION(BlueprintCallable) void ExecuteUbergraph_BP_Heartstone_DefensiveCrystal(int32_t EntryPoint);
+};
+

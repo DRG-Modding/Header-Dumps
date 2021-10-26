@@ -1,0 +1,12 @@
+// BlueprintGeneratedClass AIC_HydraWeed_Shooter.AIC_HydraWeed_Shooter_C
+// Size: 0x360 (Inherited: 0x358)
+struct AAIC_HydraWeed_Shooter_C : AFSDAIController {
+	UPROPERTY(BlueprintReadWrite) FPointerToUberGraphFrame UberGraphFrame; 
+
+	UFUNCTION(BlueprintCallable) void Recieve_BlackboardValueChanged(FName KeyName);
+	UFUNCTION(BlueprintCallable) void OnDeath(UHealthComponentBase* HealthComponent);
+	UFUNCTION(BlueprintCallable) void ReceivePossess(APawn* PossessedPawn);
+	UFUNCTION(BlueprintCallable) void StartBehavior();
+	UFUNCTION(BlueprintCallable) void ExecuteUbergraph_AIC_HydraWeed_Shooter(int32_t EntryPoint);
+};
+

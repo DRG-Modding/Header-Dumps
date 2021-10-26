@@ -1,0 +1,24 @@
+// AnimBlueprintGeneratedClass ABP_SentryGun_MineHead.ABP_SentryGun_MineHead_C
+// Size: 0x698 (Inherited: 0x290)
+struct UABP_SentryGun_MineHead_C : USentryGunAnimInstance {
+	UPROPERTY(BlueprintReadWrite) FPointerToUberGraphFrame UberGraphFrame; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_Root AnimGraphNode_Root; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequenceEvaluator AnimGraphNode_SequenceEvaluator; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateMachine AnimGraphNode_StateMachine; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ModifyBone AnimGraphNode_ModifyBone_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ConvertLocalToComponentSpace AnimGraphNode_LocalToComponentSpace; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ConvertComponentToLocalSpace AnimGraphNode_ComponentToLocalSpace; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ModifyBone AnimGraphNode_ModifyBone; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_Slot AnimGraphNode_Slot; 
+	UPROPERTY(BlueprintReadWrite) float FoldOutLength; 
+	UPROPERTY(BlueprintReadWrite) UAnimSequenceBase* FoldOutSequence; 
+
+	UFUNCTION(BlueprintCallable) void AnimGraph(FPoseLink AnimGraph);
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SentryGun_MineHead_AnimGraphNode_ModifyBone_4F9CC0C04AB90D03D69114A047514B0B();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SentryGun_MineHead_AnimGraphNode_ModifyBone_29245DD149B1558D50DED6A999B6E2A1();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SentryGun_MineHead_AnimGraphNode_SequenceEvaluator_33158AA143F6B4A10E29DDA22702F35B();
+	UFUNCTION(BlueprintCallable) void BlueprintBeginPlay();
+	UFUNCTION(BlueprintCallable) void ExecuteUbergraph_ABP_SentryGun_MineHead(int32_t EntryPoint);
+};
+

@@ -1,0 +1,65 @@
+// BlueprintGeneratedClass BP_RewardFrame.BP_RewardFrame_C
+// Size: 0x34c (Inherited: 0x250)
+struct ABP_RewardFrame_C : AEventRewardFrame {
+	UPROPERTY(BlueprintReadWrite) FPointerToUberGraphFrame UberGraphFrame; 
+	UPROPERTY(BlueprintReadWrite) USimpleObjectInfoComponent* SimpleObjectInfo; 
+	UPROPERTY(BlueprintReadWrite) USphereComponent* Sphere; 
+	UPROPERTY(BlueprintReadWrite) UTerrainPlacementComponent* terrainPlacement; 
+	UPROPERTY(BlueprintReadWrite) UBoxComponent* Box; 
+	UPROPERTY(BlueprintReadWrite) UBoxComponent* UseCollider; 
+	UPROPERTY(BlueprintReadWrite) UTerrainDetectComponent* TerrainDetect; 
+	UPROPERTY(BlueprintReadWrite) UDropToTerrainComponent* DropToTerrain; 
+	UPROPERTY(BlueprintReadWrite) USceneComponent* AttentionLightRoot; 
+	UPROPERTY(BlueprintReadWrite) UPointLightComponent* PointLight2; 
+	UPROPERTY(BlueprintReadWrite) USpotLightComponent* SpotLight; 
+	UPROPERTY(BlueprintReadWrite) UPointLightComponent* PointLight; 
+	UPROPERTY(BlueprintReadWrite) UPointLightComponent* PointLight1; 
+	UPROPERTY(BlueprintReadWrite) UStaticMeshComponent* LightCone; 
+	UPROPERTY(BlueprintReadWrite) UOutlineComponent* outline; 
+	UPROPERTY(BlueprintReadWrite) UChildActorComponent* Dispenser4; 
+	UPROPERTY(BlueprintReadWrite) UChildActorComponent* Dispenser3; 
+	UPROPERTY(BlueprintReadWrite) UChildActorComponent* Dispenser2; 
+	UPROPERTY(BlueprintReadWrite) UChildActorComponent* Dispenser1; 
+	UPROPERTY(BlueprintReadWrite) USkeletalMeshComponent* SkeletalMesh; 
+	UPROPERTY(BlueprintReadWrite) USceneComponent* DefaultSceneRoot; 
+	UPROPERTY(BlueprintReadWrite) float AttentionLightTimeLine_Progress01_7D9ABF3443AD60E5960D44ADCB060072; 
+	UPROPERTY(BlueprintReadWrite) enum class ETimelineDirection AttentionLightTimeLine__Direction_7D9ABF3443AD60E5960D44ADCB060072; 
+	UPROPERTY(BlueprintReadWrite) UTimelineComponent* AttentionLightTimeLine; 
+	UPROPERTY(BlueprintReadWrite) AGameEvent* OwningEvent; 
+	UPROPERTY(BlueprintReadWrite) bool EventFinished; 
+	UPROPERTY(BlueprintReadWrite) TArray<AEventRewardDispenser*> DispenserActors; 
+	UPROPERTY(BlueprintReadWrite) bool AttentionLightOn; 
+	UPROPERTY(BlueprintReadWrite) APlayerCharacter* KeyOwner; 
+	UPROPERTY(BlueprintReadWrite) ABP_ReturningPromotionKey_C* Key; 
+	UPROPERTY(BlueprintReadWrite) float HeightAboveGround; 
+	UPROPERTY(BlueprintReadWrite) float Incrementing; 
+	UPROPERTY(BlueprintReadWrite) FMusicHandle MusicHandle; 
+
+	UFUNCTION(BlueprintCallable) bool AddEventProgress(float Progress);
+	UFUNCTION(BlueprintCallable) bool AdvanceOneObjective();
+	UFUNCTION(BlueprintCallable) bool SetupEvent(AGameEvent* GameEvent);
+	UFUNCTION(BlueprintCallable) void GetLocalPlayerDispenser(AEventRewardDispenser* OutDispenser);
+	UFUNCTION(BlueprintCallable) void AllDispensersFinished(bool IsFinished);
+	UFUNCTION(BlueprintCallable) void SetupDispenser(AEventRewardDispenser* Dispenser);
+	UFUNCTION(BlueprintCallable) void GetRandomPlayer(APlayerCharacter* Output);
+	UFUNCTION(BlueprintCallable) void UpdateLights();
+	UFUNCTION(BlueprintCallable) void AlignDispensers();
+	UFUNCTION(BlueprintCallable) void StartEventUI();
+	UFUNCTION(BlueprintCallable) void UserConstructionScript();
+	UFUNCTION(BlueprintCallable) void AttentionLightTimeLine__FinishedFunc();
+	UFUNCTION(BlueprintCallable) void AttentionLightTimeLine__UpdateFunc();
+	UFUNCTION(BlueprintCallable) void OnEventOpened();
+	UFUNCTION(BlueprintCallable) void OnEventProgress(float Progress);
+	UFUNCTION(BlueprintCallable) void ReceiveBeginPlay();
+	UFUNCTION(BlueprintCallable) void BndEvt__EventUsable_K2Node_ComponentBoundEvent_0_UsedBySignature__DelegateSignature(APlayerCharacter* User);
+	UFUNCTION(BlueprintCallable) void OnEventFinished(bool eventSuccess);
+	UFUNCTION(BlueprintCallable) void OnEventTriggered();
+	UFUNCTION(BlueprintCallable) void BndEvt__EventUsable_K2Node_ComponentBoundEvent_1_UsableChangedSignature__DelegateSignature(bool canUse);
+	UFUNCTION(BlueprintCallable) void Toggle Attention Light(bool InVisible);
+	UFUNCTION(BlueprintCallable) void Recall Key();
+	UFUNCTION(BlueprintCallable) void BndEvt__Sphere_K2Node_ComponentBoundEvent_2_ComponentBeginOverlapSignature__DelegateSignature(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32_t OtherBodyIndex, bool bFromSweep, FHitResult SweepResult);
+	UFUNCTION(BlueprintCallable) void EnableGravity();
+	UFUNCTION(BlueprintCallable) void Cheat_FinishEvent();
+	UFUNCTION(BlueprintCallable) void ExecuteUbergraph_BP_RewardFrame(int32_t EntryPoint);
+};
+

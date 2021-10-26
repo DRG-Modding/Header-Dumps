@@ -1,0 +1,38 @@
+// AnimBlueprintGeneratedClass ABP_GunTower_LMG_Skeleton_AnimBlueprint.ABP_GunTower_LMG_Skeleton_AnimBlueprint_C
+// Size: 0xc18 (Inherited: 0x290)
+struct UABP_GunTower_LMG_Skeleton_AnimBlueprint_C : UGunTowerModuleAnimInstance {
+	UPROPERTY(BlueprintReadWrite) FPointerToUberGraphFrame UberGraphFrame; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ModifyBone AnimGraphNode_ModifyBone_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ConvertComponentToLocalSpace AnimGraphNode_ComponentToLocalSpace_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_Slot AnimGraphNode_Slot; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ModifyBone AnimGraphNode_ModifyBone_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_Root AnimGraphNode_Root; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ConvertLocalToComponentSpace AnimGraphNode_LocalToComponentSpace_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ModifyBone AnimGraphNode_ModifyBone; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ConvertLocalToComponentSpace AnimGraphNode_LocalToComponentSpace; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ConvertComponentToLocalSpace AnimGraphNode_ComponentToLocalSpace; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_4; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_4; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_4; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateMachine AnimGraphNode_StateMachine_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateMachine AnimGraphNode_StateMachine; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ApplyAdditive AnimGraphNode_ApplyAdditive; 
+	UPROPERTY(BlueprintReadWrite) float MaxAimYaw; 
+	UPROPERTY(BlueprintReadWrite) float MaxAimPitch; 
+
+	UFUNCTION(BlueprintCallable) void AnimGraph(FPoseLink AnimGraph);
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_GunTower_LMG_Skeleton_AnimBlueprint_AnimGraphNode_ModifyBone_2F5B8FD14C70B219912417B56C99F4B7();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_GunTower_LMG_Skeleton_AnimBlueprint_AnimGraphNode_ModifyBone_3C2D263449A3644B777F87B659FCBAD8();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_GunTower_LMG_Skeleton_AnimBlueprint_AnimGraphNode_ModifyBone_F4C555BB48539FD39673A89D07C2A337();
+	UFUNCTION(BlueprintCallable) void ExecuteUbergraph_ABP_GunTower_LMG_Skeleton_AnimBlueprint(int32_t EntryPoint);
+};
+

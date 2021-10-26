@@ -1,0 +1,57 @@
+// AnimBlueprintGeneratedClass ABP_SuckingPlant.ABP_SuckingPlant_C
+// Size: 0xcbc (Inherited: 0x270)
+struct UABP_SuckingPlant_C : UAnimInstance {
+	UPROPERTY(BlueprintReadWrite) FPointerToUberGraphFrame UberGraphFrame; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_Root AnimGraphNode_Root; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_8; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_7; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_6; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_5; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_4; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_6; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_5; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_4; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateMachine AnimGraphNode_StateMachine_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_ApplyAdditive AnimGraphNode_ApplyAdditive; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionPoseEvaluator AnimGraphNode_TransitionPoseEvaluator_4; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionPoseEvaluator AnimGraphNode_TransitionPoseEvaluator_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_CustomTransitionResult_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_4; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_3; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionPoseEvaluator AnimGraphNode_TransitionPoseEvaluator_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionPoseEvaluator AnimGraphNode_TransitionPoseEvaluator; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_CustomTransitionResult; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_TransitionResult AnimGraphNode_TransitionResult; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_BlendSpaceEvaluator AnimGraphNode_BlendSpaceEvaluator_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult_2; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_BlendSpaceEvaluator AnimGraphNode_BlendSpaceEvaluator; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateResult AnimGraphNode_StateResult; 
+	UPROPERTY(BlueprintReadWrite) FAnimNode_StateMachine AnimGraphNode_StateMachine; 
+	UPROPERTY(BlueprintReadWrite) ABP_SuckingPlant__C* SuckingPlant_Ref; 
+	UPROPERTY(BlueprintReadWrite) FRotator Current Rotation; 
+	UPROPERTY(BlueprintReadWrite) bool remove test; 
+	UPROPERTY(BlueprintReadWrite) float Previous Yaw Value; 
+
+	UFUNCTION(BlueprintCallable) void AnimGraph(FPoseLink AnimGraph);
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_94DB4A024F5107A011793D8A7A917BB8();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_BlendSpaceEvaluator_A352300A4C09A2E51C85FEA937DACB1E();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_E2AF042E4851FC81E3E48B8889497FB8();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_BlendSpaceEvaluator_FAF2A81D4D60864F94696AA842026B63();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_561A0D0D497D83C4B66150B3EF828CBC();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_8406EC9946965BC871F0FDAB578C9963();
+	UFUNCTION(BlueprintCallable) void BlueprintInitializeAnimation();
+	UFUNCTION(BlueprintCallable) void set rotation(FVector Target Rotation);
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_9167A2C140F772009EEF7A8C0F8436C7();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_0EA1C1304252907E29C29C9A3ADDA903();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_6CCF84CD42BE5088DB62ECAA791DD0DD();
+	UFUNCTION(BlueprintCallable) void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_SuckingPlant_AnimGraphNode_TransitionResult_DC2ED01848B1FF5FCA3FE5A3455DFEA8();
+	UFUNCTION(BlueprintCallable) void BlueprintUpdateAnimation(float DeltaTimeX);
+	UFUNCTION(BlueprintCallable) void Remove me too();
+	UFUNCTION(BlueprintCallable) void ExecuteUbergraph_ABP_SuckingPlant(int32_t EntryPoint);
+};
+
