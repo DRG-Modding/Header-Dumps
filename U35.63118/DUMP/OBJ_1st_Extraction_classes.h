@@ -1,0 +1,5 @@
+// BlueprintGeneratedClass OBJ_1st_Extraction.OBJ_1st_Extraction_C
+// Size: 0x1c0 (Inherited: 0x1c0)
+struct UOBJ_1st_Extraction_C : UOBJ_Extraction_Base_C {
+};
+
