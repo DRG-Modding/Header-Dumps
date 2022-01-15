@@ -1,0 +1,21 @@
+#ifndef UE4SS_SDK_EWC_Escort_DigPhase_HPP
+#define UE4SS_SDK_EWC_Escort_DigPhase_HPP
+
+class UEWC_Escort_DigPhase_C : UEWC_Base_C
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    FVector FirstSpawnLocationOverride;
+    float DelayBetweenWaves;
+    int32 WaveCountConstantPressure;
+    AActor* Drilldozer;
+    AAIC_EscortMule_C* DrilldoserAIC;
+    int32 WaveCountBigTunnelWave;
+
+    void StartWave();
+    void SpawnWaves();
+    void LoopSpawnWaves();
+    void OnWaveCompleted();
+    void ExecuteUbergraph_EWC_Escort_DigPhase(int32 EntryPoint, int32 CallFunc_GetNumAdditionalPlayers_ReturnValue, float CallFunc_Conv_IntToFloat_ReturnValue, float CallFunc_Multiply_FloatFloat_ReturnValue, float CallFunc_Multiply_IntFloat_ReturnValue, float CallFunc_Add_FloatFloat_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, float CallFunc_FClamp_ReturnValue, float CallFunc_RandomFloatInRange_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue_1, float CallFunc_Multiply_IntFloat_ReturnValue_1, FVector CallFunc_GetPointBehindMule_Point, float CallFunc_Add_FloatFloat_ReturnValue_1, TArray<FVector>& CallFunc_GetSpawnPointsAroundLocation_ReturnValue, float CallFunc_FMax_ReturnValue, float CallFunc_Add_FloatFloat_ReturnValue_2, float CallFunc_FMax_ReturnValue_1, float CallFunc_Add_FloatFloat_ReturnValue_3, float CallFunc_FMax_ReturnValue_2, float CallFunc_Add_FloatFloat_ReturnValue_4, float CallFunc_FMax_ReturnValue_3, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, UDifficultyManager* CallFunc_GetDifficultyManager_ReturnValue, float CallFunc_GetPointExtractionScaler_ReturnValue, float CallFunc_FMin_ReturnValue, float CallFunc_Divide_FloatFloat_ReturnValue, int32 Temp_int_Variable, FVector CallFunc_GetPointBehindMule_Point_1, TArray<FVector>& CallFunc_GetSpawnPointsAroundLocation_ReturnValue_1, int32 Temp_int_Variable_1, float CallFunc_MakeLiteralFloat_ReturnValue, int32 CallFunc_GetNumAdditionalPlayers_ReturnValue_1, float CallFunc_MakeLiteralFloat_ReturnValue_1, float CallFunc_Conv_IntToFloat_ReturnValue_1, int32 CallFunc_GetNumAdditionalPlayers_ReturnValue_2, float CallFunc_Multiply_FloatFloat_ReturnValue_1, float CallFunc_Conv_IntToFloat_ReturnValue_2, float CallFunc_Subtract_FloatFloat_ReturnValue, float CallFunc_Multiply_FloatFloat_ReturnValue_2, float CallFunc_Subtract_FloatFloat_ReturnValue_1, float CallFunc_MakeLiteralFloat_ReturnValue_2, int32 CallFunc_GetNumAdditionalPlayers_ReturnValue_3, float CallFunc_MakeLiteralFloat_ReturnValue_3, float CallFunc_Conv_IntToFloat_ReturnValue_3, float CallFunc_Subtract_FloatFloat_ReturnValue_2, float CallFunc_Multiply_FloatFloat_ReturnValue_3, float CallFunc_Subtract_FloatFloat_ReturnValue_3);
+}
+
+#endif

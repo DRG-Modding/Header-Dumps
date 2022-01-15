@@ -1,0 +1,10 @@
+#ifndef UE4SS_SDK_BP_SmallMangroveRoot_4_HPP
+#define UE4SS_SDK_BP_SmallMangroveRoot_4_HPP
+
+class ABP_SmallMangroveRoot_4_C : ABP_MangroveRock_Base_C
+{
+
+    void UserConstructionScript(bool CallFunc_HasAuthority_ReturnValue, AProceduralSetup* CallFunc_GetProceduralSetup_ReturnValue, float CallFunc_RandomFloatInRangeFromStream_ReturnValue, float CallFunc_RandomFloatInRangeFromStream_ReturnValue_1, float CallFunc_RandomFloatInRangeFromStream_ReturnValue_2, FRotator CallFunc_MakeRotator_ReturnValue, FHitResult CallFunc_K2_SetRelativeRotation_SweepHitResult);
+}
+
+#endif

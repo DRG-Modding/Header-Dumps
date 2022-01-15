@@ -1,0 +1,37 @@
+#ifndef UE4SS_SDK_HUD_TabPlayerList_InteractableV2_HPP
+#define UE4SS_SDK_HUD_TabPlayerList_InteractableV2_HPP
+
+class UHUD_TabPlayerList_InteractableV2_C : UFSDUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UButton* Button_InviteFriends1;
+    UButton* Button_InviteFriends2;
+    UButton* Button_InviteFriends3;
+    UHorizontalBox* HorizontalBox_InviteFriend;
+    UHUD_TabPlayerListEntry_InteractableV2_C* HUD_TabPlayerListEntry_Interactable1;
+    UUI_AdvancedLabel_C* LabelInviteFriend;
+    UHorizontalBox* ParentPanel;
+    UHorizontalBox* PlayersPanel;
+    USizeBox* SizeBox_InviteFriends1;
+    USizeBox* SizeBox_InviteFriends2;
+    USizeBox* SizeBox_InviteFriends3;
+    USpacer* Spacer_InviteButtons;
+    USpacer* Spacer_IsInMission;
+    TArray<UButton*> InviteButtons;
+
+    void FindPlayerList(TArray<UFSDPlayerState*>& OutPlayers, TArray<UFSDPlayerState*> Players, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, bool CallFunc_IsValid_ReturnValue, UPlayerState* CallFunc_Array_Get_Item, int32 CallFunc_Array_Length_ReturnValue, UFSDPlayerState* K2Node_DynamicCast_AsFSDPlayer_State, bool K2Node_DynamicCast_bSuccess, bool CallFunc_Less_IntInt_ReturnValue, int32 CallFunc_Array_Add_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue);
+    void OnFailure_BB3F54234323B8FC909E35A9D25E3656();
+    void OnSuccess_BB3F54234323B8FC909E35A9D25E3656();
+    void Construct();
+    void AddPlayer(UFSDPlayerState* Player);
+    void Update();
+    void OnPlayerJoined_Event(UFSDPlayerState* PlayerState);
+    void OnPlayerLeave_Event(UFSDPlayerState* PlayerState);
+    void BndEvt__Button_Invite_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();
+    void InviteFriends();
+    void BndEvt__Button_InviteFriends2_K2Node_ComponentBoundEvent_1_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__SizeBox_InviteFriends03_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
+    void ExecuteUbergraph_HUD_TabPlayerList_InteractableV2(int32 EntryPoint, int32 Temp_int_Variable, PlayerDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, int32 CallFunc_Add_IntInt_ReturnValue, bool Temp_bool_Variable, ESlateVisibility Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, bool Temp_bool_Variable_1, ESlateVisibility Temp_byte_Variable_2, ESlateVisibility Temp_byte_Variable_3, int32 Temp_int_Variable_1, int32 CallFunc_Add_IntInt_ReturnValue_1, EmptyOnlineDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, EmptyOnlineDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_2, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue_2, int32 Temp_int_Array_Index_Variable_1, int32 CallFunc_Add_IntInt_ReturnValue_3, UFSDPlayerState* K2Node_CustomEvent_player, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, UPlayerController* CallFunc_GetOwningPlayer_ReturnValue, UHUD_TabPlayerListEntry_InteractableV2_C* CallFunc_Create_ReturnValue, UPlayerState* CallFunc_Array_Get_Item, UFSDPlayerState* K2Node_DynamicCast_AsFSDPlayer_State, bool K2Node_DynamicCast_bSuccess, int32 CallFunc_Array_Length_ReturnValue, int32 Temp_int_Loop_Counter_Variable_1, UPlayerController* CallFunc_GetOwningPlayer_ReturnValue_1, bool CallFunc_Less_IntInt_ReturnValue, bool CallFunc_NotEqual_ObjectObject_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue_4, ESlateVisibility Temp_byte_Variable_4, ESlateVisibility Temp_byte_Variable_5, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue_1, UFSDPlayerState* K2Node_CustomEvent_PlayerState_1, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue_2, UFSDPlayerState* K2Node_CustomEvent_PlayerState, bool CallFunc_IsInActiveSession_ReturnValue, bool CallFunc_IsInActiveSession_ReturnValue_1, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue_3, int32 CallFunc_Array_LastIndex_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue_1, TArray<UButton*>& K2Node_MakeArray_Array, UButton* CallFunc_Array_Get_Item_1, int32 CallFunc_Array_Length_ReturnValue_1, bool Temp_bool_Variable_2, bool CallFunc_Less_IntInt_ReturnValue_2, ESlateVisibility K2Node_Select_Default, PlayerDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_3, UHorizontalBoxSlot* CallFunc_AddChildToHorizontalBoxEx_OutSlot, UHorizontalBox* CallFunc_AddChildToHorizontalBoxEx_OutHorizontalBox, UHUD_TabPlayerListEntry_InteractableV2_C* CallFunc_AddChildToHorizontalBoxEx_ReturnValue, UButton* CallFunc_Array_Get_Item_2, int32 CallFunc_Array_Length_ReturnValue_2, bool CallFunc_Less_IntInt_ReturnValue_3, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue_4, int32 CallFunc_Array_Length_ReturnValue_3, UFSDPlayerState* CallFunc_GetFSDPlayerState_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, ESlateVisibility K2Node_Select_Default_1, ESlateVisibility K2Node_Select_Default_2, FLinearColor CallFunc_MenuColors_OutputColor, FLinearColor CallFunc_MenuColors_OutputColor_1, UButton* CallFunc_Array_Get_Item_3, int32 CallFunc_Array_Length_ReturnValue_4, bool CallFunc_Less_IntInt_ReturnValue_4, bool CallFunc_IsTearingDown_isTearingDown, bool CallFunc_Not_PreBool_ReturnValue, UPlayerController* CallFunc_GetOwningPlayer_ReturnValue_2, UFSDCreateSessionCallbackProxy* CallFunc_FSDCreateSession_ReturnValue, bool CallFunc_IsValid_ReturnValue, EInviteBlockReason CallFunc_CanPlayerInvite_ReturnValue, bool CallFunc_NotEqual_ByteByte_ReturnValue, FText CallFunc_GetInviteFeatureBlockReason_ReturnValue, EInviteBlockReason CallFunc_CanPlayerInvite_ReturnValue_1, bool CallFunc_EqualEqual_ByteByte_ReturnValue, bool CallFunc_BooleanAND_ReturnValue);
+}
+
+#endif

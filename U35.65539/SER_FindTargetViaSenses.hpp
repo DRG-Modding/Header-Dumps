@@ -1,0 +1,16 @@
+#ifndef UE4SS_SDK_SER_FindTargetViaSenses_HPP
+#define UE4SS_SDK_SER_FindTargetViaSenses_HPP
+
+class USER_FindTargetViaSenses_C : UBTService_BlueprintBase
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    FBlackboardKeySelector TargetKey;
+    FGameplayTagContainer AllowedTargets;
+
+    void ReceiveSearchStartAI(UAIController* OwnerController, APawn* ControlledPawn);
+    void OnSensePawn(APawn* Pawn);
+    void ReceiveTickAI(UAIController* OwnerController, APawn* ControlledPawn, float DeltaSeconds);
+    void ExecuteUbergraph_SER_FindTargetViaSenses(int32 EntryPoint, UHealthComponentBase* Temp_object_Variable, SeePawnDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, bool CallFunc_IsAlive_ReturnValue, UHealthComponentBase* Temp_object_Variable_1, bool Temp_bool_Variable, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_IsAlive_ReturnValue_1, UAIController* K2Node_Event_OwnerController_1, APawn* K2Node_Event_ControlledPawn_1, APawn* K2Node_CustomEvent_Pawn, UPawnSensingComponent* CallFunc_GetComponentByClass_ReturnValue, InterfaceProperty K2Node_DynamicCast_AsGameplay_Tag_Asset_Interface, bool K2Node_DynamicCast_bSuccess, bool CallFunc_IsValid_ReturnValue, InterfaceProperty K2Node_DynamicCast_AsTargetable, bool K2Node_DynamicCast_bSuccess_1, bool CallFunc_DoesImplementInterface_ReturnValue, UHealthComponentBase* CallFunc_GetTargetHealthComponent_ReturnValue, UAIController* K2Node_Event_OwnerController, APawn* K2Node_Event_ControlledPawn, float K2Node_Event_DeltaSeconds, AActor* CallFunc_GetBlackboardValueAsActor_ReturnValue, InterfaceProperty K2Node_DynamicCast_AsTargetable_1, bool K2Node_DynamicCast_bSuccess_2, bool CallFunc_IsValid_ReturnValue_1, UHealthComponentBase* CallFunc_GetTargetHealthComponent_ReturnValue_1, bool CallFunc_DoesImplementInterface_ReturnValue_1, bool CallFunc_LineOfSightTo_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1, AActor* CallFunc_GetBlackboardValueAsActor_ReturnValue_1, bool CallFunc_IsValid_ReturnValue_2, bool CallFunc_HasAnyMatchingGameplayTags_ReturnValue);
+}
+
+#endif

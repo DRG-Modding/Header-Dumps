@@ -1,0 +1,24 @@
+#ifndef UE4SS_SDK_LVL_CharacterSelection_HPP
+#define UE4SS_SDK_LVL_CharacterSelection_HPP
+
+class ALVL_CharacterSelection_C : ALevelScriptActor
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    ULevelSequencePlayer* Player;
+    ACharacterSelectionSwitcher_C* switcher;
+    TArray<FCharacterViewInfo> CharViewerList;
+    ACharacterSelectionSwitcher_C* CharacterSelectionSwitcher_186_ExecuteUbergraph_LVL_CharacterSelection_RefProperty;
+    ACameraActor* CameraActor_1_ExecuteUbergraph_LVL_CharacterSelection_RefProperty;
+
+    void PlaySpecificSequence(ULevelSequence* LevelSequence, FMovieSceneSequencePlaybackSettings K2Node_MakeStruct_MovieSceneSequencePlaybackSettings, ALevelSequenceActor* CallFunc_CreateLevelSequencePlayer_OutActor, ULevelSequencePlayer* CallFunc_CreateLevelSequencePlayer_ReturnValue);
+    void StopPlayer(bool CallFunc_IsValid_ReturnValue);
+    void StartPlayer(ECharselectionCameraLocation CamSetting, ULevelSequence* Temp_object_Variable, ULevelSequence* Temp_object_Variable_1, ULevelSequence* Temp_object_Variable_2, ULevelSequence* Temp_object_Variable_3, ULevelSequence* Temp_object_Variable_4, ULevelSequence* Temp_object_Variable_5, ULevelSequence* Temp_object_Variable_6, ECharselectionCameraLocation Temp_byte_Variable, FMovieSceneSequencePlaybackSettings K2Node_MakeStruct_MovieSceneSequencePlaybackSettings, ULevelSequence* K2Node_Select_Default, ALevelSequenceActor* CallFunc_CreateLevelSequencePlayer_OutActor, ULevelSequencePlayer* CallFunc_CreateLevelSequencePlayer_ReturnValue);
+    void StopPlay();
+    void StartLevelSeq(ULevelSequence* CharacterLevelSequence);
+    void StartPlay(ECharselectionCameraLocation selectionLocation);
+    void ReceiveBeginPlay();
+    void ReceiveDestroyed();
+    void ExecuteUbergraph_LVL_CharacterSelection(int32 EntryPoint, OnPlayLevelSequenceInCharacterWorldSig__DelegateSignature K2Node_CreateDelegate_OutputDelegate, ECharselectionCameraLocation Temp_byte_Variable, ShowCharacterWorldSignature__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, bool Temp_bool_Variable, bool Temp_bool_Variable_1, bool Temp_bool_Variable_2, bool Temp_bool_Variable_3, bool Temp_bool_Variable_4, bool Temp_bool_Variable_5, bool Temp_bool_Variable_6, GenericSignature__DelegateSignature K2Node_CreateDelegate_OutputDelegate_2, TSubclassOf<UObject> CallFunc_LoadClass_ReturnValue, TArray<UVanityItem*>& K2Node_MakeArray_Array, TSubclassOf<UPlayerCharacter> K2Node_ClassDynamicCast_AsPlayer_Character, bool K2Node_ClassDynamicCast_bSuccess, TArray<UVanityItem*>& K2Node_MakeArray_Array_1, bool CallFunc_IsPlayInEditor_ReturnValue, FCharacterViewInfo K2Node_MakeStruct_CharacterViewInfo, TSubclassOf<UObject> CallFunc_LoadClass_ReturnValue_1, TSubclassOf<UPlayerCharacter> K2Node_ClassDynamicCast_AsPlayer_Character_1, bool K2Node_ClassDynamicCast_bSuccess_1, FCharacterViewInfo K2Node_MakeStruct_CharacterViewInfo_1, bool CallFunc_IsPlayInEditor_ReturnValue_1, int32 CallFunc_Array_Add_ReturnValue, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, ULevelSequence* K2Node_CustomEvent_CharacterLevelSequence, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, FCharacterViewScene K2Node_MakeStruct_CharacterViewScene, ECharselectionCameraLocation K2Node_CustomEvent_selectionLocation, bool K2Node_Select_Default, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_2, int32 CallFunc_Array_Add_ReturnValue_1);
+}
+
+#endif

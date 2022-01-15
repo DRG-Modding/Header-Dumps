@@ -1,0 +1,105 @@
+#ifndef UE4SS_SDK_HUD_Main_HPP
+#define UE4SS_SDK_HUD_Main_HPP
+
+class UHUD_Main_C : UFSDMainHUDWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UWidgetAnimation* FadeToBlack;
+    UWidgetAnimation* MoveIn;
+    UCanvasPanel* AllCameraModes;
+    UAnnouncement_Controller_C* Announcement_Controller;
+    UCanvasPanel* BottomBar;
+    UScreenOverlay_ShieldDamage_C* BP_HUD_ArmorDamageIndicator;
+    UScreenOverlay_HealthDamage_C* BP_HUD_DamageIndicator;
+    UHUD_Altimeter_C* BS_Altimeter_505;
+    UHUD_AmmoCount_C* BS_AmmoCount_66;
+    UHUD_Chat_C* BS_Chat;
+    UHUD_Flares_C* BS_Flares_330;
+    UHUD_Grenades_C* BS_Grenades_239;
+    UOnScreenIndicator_UsableItem_Simple_C* BS_UsableItem_384;
+    UHUD_WeaponName_C* BS_WeaponName_115;
+    UCanvasPanel* Camera_Canvas;
+    UWidgetSwitcher* CamerModeSwitcher;
+    UCanvasPanel* CenterBar;
+    UHUD_CoolDownManager_C* CoolDownManager;
+    UImage* FadeOverlay;
+    UCanvasPanel* FirstPersonCanvas;
+    UEditableTextBox* HiddenChatHelper;
+    UBasic_HUD_BracketWindowBig_Single_C* Holder_AmmoCounter;
+    UBasic_HUD_BracketWindowBig_Single_C* Holder_Gadgets;
+    UHUD_ActionHoldProgress_C* HUD_ActionHoldProgress;
+    UHUD_ActivatablePerks_C* HUD_ActivatablePerks;
+    UHUD_BossFight_Manager_C* HUD_BossFight_Manager;
+    UHUD_Countdown_Extraction_C* HUD_Countdown_Extraction_99;
+    UHUD_CrosshairManager_C* HUD_CrosshairManager;
+    UHUD_DamageClass_Indicator_C* HUD_DamageClass_Indicator;
+    UHUD_Directional_Damage_IndicatorV2_C* HUD_Directional_Damage_IndicatorV2;
+    UHUD_EnemyTargeting_C* HUD_EnemyTargeting;
+    UHUD_Flashlight_C* HUD_Flashlight_C_0;
+    UHUD_Frozen_C* HUD_Frozen;
+    UHUD_Itembar_C* HUD_Itembar;
+    UHUD_ItemWheel_C* HUD_ItemWheel;
+    UHUD_Milestone_Manager_C* HUD_KPI_Manager;
+    UHUD_MapTool_C* HUD_MapTool_208;
+    UHUD_MinersManualNotification_Manager_C* HUD_MinersManualNotification_Manager;
+    UMissionControl_MainDialogue_C* HUD_MissionShout;
+    UHUD_MutatorsAndWarnings_3_C* HUD_MutatorsAndWarnings_3;
+    UHUD_ActorContext_Manager_C* HUD_ObjectContext_Manager;
+    UHUD_ObjectivesBox_C* HUD_Objectives;
+    UHUD_Oxygen_C* HUD_Oxygen;
+    UHUD_PlayerDown_C* HUD_PlayerDown;
+    UHUD_PlayerInfo_C* HUD_PlayerInfo;
+    UHUD_Radar2_C* HUD_Radar2;
+    UHUD_Resources_Player_C* HUD_Resources_Player;
+    UHUD_Resources_Team_C* HUD_Resources_Team;
+    UHUD_SentryGunManager_C* HUD_SentryGunManager;
+    UHUD_TeamDisplay_Small_C* HUD_TeamDisplay_Small;
+    UHUD_ThrowCarriable_C* HUD_ThrowCarriable;
+    UHUD_TutorialWidget_C* HUD_TutorialWidget;
+    UHUD_Warning_Manager_C* HUD_Warning_Manager;
+    URetainerBox* Retainer_BottomRight;
+    URetainerBox* Retainer_Chat;
+    URetainerBox* Retainer_TeamDisplay;
+    URetainerBox* Retainer_UpperLeft;
+    URetainerBox* Retainer_UpperRight;
+    URetainerBox* RetainerBox_0;
+    URetainerBox* RetainerBox_1;
+    URetainerBox* RetainerBox_2;
+    URetainerBox* RetainerBox_4;
+    URetainerBox* RetainerBox_DamageClass_Indicator;
+    URetainerBox* RetainerBox_DamageClass_Indicator_1;
+    UCanvasPanel* TopBar;
+    UUI_FPS_C* UI_FPS;
+    UUI_NetInfo_C* UI_NetInfo;
+    UUI_PlayerSpeaking_List_C* UI_PlayerSpeaking_List;
+    UOnScreenIndicator_UsableItem_WithDescription_C* Usable;
+    UVerticalBox* V_BossFightAndSpeak;
+    UVerticalBox* VBox_Events;
+    UVerticalBox* VBox_Events_Left;
+    UVerticalBox* VerticalBox_EventsAndSpeak;
+    APlayerCharacter* Character;
+    bool hudVisible;
+    float FPS;
+    UObjective* ObjDummy;
+    UHUDVisibilityGroup* VG_Grenades;
+    UHUDVisibilityGroup* VG_Flares;
+    UHUDVisibilityGroup* VG_Flashlight;
+
+    void ToggleHUD(bool IsVisible, bool Instant, ESlateVisibility Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, bool Temp_bool_Variable, UUMGSequencePlayer* CallFunc_PlayAnimation_ReturnValue, ESlateVisibility K2Node_Select_Default, bool CallFunc_NotEqual_BoolBool_ReturnValue, UUMGSequencePlayer* CallFunc_PlayAnimation_ReturnValue_1);
+    void Destruct();
+    void AllDwarvesDown();
+    void OnCameraModeChanged(ECharacterCameraMode NewCameraMode, ECharacterCameraMode OldCameraMode);
+    void UpdateCurrentCanvas();
+    void OnCharacterStateChanged(ECharacterState NewState);
+    void PushEvent(UWidget* EventWidget, bool Left);
+    void Setup HUD Elements();
+    void Tick(FGeometry MyGeometry, float InDeltaTime);
+    void Construct();
+    void BndEvt__VG_Flashlight_K2Node_ComponentBoundEvent_2_VisibilityDelegate__DelegateSignature(UHUDVisibilityGroup* Group, bool IsVisible);
+    void BndEvt__VG_Flares_K2Node_ComponentBoundEvent_1_VisibilityDelegate__DelegateSignature(UHUDVisibilityGroup* Group, bool IsVisible);
+    void BndEvt__VG_Grenades_K2Node_ComponentBoundEvent_0_VisibilityDelegate__DelegateSignature(UHUDVisibilityGroup* Group, bool IsVisible);
+    void RefreshHUDElements();
+    void ExecuteUbergraph_HUD_Main(int32 EntryPoint, bool Temp_bool_Variable, FMargin K2Node_MakeStruct_Margin, UPlayerController* CallFunc_GetOwningPlayer_ReturnValue, APawn* CallFunc_K2_GetPawn_ReturnValue, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character, bool K2Node_DynamicCast_bSuccess, bool CallFunc_Not_PreBool_ReturnValue, UFSDGameUserSettings* CallFunc_FSDGameUserSettings_ReturnValue, UFSDGameUserSettings* CallFunc_FSDGameUserSettings_ReturnValue_1, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, ECharacterCameraMode K2Node_CustomEvent_NewCameraMode, ECharacterCameraMode K2Node_CustomEvent_OldCameraMode, OnCharacterStateChangedSignature__DelegateSignature K2Node_CreateDelegate_OutputDelegate, bool CallFunc_IsDown_ReturnValue, ECharacterState K2Node_CustomEvent_newState, UWidget* K2Node_CustomEvent_EventWidget, bool K2Node_CustomEvent_Left, bool Temp_bool_Variable_1, UWidget* K2Node_Select_Default, FGeometry K2Node_Event_MyGeometry, float K2Node_Event_InDeltaTime, UVerticalBox* K2Node_Select_Default_1, CameraModeChanged__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue, UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue_1, UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue_2, bool CallFunc_HasChild_ReturnValue, bool CallFunc_HasChild_ReturnValue_1, bool CallFunc_Not_PreBool_ReturnValue_1, UHUDVisibilityGroup* K2Node_ComponentBoundEvent_Group_2, bool K2Node_ComponentBoundEvent_IsVisible_2, bool CallFunc_IsVisible_ReturnValue, UHUDVisibilityGroup* K2Node_ComponentBoundEvent_Group_1, bool K2Node_ComponentBoundEvent_IsVisible_1, bool CallFunc_Not_PreBool_ReturnValue_2, UHUDVisibilityGroup* K2Node_ComponentBoundEvent_Group, bool K2Node_ComponentBoundEvent_IsVisible, bool CallFunc_BooleanOR_ReturnValue, bool CallFunc_SelectVisibility_IsVisible, bool CallFunc_SelectVisibility_VisibilityChanged, ESlateVisibility CallFunc_SelectVisibility_New_Visibility, bool CallFunc_IsHudGroupVisible_ReturnValue, bool CallFunc_IsHudGroupVisible_ReturnValue_1, bool CallFunc_IsHudGroupVisible_ReturnValue_2, bool CallFunc_BooleanOR_ReturnValue_1, DelegateEvent__DelegateSignature K2Node_CreateDelegate_OutputDelegate_2, bool CallFunc_BooleanOR_ReturnValue_2, bool CallFunc_SelectVisibility_IsVisible_1, bool CallFunc_SelectVisibility_VisibilityChanged_1, ESlateVisibility CallFunc_SelectVisibility_New_Visibility_1);
+}
+
+#endif

@@ -1,0 +1,16 @@
+#ifndef UE4SS_SDK_BP_TutorialComponent_HPP
+#define UE4SS_SDK_BP_TutorialComponent_HPP
+
+class UBP_TutorialComponent_C : UActorComponent
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    APlayerCharacter* Character;
+
+    void ReceiveBeginPlay();
+    void OnPlayerCharacterRegistered_Event_0(UPlayerCharacter* PlayerCharacter);
+    void OnDamageTaken(float Amount);
+    void CheckAmmo();
+    void ExecuteUbergraph_BP_TutorialComponent(int32 EntryPoint, PlayerCharacterDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, TimerDynamicDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, int32 Temp_int_Loop_Counter_Variable, FTimerHandle CallFunc_K2_SetTimerDelegate_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, int32 Temp_int_Array_Index_Variable, DamageSig__DelegateSignature K2Node_CreateDelegate_OutputDelegate_2, UPlayerCharacter* K2Node_CustomEvent_PlayerCharacter, float K2Node_CustomEvent_Amount, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, float CallFunc_Heal_ReturnValue, float CallFunc_GetHealthPct_ReturnValue, bool CallFunc_Less_FloatFloat_ReturnValue, bool CallFunc_IsValid_ReturnValue, const TArray<AItem*>& CallFunc_GetAllItems_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, AItem* CallFunc_Array_Get_Item, bool CallFunc_Less_IntInt_ReturnValue, UAmmoDrivenWeapon* K2Node_DynamicCast_AsAmmo_Driven_Weapon, bool K2Node_DynamicCast_bSuccess, float CallFunc_Conv_IntToFloat_ReturnValue, float CallFunc_Conv_IntToFloat_ReturnValue_1, float CallFunc_Divide_FloatFloat_ReturnValue, float CallFunc_Conv_IntToFloat_ReturnValue_2, bool CallFunc_Less_FloatFloat_ReturnValue_1, float CallFunc_Conv_IntToFloat_ReturnValue_3, float CallFunc_Divide_FloatFloat_ReturnValue_1, bool CallFunc_Greater_IntInt_ReturnValue, bool CallFunc_Less_FloatFloat_ReturnValue_2);
+}
+
+#endif

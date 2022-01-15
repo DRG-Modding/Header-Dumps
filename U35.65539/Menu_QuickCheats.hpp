@@ -1,0 +1,105 @@
+#ifndef UE4SS_SDK_Menu_QuickCheats_HPP
+#define UE4SS_SDK_Menu_QuickCheats_HPP
+
+class UMenu_QuickCheats_C : UWindowWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UButton* Button_Close;
+    UButton* Button_CompleteMission;
+    UButton* Button_CompleteObjectives;
+    UButton* Button_Driller;
+    UButton* Button_EnemySpawning;
+    UButton* Button_Engineer;
+    UButton* Button_FastMovement;
+    UButton* Button_FlyMode;
+    UButton* Button_GiveNitra;
+    UButton* Button_GodMode;
+    UButton* Button_Gunner;
+    UButton* Button_KillEverything;
+    UButton* Button_MaxLighting;
+    UButton* Button_OpenDifficulty;
+    UButton* Button_QuadPickaxe;
+    UButton* Button_Resupply;
+    UButton* Button_Scout;
+    UButton* Button_SpawnLootBugs;
+    UButton* Button_SpawnWaveFromPool;
+    UButton* Button_SwapPrimary;
+    UButton* Button_SwapSecondary;
+    UButton* Button_ToggleBosco;
+    USlider* HealthSlider;
+    UImage* Image_95;
+    UImage* Image_97;
+    UImage* Image_98;
+    UImage* Image_99;
+    UImage* Image_100;
+    UImage* Image_318;
+    UImage* Image_320;
+    UImage* Image_321;
+    UImage* Image_322;
+    UImage* Image_324;
+    UImage* Image_325;
+    UMenuAnchor* MenuAnchor_53;
+    UMenuAnchor* MenuAnchor_advSpawn;
+    UComboBoxString* PlayerCountBox;
+    UCanvasPanel* TopCanvasPanel;
+    UCheckBox* UsingSavedCheats;
+    int32 Current Tab Index;
+    int32 Amount of main tabs;
+    bool GodmodeActive;
+    bool FastMovementActive;
+    bool FlyingActive;
+    bool QuadPickaxeActive;
+    bool MaxLightingActive;
+    bool AmmoCostEnabled;
+    UCheat_SpawnEnemyAdvanced_C* Advanced Spawn Menu;
+    UPlayerCharacterID* ActiveCharac;
+
+    UWidget* On_MenuAnchor_advSpawn_GetMenuContent_0(bool CallFunc_IsValid_ReturnValue, UPlayerController* CallFunc_GetOwningPlayer_ReturnValue, UCheat_SpawnEnemyAdvanced_C* CallFunc_Create_ReturnValue);
+    FLinearColor GetColorAndOpacity_NoAmmoCost();
+    FLinearColor GetColorAndOpacity_MaxLightningActive();
+    FLinearColor GetColorAndOpacity_QuadPickaxe();
+    FLinearColor GetColorAndOpacity_Flying();
+    FLinearColor GetColorAndOpacity_FastMovement();
+    FLinearColor GetColorAndOpacity_Godmode();
+    UUpgradableBoscoComponent* GetBoscoUpgradeComponent(UBosco*& DroneUFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, UUpgradableBoscoComponent* CallFunc_GetUpgradeComponent_ReturnValue, bool CallFunc_IsValid_ReturnValue);
+    UWidget* OnGetMenuContent_0(UPlayerController* CallFunc_GetOwningPlayer_ReturnValue, UCheat_OverclockSelection_C* CallFunc_Create_ReturnValue);
+    ESlateVisibility Get_ActivateCommonCheatsButton_Visibility_0(bool Temp_bool_Variable, ESlateVisibility Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, UPlayerController* CallFunc_GetOwningPlayer_ReturnValue, bool CallFunc_HasAuthority_ReturnValue, ESlateVisibility K2Node_Select_Default);
+    float Get_HealthSlider_Value_0(UCharacter* CallFunc_GetPlayerCharacter_ReturnValue, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character, bool K2Node_DynamicCast_bSuccess, float CallFunc_GetHealth_ReturnValue, float CallFunc_Divide_FloatFloat_ReturnValue);
+    FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEventFKey CallFunc_GetKey_ReturnValue, bool CallFunc_EqualEqual_KeyKey_ReturnValue, bool CallFunc_EqualEqual_KeyKey_ReturnValue_1, FText CallFunc_Key_GetDisplayName_ReturnValue, FString CallFunc_Conv_TextToString_ReturnValue, bool K2Node_SwitchString_CmpSuccess, FEventReply CallFunc_Handled_ReturnValue, UWindowManager* CallFunc_GetWindowManager_ReturnValue, FEventReply CallFunc_Handled_ReturnValue_1);
+    void BndEvt__Button_Close_K2Node_ComponentBoundEvent_62_OnButtonClickedEvent__DelegateSignature();
+    void OnShown();
+    void OnClosed();
+    void BndEvt__Button_Gunner_K2Node_ComponentBoundEvent_683_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_Engineer_K2Node_ComponentBoundEvent_735_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_Driller_K2Node_ComponentBoundEvent_758_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_Scout_K2Node_ComponentBoundEvent_782_OnButtonClickedEvent__DelegateSignature();
+    void Construct();
+    void Swap Weapon to next(EItemCategory Item Category);
+    void HotKey Interaction change character();
+    void BndEvt__HealthSlider_K2Node_ComponentBoundEvent_2_OnFloatValueChangedEvent__DelegateSignature(float Value);
+    void BndEvt__Button_Resupply_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_GodMode_K2Node_ComponentBoundEvent_1_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_FastMovement_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_KillEverything_K2Node_ComponentBoundEvent_4_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_FlyMode_K2Node_ComponentBoundEvent_6_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_CompleteMission_K2Node_ComponentBoundEvent_7_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_QuadPickaxe_K2Node_ComponentBoundEvent_8_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_96_K2Node_ComponentBoundEvent_9_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_SwapPrimary_K2Node_ComponentBoundEvent_10_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_SwapSecondary_K2Node_ComponentBoundEvent_11_OnButtonClickedEvent__DelegateSignature();
+    void Set Cheats from setting();
+    void BndEvt__Button_OpenDifficulty_K2Node_ComponentBoundEvent_12_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_CompleteObjectives_K2Node_ComponentBoundEvent_13_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_GiveNitra_K2Node_ComponentBoundEvent_14_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_SpawnLootBugs_K2Node_ComponentBoundEvent_15_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_SpawnWaveFromPool_K2Node_ComponentBoundEvent_16_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_ToggleBosco_K2Node_ComponentBoundEvent_17_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__ComboBoxString_138_K2Node_ComponentBoundEvent_18_OnSelectionChangedEvent__DelegateSignature(FString SelectedItem, uint8 SelectionType);
+    void Close Advanced spawning();
+    void BndEvt__Button_EnemySpawning_K2Node_ComponentBoundEvent_19_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__MenuAnchor_advSpawn_K2Node_ComponentBoundEvent_20_OnMenuOpenChangedEvent__DelegateSignature(bool bIsOpen);
+    void BndEvt__UsingSavedCheats_K2Node_ComponentBoundEvent_9_OnCheckBoxComponentStateChanged__DelegateSignature(bool bIsChecked);
+    void ExecuteUbergraph_Menu_QuickCheats(int32 EntryPoint, UWindowManager* CallFunc_GetWindowManager_ReturnValue, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, bool CallFunc_IsValid_ReturnValue, UInventoryList* CallFunc_GetInventoryList_ReturnValue, UFSDSaveGame* CallFunc_GetFSDSaveGame_ReturnValue, UFSDSaveGame* CallFunc_GetFSDSaveGame_ReturnValue_1, EItemCategory K2Node_CustomEvent_item_category, TSubclassOf<AActor> CallFunc_GetEquippedItem_ReturnValue, UPlayerController* CallFunc_GetPlayerController_ReturnValue, UItemID* CallFunc_GetItemID_ReturnValue, UFSDPlayerControllerBase* K2Node_DynamicCast_AsFSDPlayer_Controller_Base, bool K2Node_DynamicCast_bSuccess, UItemID* CallFunc_GetNextItem_ReturnValue, TSubclassOf<AActor> CallFunc_GetActorClass_ReturnValue, UPlayerController* CallFunc_GetPlayerController_ReturnValue_1, UFSDPlayerControllerBase* K2Node_DynamicCast_AsFSDPlayer_Controller_Base_1, bool K2Node_DynamicCast_bSuccess_1, float K2Node_ComponentBoundEvent_Value, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_1, UCharacter* CallFunc_GetPlayerCharacter_ReturnValue, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character, bool K2Node_DynamicCast_bSuccess_2, float CallFunc_Multiply_FloatFloat_ReturnValue, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_2, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_3, bool CallFunc_IsInGodMode_ReturnValue, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_4, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_5, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_6, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_7, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_8, bool CallFunc_Not_PreBool_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue_1, bool CallFunc_Not_PreBool_ReturnValue_2, APawn* CallFunc_GetOwningPlayerPawn_ReturnValue, UPlayerController* CallFunc_GetPlayerController_ReturnValue_2, UBP_PlayerCharacter_C* K2Node_DynamicCast_AsBP_Player_Character, bool K2Node_DynamicCast_bSuccess_3, bool CallFunc_Not_PreBool_ReturnValue_3, bool CallFunc_Not_PreBool_ReturnValue_4, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_9, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_10, UPlayerController* CallFunc_GetPlayerController_ReturnValue_3, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_11, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_12, On close requested__DelegateSignature K2Node_CreateDelegate_OutputDelegate, APawn* CallFunc_GetOwningPlayerPawn_ReturnValue_1, UBP_PlayerCharacter_C* K2Node_DynamicCast_AsBP_Player_Character_1, bool K2Node_DynamicCast_bSuccess_4, bool CallFunc_Not_PreBool_ReturnValue_5, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_13, bool CallFunc_IsInGodMode_ReturnValue_1, bool CallFunc_EqualEqual_BoolBool_ReturnValue, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_14, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_15, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_16, UCharacter* CallFunc_GetPlayerCharacter_ReturnValue_1, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_17, FVector CallFunc_K2_GetActorLocation_ReturnValue, TArray<FVector>& CallFunc_GetSpawnPointsFromLocation_ReturnValue, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, FString K2Node_ComponentBoundEvent_SelectedItem, uint8 K2Node_ComponentBoundEvent_SelectionType, UDifficultyManager* CallFunc_GetDifficultyManager_ReturnValue, int32 CallFunc_Conv_StringToInt_ReturnValue, UDifficultySetting* CallFunc_GetCurrentDifficulty_ReturnValue, bool CallFunc_Greater_IntInt_ReturnValue, float CallFunc_GetFloatValue_ReturnValue, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_18, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue_1, UDifficultyManager* CallFunc_GetDifficultyManager_ReturnValue_1, FString CallFunc_Conv_IntToString_ReturnValue, bool K2Node_ComponentBoundEvent_bIsOpen, UWidget* CallFunc_On_MenuAnchor_advSpawn_GetMenuContent_0_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, bool K2Node_ComponentBoundEvent_bIsChecked, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_19, UFSDCheatManager* CallFunc_GetCheatManager_ReturnValue_20);
+}
+
+#endif

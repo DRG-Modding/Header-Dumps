@@ -1,0 +1,60 @@
+#ifndef UE4SS_SDK_ITM_MisSel_MissionMapIcon_HPP
+#define UE4SS_SDK_ITM_MisSel_MissionMapIcon_HPP
+
+class UITM_MisSel_MissionMapIcon_C : UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UWidgetAnimation* Click;
+    UWidgetAnimation* Hover;
+    UBasic_ButtonScalable2_C* BTN_HostPrivate;
+    UBasic_ButtonScalable2_C* BTN_HostPublic;
+    UBasic_ButtonScalable2_C* BTN_Join;
+    UBasic_ButtonScalable2_C* BTN_Solo;
+    UButton* Button_Selection;
+    UBasic_Menu_MinimalWindow_C* ButtonWindow;
+    UITM_SeasonChallengeIcon_C* ChallengeIcon;
+    UOverlay* Content;
+    UImage* ICON_TargetDot;
+    UITM_MisSel_MissionIconBasic_C* ITEM_MissionSelection_MissionIconBasic;
+    UITM_Campaign_Icon_C* ITM_Campaign_Icon;
+    UITM_MisSel_DotMarker_CaveDifficulty_C* ITM_MisSel_DotMarker_CaveDifficulty;
+    UITM_MutatorIcon_C* ITM_MutatorIcon;
+    UITM_MutatorIcon_C* ITM_MutatorIcon_1;
+    UVerticalBox* VerticalBox_Anomalies;
+    UVerticalBox* VerticalBox_Warnings;
+    UITM_MissionMapIcon_LevelLock_C* WDG_LevelLock;
+    UITM_MissionMapIcon_Objective_C* WDG_Resource;
+    UITM_MissionMap_Icon_BG_C* WindowBG;
+    UGeneratedMission* mission;
+    UITM_MisSel_FullBiome_C* BiomeController;
+    FLinearColor Tint_MissionIconColor;
+
+    void SetMutators(UGeneratedMission* Target, UITM_MutatorIcon_C* CallFunc_Create_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, bool CallFunc_IsValid_ReturnValue, TArray<UMissionMutator*>& K2Node_MakeArray_Array, bool Temp_bool_Variable, TArray<UMissionMutator*>& Temp_object_Variable, int32 Temp_int_Array_Index_Variable, TArray<UMissionMutator*>& K2Node_Select_Default, UMissionMutator* CallFunc_Array_Get_Item, int32 CallFunc_Array_Length_ReturnValue_1, UITM_MutatorIcon_C* CallFunc_Create_ReturnValue_1, int32 Temp_int_Loop_Counter_Variable, bool CallFunc_Less_IntInt_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, int32 Temp_int_Array_Index_Variable_1, UMissionWarning* CallFunc_Array_Get_Item_1, UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue, int32 CallFunc_Array_Length_ReturnValue_2, bool CallFunc_Greater_IntInt_ReturnValue, UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue_1, uint8 CallFunc_MakeLiteralByte_ReturnValue, int32 Temp_int_Loop_Counter_Variable_1, bool CallFunc_Less_IntInt_ReturnValue_1, int32 CallFunc_Add_IntInt_ReturnValue_1);
+    void SetButtonState(UBasic_ButtonScalable2_C* Button, bool Enabled, uint8 Mode, UBP_SR_PlayerControllerBase_C* CallFunc_GetSRController_SRController, UWindowWidget* CallFunc_GetMissionSelect_Widget, U_SCREEN_MissionSelectionMK3_C* K2Node_DynamicCast_As_SCREEN_Mission_Selection_MK3, bool K2Node_DynamicCast_bSuccess, uint8 CallFunc_GetMode_Mode, bool CallFunc_EqualEqual_ByteByte_ReturnValue, bool CallFunc_BooleanAND_ReturnValue);
+    void ShouldEnableSoloButton(bool& Show, bool CallFunc_IsPlayingOffline_ReturnValue, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, bool CallFunc_HasAuthority_ReturnValue);
+    void ShouldEnableHostButton(bool& Show, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, bool CallFunc_HasAuthority_ReturnValue);
+    void ShouldEnableJoinButton(bool& Show, EFSDTargetPlatform Temp_byte_Variable, bool Temp_bool_Variable, bool Temp_bool_Variable_1, bool Temp_bool_Variable_2, bool Temp_bool_Variable_3, bool Temp_bool_Variable_4, EFSDTargetPlatform CallFunc_FSDTargetPlatform_ReturnValue, bool K2Node_Select_Default, bool CallFunc_IsPlayingOffline_ReturnValue, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, bool CallFunc_BooleanOR_ReturnValue, bool CallFunc_HasAuthority_ReturnValue);
+    void GetPlayerController(UBP_PlayerController_SpaceRig_C*& AsBP Player Controller Space Rig, UPlayerController* CallFunc_GetPlayerController_ReturnValue, UBP_PlayerController_SpaceRig_C* K2Node_DynamicCast_AsBP_Player_Controller_Space_Rig, bool K2Node_DynamicCast_bSuccess);
+    void SelectOptions(EFSDTargetPlatform Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, ESlateVisibility Temp_byte_Variable_2, ESlateVisibility Temp_byte_Variable_3, ESlateVisibility Temp_byte_Variable_4, ESlateVisibility Temp_byte_Variable_5, bool CallFunc_ShouldEnableJoinButton_show, bool CallFunc_ShouldEnableHostButton_show, bool CallFunc_ShouldEnableSoloButton_show, UGameModeBase* CallFunc_GetGameMode_ReturnValue, int32 CallFunc_GetNumPlayers_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, UGameModeBase* CallFunc_GetGameMode_ReturnValue_1, int32 CallFunc_GetNumPlayers_ReturnValue_1, bool CallFunc_Less_IntInt_ReturnValue_1, bool CallFunc_ShouldEnableSoloButton_show_1, bool CallFunc_ShouldEnableJoinButton_show_1, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, bool CallFunc_BooleanOR_ReturnValue, UBP_PlayerController_SpaceRig_C* CallFunc_GetPlayerController_AsBP_Player_Controller_Space_Rig, U_SCREEN_MissionSelectionMK3_C* K2Node_DynamicCast_As_SCREEN_Mission_Selection_MK3, bool K2Node_DynamicCast_bSuccess, EFSDTargetPlatform CallFunc_FSDTargetPlatform_ReturnValue, ESlateVisibility K2Node_Select_Default, bool CallFunc_ShouldEnableHostButton_show_1, UPlayerController* CallFunc_GetPlayerController_ReturnValue, UFSDPlayerController* K2Node_DynamicCast_AsFSDPlayer_Controller, bool K2Node_DynamicCast_bSuccess_1, bool CallFunc_IsLocked_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue);
+    void GetActiveSelectionMode(uint8& NewParam, bool Temp_bool_Variable, uint8 Temp_byte_Variable, uint8 Temp_byte_Variable_1, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, uint8 K2Node_Select_Default, UGameModeBase* CallFunc_GetGameMode_ReturnValue, UBP_SpaceRig_Gamemode_C* K2Node_DynamicCast_AsBP_Space_Rig_Gamemode, bool K2Node_DynamicCast_bSuccess, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, bool CallFunc_HasAuthority_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue);
+    void GetNumberOfActiveMissions(TArray<FBlueprintSessionResult>& Array, int32& sessions, int32 MatchingSessions, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Array_Length_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Variable, FBlueprintSessionResult CallFunc_Array_Get_Item, bool CallFunc_FSDIsPrivateServer_ReturnValue, int32 CallFunc_FSDGetGlobalMissionSeed_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue, int32 CallFunc_FSDGetMissionSeed_ReturnValue, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, int32 CallFunc_GetGlobalMissionSeed_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, bool CallFunc_IsValid_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue_1, bool CallFunc_EqualEqual_IntInt_ReturnValue_1, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1);
+    bool HasMission(bool CallFunc_IsValid_ReturnValue);
+    void SetData(UGeneratedMission* mission, UITM_MisSel_FullBiome_C* BiomeController);
+    void Reset();
+    void Unselect();
+    void Construct();
+    void ServerUpdate();
+    void BndEvt__Button_Selection_K2Node_ComponentBoundEvent_60_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__Button_Selection_K2Node_ComponentBoundEvent_0_OnButtonHoverEvent__DelegateSignature();
+    void BndEvt__Button_Selection_K2Node_ComponentBoundEvent_1_OnButtonHoverEvent__DelegateSignature();
+    void BndEvt__BTN_Join_K2Node_ComponentBoundEvent_0_OnClicked__DelegateSignature();
+    void BndEvt__BTN_Host_K2Node_ComponentBoundEvent_1_OnClicked__DelegateSignature();
+    void BndEvt__BTN_Solo_K2Node_ComponentBoundEvent_2_OnClicked__DelegateSignature();
+    void PreConstruct(bool IsDesignTime);
+    void BndEvt__BTN_HostPublic_K2Node_ComponentBoundEvent_48_OnClicked__DelegateSignature();
+    void OnTeamMemberCampaignMissionChangedEvent();
+    void ShowChallengeIcon(bool inHighlight, UTexture2D* Icon, FLinearColor Color);
+    void ExecuteUbergraph_ITM_MisSel_MissionMapIcon(int32 EntryPoint, ESlateVisibility Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, ESlateVisibility Temp_byte_Variable_2, ESlateVisibility Temp_byte_Variable_3, ESlateVisibility Temp_byte_Variable_4, bool Temp_bool_Variable, ESlateVisibility Temp_byte_Variable_5, ESlateVisibility Temp_byte_Variable_6, bool Temp_bool_Variable_1, FLinearColor K2Node_MakeStruct_LinearColor, FLinearColor K2Node_MakeStruct_LinearColor_1, DelegateEvent__DelegateSignature K2Node_CreateDelegate_OutputDelegate, UGeneratedMission* K2Node_CustomEvent_Mission, UITM_MisSel_FullBiome_C* K2Node_CustomEvent_BiomeController, UGameStateBase* CallFunc_GetGameState_ReturnValue, UBP_GameState_SpaceRig_C* K2Node_DynamicCast_AsBP_Game_State_Space_Rig, bool K2Node_DynamicCast_bSuccess, UBP_PlayerController_SpaceRig_C* CallFunc_GetPlayerController_AsBP_Player_Controller_Space_Rig, UBP_PlayerController_SpaceRig_C* CallFunc_GetPlayerController_AsBP_Player_Controller_Space_Rig_1, U_SCREEN_MissionSelectionMK3_C* K2Node_DynamicCast_As_SCREEN_Mission_Selection_MK3, bool K2Node_DynamicCast_bSuccess_1, U_SCREEN_MissionSelectionMK3_C* K2Node_DynamicCast_As_SCREEN_Mission_Selection_MK3_1, bool K2Node_DynamicCast_bSuccess_2, UBP_PlayerController_SpaceRig_C* CallFunc_GetPlayerController_AsBP_Player_Controller_Space_Rig_2, U_MENU_ServerList_C* K2Node_DynamicCast_As_MENU_Server_List, bool K2Node_DynamicCast_bSuccess_3, UBP_PlayerController_SpaceRig_C* CallFunc_GetPlayerController_AsBP_Player_Controller_Space_Rig_3, UBP_PlayerController_SpaceRig_C* CallFunc_GetPlayerController_AsBP_Player_Controller_Space_Rig_4, U_SCREEN_MissionSelectionMK3_C* K2Node_DynamicCast_As_SCREEN_Mission_Selection_MK3_2, bool K2Node_DynamicCast_bSuccess_4, UUMGSequencePlayer* CallFunc_PlayAnimation_ReturnValue, UUMGSequencePlayer* CallFunc_PlayAnimation_ReturnValue_1, bool K2Node_Event_IsDesignTime, UUMGSequencePlayer* CallFunc_PlayAnimation_ReturnValue_2, bool CallFunc_IsLocked_ReturnValue, EFSDTargetPlatform CallFunc_FSDTargetPlatform_ReturnValue, UBP_PlayerController_SpaceRig_C* CallFunc_GetPlayerController_AsBP_Player_Controller_Space_Rig_5, U_SCREEN_MissionSelectionMK3_C* K2Node_DynamicCast_As_SCREEN_Mission_Selection_MK3_3, bool K2Node_DynamicCast_bSuccess_5, FLinearColor CallFunc_MenuColors_OutputColor, EFSDTargetPlatform Temp_byte_Variable_7, ESlateVisibility Temp_byte_Variable_8, ESlateVisibility K2Node_Select_Default, ESlateVisibility Temp_byte_Variable_9, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, const TArray<UGeneratedMission*>& K2Node_MakeArray_Array, bool CallFunc_IsLocked_ReturnValue_1, ESlateVisibility K2Node_Select_Default_1, FLinearColor K2Node_Select_Default_2, float CallFunc_GetMissionScale_ReturnValue, UTexture2D* CallFunc_GetObjectiveIconFromClass_ReturnValue, UMissionDNA* CallFunc_GetMissionDNA_ReturnValue, int32 CallFunc_GetObjectiveAmountFromClass_ReturnValue, FText CallFunc_Conv_IntToText_ReturnValue, const TArray<UGeneratedMission*>& K2Node_MakeArray_Array_1, bool Temp_bool_Variable_2, ESlateVisibility K2Node_Select_Default_3, OnServerListChanged__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, bool K2Node_CustomEvent_inHighlight, UTexture2D* K2Node_CustomEvent_Icon, FLinearColor K2Node_CustomEvent_Color);
+}
+
+#endif

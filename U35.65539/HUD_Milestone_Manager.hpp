@@ -1,0 +1,14 @@
+#ifndef UE4SS_SDK_HUD_Milestone_Manager_HPP
+#define UE4SS_SDK_HUD_Milestone_Manager_HPP
+
+class UHUD_Milestone_Manager_C : UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UVerticalBox* MilestoneRoot;
+
+    void PreConstruct(bool IsDesignTime);
+    void OnMilestoneReached();
+    void ExecuteUbergraph_HUD_Milestone_Manager(int32 EntryPoint, FLinearColor CallFunc_MenuColors_OutputColor, FSpaceRigNotification K2Node_MakeStruct_SpaceRigNotification, int32 Temp_int_Array_Index_Variable, bool Temp_bool_IsClosed_Variable, bool Temp_bool_Has_Been_Initd_Variable, bool K2Node_Event_IsDesignTime, UGameData* CallFunc_GetFSDGameData_ReturnValue, UPlayerController* CallFunc_GetOwningPlayer_ReturnValue, UMilestoneAsset* CallFunc_Array_Get_Item, UHUD_Milestone_Notification_C* CallFunc_Create_ReturnValue, bool CallFunc_IsCompleted_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue, int32 Temp_int_Loop_Counter_Variable, bool CallFunc_Less_IntInt_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, OnMilestoneReached__DelegateSignature K2Node_CreateDelegate_OutputDelegate, bool CallFunc_IsVisible_ReturnValue, UGameData* CallFunc_GetFSDGameData_ReturnValue_1, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, int32 CallFunc_CalculateClaimablePerkPoints_ReturnValue, bool CallFunc_Greater_IntInt_ReturnValue);
+}
+
+#endif

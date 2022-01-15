@@ -1,0 +1,35 @@
+#ifndef UE4SS_SDK_WPN_LockOnRifle_HPP
+#define UE4SS_SDK_WPN_LockOnRifle_HPP
+
+class AWPN_LockOnRifle_C : ULockOnWeapon
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UFirstPersonStaticMeshComponent* Mag_FP;
+    UStaticMeshComponent* Mag_TP;
+    USceneComponent* BeamStart;
+    UAudioComponent* LockOnRifleHUDDeActivated_Cue;
+    UAudioComponent* LockOnRifleHUDActivated_Cue;
+    UAudioComponent* LockOnRifleLocked_Cue;
+    UCrosshairAggregator* CrosshairAggregator;
+    UDamageComponent* Damage;
+    UHitscanComponent* HitScan;
+    UFirstPersonWidgetComponent* FirstPersonWidget;
+    TArray<UABP_LockOnRifle_A_C*> ABPs;
+    bool WideAngle;
+    bool SpeedBoost;
+    TSubclassOf<UStatusEffect> SpeedBoostSTE;
+
+    void GetGearStatEntry(UFSDPlayerState* PlayerState, TArray<FGearStatEntry>& Stats, TSubclassOf<UWPN_LockOnRifle_C> CallFunc_GetObjectClass_ReturnValue, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry, bool CallFunc_UPGDESC_Generic_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_1, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_1, int32 CallFunc_Array_Add_ReturnValue, int32 CallFunc_Array_Add_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_2, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_2, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_3, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_3, int32 CallFunc_Array_Add_ReturnValue_2, int32 CallFunc_Array_Add_ReturnValue_3, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_4, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_4, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_5, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_5, int32 CallFunc_Array_Add_ReturnValue_4, int32 CallFunc_Array_Add_ReturnValue_5, TSubclassOf<UWPN_LockOnRifle_C> CallFunc_GetObjectClass_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_LockOnRifle_GearStatEntry, bool CallFunc_UPGDESC_LockOnRifle_HasAnyupgrades, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_6, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_6, int32 CallFunc_Array_Add_ReturnValue_6, int32 CallFunc_Array_Add_ReturnValue_7, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_7, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_7, FGearStatEntry CallFunc_UPGDESC_LockOnRifle_GearStatEntry_1, bool CallFunc_UPGDESC_LockOnRifle_HasAnyupgrades_1, int32 CallFunc_Array_Add_ReturnValue_8, int32 CallFunc_Array_Add_ReturnValue_9, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_8, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_8, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_9, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_9, int32 CallFunc_Array_Add_ReturnValue_10, int32 CallFunc_Array_Add_ReturnValue_11, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_10, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_10, FGearStatEntry CallFunc_UPGDESC_LockOnRifle_GearStatEntry_2, bool CallFunc_UPGDESC_LockOnRifle_HasAnyupgrades_2, int32 CallFunc_Array_Add_ReturnValue_12, int32 CallFunc_Array_Add_ReturnValue_13, FGearStatEntry CallFunc_UPGDESC_LockOnRifle_GearStatEntry_3, bool CallFunc_UPGDESC_LockOnRifle_HasAnyupgrades_3, FGearStatEntry CallFunc_UPGDESC_HitScan_GearStatEntry, bool CallFunc_UPGDESC_HitScan_HasAnyUpgrades, int32 CallFunc_Array_Add_ReturnValue_14, int32 CallFunc_Array_Add_ReturnValue_15, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_11, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_11, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades, int32 CallFunc_Array_Add_ReturnValue_16, int32 CallFunc_Array_Add_ReturnValue_17, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_1, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_1, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_2, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_2, int32 CallFunc_Array_Add_ReturnValue_18, int32 CallFunc_Array_Add_ReturnValue_19, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_3, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_3, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry, bool CallFunc_UPGDESC_Damage_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue_20, int32 CallFunc_Array_Add_ReturnValue_21);
+    void ReceiveBeginPlay();
+    void LockingStarted_Event();
+    void LockingStopped_Event();
+    void CustomEvent1(const UItemUpgrade* Event);
+    void Recieve_UpdateMeshses(bool IsFirstPerson);
+    void RecieveEquipped();
+    void OnSkinChanged(USkinEffect* Skin);
+    void Receive_ReloadBegin();
+    void Receive_ReloadEnd();
+    void ExecuteUbergraph_WPN_LockOnRifle(int32 EntryPoint, LockOnRifleLockingOnState__DelegateSignature K2Node_CreateDelegate_OutputDelegate, LockOnRifleLockingOnState__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, UUserWidget* CallFunc_GetUserWidgetObject_ReturnValue, UWeaponDisplay_Base_AmmoCount_C* K2Node_DynamicCast_AsWeapon_Display_Base_Ammo_Count, bool K2Node_DynamicCast_bSuccess, UAnimInstance* CallFunc_GetAnimInstance_ReturnValue, UABP_LockOnRifle_A_C* K2Node_DynamicCast_AsABP_Lock_on_Rifle_A, bool K2Node_DynamicCast_bSuccess_1, int32 CallFunc_Array_Add_ReturnValue, UAnimInstance* CallFunc_GetAnimInstance_ReturnValue_1, UABP_LockOnRifle_A_C* K2Node_DynamicCast_AsABP_Lock_on_Rifle_A_1, bool K2Node_DynamicCast_bSuccess_2, int32 CallFunc_Array_Add_ReturnValue_1, const UItemUpgrade* K2Node_Event_Event, bool CallFunc_EqualEqual_ObjectObject_ReturnValue, bool CallFunc_EqualEqual_ObjectObject_ReturnValue_1, bool K2Node_Event_isFirstPerson, AActor* CallFunc_GetOwner_ReturnValue, bool CallFunc_TryPopActiveStatusEffect_ReturnValue, AActor* CallFunc_GetOwner_ReturnValue_1, bool CallFunc_TryPushActiveStatusEffect_ReturnValue, USkinEffect* K2Node_Event_skin, bool CallFunc_IsFirstPerson_ReturnValue);
+}
+
+#endif

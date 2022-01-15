@@ -1,0 +1,32 @@
+#ifndef UE4SS_SDK_BP_NetworkPlayerController_HPP
+#define UE4SS_SDK_BP_NetworkPlayerController_HPP
+
+class ABP_NetworkPlayerController_C : UBP_PlayerController_C
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    USCREEN_CharacterSelection_Base_C* CharSelectScreen;
+    UScreen_BaseLoadLevel_C* LoaderScreenUI;
+    UMenu_ServerStatus_C* TopBar;
+    UPopup_ReconnectController_C* ReconnectWidget;
+    bool ShowingReconnectcontroller;
+    UScreen_CharacterInfo_C* CharInfo;
+    bool SimulateLateJoin;
+    TSoftClassPtr<USCREEN_CharacterSelection_Base_C> CharacterSelectionClass;
+
+    void CollapseAndRemoveFromParent(UWidget* Widget, bool CallFunc_IsValid_ReturnValue);
+    TSubclassOf<UUserWidget> GetLoaderScreenUIClass(bool Temp_bool_Variable, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, TSubclassOf<UUserWidget> CallFunc_LoadWidgetClass_ReturnValue, UGeneratedMission* CallFunc_GetGeneratedMission_ReturnValue, TSubclassOf<UUserWidget> CallFunc_LoadWidgetClass_ReturnValue_1, bool CallFunc_IsSingleMission_ReturnValue, bool CallFunc_IsValid_ReturnValue, TSubclassOf<UUserWidget> K2Node_Select_Default);
+    void CleanupUI();
+    void GetNonTakenHero(UPlayerCharacterID*& SelectedClass, TArray<UPlayerCharacterID*> FreeHeroes, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Array_Index_Variable_1, int32 Temp_int_Loop_Counter_Variable_1, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue_1, UGameData* CallFunc_GetFSDGameData_ReturnValue_1, UPlayerCharacterID* CallFunc_Array_GetRandom_Item, int32 CallFunc_Array_Length_ReturnValue, bool CallFunc_Greater_IntInt_ReturnValue, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, UBP_GameState_C* K2Node_DynamicCast_AsBP_Game_State, bool K2Node_DynamicCast_bSuccess, TArray<UPlayerCharacterID*>& CallFunc_GetPlayableCharacterIDs_ReturnValue, UPlayerState* CallFunc_Array_Get_Item, UPlayerCharacterID* CallFunc_Array_Get_Item_1, UFSDPlayerState* K2Node_DynamicCast_AsFSDPlayer_State, bool K2Node_DynamicCast_bSuccess_1, int32 CallFunc_Array_Add_ReturnValue, UPlayerCharacterID* CallFunc_GetSelectedCharacterID_ReturnValue, int32 CallFunc_Array_Length_ReturnValue_1, bool CallFunc_Array_RemoveItem_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, int32 CallFunc_Array_Length_ReturnValue_2, bool CallFunc_Less_IntInt_ReturnValue_1);
+    void ReceiveBeginPlay();
+    void OnBack();
+    void OnPlayerCharacterPossesed_Event();
+    void Server_RequestNonTakenHero();
+    void Client_RecieveNonTakenHero(UPlayerCharacterID* New Character);
+    void Server_SetCharacterSelected();
+    void RecievePreClientTravel();
+    void ReceiveDestroyed();
+    void ShowReconnect(bool Show);
+    void ExecuteUbergraph_BP_NetworkPlayerController(int32 EntryPoint, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_2, bool CallFunc_IsLocalPlayerController_ReturnValue, UFSDPlayerState* CallFunc_GetFSDPlayerState_ReturnValue, bool CallFunc_IsValid_ReturnValue, UFSDPlayerState* CallFunc_GetFSDPlayerState_ReturnValue_1, UPlayerCharacterID* CallFunc_GetSelectedCharacterID_ReturnValue, bool CallFunc_IsPlayInEditor_ReturnValue, UFSDPlayerState* CallFunc_GetFSDPlayerState_ReturnValue_2, OnPlayerCharacterPossesed__DelegateSignature K2Node_CreateDelegate_OutputDelegate, UMenu_ServerStatus_C* CallFunc_Create_ReturnValue, UPlayerCharacterID* CallFunc_GetNonTakenHero_SelectedClass, FString CallFunc_GetDisplayName_ReturnValue, FString CallFunc_Concat_StrStr_ReturnValue, UGameModeBase* CallFunc_GetGameMode_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, APawn* CallFunc_K2_GetPawn_ReturnValue, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character, bool K2Node_DynamicCast_bSuccess, bool CallFunc_IsValid_ReturnValue_2, bool CallFunc_BooleanAND_ReturnValue, UPlayerCharacterID* K2Node_CustomEvent_New_Character, APawn* CallFunc_K2_GetPawn_ReturnValue_1, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character_1, bool K2Node_DynamicCast_bSuccess_1, bool CallFunc_IsValid_ReturnValue_3, UScreen_CharacterInfo_C* CallFunc_Create_ReturnValue_1, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_3, bool CallFunc_IsLocalPlayerController_ReturnValue_1, UFSDPlayerState* CallFunc_GetFSDPlayerState_ReturnValue_3, UFSDPlayerState* CallFunc_GetFSDPlayerState_ReturnValue_4, UFSDPlayerState* CallFunc_GetFSDPlayerState_ReturnValue_5, UPlayerCharacterID* CallFunc_GetSelectedCharacterID_ReturnValue_1, bool CallFunc_IsValid_ReturnValue_4, UGameData* CallFunc_GetFSDGameData_ReturnValue, TSubclassOf<UUserWidget> CallFunc_GetLoaderScreenUIClass_ReturnValue, UUserWidget* CallFunc_Create_ReturnValue_2, UScreen_BaseLoadLevel_C* K2Node_DynamicCast_AsScreen_Base_Load_Level, bool K2Node_DynamicCast_bSuccess_2, bool CallFunc_HasAuthority_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1, bool CallFunc_IsPlayInEditor_ReturnValue_1, bool CallFunc_Not_PreBool_ReturnValue_1, bool CallFunc_BooleanAND_ReturnValue_2, TSubclassOf<UUserWidget> CallFunc_LoadWidgetClass_ReturnValue, UUserWidget* CallFunc_Create_ReturnValue_3, USCREEN_CharacterSelection_Base_C* K2Node_DynamicCast_AsSCREEN_Character_Selection_Base, bool K2Node_DynamicCast_bSuccess_3, FString CallFunc_Conv_SoftClassReferenceToString_ReturnValue, FSoftObjectPath CallFunc_MakeSoftObjectPath_ReturnValue, Back__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, bool CallFunc_IsValid_ReturnValue_5, FString CallFunc_Concat_StrStr_ReturnValue_1, FString CallFunc_Concat_StrStr_ReturnValue_2, bool Temp_bool_Has_Been_Initd_Variable, bool Temp_bool_IsClosed_Variable, UUGCSubsystem* CallFunc_GetEngineSubsystem_ReturnValue, ShowReconnectController__DelegateSignature K2Node_CreateDelegate_OutputDelegate_2, bool CallFunc_IsValid_ReturnValue_6, bool Temp_bool_Variable, UWindowManager* CallFunc_GetWindowManager_ReturnValue, UWindowManager* CallFunc_GetWindowManager_ReturnValue_1, UPlayerCharacterID* K2Node_Select_Default, UAsyncManager* CallFunc_GetGameInstanceSubsystem_ReturnValue, UPopup_ReconnectController_C* CallFunc_Create_ReturnValue_4, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_4, const AsyncLoadCompleteDelegate__DelegateSignature Temp_delegate_Variable, bool K2Node_CustomEvent_Show, bool CallFunc_NotEqual_BoolBool_ReturnValue);
+}
+
+#endif

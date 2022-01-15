@@ -1,0 +1,22 @@
+#ifndef UE4SS_SDK_DE_WormholeSpecial_HPP
+#define UE4SS_SDK_DE_WormholeSpecial_HPP
+
+class UDE_WormholeSpecial_C : UDrinkEffectComponent
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    APlayerCharacter* Character;
+    FTransform On Start Transform;
+    ABP_WormholeLocation_Base_C* ActiveWormhole;
+
+    void Disable Older Active Wormhole Effects(bool Temp_bool_True_if_break_was_hit_Variable, int32 Temp_int_Array_Index_Variable, bool CallFunc_Not_PreBool_ReturnValue, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, TArray<UDE_WormholeSpecial_C*>& CallFunc_K2_GetComponentsByClass_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, UDE_WormholeSpecial_C* CallFunc_Array_Get_Item, bool CallFunc_Less_IntInt_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_NotEqual_ObjectObject_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1);
+    void IsLastActiveWormholeEffect(bool& was last effect, bool Temp_bool_True_if_break_was_hit_Variable, int32 Temp_int_Array_Index_Variable, bool CallFunc_Not_PreBool_ReturnValue, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, TArray<UDE_WormholeSpecial_C*>& CallFunc_K2_GetComponentsByClass_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, UDE_WormholeSpecial_C* CallFunc_Array_Get_Item, bool CallFunc_Less_IntInt_ReturnValue, bool CallFunc_NotEqual_ObjectObject_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1);
+    void Set Original position(bool Position found, bool Temp_bool_True_if_break_was_hit_Variable, int32 Temp_int_Array_Index_Variable, bool CallFunc_Not_PreBool_ReturnValue, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, const FTransform CallFunc_GetTransform_ReturnValue, TArray<UDE_WormholeSpecial_C*>& CallFunc_K2_GetComponentsByClass_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, UDE_WormholeSpecial_C* CallFunc_Array_Get_Item, bool CallFunc_Less_IntInt_ReturnValue, bool CallFunc_NotEqual_ObjectObject_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1);
+    void ReceiveTick(float DeltaSeconds);
+    void OnStartEffect(UPlayerCharacter* Character);
+    void OnStopEffect();
+    void Spawn Teleport Effects();
+    void Disable Active Location Effects();
+    void ExecuteUbergraph_DE_WormholeSpecial(int32 EntryPoint, bool CallFunc_IsLastActiveWormholeEffect_was_last_effect, bool CallFunc_IsValid_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, float K2Node_Event_DeltaSeconds, UPlayerCharacter* K2Node_Event_character, FVector CallFunc_GetActorScale3D_ReturnValue, FVector CallFunc_GetActorScale3D_ReturnValue_1, FVector CallFunc_BreakTransform_Location, FRotator CallFunc_BreakTransform_Rotation, FVector CallFunc_BreakTransform_Scale, TArray<ABP_WormholeLocation_Base_C*>& CallFunc_GetAllActorsOfClass_OutActors, FTransform CallFunc_MakeTransform_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, FHitResult CallFunc_K2_SetActorTransform_SweepHitResult, bool CallFunc_K2_SetActorTransform_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, bool CallFunc_GreaterEqual_IntInt_ReturnValue, int32 CallFunc_RandomIntegerInRange_ReturnValue, ABP_WormholeLocation_Base_C* CallFunc_Array_Get_Item, UFSDPlayerController* CallFunc_GetPlayerController_ReturnValue, UAudioComponent* CallFunc_SpawnSoundAttached_ReturnValue, bool CallFunc_IsLocallyControlled_ReturnValue, bool CallFunc_IsLocallyControlled_ReturnValue_1, UParticleSystemComponent* CallFunc_SpawnEmitterAttached_ReturnValue, UAudioComponent* CallFunc_SpawnSoundAttached_ReturnValue_1, const FTransform CallFunc_GetTransform_ReturnValue, FVector CallFunc_BreakTransform_Location_1, FRotator CallFunc_BreakTransform_Rotation_1, FVector CallFunc_BreakTransform_Scale_1, FTransform CallFunc_MakeTransform_ReturnValue_1, FHitResult CallFunc_K2_SetActorTransform_SweepHitResult_1, bool CallFunc_K2_SetActorTransform_ReturnValue_1);
+}
+
+#endif

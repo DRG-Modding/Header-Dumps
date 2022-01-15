@@ -1,0 +1,16 @@
+#ifndef UE4SS_SDK_HUD_RadarPoint_EscortMule_HPP
+#define UE4SS_SDK_HUD_RadarPoint_EscortMule_HPP
+
+class UHUD_RadarPoint_EscortMule_C : UUserWidget
+{
+    UImage* MarkerImage;
+    URadarPointComponent* Component;
+    float TimeoutDelay;
+    float Timeout;
+
+    void InitPoint(URadarPointComponent* RadarComponent, bool& success, float CallFunc_GetGameTimeInSeconds_ReturnValue, float CallFunc_Add_FloatFloat_ReturnValue);
+    void Get3dPosition(FVector& Pos, AActor* CallFunc_GetOwner_ReturnValue, bool CallFunc_IsValid_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue);
+    void UpdatePoint(float alpha, float verticalDist, bool& destroy, bool Temp_bool_Variable, bool CallFunc_EqualEqual_FloatFloat_ReturnValue, ESlateVisibility Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, bool CallFunc_IsValid_ReturnValue, ESlateVisibility K2Node_Select_Default, bool CallFunc_Not_PreBool_ReturnValue);
+}
+
+#endif

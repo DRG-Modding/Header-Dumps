@@ -1,0 +1,14 @@
+#ifndef UE4SS_SDK_BP_Quake_HPP
+#define UE4SS_SDK_BP_Quake_HPP
+
+class ABP_Quake_C : AActor
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UAudioComponent* EarthQuakeSound;
+    USceneComponent* DefaultSceneRoot;
+
+    void ReceiveBeginPlay();
+    void ExecuteUbergraph_BP_Quake(int32 EntryPoint, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, bool CallFunc_HasAuthority_ReturnValue, int32 Temp_int_Loop_Counter_Variable_1, int32 CallFunc_Add_IntInt_ReturnValue_1, int32 Temp_int_Array_Index_Variable_1, int32 Temp_int_Loop_Counter_Variable_2, int32 CallFunc_Add_IntInt_ReturnValue_2, bool CallFunc_HasAuthority_ReturnValue_1, UCharacter* CallFunc_GetPlayerCharacter_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue, bool CallFunc_IsLocallyControlled_ReturnValue, UParticleSystemComponent* CallFunc_SpawnEmitterAtLocation_ReturnValue, int32 Temp_int_Array_Index_Variable_2, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, UPlayerCharacter* CallFunc_Array_Get_Item, int32 CallFunc_Array_Length_ReturnValue, bool CallFunc_IsValid_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, UStatusEffectsComponent* CallFunc_GetComponentByClass_ReturnValue, TArray<ABP_MagmaQuakeCrevasse_Trap_C*>& CallFunc_GetAllActorsOfClass_OutActors, bool CallFunc_PushActiveStatusEffect_ReturnValue, ABP_MagmaQuakeCrevasse_Trap_C* CallFunc_Array_Get_Item_1, int32 CallFunc_Array_Length_ReturnValue_1, bool CallFunc_Less_IntInt_ReturnValue_1, bool CallFunc_HasAuthority_ReturnValue_2, TArray<ABP_MagmaQuakeCrevasse_Trap_C*>& CallFunc_GetAllActorsOfClass_OutActors_1, ABP_MagmaQuakeCrevasse_Trap_C* CallFunc_Array_Get_Item_2, int32 CallFunc_Array_Length_ReturnValue_2, bool CallFunc_Less_IntInt_ReturnValue_2, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue);
+}
+
+#endif

@@ -1,0 +1,16 @@
+#ifndef UE4SS_SDK_Options_Scalability_Overall_HPP
+#define UE4SS_SDK_Options_Scalability_Overall_HPP
+
+class UOptions_Scalability_Overall_C : UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UBasic_OptionSwitcher_C* Basic_OptionSwitcher;
+    FText CustomText;
+
+    void Construct();
+    void UINeedsUpdate();
+    void BndEvt__Basic_OptionSwitcher_K2Node_ComponentBoundEvent_1_OnSelectionChanged__DelegateSignature(FText Value, int32 Index);
+    void ExecuteUbergraph_Options_Scalability_Overall(int32 EntryPoint, UGameUserSettings* CallFunc_GetGameUserSettings_ReturnValue, UGameUserSettings* CallFunc_GetGameUserSettings_ReturnValue_1, int32 CallFunc_GetOverallScalabilityLevel_ReturnValue, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue_1, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, FText K2Node_ComponentBoundEvent_Value, int32 K2Node_ComponentBoundEvent_Index, bool CallFunc_EqualEqual_IntInt_ReturnValue_2, int32 CallFunc_Add_Option_Index, int32 CallFunc_GetOptionCount_Count, bool CallFunc_EqualEqual_IntInt_ReturnValue_3, bool CallFunc_BooleanAND_ReturnValue, GenericSignature__DelegateSignature K2Node_CreateDelegate_OutputDelegate, bool CallFunc_RemoveOption_ReturnValue, int32 CallFunc_GetOptionCount_Count_1, bool CallFunc_EqualEqual_IntInt_ReturnValue_4, bool CallFunc_RemoveOption_ReturnValue_1);
+}
+
+#endif

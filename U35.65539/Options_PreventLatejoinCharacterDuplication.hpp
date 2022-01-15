@@ -1,0 +1,15 @@
+#ifndef UE4SS_SDK_Options_PreventLatejoinCharacterDuplication_HPP
+#define UE4SS_SDK_Options_PreventLatejoinCharacterDuplication_HPP
+
+class UOptions_PreventLatejoinCharacterDuplication_C : UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UBasic_CheckBox_C* Basic_CheckBox;
+
+    void Construct();
+    void BndEvt__Basic_CheckBox_K2Node_ComponentBoundEvent_8_OnCheckStateChanged__DelegateSignature(bool IsChecked);
+    void OnGameUserSettingsChanged();
+    void ExecuteUbergraph_Options_PreventLatejoinCharacterDuplication(int32 EntryPoint, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, UFSDGameUserSettings* CallFunc_FSDGameUserSettings_ReturnValue, UFSDGameUserSettings* CallFunc_FSDGameUserSettings_ReturnValue_1, bool K2Node_ComponentBoundEvent_IsChecked, OnGameUserSettingsUINeedsUpdate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, UFSDGameUserSettings* CallFunc_FSDGameUserSettings_ReturnValue_2, bool CallFunc_GetPreventLatejoinCharacterDuplication_ReturnValue, UFSDGameUserSettings* CallFunc_FSDGameUserSettings_ReturnValue_3, bool CallFunc_IsServer_ReturnValue);
+}
+
+#endif

@@ -1,0 +1,51 @@
+#ifndef UE4SS_SDK_MENU_MissionCheat_HPP
+#define UE4SS_SDK_MENU_MissionCheat_HPP
+
+class UMENU_MissionCheat_C : UWindowWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UComboBoxString* Anomaly;
+    UComboBoxString* Biome;
+    UButton* BTN_Close;
+    UButton* BTN_MissionFromMap;
+    UButton* BTN_StartMission;
+    UComboBoxString* Complexity;
+    UComboBoxString* Difficulty;
+    UImage* Image_101;
+    UImage* Image_166;
+    UComboBoxString* MissionType;
+    UComboBoxString* Secondary;
+    UEditableTextBox* TB_GlobalSeed;
+    UEditableTextBox* TB_MissionSeed;
+    UEditableTextBox* TB_PLSSeed;
+    UEditableTextBox* TB_Seed;
+    UTextBlock* TXT_MissionName;
+    UComboBoxString* Warning_A;
+    UComboBoxString* Warning_B;
+
+    void SetMissionName(UGeneratedMission* mission, bool CallFunc_IsValid_ReturnValue);
+    void GetDifficulty(UDifficultySetting*& Output, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 CallFunc_GetSelectedIndex_ReturnValue, UDifficultySetting* CallFunc_Array_Get_Item);
+    void RefreshSecondaries(int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, UMissionTemplate* CallFunc_GetSelectedMissionType_Template, int32 CallFunc_Array_Length_ReturnValue, TSubclassOf<UObjective> CallFunc_Array_Get_Item, bool CallFunc_Less_IntInt_ReturnValue, FString CallFunc_GetClassDisplayName_ReturnValue);
+    void GetSecondary(TSubclassOf<UObjective>& Output, UMissionTemplate* CallFunc_GetSelectedMissionType_Template, int32 CallFunc_GetSelectedIndex_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, TSubclassOf<UObjective> CallFunc_Array_Get_Item);
+    bool IsCustomMissionAllowed(ESteamBranch CallFunc_GetSteamBranch_ReturnValue, bool CallFunc_IsPlayInEditor_ReturnValue, bool CallFunc_NotEqual_ByteByte_ReturnValue, bool CallFunc_BooleanOR_ReturnValue);
+    void Get Warning B(UMissionWarning*& Output, int32 CallFunc_GetSelectedIndex_ReturnValue, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, UMissionWarning* CallFunc_Array_Get_Item);
+    void Get Warning A(UMissionWarning*& Output, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 CallFunc_GetSelectedIndex_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, UMissionWarning* CallFunc_Array_Get_Item);
+    void GetAnomaly(UMissionMutator*& Output, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 CallFunc_GetSelectedIndex_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, UMissionMutator* CallFunc_Array_Get_Item);
+    void GetDuration(UMissionDuration*& Output, UMissionTemplate* CallFunc_GetSelectedMissionType_Template, int32 CallFunc_GetSelectedIndex_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, TSubclassOf<UMissionDNA> CallFunc_Array_Get_Item);
+    void GetComplexity(UMissionComplexity*& Output, UMissionTemplate* CallFunc_GetSelectedMissionType_Template, int32 CallFunc_GetSelectedIndex_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, TSubclassOf<UMissionDNA> CallFunc_Array_Get_Item);
+    void GetSelectedMissionType(UMissionTemplate*& Template, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 CallFunc_GetSelectedIndex_ReturnValue, TArray<FMissionTemplateItem>& CallFunc_GetAllPossibleMissions_ReturnValue);
+    void GetSelectedBiome(UBiome*& Biome, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 CallFunc_GetSelectedIndex_ReturnValue);
+    void OnFailure_7138AEF44F9FC9F667DF87911EB7E3E2();
+    void OnSuccess_7138AEF44F9FC9F667DF87911EB7E3E2();
+    void Construct();
+    void BndEvt__Button_Close_K2Node_ComponentBoundEvent_1_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__BTN_StartMission_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();
+    void RefreshComplexities();
+    void BndEvt__MissionType_K2Node_ComponentBoundEvent_2_OnSelectionChangedEvent__DelegateSignature(FString SelectedItem, uint8 SelectionType);
+    void BndEvt__BTN_MissionFromMap_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
+    void SetGeneratedMission(UGeneratedMission* mission, int32 PLS_Seed);
+    void BndEvt__TB_GlobalSeed_K2Node_ComponentBoundEvent_4_OnEditableTextBoxCommittedEvent__DelegateSignature(const FText& Text, uint8 CommitMethod);
+    void ExecuteUbergraph_MENU_MissionCheat(int32 EntryPoint, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, UMissionGenerationManager* CallFunc_GetGameInstanceSubsystem_ReturnValue, bool CallFunc_HasTooManyModsEnabled_ReturnValue, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, int32 Temp_int_Array_Index_Variable_1, int32 Temp_int_Loop_Counter_Variable_1, int32 CallFunc_Add_IntInt_ReturnValue_1, int32 Temp_int_Loop_Counter_Variable_2, int32 CallFunc_Add_IntInt_ReturnValue_2, int32 Temp_int_Array_Index_Variable_2, int32 Temp_int_Array_Index_Variable_3, int32 Temp_int_Loop_Counter_Variable_3, int32 CallFunc_Add_IntInt_ReturnValue_3, int32 Temp_int_Array_Index_Variable_4, EmptyOnlineDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, int32 Temp_int_Loop_Counter_Variable_4, int32 CallFunc_Add_IntInt_ReturnValue_4, int32 Temp_int_Array_Index_Variable_5, int32 Temp_int_Loop_Counter_Variable_5, int32 CallFunc_Add_IntInt_ReturnValue_5, UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 Temp_int_Loop_Counter_Variable_6, int32 CallFunc_Add_IntInt_ReturnValue_6, int32 CallFunc_Array_Length_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, UGameData* CallFunc_GetFSDGameData_ReturnValue_1, TArray<FMissionTemplateItem>& CallFunc_GetAllPossibleMissions_ReturnValue, FMissionTemplateItem CallFunc_Array_Get_Item, int32 CallFunc_Array_Length_ReturnValue_1, bool CallFunc_Less_IntInt_ReturnValue_1, FString CallFunc_Conv_TextToString_ReturnValue, UMissionTemplate* CallFunc_GetSelectedMissionType_Template, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, UBiome* CallFunc_GetSelectedBiome_Biome, FText CallFunc_GetText_ReturnValue, FString CallFunc_Conv_TextToString_ReturnValue_1, int32 CallFunc_Conv_StringToInt_ReturnValue, UMissionComplexity* CallFunc_GetComplexity_Output, UMissionDuration* CallFunc_GetDuration_Output, UGameData* CallFunc_GetFSDGameData_ReturnValue_2, UMissionMutator* CallFunc_Array_Get_Item_1, int32 CallFunc_Array_Length_ReturnValue_2, bool CallFunc_Less_IntInt_ReturnValue_2, FString CallFunc_Conv_TextToString_ReturnValue_2, UMissionMutator* CallFunc_GetAnomaly_Output, UMissionWarning* CallFunc_Get_Warning_A_Output, UMissionWarning* CallFunc_Get_Warning_B_Output, TArray<UMissionWarning*>& K2Node_MakeArray_Array, UGameData* CallFunc_GetFSDGameData_ReturnValue_3, UMissionWarning* CallFunc_Array_Get_Item_2, int32 CallFunc_Array_Length_ReturnValue_3, bool CallFunc_Less_IntInt_ReturnValue_3, FString CallFunc_Conv_TextToString_ReturnValue_3, UGameData* CallFunc_GetFSDGameData_ReturnValue_4, UMissionWarning* CallFunc_Array_Get_Item_3, int32 CallFunc_Array_Length_ReturnValue_4, bool CallFunc_Less_IntInt_ReturnValue_4, FString CallFunc_Conv_TextToString_ReturnValue_4, UMissionTemplate* CallFunc_GetSelectedMissionType_Template_1, FString K2Node_ComponentBoundEvent_SelectedItem, uint8 K2Node_ComponentBoundEvent_SelectionType, TSubclassOf<UMissionDNA> CallFunc_Array_Get_Item_4, int32 CallFunc_Array_Length_ReturnValue_5, bool CallFunc_Less_IntInt_ReturnValue_5, FString CallFunc_Conv_TextToString_ReturnValue_5, FString CallFunc_Conv_TextToString_ReturnValue_6, bool CallFunc_IsCustomMissionAllowed_ReturnValue, FString CallFunc_Concat_StrStr_ReturnValue, FString CallFunc_Concat_StrStr_ReturnValue_1, TSubclassOf<UObjective> CallFunc_GetSecondary_Output, UGeneratedMission* CallFunc_GenerateMission_ReturnValue, UGameData* CallFunc_GetFSDGameData_ReturnValue_5, int32 Temp_int_Array_Index_Variable_6, FMissionBiomeItem CallFunc_Array_Get_Item_5, UDifficultySetting* CallFunc_Array_Get_Item_6, const FText CallFunc_GetBiomeName_ReturnValue, FString CallFunc_Conv_TextToString_ReturnValue_7, FString CallFunc_Conv_TextToString_ReturnValue_8, int32 CallFunc_Array_Length_ReturnValue_6, bool CallFunc_Less_IntInt_ReturnValue_6, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, UDifficultyManager* CallFunc_GetDifficultyManager_ReturnValue, int32 CallFunc_GetSelectedIndex_ReturnValue, UDifficultySetting* CallFunc_SelectDifficulty_ReturnValue, UPlayerController* CallFunc_GetPlayerController_ReturnValue, bool CallFunc_FSDUpdateSessionInfo_ReturnValue, UFSDGameModeSpaceRig* CallFunc_GetFSDSRGameMode_ReturnValue, EmptyOnlineDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_2, int32 CallFunc_GetMaxPublicConnections_ReturnValue, bool CallFunc_IsCustomMissionAllowed_ReturnValue_1, UFSDCreateSessionCallbackProxy* CallFunc_FSDCreateSession_ReturnValue, bool CallFunc_IsValid_ReturnValue, FText CallFunc_GetText_ReturnValue_1, FString CallFunc_Conv_TextToString_ReturnValue_9, FText CallFunc_GetText_ReturnValue_2, int32 CallFunc_Conv_StringToInt_ReturnValue_1, FString CallFunc_Conv_TextToString_ReturnValue_10, UGeneratedMission* K2Node_CustomEvent_Mission, int32 K2Node_CustomEvent_PLS_Seed, int32 CallFunc_Conv_StringToInt_ReturnValue_2, UGeneratedMission* CallFunc_GetMissionFromSeeds_ReturnValue, UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_3, const FText K2Node_ComponentBoundEvent_Text, uint8 K2Node_ComponentBoundEvent_CommitMethod, FText CallFunc_GetText_ReturnValue_3, FString CallFunc_Conv_TextToString_ReturnValue_11, int32 CallFunc_Conv_StringToInt_ReturnValue_3);
+}
+
+#endif

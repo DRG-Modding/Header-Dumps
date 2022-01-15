@@ -1,0 +1,105 @@
+#ifndef UE4SS_SDK_ENE_HydraWeed_Core_HPP
+#define UE4SS_SDK_ENE_HydraWeed_Core_HPP
+
+class AENE_HydraWeed_Core_C : UHydraWeedCore
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    UStaticMeshComponent* Carving Mesh;
+    USphereComponent* WakeUpTrigger;
+    UParticleSystemComponent* P_GodRays;
+    UPathfinderCollisionComponent* PathfinderCollision;
+    UOutlineComponent* outline;
+    UStaticMeshComponent* SM_HydraWeed_Extra_Roots_SM_HydraWeed_Root_06;
+    UStaticMeshComponent* SM_HydraWeed_Extra_Roots_SM_HydraWeed_Root_05;
+    UStaticMeshComponent* SM_HydraWeed_Extra_Roots_SM_HydraWeed_Root_04;
+    UStaticMeshComponent* SM_HydraWeed_Extra_Roots_SM_HydraWeed_Root_03;
+    UStaticMeshComponent* SM_HydraWeed_Extra_Roots_SM_HydraWeed_Root_01;
+    UStaticMeshComponent* SM_HydraWeed_Extra_Roots_SM_HydraWeed_Root_02;
+    USceneComponent* BigRoots;
+    UWeakpointGlowComponent* WeakpointGlow;
+    UPointLightComponent* PointLight;
+    USphereComponent* Sphere;
+    USkeletalMeshComponent* SkeletalMesh;
+    UTerrainPlacementComponent* terrainPlacement;
+    USpawnActorWithDebrisPosComponent* SpawnActorWithDebrisPos;
+    USceneComponent* DefaultSceneRoot;
+    float GlowIntensity_Glow_E20983104900FF1AA1B7E19B0232B66F;
+    TEnumAsByte<ETimelineDirection::Type> GlowIntensity__Direction_E20983104900FF1AA1B7E19B0232B66F;
+    UTimelineComponent* GlowIntensity;
+    float SpawnRadius;
+    int32 NumShootersKilledToOpen;
+    int32 NumShootersKilled;
+    bool IsOpen;
+    TArray<AActor*> MyShooters;
+    float DamageTakenWhileOpen;
+    int32 ShooterIndex;
+    bool IsDormant;
+    FENE_HydraWeed_Core_COnOpenChanged OnOpenChanged;
+    void OnOpenChanged(bool IsOpen);
+    int32 MaxAllowedShooters;
+    TArray<AActor*> MyHealers;
+    float MaxLightIntensity;
+    FVector SeedProjectileSpawnOffset;
+    TArray<FVector> LaunchSeedList;
+    int32 MaxNumHealers;
+    float StayOpenTimerTick;
+    float StayOpenTimerProgress;
+    FTimerHandle StayOpenTimer;
+    float TimeToDamageConversion;
+    float StayOpenWhenBellowThisHealthPercentage;
+    TArray<FVector> LaunchHealerSeedList;
+    TArray<TSubclassOf<ABP_HydraWeedCoreFragment_C>> ShardFragments;
+    float HealCapPercentage;
+    float HealthCheckPointValue1;
+    float HealthCheckPointValue2;
+    float MinHealthPercentageToSpawnHealingPods;
+    float TimeToDamagePenaltyPerPlayer;
+    FENE_HydraWeed_Core_COnDormantChanged OnDormantChanged;
+    void OnDormantChanged(bool IsDormant);
+    bool IsHealthbarVisible;
+    int32 NumSpawnAttempts;
+    float ShooterDormantRange;
+    float ShooterActiveRange;
+    float StopFightingDistance;
+    float ResumeFightingDistance;
+
+    FVector GetTargetCenterMass(FVector CallFunc_GetSocketLocation_ReturnValue);
+    USkeletalMeshComponent* GetMesh();
+    bool GetIsTargetable(bool CallFunc_Not_PreBool_ReturnValue, bool CallFunc_BooleanAND_ReturnValue);
+    void OnRep_IsHealthbarVisible(UBossFightSubSystem* CallFunc_GetGameInstanceSubsystem_ReturnValue, FBossFight K2Node_MakeStruct_BossFight, USimpleBossFight* CallFunc_SpawnObject_ReturnValue, InterfaceProperty CallFunc_RegisterBossFight_BossFight_CastInput);
+    void ArePlayersInRange(float Distance, bool& InRange, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue, UFSDGameState* CallFunc_GetFSDGameState_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, UPlayerCharacter* CallFunc_Array_Get_Item, bool CallFunc_Less_IntInt_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue_1, float CallFunc_Vector_Distance_ReturnValue, bool CallFunc_Less_FloatFloat_ReturnValue);
+    int32 GetMaxAllowedHealersToSpawn(UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, int32 CallFunc_Clamp_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue_1, int32 CallFunc_Subtract_IntInt_ReturnValue);
+    int32 ClampMaxShooters(int32 DesiredCountUFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, int32 CallFunc_Clamp_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue_1, int32 CallFunc_Subtract_IntInt_ReturnValue, int32 CallFunc_Min_ReturnValue);
+    void SpawnGems(FName Temp_name_Variable, FName Temp_name_Variable_1, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, bool Temp_bool_Variable, FVector CallFunc_RandomUnitVector_ReturnValue, TSubclassOf<UBP_HydraWeedCoreFragment_C> CallFunc_Array_Get_Item, FVector CallFunc_Multiply_VectorFloat_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, FVector CallFunc_RandomUnitVectorInConeInDegrees_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, FVector CallFunc_Multiply_VectorFloat_ReturnValue_1, bool CallFunc_RandomBool_ReturnValue, FName K2Node_Select_Default, FTransform CallFunc_GetSocketTransform_ReturnValue, AActor* CallFunc_BeginDeferredActorSpawnFromClass_ReturnValue, UBP_HydraWeedCoreFragment_C* CallFunc_FinishSpawningActor_ReturnValue);
+    void LaunchSeed(FVector& TargetLocation, TSubclassOf<UProjectile> projectileClass, float CallFunc_GetGlobalGravityZ_ReturnValue, float CallFunc_Multiply_FloatFloat_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue, FVector CallFunc_Add_VectorVector_ReturnValue, FVector CallFunc_SuggestProjectileVelocity_CustomArc_OutLaunchVelocity, bool CallFunc_SuggestProjectileVelocity_CustomArc_ReturnValue, AProjectileBase* CallFunc_SpawnBallisticProjectile_ReturnValue, UHydraWeedSpawnProjectile* K2Node_DynamicCast_AsHydra_Weed_Spawn_Projectile, bool K2Node_DynamicCast_bSuccess);
+    void OnRep_IsDormant();
+    UMeshComponent* Receive_GetMeshComponent();
+    void OnRep_IsOpen();
+    void GlowIntensity__FinishedFunc();
+    void GlowIntensity__UpdateFunc();
+    void ReceiveBeginPlay();
+    void BndEvt__Health_K2Node_ComponentBoundEvent_0_DeathSig__DelegateSignature(UHealthComponentBase* HealthComponent);
+    void BndEvt__Health_K2Node_ComponentBoundEvent_2_DamageSig__DelegateSignature(float Amount);
+    void DoGlow();
+    void OnShooterKilled(UHydraWeedShooter* shooter);
+    void OnHealerKilled(UHydraWeedHealer* healer);
+    void WakupCore();
+    void AddSeedToLaunch(FVector Location, TSubclassOf<UProjectile> projectileClass);
+    void OnLaunchSeed();
+    void UpdateStayOpenTimer();
+    void CheckStayOpenDamage();
+    void AddHealerSeedToLaunch(FVector Location, TSubclassOf<UProjectile> projectileClass);
+    void OnLaunchHealerSeed();
+    void BndEvt__WakeUpTrigger_K2Node_ComponentBoundEvent_3_ComponentBeginOverlapSignature__DelegateSignature(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+    void WakeUp();
+    void CheckDistanceToPlayers();
+    void SetSightRangeOfAllShooters(bool BePassive);
+    void ResumeFight();
+    void BndEvt__Health_K2Node_ComponentBoundEvent_1_HealthSegmentChange__DelegateSignature(int32 currSegment, int32 prevSegment);
+    void BndEvt__Health_K2Node_ComponentBoundEvent_4_HitSig__DelegateSignature(float Damage, UDamageClass* DamageClass, AActor* DamageCauser, bool anyHealthLost);
+    void ExecuteUbergraph_ENE_HydraWeed_Core(int32 EntryPoint, bool CallFunc_Not_PreBool_ReturnValue, UHealthComponentBase* Temp_object_Variable, int32 Temp_int_Array_Index_Variable, bool CallFunc_HasAuthority_ReturnValue, bool CallFunc_HasAuthority_ReturnValue_1, UHealthComponentBase* Temp_object_Variable_1, int32 Temp_int_Loop_Counter_Variable, int32 Temp_int_Variable, bool CallFunc_LessEqual_IntInt_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, bool Temp_bool_IsClosed_Variable, bool Temp_bool_Has_Been_Initd_Variable, bool CallFunc_HasAuthority_ReturnValue_2, int32 Temp_int_Variable_1, AProceduralSetup* CallFunc_GetProceduralSetup_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue, const TArray<FVector>& K2Node_MakeArray_Array, int32 CallFunc_Array_Length_ReturnValue, TArray<AActor*>& CallFunc_PlaceActors_OutSpawnedActors, bool CallFunc_PlaceActors_ReturnValue, bool CallFunc_HasAuthority_ReturnValue_3, int32 Temp_int_Variable_2, int32 CallFunc_Add_IntInt_ReturnValue_1, AProceduralSetup* CallFunc_GetProceduralSetup_ReturnValue_1, FVector CallFunc_K2_GetActorLocation_ReturnValue_1, const TArray<FVector>& K2Node_MakeArray_Array_1, int32 CallFunc_ClampMaxShooters_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue_2, int32 CallFunc_ClampMaxShooters_ReturnValue_1, TArray<AActor*>& CallFunc_PlaceActors_OutSpawnedActors_1, bool CallFunc_PlaceActors_ReturnValue_1, int32 CallFunc_Array_Length_ReturnValue_1, UHealthComponentBase* K2Node_ComponentBoundEvent_HealthComponent, float K2Node_ComponentBoundEvent_Amount, bool CallFunc_IsAlive_ReturnValue, float CallFunc_Add_FloatFloat_ReturnValue, float CallFunc_GetMaxHealth_ReturnValue, float CallFunc_Divide_FloatFloat_ReturnValue, AActor* CallFunc_Array_Get_Item, int32 CallFunc_Array_Length_ReturnValue_2, InterfaceProperty K2Node_DynamicCast_AsTargetable, bool K2Node_DynamicCast_bSuccess, bool CallFunc_Greater_IntInt_ReturnValue, UHealthComponentBase* CallFunc_GetTargetHealthComponent_ReturnValue, AProceduralSetup* CallFunc_GetProceduralSetup_ReturnValue_2, FVector CallFunc_K2_GetActorLocation_ReturnValue_2, const TArray<FVector>& K2Node_MakeArray_Array_2, int32 Temp_int_Array_Index_Variable_1, float CallFunc_GetMaxHealth_ReturnValue_1, AActor* CallFunc_Array_Get_Item_1, UHydraWeedShooter* K2Node_DynamicCast_AsHydra_Weed_Shooter, bool K2Node_DynamicCast_bSuccess_1, float CallFunc_GetHealth_ReturnValue, float CallFunc_Divide_FloatFloat_ReturnValue_1, int32 CallFunc_FTrunc_ReturnValue, int32 CallFunc_Array_Length_ReturnValue_3, int32 CallFunc_Clamp_ReturnValue, int32 CallFunc_Clamp_ReturnValue_1, int32 CallFunc_RandomIntegerInRange_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, AActor* CallFunc_Array_Get_Item_2, UENE_ShootingPlant_Small_C* K2Node_DynamicCast_AsENE_Shooting_Plant_Small, bool K2Node_DynamicCast_bSuccess_2, int32 CallFunc_Add_IntInt_ReturnValue_3, int32 Temp_int_Loop_Counter_Variable_1, int32 Temp_int_Array_Index_Variable_2, bool CallFunc_Less_IntInt_ReturnValue_1, AActor* CallFunc_Array_Get_Item_3, UENE_ShootingPlant_Small_C* K2Node_DynamicCast_AsENE_Shooting_Plant_Small_1, bool K2Node_DynamicCast_bSuccess_3, FVector CallFunc_K2_GetActorLocation_ReturnValue_3, int32 CallFunc_Add_IntInt_ReturnValue_4, int32 CallFunc_Array_Length_ReturnValue_4, TimerDynamicDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, FTimerHandle CallFunc_K2_SetTimerDelegate_ReturnValue, int32 Temp_int_Variable_3, AActor* CallFunc_Array_Get_Item_4, InterfaceProperty K2Node_DynamicCast_AsTargetable_1, bool K2Node_DynamicCast_bSuccess_4, UHealthComponentBase* CallFunc_GetTargetHealthComponent_ReturnValue_1, int32 CallFunc_Array_Length_ReturnValue_5, bool CallFunc_Greater_IntInt_ReturnValue_1, UHydraWeedShooter* K2Node_Event_shooter, bool CallFunc_Array_RemoveItem_ReturnValue, UHydraWeedHealer* K2Node_Event_healer, bool CallFunc_Array_RemoveItem_ReturnValue_1, FVector K2Node_CustomEvent_Location_1, TSubclassOf<UProjectile> K2Node_CustomEvent_projectileClass_1, int32 CallFunc_Array_Add_ReturnValue, float CallFunc_RandomFloatInRange_ReturnValue, bool CallFunc_EqualEqual_IntInt_ReturnValue, int32 CallFunc_Array_Length_ReturnValue_6, bool CallFunc_Greater_IntInt_ReturnValue_2, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, UDifficultyManager* CallFunc_GetDifficultyManager_ReturnValue, float CallFunc_GetBossDifficultyScaler_ReturnValue, float CallFunc_Multiply_FloatFloat_ReturnValue, bool CallFunc_GreaterEqual_FloatFloat_ReturnValue, float CallFunc_GetMaxHealth_ReturnValue_2, float CallFunc_GetHealth_ReturnValue_1, float CallFunc_Multiply_FloatFloat_ReturnValue_1, FVector K2Node_CustomEvent_Location, TSubclassOf<UProjectile> K2Node_CustomEvent_projectileClass, bool CallFunc_Greater_FloatFloat_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, float CallFunc_RandomFloatInRange_ReturnValue_1, int32 CallFunc_Array_Add_ReturnValue_1, bool CallFunc_EqualEqual_IntInt_ReturnValue_1, int32 CallFunc_Array_Length_ReturnValue_7, bool CallFunc_Greater_IntInt_ReturnValue_3, UPrimitiveComponent* K2Node_ComponentBoundEvent_OverlappedComponent, AActor* K2Node_ComponentBoundEvent_OtherActor, UPrimitiveComponent* K2Node_ComponentBoundEvent_OtherComp, int32 K2Node_ComponentBoundEvent_OtherBodyIndex, bool K2Node_ComponentBoundEvent_bFromSweep, const FHitResult K2Node_ComponentBoundEvent_SweepResult, FVector CallFunc_K2_GetActorLocation_ReturnValue_4, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character, bool K2Node_DynamicCast_bSuccess_5, FVector CallFunc_K2_GetActorLocation_ReturnValue_5, FVector CallFunc_Add_VectorVector_ReturnValue, FHitResult CallFunc_LineTraceSingle_OutHit, bool CallFunc_LineTraceSingle_ReturnValue, bool CallFunc_BreakHitResult_bBlockingHit, bool CallFunc_BreakHitResult_bInitialOverlap, float CallFunc_BreakHitResult_Time, float CallFunc_BreakHitResult_Distance, FVector CallFunc_BreakHitResult_Location, FVector CallFunc_BreakHitResult_ImpactPoint, FVector CallFunc_BreakHitResult_Normal, FVector CallFunc_BreakHitResult_ImpactNormal, UPhysicalMaterial* CallFunc_BreakHitResult_PhysMat, AActor* CallFunc_BreakHitResult_HitActor, UPrimitiveComponent* CallFunc_BreakHitResult_HitComponent, FName CallFunc_BreakHitResult_HitBoneName, int32 CallFunc_BreakHitResult_HitItem, int32 CallFunc_BreakHitResult_FaceIndex, FVector CallFunc_BreakHitResult_TraceStart, FVector CallFunc_BreakHitResult_TraceEnd, bool CallFunc_EqualEqual_ObjectObject_ReturnValue, int32 Temp_int_Loop_Counter_Variable_2, bool CallFunc_Less_IntInt_ReturnValue_2, int32 CallFunc_Add_IntInt_ReturnValue_5, FVector CallFunc_K2_GetActorLocation_ReturnValue_6, FVector CallFunc_Add_VectorVector_ReturnValue_1, float CallFunc_GetMaxHealth_ReturnValue_3, UParticleSystemComponent* CallFunc_SpawnEmitterAtLocation_ReturnValue, float CallFunc_GetHealth_ReturnValue_2, float CallFunc_Multiply_FloatFloat_ReturnValue_2, bool CallFunc_LessEqual_FloatFloat_ReturnValue, int32 CallFunc_Array_Length_ReturnValue_8, FString CallFunc_Conv_IntToString_ReturnValue, ADeepCSGWorld* CallFunc_GetCSGWorld_ReturnValue, FString CallFunc_Concat_StrStr_ReturnValue, FTransform CallFunc_K2_GetComponentToWorld_ReturnValue, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue_1, int32 CallFunc_Add_IntInt_ReturnValue_6, TimerDynamicDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, int32 CallFunc_Add_IntInt_ReturnValue_7, FTimerHandle CallFunc_K2_SetTimerDelegate_ReturnValue_1, bool CallFunc_Less_IntInt_ReturnValue_3, UFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue_2, bool CallFunc_HasAuthority_ReturnValue_4, int32 CallFunc_Add_IntInt_ReturnValue_8, int32 CallFunc_GetMaxAllowedHealersToSpawn_ReturnValue, float CallFunc_Multiply_IntFloat_ReturnValue, bool CallFunc_Greater_IntInt_ReturnValue_4, float CallFunc_Add_FloatFloat_ReturnValue_1, float CallFunc_Multiply_FloatFloat_ReturnValue_3, int32 CallFunc_GetMaxAllowedHealersToSpawn_ReturnValue_1, float CallFunc_Add_FloatFloat_ReturnValue_2, int32 CallFunc_Min_ReturnValue, TArray<AActor*>& CallFunc_PlaceActors_OutSpawnedActors_2, bool CallFunc_PlaceActors_ReturnValue_2, AActor* CallFunc_Array_Get_Item_5, int32 CallFunc_Array_Length_ReturnValue_9, FVector CallFunc_K2_GetActorLocation_ReturnValue_7, bool CallFunc_Less_IntInt_ReturnValue_4, UHydraWeedHealer* K2Node_DynamicCast_AsHydra_Weed_Healer, bool K2Node_DynamicCast_bSuccess_6, FVector CallFunc_K2_GetActorLocation_ReturnValue_8, int32 CallFunc_Array_Length_ReturnValue_10, bool CallFunc_LessEqual_IntInt_ReturnValue_1, bool CallFunc_BooleanAND_ReturnValue_1, int32 CallFunc_Subtract_IntInt_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_2, TimerDynamicDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_2, FTimerHandle CallFunc_K2_SetTimerDelegate_ReturnValue_2, AActor* CallFunc_Array_Get_Item_6, UENE_ShootingPlant_Small_C* K2Node_DynamicCast_AsENE_Shooting_Plant_Small_2, bool K2Node_DynamicCast_bSuccess_7, int32 CallFunc_Add_IntInt_ReturnValue_9, TimerDynamicDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_3, FTimerHandle CallFunc_K2_SetTimerDelegate_ReturnValue_3, int32 CallFunc_Array_Length_ReturnValue_11, bool K2Node_CustomEvent_BePassive, bool CallFunc_Less_IntInt_ReturnValue_5, float CallFunc_Multiply_FloatFloat_ReturnValue_4, bool CallFunc_ArePlayersInRange_InRange, bool CallFunc_ArePlayersInRange_InRange_1, float CallFunc_Subtract_FloatFloat_ReturnValue, bool CallFunc_ArePlayersInRange_InRange_2, int32 K2Node_ComponentBoundEvent_currSegment, int32 K2Node_ComponentBoundEvent_prevSegment, bool CallFunc_Greater_IntInt_ReturnValue_5, float K2Node_ComponentBoundEvent_Damage, UDamageClass* K2Node_ComponentBoundEvent_damageClass, AActor* K2Node_ComponentBoundEvent_DamageCauser, bool K2Node_ComponentBoundEvent_anyHealthLost, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character_1, bool K2Node_DynamicCast_bSuccess_8, bool CallFunc_IsLocallyControlled_ReturnValue, FVector CallFunc_K2_GetComponentLocation_ReturnValue);
+    void OnDormantChanged__DelegateSignature(bool IsDormant);
+    void OnOpenChanged__DelegateSignature(bool IsOpen);
+}
+
+#endif

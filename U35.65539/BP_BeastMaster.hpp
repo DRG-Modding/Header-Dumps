@@ -1,0 +1,37 @@
+#ifndef UE4SS_SDK_BP_BeastMaster_HPP
+#define UE4SS_SDK_BP_BeastMaster_HPP
+
+class UBP_BeastMaster_C : UBeastMasterComponent
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    ASpiderEnemy* PossibleTarget;
+    ASpiderEnemy* FriendedEnemy;
+    FGameplayTagQuery Filter;
+    UClass* LoadedFriendable;
+    TSoftClassPtr<UObject> Friendable;
+    float MaxAttackDMGMod;
+    FText HoldText;
+    FTimerHandle HoldTimer;
+    float HoldProgress;
+    float HoldDuration;
+    ASpiderEnemy* ActiveTarget;
+
+    void ChangeAttacks(USpiderEnemy* enemy, bool Temp_bool_Variable, UEnemyComponent* CallFunc_GetComponentByClass_ReturnValue, float CallFunc_MakeLiteralFloat_ReturnValue, float CallFunc_MakeLiteralFloat_ReturnValue_1, bool CallFunc_EqualEqual_ObjectObject_ReturnValue, float K2Node_Select_Default, UMeleeAttackComponent* CallFunc_GetComponentByClass_ReturnValue_1, float CallFunc_Multiply_FloatFloat_ReturnValue);
+    void UpdateHoldProgress(bool CallFunc_IsValid_ReturnValue, UPlayerCharacter* CallFunc_GetPlayerCharacter_AsPlayer_Character, UFSDPlayerController* CallFunc_GetPlayerController_ReturnValue, bool CallFunc_Greater_FloatFloat_ReturnValue, UOutlineComponent* CallFunc_GetComponentByClass_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, float CallFunc_Divide_FloatFloat_ReturnValue, UFSDPlayerController* CallFunc_GetPlayerController_ReturnValue_1, float CallFunc_FClamp_ReturnValue, UPlayerCharacter* CallFunc_GetPlayerCharacter_AsPlayer_Character_1, float CallFunc_Add_FloatFloat_ReturnValue, UPlayerFPAnimInstance* CallFunc_GetFPAnimInstance_ReturnValue, UPlayerCharacter* CallFunc_GetPlayerCharacter_AsPlayer_Character_2, bool CallFunc_GreaterEqual_FloatFloat_ReturnValue, bool CallFunc_IsValid_ReturnValue_2, bool CallFunc_IsValid_ReturnValue_3, bool CallFunc_Not_PreBool_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, UPlayerCharacter* CallFunc_GetPlayerCharacter_AsPlayer_Character_3, float CallFunc_GetDistanceTo_ReturnValue, bool CallFunc_Less_FloatFloat_ReturnValue);
+    AFSDPlayerController* GetPlayerController(UPlayerCharacter* CallFunc_GetPlayerCharacter_AsPlayer_Character, UFSDPlayerController* CallFunc_GetPlayerController_ReturnValue);
+    void SetupStatusEffects(USpiderEnemy* enemy, bool Temp_bool_Variable, TSubclassOf<UStatusEffect> Temp_class_Variable, float CallFunc_GetHealth_ReturnValue, bool CallFunc_Greater_FloatFloat_ReturnValue, TSubclassOf<UStatusEffect> Temp_class_Variable_1, TSubclassOf<UStatusEffect> K2Node_Select_Default, bool CallFunc_PopActiveStatusEffect_ReturnValue);
+    void GetPlayerCharacter(UPlayerCharacter*& AsPlayer Character, AActor* CallFunc_GetOwner_ReturnValue, UPlayerCharacter* K2Node_DynamicCast_AsPlayer_Character, bool K2Node_DynamicCast_bSuccess);
+    void GetPerk(UFloatPerkAsset*& Perks Beast Master, UGameData* CallFunc_GetFSDGameData_ReturnValue);
+    bool CanBefriend(USpiderEnemy* enemyUBP_PetComponent_C* CallFunc_GetComponentByClass_ReturnValue, bool CallFunc_HasActiveEffect_ReturnValue, bool CallFunc_IsValid_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue_1, bool CallFunc_IsAlive_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue_2, bool CallFunc_DoesContainerMatchTagQuery_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1, bool CallFunc_BooleanAND_ReturnValue_2, bool CallFunc_BooleanAND_ReturnValue_3);
+    void OnLoaded_8AE17C7C4ABC357330FD319C5F5E7796(TSubclassOf<UObject> Loaded);
+    void BeginBeastMasterActivation();
+    void Server_Befriend(USpiderEnemy* Spider);
+    void OnTargetChanged(AActor* NewTarget, UPrimitiveComponent* NewPrimitive);
+    void ReceiveBeginPlay();
+    void Setup Shouts();
+    void OnFriendedEnemyDeath(UHealthComponentBase* HealthComponent);
+    void EndBeastMasterActivation();
+    void ExecuteUbergraph_BP_BeastMaster(int32 EntryPoint, TSubclassOf<UObject> K2Node_CustomEvent_Loaded, bool CallFunc_IsValid_ReturnValue, USpiderEnemy* K2Node_CustomEvent_Spider, DeathSig__DelegateSignature K2Node_CreateDelegate_OutputDelegate, UAIController* CallFunc_GetAIController_ReturnValue, bool CallFunc_RunBehaviorTree_ReturnValue, UHealthComponentBase* CallFunc_GetHealthComponent_ReturnValue, bool CallFunc_CanBefriend_ReturnValue, float CallFunc_Heal_ReturnValue, UFloatPerkAsset* CallFunc_GetPerk_Perks_Beast_Master, UFloatPerkAsset* CallFunc_GetPerk_Perks_Beast_Master_1, UFloatPerkAsset* CallFunc_GetPerk_Perks_Beast_Master_2, AActor* K2Node_CustomEvent_NewTarget, UPrimitiveComponent* K2Node_CustomEvent_NewPrimitive, FName CallFunc_MakeLiteralName_ReturnValue, USpiderEnemy* K2Node_DynamicCast_AsSpider_Enemy, bool K2Node_DynamicCast_bSuccess, bool CallFunc_CanBefriend_ReturnValue_1, TSubclassOf<USpiderEnemy> CallFunc_GetObjectClass_ReturnValue, bool CallFunc_ClassIsChildOf_ReturnValue, bool CallFunc_DoesContainerMatchTagQuery_ReturnValue, bool CallFunc_PushActiveStatusEffect_ReturnValue, TargetChangedSignature__DelegateSignature K2Node_CreateDelegate_OutputDelegate_1, UPlayerCharacter* CallFunc_GetPlayerCharacter_AsPlayer_Character, UFSDPlayerController* CallFunc_GetPlayerController_ReturnValue, bool CallFunc_CanUseCharge_ReturnValue, bool CallFunc_IsLocallyControlled_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1, bool CallFunc_BooleanAND_ReturnValue_2, TSubclassOf<UObject> Temp_class_Variable, UPlayerCharacter* CallFunc_GetPlayerCharacter_AsPlayer_Character_1, USphereComponent* CallFunc_AddPetComponent_ReturnValue, UBP_PetUsable_C* CallFunc_AddPetComponent_ReturnValue_1, UBP_PetComponent_C* CallFunc_AddPetComponent_ReturnValue_2, UHealthComponentBase* K2Node_CustomEvent_HealthComponent, UFSDPlayerController* CallFunc_GetPlayerController_ReturnValue_1, bool CallFunc_UseCharge_ReturnValue, bool CallFunc_CanUseCharge_ReturnValue_1, EndUsingDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_2, bool CallFunc_BooleanAND_ReturnValue_3, EndUsingDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_3, TimerDynamicDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate_4, FTimerHandle CallFunc_K2_SetTimerDelegate_ReturnValue, OnAssetClassLoaded__DelegateSignature K2Node_CreateDelegate_OutputDelegate_5, UOutlineComponent* CallFunc_GetComponentByClass_ReturnValue, bool CallFunc_IsValid_ReturnValue_1);
+}
+
+#endif
