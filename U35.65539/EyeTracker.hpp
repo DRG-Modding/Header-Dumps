@@ -13,7 +13,7 @@ class UEyeTrackerFunctionLibrary : UBlueprintFunctionLibrary
     bool GetGazeData(FEyeTrackerGazeData& OutGazeData);
 }
 
-struct UEyeTrackerStereoGazeData
+struct FEyeTrackerStereoGazeData
 {
     FVector LeftEyeOrigin;
     FVector LeftEyeDirection;
@@ -23,7 +23,7 @@ struct UEyeTrackerStereoGazeData
     float ConfidenceValue;
 }
 
-struct UEyeTrackerGazeData
+struct FEyeTrackerGazeData
 {
     FVector GazeOrigin;
     FVector GazeDirection;

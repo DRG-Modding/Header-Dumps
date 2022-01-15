@@ -9,7 +9,7 @@ class UImageWriteBlueprintLibrary : UBlueprintFunctionLibrary
     void ExportToDisk(UTexture* Texture, FString Filename, const FImageWriteOptions& options);
 }
 
-struct UImageWriteOptions
+struct FImageWriteOptions
 {
     EDesiredImageFormat Format;
     FImageWriteOptionsOnComplete OnComplete;

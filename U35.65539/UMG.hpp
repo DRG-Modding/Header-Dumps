@@ -1958,11 +1958,11 @@ class UWrapBoxSlot : UPanelSlot
     void SetFillEmptySpace(bool InbFillEmptySpace);
 }
 
-struct UEventReply
+struct FEventReply
 {
 }
 
-struct UWidgetTransform
+struct FWidgetTransform
 {
     FVector2D Translation;
     FVector2D Scale;
@@ -1970,11 +1970,11 @@ struct UWidgetTransform
     float Angle;
 }
 
-struct UPaintContext
+struct FPaintContext
 {
 }
 
-struct UShapedTextOptions
+struct FShapedTextOptions
 {
     uint8 bOverride_TextShapingMethod;
     uint8 bOverride_TextFlowDirection;
@@ -1982,7 +1982,7 @@ struct UShapedTextOptions
     ETextFlowDirection TextFlowDirection;
 }
 
-struct UAnimationEventBinding
+struct FAnimationEventBinding
 {
     UWidgetAnimation* Animation;
     FAnimationEventBindingDelegate Delegate;
@@ -1991,29 +1991,29 @@ struct UAnimationEventBinding
     FName UserTag;
 }
 
-struct UNamedSlotBinding
+struct FNamedSlotBinding
 {
     FName Name;
     UWidget* Content;
 }
 
-struct UAnchorData
+struct FAnchorData
 {
     FMargin Offsets;
     FAnchors Anchors;
     FVector2D Alignment;
 }
 
-struct UDynamicPropertyPath : FCachedPropertyPath
+struct FDynamicPropertyPath : FCachedPropertyPath
 {
 }
 
-struct UMovieScene2DTransformMask
+struct FMovieScene2DTransformMask
 {
     uint32 Mask;
 }
 
-struct UMovieScene2DTransformSectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieScene2DTransformSectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneFloatChannel Translation;
     FMovieSceneFloatChannel Rotation;
@@ -2023,7 +2023,7 @@ struct UMovieScene2DTransformSectionTemplate : FMovieScenePropertySectionTemplat
     FMovieScene2DTransformMask Mask;
 }
 
-struct UMovieSceneMarginSectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneMarginSectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneFloatChannel TopCurve;
     FMovieSceneFloatChannel LeftCurve;
@@ -2032,22 +2032,22 @@ struct UMovieSceneMarginSectionTemplate : FMovieScenePropertySectionTemplate
     EMovieSceneBlendType BlendType;
 }
 
-struct UMovieSceneWidgetMaterialSectionTemplate : FMovieSceneParameterSectionTemplate
+struct FMovieSceneWidgetMaterialSectionTemplate : FMovieSceneParameterSectionTemplate
 {
     TArray<FName> BrushPropertyNamePath;
 }
 
-struct URichTextStyleRow : FTableRowBase
+struct FRichTextStyleRow : FTableRowBase
 {
     FTextBlockStyle TextStyle;
 }
 
-struct URichImageRow : FTableRowBase
+struct FRichImageRow : FTableRowBase
 {
     FSlateBrush Brush;
 }
 
-struct USlateMeshVertex
+struct FSlateMeshVertex
 {
     FVector2D Position;
     FColor Color;
@@ -2059,19 +2059,19 @@ struct USlateMeshVertex
     FVector2D UV5;
 }
 
-struct USlateChildSize
+struct FSlateChildSize
 {
     float Value;
     TEnumAsByte<ESlateSizeRule::Type> SizeRule;
 }
 
-struct UUserWidgetPool
+struct FUserWidgetPool
 {
     TArray<UUserWidget*> ActiveWidgets;
     TArray<UUserWidget*> InactiveWidgets;
 }
 
-struct UWidgetAnimationBinding
+struct FWidgetAnimationBinding
 {
     FName WidgetName;
     FName SlotWidgetName;
@@ -2079,7 +2079,7 @@ struct UWidgetAnimationBinding
     bool bIsRootWidget;
 }
 
-struct UBlueprintWidgetAnimationDelegateBinding
+struct FBlueprintWidgetAnimationDelegateBinding
 {
     EWidgetAnimationEvent Action;
     FName AnimationToBind;
@@ -2087,7 +2087,7 @@ struct UBlueprintWidgetAnimationDelegateBinding
     FName UserTag;
 }
 
-struct UDelegateRuntimeBinding
+struct FDelegateRuntimeBinding
 {
     FString ObjectName;
     FName PropertyName;
@@ -2096,11 +2096,11 @@ struct UDelegateRuntimeBinding
     EBindingKind Kind;
 }
 
-struct UWidgetComponentInstanceData : FSceneComponentInstanceData
+struct FWidgetComponentInstanceData : FSceneComponentInstanceData
 {
 }
 
-struct UWidgetNavigationData
+struct FWidgetNavigationData
 {
     EUINavigationRule Rule;
     FName WidgetToFocus;

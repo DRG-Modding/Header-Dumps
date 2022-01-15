@@ -35,7 +35,7 @@ class UAnalyticsBlueprintLibrary : UBlueprintFunctionLibrary
     void EndSession();
 }
 
-struct UAnalyticsEventAttr
+struct FAnalyticsEventAttr
 {
     FString Name;
     FString Value;

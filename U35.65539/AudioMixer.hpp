@@ -105,7 +105,7 @@ class USynthSound : USoundWaveProcedural
     USynthComponent* OwningSynthComponent;
 }
 
-struct USubmixEffectDynamicsProcessorSettings
+struct FSubmixEffectDynamicsProcessorSettings
 {
     ESubmixEffectDynamicsProcessorType DynamicsProcessorType;
     ESubmixEffectDynamicsPeakMode PeakMode;
@@ -127,19 +127,19 @@ struct USubmixEffectDynamicsProcessorSettings
     FSubmixEffectDynamicProcessorFilterSettings KeyLowshelf;
 }
 
-struct USubmixEffectDynamicProcessorFilterSettings
+struct FSubmixEffectDynamicProcessorFilterSettings
 {
     uint8 bEnabled;
     float Cutoff;
     float GainDb;
 }
 
-struct USubmixEffectSubmixEQSettings
+struct FSubmixEffectSubmixEQSettings
 {
     TArray<FSubmixEffectEQBand> EQBands;
 }
 
-struct USubmixEffectEQBand
+struct FSubmixEffectEQBand
 {
     float Frequency;
     float Bandwidth;
@@ -147,7 +147,7 @@ struct USubmixEffectEQBand
     uint8 bEnabled;
 }
 
-struct USubmixEffectReverbSettings
+struct FSubmixEffectReverbSettings
 {
     float Density;
     float Diffusion;
@@ -164,7 +164,7 @@ struct USubmixEffectReverbSettings
     float DryLevel;
 }
 
-struct USubmixEffectReverbFastSettings
+struct FSubmixEffectReverbFastSettings
 {
     bool bBypass;
     float Density;

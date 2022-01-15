@@ -198,21 +198,21 @@ class UModioSubsystem : UEngineSubsystem
     void DisableModManagement();
 }
 
-struct UModioYoutubeURLList
+struct FModioYoutubeURLList
 {
 }
 
-struct UModioSketchfabURLList
+struct FModioSketchfabURLList
 {
 }
 
-struct UModioModInfoList
+struct FModioModInfoList
 {
     FModioPagedResult PagedResult;
     TArray<FModioModInfo> InternalList;
 }
 
-struct UModioModInfo
+struct FModioModInfo
 {
     FModioModID ModId;
     FString ProfileName;
@@ -235,7 +235,7 @@ struct UModioModInfo
     FModioModStats Stats;
 }
 
-struct UModioModStats
+struct FModioModStats
 {
     int64 PopularityRankPosition;
     int64 PopularityRankTotalMods;
@@ -249,18 +249,18 @@ struct UModioModStats
     FString RatingDisplayText;
 }
 
-struct UModioModTag
+struct FModioModTag
 {
     FString Tag;
 }
 
-struct UModioMetadata
+struct FModioMetadata
 {
     FString Key;
     FString Value;
 }
 
-struct UModioFileMetadata
+struct FModioFileMetadata
 {
     FModioFileMetadataID MetadataId;
     FModioModID ModId;
@@ -274,15 +274,15 @@ struct UModioFileMetadata
     FString MetadataBlob;
 }
 
-struct UModioModID
+struct FModioModID
 {
 }
 
-struct UModioFileMetadataID
+struct FModioFileMetadataID
 {
 }
 
-struct UModioUser
+struct FModioUser
 {
     FModioUserID UserId;
     FString Username;
@@ -290,11 +290,11 @@ struct UModioUser
     FString ProfileUrl;
 }
 
-struct UModioUserID
+struct FModioUserID
 {
 }
 
-struct UModioPagedResult
+struct FModioPagedResult
 {
     int32 PageIndex;
     int32 PageSize;
@@ -303,87 +303,87 @@ struct UModioPagedResult
     int32 ResultCount;
 }
 
-struct UModioModTagOptions
+struct FModioModTagOptions
 {
     FModioPagedResult PagedResult;
     TArray<FModioModTagInfo> InternalList;
 }
 
-struct UModioModTagInfo
+struct FModioModTagInfo
 {
     FString TagGroupName;
     TArray<FString> TagGroupValues;
     bool bAllowMultipleSelection;
 }
 
-struct UModioErrorCode
+struct FModioErrorCode
 {
 }
 
-struct UModioModManagementEvent
+struct FModioModManagementEvent
 {
     FModioModID ID;
     EModioModManagementEventType Event;
     FModioErrorCode Status;
 }
 
-struct UModioOptionalModInfoList
+struct FModioOptionalModInfoList
 {
 }
 
-struct UModioOptionalModInfo
+struct FModioOptionalModInfo
 {
 }
 
-struct UModioOptionalImage
+struct FModioOptionalImage
 {
 }
 
-struct UModioOptionalModTagOptions
+struct FModioOptionalModTagOptions
 {
 }
 
-struct UModioOptionalTerms
+struct FModioOptionalTerms
 {
 }
 
-struct UModioOptionalModDependencyList
+struct FModioOptionalModDependencyList
 {
 }
 
-struct UModioAuthenticationParams
+struct FModioAuthenticationParams
 {
     FString AuthToken;
     FString UserEmail;
     bool bUserHasAcceptedTerms;
 }
 
-struct UModioEmailAuthCode
+struct FModioEmailAuthCode
 {
 }
 
-struct UModioEmailAddress
+struct FModioEmailAddress
 {
 }
 
-struct UModioApiKey
+struct FModioApiKey
 {
 }
 
-struct UModioGameID
+struct FModioGameID
 {
 }
 
-struct UModioFilterParams
+struct FModioFilterParams
 {
 }
 
-struct UModioImage
+struct FModioImage
 {
     FString ImagePath;
 }
 
-struct UModioInitializeOptions
+struct FModioInitializeOptions
 {
     FModioGameID GameId;
     FModioApiKey ApiKey;
@@ -391,27 +391,27 @@ struct UModioInitializeOptions
     EModioPortal PortalInUse;
 }
 
-struct UModioModCollectionEntry
+struct FModioModCollectionEntry
 {
 }
 
-struct UModioModDependencyList
+struct FModioModDependencyList
 {
     FModioPagedResult PagedResult;
     TArray<FModioModDependency> InternalList;
 }
 
-struct UModioModDependency
+struct FModioModDependency
 {
     FModioModID ModId;
     FString ModName;
 }
 
-struct UModioOptionalModProgressInfo
+struct FModioOptionalModProgressInfo
 {
 }
 
-struct UModioModProgressInfo
+struct FModioModProgressInfo
 {
     int64 TotalDownloadSize;
     int64 CurrentlyDownloadedBytes;
@@ -420,11 +420,11 @@ struct UModioModProgressInfo
     FModioModID ID;
 }
 
-struct UModioReportParams
+struct FModioReportParams
 {
 }
 
-struct UModioTerms
+struct FModioTerms
 {
     FString AgreeButtonText;
     FString DisagreeButtonText;
@@ -434,18 +434,18 @@ struct UModioTerms
     FModioLink ManageLink;
 }
 
-struct UModioLink
+struct FModioLink
 {
     FString Text;
     FString URL;
     bool bRequired;
 }
 
-struct UModioOptionalUser
+struct FModioOptionalUser
 {
 }
 
-struct UModioValidationError
+struct FModioValidationError
 {
     FString FieldName;
     FString ValidationFailureDescription;

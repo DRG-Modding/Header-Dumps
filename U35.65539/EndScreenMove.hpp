@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_EndScreenMove_HPP
 #define UE4SS_SDK_EndScreenMove_HPP
 
-class UDEPRECATED_EndScreenMove
+struct FEndScreenMove
 {
     UAnimSequence* Walk_2_2D5808D7436DCFFCD4A0E9BBCDEFD20E;
     UAnimSequence* Pose_Optional_4_0C5B3E154236E596C7B98C8674399C23;

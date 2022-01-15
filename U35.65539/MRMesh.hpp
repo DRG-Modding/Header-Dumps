@@ -49,7 +49,7 @@ class UMRMeshComponent : UPrimitiveComponent
     void Clear();
 }
 
-struct UMRMeshConfiguration
+struct FMRMeshConfiguration
 {
 }
 

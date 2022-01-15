@@ -344,7 +344,7 @@ class UMaterialExpressionLandscapeVisibilityMask : UMaterialExpression
     FGuid ExpressionGUID;
 }
 
-struct ULandscapeLayer
+struct FLandscapeLayer
 {
     FGuid Guid;
     FName Name;
@@ -357,42 +357,42 @@ struct ULandscapeLayer
     TMap<ULandscapeLayerInfoObject*, bool> WeightmapLayerAllocationBlend;
 }
 
-struct ULandscapeLayerBrush
+struct FLandscapeLayerBrush
 {
 }
 
-struct ULandscapeLayerComponentData
+struct FLandscapeLayerComponentData
 {
     FHeightmapData HeightmapData;
     FWeightmapData WeightmapData;
 }
 
-struct UWeightmapData
+struct FWeightmapData
 {
     TArray<UTexture2D*> Textures;
     TArray<FWeightmapLayerAllocationInfo> LayerAllocations;
     TArray<ULandscapeWeightmapUsage*> TextureUsages;
 }
 
-struct UWeightmapLayerAllocationInfo
+struct FWeightmapLayerAllocationInfo
 {
     ULandscapeLayerInfoObject* LayerInfo;
     uint8 WeightmapTextureIndex;
     uint8 WeightmapTextureChannel;
 }
 
-struct UHeightmapData
+struct FHeightmapData
 {
     UTexture2D* Texture;
 }
 
-struct ULandscapeComponentMaterialOverride
+struct FLandscapeComponentMaterialOverride
 {
     FPerPlatformInt LODIndex;
     UMaterialInterface* Material;
 }
 
-struct ULandscapeEditToolRenderData
+struct FLandscapeEditToolRenderData
 {
     UMaterialInterface* ToolMaterial;
     UMaterialInterface* GizmoMaterial;
@@ -405,11 +405,11 @@ struct ULandscapeEditToolRenderData
     UTexture2D* DirtyTexture;
 }
 
-struct UGizmoSelectData
+struct FGizmoSelectData
 {
 }
 
-struct UGrassVariety
+struct FGrassVariety
 {
     UStaticMesh* GrassMesh;
     FPerPlatformFloat GrassDensity;
@@ -431,56 +431,56 @@ struct UGrassVariety
     bool bKeepInstanceBufferCPUCopy;
 }
 
-struct ULandscapeInfoLayerSettings
+struct FLandscapeInfoLayerSettings
 {
     ULandscapeLayerInfoObject* LayerInfoObj;
     FName LayerName;
 }
 
-struct ULandscapeMaterialTextureStreamingInfo
+struct FLandscapeMaterialTextureStreamingInfo
 {
     FName TextureName;
     float TexelFactor;
 }
 
-struct ULandscapeProxyMaterialOverride
+struct FLandscapeProxyMaterialOverride
 {
     FPerPlatformInt LODIndex;
     UMaterialInterface* Material;
 }
 
-struct ULandscapeImportLayerInfo
+struct FLandscapeImportLayerInfo
 {
 }
 
-struct ULandscapeLayerStruct
+struct FLandscapeLayerStruct
 {
     ULandscapeLayerInfoObject* LayerInfoObj;
 }
 
-struct ULandscapeEditorLayerSettings
+struct FLandscapeEditorLayerSettings
 {
 }
 
-struct ULandscapeSplineConnection
+struct FLandscapeSplineConnection
 {
     ULandscapeSplineSegment* Segment;
     uint8 End;
 }
 
-struct UForeignWorldSplineData
+struct FForeignWorldSplineData
 {
 }
 
-struct UForeignSplineSegmentData
+struct FForeignSplineSegmentData
 {
 }
 
-struct UForeignControlPointData
+struct FForeignControlPointData
 {
 }
 
-struct ULandscapeSplineMeshEntry
+struct FLandscapeSplineMeshEntry
 {
     UStaticMesh* Mesh;
     TArray<UMaterialInterface*> MaterialOverrides;
@@ -493,14 +493,14 @@ struct ULandscapeSplineMeshEntry
     TEnumAsByte<ESplineMeshAxis::Type> UpAxis;
 }
 
-struct ULandscapeSplineSegmentConnection
+struct FLandscapeSplineSegmentConnection
 {
     ULandscapeSplineControlPoint* ControlPoint;
     float TangentLen;
     FName SocketName;
 }
 
-struct ULandscapeSplineInterpPoint
+struct FLandscapeSplineInterpPoint
 {
     FVector Center;
     FVector Left;
@@ -514,14 +514,14 @@ struct ULandscapeSplineInterpPoint
     float StartEndFalloff;
 }
 
-struct UGrassInput
+struct FGrassInput
 {
     FName Name;
     ULandscapeGrassType* GrassType;
     FExpressionInput Input;
 }
 
-struct ULayerBlendInput
+struct FLayerBlendInput
 {
     FName LayerName;
     TEnumAsByte<ELandscapeLayerBlendType> BlendType;

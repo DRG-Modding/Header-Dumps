@@ -1391,12 +1391,12 @@ class UVisualLoggerExtension : UObject
 {
 }
 
-struct UAIRequestID
+struct FAIRequestID
 {
     uint32 RequestID;
 }
 
-struct UAIStimulus
+struct FAIStimulus
 {
     float Age;
     float ExpirationAge;
@@ -1407,51 +1407,51 @@ struct UAIStimulus
     uint8 bSuccessfullySensed;
 }
 
-struct UAIDataProviderValue
+struct FAIDataProviderValue
 {
     UAIDataProvider* DataBinding;
     FName DataField;
 }
 
-struct UAIDataProviderTypedValue : FAIDataProviderValue
+struct FAIDataProviderTypedValue : FAIDataProviderValue
 {
     UClass* PropertyType;
 }
 
-struct UAIDataProviderBoolValue : FAIDataProviderTypedValue
+struct FAIDataProviderBoolValue : FAIDataProviderTypedValue
 {
     bool DefaultValue;
 }
 
-struct UAIDataProviderFloatValue : FAIDataProviderTypedValue
+struct FAIDataProviderFloatValue : FAIDataProviderTypedValue
 {
     float DefaultValue;
 }
 
-struct UAIDataProviderIntValue : FAIDataProviderTypedValue
+struct FAIDataProviderIntValue : FAIDataProviderTypedValue
 {
     int32 DefaultValue;
 }
 
-struct UAIDataProviderStructValue : FAIDataProviderValue
+struct FAIDataProviderStructValue : FAIDataProviderValue
 {
 }
 
-struct UActorPerceptionBlueprintInfo
+struct FActorPerceptionBlueprintInfo
 {
     AActor* Target;
     TArray<FAIStimulus> LastSensedStimuli;
     uint8 bIsHostile;
 }
 
-struct UAISenseAffiliationFilter
+struct FAISenseAffiliationFilter
 {
     uint8 bDetectEnemies;
     uint8 bDetectNeutrals;
     uint8 bDetectFriendlies;
 }
 
-struct UAIDamageEvent
+struct FAIDamageEvent
 {
     float Amount;
     FVector Location;
@@ -1460,7 +1460,7 @@ struct UAIDamageEvent
     AActor* Instigator;
 }
 
-struct UAINoiseEvent
+struct FAINoiseEvent
 {
     FVector NoiseLocation;
     float Loudness;
@@ -1469,47 +1469,47 @@ struct UAINoiseEvent
     FName Tag;
 }
 
-struct UAIPredictionEvent
+struct FAIPredictionEvent
 {
     AActor* Requestor;
     AActor* PredictedActor;
 }
 
-struct UAISightEvent
+struct FAISightEvent
 {
     AActor* SeenActor;
     AActor* Observer;
 }
 
-struct UAITeamStimulusEvent
+struct FAITeamStimulusEvent
 {
     AActor* Broadcaster;
     AActor* enemy;
 }
 
-struct UAITouchEvent
+struct FAITouchEvent
 {
     AActor* TouchReceiver;
     AActor* OtherActor;
 }
 
-struct UIntervalCountdown
+struct FIntervalCountdown
 {
     float Interval;
 }
 
-struct UAIMoveRequest
+struct FAIMoveRequest
 {
     AActor* GoalActor;
 }
 
-struct UBehaviorTreeTemplateInfo
+struct FBehaviorTreeTemplateInfo
 {
     UBehaviorTree* Asset;
     UBTCompositeNode* Template;
 }
 
-struct UBlackboardKeySelector
+struct FBlackboardKeySelector
 {
     TArray<UBlackboardKeyType*> AllowedTypes;
     FName SelectedKeyName;
@@ -1518,14 +1518,14 @@ struct UBlackboardKeySelector
     uint8 bNoneIsAllowedValue;
 }
 
-struct UBlackboardEntry
+struct FBlackboardEntry
 {
     FName EntryName;
     UBlackboardKeyType* KeyType;
     uint8 bInstanceSynced;
 }
 
-struct UBTCompositeChild
+struct FBTCompositeChild
 {
     UBTCompositeNode* ChildComposite;
     UBTTaskNode* ChildTask;
@@ -1533,19 +1533,19 @@ struct UBTCompositeChild
     TArray<FBTDecoratorLogic> DecoratorOps;
 }
 
-struct UBTDecoratorLogic
+struct FBTDecoratorLogic
 {
     TEnumAsByte<EBTDecoratorLogic::Type> Operation;
     uint16 Number;
 }
 
-struct UCrowdAvoidanceSamplingPattern
+struct FCrowdAvoidanceSamplingPattern
 {
     TArray<float> Angles;
     TArray<float> Radii;
 }
 
-struct UCrowdAvoidanceConfig
+struct FCrowdAvoidanceConfig
 {
     float VelocityBias;
     float DesiredVelocityWeight;
@@ -1559,19 +1559,19 @@ struct UCrowdAvoidanceConfig
     uint8 AdaptiveDepth;
 }
 
-struct UEnvQueryInstanceCache
+struct FEnvQueryInstanceCache
 {
     UEnvQuery* Template;
 }
 
-struct UEnvQueryRequest
+struct FEnvQueryRequest
 {
     UEnvQuery* QueryTemplate;
     UObject* Owner;
     UWorld* World;
 }
 
-struct UEQSParametrizedQueryExecutionRequest
+struct FEQSParametrizedQueryExecutionRequest
 {
     UEnvQuery* QueryTemplate;
     TArray<FAIDynamicParam> QueryConfig;
@@ -1580,7 +1580,7 @@ struct UEQSParametrizedQueryExecutionRequest
     uint8 bUseBBKeyForQueryTemplate;
 }
 
-struct UAIDynamicParam
+struct FAIDynamicParam
 {
     FName ParamName;
     EAIParamType ParamType;
@@ -1588,14 +1588,14 @@ struct UAIDynamicParam
     FBlackboardKeySelector BBKey;
 }
 
-struct UEnvQueryResult
+struct FEnvQueryResult
 {
     TSubclassOf<UEnvQueryItemType> ItemType;
     int32 OptionIndex;
     int32 QueryID;
 }
 
-struct UEnvOverlapData
+struct FEnvOverlapData
 {
     float ExtentX;
     float ExtentY;
@@ -1608,7 +1608,7 @@ struct UEnvOverlapData
     uint8 bSkipOverlapQuerier;
 }
 
-struct UEnvTraceData
+struct FEnvTraceData
 {
     int32 VersionNum;
     TSubclassOf<UNavigationQueryFilter> NavigationFilter;
@@ -1630,7 +1630,7 @@ struct UEnvTraceData
     uint8 bCanProjectDown;
 }
 
-struct UEnvDirection
+struct FEnvDirection
 {
     TSubclassOf<UEnvQueryContext> LineFrom;
     TSubclassOf<UEnvQueryContext> LineTo;
@@ -1638,29 +1638,29 @@ struct UEnvDirection
     TEnumAsByte<EEnvDirection::Type> DirMode;
 }
 
-struct UEnvNamedValue
+struct FEnvNamedValue
 {
     FName ParamName;
     EAIParamType ParamType;
     float Value;
 }
 
-struct UGenericTeamId
+struct FGenericTeamId
 {
     uint8 TeamID;
 }
 
-struct UPawnActionStack
+struct FPawnActionStack
 {
     UPawnAction* TopAction;
 }
 
-struct UPawnActionEvent
+struct FPawnActionEvent
 {
     UPawnAction* Action;
 }
 
-class UDefault__AISenseBlueprintListener
+struct FDefault__AISenseBlueprintListener
 {
 }
 

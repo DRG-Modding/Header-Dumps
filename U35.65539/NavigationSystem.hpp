@@ -409,36 +409,36 @@ class URecastNavMeshDataChunk : UNavigationDataChunk
 {
 }
 
-struct UNavCollisionBox
+struct FNavCollisionBox
 {
     FVector Offset;
     FVector Extent;
 }
 
-struct UNavCollisionCylinder
+struct FNavCollisionCylinder
 {
     FVector Offset;
     float Radius;
     float Height;
 }
 
-struct USupportedAreaData
+struct FSupportedAreaData
 {
     FString AreaClassName;
     int32 AreaID;
     UClass* AreaClass;
 }
 
-struct UNavGraphNode
+struct FNavGraphNode
 {
     UObject* Owner;
 }
 
-struct UNavGraphEdge
+struct FNavGraphEdge
 {
 }
 
-struct UNavigationFilterFlags
+struct FNavigationFilterFlags
 {
     uint8 bNavFlag0;
     uint8 bNavFlag1;
@@ -458,7 +458,7 @@ struct UNavigationFilterFlags
     uint8 bNavFlag15;
 }
 
-struct UNavigationFilterArea
+struct FNavigationFilterArea
 {
     TSubclassOf<UNavArea> AreaClass;
     float TravelCostOverride;
@@ -468,12 +468,12 @@ struct UNavigationFilterArea
     uint8 bOverrideEnteringCost;
 }
 
-struct UNavLinkCustomInstanceData : FActorComponentInstanceData
+struct FNavLinkCustomInstanceData : FActorComponentInstanceData
 {
     uint32 NavLinkUserId;
 }
 
-struct URecastNavMeshGenerationProperties
+struct FRecastNavMeshGenerationProperties
 {
     int32 TilePoolSize;
     float TileSizeUU;

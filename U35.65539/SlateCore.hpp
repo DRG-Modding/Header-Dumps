@@ -32,11 +32,11 @@ class USlateWidgetStyleContainerInterface : UInterface
 {
 }
 
-struct UGeometry
+struct FGeometry
 {
 }
 
-struct USlateBrush
+struct FSlateBrush
 {
     FVector2D ImageSize;
     FMargin Margin;
@@ -52,13 +52,13 @@ struct USlateBrush
     uint8 bHasUObject;
 }
 
-struct USlateColor
+struct FSlateColor
 {
     FLinearColor SpecifiedColor;
     TEnumAsByte<ESlateColorStylingMode::Type> ColorUseRule;
 }
 
-struct UMargin
+struct FMargin
 {
     float Left;
     float Top;
@@ -66,31 +66,31 @@ struct UMargin
     float Bottom;
 }
 
-struct UInputEvent
+struct FInputEvent
 {
 }
 
-struct UPointerEvent : FInputEvent
+struct FPointerEvent : FInputEvent
 {
 }
 
-struct UCharacterEvent : FInputEvent
+struct FCharacterEvent : FInputEvent
 {
 }
 
-struct UKeyEvent : FInputEvent
+struct FKeyEvent : FInputEvent
 {
 }
 
-struct UNavigationEvent : FInputEvent
+struct FNavigationEvent : FInputEvent
 {
 }
 
-struct UAnalogInputEvent : FKeyEvent
+struct FAnalogInputEvent : FKeyEvent
 {
 }
 
-struct USlateFontInfo
+struct FSlateFontInfo
 {
     UObject* FontObject;
     UObject* FontMaterial;
@@ -99,7 +99,7 @@ struct USlateFontInfo
     int32 Size;
 }
 
-struct UFontOutlineSettings
+struct FFontOutlineSettings
 {
     int32 OutlineSize;
     bool bSeparateFillAlpha;
@@ -108,11 +108,11 @@ struct UFontOutlineSettings
     FLinearColor OutlineColor;
 }
 
-struct USlateWidgetStyle
+struct FSlateWidgetStyle
 {
 }
 
-struct UTableRowStyle : FSlateWidgetStyle
+struct FTableRowStyle : FSlateWidgetStyle
 {
     FSlateBrush SelectorFocusedBrush;
     FSlateBrush ActiveHoveredBrush;
@@ -132,19 +132,19 @@ struct UTableRowStyle : FSlateWidgetStyle
     FSlateBrush InactiveHighlightedBrush;
 }
 
-struct UComboBoxStyle : FSlateWidgetStyle
+struct FComboBoxStyle : FSlateWidgetStyle
 {
     FComboButtonStyle ComboButtonStyle;
     FSlateSound PressedSlateSound;
     FSlateSound SelectionChangeSlateSound;
 }
 
-struct USlateSound
+struct FSlateSound
 {
     UObject* ResourceObject;
 }
 
-struct UComboButtonStyle : FSlateWidgetStyle
+struct FComboButtonStyle : FSlateWidgetStyle
 {
     FButtonStyle ButtonStyle;
     FSlateBrush DownArrowImage;
@@ -154,7 +154,7 @@ struct UComboButtonStyle : FSlateWidgetStyle
     FMargin MenuBorderPadding;
 }
 
-struct UButtonStyle : FSlateWidgetStyle
+struct FButtonStyle : FSlateWidgetStyle
 {
     FSlateBrush Normal;
     FSlateBrush Hovered;
@@ -166,7 +166,7 @@ struct UButtonStyle : FSlateWidgetStyle
     FSlateSound HoveredSlateSound;
 }
 
-struct UEditableTextStyle : FSlateWidgetStyle
+struct FEditableTextStyle : FSlateWidgetStyle
 {
     FSlateFontInfo Font;
     FSlateColor ColorAndOpacity;
@@ -175,7 +175,7 @@ struct UEditableTextStyle : FSlateWidgetStyle
     FSlateBrush CaretImage;
 }
 
-struct UEditableTextBoxStyle : FSlateWidgetStyle
+struct FEditableTextBoxStyle : FSlateWidgetStyle
 {
     FSlateBrush BackgroundImageNormal;
     FSlateBrush BackgroundImageHovered;
@@ -191,7 +191,7 @@ struct UEditableTextBoxStyle : FSlateWidgetStyle
     FScrollBarStyle ScrollBarStyle;
 }
 
-struct UScrollBarStyle : FSlateWidgetStyle
+struct FScrollBarStyle : FSlateWidgetStyle
 {
     FSlateBrush HorizontalBackgroundImage;
     FSlateBrush VerticalBackgroundImage;
@@ -204,7 +204,7 @@ struct UScrollBarStyle : FSlateWidgetStyle
     FSlateBrush DraggedThumbImage;
 }
 
-struct UTextBlockStyle : FSlateWidgetStyle
+struct FTextBlockStyle : FSlateWidgetStyle
 {
     FSlateFontInfo Font;
     FSlateColor ColorAndOpacity;
@@ -217,7 +217,7 @@ struct UTextBlockStyle : FSlateWidgetStyle
     FSlateBrush UnderlineBrush;
 }
 
-struct USpinBoxStyle : FSlateWidgetStyle
+struct FSpinBoxStyle : FSlateWidgetStyle
 {
     FSlateBrush BackgroundBrush;
     FSlateBrush HoveredBackgroundBrush;
@@ -228,39 +228,39 @@ struct USpinBoxStyle : FSlateWidgetStyle
     FMargin TextPadding;
 }
 
-struct UFocusEvent
+struct FFocusEvent
 {
 }
 
-struct UMotionEvent : FInputEvent
+struct FMotionEvent : FInputEvent
 {
 }
 
-struct UCompositeFont
+struct FCompositeFont
 {
     FTypeface DefaultTypeface;
     FCompositeFallbackFont FallbackTypeface;
     TArray<FCompositeSubFont> SubTypefaces;
 }
 
-struct UCompositeFallbackFont
+struct FCompositeFallbackFont
 {
     FTypeface Typeface;
     float ScalingFactor;
 }
 
-struct UTypeface
+struct FTypeface
 {
     TArray<FTypefaceEntry> Fonts;
 }
 
-struct UTypefaceEntry
+struct FTypefaceEntry
 {
     FName Name;
     FFontData Font;
 }
 
-struct UFontData
+struct FFontData
 {
     FString FontFilename;
     EFontHinting Hinting;
@@ -269,17 +269,17 @@ struct UFontData
     UObject* FontFaceAsset;
 }
 
-struct UCompositeSubFont : FCompositeFallbackFont
+struct FCompositeSubFont : FCompositeFallbackFont
 {
     TArray<FInt32Range> CharacterRanges;
     FString Cultures;
 }
 
-struct UCaptureLostEvent
+struct FCaptureLostEvent
 {
 }
 
-struct UWindowStyle : FSlateWidgetStyle
+struct FWindowStyle : FSlateWidgetStyle
 {
     FButtonStyle MinimizeButtonStyle;
     FButtonStyle MaximizeButtonStyle;
@@ -297,13 +297,13 @@ struct UWindowStyle : FSlateWidgetStyle
     FSlateBrush ChildBackgroundBrush;
 }
 
-struct UScrollBorderStyle : FSlateWidgetStyle
+struct FScrollBorderStyle : FSlateWidgetStyle
 {
     FSlateBrush TopShadowBrush;
     FSlateBrush BottomShadowBrush;
 }
 
-struct UScrollBoxStyle : FSlateWidgetStyle
+struct FScrollBoxStyle : FSlateWidgetStyle
 {
     FSlateBrush TopShadowBrush;
     FSlateBrush BottomShadowBrush;
@@ -311,7 +311,7 @@ struct UScrollBoxStyle : FSlateWidgetStyle
     FSlateBrush RightShadowBrush;
 }
 
-struct UDockTabStyle : FSlateWidgetStyle
+struct FDockTabStyle : FSlateWidgetStyle
 {
     FButtonStyle CloseButtonStyle;
     FSlateBrush NormalBrush;
@@ -327,7 +327,7 @@ struct UDockTabStyle : FSlateWidgetStyle
     FSlateColor FlashColor;
 }
 
-struct UHeaderRowStyle : FSlateWidgetStyle
+struct FHeaderRowStyle : FSlateWidgetStyle
 {
     FTableColumnHeaderStyle ColumnStyle;
     FTableColumnHeaderStyle LastColumnStyle;
@@ -336,13 +336,13 @@ struct UHeaderRowStyle : FSlateWidgetStyle
     FSlateColor ForegroundColor;
 }
 
-struct USplitterStyle : FSlateWidgetStyle
+struct FSplitterStyle : FSlateWidgetStyle
 {
     FSlateBrush HandleNormalBrush;
     FSlateBrush HandleHighlightBrush;
 }
 
-struct UTableColumnHeaderStyle : FSlateWidgetStyle
+struct FTableColumnHeaderStyle : FSlateWidgetStyle
 {
     FSlateBrush SortPrimaryAscendingImage;
     FSlateBrush SortPrimaryDescendingImage;
@@ -355,13 +355,13 @@ struct UTableColumnHeaderStyle : FSlateWidgetStyle
     FSlateBrush MenuDropdownHoveredBorderBrush;
 }
 
-struct UInlineTextImageStyle : FSlateWidgetStyle
+struct FInlineTextImageStyle : FSlateWidgetStyle
 {
     FSlateBrush Image;
     int16 Baseline;
 }
 
-struct UVolumeControlStyle : FSlateWidgetStyle
+struct FVolumeControlStyle : FSlateWidgetStyle
 {
     FSliderStyle SliderStyle;
     FSlateBrush HighVolumeImage;
@@ -371,7 +371,7 @@ struct UVolumeControlStyle : FSlateWidgetStyle
     FSlateBrush MutedImage;
 }
 
-struct USliderStyle : FSlateWidgetStyle
+struct FSliderStyle : FSlateWidgetStyle
 {
     FSlateBrush NormalBarImage;
     FSlateBrush HoveredBarImage;
@@ -382,7 +382,7 @@ struct USliderStyle : FSlateWidgetStyle
     float BarThickness;
 }
 
-struct USearchBoxStyle : FSlateWidgetStyle
+struct FSearchBoxStyle : FSlateWidgetStyle
 {
     FEditableTextBoxStyle TextBoxStyle;
     FSlateFontInfo ActiveFontInfo;
@@ -394,34 +394,34 @@ struct USearchBoxStyle : FSlateWidgetStyle
     bool bLeftAlignButtons;
 }
 
-struct UExpandableAreaStyle : FSlateWidgetStyle
+struct FExpandableAreaStyle : FSlateWidgetStyle
 {
     FSlateBrush CollapsedImage;
     FSlateBrush ExpandedImage;
     float RolloutAnimationSeconds;
 }
 
-struct UProgressBarStyle : FSlateWidgetStyle
+struct FProgressBarStyle : FSlateWidgetStyle
 {
     FSlateBrush BackgroundImage;
     FSlateBrush FillImage;
     FSlateBrush MarqueeImage;
 }
 
-struct UInlineEditableTextBlockStyle : FSlateWidgetStyle
+struct FInlineEditableTextBlockStyle : FSlateWidgetStyle
 {
     FEditableTextBoxStyle EditableTextBoxStyle;
     FTextBlockStyle TextStyle;
 }
 
-struct UHyperlinkStyle : FSlateWidgetStyle
+struct FHyperlinkStyle : FSlateWidgetStyle
 {
     FButtonStyle UnderlineStyle;
     FTextBlockStyle TextStyle;
     FMargin Padding;
 }
 
-struct UCheckBoxStyle : FSlateWidgetStyle
+struct FCheckBoxStyle : FSlateWidgetStyle
 {
     TEnumAsByte<ESlateCheckBoxType::Type> CheckBoxType;
     FSlateBrush UncheckedImage;

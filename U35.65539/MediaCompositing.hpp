@@ -27,19 +27,19 @@ class UMovieSceneMediaTrack : UMovieSceneNameableTrack
     TArray<UMovieSceneSection*> MediaSections;
 }
 
-struct UMovieSceneMediaPlayerPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneMediaPlayerPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     UMediaSource* MediaSource;
     FFrameNumber SectionStartFrame;
     bool bLoop;
 }
 
-struct UMovieSceneMediaSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneMediaSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneMediaSectionParams Params;
 }
 
-struct UMovieSceneMediaSectionParams
+struct FMovieSceneMediaSectionParams
 {
     UMediaSoundComponent* MediaSoundComponent;
     UMediaSource* MediaSource;

@@ -21,7 +21,7 @@ class UAudioCaptureComponent : USynthComponent
     int32 JitterLatencyFrames;
 }
 
-struct UAudioCaptureDeviceInfo
+struct FAudioCaptureDeviceInfo
 {
     FName DeviceName;
     int32 NumInputChannels;

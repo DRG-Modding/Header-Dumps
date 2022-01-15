@@ -419,13 +419,13 @@ class UARCandidateObject : UDataAsset
     FBox GetBoundingBox();
 }
 
-struct UARSharedWorldReplicationState
+struct FARSharedWorldReplicationState
 {
     int32 PreviewImageOffset;
     int32 ARWorldOffset;
 }
 
-struct UARTraceResult
+struct FARTraceResult
 {
     float DistanceFromCamera;
     EARLineTraceChannels TraceChannel;
@@ -433,7 +433,7 @@ struct UARTraceResult
     UARTrackedGeometry* TrackedGeometry;
 }
 
-struct UARPose3D
+struct FARPose3D
 {
     FARSkeletonDefinition SkeletonDefinition;
     TArray<FTransform> JointTransforms;
@@ -441,28 +441,28 @@ struct UARPose3D
     EARJointTransformSpace JointTransformSpace;
 }
 
-struct UARSkeletonDefinition
+struct FARSkeletonDefinition
 {
     int32 NumJoints;
     TArray<FName> JointNames;
     TArray<int32> ParentIndices;
 }
 
-struct UARPose2D
+struct FARPose2D
 {
     FARSkeletonDefinition SkeletonDefinition;
     TArray<FVector2D> JointLocations;
     TArray<bool> IsJointTracked;
 }
 
-struct UARVideoFormat
+struct FARVideoFormat
 {
     int32 FPS;
     int32 Width;
     int32 Height;
 }
 
-struct UARSessionStatus
+struct FARSessionStatus
 {
     FString AdditionalInfo;
     EARSessionStatus Status;

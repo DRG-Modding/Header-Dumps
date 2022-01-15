@@ -13,7 +13,7 @@ class URawInputSettings : UDeveloperSettings
     bool bRegisterDefaultDevice;
 }
 
-struct URegisteredDeviceInfo
+struct FRegisteredDeviceInfo
 {
     int32 Handle;
     int32 VendorID;
@@ -21,7 +21,7 @@ struct URegisteredDeviceInfo
     FString DeviceName;
 }
 
-struct URawInputDeviceConfiguration
+struct FRawInputDeviceConfiguration
 {
     FString VendorID;
     FString ProductID;
@@ -29,13 +29,13 @@ struct URawInputDeviceConfiguration
     TArray<FRawInputDeviceButtonProperties> ButtonProperties;
 }
 
-struct URawInputDeviceButtonProperties
+struct FRawInputDeviceButtonProperties
 {
     uint8 bEnabled;
     FKey Key;
 }
 
-struct URawInputDeviceAxisProperties
+struct FRawInputDeviceAxisProperties
 {
     uint8 bEnabled;
     uint8 bMapToButton;
@@ -46,7 +46,7 @@ struct URawInputDeviceAxisProperties
     TArray<FRawInputDeviceAxisToButtonProperties> AxisToButtonMapping;
 }
 
-struct URawInputDeviceAxisToButtonProperties
+struct FRawInputDeviceAxisToButtonProperties
 {
     float AxisValue;
     float AxisThreshold;

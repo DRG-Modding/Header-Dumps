@@ -628,30 +628,30 @@ class UGizmoTransformProxyTransformSource : UGizmoBaseTransformSource
     UTransformProxy* Proxy;
 }
 
-struct UBrushStampData
+struct FBrushStampData
 {
 }
 
-struct UBehaviorInfo
+struct FBehaviorInfo
 {
     UInputBehavior* Behavior;
 }
 
-struct UInputRayHit
+struct FInputRayHit
 {
 }
 
-struct UActiveGizmo
+struct FActiveGizmo
 {
 }
 
-struct UGizmoFloatParameterChange
+struct FGizmoFloatParameterChange
 {
     float InitialValue;
     float CurrentValue;
 }
 
-struct UGizmoVec2ParameterChange
+struct FGizmoVec2ParameterChange
 {
     FVector2D InitialValue;
     FVector2D CurrentValue;

@@ -62,11 +62,11 @@ class UAnimationSharingStateProcessor : UObject
     UEnum* GetAnimationStateEnum();
 }
 
-struct UTickAnimationSharingFunction : FTickFunction
+struct FTickAnimationSharingFunction : FTickFunction
 {
 }
 
-struct UAnimationSharingScalability
+struct FAnimationSharingScalability
 {
     FPerPlatformBool UseBlendTransitions;
     FPerPlatformFloat BlendSignificanceValue;
@@ -74,7 +74,7 @@ struct UAnimationSharingScalability
     FPerPlatformFloat TickSignificanceValue;
 }
 
-struct UPerSkeletonAnimationSharingSetup
+struct FPerSkeletonAnimationSharingSetup
 {
     USkeleton* Skeleton;
     USkeletalMesh* SkeletalMesh;
@@ -84,7 +84,7 @@ struct UPerSkeletonAnimationSharingSetup
     TArray<FAnimationStateEntry> AnimationStates;
 }
 
-struct UAnimationStateEntry
+struct FAnimationStateEntry
 {
     uint8 State;
     TArray<FAnimationSetup> AnimationSetups;
@@ -99,7 +99,7 @@ struct UAnimationStateEntry
     bool bRequiresCurves;
 }
 
-struct UAnimationSetup
+struct FAnimationSetup
 {
     UAnimSequence* AnimSequence;
     TSubclassOf<UAnimSharingStateInstance> AnimBlueprint;

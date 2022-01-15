@@ -76,7 +76,7 @@ class UGameplayTasksComponent : UActorComponent
     EGameplayTaskRunResult K2_RunGameplayTask(InterfaceProperty TaskOwner, UGameplayTask* Task, uint8 Priority, TArray<TSubclassOf<UGameplayTaskResource>> AdditionalRequiredResources, TArray<TSubclassOf<UGameplayTaskResource>> AdditionalClaimedResources);
 }
 
-struct UGameplayResourceSet
+struct FGameplayResourceSet
 {
 }
 

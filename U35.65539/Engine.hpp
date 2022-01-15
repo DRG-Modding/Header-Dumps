@@ -12235,7 +12235,7 @@ class AWorldSettings : AInfo
     void OnRep_WorldGravityZ();
 }
 
-struct UDistributionLookupTable
+struct FDistributionLookupTable
 {
     float TimeScale;
     float TimeBias;
@@ -12247,39 +12247,39 @@ struct UDistributionLookupTable
     uint8 LockFlag;
 }
 
-struct URawDistribution
+struct FRawDistribution
 {
     FDistributionLookupTable Table;
 }
 
-struct UFloatDistribution
+struct FFloatDistribution
 {
     FDistributionLookupTable Table;
 }
 
-struct UVectorDistribution
+struct FVectorDistribution
 {
     FDistributionLookupTable Table;
 }
 
-struct UVector4Distribution
+struct FVector4Distribution
 {
     FDistributionLookupTable Table;
 }
 
-struct UFloatRK4SpringInterpolator
+struct FFloatRK4SpringInterpolator
 {
     float StiffnessConstant;
     float DampeningRatio;
 }
 
-struct UVectorRK4SpringInterpolator
+struct FVectorRK4SpringInterpolator
 {
     float StiffnessConstant;
     float DampeningRatio;
 }
 
-struct UFormatArgumentData
+struct FFormatArgumentData
 {
     FString ArgumentName;
     TEnumAsByte<EFormatArgumentType::Type> ArgumentValueType;
@@ -12289,49 +12289,49 @@ struct UFormatArgumentData
     ETextGender ArgumentValueGender;
 }
 
-struct UExpressionInput
+struct FExpressionInput
 {
     int32 OutputIndex;
     FName ExpressionName;
 }
 
-struct UMaterialAttributesInput : FExpressionInput
+struct FMaterialAttributesInput : FExpressionInput
 {
     int32 PropertyConnectedBitmask;
 }
 
-struct UExpressionOutput
+struct FExpressionOutput
 {
     FName OutputName;
 }
 
-struct UMaterialInput
+struct FMaterialInput
 {
     int32 OutputIndex;
     FName ExpressionName;
 }
 
-struct UColorMaterialInput : FMaterialInput
+struct FColorMaterialInput : FMaterialInput
 {
 }
 
-struct UScalarMaterialInput : FMaterialInput
+struct FScalarMaterialInput : FMaterialInput
 {
 }
 
-struct UShadingModelMaterialInput : FMaterialInput
+struct FShadingModelMaterialInput : FMaterialInput
 {
 }
 
-struct UVectorMaterialInput : FMaterialInput
+struct FVectorMaterialInput : FMaterialInput
 {
 }
 
-struct UVector2MaterialInput : FMaterialInput
+struct FVector2MaterialInput : FMaterialInput
 {
 }
 
-struct UHitResult
+struct FHitResult
 {
     uint8 bBlockingHit;
     uint8 bStartPenetrating;
@@ -12353,26 +12353,26 @@ struct UHitResult
     FName MyBoneName;
 }
 
-struct UVector_NetQuantize : FVector
+struct FVector_NetQuantize : FVector
 {
 }
 
-struct UVector_NetQuantizeNormal : FVector
+struct FVector_NetQuantizeNormal : FVector
 {
 }
 
-struct UBranchingPointNotifyPayload
+struct FBranchingPointNotifyPayload
 {
 }
 
-struct USimpleMemberReference
+struct FSimpleMemberReference
 {
     UObject* MemberParent;
     FName MemberName;
     FGuid MemberGuid;
 }
 
-struct UTickFunction
+struct FTickFunction
 {
     TEnumAsByte<ETickingGroup> TickGroup;
     TEnumAsByte<ETickingGroup> EndTickGroup;
@@ -12383,29 +12383,29 @@ struct UTickFunction
     float TickInterval;
 }
 
-struct UActorComponentTickFunction : FTickFunction
+struct FActorComponentTickFunction : FTickFunction
 {
 }
 
-struct USubtitleCue
+struct FSubtitleCue
 {
     FText Text;
     float Time;
 }
 
-struct UInterpControlPoint
+struct FInterpControlPoint
 {
     FVector PositionControlPoint;
     bool bPositionIsRelative;
 }
 
-struct UPlatformInterfaceDelegateResult
+struct FPlatformInterfaceDelegateResult
 {
     bool bSuccessful;
     FPlatformInterfaceData Data;
 }
 
-struct UPlatformInterfaceData
+struct FPlatformInterfaceData
 {
     FName DataName;
     TEnumAsByte<EPlatformInterfaceDataType> Type;
@@ -12415,7 +12415,7 @@ struct UPlatformInterfaceData
     UObject* ObjectValue;
 }
 
-struct UDebugFloatHistory
+struct FDebugFloatHistory
 {
     TArray<float> Samples;
     float MaxSamples;
@@ -12424,7 +12424,7 @@ struct UDebugFloatHistory
     bool bAutoAdjustMinMax;
 }
 
-struct ULatentActionInfo
+struct FLatentActionInfo
 {
     int32 Linkage;
     int32 UUID;
@@ -12432,27 +12432,27 @@ struct ULatentActionInfo
     UObject* CallbackTarget;
 }
 
-struct UTimerHandle
+struct FTimerHandle
 {
     uint64 Handle;
 }
 
-struct UCollisionProfileName
+struct FCollisionProfileName
 {
     FName Name;
 }
 
-struct UGenericStruct
+struct FGenericStruct
 {
     int32 Data;
 }
 
-struct UUserActivity
+struct FUserActivity
 {
     FString ActionName;
 }
 
-struct URepAttachment
+struct FRepAttachment
 {
     AActor* AttachParent;
     FVector_NetQuantize100 LocationOffset;
@@ -12462,11 +12462,11 @@ struct URepAttachment
     USceneComponent* AttachComponent;
 }
 
-struct UVector_NetQuantize100 : FVector
+struct FVector_NetQuantize100 : FVector
 {
 }
 
-struct URepMovement
+struct FRepMovement
 {
     FVector LinearVelocity;
     FVector AngularVelocity;
@@ -12479,11 +12479,11 @@ struct URepMovement
     ERotatorQuantization RotationQuantizationLevel;
 }
 
-struct UActorTickFunction : FTickFunction
+struct FActorTickFunction : FTickFunction
 {
 }
 
-struct URootMotionSourceGroup
+struct FRootMotionSourceGroup
 {
     uint8 bHasAdditiveSources;
     uint8 bHasOverrideSources;
@@ -12493,16 +12493,16 @@ struct URootMotionSourceGroup
     FVector_NetQuantize10 LastPreAdditiveVelocity;
 }
 
-struct UVector_NetQuantize10 : FVector
+struct FVector_NetQuantize10 : FVector
 {
 }
 
-struct URootMotionSourceSettings
+struct FRootMotionSourceSettings
 {
     uint8 Flags;
 }
 
-struct URepRootMotionMontage
+struct FRepRootMotionMontage
 {
     bool bIsActive;
     UAnimMontage* AnimMontage;
@@ -12518,20 +12518,20 @@ struct URepRootMotionMontage
     FVector_NetQuantize10 LinearVelocity;
 }
 
-struct USimulatedRootMotionReplicatedMove
+struct FSimulatedRootMotionReplicatedMove
 {
     float Time;
     FRepRootMotionMontage RootMotion;
 }
 
-struct URootMotionMovementParams
+struct FRootMotionMovementParams
 {
     bool bHasRootMotion;
     float BlendWeight;
     FTransform RootMotionTransform;
 }
 
-struct UBasedMovementInfo
+struct FBasedMovementInfo
 {
     UPrimitiveComponent* MovementBase;
     FName BoneName;
@@ -12542,12 +12542,12 @@ struct UBasedMovementInfo
     bool bServerHasVelocity;
 }
 
-struct UUniqueNetIdRepl : FUniqueNetIdWrapper
+struct FUniqueNetIdRepl : FUniqueNetIdWrapper
 {
     TArray<uint8> ReplicationBytes;
 }
 
-struct UForceFeedbackParameters
+struct FForceFeedbackParameters
 {
     FName Tag;
     bool bLooping;
@@ -12555,7 +12555,7 @@ struct UForceFeedbackParameters
     bool bPlayWhilePaused;
 }
 
-struct UViewTargetTransitionParams
+struct FViewTargetTransitionParams
 {
     float BlendTime;
     TEnumAsByte<EViewTargetBlendFunction> BlendFunction;
@@ -12563,7 +12563,7 @@ struct UViewTargetTransitionParams
     uint8 bLockOutgoing;
 }
 
-struct UUpdateLevelStreamingLevelStatus
+struct FUpdateLevelStreamingLevelStatus
 {
     FName PackageName;
     int32 LODIndex;
@@ -12572,25 +12572,25 @@ struct UUpdateLevelStreamingLevelStatus
     uint8 bNewShouldBlockOnLoad;
 }
 
-struct UUpdateLevelVisibilityLevelInfo
+struct FUpdateLevelVisibilityLevelInfo
 {
     FName PackageName;
     FName Filename;
     uint8 bIsVisible;
 }
 
-struct UActiveForceFeedbackEffect
+struct FActiveForceFeedbackEffect
 {
     UForceFeedbackEffect* ForceFeedbackEffect;
 }
 
-struct UWalkableSlopeOverride
+struct FWalkableSlopeOverride
 {
     TEnumAsByte<EWalkableSlopeBehavior> WalkableSlopeBehavior;
     float WalkableSlopeAngle;
 }
 
-struct UBodyInstance
+struct FBodyInstance
 {
     TEnumAsByte<ECollisionChannel> ObjectType;
     TEnumAsByte<ECollisionEnabled::Type> CollisionEnabled;
@@ -12638,19 +12638,19 @@ struct UBodyInstance
     float PhysicsBlendWeight;
 }
 
-struct UCollisionResponse
+struct FCollisionResponse
 {
     FCollisionResponseContainer ResponseToChannels;
     TArray<FResponseChannel> ResponseArray;
 }
 
-struct UResponseChannel
+struct FResponseChannel
 {
     FName Channel;
     TEnumAsByte<ECollisionResponse> Response;
 }
 
-struct UCollisionResponseContainer
+struct FCollisionResponseContainer
 {
     TEnumAsByte<ECollisionResponse> WorldStatic;
     TEnumAsByte<ECollisionResponse> WorldDynamic;
@@ -12686,32 +12686,32 @@ struct UCollisionResponseContainer
     TEnumAsByte<ECollisionResponse> GameTraceChannel18;
 }
 
-struct UCustomPrimitiveData
+struct FCustomPrimitiveData
 {
     TArray<float> Data;
 }
 
-struct ULightingChannels
+struct FLightingChannels
 {
     uint8 bChannel0;
     uint8 bChannel1;
     uint8 bChannel2;
 }
 
-struct UFastArraySerializer
+struct FFastArraySerializer
 {
     int32 ArrayReplicationKey;
     EFastArraySerializerDeltaFlags DeltaFlags;
 }
 
-struct UFastArraySerializerItem
+struct FFastArraySerializerItem
 {
     int32 ReplicationID;
     int32 ReplicationKey;
     int32 MostRecentArrayReplicationKey;
 }
 
-struct UDebugTextInfo
+struct FDebugTextInfo
 {
     AActor* SrcActor;
     FVector SrcActorOffset;
@@ -12728,34 +12728,34 @@ struct UDebugTextInfo
     float FontScale;
 }
 
-struct URuntimeFloatCurve
+struct FRuntimeFloatCurve
 {
     FRichCurve EditorCurveData;
     UCurveFloat* ExternalCurve;
 }
 
-struct UIndexedCurve
+struct FIndexedCurve
 {
     FKeyHandleMap KeyHandlesToIndices;
 }
 
-struct UKeyHandleMap
+struct FKeyHandleMap
 {
 }
 
-struct URealCurve : FIndexedCurve
+struct FRealCurve : FIndexedCurve
 {
     float DefaultValue;
     TEnumAsByte<ERichCurveExtrapolation> PreInfinityExtrap;
     TEnumAsByte<ERichCurveExtrapolation> PostInfinityExtrap;
 }
 
-struct URichCurve : FRealCurve
+struct FRichCurve : FRealCurve
 {
     TArray<FRichCurveKey> Keys;
 }
 
-struct URichCurveKey
+struct FRichCurveKey
 {
     TEnumAsByte<ERichCurveInterpMode> InterpMode;
     TEnumAsByte<ERichCurveTangentMode> TangentMode;
@@ -12768,54 +12768,54 @@ struct URichCurveKey
     float LeaveTangentWeight;
 }
 
-struct UOverlapResult
+struct FOverlapResult
 {
     TWeakObjectPtr<AActor> Actor;
     TWeakObjectPtr<UPrimitiveComponent> Component;
     uint8 bBlockingHit;
 }
 
-struct UTableRowBase
+struct FTableRowBase
 {
 }
 
-struct UKeyHandleLookupTable
+struct FKeyHandleLookupTable
 {
 }
 
-struct UPerPlatformFloat
+struct FPerPlatformFloat
 {
     float Default;
 }
 
-struct UPerPlatformInt
+struct FPerPlatformInt
 {
     int32 Default;
 }
 
-struct UPerPlatformBool
+struct FPerPlatformBool
 {
     bool Default;
 }
 
-struct UAnimNode_Base
+struct FAnimNode_Base
 {
 }
 
-struct UPoseLinkBase
+struct FPoseLinkBase
 {
     int32 LinkID;
 }
 
-struct UPoseLink : FPoseLinkBase
+struct FPoseLink : FPoseLinkBase
 {
 }
 
-struct UAnimInstanceProxy
+struct FAnimInstanceProxy
 {
 }
 
-struct UInputScaleBiasClamp
+struct FInputScaleBiasClamp
 {
     bool bMapRange;
     bool bClampResult;
@@ -12830,13 +12830,13 @@ struct UInputScaleBiasClamp
     float InterpSpeedDecreasing;
 }
 
-struct UInputRange
+struct FInputRange
 {
     float Min;
     float Max;
 }
 
-struct UInputAlphaBoolBlend
+struct FInputAlphaBoolBlend
 {
     float BlendInTime;
     float BlendOutTime;
@@ -12846,29 +12846,29 @@ struct UInputAlphaBoolBlend
     FAlphaBlend AlphaBlend;
 }
 
-struct UAlphaBlend
+struct FAlphaBlend
 {
     UCurveFloat* CustomCurve;
     float BlendTime;
     EAlphaBlendOption BlendOption;
 }
 
-struct UInputScaleBias
+struct FInputScaleBias
 {
     float Scale;
     float Bias;
 }
 
-struct UComponentSpacePoseLink : FPoseLinkBase
+struct FComponentSpacePoseLink : FPoseLinkBase
 {
 }
 
-struct UBoneReference
+struct FBoneReference
 {
     FName BoneName;
 }
 
-struct UAnimNode_AssetPlayerBase : FAnimNode_Base
+struct FAnimNode_AssetPlayerBase : FAnimNode_Base
 {
     int32 GroupIndex;
     TEnumAsByte<EAnimGroupRole::Type> GroupRole;
@@ -12877,24 +12877,24 @@ struct UAnimNode_AssetPlayerBase : FAnimNode_Base
     float InternalTimeAccumulator;
 }
 
-struct UPerBoneBlendWeight
+struct FPerBoneBlendWeight
 {
     int32 SourceIndex;
     float BlendWeight;
 }
 
-struct UInputBlendPose
+struct FInputBlendPose
 {
     TArray<FBranchFilter> BranchFilters;
 }
 
-struct UBranchFilter
+struct FBranchFilter
 {
     FName BoneName;
     int32 BlendDepth;
 }
 
-struct UPoseSnapshot
+struct FPoseSnapshot
 {
     TArray<FTransform> LocalTransforms;
     TArray<FName> BoneNames;
@@ -12903,7 +12903,7 @@ struct UPoseSnapshot
     bool bIsValid;
 }
 
-struct USolverIterations
+struct FSolverIterations
 {
     int32 SolverIterations;
     int32 JointIterations;
@@ -12913,19 +12913,19 @@ struct USolverIterations
     int32 CollisionPushOutIterations;
 }
 
-struct UAnimNode_Root : FAnimNode_Base
+struct FAnimNode_Root : FAnimNode_Base
 {
     FPoseLink Result;
     FName Name;
     FName Group;
 }
 
-struct UAnimCurveParam
+struct FAnimCurveParam
 {
     FName Name;
 }
 
-struct UActorComponentInstanceData
+struct FActorComponentInstanceData
 {
     UObject* SourceComponentTemplate;
     EComponentCreationMethod SourceComponentCreationMethod;
@@ -12936,21 +12936,21 @@ struct UActorComponentInstanceData
     TArray<FName> ReferencedNames;
 }
 
-struct UActorComponentDuplicatedObjectData
+struct FActorComponentDuplicatedObjectData
 {
 }
 
-struct USceneComponentInstanceData : FActorComponentInstanceData
+struct FSceneComponentInstanceData : FActorComponentInstanceData
 {
     TMap<USceneComponent*, FTransform> AttachedInstanceComponents;
 }
 
-struct UDirectoryPath
+struct FDirectoryPath
 {
     FString Path;
 }
 
-struct UKAggregateGeom
+struct FKAggregateGeom
 {
     TArray<FKSphereElem> SphereElems;
     TArray<FKBoxElem> BoxElems;
@@ -12959,14 +12959,14 @@ struct UKAggregateGeom
     TArray<FKTaperedCapsuleElem> TaperedCapsuleElems;
 }
 
-struct UKShapeElem
+struct FKShapeElem
 {
     float RestOffset;
     FName Name;
     uint8 bContributeToMass;
 }
 
-struct UKTaperedCapsuleElem : FKShapeElem
+struct FKTaperedCapsuleElem : FKShapeElem
 {
     FVector Center;
     FRotator Rotation;
@@ -12975,7 +12975,7 @@ struct UKTaperedCapsuleElem : FKShapeElem
     float Length;
 }
 
-struct UKConvexElem : FKShapeElem
+struct FKConvexElem : FKShapeElem
 {
     TArray<FVector> VertexData;
     TArray<int32> IndexData;
@@ -12983,7 +12983,7 @@ struct UKConvexElem : FKShapeElem
     FTransform Transform;
 }
 
-struct UKSphylElem : FKShapeElem
+struct FKSphylElem : FKShapeElem
 {
     FVector Center;
     FRotator Rotation;
@@ -12991,7 +12991,7 @@ struct UKSphylElem : FKShapeElem
     float Length;
 }
 
-struct UKBoxElem : FKShapeElem
+struct FKBoxElem : FKShapeElem
 {
     FVector Center;
     FRotator Rotation;
@@ -13000,39 +13000,39 @@ struct UKBoxElem : FKShapeElem
     float Z;
 }
 
-struct UKSphereElem : FKShapeElem
+struct FKSphereElem : FKShapeElem
 {
     FVector Center;
     float Radius;
 }
 
-struct UAnimationGroupReference
+struct FAnimationGroupReference
 {
     FName GroupName;
     TEnumAsByte<EAnimGroupRole::Type> GroupRole;
 }
 
-struct UAnimGroupInstance
+struct FAnimGroupInstance
 {
 }
 
-struct UAnimTickRecord
+struct FAnimTickRecord
 {
     UAnimationAsset* SourceAsset;
 }
 
-struct UMarkerSyncAnimPosition
+struct FMarkerSyncAnimPosition
 {
     FName PreviousMarkerName;
     FName NextMarkerName;
     float PositionBetweenMarkers;
 }
 
-struct UBlendFilter
+struct FBlendFilter
 {
 }
 
-struct UBlendSampleData
+struct FBlendSampleData
 {
     int32 SampleDataIndex;
     UAnimSequence* Animation;
@@ -13042,7 +13042,7 @@ struct UBlendSampleData
     float SamplePlayRate;
 }
 
-struct UAnimationRecordingSettings
+struct FAnimationRecordingSettings
 {
     bool bRecordInWorldSpace;
     bool bRemoveRootAnimation;
@@ -13053,94 +13053,94 @@ struct UAnimationRecordingSettings
     TEnumAsByte<ERichCurveTangentMode> TangentMode;
 }
 
-struct UComponentSpacePose
+struct FComponentSpacePose
 {
     TArray<FTransform> Transforms;
     TArray<FName> Names;
 }
 
-struct ULocalSpacePose
+struct FLocalSpacePose
 {
     TArray<FTransform> Transforms;
     TArray<FName> Names;
 }
 
-struct UNamedTransform
+struct FNamedTransform
 {
     FTransform Value;
     FName Name;
 }
 
-struct UNamedColor
+struct FNamedColor
 {
     FColor Value;
     FName Name;
 }
 
-struct UNamedVector
+struct FNamedVector
 {
     FVector Value;
     FName Name;
 }
 
-struct UNamedFloat
+struct FNamedFloat
 {
     float Value;
     FName Name;
 }
 
-struct UAnimParentNodeAssetOverride
+struct FAnimParentNodeAssetOverride
 {
     UAnimationAsset* NewAsset;
     FGuid ParentNodeGuid;
 }
 
-struct UAnimGroupInfo
+struct FAnimGroupInfo
 {
     FName Name;
     FLinearColor Color;
 }
 
-struct UAnimBlueprintDebugData
+struct FAnimBlueprintDebugData
 {
 }
 
-struct UAnimationFrameSnapshot
+struct FAnimationFrameSnapshot
 {
 }
 
-struct UStateMachineDebugData
+struct FStateMachineDebugData
 {
 }
 
-struct UStateMachineStateDebugData
+struct FStateMachineStateDebugData
 {
 }
 
-struct UAnimBlueprintFunctionData
+struct FAnimBlueprintFunctionData
 {
     TFieldPath<FNone> OutputPoseNodeProperty;
     TArray<TFieldPath<FNone>> InputPoseNodeProperties;
     TArray<TFieldPath<FNone>> InputProperties;
 }
 
-struct UAnimGraphBlendOptions
+struct FAnimGraphBlendOptions
 {
     float BlendInTime;
     float BlendOutTime;
 }
 
-struct UGraphAssetPlayerInformation
+struct FGraphAssetPlayerInformation
 {
     TArray<int32> PlayerNodeIndices;
 }
 
-struct UCachedPoseIndices
+struct FCachedPoseIndices
 {
     TArray<int32> OrderedSavedPoseNodeIndices;
 }
 
-struct UAnimBlueprintFunction
+struct FAnimBlueprintFunction
 {
     FName Name;
     FName Group;
@@ -13150,12 +13150,12 @@ struct UAnimBlueprintFunction
     bool bImplemented;
 }
 
-struct UAnimTrack
+struct FAnimTrack
 {
     TArray<FAnimSegment> AnimSegments;
 }
 
-struct UAnimSegment
+struct FAnimSegment
 {
     UAnimSequenceBase* AnimReference;
     float StartPos;
@@ -13165,68 +13165,68 @@ struct UAnimSegment
     int32 LoopingCount;
 }
 
-struct URootMotionExtractionStep
+struct FRootMotionExtractionStep
 {
     UAnimSequence* AnimSequence;
     float StartPosition;
     float EndPosition;
 }
 
-struct UAnimationErrorStats
+struct FAnimationErrorStats
 {
 }
 
-struct URawCurveTracks
+struct FRawCurveTracks
 {
     TArray<FFloatCurve> FloatCurves;
 }
 
-struct UAnimCurveBase
+struct FAnimCurveBase
 {
     FName LastObservedName;
     FSmartName Name;
     int32 CurveTypeFlags;
 }
 
-struct USmartName
+struct FSmartName
 {
     FName DisplayName;
 }
 
-struct UFloatCurve : FAnimCurveBase
+struct FFloatCurve : FAnimCurveBase
 {
     FRichCurve FloatCurve;
 }
 
-struct UTransformCurve : FAnimCurveBase
+struct FTransformCurve : FAnimCurveBase
 {
     FVectorCurve TranslationCurve;
     FVectorCurve RotationCurve;
     FVectorCurve ScaleCurve;
 }
 
-struct UVectorCurve : FAnimCurveBase
+struct FVectorCurve : FAnimCurveBase
 {
     FRichCurve FloatCurves;
 }
 
-struct USlotEvaluationPose
+struct FSlotEvaluationPose
 {
     TEnumAsByte<EAdditiveAnimationType> AdditiveType;
     float Weight;
 }
 
-struct UA2Pose
+struct FA2Pose
 {
     TArray<FTransform> Bones;
 }
 
-struct UA2CSPose : FA2Pose
+struct FA2CSPose : FA2Pose
 {
     TArray<uint8> ComponentSpaceFlags;
 }
 
-struct UQueuedDrawDebugItem
+struct FQueuedDrawDebugItem
 {
     TEnumAsByte<EDrawDebugItemType::Type> ItemType;
     FVector StartLoc;
@@ -13244,7 +13244,7 @@ struct UQueuedDrawDebugItem
     FVector2D TextScale;
 }
 
-struct UAnimLinkableElement
+struct FAnimLinkableElement
 {
     UAnimMontage* LinkedMontage;
     int32 SlotIndex;
@@ -13257,7 +13257,7 @@ struct UAnimLinkableElement
     UAnimSequenceBase* LinkedSequence;
 }
 
-struct UAnimMontageInstance
+struct FAnimMontageInstance
 {
     UAnimMontage* Montage;
     bool bPlaying;
@@ -13271,7 +13271,7 @@ struct UAnimMontageInstance
     int32 DisableRootMotionCount;
 }
 
-struct UAnimNotifyEvent : FAnimLinkableElement
+struct FAnimNotifyEvent : FAnimLinkableElement
 {
     float DisplayTime;
     float TriggerTimeOffset;
@@ -13292,27 +13292,27 @@ struct UAnimNotifyEvent : FAnimLinkableElement
     int32 TrackIndex;
 }
 
-struct UBranchingPointMarker
+struct FBranchingPointMarker
 {
     int32 NotifyIndex;
     float TriggerTime;
     TEnumAsByte<EAnimNotifyEventType::Type> NotifyEventType;
 }
 
-struct UBranchingPoint : FAnimLinkableElement
+struct FBranchingPoint : FAnimLinkableElement
 {
     FName EventName;
     float DisplayTime;
     float TriggerTimeOffset;
 }
 
-struct USlotAnimationTrack
+struct FSlotAnimationTrack
 {
     FName slotName;
     FAnimTrack AnimTrack;
 }
 
-struct UCompositeSection : FAnimLinkableElement
+struct FCompositeSection : FAnimLinkableElement
 {
     FName SectionName;
     float StartTime;
@@ -13320,7 +13320,7 @@ struct UCompositeSection : FAnimLinkableElement
     TArray<UAnimMetaData*> MetaData;
 }
 
-struct UAnimNode_ApplyMeshSpaceAdditive : FAnimNode_Base
+struct FAnimNode_ApplyMeshSpaceAdditive : FAnimNode_Base
 {
     FPoseLink Base;
     FPoseLink Additive;
@@ -13334,35 +13334,35 @@ struct UAnimNode_ApplyMeshSpaceAdditive : FAnimNode_Base
     int32 LODThreshold;
 }
 
-struct UAnimNode_CustomProperty : FAnimNode_Base
+struct FAnimNode_CustomProperty : FAnimNode_Base
 {
     TArray<FName> SourcePropertyNames;
     TArray<FName> DestPropertyNames;
     UObject* TargetInstance;
 }
 
-struct UAnimNode_Inertialization : FAnimNode_Base
+struct FAnimNode_Inertialization : FAnimNode_Base
 {
     FPoseLink Source;
 }
 
-struct UInertializationPoseDiff
+struct FInertializationPoseDiff
 {
 }
 
-struct UInertializationCurveDiff
+struct FInertializationCurveDiff
 {
 }
 
-struct UInertializationBoneDiff
+struct FInertializationBoneDiff
 {
 }
 
-struct UInertializationPose
+struct FInertializationPose
 {
 }
 
-struct UAnimNode_LinkedAnimGraph : FAnimNode_CustomProperty
+struct FAnimNode_LinkedAnimGraph : FAnimNode_CustomProperty
 {
     TArray<FPoseLink> InputPoses;
     TArray<FName> InputPoseNames;
@@ -13372,26 +13372,26 @@ struct UAnimNode_LinkedAnimGraph : FAnimNode_CustomProperty
     uint8 bPropagateNotifiesToLinkedInstances;
 }
 
-struct UAnimNode_LinkedAnimLayer : FAnimNode_LinkedAnimGraph
+struct FAnimNode_LinkedAnimLayer : FAnimNode_LinkedAnimGraph
 {
     TSubclassOf<UAnimLayerInterface> Interface;
     FName Layer;
 }
 
-struct UAnimNode_LinkedInputPose : FAnimNode_Base
+struct FAnimNode_LinkedInputPose : FAnimNode_Base
 {
     FName Name;
     FName Graph;
     FPoseLink InputPose;
 }
 
-struct UAnimNode_SaveCachedPose : FAnimNode_Base
+struct FAnimNode_SaveCachedPose : FAnimNode_Base
 {
     FPoseLink pose;
     FName CachePoseName;
 }
 
-struct UAnimNode_SequencePlayer : FAnimNode_AssetPlayerBase
+struct FAnimNode_SequencePlayer : FAnimNode_AssetPlayerBase
 {
     UAnimSequenceBase* Sequence;
     float PlayRateBasis;
@@ -13401,7 +13401,7 @@ struct UAnimNode_SequencePlayer : FAnimNode_AssetPlayerBase
     bool bLoopAnimation;
 }
 
-struct UAnimNode_StateMachine : FAnimNode_Base
+struct FAnimNode_StateMachine : FAnimNode_Base
 {
     int32 StateMachineIndexInClass;
     int32 MaxTransitionsPerFrame;
@@ -13409,34 +13409,34 @@ struct UAnimNode_StateMachine : FAnimNode_Base
     bool bReinitializeOnBecomingRelevant;
 }
 
-struct UAnimationPotentialTransition
+struct FAnimationPotentialTransition
 {
 }
 
-struct UAnimationActiveTransitionEntry
+struct FAnimationActiveTransitionEntry
 {
     UBlendProfile* BlendProfile;
 }
 
-struct UAnimNode_TransitionPoseEvaluator : FAnimNode_Base
+struct FAnimNode_TransitionPoseEvaluator : FAnimNode_Base
 {
     int32 FramesToCachePose;
     TEnumAsByte<EEvaluatorDataSource::Type> DataSource;
     TEnumAsByte<EEvaluatorMode::Type> EvaluatorMode;
 }
 
-struct UAnimNode_TransitionResult : FAnimNode_Base
+struct FAnimNode_TransitionResult : FAnimNode_Base
 {
     bool bCanEnterTransition;
 }
 
-struct UAnimNode_UseCachedPose : FAnimNode_Base
+struct FAnimNode_UseCachedPose : FAnimNode_Base
 {
     FPoseLink LinkToCachingNode;
     FName CachePoseName;
 }
 
-struct UExposedValueHandler
+struct FExposedValueHandler
 {
     FName BoundFunction;
     TArray<FExposedValueCopyRecord> CopyRecords;
@@ -13444,7 +13444,7 @@ struct UExposedValueHandler
     TFieldPath<FNone> ValueHandlerNodeProperty;
 }
 
-struct UExposedValueCopyRecord
+struct FExposedValueCopyRecord
 {
     FName SourcePropertyName;
     FName SourceSubPropertyName;
@@ -13459,33 +13459,33 @@ struct UExposedValueCopyRecord
     TFieldPath<FNone> CachedSourceStructSubProperty;
 }
 
-struct UAnimNode_ConvertLocalToComponentSpace : FAnimNode_Base
+struct FAnimNode_ConvertLocalToComponentSpace : FAnimNode_Base
 {
     FPoseLink LocalPose;
 }
 
-struct UAnimNode_ConvertComponentToLocalSpace : FAnimNode_Base
+struct FAnimNode_ConvertComponentToLocalSpace : FAnimNode_Base
 {
     FComponentSpacePoseLink ComponentPose;
 }
 
-struct UAnimNotifyQueue
+struct FAnimNotifyQueue
 {
     TArray<FAnimNotifyEventReference> AnimNotifies;
     TMap<FName, FAnimNotifyArray> UnfilteredMontageAnimNotifies;
 }
 
-struct UAnimNotifyArray
+struct FAnimNotifyArray
 {
     TArray<FAnimNotifyEventReference> Notifies;
 }
 
-struct UAnimNotifyEventReference
+struct FAnimNotifyEventReference
 {
     UObject* NotifySource;
 }
 
-struct UCompressedTrack
+struct FCompressedTrack
 {
     TArray<uint8> ByteStream;
     TArray<float> Times;
@@ -13493,58 +13493,58 @@ struct UCompressedTrack
     float Ranges;
 }
 
-struct UCurveTrack
+struct FCurveTrack
 {
     FName CurveName;
     TArray<float> CurveWeights;
 }
 
-struct UScaleTrack
+struct FScaleTrack
 {
     TArray<FVector> ScaleKeys;
     TArray<float> Times;
 }
 
-struct URotationTrack
+struct FRotationTrack
 {
     TArray<FQuat> RotKeys;
     TArray<float> Times;
 }
 
-struct UTranslationTrack
+struct FTranslationTrack
 {
     TArray<FVector> PosKeys;
     TArray<float> Times;
 }
 
-struct UAnimSequenceTrackContainer
+struct FAnimSequenceTrackContainer
 {
     TArray<FRawAnimSequenceTrack> AnimationTracks;
     TArray<FName> TrackNames;
 }
 
-struct URawAnimSequenceTrack
+struct FRawAnimSequenceTrack
 {
     TArray<FVector> PosKeys;
     TArray<FQuat> RotKeys;
     TArray<FVector> ScaleKeys;
 }
 
-struct UAnimSetMeshLinkup
+struct FAnimSetMeshLinkup
 {
     TArray<int32> BoneToTrackTable;
 }
 
-struct UAnimSingleNodeInstanceProxy : FAnimInstanceProxy
+struct FAnimSingleNodeInstanceProxy : FAnimInstanceProxy
 {
 }
 
-struct UAnimNode_SingleNode : FAnimNode_Base
+struct FAnimNode_SingleNode : FAnimNode_Base
 {
     FPoseLink SourcePose;
 }
 
-struct UBakedAnimationStateMachine
+struct FBakedAnimationStateMachine
 {
     FName MachineName;
     int32 InitialState;
@@ -13552,12 +13552,12 @@ struct UBakedAnimationStateMachine
     TArray<FAnimationTransitionBetweenStates> Transitions;
 }
 
-struct UAnimationStateBase
+struct FAnimationStateBase
 {
     FName StateName;
 }
 
-struct UAnimationTransitionBetweenStates : FAnimationStateBase
+struct FAnimationTransitionBetweenStates : FAnimationStateBase
 {
     int32 PreviousState;
     int32 NextState;
@@ -13571,7 +13571,7 @@ struct UAnimationTransitionBetweenStates : FAnimationStateBase
     TEnumAsByte<ETransitionLogicType::Type> LogicType;
 }
 
-struct UBakedAnimationState
+struct FBakedAnimationState
 {
     FName StateName;
     TArray<FBakedStateExitTransition> Transitions;
@@ -13586,7 +13586,7 @@ struct UBakedAnimationState
     bool bAlwaysResetOnEntry;
 }
 
-struct UBakedStateExitTransition
+struct FBakedStateExitTransition
 {
     int32 CanTakeDelegateIndex;
     int32 CustomResultNodeIndex;
@@ -13596,7 +13596,7 @@ struct UBakedStateExitTransition
     TArray<int32> PoseEvaluatorLinks;
 }
 
-struct UAnimationState : FAnimationStateBase
+struct FAnimationState : FAnimationStateBase
 {
     TArray<FAnimationTransitionRule> Transitions;
     int32 StateRootNodeIndex;
@@ -13605,45 +13605,45 @@ struct UAnimationState : FAnimationStateBase
     int32 FullyBlendedNotify;
 }
 
-struct UAnimationTransitionRule
+struct FAnimationTransitionRule
 {
     FName RuleToExecute;
     bool TransitionReturnVal;
     int32 TransitionIndex;
 }
 
-struct UTrackToSkeletonMap
+struct FTrackToSkeletonMap
 {
     int32 BoneTreeIndex;
 }
 
-struct UMarkerSyncData
+struct FMarkerSyncData
 {
     TArray<FAnimSyncMarker> AuthoredSyncMarkers;
 }
 
-struct UAnimSyncMarker
+struct FAnimSyncMarker
 {
     FName MarkerName;
     float Time;
 }
 
-struct UAnimNotifyTrack
+struct FAnimNotifyTrack
 {
     FName TrackName;
     FLinearColor TrackColor;
 }
 
-struct UPerBoneBlendWeights
+struct FPerBoneBlendWeights
 {
     TArray<FPerBoneBlendWeight> BoneBlendWeights;
 }
 
-struct UAssetImportInfo
+struct FAssetImportInfo
 {
 }
 
-struct UPrimaryAssetRulesCustomOverride
+struct FPrimaryAssetRulesCustomOverride
 {
     FPrimaryAssetType PrimaryAssetType;
     FDirectoryPath FilterDirectory;
@@ -13651,7 +13651,7 @@ struct UPrimaryAssetRulesCustomOverride
     FPrimaryAssetRules Rules;
 }
 
-struct UPrimaryAssetRules
+struct FPrimaryAssetRules
 {
     int32 Priority;
     int32 ChunkId;
@@ -13659,19 +13659,19 @@ struct UPrimaryAssetRules
     EPrimaryAssetCookRule CookRule;
 }
 
-struct UPrimaryAssetRulesOverride
+struct FPrimaryAssetRulesOverride
 {
     FPrimaryAssetId PrimaryAssetId;
     FPrimaryAssetRules Rules;
 }
 
-struct UAssetManagerRedirect
+struct FAssetManagerRedirect
 {
     FString Old;
     FString New;
 }
 
-struct UPrimaryAssetTypeInfo
+struct FPrimaryAssetTypeInfo
 {
     FName PrimaryAssetType;
     TSoftClassPtr<UObject> AssetBaseClass;
@@ -13686,17 +13686,17 @@ struct UPrimaryAssetTypeInfo
     int32 NumberOfAssets;
 }
 
-struct UAssetMapping
+struct FAssetMapping
 {
     UAnimationAsset* SourceAsset;
     UAnimationAsset* TargetAsset;
 }
 
-struct UAtmospherePrecomputeInstanceData : FSceneComponentInstanceData
+struct FAtmospherePrecomputeInstanceData : FSceneComponentInstanceData
 {
 }
 
-struct UAtmospherePrecomputeParameters
+struct FAtmospherePrecomputeParameters
 {
     float DensityHeight;
     float DecayHeight;
@@ -13711,7 +13711,7 @@ struct UAtmospherePrecomputeParameters
     int32 InscatterNuNum;
 }
 
-struct UBaseAttenuationSettings
+struct FBaseAttenuationSettings
 {
     EAttenuationDistanceModel DistanceAlgorithm;
     TEnumAsByte<EAttenuationShape::Type> AttenuationShape;
@@ -13723,7 +13723,7 @@ struct UBaseAttenuationSettings
     FRuntimeFloatCurve CustomAttenuationCurve;
 }
 
-struct UAudioComponentParam
+struct FAudioComponentParam
 {
     FName ParamName;
     float FloatParam;
@@ -13732,21 +13732,21 @@ struct UAudioComponentParam
     USoundWave* SoundWaveParam;
 }
 
-struct UAudioEffectParameters
+struct FAudioEffectParameters
 {
 }
 
-struct UAudioReverbEffect : FAudioEffectParameters
+struct FAudioReverbEffect : FAudioEffectParameters
 {
 }
 
-struct UAudioQualitySettings
+struct FAudioQualitySettings
 {
     FText DisplayName;
     int32 MaxChannels;
 }
 
-struct UInteriorSettings
+struct FInteriorSettings
 {
     bool bIsWorldSettings;
     float ExteriorVolume;
@@ -13759,24 +13759,24 @@ struct UInteriorSettings
     float InteriorLPFTime;
 }
 
-struct ULaunchOnTestSettings
+struct FLaunchOnTestSettings
 {
     FFilePath LaunchOnTestmap;
     FString DeviceID;
 }
 
-struct UFilePath
+struct FFilePath
 {
     FString FilePath;
 }
 
-struct UEditorMapPerformanceTestDefinition
+struct FEditorMapPerformanceTestDefinition
 {
     FSoftObjectPath PerformanceTestmap;
     int32 TestTimer;
 }
 
-struct UBuildPromotionTestSettings
+struct FBuildPromotionTestSettings
 {
     FFilePath DefaultStaticMeshAsset;
     FBuildPromotionImportWorkflowSettings ImportWorkflow;
@@ -13785,13 +13785,13 @@ struct UBuildPromotionTestSettings
     FFilePath SourceControlMaterial;
 }
 
-struct UBuildPromotionNewProjectSettings
+struct FBuildPromotionNewProjectSettings
 {
     FDirectoryPath NewProjectFolderOverride;
     FString NewProjectNameOverride;
 }
 
-struct UBuildPromotionOpenAssetSettings
+struct FBuildPromotionOpenAssetSettings
 {
     FFilePath BlueprintAsset;
     FFilePath MaterialAsset;
@@ -13801,7 +13801,7 @@ struct UBuildPromotionOpenAssetSettings
     FFilePath TextureAsset;
 }
 
-struct UBuildPromotionImportWorkflowSettings
+struct FBuildPromotionImportWorkflowSettings
 {
     FEditorImportWorkflowDefinition Diffuse;
     FEditorImportWorkflowDefinition Normal;
@@ -13816,38 +13816,38 @@ struct UBuildPromotionImportWorkflowSettings
     TArray<FEditorImportWorkflowDefinition> OtherAssetsToImport;
 }
 
-struct UEditorImportWorkflowDefinition
+struct FEditorImportWorkflowDefinition
 {
     FFilePath ImportFilePath;
     TArray<FImportFactorySettingValues> FactorySettings;
 }
 
-struct UImportFactorySettingValues
+struct FImportFactorySettingValues
 {
     FString SettingName;
     FString Value;
 }
 
-struct UBlueprintEditorPromotionSettings
+struct FBlueprintEditorPromotionSettings
 {
     FFilePath FirstMeshPath;
     FFilePath SecondMeshPath;
     FFilePath DefaultParticleAsset;
 }
 
-struct UParticleEditorPromotionSettings
+struct FParticleEditorPromotionSettings
 {
     FFilePath DefaultParticleAsset;
 }
 
-struct UMaterialEditorPromotionSettings
+struct FMaterialEditorPromotionSettings
 {
     FFilePath DefaultMaterialAsset;
     FFilePath DefaultDiffuseTexture;
     FFilePath DefaultNormalTexture;
 }
 
-struct UEditorImportExportTestDefinition
+struct FEditorImportExportTestDefinition
 {
     FFilePath ImportFilePath;
     FString ExportFileExtension;
@@ -13855,7 +13855,7 @@ struct UEditorImportExportTestDefinition
     TArray<FImportFactorySettingValues> FactorySettings;
 }
 
-struct UExternalToolDefinition
+struct FExternalToolDefinition
 {
     FString ToolName;
     FFilePath ExecutablePath;
@@ -13865,52 +13865,52 @@ struct UExternalToolDefinition
     FDirectoryPath ScriptDirectory;
 }
 
-struct UNavAvoidanceData
+struct FNavAvoidanceData
 {
 }
 
-struct UBandwidthTestGenerator
+struct FBandwidthTestGenerator
 {
     TArray<FBandwidthTestItem> ReplicatedBuffers;
 }
 
-struct UBandwidthTestItem
+struct FBandwidthTestItem
 {
     TArray<uint8> Kilobyte;
 }
 
-struct UBlendProfileBoneEntry
+struct FBlendProfileBoneEntry
 {
     FBoneReference BoneReference;
     float BlendScale;
 }
 
-struct UPerBoneInterpolation
+struct FPerBoneInterpolation
 {
     FBoneReference BoneReference;
     float InterpolationSpeedPerSec;
 }
 
-struct UGridBlendSample
+struct FGridBlendSample
 {
     FEditorElement GridElement;
     float BlendWeight;
 }
 
-struct UEditorElement
+struct FEditorElement
 {
     int32 Indices;
     float Weights;
 }
 
-struct UBlendSample
+struct FBlendSample
 {
     UAnimSequence* Animation;
     FVector SampleValue;
     float RateScale;
 }
 
-struct UBlendParameter
+struct FBlendParameter
 {
     FString DisplayName;
     float Min;
@@ -13918,20 +13918,20 @@ struct UBlendParameter
     int32 GridNum;
 }
 
-struct UInterpolationParameter
+struct FInterpolationParameter
 {
     float InterpolationTime;
     TEnumAsByte<EFilterInterpolationType> InterpolationType;
 }
 
-struct UBPEditorBookmarkNode
+struct FBPEditorBookmarkNode
 {
     FGuid NodeGuid;
     FGuid ParentGuid;
     FText DisplayName;
 }
 
-struct UEditedDocumentInfo
+struct FEditedDocumentInfo
 {
     FSoftObjectPath EditedObjectPath;
     FVector2D SavedViewOffset;
@@ -13939,13 +13939,13 @@ struct UEditedDocumentInfo
     UObject* EditedObject;
 }
 
-struct UBPInterfaceDescription
+struct FBPInterfaceDescription
 {
     TSubclassOf<UInterface> Interface;
     TArray<UEdGraph*> Graphs;
 }
 
-struct UBPVariableDescription
+struct FBPVariableDescription
 {
     FName VarName;
     FGuid VarGuid;
@@ -13959,13 +13959,13 @@ struct UBPVariableDescription
     FString DefaultValue;
 }
 
-struct UBPVariableMetaDataEntry
+struct FBPVariableMetaDataEntry
 {
     FName DataKey;
     FString DataValue;
 }
 
-struct UEdGraphPinType
+struct FEdGraphPinType
 {
     FName PinCategory;
     FName PinSubCategory;
@@ -13979,7 +13979,7 @@ struct UEdGraphPinType
     uint8 bIsWeakPointer;
 }
 
-struct UEdGraphTerminalType
+struct FEdGraphTerminalType
 {
     FName TerminalCategory;
     FName TerminalSubCategory;
@@ -13988,11 +13988,11 @@ struct UEdGraphTerminalType
     bool bTerminalIsWeakPointer;
 }
 
-struct UBlueprintMacroCosmeticInfo
+struct FBlueprintMacroCosmeticInfo
 {
 }
 
-struct UCompilerNativizationOptions
+struct FCompilerNativizationOptions
 {
     FName PlatformName;
     bool ServerOnlyPlatform;
@@ -14003,71 +14003,71 @@ struct UCompilerNativizationOptions
     TArray<FString> ExcludedFolderPaths;
 }
 
-struct UBPComponentClassOverride
+struct FBPComponentClassOverride
 {
     FName ComponentName;
     UClass* ComponentClass;
 }
 
-struct UBlueprintCookedComponentInstancingData
+struct FBlueprintCookedComponentInstancingData
 {
     TArray<FBlueprintComponentChangedPropertyInfo> ChangedPropertyList;
     bool bHasValidCookedData;
 }
 
-struct UBlueprintComponentChangedPropertyInfo
+struct FBlueprintComponentChangedPropertyInfo
 {
     FName PropertyName;
     int32 ArrayIndex;
     UStruct* PropertyScope;
 }
 
-struct UEventGraphFastCallPair
+struct FEventGraphFastCallPair
 {
     UFunction* FunctionToPatch;
     int32 EventGraphCallOffset;
 }
 
-struct UBlueprintDebugData
+struct FBlueprintDebugData
 {
 }
 
-struct UPointerToUberGraphFrame
+struct FPointerToUberGraphFrame
 {
 }
 
-struct UDebuggingInfoForSingleFunction
+struct FDebuggingInfoForSingleFunction
 {
 }
 
-struct UNodeToCodeAssociation
+struct FNodeToCodeAssociation
 {
 }
 
-struct UAnimCurveType
+struct FAnimCurveType
 {
 }
 
-struct UBookmarkBaseJumpToSettings
+struct FBookmarkBaseJumpToSettings
 {
 }
 
-struct UBookmarkJumpToSettings : FBookmarkBaseJumpToSettings
+struct FBookmarkJumpToSettings : FBookmarkBaseJumpToSettings
 {
 }
 
-struct UBookmark2DJumpToSettings
+struct FBookmark2DJumpToSettings
 {
 }
 
-struct UGeomSelection
+struct FGeomSelection
 {
     int32 Type;
     int32 Index;
     int32 SelectionIndex;
 }
 
-struct UBuilderPoly
+struct FBuilderPoly
 {
     TArray<int32> VertexIndices;
     int32 Direction;
@@ -14075,55 +14075,55 @@ struct UBuilderPoly
     int32 PolyFlags;
 }
 
-struct UCachedAnimTransitionData
+struct FCachedAnimTransitionData
 {
     FName StateMachineName;
     FName FromStateName;
     FName ToStateName;
 }
 
-struct UCachedAnimRelevancyData
+struct FCachedAnimRelevancyData
 {
     FName StateMachineName;
     FName StateName;
 }
 
-struct UCachedAnimAssetPlayerData
+struct FCachedAnimAssetPlayerData
 {
     FName StateMachineName;
     FName StateName;
 }
 
-struct UCachedAnimStateArray
+struct FCachedAnimStateArray
 {
     TArray<FCachedAnimStateData> States;
 }
 
-struct UCachedAnimStateData
+struct FCachedAnimStateData
 {
     FName StateMachineName;
     FName StateName;
 }
 
-struct UActiveCameraShakeInfo
+struct FActiveCameraShakeInfo
 {
     UCameraShake* ShakeInstance;
     TWeakObjectPtr<UCameraShakeSourceComponent> ShakeSource;
 }
 
-struct UPooledCameraShakes
+struct FPooledCameraShakes
 {
     TArray<UCameraShake*> PooledShakes;
 }
 
-struct UVOscillator
+struct FVOscillator
 {
     FFOscillator X;
     FFOscillator Y;
     FFOscillator Z;
 }
 
-struct UFOscillator
+struct FFOscillator
 {
     float Amplitude;
     float Frequency;
@@ -14131,18 +14131,18 @@ struct UFOscillator
     EOscillatorWaveform Waveform;
 }
 
-struct UROscillator
+struct FROscillator
 {
     FFOscillator Pitch;
     FFOscillator Yaw;
     FFOscillator Roll;
 }
 
-struct UDummySpacerCameraTypes
+struct FDummySpacerCameraTypes
 {
 }
 
-struct UMinimalViewInfo
+struct FMinimalViewInfo
 {
     FVector Location;
     FRotator Rotation;
@@ -14160,7 +14160,7 @@ struct UMinimalViewInfo
     FVector2D OffCenterProjectionOffset;
 }
 
-struct UPostProcessSettings
+struct FPostProcessSettings
 {
     uint8 bOverride_WhiteTemp;
     uint8 bOverride_WhiteTint;
@@ -14522,18 +14522,18 @@ struct UPostProcessSettings
     FWeightedBlendables WeightedBlendables;
 }
 
-struct UWeightedBlendables
+struct FWeightedBlendables
 {
     TArray<FWeightedBlendable> Array;
 }
 
-struct UWeightedBlendable
+struct FWeightedBlendable
 {
     float Weight;
     UObject* Object;
 }
 
-struct UCanvasIcon
+struct FCanvasIcon
 {
     UTexture* Texture;
     float U;
@@ -14542,13 +14542,13 @@ struct UCanvasIcon
     float VL;
 }
 
-struct UWrappedStringElement
+struct FWrappedStringElement
 {
     FString Value;
     FVector2D LineExtent;
 }
 
-struct UTextSizingParameters
+struct FTextSizingParameters
 {
     float DrawX;
     float DrawY;
@@ -14559,11 +14559,11 @@ struct UTextSizingParameters
     FVector2D SpacingAdjust;
 }
 
-struct UCharacterMovementComponentPostPhysicsTickFunction : FTickFunction
+struct FCharacterMovementComponentPostPhysicsTickFunction : FTickFunction
 {
 }
 
-struct UFindFloorResult
+struct FFindFloorResult
 {
     uint8 bBlockingHit;
     uint8 bWalkableFloor;
@@ -14573,27 +14573,27 @@ struct UFindFloorResult
     FHitResult HitResult;
 }
 
-struct UChildActorComponentInstanceData : FSceneComponentInstanceData
+struct FChildActorComponentInstanceData : FSceneComponentInstanceData
 {
     TSubclassOf<AActor> ChildActorClass;
     FName ChildActorName;
     TArray<FChildActorAttachedActorInfo> AttachedActors;
 }
 
-struct UChildActorAttachedActorInfo
+struct FChildActorAttachedActorInfo
 {
     TWeakObjectPtr<AActor> Actor;
     FName SocketName;
     FTransform RelativeTransform;
 }
 
-struct UCustomProfile
+struct FCustomProfile
 {
     FName Name;
     TArray<FResponseChannel> CustomResponses;
 }
 
-struct UCustomChannelSetup
+struct FCustomChannelSetup
 {
     TEnumAsByte<ECollisionChannel> Channel;
     TEnumAsByte<ECollisionResponse> DefaultResponse;
@@ -14602,7 +14602,7 @@ struct UCustomChannelSetup
     FName Name;
 }
 
-struct UCollisionResponseTemplate
+struct FCollisionResponseTemplate
 {
     FName Name;
     TEnumAsByte<ECollisionEnabled::Type> CollisionEnabled;
@@ -14611,27 +14611,27 @@ struct UCollisionResponseTemplate
     TArray<FResponseChannel> CustomResponses;
 }
 
-struct UBlueprintComponentDelegateBinding
+struct FBlueprintComponentDelegateBinding
 {
     FName ComponentPropertyName;
     FName DelegatePropertyName;
     FName FunctionNameToBind;
 }
 
-struct UMeshUVChannelInfo
+struct FMeshUVChannelInfo
 {
     bool bInitialized;
     bool bOverrideDensities;
     float LocalUVDensities;
 }
 
-struct UAutoCompleteNode
+struct FAutoCompleteNode
 {
     int32 IndexChar;
     TArray<int32> AutoCompleteListIndices;
 }
 
-struct UAngularDriveConstraint
+struct FAngularDriveConstraint
 {
     FConstraintDrive TwistDrive;
     FConstraintDrive SwingDrive;
@@ -14641,7 +14641,7 @@ struct UAngularDriveConstraint
     TEnumAsByte<EAngularDriveMode::Type> AngularDriveMode;
 }
 
-struct UConstraintDrive
+struct FConstraintDrive
 {
     float Stiffness;
     float Damping;
@@ -14650,7 +14650,7 @@ struct UConstraintDrive
     uint8 bEnableVelocityDrive;
 }
 
-struct ULinearDriveConstraint
+struct FLinearDriveConstraint
 {
     FVector PositionTarget;
     FVector VelocityTarget;
@@ -14660,7 +14660,7 @@ struct ULinearDriveConstraint
     uint8 bEnablePositionDrive;
 }
 
-struct UConstraintInstance
+struct FConstraintInstance
 {
     FName JointName;
     FName ConstraintBone1;
@@ -14676,7 +14676,7 @@ struct UConstraintInstance
     FConstraintProfileProperties ProfileInstance;
 }
 
-struct UConstraintProfileProperties
+struct FConstraintProfileProperties
 {
     float ProjectionLinearTolerance;
     float ProjectionAngularTolerance;
@@ -14694,7 +14694,7 @@ struct UConstraintProfileProperties
     uint8 bLinearBreakable;
 }
 
-struct UConstraintBaseParams
+struct FConstraintBaseParams
 {
     float Stiffness;
     float Damping;
@@ -14703,13 +14703,13 @@ struct UConstraintBaseParams
     uint8 bSoftConstraint;
 }
 
-struct UTwistConstraint : FConstraintBaseParams
+struct FTwistConstraint : FConstraintBaseParams
 {
     float TwistLimitDegrees;
     TEnumAsByte<EAngularConstraintMotion> TwistMotion;
 }
 
-struct UConeConstraint : FConstraintBaseParams
+struct FConeConstraint : FConstraintBaseParams
 {
     float Swing1LimitDegrees;
     float Swing2LimitDegrees;
@@ -14717,7 +14717,7 @@ struct UConeConstraint : FConstraintBaseParams
     TEnumAsByte<EAngularConstraintMotion> Swing2Motion;
 }
 
-struct ULinearConstraint : FConstraintBaseParams
+struct FLinearConstraint : FConstraintBaseParams
 {
     float Limit;
     TEnumAsByte<ELinearConstraintMotion> XMotion;
@@ -14725,87 +14725,87 @@ struct ULinearConstraint : FConstraintBaseParams
     TEnumAsByte<ELinearConstraintMotion> ZMotion;
 }
 
-struct UCullDistanceSizePair
+struct FCullDistanceSizePair
 {
     float Size;
     float CullDistance;
 }
 
-struct URuntimeCurveLinearColor
+struct FRuntimeCurveLinearColor
 {
     FRichCurve ColorCurves;
     UCurveLinearColor* ExternalCurve;
 }
 
-struct UNamedCurveValue
+struct FNamedCurveValue
 {
     FName Name;
     float Value;
 }
 
-struct UCurveTableRowHandle
+struct FCurveTableRowHandle
 {
     UCurveTable* CurveTable;
     FName RowName;
 }
 
-struct UDataTableCategoryHandle
+struct FDataTableCategoryHandle
 {
     UDataTable* DataTable;
     FName ColumnName;
     FName RowContents;
 }
 
-struct UDataTableRowHandle
+struct FDataTableRowHandle
 {
     UDataTable* DataTable;
     FName RowName;
 }
 
-struct UDebugCameraControllerSettingsViewModeIndex
+struct FDebugCameraControllerSettingsViewModeIndex
 {
     TEnumAsByte<EViewModeIndex> ViewModeIndex;
 }
 
-struct UDebugDisplayProperty
+struct FDebugDisplayProperty
 {
     UObject* obj;
     UClass* WithinClass;
 }
 
-struct UMulticastRecordOptions
+struct FMulticastRecordOptions
 {
     FString FuncPathName;
     bool bServerSkip;
     bool bClientSkip;
 }
 
-struct URollbackNetStartupActorInfo
+struct FRollbackNetStartupActorInfo
 {
     UObject* Archetype;
     ULevel* Level;
     TArray<UObject*> ObjReferences;
 }
 
-struct ULevelNameAndTime
+struct FLevelNameAndTime
 {
     FString LevelName;
     uint32 LevelChangeTimeInMS;
 }
 
-struct UDialogueWaveParameter
+struct FDialogueWaveParameter
 {
     UDialogueWave* DialogueWave;
     FDialogueContext Context;
 }
 
-struct UDialogueContext
+struct FDialogueContext
 {
     UDialogueVoice* Speaker;
     TArray<UDialogueVoice*> Targets;
 }
 
-struct UDialogueContextMapping
+struct FDialogueContextMapping
 {
     FDialogueContext Context;
     USoundWave* SoundWave;
@@ -14813,14 +14813,14 @@ struct UDialogueContextMapping
     UDialogueSoundWaveProxy* Proxy;
 }
 
-struct URawDistributionFloat : FRawDistribution
+struct FRawDistributionFloat : FRawDistribution
 {
     float MinValue;
     float MaxValue;
     UDistributionFloat* Distribution;
 }
 
-struct URawDistributionVector : FRawDistribution
+struct FRawDistributionVector : FRawDistribution
 {
     float MinValue;
     float MaxValue;
@@ -14829,20 +14829,20 @@ struct URawDistributionVector : FRawDistribution
     UDistributionVector* Distribution;
 }
 
-struct UGraphReference
+struct FGraphReference
 {
     UEdGraph* MacroGraph;
     UBlueprint* GraphBlueprint;
     FGuid GraphGuid;
 }
 
-struct UEdGraphPinReference
+struct FEdGraphPinReference
 {
     TWeakObjectPtr<UEdGraphNode> OwningNode;
     FGuid PinId;
 }
 
-struct UEdGraphSchemaAction
+struct FEdGraphSchemaAction
 {
     FText MenuDescription;
     FText TooltipDescription;
@@ -14861,24 +14861,24 @@ struct UEdGraphSchemaAction
     FString SearchText;
 }
 
-struct UEdGraphSchemaAction_NewNode : FEdGraphSchemaAction
+struct FEdGraphSchemaAction_NewNode : FEdGraphSchemaAction
 {
     UEdGraphNode* NodeTemplate;
 }
 
-struct UPluginRedirect
+struct FPluginRedirect
 {
     FString OldPluginName;
     FString NewPluginName;
 }
 
-struct UStructRedirect
+struct FStructRedirect
 {
     FName OldStructName;
     FName NewStructName;
 }
 
-struct UClassRedirect
+struct FClassRedirect
 {
     FName ObjectName;
     FName OldClassName;
@@ -14890,13 +14890,13 @@ struct UClassRedirect
     bool InstanceOnly;
 }
 
-struct UGameNameRedirect
+struct FGameNameRedirect
 {
     FName OldGameName;
     FName NewGameName;
 }
 
-struct UScreenMessageString
+struct FScreenMessageString
 {
     uint64 Key;
     FString ScreenMessage;
@@ -14906,27 +14906,27 @@ struct UScreenMessageString
     FVector2D TextScale;
 }
 
-struct UDropNoteInfo
+struct FDropNoteInfo
 {
     FVector Location;
     FRotator Rotation;
     FString Comment;
 }
 
-struct UStatColorMapping
+struct FStatColorMapping
 {
     FString StatName;
     TArray<FStatColorMapEntry> ColorMap;
     uint8 DisableBlend;
 }
 
-struct UStatColorMapEntry
+struct FStatColorMapEntry
 {
     float In;
     FColor Out;
 }
 
-struct UWorldContext
+struct FWorldContext
 {
     FURL LastURL;
     FURL LastRemoteURL;
@@ -14940,12 +14940,12 @@ struct UWorldContext
     TArray<FNamedNetDriver> ActiveNetDrivers;
 }
 
-struct UNamedNetDriver
+struct FNamedNetDriver
 {
     UNetDriver* NetDriver;
 }
 
-struct ULevelStreamingStatus
+struct FLevelStreamingStatus
 {
     FName PackageName;
     uint8 bShouldBeLoaded;
@@ -14953,7 +14953,7 @@ struct ULevelStreamingStatus
     uint32 LODIndex;
 }
 
-struct UFullyLoadedPackagesInfo
+struct FFullyLoadedPackagesInfo
 {
     TEnumAsByte<EFullyLoadPackageType> FullyLoadType;
     FString Tag;
@@ -14961,7 +14961,7 @@ struct UFullyLoadedPackagesInfo
     TArray<UObject*> LoadedObjects;
 }
 
-struct UURL
+struct FURL
 {
     FString Protocol;
     FString Host;
@@ -14973,24 +14973,24 @@ struct UURL
     FString Portal;
 }
 
-struct UNetDriverDefinition
+struct FNetDriverDefinition
 {
     FName DefName;
     FName DriverClassName;
     FName DriverClassNameFallback;
 }
 
-struct UExposureSettings
+struct FExposureSettings
 {
     float FixedEV100;
     bool bFixed;
 }
 
-struct UTickPrerequisite
+struct FTickPrerequisite
 {
 }
 
-struct UCanvasUVTri
+struct FCanvasUVTri
 {
     FVector2D V0_Pos;
     FVector2D V0_UV;
@@ -15003,14 +15003,14 @@ struct UCanvasUVTri
     FLinearColor V2_Color;
 }
 
-struct UFontRenderInfo
+struct FFontRenderInfo
 {
     uint8 bClipText;
     uint8 bEnableShadow;
     FDepthFieldGlowInfo GlowInfo;
 }
 
-struct UDepthFieldGlowInfo
+struct FDepthFieldGlowInfo
 {
     uint8 bEnableGlow;
     FLinearColor GlowColor;
@@ -15018,42 +15018,42 @@ struct UDepthFieldGlowInfo
     FVector2D GlowInnerRadius;
 }
 
-struct URedirector
+struct FRedirector
 {
     FName OldName;
     FName NewName;
 }
 
-struct UCollectionReference
+struct FCollectionReference
 {
     FName CollectionName;
 }
 
-struct UComponentReference
+struct FComponentReference
 {
     AActor* OtherActor;
     FName ComponentProperty;
     FString PathToComponent;
 }
 
-struct UConstrainComponentPropName
+struct FConstrainComponentPropName
 {
     FName ComponentName;
 }
 
-struct UDamageEvent
+struct FDamageEvent
 {
     TSubclassOf<UDamageType> DamageTypeClass;
 }
 
-struct URadialDamageEvent : FDamageEvent
+struct FRadialDamageEvent : FDamageEvent
 {
     FRadialDamageParams Params;
     FVector Origin;
     TArray<FHitResult> ComponentHits;
 }
 
-struct URadialDamageParams
+struct FRadialDamageParams
 {
     float BaseDamage;
     float MinimumDamage;
@@ -15062,14 +15062,14 @@ struct URadialDamageParams
     float DamageFalloff;
 }
 
-struct UPointDamageEvent : FDamageEvent
+struct FPointDamageEvent : FDamageEvent
 {
     float Damage;
     FVector_NetQuantizeNormal ShotDirection;
     FHitResult HitInfo;
 }
 
-struct USkeletalMeshBuildSettings
+struct FSkeletalMeshBuildSettings
 {
     uint8 bRecomputeNormals;
     uint8 bRecomputeTangents;
@@ -15085,7 +15085,7 @@ struct USkeletalMeshBuildSettings
     float MorphThresholdPosition;
 }
 
-struct UMeshBuildSettings
+struct FMeshBuildSettings
 {
     uint8 bUseMikkTSpace;
     uint8 bRecomputeNormals;
@@ -15108,14 +15108,14 @@ struct UMeshBuildSettings
     UStaticMesh* DistanceFieldReplacementMesh;
 }
 
-struct UPOV
+struct FPOV
 {
     FVector Location;
     FRotator Rotation;
     float FOV;
 }
 
-struct UAnimUpdateRateParameters
+struct FAnimUpdateRateParameters
 {
     EUpdateRateShiftBucket ShiftBucket;
     uint8 bInterpolateSkippedFrames;
@@ -15135,39 +15135,39 @@ struct UAnimUpdateRateParameters
     int32 SkippedEvalFrames;
 }
 
-struct UAnimSlotDesc
+struct FAnimSlotDesc
 {
     FName slotName;
     int32 NumChannels;
 }
 
-struct UAnimSlotInfo
+struct FAnimSlotInfo
 {
     FName slotName;
     TArray<float> ChannelWeights;
 }
 
-struct UMTDResult
+struct FMTDResult
 {
     FVector Direction;
     float Distance;
 }
 
-struct UPrimitiveMaterialRef
+struct FPrimitiveMaterialRef
 {
     UPrimitiveComponent* Primitive;
     UDecalComponent* Decal;
     int32 ElementIndex;
 }
 
-struct USwarmDebugOptions
+struct FSwarmDebugOptions
 {
     uint8 bDistributionEnabled;
     uint8 bForceContentExport;
     uint8 bInitialized;
 }
 
-struct ULightmassDebugOptions
+struct FLightmassDebugOptions
 {
     uint8 bDebugMode;
     uint8 bStatsEnabled;
@@ -15187,7 +15187,7 @@ struct ULightmassDebugOptions
     float ExecutionTimeDivisor;
 }
 
-struct ULightmassPrimitiveSettings
+struct FLightmassPrimitiveSettings
 {
     uint8 bUseTwoSidedLighting;
     uint8 bShadowIndirectOnly;
@@ -15200,23 +15200,23 @@ struct ULightmassPrimitiveSettings
     float FullyOccludedSamplesFraction;
 }
 
-struct ULightmassLightSettings
+struct FLightmassLightSettings
 {
     float IndirectLightingSaturation;
     float ShadowExponent;
     bool bUseAreaShadowsForStationaryLight;
 }
 
-struct ULightmassDirectionalLightSettings : FLightmassLightSettings
+struct FLightmassDirectionalLightSettings : FLightmassLightSettings
 {
     float LightSourceAngle;
 }
 
-struct ULightmassPointLightSettings : FLightmassLightSettings
+struct FLightmassPointLightSettings : FLightmassLightSettings
 {
 }
 
-struct UBasedPosition
+struct FBasedPosition
 {
     AActor* Base;
     FVector Position;
@@ -15225,20 +15225,20 @@ struct UBasedPosition
     FVector CachedTransPosition;
 }
 
-struct UFractureEffect
+struct FFractureEffect
 {
     UParticleSystem* ParticleSystem;
     USoundBase* Sound;
 }
 
-struct UCollisionImpactData
+struct FCollisionImpactData
 {
     TArray<FRigidBodyContactInfo> ContactInfos;
     FVector TotalNormalImpulse;
     FVector TotalFrictionImpulse;
 }
 
-struct URigidBodyContactInfo
+struct FRigidBodyContactInfo
 {
     FVector ContactPosition;
     FVector ContactNormal;
@@ -15246,7 +15246,7 @@ struct URigidBodyContactInfo
     UPhysicalMaterial* PhysMaterial;
 }
 
-struct URigidBodyErrorCorrection
+struct FRigidBodyErrorCorrection
 {
     float PingExtrapolation;
     float PingLimit;
@@ -15263,7 +15263,7 @@ struct URigidBodyErrorCorrection
     float ErrorAccumulationSimilarity;
 }
 
-struct URigidBodyState
+struct FRigidBodyState
 {
     FVector_NetQuantize100 Position;
     FQuat Quaternion;
@@ -15272,19 +15272,19 @@ struct URigidBodyState
     uint8 Flags;
 }
 
-struct UMaterialShadingModelField
+struct FMaterialShadingModelField
 {
     uint16 ShadingModelField;
 }
 
-struct UExponentialHeightFogData
+struct FExponentialHeightFogData
 {
     float FogDensity;
     float FogHeightFalloff;
     float FogHeightOffset;
 }
 
-struct UFontCharacter
+struct FFontCharacter
 {
     int32 StartU;
     int32 StartV;
@@ -15294,7 +15294,7 @@ struct UFontCharacter
     int32 VerticalOffset;
 }
 
-struct UFontImportOptionsData
+struct FFontImportOptionsData
 {
     FString FontName;
     float Height;
@@ -15327,11 +15327,11 @@ struct UFontImportOptionsData
     float DistanceFieldScanRadiusScale;
 }
 
-struct UForceFeedbackAttenuationSettings : FBaseAttenuationSettings
+struct FForceFeedbackAttenuationSettings : FBaseAttenuationSettings
 {
 }
 
-struct UForceFeedbackChannelDetails
+struct FForceFeedbackChannelDetails
 {
     uint8 bAffectsLeftLarge;
     uint8 bAffectsLeftSmall;
@@ -15340,21 +15340,21 @@ struct UForceFeedbackChannelDetails
     FRuntimeFloatCurve Curve;
 }
 
-struct UPredictProjectilePathResult
+struct FPredictProjectilePathResult
 {
     TArray<FPredictProjectilePathPointData> PathData;
     FPredictProjectilePathPointData LastTraceDestination;
     FHitResult HitResult;
 }
 
-struct UPredictProjectilePathPointData
+struct FPredictProjectilePathPointData
 {
     FVector Location;
     FVector Velocity;
     float Time;
 }
 
-struct UPredictProjectilePathParams
+struct FPredictProjectilePathParams
 {
     FVector StartLocation;
     FVector LaunchVelocity;
@@ -15372,18 +15372,18 @@ struct UPredictProjectilePathParams
     bool bTraceComplex;
 }
 
-struct UActiveHapticFeedbackEffect
+struct FActiveHapticFeedbackEffect
 {
     UHapticFeedbackEffect_Base* HapticEffect;
 }
 
-struct UHapticFeedbackDetails_Curve
+struct FHapticFeedbackDetails_Curve
 {
     FRuntimeFloatCurve Frequency;
     FRuntimeFloatCurve Amplitude;
 }
 
-struct UClusterNode
+struct FClusterNode
 {
     FVector BoundMin;
     int32 FirstChild;
@@ -15395,7 +15395,7 @@ struct UClusterNode
     FVector MaxInstanceScale;
 }
 
-struct UClusterNode_DEPRECATED
+struct FClusterNode_DEPRECATED
 {
     FVector BoundMin;
     int32 FirstChild;
@@ -15405,14 +15405,14 @@ struct UClusterNode_DEPRECATED
     int32 LastInstance;
 }
 
-struct UHLODProxyMesh
+struct FHLODProxyMesh
 {
     TLazyObjectPtr<ALODActor> LODActor;
     UStaticMesh* StaticMesh;
     FName Key;
 }
 
-struct UImportanceTexture
+struct FImportanceTexture
 {
     FIntPoint Size;
     int32 NumMips;
@@ -15423,7 +15423,7 @@ struct UImportanceTexture
     TEnumAsByte<EImportanceWeight::Type> Weighting;
 }
 
-struct UComponentOverrideRecord
+struct FComponentOverrideRecord
 {
     UClass* ComponentClass;
     UActorComponent* ComponentTemplate;
@@ -15431,58 +15431,58 @@ struct UComponentOverrideRecord
     FBlueprintCookedComponentInstancingData CookedComponentInstancingData;
 }
 
-struct UComponentKey
+struct FComponentKey
 {
     UClass* OwnerClass;
     FName SCSVariableName;
     FGuid AssociatedGuid;
 }
 
-struct UBlueprintInputDelegateBinding
+struct FBlueprintInputDelegateBinding
 {
     uint8 bConsumeInput;
     uint8 bExecuteWhenPaused;
     uint8 bOverrideParentBinding;
 }
 
-struct UBlueprintInputActionDelegateBinding : FBlueprintInputDelegateBinding
+struct FBlueprintInputActionDelegateBinding : FBlueprintInputDelegateBinding
 {
     FName InputActionName;
     TEnumAsByte<EInputEvent> InputKeyEvent;
     FName FunctionNameToBind;
 }
 
-struct UBlueprintInputAxisDelegateBinding : FBlueprintInputDelegateBinding
+struct FBlueprintInputAxisDelegateBinding : FBlueprintInputDelegateBinding
 {
     FName InputAxisName;
     FName FunctionNameToBind;
 }
 
-struct UBlueprintInputAxisKeyDelegateBinding : FBlueprintInputDelegateBinding
+struct FBlueprintInputAxisKeyDelegateBinding : FBlueprintInputDelegateBinding
 {
     FKey AxisKey;
     FName FunctionNameToBind;
 }
 
-struct UCachedKeyToActionInfo
+struct FCachedKeyToActionInfo
 {
     UPlayerInput* PlayerInput;
 }
 
-struct UBlueprintInputKeyDelegateBinding : FBlueprintInputDelegateBinding
+struct FBlueprintInputKeyDelegateBinding : FBlueprintInputDelegateBinding
 {
     FInputChord InputChord;
     TEnumAsByte<EInputEvent> InputKeyEvent;
     FName FunctionNameToBind;
 }
 
-struct UBlueprintInputTouchDelegateBinding : FBlueprintInputDelegateBinding
+struct FBlueprintInputTouchDelegateBinding : FBlueprintInputDelegateBinding
 {
     TEnumAsByte<EInputEvent> InputKeyEvent;
     FName FunctionNameToBind;
 }
 
-struct UInstancedStaticMeshComponentInstanceData : FSceneComponentInstanceData
+struct FInstancedStaticMeshComponentInstanceData : FSceneComponentInstanceData
 {
     UStaticMesh* StaticMesh;
     FInstancedStaticMeshLightMapInstanceData CachedStaticLighting;
@@ -15491,35 +15491,35 @@ struct UInstancedStaticMeshComponentInstanceData : FSceneComponentInstanceData
     int32 InstancingRandomSeed;
 }
 
-struct UInstancedStaticMeshInstanceData
+struct FInstancedStaticMeshInstanceData
 {
     FMatrix Transform;
 }
 
-struct UInstancedStaticMeshLightMapInstanceData
+struct FInstancedStaticMeshLightMapInstanceData
 {
     FTransform Transform;
     TArray<FGuid> MapBuildDataIds;
 }
 
-struct UInstancedStaticMeshMappingInfo
+struct FInstancedStaticMeshMappingInfo
 {
 }
 
-struct UIntegralCurve : FIndexedCurve
+struct FIntegralCurve : FIndexedCurve
 {
     TArray<FIntegralKey> Keys;
     int32 DefaultValue;
     bool bUseDefaultValueBeforeFirstKey;
 }
 
-struct UIntegralKey
+struct FIntegralKey
 {
     float Time;
     int32 Value;
 }
 
-struct UCurveEdTab
+struct FCurveEdTab
 {
     FString TabName;
     TArray<FCurveEdEntry> Curves;
@@ -15529,7 +15529,7 @@ struct UCurveEdTab
     float ViewEndOutput;
 }
 
-struct UCurveEdEntry
+struct FCurveEdEntry
 {
     UObject* CurveObject;
     FColor CurveColor;
@@ -15542,7 +15542,7 @@ struct UCurveEdEntry
     float ClampHigh;
 }
 
-struct UInterpEdSelKey
+struct FInterpEdSelKey
 {
     UInterpGroup* Group;
     UInterpTrack* Track;
@@ -15550,7 +15550,7 @@ struct UInterpEdSelKey
     float UnsnappedPosition;
 }
 
-struct UCameraPreviewInfo
+struct FCameraPreviewInfo
 {
     TSubclassOf<APawn> PawnClass;
     UAnimSequence* AnimSeq;
@@ -15559,7 +15559,7 @@ struct UCameraPreviewInfo
     APawn* PawnInst;
 }
 
-struct USubTrackGroup
+struct FSubTrackGroup
 {
     FString GroupName;
     TArray<int32> TrackIndices;
@@ -15567,14 +15567,14 @@ struct USubTrackGroup
     uint8 bIsSelected;
 }
 
-struct USupportedSubTrackInfo
+struct FSupportedSubTrackInfo
 {
     TSubclassOf<UInterpTrack> SupportedClass;
     FString SubTrackName;
     int32 GroupIndex;
 }
 
-struct UAnimControlTrackKey
+struct FAnimControlTrackKey
 {
     float StartTime;
     UAnimSequence* AnimSeq;
@@ -15585,13 +15585,13 @@ struct UAnimControlTrackKey
     uint8 bReverse;
 }
 
-struct UBoolTrackKey
+struct FBoolTrackKey
 {
     float Time;
     uint8 Value;
 }
 
-struct UDirectorTrackCut
+struct FDirectorTrackCut
 {
     float Time;
     float TransitionTime;
@@ -15599,31 +15599,31 @@ struct UDirectorTrackCut
     int32 ShotNumber;
 }
 
-struct UEventTrackKey
+struct FEventTrackKey
 {
     float Time;
     FName EventName;
 }
 
-struct UInterpLookupTrack
+struct FInterpLookupTrack
 {
     TArray<FInterpLookupPoint> Points;
 }
 
-struct UInterpLookupPoint
+struct FInterpLookupPoint
 {
     FName GroupName;
     float Time;
 }
 
-struct UParticleReplayTrackKey
+struct FParticleReplayTrackKey
 {
     float Time;
     float Duration;
     int32 ClipIDNumber;
 }
 
-struct USoundTrackKey
+struct FSoundTrackKey
 {
     float Time;
     float Volume;
@@ -15631,48 +15631,48 @@ struct USoundTrackKey
     USoundBase* Sound;
 }
 
-struct UToggleTrackKey
+struct FToggleTrackKey
 {
     float Time;
     TEnumAsByte<ETrackToggleAction> ToggleAction;
 }
 
-struct UVisibilityTrackKey
+struct FVisibilityTrackKey
 {
     float Time;
     TEnumAsByte<EVisibilityTrackAction> Action;
     TEnumAsByte<EVisibilityTrackCondition> ActiveCondition;
 }
 
-struct UVectorSpringState
+struct FVectorSpringState
 {
 }
 
-struct UFloatSpringState
+struct FFloatSpringState
 {
 }
 
-struct UDrawToRenderTargetContext
+struct FDrawToRenderTargetContext
 {
     UTextureRenderTarget2D* RenderTarget;
 }
 
-struct ULatentActionManager
+struct FLatentActionManager
 {
 }
 
-struct ULayerActorStats
+struct FLayerActorStats
 {
     UClass* Type;
     int32 Total;
 }
 
-struct UReplicatedStaticActorDestructionInfo
+struct FReplicatedStaticActorDestructionInfo
 {
     UClass* ObjClass;
 }
 
-struct ULevelSimplificationDetails
+struct FLevelSimplificationDetails
 {
     bool bCreatePackagePerAsset;
     float DetailsPercentage;
@@ -15692,7 +15692,7 @@ struct ULevelSimplificationDetails
     bool bGenerateLandscapeSpecularMap;
 }
 
-struct UMaterialProxySettings
+struct FMaterialProxySettings
 {
     FIntPoint TextureSize;
     float GutterSpace;
@@ -15730,25 +15730,25 @@ struct UMaterialProxySettings
     FIntPoint AmbientOcclusionTextureSize;
 }
 
-struct UStreamableTextureInstance
+struct FStreamableTextureInstance
 {
 }
 
-struct UDynamicTextureInstance : FStreamableTextureInstance
+struct FDynamicTextureInstance : FStreamableTextureInstance
 {
     UTexture2D* Texture;
     bool bAttached;
     float OriginalRadius;
 }
 
-struct UPrecomputedLightInstanceData : FSceneComponentInstanceData
+struct FPrecomputedLightInstanceData : FSceneComponentInstanceData
 {
     FTransform Transform;
     FGuid LightGuid;
     int32 PreviewShadowMapChannel;
 }
 
-struct UBatchedPoint
+struct FBatchedPoint
 {
     FVector Position;
     FLinearColor Color;
@@ -15757,7 +15757,7 @@ struct UBatchedPoint
     uint8 DepthPriority;
 }
 
-struct UBatchedLine
+struct FBatchedLine
 {
     FVector Start;
     FVector End;
@@ -15767,7 +15767,7 @@ struct UBatchedLine
     uint8 DepthPriority;
 }
 
-struct UClientReceiveData
+struct FClientReceiveData
 {
     APlayerController* LocalPC;
     FName MessageType;
@@ -15778,13 +15778,13 @@ struct UClientReceiveData
     UObject* OptionalObject;
 }
 
-struct UParameterGroupData
+struct FParameterGroupData
 {
     FString GroupName;
     int32 GroupSortPriority;
 }
 
-struct UMaterialSpriteElement
+struct FMaterialSpriteElement
 {
     UMaterialInterface* Material;
     UCurveFloat* DistanceToOpacityCurve;
@@ -15794,7 +15794,7 @@ struct UMaterialSpriteElement
     UCurveFloat* DistanceToSizeCurve;
 }
 
-struct UMaterialCachedExpressionData
+struct FMaterialCachedExpressionData
 {
     FMaterialCachedParameters Parameters;
     TArray<UObject*> ReferencedTextures;
@@ -15809,19 +15809,19 @@ struct UMaterialCachedExpressionData
     uint8 bHasSceneColor;
 }
 
-struct UMaterialParameterCollectionInfo
+struct FMaterialParameterCollectionInfo
 {
     FGuid StateId;
     UMaterialParameterCollection* ParameterCollection;
 }
 
-struct UMaterialFunctionInfo
+struct FMaterialFunctionInfo
 {
     FGuid StateId;
     UMaterialFunctionInterface* Function;
 }
 
-struct UMaterialCachedParameters
+struct FMaterialCachedParameters
 {
     FMaterialCachedParameterEntry Entries;
     TArray<float> ScalarValues;
@@ -15832,7 +15832,7 @@ struct UMaterialCachedParameters
     TArray<URuntimeVirtualTexture*> RuntimeVirtualTextureValues;
 }
 
-struct UMaterialCachedParameterEntry
+struct FMaterialCachedParameterEntry
 {
     TArray<uint64> NameHashes;
     TArray<FMaterialParameterInfo> ParameterInfos;
@@ -15840,14 +15840,14 @@ struct UMaterialCachedParameterEntry
     TArray<bool> Overrides;
 }
 
-struct UMaterialParameterInfo
+struct FMaterialParameterInfo
 {
     FName Name;
     TEnumAsByte<EMaterialParameterAssociation> Association;
     int32 Index;
 }
 
-struct UParameterChannelNames
+struct FParameterChannelNames
 {
     FText R;
     FText G;
@@ -15855,33 +15855,33 @@ struct UParameterChannelNames
     FText A;
 }
 
-struct UCustomDefine
+struct FCustomDefine
 {
     FString DefineName;
     FString DefineValue;
 }
 
-struct UCustomInput
+struct FCustomInput
 {
     FName InputName;
     FExpressionInput Input;
 }
 
-struct UFunctionExpressionOutput
+struct FFunctionExpressionOutput
 {
     UMaterialExpressionFunctionOutput* ExpressionOutput;
     FGuid ExpressionOutputId;
     FExpressionOutput Output;
 }
 
-struct UFunctionExpressionInput
+struct FFunctionExpressionInput
 {
     UMaterialExpressionFunctionInput* ExpressionInput;
     FGuid ExpressionInputId;
     FExpressionInput Input;
 }
 
-struct UFontParameterValue
+struct FFontParameterValue
 {
     FMaterialParameterInfo ParameterInfo;
     UFont* FontValue;
@@ -15889,42 +15889,42 @@ struct UFontParameterValue
     FGuid ExpressionGUID;
 }
 
-struct URuntimeVirtualTextureParameterValue
+struct FRuntimeVirtualTextureParameterValue
 {
     FMaterialParameterInfo ParameterInfo;
     URuntimeVirtualTexture* ParameterValue;
     FGuid ExpressionGUID;
 }
 
-struct UTextureParameterValue
+struct FTextureParameterValue
 {
     FMaterialParameterInfo ParameterInfo;
     UTexture* ParameterValue;
     FGuid ExpressionGUID;
 }
 
-struct UVectorParameterValue
+struct FVectorParameterValue
 {
     FMaterialParameterInfo ParameterInfo;
     FLinearColor ParameterValue;
     FGuid ExpressionGUID;
 }
 
-struct UScalarParameterValue
+struct FScalarParameterValue
 {
     FMaterialParameterInfo ParameterInfo;
     float ParameterValue;
     FGuid ExpressionGUID;
 }
 
-struct UScalarParameterAtlasInstanceData
+struct FScalarParameterAtlasInstanceData
 {
     bool bIsUsedAsAtlasPosition;
     TSoftObjectPtr<UCurveLinearColor> Curve;
     TSoftObjectPtr<UCurveLinearColorAtlas> Atlas;
 }
 
-struct UMaterialInstanceBasePropertyOverrides
+struct FMaterialInstanceBasePropertyOverrides
 {
     uint8 bOverride_OpacityMaskClipValue;
     uint8 bOverride_BlendMode;
@@ -15940,14 +15940,14 @@ struct UMaterialInstanceBasePropertyOverrides
     float OpacityMaskClipValue;
 }
 
-struct UMaterialTextureInfo
+struct FMaterialTextureInfo
 {
     float SamplingScale;
     int32 UVChannelIndex;
     FName TextureName;
 }
 
-struct ULightmassMaterialInterfaceSettings
+struct FLightmassMaterialInterfaceSettings
 {
     float EmissiveBoost;
     float DiffuseBoost;
@@ -15959,7 +15959,7 @@ struct ULightmassMaterialInterfaceSettings
     uint8 bOverrideExportResolutionScale;
 }
 
-struct UMaterialLayersFunctions
+struct FMaterialLayersFunctions
 {
     TArray<UMaterialFunctionInterface*> Layers;
     TArray<UMaterialFunctionInterface*> Blends;
@@ -15967,35 +15967,35 @@ struct UMaterialLayersFunctions
     FString KeyString;
 }
 
-struct UCollectionParameterBase
+struct FCollectionParameterBase
 {
     FName ParameterName;
     FGuid ID;
 }
 
-struct UCollectionVectorParameter : FCollectionParameterBase
+struct FCollectionVectorParameter : FCollectionParameterBase
 {
     FLinearColor DefaultValue;
 }
 
-struct UCollectionScalarParameter : FCollectionParameterBase
+struct FCollectionScalarParameter : FCollectionParameterBase
 {
     float DefaultValue;
 }
 
-struct UInterpGroupActorInfo
+struct FInterpGroupActorInfo
 {
     FName ObjectName;
     TArray<AActor*> Actors;
 }
 
-struct UCameraCutInfo
+struct FCameraCutInfo
 {
     FVector Location;
     float Timestamp;
 }
 
-struct UMemberReference
+struct FMemberReference
 {
     UObject* MemberParent;
     FString MemberScope;
@@ -16005,7 +16005,7 @@ struct UMemberReference
     bool bWasDeprecated;
 }
 
-struct UMeshInstancingSettings
+struct FMeshInstancingSettings
 {
     TSubclassOf<AActor> ActorClassToUse;
     int32 InstanceReplacementThreshold;
@@ -16015,7 +16015,7 @@ struct UMeshInstancingSettings
     TSubclassOf<UInstancedStaticMeshComponent> ISMComponentToUse;
 }
 
-struct UMeshMergingSettings
+struct FMeshMergingSettings
 {
     int32 TargetLightMapResolution;
     EUVOutput OutputUVs;
@@ -16039,7 +16039,7 @@ struct UMeshMergingSettings
     uint8 bAllowDistanceField;
 }
 
-struct UMeshProxySettings
+struct FMeshProxySettings
 {
     int32 ScreenSize;
     float VoxelSize;
@@ -16066,7 +16066,7 @@ struct UMeshProxySettings
     uint8 bGenerateLightmapUVs;
 }
 
-struct UMeshReductionSettings
+struct FMeshReductionSettings
 {
     float PercentTriangles;
     float PercentVertices;
@@ -16088,7 +16088,7 @@ struct UMeshReductionSettings
     TEnumAsByte<EMeshFeatureImportance::Type> VertexColorImportance;
 }
 
-struct UPurchaseInfo
+struct FPurchaseInfo
 {
     FString Identifier;
     FString DisplayName;
@@ -16096,18 +16096,18 @@ struct UPurchaseInfo
     FString DisplayPrice;
 }
 
-struct UNameCurve : FIndexedCurve
+struct FNameCurve : FIndexedCurve
 {
     TArray<FNameCurveKey> Keys;
 }
 
-struct UNameCurveKey
+struct FNameCurveKey
 {
     float Time;
     FName Value;
 }
 
-struct UNavAvoidanceMask
+struct FNavAvoidanceMask
 {
     uint8 bGroup0;
     uint8 bGroup1;
@@ -16143,7 +16143,7 @@ struct UNavAvoidanceMask
     uint8 bGroup31;
 }
 
-struct UMovementProperties
+struct FMovementProperties
 {
     uint8 bCanCrouch;
     uint8 bCanJump;
@@ -16152,7 +16152,7 @@ struct UMovementProperties
     uint8 bCanFly;
 }
 
-struct UNavAgentProperties : FMovementProperties
+struct FNavAgentProperties : FMovementProperties
 {
     float AgentRadius;
     float AgentHeight;
@@ -16161,7 +16161,7 @@ struct UNavAgentProperties : FMovementProperties
     FSoftClassPath PreferredNavData;
 }
 
-struct UNavDataConfig : FNavAgentProperties
+struct FNavDataConfig : FNavAgentProperties
 {
     FName Name;
     FColor Color;
@@ -16170,7 +16170,7 @@ struct UNavDataConfig : FNavAgentProperties
     TSoftClassPtr<AActor> NavDataClass;
 }
 
-struct UNavAgentSelector
+struct FNavAgentSelector
 {
     uint8 bSupportsAgent0;
     uint8 bSupportsAgent1;
@@ -16190,7 +16190,7 @@ struct UNavAgentSelector
     uint8 bSupportsAgent15;
 }
 
-struct UNavigationLinkBase
+struct FNavigationLinkBase
 {
     float LeftProjectHeight;
     float MaxFallDownLength;
@@ -16227,7 +16227,7 @@ struct UNavigationLinkBase
     TSubclassOf<UNavAreaBase> AreaClass;
 }
 
-struct UNavigationSegmentLink : FNavigationLinkBase
+struct FNavigationSegmentLink : FNavigationLinkBase
 {
     FVector LeftStart;
     FVector LeftEnd;
@@ -16235,13 +16235,13 @@ struct UNavigationSegmentLink : FNavigationLinkBase
     FVector RightEnd;
 }
 
-struct UNavigationLink : FNavigationLinkBase
+struct FNavigationLink : FNavigationLinkBase
 {
     FVector Left;
     FVector Right;
 }
 
-struct UChannelDefinition
+struct FChannelDefinition
 {
     FName ChannelName;
     FName ClassName;
@@ -16254,7 +16254,7 @@ struct UChannelDefinition
     bool bInitialClient;
 }
 
-struct UPacketSimulationSettings
+struct FPacketSimulationSettings
 {
     int32 PktLoss;
     int32 PktLossMaxSize;
@@ -16271,26 +16271,26 @@ struct UPacketSimulationSettings
     int32 PktJitter;
 }
 
-struct UNetworkEmulationProfileDescription
+struct FNetworkEmulationProfileDescription
 {
     FString ProfileName;
     FString ToolTip;
 }
 
-struct UNodeItem
+struct FNodeItem
 {
     FName ParentName;
     FTransform Transform;
 }
 
-struct UParticleBurst
+struct FParticleBurst
 {
     int32 count;
     int32 CountLow;
     float Time;
 }
 
-struct UParticleRandomSeedInfo
+struct FParticleRandomSeedInfo
 {
     FName ParameterName;
     uint8 bGetSeedFromInstance;
@@ -16300,20 +16300,20 @@ struct UParticleRandomSeedInfo
     TArray<int32> RandomSeeds;
 }
 
-struct UParticleCurvePair
+struct FParticleCurvePair
 {
     FString CurveName;
     UObject* CurveObject;
 }
 
-struct UBeamModifierOptions
+struct FBeamModifierOptions
 {
     uint8 bModify;
     uint8 bScale;
     uint8 bLock;
 }
 
-struct UParticleEvent_GenerateInfo
+struct FParticleEvent_GenerateInfo
 {
     TEnumAsByte<EParticleEventType> Type;
     int32 Frequency;
@@ -16326,20 +16326,20 @@ struct UParticleEvent_GenerateInfo
     TArray<UParticleModuleEventSendToGame*> ParticleModuleEventsToSendToGame;
 }
 
-struct ULocationBoneSocketInfo
+struct FLocationBoneSocketInfo
 {
     FName BoneSocketName;
     FVector Offset;
 }
 
-struct UOrbitOptions
+struct FOrbitOptions
 {
     uint8 bProcessDuringSpawn;
     uint8 bProcessDuringUpdate;
     uint8 bUseEmitterTime;
 }
 
-struct UEmitterDynamicParameter
+struct FEmitterDynamicParameter
 {
     FName ParamName;
     uint8 bUseEmitterTime;
@@ -16349,13 +16349,13 @@ struct UEmitterDynamicParameter
     FRawDistributionFloat ParamValue;
 }
 
-struct UBeamTargetData
+struct FBeamTargetData
 {
     FName TargetName;
     float TargetPercentage;
 }
 
-struct UGPUSpriteResourceData
+struct FGPUSpriteResourceData
 {
     TArray<FColor> QuantizedColorSamples;
     TArray<FColor> QuantizedMiscSamples;
@@ -16399,7 +16399,7 @@ struct UGPUSpriteResourceData
     float MaxFacingCameraBlendDistance;
 }
 
-struct UGPUSpriteEmitterInfo
+struct FGPUSpriteEmitterInfo
 {
     UParticleModuleRequired* RequiredModule;
     UParticleModuleSpawn* SpawnModule;
@@ -16432,7 +16432,7 @@ struct UGPUSpriteEmitterInfo
     FRawDistributionFloat DynamicAlphaScale;
 }
 
-struct UGPUSpriteLocalVectorFieldInfo
+struct FGPUSpriteLocalVectorFieldInfo
 {
     UVectorField* Field;
     FTransform Transform;
@@ -16448,22 +16448,22 @@ struct UGPUSpriteLocalVectorFieldInfo
     uint8 bUseFixDT;
 }
 
-struct UNamedEmitterMaterial
+struct FNamedEmitterMaterial
 {
     FName Name;
     UMaterialInterface* Material;
 }
 
-struct ULODSoloTrack
+struct FLODSoloTrack
 {
     TArray<uint8> SoloEnableSetting;
 }
 
-struct UParticleSystemLOD
+struct FParticleSystemLOD
 {
 }
 
-struct UParticleSysParam
+struct FParticleSysParam
 {
     FName Name;
     TEnumAsByte<EParticleSysParamType> ParamType;
@@ -16476,23 +16476,23 @@ struct UParticleSysParam
     UMaterialInterface* Material;
 }
 
-struct UParticleSystemWorldManagerTickFunction : FTickFunction
+struct FParticleSystemWorldManagerTickFunction : FTickFunction
 {
 }
 
-struct UParticleSystemReplayFrame
+struct FParticleSystemReplayFrame
 {
 }
 
-struct UParticleEmitterReplayFrame
+struct FParticleEmitterReplayFrame
 {
 }
 
-struct UFreezablePerPlatformInt
+struct FFreezablePerPlatformInt
 {
 }
 
-struct UPhysicalAnimationData
+struct FPhysicalAnimationData
 {
     FName BodyName;
     uint8 bIsLocalSimulation;
@@ -16504,69 +16504,69 @@ struct UPhysicalAnimationData
     float MaxAngularForce;
 }
 
-struct UTireFrictionScalePair
+struct FTireFrictionScalePair
 {
     UTireType* TireType;
     float FrictionScale;
 }
 
-struct UPhysicalAnimationProfile
+struct FPhysicalAnimationProfile
 {
     FName ProfileName;
     FPhysicalAnimationData PhysicalAnimationData;
 }
 
-struct UPhysicsConstraintProfileHandle
+struct FPhysicsConstraintProfileHandle
 {
     FConstraintProfileProperties ProfileProperties;
     FName ProfileName;
 }
 
-struct UChaosPhysicsSettings
+struct FChaosPhysicsSettings
 {
     EChaosThreadingMode DefaultThreadingModel;
     EChaosSolverTickMode DedicatedThreadTickMode;
     EChaosBufferMode DedicatedThreadBufferMode;
 }
 
-struct UPhysicalSurfaceName
+struct FPhysicalSurfaceName
 {
     TEnumAsByte<EPhysicalSurface> Type;
     FName Name;
 }
 
-struct UDelegateArray
+struct FDelegateArray
 {
     TArray<FDelegateArrayDelegates> Delegates;
 }
 
-struct UTViewTarget
+struct FTViewTarget
 {
     AActor* Target;
     FMinimalViewInfo POV;
     APlayerState* PlayerState;
 }
 
-struct UCameraCacheEntry
+struct FCameraCacheEntry
 {
     float Timestamp;
     FMinimalViewInfo POV;
 }
 
-struct UInputActionSpeechMapping
+struct FInputActionSpeechMapping
 {
     FName ActionName;
     FName SpeechKeyword;
 }
 
-struct UInputAxisKeyMapping
+struct FInputAxisKeyMapping
 {
     FName AxisName;
     float Scale;
     FKey Key;
 }
 
-struct UInputActionKeyMapping
+struct FInputActionKeyMapping
 {
     FName ActionName;
     uint8 bShift;
@@ -16576,13 +16576,13 @@ struct UInputActionKeyMapping
     FKey Key;
 }
 
-struct UInputAxisConfigEntry
+struct FInputAxisConfigEntry
 {
     FName AxisKeyName;
     FInputAxisProperties AxisProperties;
 }
 
-struct UInputAxisProperties
+struct FInputAxisProperties
 {
     float DeadZone;
     float Sensitivity;
@@ -16590,7 +16590,7 @@ struct UInputAxisProperties
     uint8 bInvert;
 }
 
-struct UKeyBind
+struct FKeyBind
 {
     FKey Key;
     FString Command;
@@ -16605,13 +16605,13 @@ struct UKeyBind
     uint8 bDisabled;
 }
 
-struct UPlayerMuteList
+struct FPlayerMuteList
 {
     bool bHasVoiceHandshakeCompleted;
     int32 VoiceChannelIdx;
 }
 
-struct UPoseDataContainer
+struct FPoseDataContainer
 {
     TArray<FSmartName> PoseNames;
     TArray<FName> Tracks;
@@ -16620,45 +16620,45 @@ struct UPoseDataContainer
     TArray<FAnimCurveBase> Curves;
 }
 
-struct UPoseData
+struct FPoseData
 {
     TArray<FTransform> LocalSpacePose;
     TMap<int32, int32> TrackToBufferIndex;
     TArray<float> CurveData;
 }
 
-struct UPreviewAssetAttachContainer
+struct FPreviewAssetAttachContainer
 {
     TArray<FPreviewAttachedObjectPair> AttachedObjects;
 }
 
-struct UPreviewAttachedObjectPair
+struct FPreviewAttachedObjectPair
 {
     TSoftObjectPtr<UObject> AttachedObject;
     UObject* Object;
     FName AttachedTo;
 }
 
-struct UPreviewMeshCollectionEntry
+struct FPreviewMeshCollectionEntry
 {
     TSoftObjectPtr<USkeletalMesh> SkeletalMesh;
 }
 
-struct UPrimitiveComponentInstanceData : FSceneComponentInstanceData
+struct FPrimitiveComponentInstanceData : FSceneComponentInstanceData
 {
     FTransform ComponentTransform;
     int32 VisibilityId;
     UPrimitiveComponent* LODParent;
 }
 
-struct USpriteCategoryInfo
+struct FSpriteCategoryInfo
 {
     FName Category;
     FText DisplayName;
     FText Description;
 }
 
-struct UReverbSettings
+struct FReverbSettings
 {
     bool bApplyReverb;
     UReverbEffect* ReverbEffect;
@@ -16667,29 +16667,29 @@ struct UReverbSettings
     float FadeTime;
 }
 
-struct UCompressedRichCurve
+struct FCompressedRichCurve
 {
 }
 
-struct UTransformBase
+struct FTransformBase
 {
     FName Node;
     FTransformBaseConstraint Constraints;
 }
 
-struct UTransformBaseConstraint
+struct FTransformBaseConstraint
 {
     TArray<FRigTransformConstraint> TransformConstraints;
 }
 
-struct URigTransformConstraint
+struct FRigTransformConstraint
 {
     TEnumAsByte<EConstraintTransform::Type> TranformType;
     FName ParentSpace;
     float Weight;
 }
 
-struct UNode
+struct FNode
 {
     FName Name;
     FName ParentName;
@@ -16698,7 +16698,7 @@ struct UNode
     bool bAdvanced;
 }
 
-struct URootMotionSource
+struct FRootMotionSource
 {
     uint16 Priority;
     uint16 LocalID;
@@ -16715,19 +16715,19 @@ struct URootMotionSource
     FRootMotionFinishVelocitySettings FinishVelocityParams;
 }
 
-struct URootMotionFinishVelocitySettings
+struct FRootMotionFinishVelocitySettings
 {
     ERootMotionFinishVelocityMode Mode;
     FVector SetVelocity;
     float ClampVelocity;
 }
 
-struct URootMotionSourceStatus
+struct FRootMotionSourceStatus
 {
     uint8 Flags;
 }
 
-struct URootMotionSource_JumpForce : FRootMotionSource
+struct FRootMotionSource_JumpForce : FRootMotionSource
 {
     FRotator Rotation;
     float Distance;
@@ -16737,7 +16737,7 @@ struct URootMotionSource_JumpForce : FRootMotionSource
     UCurveFloat* TimeMappingCurve;
 }
 
-struct URootMotionSource_MoveToDynamicForce : FRootMotionSource
+struct FRootMotionSource_MoveToDynamicForce : FRootMotionSource
 {
     FVector StartLocation;
     FVector InitialTargetLocation;
@@ -16747,7 +16747,7 @@ struct URootMotionSource_MoveToDynamicForce : FRootMotionSource
     UCurveFloat* TimeMappingCurve;
 }
 
-struct URootMotionSource_MoveToForce : FRootMotionSource
+struct FRootMotionSource_MoveToForce : FRootMotionSource
 {
     FVector StartLocation;
     FVector TargetLocation;
@@ -16755,7 +16755,7 @@ struct URootMotionSource_MoveToForce : FRootMotionSource
     UCurveVector* PathOffsetCurve;
 }
 
-struct URootMotionSource_RadialForce : FRootMotionSource
+struct FRootMotionSource_RadialForce : FRootMotionSource
 {
     FVector Location;
     AActor* LocationActor;
@@ -16769,13 +16769,13 @@ struct URootMotionSource_RadialForce : FRootMotionSource
     FRotator FixedWorldDirection;
 }
 
-struct URootMotionSource_ConstantForce : FRootMotionSource
+struct FRootMotionSource_ConstantForce : FRootMotionSource
 {
     FVector force;
     UCurveFloat* StrengthOverTime;
 }
 
-struct UCameraExposureSettings
+struct FCameraExposureSettings
 {
     TEnumAsByte<EAutoExposureMethod> Method;
     float LowPercent;
@@ -16793,28 +16793,28 @@ struct UCameraExposureSettings
     uint8 ApplyPhysicalCameraExposure;
 }
 
-struct ULensSettings
+struct FLensSettings
 {
     FLensBloomSettings Bloom;
     FLensImperfectionSettings Imperfections;
     float ChromaticAberration;
 }
 
-struct ULensImperfectionSettings
+struct FLensImperfectionSettings
 {
     UTexture* DirtMask;
     float DirtMaskIntensity;
     FLinearColor DirtMaskTint;
 }
 
-struct ULensBloomSettings
+struct FLensBloomSettings
 {
     FGaussianSumBloomSettings GaussianSum;
     FConvolutionBloomSettings Convolution;
     TEnumAsByte<EBloomMethod> Method;
 }
 
-struct UConvolutionBloomSettings
+struct FConvolutionBloomSettings
 {
     UTexture2D* Texture;
     float Size;
@@ -16825,7 +16825,7 @@ struct UConvolutionBloomSettings
     float BufferScale;
 }
 
-struct UGaussianSumBloomSettings
+struct FGaussianSumBloomSettings
 {
     float Intensity;
     float Threshold;
@@ -16844,7 +16844,7 @@ struct UGaussianSumBloomSettings
     FLinearColor Filter6Tint;
 }
 
-struct UFilmStockSettings
+struct FFilmStockSettings
 {
     float Slope;
     float Toe;
@@ -16853,7 +16853,7 @@ struct UFilmStockSettings
     float WhiteClip;
 }
 
-struct UColorGradingSettings
+struct FColorGradingSettings
 {
     FColorGradePerRangeSettings Global;
     FColorGradePerRangeSettings Shadows;
@@ -16863,7 +16863,7 @@ struct UColorGradingSettings
     float HighlightsMin;
 }
 
-struct UColorGradePerRangeSettings
+struct FColorGradePerRangeSettings
 {
     FVector4 Saturation;
     FVector4 Contrast;
@@ -16872,25 +16872,25 @@ struct UColorGradePerRangeSettings
     FVector4 Offset;
 }
 
-struct UEngineShowFlagsSetting
+struct FEngineShowFlagsSetting
 {
     FString ShowFlagName;
     bool Enabled;
 }
 
-struct USimpleCurve : FRealCurve
+struct FSimpleCurve : FRealCurve
 {
     TEnumAsByte<ERichCurveInterpMode> InterpMode;
     TArray<FSimpleCurveKey> Keys;
 }
 
-struct USimpleCurveKey
+struct FSimpleCurveKey
 {
     float Time;
     float Value;
 }
 
-struct USingleAnimationPlayData
+struct FSingleAnimationPlayData
 {
     UAnimationAsset* AnimToPlay;
     uint8 bSavedLooping;
@@ -16899,14 +16899,14 @@ struct USingleAnimationPlayData
     float SavedPlayRate;
 }
 
-struct USkeletalMaterial
+struct FSkeletalMaterial
 {
     UMaterialInterface* MaterialInterface;
     FName MaterialSlotName;
     FMeshUVChannelInfo UVChannelData;
 }
 
-struct UClothingAssetData_Legacy
+struct FClothingAssetData_Legacy
 {
     FName AssetName;
     FString ApexFileName;
@@ -16914,7 +16914,7 @@ struct UClothingAssetData_Legacy
     FClothPhysicsProperties_Legacy PhysicsProperties;
 }
 
-struct UClothPhysicsProperties_Legacy
+struct FClothPhysicsProperties_Legacy
 {
     float VerticalResistance;
     float HorizontalResistance;
@@ -16938,7 +16938,7 @@ struct UClothPhysicsProperties_Legacy
     float FiberResistance;
 }
 
-struct USkeletalMeshLODInfo
+struct FSkeletalMeshLODInfo
 {
     FPerPlatformFloat ScreenSize;
     float LODHysteresis;
@@ -16958,7 +16958,7 @@ struct USkeletalMeshLODInfo
     uint8 bSupportUniformlyDistributedSampling;
 }
 
-struct USkeletalMeshOptimizationSettings
+struct FSkeletalMeshOptimizationSettings
 {
     TEnumAsByte<SkeletalMeshTerminationCriterion> TerminationCriterion;
     float NumOfTrianglesPercentage;
@@ -16983,7 +16983,7 @@ struct USkeletalMeshOptimizationSettings
     int32 BaseLOD;
 }
 
-struct USkeletalMeshClothBuildParams
+struct FSkeletalMeshClothBuildParams
 {
     TWeakObjectPtr<UClothingAssetBase> TargetAsset;
     int32 TargetLod;
@@ -16995,28 +16995,28 @@ struct USkeletalMeshClothBuildParams
     TSoftObjectPtr<UPhysicsAsset> PhysicsAsset;
 }
 
-struct UBoneMirrorExport
+struct FBoneMirrorExport
 {
     FName BoneName;
     FName SourceBoneName;
     TEnumAsByte<EAxis::Type> BoneFlipAxis;
 }
 
-struct UBoneMirrorInfo
+struct FBoneMirrorInfo
 {
     int32 SourceIndex;
     TEnumAsByte<EAxis::Type> BoneFlipAxis;
 }
 
-struct USkeletalMeshComponentClothTickFunction : FTickFunction
+struct FSkeletalMeshComponentClothTickFunction : FTickFunction
 {
 }
 
-struct USkeletalMeshComponentEndPhysicsTickFunction : FTickFunction
+struct FSkeletalMeshComponentEndPhysicsTickFunction : FTickFunction
 {
 }
 
-struct USkeletalMeshLODGroupSettings
+struct FSkeletalMeshLODGroupSettings
 {
     FPerPlatformFloat ScreenSize;
     float LODHysteresis;
@@ -17028,33 +17028,33 @@ struct USkeletalMeshLODGroupSettings
     FSkeletalMeshOptimizationSettings ReductionSettings;
 }
 
-struct UBoneFilter
+struct FBoneFilter
 {
     bool bExcludeSelf;
     FName BoneName;
 }
 
-struct USkeletalMeshSamplingInfo
+struct FSkeletalMeshSamplingInfo
 {
     TArray<FSkeletalMeshSamplingRegion> Regions;
     FSkeletalMeshSamplingBuiltData BuiltData;
 }
 
-struct USkeletalMeshSamplingBuiltData
+struct FSkeletalMeshSamplingBuiltData
 {
     TArray<FSkeletalMeshSamplingLODBuiltData> WholeMeshBuiltData;
     TArray<FSkeletalMeshSamplingRegionBuiltData> RegionBuiltData;
 }
 
-struct USkeletalMeshSamplingRegionBuiltData
+struct FSkeletalMeshSamplingRegionBuiltData
 {
 }
 
-struct USkeletalMeshSamplingLODBuiltData
+struct FSkeletalMeshSamplingLODBuiltData
 {
 }
 
-struct USkeletalMeshSamplingRegion
+struct FSkeletalMeshSamplingRegion
 {
     FName Name;
     int32 LODIndex;
@@ -17063,111 +17063,111 @@ struct USkeletalMeshSamplingRegion
     TArray<FSkeletalMeshSamplingRegionBoneFilter> BoneFilters;
 }
 
-struct USkeletalMeshSamplingRegionBoneFilter
+struct FSkeletalMeshSamplingRegionBoneFilter
 {
     FName BoneName;
     uint8 bIncludeOrExclude;
     uint8 bApplyToChildren;
 }
 
-struct USkeletalMeshSamplingRegionMaterialFilter
+struct FSkeletalMeshSamplingRegionMaterialFilter
 {
     FName MaterialName;
 }
 
-struct UVirtualBone
+struct FVirtualBone
 {
     FName SourceBoneName;
     FName TargetBoneName;
     FName VirtualBoneName;
 }
 
-struct UAnimSlotGroup
+struct FAnimSlotGroup
 {
     FName GroupName;
     TArray<FName> SlotNames;
 }
 
-struct URigConfiguration
+struct FRigConfiguration
 {
     URig* Rig;
     TArray<FNameMapping> BoneMappingTable;
 }
 
-struct UNameMapping
+struct FNameMapping
 {
     FName NodeName;
     FName BoneName;
 }
 
-struct UBoneReductionSetting
+struct FBoneReductionSetting
 {
     TArray<FName> BonesToRemove;
 }
 
-struct UReferencePose
+struct FReferencePose
 {
     FName PoseName;
     TArray<FTransform> ReferencePose;
 }
 
-struct UBoneNode
+struct FBoneNode
 {
     FName Name;
     int32 ParentIndex;
     TEnumAsByte<EBoneTranslationRetargetingMode::Type> TranslationRetargetingMode;
 }
 
-struct USkeletonToMeshLinkup
+struct FSkeletonToMeshLinkup
 {
     TArray<int32> SkeletonToMeshTable;
     TArray<int32> MeshToSkeletonTable;
 }
 
-struct USkelMeshComponentLODInfo
+struct FSkelMeshComponentLODInfo
 {
     TArray<bool> HiddenMaterials;
 }
 
-struct USkelMeshSkinWeightInfo
+struct FSkelMeshSkinWeightInfo
 {
     int32 Bones;
     uint8 Weights;
 }
 
-struct USkinWeightProfileInfo
+struct FSkinWeightProfileInfo
 {
     FName Name;
     FPerPlatformBool DefaultProfile;
     FPerPlatformInt DefaultProfileFromLODIndex;
 }
 
-struct UTentDistribution
+struct FTentDistribution
 {
     float TipAltitude;
     float TipValue;
     float Width;
 }
 
-struct UPrecomputedSkyLightInstanceData : FSceneComponentInstanceData
+struct FPrecomputedSkyLightInstanceData : FSceneComponentInstanceData
 {
     FGuid LightGuid;
     float AverageBrightness;
 }
 
-struct USmartNameContainer
+struct FSmartNameContainer
 {
 }
 
-struct USmartNameMapping
+struct FSmartNameMapping
 {
 }
 
-struct UCurveMetaData
+struct FCurveMetaData
 {
 }
 
-struct USoundAttenuationSettings : FBaseAttenuationSettings
+struct FSoundAttenuationSettings : FBaseAttenuationSettings
 {
     uint8 bAttenuate;
     uint8 bSpatialize;
@@ -17226,14 +17226,14 @@ struct USoundAttenuationSettings : FBaseAttenuationSettings
     FSoundAttenuationPluginSettings PluginSettings;
 }
 
-struct USoundAttenuationPluginSettings
+struct FSoundAttenuationPluginSettings
 {
     TArray<USpatializationPluginSourceSettingsBase*> SpatializationPluginSettingsArray;
     TArray<UOcclusionPluginSourceSettingsBase*> OcclusionPluginSettingsArray;
     TArray<UReverbPluginSourceSettingsBase*> ReverbPluginSettingsArray;
 }
 
-struct UAttenuationSubmixSendSettings
+struct FAttenuationSubmixSendSettings
 {
     USoundSubmixBase* Submix;
     ESubmixSendMethod SubmixSendMethod;
@@ -17245,14 +17245,14 @@ struct UAttenuationSubmixSendSettings
     FRuntimeFloatCurve CustomSubmixSendCurve;
 }
 
-struct UPassiveSoundMixModifier
+struct FPassiveSoundMixModifier
 {
     USoundMix* SoundMix;
     float MinVolumeThreshold;
     float MaxVolumeThreshold;
 }
 
-struct USoundClassProperties
+struct FSoundClassProperties
 {
     float Volume;
     float Pitch;
@@ -17276,11 +17276,11 @@ struct USoundClassProperties
     USoundSubmix* DefaultSubmix;
 }
 
-struct USoundClassEditorData
+struct FSoundClassEditorData
 {
 }
 
-struct USoundConcurrencySettings
+struct FSoundConcurrencySettings
 {
     int32 MaxCount;
     uint8 bLimitToOwner;
@@ -17292,17 +17292,17 @@ struct USoundConcurrencySettings
     float VoiceStealReleaseTime;
 }
 
-struct USoundNodeEditorData
+struct FSoundNodeEditorData
 {
 }
 
-struct USourceEffectChainEntry
+struct FSourceEffectChainEntry
 {
     USoundEffectSourcePreset* Preset;
     uint8 bBypass;
 }
 
-struct USoundGroup
+struct FSoundGroup
 {
     TEnumAsByte<ESoundGroup> SoundGroup;
     FString DisplayName;
@@ -17310,7 +17310,7 @@ struct USoundGroup
     float DecompressedDuration;
 }
 
-struct USoundClassAdjuster
+struct FSoundClassAdjuster
 {
     USoundClass* SoundClassObject;
     float VolumeAdjuster;
@@ -17320,7 +17320,7 @@ struct USoundClassAdjuster
     float VoiceCenterChannelVolumeAdjuster;
 }
 
-struct UAudioEQEffect : FAudioEffectParameters
+struct FAudioEQEffect : FAudioEffectParameters
 {
     float FrequencyCenter0;
     float Gain0;
@@ -17336,7 +17336,7 @@ struct UAudioEQEffect : FAudioEffectParameters
     float Bandwidth3;
 }
 
-struct UDistanceDatum
+struct FDistanceDatum
 {
     float FadeInDistanceStart;
     float FadeInDistanceEnd;
@@ -17345,7 +17345,7 @@ struct UDistanceDatum
     float Volume;
 }
 
-struct UModulatorContinuousParams
+struct FModulatorContinuousParams
 {
     FName ParameterName;
     float Default;
@@ -17356,7 +17356,7 @@ struct UModulatorContinuousParams
     TEnumAsByte<ModulationParamMode> ParamMode;
 }
 
-struct USoundSourceBusSendInfo
+struct FSoundSourceBusSendInfo
 {
     ESourceBusSendLevelControlMethod SourceBusSendLevelControlMethod;
     USoundSourceBus* SoundSourceBus;
@@ -17368,7 +17368,7 @@ struct USoundSourceBusSendInfo
     FRuntimeFloatCurve CustomSendLevelCurve;
 }
 
-struct USoundSubmixSendInfo
+struct FSoundSubmixSendInfo
 {
     ESendLevelControlMethod SendLevelControlMethod;
     USoundSubmixBase* SoundSubmix;
@@ -17380,57 +17380,57 @@ struct USoundSubmixSendInfo
     FRuntimeFloatCurve CustomSendLevelCurve;
 }
 
-struct USoundWaveEnvelopeTimeData
+struct FSoundWaveEnvelopeTimeData
 {
     float Amplitude;
     float TimeSec;
 }
 
-struct USoundWaveSpectralTimeData
+struct FSoundWaveSpectralTimeData
 {
     TArray<FSoundWaveSpectralDataEntry> Data;
     float TimeSec;
 }
 
-struct USoundWaveSpectralDataEntry
+struct FSoundWaveSpectralDataEntry
 {
     float Magnitude;
     float NormalizedMagnitude;
 }
 
-struct USoundWaveEnvelopeDataPerSound
+struct FSoundWaveEnvelopeDataPerSound
 {
     float Envelope;
     float PlaybackTime;
     USoundWave* SoundWave;
 }
 
-struct USoundWaveSpectralDataPerSound
+struct FSoundWaveSpectralDataPerSound
 {
     TArray<FSoundWaveSpectralData> SpectralData;
     float PlaybackTime;
     USoundWave* SoundWave;
 }
 
-struct USoundWaveSpectralData
+struct FSoundWaveSpectralData
 {
     float FrequencyHz;
     float Magnitude;
     float NormalizedMagnitude;
 }
 
-struct UStreamedAudioPlatformData
+struct FStreamedAudioPlatformData
 {
 }
 
-struct USplineInstanceData : FSceneComponentInstanceData
+struct FSplineInstanceData : FSceneComponentInstanceData
 {
     bool bSplineHasBeenEdited;
     FSplineCurves SplineCurves;
     FSplineCurves SplineCurvesPreUCS;
 }
 
-struct USplineCurves
+struct FSplineCurves
 {
     FInterpCurveVector Position;
     FInterpCurveQuat Rotation;
@@ -17439,7 +17439,7 @@ struct USplineCurves
     USplineMetadata* MetaData;
 }
 
-struct USplinePoint
+struct FSplinePoint
 {
     float InputKey;
     FVector Position;
@@ -17450,7 +17450,7 @@ struct USplinePoint
     TEnumAsByte<ESplinePointType::Type> Type;
 }
 
-struct USplineMeshInstanceData : FSceneComponentInstanceData
+struct FSplineMeshInstanceData : FSceneComponentInstanceData
 {
     FVector StartPos;
     FVector EndPos;
@@ -17458,7 +17458,7 @@ struct USplineMeshInstanceData : FSceneComponentInstanceData
     FVector EndTangent;
 }
 
-struct USplineMeshParams
+struct FSplineMeshParams
 {
     FVector StartPos;
     FVector StartTangent;
@@ -17472,13 +17472,13 @@ struct USplineMeshParams
     FVector2D EndOffset;
 }
 
-struct UMaterialRemapIndex
+struct FMaterialRemapIndex
 {
     uint32 ImportVersionKey;
     TArray<int32> MaterialRemap;
 }
 
-struct UStaticMaterial
+struct FStaticMaterial
 {
     UMaterialInterface* MaterialInterface;
     FName MaterialSlotName;
@@ -17486,7 +17486,7 @@ struct UStaticMaterial
     FMeshUVChannelInfo UVChannelData;
 }
 
-struct UAssetEditorOrbitCameraPosition
+struct FAssetEditorOrbitCameraPosition
 {
     bool bIsSet;
     FVector CamOrbitPoint;
@@ -17494,12 +17494,12 @@ struct UAssetEditorOrbitCameraPosition
     FRotator CamOrbitRotation;
 }
 
-struct UMeshSectionInfoMap
+struct FMeshSectionInfoMap
 {
     TMap<uint32, FMeshSectionInfo> Map;
 }
 
-struct UMeshSectionInfo
+struct FMeshSectionInfo
 {
     int32 MaterialIndex;
     bool bEnableCollision;
@@ -17507,7 +17507,7 @@ struct UMeshSectionInfo
     bool bForceOpaque;
 }
 
-struct UStaticMeshSourceModel
+struct FStaticMeshSourceModel
 {
     FMeshBuildSettings BuildSettings;
     FMeshReductionSettings ReductionSettings;
@@ -17516,7 +17516,7 @@ struct UStaticMeshSourceModel
     FString SourceImportFilename;
 }
 
-struct UStaticMeshOptimizationSettings
+struct FStaticMeshOptimizationSettings
 {
     TEnumAsByte<EOptimizationType> ReductionMethod;
     float NumOfTrianglesPercentage;
@@ -17529,7 +17529,7 @@ struct UStaticMeshOptimizationSettings
     uint8 ShadingImportance;
 }
 
-struct UStaticMeshComponentInstanceData : FPrimitiveComponentInstanceData
+struct FStaticMeshComponentInstanceData : FPrimitiveComponentInstanceData
 {
     UStaticMesh* StaticMesh;
     TArray<FStaticMeshVertexColorLODData> VertexColorLODs;
@@ -17537,32 +17537,32 @@ struct UStaticMeshComponentInstanceData : FPrimitiveComponentInstanceData
     TArray<FStreamingTextureBuildInfo> StreamingTextureData;
 }
 
-struct UStreamingTextureBuildInfo
+struct FStreamingTextureBuildInfo
 {
     uint32 PackedRelativeBox;
     int32 TextureLevelIndex;
     float TexelFactor;
 }
 
-struct UStaticMeshVertexColorLODData
+struct FStaticMeshVertexColorLODData
 {
     TArray<FPaintedVertex> PaintedVertices;
     TArray<FColor> VertexBufferColors;
     uint32 LODIndex;
 }
 
-struct UPaintedVertex
+struct FPaintedVertex
 {
     FVector Position;
     FColor Color;
     FVector4 Normal;
 }
 
-struct UStaticMeshComponentLODInfo
+struct FStaticMeshComponentLODInfo
 {
 }
 
-struct UStaticParameterSet
+struct FStaticParameterSet
 {
     TArray<FStaticSwitchParameter> StaticSwitchParameters;
     TArray<FStaticComponentMaskParameter> StaticComponentMaskParameters;
@@ -17570,25 +17570,25 @@ struct UStaticParameterSet
     TArray<FStaticMaterialLayersParameter> MaterialLayersParameters;
 }
 
-struct UStaticParameterBase
+struct FStaticParameterBase
 {
     FMaterialParameterInfo ParameterInfo;
     bool bOverride;
     FGuid ExpressionGUID;
 }
 
-struct UStaticMaterialLayersParameter : FStaticParameterBase
+struct FStaticMaterialLayersParameter : FStaticParameterBase
 {
     FMaterialLayersFunctions Value;
 }
 
-struct UStaticTerrainLayerWeightParameter : FStaticParameterBase
+struct FStaticTerrainLayerWeightParameter : FStaticParameterBase
 {
     int32 WeightmapIndex;
     bool bWeightBasedBlend;
 }
 
-struct UStaticComponentMaskParameter : FStaticParameterBase
+struct FStaticComponentMaskParameter : FStaticParameterBase
 {
     bool R;
     bool G;
@@ -17596,12 +17596,12 @@ struct UStaticComponentMaskParameter : FStaticParameterBase
     bool A;
 }
 
-struct UStaticSwitchParameter : FStaticParameterBase
+struct FStaticSwitchParameter : FStaticParameterBase
 {
     bool Value;
 }
 
-struct UEquirectProps
+struct FEquirectProps
 {
     FBox2D LeftUVRect;
     FBox2D RightUVRect;
@@ -17611,19 +17611,19 @@ struct UEquirectProps
     FVector2D RightBias;
 }
 
-struct UStringCurve : FIndexedCurve
+struct FStringCurve : FIndexedCurve
 {
     FString DefaultValue;
     TArray<FStringCurveKey> Keys;
 }
 
-struct UStringCurveKey
+struct FStringCurveKey
 {
     float Time;
     FString Value;
 }
 
-struct USubsurfaceProfileStruct
+struct FSubsurfaceProfileStruct
 {
     FLinearColor SurfaceAlbedo;
     FLinearColor MeanFreePathColor;
@@ -17644,7 +17644,7 @@ struct USubsurfaceProfileStruct
     FLinearColor TransmissionTintColor;
 }
 
-struct UTextureFormatSettings
+struct FTextureFormatSettings
 {
     TEnumAsByte<TextureCompressionSettings> CompressionSettings;
     uint8 CompressionNoAlpha;
@@ -17653,15 +17653,15 @@ struct UTextureFormatSettings
     uint8 SRGB;
 }
 
-struct UTexturePlatformData
+struct FTexturePlatformData
 {
 }
 
-struct UTextureSource
+struct FTextureSource
 {
 }
 
-struct UTextureSourceBlock
+struct FTextureSourceBlock
 {
     int32 BlockX;
     int32 BlockY;
@@ -17671,7 +17671,7 @@ struct UTextureSourceBlock
     int32 NumMips;
 }
 
-struct UTextureLODGroup
+struct FTextureLODGroup
 {
     TEnumAsByte<TextureGroup> Group;
     int32 LODBias;
@@ -17691,7 +17691,7 @@ struct UTextureLODGroup
     bool DuplicateNonOptionalMips;
 }
 
-struct UStreamingRenderAssetPrimitiveInfo
+struct FStreamingRenderAssetPrimitiveInfo
 {
     UStreamableRenderAsset* RenderAsset;
     FBoxSphereBounds Bounds;
@@ -17700,7 +17700,7 @@ struct UStreamingRenderAssetPrimitiveInfo
     uint8 bAllowInvalidTexelFactorWhenUnregistered;
 }
 
-struct UTimeline
+struct FTimeline
 {
     TEnumAsByte<ETimelineLengthMode> LengthMode;
     uint8 bLooping;
@@ -17721,7 +17721,7 @@ struct UTimeline
     FName DirectionPropertyName;
 }
 
-struct UTimelineLinearColorTrack
+struct FTimelineLinearColorTrack
 {
     UCurveLinearColor* LinearColorCurve;
     FTimelineLinearColorTrackInterpFunc InterpFunc;
@@ -17730,7 +17730,7 @@ struct UTimelineLinearColorTrack
     FName LinearColorPropertyName;
 }
 
-struct UTimelineFloatTrack
+struct FTimelineFloatTrack
 {
     UCurveFloat* FloatCurve;
     FTimelineFloatTrackInterpFunc InterpFunc;
@@ -17739,7 +17739,7 @@ struct UTimelineFloatTrack
     FName FloatPropertyName;
 }
 
-struct UTimelineVectorTrack
+struct FTimelineVectorTrack
 {
     UCurveVector* VectorCurve;
     FTimelineVectorTrackInterpFunc InterpFunc;
@@ -17748,51 +17748,51 @@ struct UTimelineVectorTrack
     FName VectorPropertyName;
 }
 
-struct UTimelineEventEntry
+struct FTimelineEventEntry
 {
     float Time;
     FTimelineEventEntryEventFunc EventFunc;
     void OnTimelineEvent();
 }
 
-struct UTTTrackBase
+struct FTTTrackBase
 {
     FName TrackName;
     bool bIsExternalCurve;
 }
 
-struct UTTPropertyTrack : FTTTrackBase
+struct FTTPropertyTrack : FTTTrackBase
 {
     FName PropertyName;
 }
 
-struct UTTLinearColorTrack : FTTPropertyTrack
+struct FTTLinearColorTrack : FTTPropertyTrack
 {
     UCurveLinearColor* CurveLinearColor;
 }
 
-struct UTTVectorTrack : FTTPropertyTrack
+struct FTTVectorTrack : FTTPropertyTrack
 {
     UCurveVector* CurveVector;
 }
 
-struct UTTFloatTrack : FTTPropertyTrack
+struct FTTFloatTrack : FTTPropertyTrack
 {
     UCurveFloat* CurveFloat;
 }
 
-struct UTTEventTrack : FTTTrackBase
+struct FTTEventTrack : FTTTrackBase
 {
     FName FunctionName;
     UCurveFloat* CurveKeys;
 }
 
-struct UTimeStretchCurveInstance
+struct FTimeStretchCurveInstance
 {
     bool bHasValidData;
 }
 
-struct UTimeStretchCurve
+struct FTimeStretchCurve
 {
     float SamplingRate;
     float CurveValueMinPrecision;
@@ -17800,13 +17800,13 @@ struct UTimeStretchCurve
     float Sum_dT_i_by_C_i;
 }
 
-struct UTimeStretchCurveMarker
+struct FTimeStretchCurveMarker
 {
     float Time;
     float alpha;
 }
 
-struct UTouchInputControl
+struct FTouchInputControl
 {
     UTexture2D* Image1;
     UTexture2D* Image2;
@@ -17819,13 +17819,13 @@ struct UTouchInputControl
     FKey AltInputKey;
 }
 
-struct UHardwareCursorReference
+struct FHardwareCursorReference
 {
     FName CursorPath;
     FVector2D HotSpot;
 }
 
-struct UVirtualTextureBuildSettings
+struct FVirtualTextureBuildSettings
 {
     int32 TileSize;
     int32 TileBorderSize;
@@ -17833,7 +17833,7 @@ struct UVirtualTextureBuildSettings
     bool bEnableCompressZlib;
 }
 
-struct UVirtualTextureSpacePoolConfig
+struct FVirtualTextureSpacePoolConfig
 {
     int32 MinTileSize;
     int32 MaxTileSize;
@@ -17842,24 +17842,24 @@ struct UVirtualTextureSpacePoolConfig
     bool bAllowSizeScale;
 }
 
-struct UVoiceSettings
+struct FVoiceSettings
 {
     USceneComponent* ComponentToAttachTo;
     USoundAttenuation* AttenuationSettings;
     USoundEffectSourcePresetChain* SourceEffectChain;
 }
 
-struct UStreamingLevelsToConsider
+struct FStreamingLevelsToConsider
 {
     TArray<FLevelStreamingWrapper> StreamingLevels;
 }
 
-struct ULevelStreamingWrapper
+struct FLevelStreamingWrapper
 {
     ULevelStreaming* StreamingLevel;
 }
 
-struct ULevelCollection
+struct FLevelCollection
 {
     AGameStateBase* GameState;
     UNetDriver* NetDriver;
@@ -17868,15 +17868,15 @@ struct ULevelCollection
     TSet<ULevel*> Levels;
 }
 
-struct UEndPhysicsTickFunction : FTickFunction
+struct FEndPhysicsTickFunction : FTickFunction
 {
 }
 
-struct UStartPhysicsTickFunction : FTickFunction
+struct FStartPhysicsTickFunction : FTickFunction
 {
 }
 
-struct ULevelViewportInfo
+struct FLevelViewportInfo
 {
     FVector CamPosition;
     FRotator CamRotation;
@@ -17884,24 +17884,24 @@ struct ULevelViewportInfo
     bool CamUpdated;
 }
 
-struct UWorldPSCPool
+struct FWorldPSCPool
 {
     TMap<UParticleSystem*, FPSCPool> WorldParticleSystemPools;
 }
 
-struct UPSCPool
+struct FPSCPool
 {
     TArray<FPSCPoolElem> FreeElements;
     TArray<UParticleSystemComponent*> InUseComponents_Auto;
     TArray<UParticleSystemComponent*> InUseComponents_Manual;
 }
 
-struct UPSCPoolElem
+struct FPSCPoolElem
 {
     UParticleSystemComponent* PSC;
 }
 
-struct UBroadphaseSettings
+struct FBroadphaseSettings
 {
     bool bUseMBPOnClient;
     bool bUseMBPOnServer;
@@ -17911,7 +17911,7 @@ struct UBroadphaseSettings
     uint32 MBPNumSubdivs;
 }
 
-struct UHierarchicalSimplification
+struct FHierarchicalSimplification
 {
     float TransitionScreenSize;
     float OverrideDrawDistance;
@@ -17927,7 +17927,7 @@ struct UHierarchicalSimplification
     int32 MinNumberOfActorsToBuild;
 }
 
-struct UNetViewer
+struct FNetViewer
 {
     UNetConnection* Connection;
     AActor* InViewer;
@@ -17936,7 +17936,7 @@ struct UNetViewer
     FVector ViewDir;
 }
 
-struct ULightmassWorldInfoSettings
+struct FLightmassWorldInfoSettings
 {
     float StaticLightingLevelScale;
     int32 NumIndirectLightingBounces;
@@ -17972,7 +17972,7 @@ class UDefault__AnimBlueprintGeneratedClass
 {
 }
 
-class UDefault__UserDefinedStruct
+struct FDefault__UserDefinedStruct
 {
 }
 

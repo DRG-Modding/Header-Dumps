@@ -11,7 +11,7 @@ class UMovieSceneGeometryCollectionTrack : UMovieSceneNameableTrack
     TArray<UMovieSceneSection*> AnimationSections;
 }
 
-struct UMovieSceneGeometryCollectionParams
+struct FMovieSceneGeometryCollectionParams
 {
     FSoftObjectPath GeometryCollectionCache;
     FFrameNumber StartFrameOffset;
@@ -19,12 +19,12 @@ struct UMovieSceneGeometryCollectionParams
     float PlayRate;
 }
 
-struct UMovieSceneGeometryCollectionSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneGeometryCollectionSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneGeometryCollectionSectionTemplateParameters Params;
 }
 
-struct UMovieSceneGeometryCollectionSectionTemplateParameters : FMovieSceneGeometryCollectionParams
+struct FMovieSceneGeometryCollectionSectionTemplateParameters : FMovieSceneGeometryCollectionParams
 {
     FFrameNumber SectionStartTime;
     FFrameNumber SectionEndTime;

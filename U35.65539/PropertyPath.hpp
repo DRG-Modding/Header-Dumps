@@ -1,13 +1,13 @@
 #ifndef UE4SS_SDK_PropertyPath_HPP
 #define UE4SS_SDK_PropertyPath_HPP
 
-struct UCachedPropertyPath
+struct FCachedPropertyPath
 {
     TArray<FPropertyPathSegment> Segments;
     UFunction* CachedFunction;
 }
 
-struct UPropertyPathSegment
+struct FPropertyPathSegment
 {
     FName Name;
     int32 ArrayIndex;

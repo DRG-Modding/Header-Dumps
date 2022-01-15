@@ -16,7 +16,7 @@ class UDiscordSDKInterface_Win64 : UDiscordSDKInterface
 {
 }
 
-struct UDiscordUserDataSDK
+struct FDiscordUserDataSDK
 {
     FString UserId;
     FString Username;

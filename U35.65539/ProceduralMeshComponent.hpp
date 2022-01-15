@@ -41,7 +41,7 @@ class UProceduralMeshComponent : UMeshComponent
     void AddCollisionConvexMesh(TArray<FVector> ConvexVerts);
 }
 
-struct UProcMeshSection
+struct FProcMeshSection
 {
     TArray<FProcMeshVertex> ProcVertexBuffer;
     TArray<uint32> ProcIndexBuffer;
@@ -50,7 +50,7 @@ struct UProcMeshSection
     bool bSectionVisible;
 }
 
-struct UProcMeshVertex
+struct FProcMeshVertex
 {
     FVector Position;
     FVector Normal;
@@ -62,7 +62,7 @@ struct UProcMeshVertex
     FVector2D UV3;
 }
 
-struct UProcMeshTangent
+struct FProcMeshTangent
 {
     FVector TangentX;
     bool bFlipTangentY;

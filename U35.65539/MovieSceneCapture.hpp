@@ -147,12 +147,12 @@ class UVideoCaptureProtocol : UFrameGrabberProtocol
     float CompressionQuality;
 }
 
-struct UCompositionGraphCapturePasses
+struct FCompositionGraphCapturePasses
 {
     TArray<FString> Value;
 }
 
-struct UFrameMetrics
+struct FFrameMetrics
 {
     float TotalElapsedTime;
     float FrameDelta;
@@ -160,7 +160,7 @@ struct UFrameMetrics
     int32 NumDroppedFrames;
 }
 
-struct UMovieSceneCaptureSettings
+struct FMovieSceneCaptureSettings
 {
     FDirectoryPath OutputDirectory;
     TSubclassOf<AGameModeBase> GameModeOverride;
@@ -185,17 +185,17 @@ struct UMovieSceneCaptureSettings
     int32 PathTracerSamplePerPixel;
 }
 
-struct UCaptureResolution
+struct FCaptureResolution
 {
     int32 ResX;
     int32 ResY;
 }
 
-struct UCapturedPixels
+struct FCapturedPixels
 {
 }
 
-struct UCapturedPixelsID
+struct FCapturedPixelsID
 {
     TMap<FName, FName> Identifiers;
 }

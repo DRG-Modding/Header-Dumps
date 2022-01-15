@@ -8,17 +8,17 @@ class UAnimationDataSourceRegistry : UObject
     TMap<FName, TWeakObjectPtr<UObject>> DataSources;
 }
 
-struct UCCDIKChainLink
+struct FCCDIKChainLink
 {
 }
 
-struct UAxis
+struct FAxis
 {
     FVector Axis;
     bool bInLocalSpace;
 }
 
-struct UConstraintData
+struct FConstraintData
 {
     FConstraintDescriptor Constraint;
     float Weight;
@@ -27,24 +27,24 @@ struct UConstraintData
     FTransform CurrentTransform;
 }
 
-struct UConstraintDescriptor
+struct FConstraintDescriptor
 {
     EConstraintType Type;
 }
 
-struct UConstraintDescriptionEx
+struct FConstraintDescriptionEx
 {
     FFilterOptionPerAxis AxesFilterOption;
 }
 
-struct UFilterOptionPerAxis
+struct FFilterOptionPerAxis
 {
     bool bX;
     bool bY;
     bool bZ;
 }
 
-struct UAimConstraintDescription : FConstraintDescriptionEx
+struct FAimConstraintDescription : FConstraintDescriptionEx
 {
     FAxis LookAt_Axis;
     FAxis LookUp_Axis;
@@ -52,12 +52,12 @@ struct UAimConstraintDescription : FConstraintDescriptionEx
     FVector LookUpTarget;
 }
 
-struct UTransformConstraintDescription : FConstraintDescriptionEx
+struct FTransformConstraintDescription : FConstraintDescriptionEx
 {
     ETransformConstraintType TransformType;
 }
 
-struct UTransformConstraint
+struct FTransformConstraint
 {
     FConstraintDescription Operator;
     FName SourceNode;
@@ -66,7 +66,7 @@ struct UTransformConstraint
     bool bMaintainOffset;
 }
 
-struct UConstraintDescription
+struct FConstraintDescription
 {
     bool bTranslation;
     bool bRotation;
@@ -77,7 +77,7 @@ struct UConstraintDescription
     FFilterOptionPerAxis ScaleAxes;
 }
 
-struct UConstraintOffset
+struct FConstraintOffset
 {
     FVector Translation;
     FQuat Rotation;
@@ -85,48 +85,48 @@ struct UConstraintOffset
     FTransform Parent;
 }
 
-struct UTransformFilter
+struct FTransformFilter
 {
     FFilterOptionPerAxis TranslationFilter;
     FFilterOptionPerAxis RotationFilter;
     FFilterOptionPerAxis ScaleFilter;
 }
 
-struct UEulerTransform
+struct FEulerTransform
 {
     FVector Location;
     FRotator Rotation;
     FVector Scale;
 }
 
-struct UFABRIKChainLink
+struct FFABRIKChainLink
 {
 }
 
-struct UNodeChain
+struct FNodeChain
 {
     TArray<FName> Nodes;
 }
 
-struct UNodeHierarchyWithUserData
+struct FNodeHierarchyWithUserData
 {
     FNodeHierarchyData Hierarchy;
 }
 
-struct UNodeHierarchyData
+struct FNodeHierarchyData
 {
     TArray<FNodeObject> Nodes;
     TArray<FTransform> Transforms;
     TMap<FName, int32> NodeNameToIndexMapping;
 }
 
-struct UNodeObject
+struct FNodeObject
 {
     FName Name;
     FName ParentName;
 }
 
-struct UTransformNoScale
+struct FTransformNoScale
 {
     FVector Location;
     FQuat Rotation;

@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_EnemySpawnWave_HPP
 #define UE4SS_SDK_EnemySpawnWave_HPP
 
-class UDEPRECATED_EnemySpawnWave
+struct FEnemySpawnWave
 {
     UEnemyDescriptor* EnemyDescriptor_11_22DA94D847CE1CF86462A7B6CDE605FC;
     int32 MinAmount_13_06D0A5444939F28386FC9E92C4FD6798;

@@ -54,7 +54,7 @@ class UNiagaraDataInterfaceChaosDestruction : UNiagaraDataInterface
     float TimeStampOfLastProcessedData;
 }
 
-struct UChaosDestructionEvent
+struct FChaosDestructionEvent
 {
     FVector Position;
     FVector Normal;

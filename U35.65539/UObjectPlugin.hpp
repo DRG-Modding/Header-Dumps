@@ -6,7 +6,7 @@ class UMyPluginObject : UObject
     FMyPluginStruct MyStruct;
 }
 
-struct UMyPluginStruct
+struct FMyPluginStruct
 {
     FString TestString;
 }

@@ -20063,31 +20063,31 @@ class UZipLineStateComponent : UCharacterStateComponent
     void All_SpeedBoostChanged(bool bActive);
 }
 
-struct UCountDownFloat
+struct FCountDownFloat
 {
     float CountDownDuration;
 }
 
-struct ULerpingPercent
+struct FLerpingPercent
 {
     uint8 TargetPercent;
 }
 
-struct UReplicatedCharacterData
+struct FReplicatedCharacterData
 {
     TWeakObjectPtr<AActor> Target;
     float TemperatureEffect;
     bool bCanTakeDamage;
 }
 
-struct ULaserPointerTarget
+struct FLaserPointerTarget
 {
     FHitResult HitInfo;
     AActor* Target;
     AActor* ExtraTarget;
 }
 
-struct UCoolDownProgressStyle
+struct FCoolDownProgressStyle
 {
     UTexture2D* Icon;
     FLinearColor IconTint;
@@ -20096,7 +20096,7 @@ struct UCoolDownProgressStyle
     USoundCue* AudioCoolDownFinished;
 }
 
-struct UCameraSpringSettings
+struct FCameraSpringSettings
 {
     bool SpringEnabled;
     float StepThreshold;
@@ -20110,7 +20110,7 @@ struct UCameraSpringSettings
     bool bSpringInitialized;
 }
 
-struct UHeroInfo
+struct FHeroInfo
 {
     FText HeroName;
     UTexture2D* HeroIcon;
@@ -20122,7 +20122,7 @@ struct UHeroInfo
     FText SwitchToMessage;
 }
 
-struct UAnalogAimSettings
+struct FAnalogAimSettings
 {
     bool ShowDebugOutput;
     FVector2D AimRate;
@@ -20133,14 +20133,14 @@ struct UAnalogAimSettings
     FVector2D ThirdPersonLookRate;
 }
 
-struct UHoldButton
+struct FHoldButton
 {
     FText HoldingText;
     float HoldStartTime;
     float HoldDuration;
 }
 
-struct UDownCameraSettings
+struct FDownCameraSettings
 {
     TWeakObjectPtr<APlayerCharacter> Target;
     int32 TargetIndex;
@@ -20149,13 +20149,13 @@ struct UDownCameraSettings
     float SmoothSpeed;
 }
 
-struct UPlatformComponent
+struct FPlatformComponent
 {
     TSubclassOf<UActorComponent> ComponentClass;
     EPlatformComponentCriteria Criteria;
 }
 
-struct UClaimableRewardEntry
+struct FClaimableRewardEntry
 {
     FText Title;
     FText Text;
@@ -20164,13 +20164,13 @@ struct UClaimableRewardEntry
     FGuid SaveGameID;
 }
 
-struct UCharacterViewScene
+struct FCharacterViewScene
 {
     TArray<FCharacterViewInfo> Characters;
     bool MissionSuccess;
 }
 
-struct UCharacterViewInfo
+struct FCharacterViewInfo
 {
     TSubclassOf<APlayerCharacter> CharacterClass;
     TArray<UVanityItem*> EquippedVanity;
@@ -20178,14 +20178,14 @@ struct UCharacterViewInfo
     UVictoryPose* VictoryPose;
 }
 
-struct USpaceRigNotification
+struct FSpaceRigNotification
 {
     FText Text;
     UTexture2D* Icon;
     FLinearColor IconColor;
 }
 
-struct UNetworkConnectionInfo
+struct FNetworkConnectionInfo
 {
     AFSDPlayerController* PlayerController;
     float PacketLossIn;
@@ -20195,7 +20195,7 @@ struct UNetworkConnectionInfo
     bool IsValid;
 }
 
-struct UPendingRewards
+struct FPendingRewards
 {
     FPendingRewardsStats StartStats;
     FPendingRewardsStats EndStats;
@@ -20208,19 +20208,19 @@ struct UPendingRewards
     bool bWasRewarded;
 }
 
-struct UXPReward
+struct FXPReward
 {
     FText Description;
     int32 XP;
 }
 
-struct UCreditsReward
+struct FCreditsReward
 {
     FText Description;
     int32 Amount;
 }
 
-struct UPendingRewardsStats
+struct FPendingRewardsStats
 {
     TMap<UResourceData*, float> AllResources;
     TMap<UResourceData*, float> CollectedResources;
@@ -20230,7 +20230,7 @@ struct UPendingRewardsStats
     int32 EnemiesKilled;
 }
 
-struct UFSDServerSearchOptions
+struct FFSDServerSearchOptions
 {
     ESteamServerJoinStatus JoinStatus;
     ESteamSearchRegion SearchRegion;
@@ -20242,7 +20242,7 @@ struct UFSDServerSearchOptions
     TArray<EGameType> GameTypes;
 }
 
-struct UFadeData
+struct FFadeData
 {
     bool bEnabled;
     bool bShowDebugOutput;
@@ -20259,7 +20259,7 @@ struct UFadeData
     FString DebugMsg;
 }
 
-struct UGameStateSeamlessTravelStorage
+struct FGameStateSeamlessTravelStorage
 {
     UDifficultySetting* ChosenDifficulty;
     TMap<UPlayer*, bool> PlayerShouldStartInMedbay;
@@ -20269,7 +20269,7 @@ struct UGameStateSeamlessTravelStorage
     TMap<FName, int32> StoredIntValues;
 }
 
-struct UFSDChatMessage
+struct FFSDChatMessage
 {
     EChatMessageType MsgType;
     FString Sender;
@@ -20278,7 +20278,7 @@ struct UFSDChatMessage
     FUniqueNetIdRepl SenderNetID;
 }
 
-struct USplineSegmentCarveOperationData
+struct FSplineSegmentCarveOperationData
 {
     int32 OperationNumber;
     TArray<FCarveSplineSegment> Segments;
@@ -20287,14 +20287,14 @@ struct USplineSegmentCarveOperationData
     EPreciousMaterialOptions Precious;
 }
 
-struct UMeltOperationData
+struct FMeltOperationData
 {
     int32 OperationNumber;
     TArray<FVector> Points;
     float Radius;
 }
 
-struct UDrillOperationData
+struct FDrillOperationData
 {
     int32 OperationNumber;
     FVector HitPos;
@@ -20303,12 +20303,12 @@ struct UDrillOperationData
     float CarveNoise;
 }
 
-struct URemoveFloatingIslandOperationData
+struct FRemoveFloatingIslandOperationData
 {
     int32 OperationNumber;
 }
 
-struct UPickaxeDigOperationData
+struct FPickaxeDigOperationData
 {
     int32 OperationNumber;
     FVector HitPos;
@@ -20317,7 +20317,7 @@ struct UPickaxeDigOperationData
     AActor* Miner;
 }
 
-struct UCarveWithSTLMeshOperationData
+struct FCarveWithSTLMeshOperationData
 {
     int32 OperationNumber;
     USTLMeshCarver* STLMeshCarver;
@@ -20328,7 +20328,7 @@ struct UCarveWithSTLMeshOperationData
     FMatrixWithExactSync Transform;
 }
 
-struct UCarveWithColliderOperationData
+struct FCarveWithColliderOperationData
 {
     int32 OperationNumber;
     UStaticMesh* StaticMesh;
@@ -20340,7 +20340,7 @@ struct UCarveWithColliderOperationData
     CarveOptionsCellSize CarveCellSize;
 }
 
-struct UGrenadeExplodeOperationData
+struct FGrenadeExplodeOperationData
 {
     int32 OperationNumber;
     FVector HitPos;
@@ -20355,7 +20355,7 @@ struct UGrenadeExplodeOperationData
     uint32 OverrideBurntMaterialHandle;
 }
 
-struct USonyInputSettings
+struct FSonyInputSettings
 {
     bool MotionControlEnabled;
     float MotionControlXSensitivity;
@@ -20377,13 +20377,13 @@ struct USonyInputSettings
     ESonyControllerLightMode ControllerLightMode;
 }
 
-struct UOptionsInSaveGame
+struct FOptionsInSaveGame
 {
     bool SaveGameOptionsValid;
     int32 ScreenMode;
 }
 
-struct UGDKWinOptionsInSaveGame
+struct FGDKWinOptionsInSaveGame
 {
     bool SaveGameOptionsValid;
     int32 ScreenMode;
@@ -20408,7 +20408,7 @@ struct UGDKWinOptionsInSaveGame
     bool UseDefaultAudioOutputDevice;
 }
 
-struct UConsoleOptionsInSaveGame
+struct FConsoleOptionsInSaveGame
 {
     FControllerSettings ControllerSettings;
     FHUDElements HUDElements;
@@ -20453,20 +20453,20 @@ struct UConsoleOptionsInSaveGame
     bool SwapControllerThumbsticks;
 }
 
-struct UCustomKeyBinding
+struct FCustomKeyBinding
 {
     FName ActionName;
     int32 Index;
     FKey Key;
 }
 
-struct UCharacterOptions
+struct FCharacterOptions
 {
     bool GrapplingHookAutoSwitch;
     bool ZiplineGunAutoSwitch;
 }
 
-struct UHUDElements
+struct FHUDElements
 {
     FHUDElementData OnScreenHelp;
     FHUDElementData EnemyHealth;
@@ -20485,70 +20485,70 @@ struct UHUDElements
     FHUDElementData SentryGunDisplay;
 }
 
-struct UHUDElementData
+struct FHUDElementData
 {
     EHUDVisibilityMode Mode;
     int32 Version;
 }
 
-struct UControllerSettings
+struct FControllerSettings
 {
     float AimInnerDeadZone;
     float AimSensitivity;
     float AimOuterAcceleration;
 }
 
-struct UWatchedTutorial
+struct FWatchedTutorial
 {
     FString TutorialName;
     int32 count;
 }
 
-struct UResourcesSave
+struct FResourcesSave
 {
     TMap<FGuid, float> OwnedResources;
     TMap<UResourceData*, float> Resources;
 }
 
-struct UItemUINotifications
+struct FItemUINotifications
 {
     TArray<FUINotificationItem> UINotifications;
     TSet<FGuid> UINotificationSet;
     UFSDSaveGame* SaveGame;
 }
 
-struct UUINotificationItem
+struct FUINotificationItem
 {
     TArray<FGuid> NotificationIDs;
 }
 
-struct UEventRewardSave
+struct FEventRewardSave
 {
     TMap<FGuid, FEventRewardSaveItem> PendingRewards;
 }
 
-struct UEventRewardSaveItem
+struct FEventRewardSaveItem
 {
     FGuid CategoryID;
     TArray<FGuid> ClassOptions;
 }
 
-struct USkinList
+struct FSkinList
 {
     TSet<FGuid> Skins;
 }
 
-struct UItemNotificationInfo
+struct FItemNotificationInfo
 {
     int32 NotificationFlags;
 }
 
-struct UUpgradeLoadout
+struct FUpgradeLoadout
 {
     TMap<FGuid, FItemUpgradeSelection> Loadout;
 }
 
-struct UItemUpgradeSelection
+struct FItemUpgradeSelection
 {
     FGuid WeaponID;
     TArray<FGuid> EquippedUpgrades;
@@ -20560,19 +20560,19 @@ struct UItemUpgradeSelection
     FGuid EquippedSkinMesh;
 }
 
-struct UDrinkSave
+struct FDrinkSave
 {
     TSet<FGuid> UnlockedDrinks;
     bool HasUnlockedSpecial;
 }
 
-struct UForgingSave
+struct FForgingSave
 {
     int32 XP;
     int32 AwardsGiven;
 }
 
-struct UCharacterSave
+struct FCharacterSave
 {
     FGuid SaveGameID;
     int32 XP;
@@ -20588,14 +20588,14 @@ struct UCharacterSave
     FVictoryPoseSave VictoryPose;
 }
 
-struct UVictoryPoseSave
+struct FVictoryPoseSave
 {
     FGuid EquippedVictoryPose;
     TArray<FGuid> UnlockedVictoryPoses;
     TArray<FGuid> EquippedVictoryPoses;
 }
 
-struct UItemLoadout
+struct FItemLoadout
 {
     FGuid PrimaryWeapon;
     FGuid SecondaryWeapon;
@@ -20608,7 +20608,7 @@ struct UItemLoadout
     int32 IconIndex;
 }
 
-struct UCharacterVanitySave
+struct FCharacterVanitySave
 {
     TArray<FCharacterVanityLoadout> Loadouts;
     TArray<FGuid> UnLockedVanityItemIDs;
@@ -20625,7 +20625,7 @@ struct UCharacterVanitySave
     TMap<EVanitySlot, FGuid> NewVanityItems;
 }
 
-struct UCharacterVanityLoadout
+struct FCharacterVanityLoadout
 {
     FGuid EquippedHeadItemID;
     FGuid EquippedBeardItemID;
@@ -20638,13 +20638,13 @@ struct UCharacterVanityLoadout
     FGuid EquippedSideburnsItemID;
 }
 
-struct UDeepDiveSave
+struct FDeepDiveSave
 {
     FDeepDiveItem NormalSave;
     FDeepDiveItem EliteSave;
 }
 
-struct UDeepDiveItem
+struct FDeepDiveItem
 {
     int32 Progress;
     int32 Seed;
@@ -20654,13 +20654,13 @@ struct UDeepDiveItem
     TArray<FGuid> RewardsGiven;
 }
 
-struct UDeepDiveSaveRewardItem
+struct FDeepDiveSaveRewardItem
 {
     FGuid RewardID;
     int32 Stage;
 }
 
-struct UCampaignSave
+struct FCampaignSave
 {
     FActiveCampaignItem ActiveCampaign;
     TArray<FGuid> CompletedCampaigns;
@@ -20669,36 +20669,36 @@ struct UCampaignSave
     FWeeklyCampaignItem MaxtrixCoreHuntSave;
 }
 
-struct UWeeklyCampaignItem
+struct FWeeklyCampaignItem
 {
     int32 LastCompletedWeek;
     int32 LastStartedWeek;
     int32 RewardedProgress;
 }
 
-struct UActiveCampaignItem
+struct FActiveCampaignItem
 {
     FGuid CampaignID;
     int32 Progress;
 }
 
-struct UUnLockedMissionParameters
+struct FUnLockedMissionParameters
 {
     TArray<FGuid> UnLockedComplexities;
     TArray<FGuid> UnLockedDurations;
 }
 
-struct UGameDLCSave
+struct FGameDLCSave
 {
     TSet<FGuid> AnnouncedIDs;
 }
 
-struct USeasonSave
+struct FSeasonSave
 {
     TMap<FGuid, FSeasonSaveEntry> Seasons;
 }
 
-struct USeasonSaveEntry
+struct FSeasonSaveEntry
 {
     int32 XP;
     int32 Tokens;
@@ -20715,7 +20715,7 @@ struct USeasonSaveEntry
     float ChallengesCompletedAtSeasonStart;
 }
 
-struct UChallengeSaveInfo
+struct FChallengeSaveInfo
 {
     TArray<int32> StatIndices;
     FGuid ChallengeGuid;
@@ -20725,23 +20725,23 @@ struct UChallengeSaveInfo
     int32 TokenGain;
 }
 
-struct URewardsClaimed
+struct FRewardsClaimed
 {
     bool NormalClaimed;
     bool SpecialClaimed;
 }
 
-struct UFSDEventRewardsSave
+struct FFSDEventRewardsSave
 {
     TSet<FGuid> EventsSeen;
 }
 
-struct UPromotionRewardsSave
+struct FPromotionRewardsSave
 {
     TSet<FGuid> ClaimedRewards;
 }
 
-struct USchematicSave
+struct FSchematicSave
 {
     TArray<FGuid> ForgedSchematics;
     FGuid PendingReward;
@@ -20750,54 +20750,54 @@ struct USchematicSave
     bool bFirstSchematicMessageShown;
 }
 
-struct UCharacterPerksSave
+struct FCharacterPerksSave
 {
     TArray<FPerkEquipEntry> CharacterPerks;
 }
 
-struct UPerkEquipEntry
+struct FPerkEquipEntry
 {
     FGuid characterID;
     TArray<FGuid> PerkIDs;
 }
 
-struct UAchievementSave
+struct FAchievementSave
 {
     TArray<FString> OfflineAchievedAchievements;
     TArray<FAchievementSaveEntry> AchievementEntries;
 }
 
-struct UAchievementSaveEntry
+struct FAchievementSaveEntry
 {
     FGuid AchievementSaveID;
     float HighestSavedProgress;
     float CurrentProgress;
 }
 
-struct UPerkClaimsSave
+struct FPerkClaimsSave
 {
     TArray<FPerkClaimEntry> PerkEntries;
     bool HasResetPerks2;
 }
 
-struct UPerkClaimEntry
+struct FPerkClaimEntry
 {
     FGuid PerkID;
     int32 currentRank;
 }
 
-struct UMilestoneSave
+struct FMilestoneSave
 {
     TArray<FMilestoneCounter> ClaimedKPIRewards;
 }
 
-struct UMilestoneCounter
+struct FMilestoneCounter
 {
     FGuid KPIGuid;
     int32 Tier;
 }
 
-struct UMissionStatSave
+struct FMissionStatSave
 {
     TArray<FMissionStatCounter> Counters;
     bool bCharacterLevelUpFixed;
@@ -20807,14 +20807,14 @@ struct UMissionStatSave
     bool WeaponUpgradesFixed;
 }
 
-struct UMissionStatCounter
+struct FMissionStatCounter
 {
     FGuid PlayerClassID;
     FGuid MissionStatID;
     float Value;
 }
 
-struct UEndMissionResult
+struct FEndMissionResult
 {
     FPlayerProgress PreviousPlayerProgress;
     FPlayerProgress PlayerProgress;
@@ -20824,7 +20824,7 @@ struct UEndMissionResult
     bool bReadyForUse;
 }
 
-struct UCharacterProgress
+struct FCharacterProgress
 {
     UPlayerCharacterID* characterID;
     int32 Level;
@@ -20834,38 +20834,38 @@ struct UCharacterProgress
     int32 TimesRetired;
 }
 
-struct UPlayerProgress
+struct FPlayerProgress
 {
     int32 PlayerRank;
     int32 PlayerStars;
 }
 
-struct UDiscordServerData
+struct FDiscordServerData
 {
     int32 presenceCount;
     int32 memberCount;
 }
 
-struct UActiveCampaingMission
+struct FActiveCampaingMission
 {
     bool HasMission;
     int32 GlobalSeed;
     int32 MissionSeed;
 }
 
-struct USaveGameStatePerkItem
+struct FSaveGameStatePerkItem
 {
     uint8 Rank;
     UPerkAsset* Perk;
 }
 
-struct UDrinkableBarSlot
+struct FDrinkableBarSlot
 {
     FVector WorldLocation;
     TWeakObjectPtr<ADrinkableActor> DrinkableActor;
 }
 
-struct UUpgradeValues
+struct FUpgradeValues
 {
     float BaseValue;
     float UpgradedValue;
@@ -20877,31 +20877,31 @@ struct UUpgradeValues
     EItemPreviewStatus PreviewStatus;
 }
 
-struct UCraftingCost
+struct FCraftingCost
 {
     UResourceData* Resource;
     float Amount;
 }
 
-struct UItemUpgradeStatText
+struct FItemUpgradeStatText
 {
     FText StatText;
     bool IsAdventageous;
 }
 
-struct UDeepDiveBank
+struct FDeepDiveBank
 {
     UDeepDive* NormalDeepDive;
     UDeepDive* HardDeepDive;
 }
 
-struct UObjectiveMissionIcon
+struct FObjectiveMissionIcon
 {
     UTexture2D* Texture;
     FLinearColor Tint;
 }
 
-struct UMissionShouts
+struct FMissionShouts
 {
     UDialogDataAsset* AfterDropPodExit;
     UDialogDataAsset* OnExitPodDescending;
@@ -20912,23 +20912,23 @@ struct UMissionShouts
     UDialogDataAsset* OnDeepDiveAllReturnObjectivesCompleted;
 }
 
-struct UAfflictionEntriesArray : FFastArraySerializer
+struct FAfflictionEntriesArray : FFastArraySerializer
 {
     TArray<FAfflictionEntry> Items;
     UPawnAfflictionComponent* Owner;
 }
 
-struct UAfflictionEntry : FFastArraySerializerItem
+struct FAfflictionEntry : FFastArraySerializerItem
 {
     UPawnAffliction* Affliction;
 }
 
-struct UPawnAfflictionItem
+struct FPawnAfflictionItem
 {
     TArray<UAfflictionEffect*> Afflictions;
 }
 
-struct UTrackBuilderPoint
+struct FTrackBuilderPoint
 {
     ETrackBuildPlacementState PlacementState;
     FVector_NetQuantize Location;
@@ -20937,18 +20937,18 @@ struct UTrackBuilderPoint
     TWeakObjectPtr<UTrackBuilderConnectPoint> ConnectPoint;
 }
 
-struct UMixerAnnouncement
+struct FMixerAnnouncement
 {
     FString Username;
     FText Text;
 }
 
-struct UHUDVisibilityRegisteredWidget
+struct FHUDVisibilityRegisteredWidget
 {
     TWeakObjectPtr<UWidget> Widget;
 }
 
-struct UYesNoPromptSettings
+struct FYesNoPromptSettings
 {
     TSubclassOf<UYesNoPromptWidget> WidgetClass;
     int32 ZOrder;
@@ -20956,19 +20956,19 @@ struct UYesNoPromptSettings
     FText Message;
 }
 
-struct UItemLoadoutAnimations
+struct FItemLoadoutAnimations
 {
     UAnimMontage* Loadout;
     TArray<UAnimSequence*> Loadout_IdleBreaks;
 }
 
-struct UAudioWithCooldown
+struct FAudioWithCooldown
 {
     USoundCue* Audio;
     float CoolDown;
 }
 
-struct URecoilSettings
+struct FRecoilSettings
 {
     FRandRange RecoilRoll;
     FRandRange RecoilPitch;
@@ -20979,13 +20979,13 @@ struct URecoilSettings
     float Mass;
 }
 
-struct URandRange
+struct FRandRange
 {
     float Min;
     float Max;
 }
 
-struct UTracerData
+struct FTracerData
 {
     UFXSystemAsset* MainParticle;
     UFXSystemAsset* TrailParticle;
@@ -20996,27 +20996,27 @@ struct UTracerData
     float MinDistance;
 }
 
-struct UItemAnimationItem
+struct FItemAnimationItem
 {
     UAnimMontage* FP_CharacterMontage;
     UAnimMontage* TP_CharacterMontage;
     UAnimMontage* ItemMontage;
 }
 
-struct UHackingUsableState
+struct FHackingUsableState
 {
     bool bIsHacked;
     TWeakObjectPtr<AHackingToolItem> BeingHackedByItem;
     TWeakObjectPtr<APlayerCharacter> HackedBy;
 }
 
-struct ULockCounter
+struct FLockCounter
 {
     int32 LockCount;
     TWeakObjectPtr<AActor> LockedActor;
 }
 
-struct UProjectileImpact
+struct FProjectileImpact
 {
     FVector_NetQuantize Location;
     FVector_NetQuantizeNormal Normal;
@@ -21026,7 +21026,7 @@ struct UProjectileImpact
     int32 BoneIndex;
 }
 
-struct UProjectileState
+struct FProjectileState
 {
     FVector_NetQuantize Velocity;
     FVector_NetQuantize Location;
@@ -21037,19 +21037,19 @@ struct UProjectileState
     uint8 IsPenetrating;
 }
 
-struct UScaledEffect
+struct FScaledEffect
 {
     UFXSystemAsset* ParticleSystem;
     float Scale;
 }
 
-struct USentryGunMuzzleSetup
+struct FSentryGunMuzzleSetup
 {
     FName SocketName;
     UAnimMontage* FireMontage;
 }
 
-struct UBlueprintFriend
+struct FBlueprintFriend
 {
     FString DisplayName;
     FString RealName;
@@ -21057,7 +21057,7 @@ struct UBlueprintFriend
     FString UniqueNetId;
 }
 
-struct USizeBoxSettings
+struct FSizeBoxSettings
 {
     float WidthOverride;
     float HeightOverride;
@@ -21069,26 +21069,26 @@ struct USizeBoxSettings
     float MaxAspectRatio;
 }
 
-struct UWidgetAnimationSettings
+struct FWidgetAnimationSettings
 {
     float PlaybackSpeed;
     TEnumAsByte<EUMGSequencePlayMode::Type> PlayMode;
     bool bRestoreState;
 }
 
-struct UTextCounterEntry
+struct FTextCounterEntry
 {
     UTextBlock* TextBlock;
     FText Format;
     int32 Value;
 }
 
-struct UGameActivitySubTask
+struct FGameActivitySubTask
 {
     FString SubActivityId;
 }
 
-struct UFrozenAfflictionItem
+struct FFrozenAfflictionItem
 {
     FName BoneName;
     FRandRange MeshScale;
@@ -21096,33 +21096,33 @@ struct UFrozenAfflictionItem
     float ChanceToSpawn;
 }
 
-struct UAttachMeshesAfflictionItem
+struct FAttachMeshesAfflictionItem
 {
     FName BoneName;
     float Scale;
     UStaticMesh* Mesh;
 }
 
-struct UPushPoint
+struct FPushPoint
 {
     USphereComponent* collider;
     APlayerCharacter* Character;
 }
 
-struct UCompositeArmorItem
+struct FCompositeArmorItem
 {
     UPrimitiveComponent* Component;
     float Health;
 }
 
-struct UArmorHealthItem
+struct FArmorHealthItem
 {
     uint8 MaterialIndex;
     bool HealthIsBreakPercentage;
     TArray<FArmorHealthSubItem> ArmorBones;
 }
 
-struct UArmorHealthSubItem
+struct FArmorHealthSubItem
 {
     float Health;
     FName BoneName;
@@ -21130,32 +21130,32 @@ struct UArmorHealthSubItem
     FName OptionalFXSocket;
 }
 
-struct UDestructableBodypartItem
+struct FDestructableBodypartItem
 {
     uint8 MaterialIndex;
     TArray<FName> ArmorBones;
 }
 
-struct UAttackCooldown
+struct FAttackCooldown
 {
     FName AttackName;
     float CoolDown;
 }
 
-struct UAttackerInfo
+struct FAttackerInfo
 {
     TWeakObjectPtr<AActor> Attacker;
     int32 PositionIndex;
     float AttackerRadius;
 }
 
-struct UBiomeEnemyEntry
+struct FBiomeEnemyEntry
 {
     UEnemyDescriptor* enemy;
     bool IsDistruptive;
 }
 
-struct UBiomeNoiseItem
+struct FBiomeNoiseItem
 {
     UFloodFillSettings* CeilingNoise;
     UDetailNoise* CeilingDetailNoise;
@@ -21166,21 +21166,21 @@ struct UBiomeNoiseItem
     float Weight;
 }
 
-struct UBoscoLightSetting
+struct FBoscoLightSetting
 {
     FColor Color;
     float Intensity;
     float Radius;
 }
 
-struct UBossFight
+struct FBossFight
 {
     TWeakObjectPtr<AActor> BossActor;
     TWeakObjectPtr<UEnemyComponent> EnemyComponent;
     TWeakObjectPtr<UEnemyHealthComponent> HealthComponent;
 }
 
-struct ULevelGenerationCarver
+struct FLevelGenerationCarver
 {
     FMatrixWithExactSync Transform;
     USTLMeshCarver* MeshCarver;
@@ -21193,19 +21193,19 @@ struct ULevelGenerationCarver
     bool ToBeDiscarded;
 }
 
-struct UCustomUsable
+struct FCustomUsable
 {
     UUsableComponentBase* Usable;
     ECustomUsableType TerminationType;
 }
 
-struct UUsableRepliactional
+struct FUsableRepliactional
 {
     UUsableComponentBase* UsableComp;
     uint8 Key;
 }
 
-struct UClaimableRewardView
+struct FClaimableRewardView
 {
     UDialogDataAsset* MissionControlSpeak;
     TSoftClassPtr<UUserWidget> BackgroundWidgetClass;
@@ -21214,12 +21214,12 @@ struct UClaimableRewardView
     TArray<FClaimableRewardEntry> RewardDisplays;
 }
 
-struct UClaimableRewardArray
+struct FClaimableRewardArray
 {
     TArray<FClaimableRewardEntry> Entries;
 }
 
-struct UCloudSaveRequest
+struct FCloudSaveRequest
 {
     FString SteamTicket;
     FString PSTicket;
@@ -21229,7 +21229,7 @@ struct UCloudSaveRequest
     FString Branch;
 }
 
-struct UCloudLoadRequest
+struct FCloudLoadRequest
 {
     FString SteamTicket;
     FString PSTicket;
@@ -21237,23 +21237,23 @@ struct UCloudLoadRequest
     int32 Offset;
 }
 
-struct UExampleStruct
+struct FExampleStruct
 {
     float Field;
 }
 
-struct UMissionShoutQueueItem
+struct FMissionShoutQueueItem
 {
     TSoftObjectPtr<USoundBase> AudioPtr;
     FText Text;
     USoundBase* LoadedAudio;
 }
 
-struct UActiveOutline
+struct FActiveOutline
 {
 }
 
-struct UCharacterShouts
+struct FCharacterShouts
 {
     UDialogDataAsset* Attention;
     UDialogDataAsset* Follow;
@@ -21280,13 +21280,13 @@ struct UCharacterShouts
     UDialogDataAsset* Carrying;
 }
 
-struct UCommunityReward
+struct FCommunityReward
 {
     UResourceData* Resource;
     float Value;
 }
 
-struct UCommunityFactionData
+struct FCommunityFactionData
 {
     bool IsValid;
     TArray<FString> Goals;
@@ -21294,7 +21294,7 @@ struct UCommunityFactionData
     TArray<int32> Members;
 }
 
-struct UCommunityGoalStateData
+struct FCommunityGoalStateData
 {
     bool isGoal;
     bool isRecruitment;
@@ -21302,7 +21302,7 @@ struct UCommunityGoalStateData
     int32 CurrentGoalPeriodID;
 }
 
-struct UCommunityRewardNotification
+struct FCommunityRewardNotification
 {
     FText Text;
     UTexture2D* Icon;
@@ -21310,14 +21310,14 @@ struct UCommunityRewardNotification
     FString ID;
 }
 
-struct UCommunityFactionResponse
+struct FCommunityFactionResponse
 {
     TArray<FString> Goals;
     TArray<float> Values;
     TArray<float> Members;
 }
 
-struct UCommunityGoalStateResponse
+struct FCommunityGoalStateResponse
 {
     bool isGoal;
     bool isRecruitment;
@@ -21327,7 +21327,7 @@ struct UCommunityGoalStateResponse
     int32 CurrentGoalPeriodID;
 }
 
-struct UCommunityGoalTierResponse
+struct FCommunityGoalTierResponse
 {
     bool Found;
     FString GoalID;
@@ -21336,17 +21336,17 @@ struct UCommunityGoalTierResponse
     float ThirdTierGoal;
 }
 
-struct UCommunityGoalIncrementResponse
+struct FCommunityGoalIncrementResponse
 {
     bool success;
 }
 
-struct UCommunityGoalTierDataRequest
+struct FCommunityGoalTierDataRequest
 {
     FString GoalID;
 }
 
-struct UCommunityGoalRequest
+struct FCommunityGoalRequest
 {
     FString GoalID;
     int32 FactionID;
@@ -21355,14 +21355,14 @@ struct UCommunityGoalRequest
     FString Branch;
 }
 
-struct UActionIconMapping
+struct FActionIconMapping
 {
     FKey ActionKey;
     UTexture2D* Icon;
     bool DoNotTint;
 }
 
-struct UPricingTierEntry : FTableRowBase
+struct FPricingTierEntry : FTableRowBase
 {
     FIRandRange CreditCost;
     FIRandRange Material1;
@@ -21370,13 +21370,13 @@ struct UPricingTierEntry : FTableRowBase
     FIRandRange Material3;
 }
 
-struct UIRandRange
+struct FIRandRange
 {
     int32 Min;
     int32 Max;
 }
 
-struct UCustomKeySetting
+struct FCustomKeySetting
 {
     FName SaveID;
     FText Description;
@@ -21384,7 +21384,7 @@ struct UCustomKeySetting
     EKeyBindingAxis ActionAxis;
 }
 
-struct UDailyDeal
+struct FDailyDeal
 {
     UResourceData* Resource;
     EDealType DealType;
@@ -21393,7 +21393,7 @@ struct UDailyDeal
     float ChangePercent;
 }
 
-struct UDailyDealSetup
+struct FDailyDealSetup
 {
     UResourceData* Resource;
     EDealType DealType;
@@ -21402,25 +21402,25 @@ struct UDailyDealSetup
     FVector2D ExtraValueRangePercent;
 }
 
-struct UDamageSubsystemItem
+struct FDamageSubsystemItem
 {
     UDamageComponent* DamageComponent;
 }
 
-struct UDamageModifierItem
+struct FDamageModifierItem
 {
     EDamageUpgrade DamageUpgrade;
     float Additive;
     float Multiplicative;
 }
 
-struct UDanceItem
+struct FDanceItem
 {
     UAnimSequence* DanceMove;
     UAnimSequence* DanceMoveWithBeer;
 }
 
-struct UCellNoise
+struct FCellNoise
 {
     int32 Seed;
     FVector CellSize;
@@ -21429,26 +21429,26 @@ struct UCellNoise
     int32 MaxCellValue;
 }
 
-struct UDebrisCellNoiseParameters
+struct FDebrisCellNoiseParameters
 {
     UDebrisCellNoise* Noise;
     int32 MinCellValue;
     int32 MaxCellValue;
 }
 
-struct UUDebrisCarveMesh
+struct FUDebrisCarveMesh
 {
     UStaticMesh* Mesh;
     float Probablity;
 }
 
-struct UDebrisItemActorItem
+struct FDebrisItemActorItem
 {
     TSubclassOf<AActor> Actor;
     float Probability;
 }
 
-struct UDebrisStaticMesh
+struct FDebrisStaticMesh
 {
     UStaticMesh* Mesh;
     UMaterialInterface* Material;
@@ -21464,7 +21464,7 @@ struct UDebrisStaticMesh
     bool OnlySpawnWhenCarving;
 }
 
-struct UDecalData
+struct FDecalData
 {
     UMaterialInterface* DecalMaterial;
     float DecalSize;
@@ -21473,13 +21473,13 @@ struct UDecalData
     float FadeDuration;
 }
 
-struct UUDebrisStaticCarveMesh
+struct FUDebrisStaticCarveMesh
 {
     UStaticMeshCarver* Mesh;
     float Probablity;
 }
 
-struct UDebrisCapsule
+struct FDebrisCapsule
 {
     int32 ID;
     FVector Start;
@@ -21487,48 +21487,48 @@ struct UDebrisCapsule
     float Radius;
 }
 
-struct UDebrisInfluence
+struct FDebrisInfluence
 {
     UObject* CaveInfluencer;
     float Radius;
 }
 
-struct UDebrisWhenCarving
+struct FDebrisWhenCarving
 {
     UDebrisInstances* Debris;
 }
 
-struct UCSGRaycastHitInfo
+struct FCSGRaycastHitInfo
 {
     FVector Position;
     FVector Normal;
     int32 Material;
 }
 
-struct UDeepDiveLoaderSequence
+struct FDeepDiveLoaderSequence
 {
     TSoftObjectPtr<ULevelSequence> LevelSequence;
 }
 
-struct UDeepDiveTemplateItem
+struct FDeepDiveTemplateItem
 {
     UMissionTemplate* mission;
     TArray<UMissionDuration*> AllowedDurations;
 }
 
-struct UDeepDiveRewardItem
+struct FDeepDiveRewardItem
 {
     USchematic* Schematic;
     int32 Stage;
     bool WasAlreadyGiven;
 }
 
-struct UHandleRotationOptions
+struct FHandleRotationOptions
 {
     bool HandlePitch;
 }
 
-struct UDeepRepPath
+struct FDeepRepPath
 {
     FVector PathBase;
     uint8 PathLength;
@@ -21537,7 +21537,7 @@ struct UDeepRepPath
     FVector PathOffsets;
 }
 
-struct UTerrainLateJoinIteration
+struct FTerrainLateJoinIteration
 {
     int32 DrillsIndex;
     int32 MeltsIndex;
@@ -21552,7 +21552,7 @@ struct UTerrainLateJoinIteration
     int32 ChunkVisibilityIndex;
 }
 
-struct UTerrainLateJoinData
+struct FTerrainLateJoinData
 {
     TArray<FGrenadeExplodeOperationData> explosions;
     TArray<FCarveWithColliderOperationData> colliderCarves;
@@ -21567,7 +21567,7 @@ struct UTerrainLateJoinData
     int32 OperationCount;
 }
 
-struct UDialogStruct
+struct FDialogStruct
 {
     bool Enabled;
     FText Text;
@@ -21575,24 +21575,24 @@ struct UDialogStruct
     EDialogRestriction Restriction;
 }
 
-struct UVeteranComposition
+struct FVeteranComposition
 {
     FRandFloatInterval Normal;
     FRandFloatInterval Large;
 }
 
-struct URandFloatInterval
+struct FRandFloatInterval
 {
     TArray<FRandFloatIntervalItem> Intervals;
 }
 
-struct URandFloatIntervalItem
+struct FRandFloatIntervalItem
 {
     float Weight;
     FRandRange range;
 }
 
-struct UDiscordFSDRichPresence
+struct FDiscordFSDRichPresence
 {
     FString State;
     FString details;
@@ -21608,13 +21608,13 @@ struct UDiscordFSDRichPresence
     bool bIsPureSolo;
 }
 
-struct UDiscordEoMData
+struct FDiscordEoMData
 {
     FString nick;
     FString UserId;
 }
 
-struct UDiscordServerInviteData
+struct FDiscordServerInviteData
 {
     FString code;
     FString serverID;
@@ -21627,7 +21627,7 @@ struct UDiscordServerInviteData
     FString splashKey;
 }
 
-struct UDiscordRewardNotification
+struct FDiscordRewardNotification
 {
     FText Text;
     UTexture2D* Icon;
@@ -21635,7 +21635,7 @@ struct UDiscordRewardNotification
     FString ID;
 }
 
-struct UDoubleDrillDamageItem
+struct FDoubleDrillDamageItem
 {
     TWeakObjectPtr<UPrimitiveComponent> Target;
     FVector_NetQuantize Location;
@@ -21645,7 +21645,7 @@ struct UDoubleDrillDamageItem
     uint8 BoneIndex;
 }
 
-struct UDeathIntroSettings
+struct FDeathIntroSettings
 {
     float FirstPersonDuration;
     float FadeToBlackDelay;
@@ -21656,23 +21656,23 @@ struct UDeathIntroSettings
     float ZoomOutStartDistance;
 }
 
-struct UBarleySpawnItem
+struct FBarleySpawnItem
 {
     UResourceData* Resource;
     float Weight;
 }
 
-struct UEliminationDescriptors
+struct FEliminationDescriptors
 {
     TArray<UEnemyDescriptor*> Descriptors;
 }
 
-struct UEliminationTarget
+struct FEliminationTarget
 {
     TArray<AFSDPawn*> Targets;
 }
 
-struct UEncounterManagerItem
+struct FEncounterManagerItem
 {
     TArray<FManagedEncounterItem> ManagedEcnounterItems;
     TArray<FPrePlacedEncounterItem> PrePlacedEncounterItems;
@@ -21682,33 +21682,33 @@ struct UEncounterManagerItem
     void EnemySpawnedDelegate(APawn* enemy);
 }
 
-struct UPrePlacedEncounterItem
+struct FPrePlacedEncounterItem
 {
     UEnemyDescriptor* descriptor;
     FTransform Location;
     AEncounterActor* EncounterActor;
 }
 
-struct UManagedEncounterItem
+struct FManagedEncounterItem
 {
     UEnemyDescriptor* descriptor;
     int32 Amount;
 }
 
-struct UEncounterSpecialItem
+struct FEncounterSpecialItem
 {
     UEnemyDescriptor* enemy;
     float BaseChance;
     bool CanSpawnInDeepDive;
 }
 
-struct UEncounterRareCritterItem
+struct FEncounterRareCritterItem
 {
     URareCritterDescriptor* Critter;
     float Chance;
 }
 
-struct UGliderAnimSync
+struct FGliderAnimSync
 {
     float Time;
     float AnimAlphaSync;
@@ -21719,7 +21719,7 @@ struct UGliderAnimSync
     float HorizontalAddBlend;
 }
 
-struct UTestAnimInstanceProxy : FAnimInstanceProxy
+struct FTestAnimInstanceProxy : FAnimInstanceProxy
 {
     bool IsAlive;
     float RandomStartPosition;
@@ -21728,7 +21728,7 @@ struct UTestAnimInstanceProxy : FAnimInstanceProxy
     float WalkCyclePlayRate;
 }
 
-struct UControlEnemyState
+struct FControlEnemyState
 {
     ADeepPathfinderCharacter* ControlledEnemy;
     FTransform InitialTargetTransform;
@@ -21737,38 +21737,38 @@ struct UControlEnemyState
     FVector InitialEnemyVelocity;
 }
 
-struct UEnemyAttackDescription
+struct FEnemyAttackDescription
 {
     FText Name;
     EEnemyAttackType range;
     EDamageType DamageType;
 }
 
-struct UEnemyMinersManualStats
+struct FEnemyMinersManualStats
 {
     int32 Health;
     int32 Damage;
     int32 Speed;
 }
 
-struct UEnemyGroupDescriptorItem
+struct FEnemyGroupDescriptorItem
 {
     UEnemyDescriptor* EnemyDescriptor;
 }
 
-struct UEnemyGroupDescriptorSpawnItem
+struct FEnemyGroupDescriptorSpawnItem
 {
     UEnemyDescriptor* enemy;
     int32 count;
 }
 
-struct UEnemyDebris
+struct FEnemyDebris
 {
     float InfluenceRange;
     TArray<UDebrisBase*> Debris;
 }
 
-struct UEnemySpawnParamsEntry : FTableRowBase
+struct FEnemySpawnParamsEntry : FTableRowBase
 {
     FString ItemName;
     float DifficultyRating;
@@ -21779,25 +21779,25 @@ struct UEnemySpawnParamsEntry : FTableRowBase
     int32 RequiredMainCampaignProgress;
 }
 
-struct USpawnRarityItem
+struct FSpawnRarityItem
 {
     float Duration;
     float Rarity;
 }
 
-struct USpawnEffectsArray : FFastArraySerializer
+struct FSpawnEffectsArray : FFastArraySerializer
 {
     TArray<FSpawnEffectItem> Items;
 }
 
-struct USpawnEffectItem : FFastArraySerializerItem
+struct FSpawnEffectItem : FFastArraySerializerItem
 {
     ECreatureSize CreatureSize;
     FVector_NetQuantize Location;
     FRotator Rotation;
 }
 
-struct USpawnQueueItem
+struct FSpawnQueueItem
 {
     TSoftClassPtr<APawn> EnemyClass;
     UEnemyDescriptor* enemy;
@@ -21805,41 +21805,41 @@ struct USpawnQueueItem
     void EnemySpawnedDelegate(APawn* enemy);
 }
 
-struct USpawnRarityModifierItem
+struct FSpawnRarityModifierItem
 {
 }
 
-struct UEnemySpawnItem
+struct FEnemySpawnItem
 {
     UEnemyDescriptor* enemy;
     int32 count;
     float VeteranComposition;
 }
 
-struct UMUSTBEHERETOCOMPILE
+struct FMUSTBEHERETOCOMPILE
 {
 }
 
-struct UWaveEntry
+struct FWaveEntry
 {
     TSubclassOf<UEnemyWaveController> WaveControllerLoaded;
     float Weight;
     TSoftClassPtr<UEnemyWaveController> WaveController;
 }
 
-struct UEscortMulePath
+struct FEscortMulePath
 {
     TArray<FVector> Path;
 }
 
-struct UEscortMuleMovementState
+struct FEscortMuleMovementState
 {
     FTransform TargetTransform;
     FVector Velocity;
     FQuat AngularVelocity;
 }
 
-struct UEscortMuleExtractorSlot
+struct FEscortMuleExtractorSlot
 {
     EEscortExtractorState ExtractorState;
     EEscortExtractorState LastState;
@@ -21848,7 +21848,7 @@ struct UEscortMuleExtractorSlot
     UWidgetComponent* Widget;
 }
 
-struct USubObjective
+struct FSubObjective
 {
     UDialogDataAsset* OnProgressShout;
     UDialogDataAsset* OnCompletedShout;
@@ -21857,36 +21857,36 @@ struct USubObjective
     int32 count;
 }
 
-struct USmartSpawnEntry
+struct FSmartSpawnEntry
 {
 }
 
-struct UFacilityGeneratorEnounter
+struct FFacilityGeneratorEnounter
 {
     TArray<UEnemyDescriptor*> Enemies;
     float Difficulty;
     FRandInterval Diversity;
 }
 
-struct URandInterval
+struct FRandInterval
 {
     TArray<FRandIntervalItem> Intervals;
 }
 
-struct URandIntervalItem
+struct FRandIntervalItem
 {
     float Weight;
     FIRandRange range;
 }
 
-struct UFakeMoveState
+struct FFakeMoveState
 {
     FVector Pos1;
     FVector Pos2;
     FVector Vel;
 }
 
-struct UFakeMoverState
+struct FFakeMoverState
 {
     float TickRate;
     float TickTime;
@@ -21901,7 +21901,7 @@ struct UFakeMoverState
     float SignedDistToSurface;
 }
 
-struct UFakeMoverTarget
+struct FFakeMoverTarget
 {
     float InfluenceDistance;
     float TargetDistance;
@@ -21912,7 +21912,7 @@ struct UFakeMoverTarget
     float MinDistance;
 }
 
-struct UFakeMoverPropulsion
+struct FFakeMoverPropulsion
 {
     float Speed;
     float AirAcceleration;
@@ -21921,7 +21921,7 @@ struct UFakeMoverPropulsion
     float GroundDeceleration;
 }
 
-struct UFlareMeta
+struct FFlareMeta
 {
     TWeakObjectPtr<AActor> Actor;
     float Inhibit;
@@ -21931,79 +21931,79 @@ struct UFlareMeta
     bool Moving;
 }
 
-struct UFloatPerkEffect
+struct FFloatPerkEffect
 {
     UFloatPerkActivation* PerkActivation;
     FText FormattedDescription;
     TArray<FFloatPerkRankValue> RankValues;
 }
 
-struct UFloatPerkRankValue
+struct FFloatPerkRankValue
 {
     int32 RankIndex;
     float Value;
 }
 
-struct UFloatPerkRank
+struct FFloatPerkRank
 {
     int32 Tier;
     int32 Cost;
 }
 
-struct UPathObstacle
+struct FPathObstacle
 {
     FVector Position;
     float Radius;
 }
 
-struct ULayeredNoise
+struct FLayeredNoise
 {
     UFloodFillSettings* Noise;
     float Scale;
 }
 
-struct UFormationDataItem
+struct FFormationDataItem
 {
     FVector Direction;
     float Distance;
 }
 
-struct UFormation
+struct FFormation
 {
     UFormationData* FormationData;
 }
 
-struct UFormationID
+struct FFormationID
 {
 }
 
-struct UDamageDataBase
+struct FDamageDataBase
 {
 }
 
-struct UDamageData : FDamageDataBase
+struct FDamageData : FDamageDataBase
 {
     UFSDPhysicalMaterial* Bodypart;
     UDamageClass* DamageClass;
 }
 
-struct UDelegateStruct
+struct FDelegateStruct
 {
 }
 
-struct UFSDTagsRoot
+struct FFSDTagsRoot
 {
     FFSDTagsAttitude Attitude;
 }
 
-struct UFSDTagsAttitude
+struct FFSDTagsAttitude
 {
     FGameplayTag Friendly;
     FGameplayTag Neutral;
     FGameplayTag Hostile;
 }
 
-struct UGeneratedMissionSeed
+struct FGeneratedMissionSeed
 {
     int32 Seed;
     int32 GlobalSeed;
@@ -22017,13 +22017,13 @@ struct UGeneratedMissionSeed
     EMissionStructure MissionStructure;
 }
 
-struct UReplicatedObjectives
+struct FReplicatedObjectives
 {
     bool HasReplicated;
     TArray<UObjective*> Objectives;
 }
 
-struct UModdingUISettings
+struct FModdingUISettings
 {
     uint8 SortField;
     bool SortAscending;
@@ -22031,7 +22031,7 @@ struct UModdingUISettings
     bool bShowSandboxLabel;
 }
 
-struct UInputDisplay
+struct FInputDisplay
 {
     EInputInteraction Interaction;
     FText InputText;
@@ -22040,31 +22040,31 @@ struct UInputDisplay
     bool IconTintable;
 }
 
-struct UItemRefundListItem
+struct FItemRefundListItem
 {
     FString Name;
     TMap<FGuid, FItemRefundResourceItem> Resources;
     float CreditCost;
 }
 
-struct UItemRefundResourceItem
+struct FItemRefundResourceItem
 {
     FString Name;
     float Amount;
 }
 
-struct UFSDServicesEndpoints
+struct FFSDServicesEndpoints
 {
 }
 
-struct USplineHitResult
+struct FSplineHitResult
 {
     FHitResult HitResult;
     float SplineDistance;
     FVector SplineTangent;
 }
 
-struct USplineSegment
+struct FSplineSegment
 {
     FVector StartLocation;
     FVector StartTangent;
@@ -22072,47 +22072,47 @@ struct USplineSegment
     FVector EndTangent;
 }
 
-struct UNewPlayerMutator
+struct FNewPlayerMutator
 {
     int32 MinCampaignProgress;
     int32 MaxCampaignProgress;
     TArray<UMutator*> Mutators;
 }
 
-struct UWidgetMover
+struct FWidgetMover
 {
     TWeakObjectPtr<UWidget> Widget;
 }
 
-struct UCustomCounter
+struct FCustomCounter
 {
     FCustomCounterOnCount OnCount;
     void CustomCounterDelegate(float Value, float NormalizedTime);
     TWeakObjectPtr<UObject> Owner;
 }
 
-struct UWidgetTextCounter
+struct FWidgetTextCounter
 {
     TWeakObjectPtr<UTextBlock> Widget;
 }
 
-struct UWidgetFade
+struct FWidgetFade
 {
     TWeakObjectPtr<UUserWidget> Widget;
 }
 
-struct UWidgetPing
+struct FWidgetPing
 {
     TWeakObjectPtr<UWidget> Widget;
 }
 
-struct UTesterName : FTableRowBase
+struct FTesterName : FTableRowBase
 {
     FString SteamID;
     FString SteamProfileName;
 }
 
-struct UTipsTableRow : FTableRowBase
+struct FTipsTableRow : FTableRowBase
 {
     FText Header;
     FText Description;
@@ -22121,13 +22121,13 @@ struct UTipsTableRow : FTableRowBase
     float TimeToDisplay;
 }
 
-struct UGVisibilityGroups
+struct FGVisibilityGroups
 {
     TSet<UHUDVisibilityGroup*> AllGroups;
     UHUDVisibilityGroup* EnemyHealth;
 }
 
-struct UGDItemCategoryIDs
+struct FGDItemCategoryIDs
 {
     UCategoryID* OverclockID;
     UCategoryID* ItemSkinID;
@@ -22139,7 +22139,7 @@ struct UGDItemCategoryIDs
     UCategoryID* BoscoSkinID;
 }
 
-struct UGDPerks
+struct FGDPerks
 {
     TArray<UPerkAsset*> PerkAssets;
     TArray<int32> RequiredClaimsPerTier;
@@ -22159,7 +22159,7 @@ struct UGDPerks
     UFloatPerkAsset* PassivePerkSlots;
 }
 
-struct UGDPlayerAndCharacterProgression
+struct FGDPlayerAndCharacterProgression
 {
     TArray<TSoftClassPtr<APlayerCharacter>> RankedHeroClasses;
     TArray<TSoftClassPtr<APlayerCharacter>> TestHeroClasses;
@@ -22169,28 +22169,28 @@ struct UGDPlayerAndCharacterProgression
     TMap<FGuid, UPlayerCharacterID*> PlayerCharacterIDs;
 }
 
-struct UGDMilestones
+struct FGDMilestones
 {
     TArray<UMilestoneAsset*> Milestones;
 }
 
-struct UGDGameStatsTracking
+struct FGDGameStatsTracking
 {
     FGameplayTagContainer TotalEnemyKillsFilter;
 }
 
-struct UGDTerrainTypes
+struct FGDTerrainTypes
 {
     UTerrainType* Rock;
     UTerrainType* Dirt;
 }
 
-struct UGDDifficulty
+struct FGDDifficulty
 {
     TArray<UDifficultySetting*> DifficultySettings;
 }
 
-struct UGDResources
+struct FGDResources
 {
     UResourceData* CreditsResource;
     UResourceData* MOMResource;
@@ -22220,7 +22220,7 @@ struct UGDResources
     TArray<UResourceData*> AllResources;
 }
 
-struct UGDCharacterRetirement
+struct FGDCharacterRetirement
 {
     TMap<UPlayerCharacterID*, TSubclassOf<UCampaign>> Campaigns;
     TMap<UPlayerCharacterID*, FRetirementCostItem> RetirementCost;
@@ -22228,17 +22228,17 @@ struct UGDCharacterRetirement
     TArray<float> ResourceCostMultipliers;
 }
 
-struct URetirementCostItem
+struct FRetirementCostItem
 {
     TMap<UResourceData*, int32> RetirementCost;
 }
 
-struct UUpgradeCostItem
+struct FUpgradeCostItem
 {
     TArray<int32> Amounts;
 }
 
-struct UGDStats
+struct FGDStats
 {
     UPawnStat* MaxAmmo;
     UPawnStat* MaxShields;
@@ -22279,7 +22279,7 @@ struct UGDStats
     UPawnStat* HoverBootsDuration;
 }
 
-struct UGDDamageClasses
+struct FGDDamageClasses
 {
     UDamageClass* Falling;
     UDamageClass* Fire;
@@ -22292,7 +22292,7 @@ struct UGDDamageClasses
     UDamageClass* Corrosive;
 }
 
-struct UGDAudio
+struct FGDAudio
 {
     TSoftObjectPtr<USoundAttenuation> FirstPersonHitscanAttenuationOverride;
     TSubclassOf<AFSDReverbVolume> ReverbActor;
@@ -22304,12 +22304,12 @@ struct UGDAudio
     float ThirdPersonPriority;
 }
 
-struct UResourcePouchItem
+struct FResourcePouchItem
 {
     UResourceData* Resource;
 }
 
-struct UTrackPositionList
+struct FTrackPositionList
 {
     FName TrackName;
     TArray<FVector> Positions;
@@ -22317,12 +22317,12 @@ struct UTrackPositionList
     TArray<TWeakObjectPtr<UMaterialInstanceDynamic>> DynamicMaterials;
 }
 
-struct UGMMutatorItem
+struct FGMMutatorItem
 {
     TArray<UMutator*> Mutators;
 }
 
-struct UDeepDiveAnalyticsInformation
+struct FDeepDiveAnalyticsInformation
 {
     bool WasDeepDive;
     int32 LastDeepDiveStage;
@@ -22330,34 +22330,34 @@ struct UDeepDiveAnalyticsInformation
     bool IsReplay;
 }
 
-struct UPartyAnalyticsInformation
+struct FPartyAnalyticsInformation
 {
 }
 
-struct UGooPuddleStatusEffectTrigger
+struct FGooPuddleStatusEffectTrigger
 {
     TArray<UDamageClass*> Trigger;
     TSubclassOf<UStatusEffect> NewStatusEffect;
 }
 
-struct UAvoidActorEntry
+struct FAvoidActorEntry
 {
     AActor* Actor;
 }
 
-struct UGrabAvoidClassEntry
+struct FGrabAvoidClassEntry
 {
     TSubclassOf<AActor> ActorClass;
     float DistanceToKeep;
 }
 
-struct UGraplingGunState
+struct FGraplingGunState
 {
     FVector_NetQuantize TargetLocation;
     uint8 IsGrapling;
 }
 
-struct UStateStats
+struct FStateStats
 {
     float MaxAcceleration;
     float MaxPawnSpeed;
@@ -22366,13 +22366,13 @@ struct UStateStats
     float MaxBreakingDeceleration;
 }
 
-struct UGuntowerModuleLevel
+struct FGuntowerModuleLevel
 {
     TArray<TSubclassOf<AGuntowerModule>> PossibleModules;
     bool PreventDuplication;
 }
 
-struct UEliteEnemyEntry
+struct FEliteEnemyEntry
 {
     float HeroChance;
     TSubclassOf<UStatusEffect> StatusEffect;
@@ -22382,19 +22382,19 @@ struct UEliteEnemyEntry
     EEnemyHealthScaling HealthScalingOverride;
 }
 
-struct UEliteEnemyBan
+struct FEliteEnemyBan
 {
     FInt32Interval AffectedPlayerCount;
     UMissionTemplate* Template;
 }
 
-struct UHealthBarLooks
+struct FHealthBarLooks
 {
     FLinearColor HealthColor;
     FLinearColor DamageColor;
 }
 
-struct UGenerateIconInfo
+struct FGenerateIconInfo
 {
     EGeneratorIconType IconType;
     UPickaxePart* PickaxePart;
@@ -22407,7 +22407,7 @@ struct UGenerateIconInfo
     bool bShowCloseUp;
 }
 
-struct UPickaxeSet
+struct FPickaxeSet
 {
     UPickaxePart* BladeFront;
     UPickaxePart* OptionalBladeBack;
@@ -22418,43 +22418,43 @@ struct UPickaxeSet
     UPickaxePart* Material;
 }
 
-struct UQueuedMontage
+struct FQueuedMontage
 {
     UAnimMontage* Montage;
     bool ForceUpdate;
 }
 
-struct UInputTranslationTable
+struct FInputTranslationTable
 {
     TMap<FName, FInputTranslation> Entries;
 }
 
-struct UInputTranslation
+struct FInputTranslation
 {
     FInputTranslationEntry Default;
     bool bControllerOverride;
     FInputTranslationEntry ControllerOverride;
 }
 
-struct UInputTranslationEntry
+struct FInputTranslationEntry
 {
     EInputInteraction Interaction;
     FName InputName;
     int32 Axis;
 }
 
-struct UCarriedItemState
+struct FCarriedItemState
 {
     AActor* Item;
     uint8 PlayThrowMontage;
 }
 
-struct UItemSkinOwners
+struct FItemSkinOwners
 {
     TArray<UItemID*> Items;
 }
 
-struct UGearStatEntry
+struct FGearStatEntry
 {
     FText Text;
     FText Value;
@@ -22463,13 +22463,13 @@ struct UGearStatEntry
     EItemPreviewStatus PreviewStatus;
 }
 
-struct UBumpPlayerHit
+struct FBumpPlayerHit
 {
     FVector_NetQuantize force;
     APlayerCharacter* Player;
 }
 
-struct ULaserPointerData
+struct FLaserPointerData
 {
     FText Name;
     FText Description;
@@ -22479,7 +22479,7 @@ struct ULaserPointerData
     FGuid SaveGameID;
 }
 
-struct ULineSegmentCarverPoint
+struct FLineSegmentCarverPoint
 {
     FVector Position;
     float HRange;
@@ -22490,7 +22490,7 @@ struct ULineSegmentCarverPoint
     float FloorNoiseRange;
 }
 
-struct ULineSegmentFillerPoint
+struct FLineSegmentFillerPoint
 {
     FVector Position;
     FRandRange RandomRange;
@@ -22498,13 +22498,13 @@ struct ULineSegmentFillerPoint
     FRandRange FillAmount;
 }
 
-struct UFSDTranslationProgress
+struct FFSDTranslationProgress
 {
     FString CodeName;
     int32 TranslatedPercent;
 }
 
-struct ULocalizedLanguageInfo
+struct FLocalizedLanguageInfo
 {
     FString EnglishName;
     FString NativeName;
@@ -22513,7 +22513,7 @@ struct ULocalizedLanguageInfo
     int32 TranslatedPercent;
 }
 
-struct UBeamCollision
+struct FBeamCollision
 {
     bool bBeamBlocked;
     float BeamHitDistance;
@@ -22521,7 +22521,7 @@ struct UBeamCollision
     FVector FinalTraceEnd;
 }
 
-struct UFSDLocalizedChatMessage
+struct FFSDLocalizedChatMessage
 {
     EChatMessageType MsgType;
     FString Sender;
@@ -22529,38 +22529,38 @@ struct UFSDLocalizedChatMessage
     TArray<FText> Arguments;
 }
 
-struct UMilestoneTier
+struct FMilestoneTier
 {
     float CompletionCount;
     int32 PerkPoints;
 }
 
-struct UBiomeFeatures
+struct FBiomeFeatures
 {
     UMinersManualData* Descriptions;
 }
 
-struct UMissionTypeDescription
+struct FMissionTypeDescription
 {
     FText InfoHeadline;
     TArray<FSoftMissionStepDescription> Steps;
 }
 
-struct USoftMissionStepDescription
+struct FSoftMissionStepDescription
 {
     FText Headline;
     FText RichDescription;
     TSoftObjectPtr<UTexture2D> Image;
 }
 
-struct UMissionStepDescription
+struct FMissionStepDescription
 {
     FText Headline;
     FText RichDescription;
     UTexture2D* Image;
 }
 
-struct UMinersManualDescription
+struct FMinersManualDescription
 {
     FText Headline;
     FText RichDescription;
@@ -22568,7 +22568,7 @@ struct UMinersManualDescription
     UTexture2D* ImageBackground;
 }
 
-struct USoftMinersManualDescription
+struct FSoftMinersManualDescription
 {
     FText Headline;
     FText RichDescription;
@@ -22576,7 +22576,7 @@ struct USoftMinersManualDescription
     TSoftObjectPtr<UTexture2D> ImageBackground;
 }
 
-struct UDamageTypeDescription
+struct FDamageTypeDescription
 {
     EDamageType Type;
     FText Name;
@@ -22585,13 +22585,13 @@ struct UDamageTypeDescription
     float IconScale;
 }
 
-struct USoftIconWithColor
+struct FSoftIconWithColor
 {
     TSoftObjectPtr<UTexture2D> Icon;
     FLinearColor Tint;
 }
 
-struct UMiningPodDialogs
+struct FMiningPodDialogs
 {
     UDialogDataAsset* DepartingIn5Min;
     UDialogDataAsset* DepartingIn4Min;
@@ -22605,12 +22605,12 @@ struct UMiningPodDialogs
     UDialogDataAsset* DeepDiveDeparted;
 }
 
-struct UGeneratedMissionGroup
+struct FGeneratedMissionGroup
 {
     TArray<UGeneratedMission*> AvailableMissions;
 }
 
-struct URewardTexts
+struct FRewardTexts
 {
     FText PrimaryObjective;
     FText SecondaryObjective;
@@ -22620,13 +22620,13 @@ struct URewardTexts
     FText HostilesKilled;
 }
 
-struct UMissionHazardSetting
+struct FMissionHazardSetting
 {
     FText Name;
     float HazardBonus;
 }
 
-struct UGDMissionStats
+struct FGDMissionStats
 {
     UMissionStat* TimePlayed;
     UMissionStat* DistanceTravelled;
@@ -22663,40 +22663,40 @@ struct UGDMissionStats
     TMap<UPlayerCharacterID*, UMissionStat*> CharacterMissionsCompleted;
 }
 
-struct UPlanetZoneItem
+struct FPlanetZoneItem
 {
     TArray<UBiome*> Biomes;
     TArray<UGeneratedMission*> missions;
     UPlanetZone* Zone;
 }
 
-struct UMissionBiomeItem
+struct FMissionBiomeItem
 {
     UBiome* Biome;
     float Rarity;
 }
 
-struct UMissionTemplateItem
+struct FMissionTemplateItem
 {
     UMissionTemplate* Template;
     float Rarity;
 }
 
-struct URequiredMissionItem
+struct FRequiredMissionItem
 {
     UMissionTemplate* MissionTemplate;
     UMissionComplexity* Complexity;
     UMissionDuration* Duration;
 }
 
-struct UMultiHitScanHits
+struct FMultiHitScanHits
 {
     TArray<FMultiHitscanHit> Hits;
     TArray<UPrimitiveComponent*> Components;
     TArray<UFSDPhysicalMaterial*> PhysicalMaterials;
 }
 
-struct UMultiHitscanHit
+struct FMultiHitscanHit
 {
     uint8 TargetComponentIndex;
     uint8 PhysicalMaterialIndex;
@@ -22707,7 +22707,7 @@ struct UMultiHitscanHit
     bool SpawnDecal;
 }
 
-struct UProjectileSpawnData
+struct FProjectileSpawnData
 {
     TSubclassOf<AProjectile> projectileClass;
     FFloatInterval HorizontalAngleOffset;
@@ -22716,13 +22716,13 @@ struct UProjectileSpawnData
     bool IsBallistic;
 }
 
-struct UActiveAudioItem
+struct FActiveAudioItem
 {
     UAudioComponent* Audio;
     float FadeoutDuration;
 }
 
-struct UActiveMusicItem
+struct FActiveMusicItem
 {
     USoundBase* Sound;
     float StartingTime;
@@ -22732,26 +22732,26 @@ struct UActiveMusicItem
     UMusicCategory* Category;
 }
 
-struct UMusicHandle
+struct FMusicHandle
 {
     int32 MusicHandle;
 }
 
-struct UPathCell
+struct FPathCell
 {
 }
 
-struct UPathDebugNode
+struct FPathDebugNode
 {
 }
 
-struct UOxygenCallback
+struct FOxygenCallback
 {
     FOxygenCallbackDelegate Delegate;
     void OxygenTriggerDelegate();
 }
 
-struct USimpleObjectInfoData
+struct FSimpleObjectInfoData
 {
     FText InGameName;
     FText InGameDescription;
@@ -22759,42 +22759,42 @@ struct USimpleObjectInfoData
     UTexture2D* Icon;
 }
 
-struct UPawnStatEntriesArray : FFastArraySerializer
+struct FPawnStatEntriesArray : FFastArraySerializer
 {
     TArray<FPawnStatEntry> Items;
     UPawnStatsComponent* Owner;
 }
 
-struct UPawnStatEntry : FFastArraySerializerItem
+struct FPawnStatEntry : FFastArraySerializerItem
 {
     UPawnStat* PawnStat;
     float Value;
 }
 
-struct UPerkUsage
+struct FPerkUsage
 {
     UPerkAsset* Perk;
     int32 UsedCount;
 }
 
-struct UPickaxeMeshInstance
+struct FPickaxeMeshInstance
 {
     UMeshComponent* FP_Mesh;
     UMeshComponent* TP_Mesh;
 }
 
-struct UDefaultPickaxeParts
+struct FDefaultPickaxeParts
 {
     TMap<EPickaxePartLocation, UPickaxePart*> Parts;
 }
 
-struct UPillarSegment
+struct FPillarSegment
 {
     float Scale;
     float HeightOffset;
 }
 
-struct UHealthRegenerationParams
+struct FHealthRegenerationParams
 {
     bool bIsRegenerating;
     float DelayAfterDamage;
@@ -22802,72 +22802,72 @@ struct UHealthRegenerationParams
     float TargetHealthRatio;
 }
 
-struct UPlayerSphere
+struct FPlayerSphere
 {
     FVector Center;
     float Radius;
     TArray<TWeakObjectPtr<APlayerCharacter>> Players;
 }
 
-struct UProximityTriggerItem
+struct FProximityTriggerItem
 {
     FProximityTriggerItemCallback Callback;
     void PlayerProximityDelegate(UPlayerCharacter* Player, bool enteredTrigger);
 }
 
-struct URejoinFloat
+struct FRejoinFloat
 {
     FGuid ItemKey;
     FName ValueKey;
     float Value;
 }
 
-struct URejoinInt
+struct FRejoinInt
 {
     FGuid ItemKey;
     FName ValueKey;
     int32 Value;
 }
 
-struct UDeepDiveTesterItem
+struct FDeepDiveTesterItem
 {
     UMissionTemplate* mission;
     UMissionMutator* Mutator;
     UMissionWarning* Warning;
 }
 
-struct UPostDataModel
+struct FPostDataModel
 {
 }
 
-struct UPostProcessingBlendable
+struct FPostProcessingBlendable
 {
     TScriptInterface<IBlendableInterface> Blendable;
 }
 
-struct UInfluenceMap
+struct FInfluenceMap
 {
     TMap<UObject*, FCaveInfluenceSet> CaveInfluences;
 }
 
-struct UCaveInfluenceSet
+struct FCaveInfluenceSet
 {
     TArray<FCaveInfluence> CaveInfluences;
 }
 
-struct UCaveInfluence
+struct FCaveInfluence
 {
     FVector Center;
     float range;
 }
 
-struct UGemResourceAmount
+struct FGemResourceAmount
 {
     UGemResourceCreator* GemCreator;
     int32 Amount;
 }
 
-struct UCarvedResource
+struct FCarvedResource
 {
     UCarvedResourceCreator* ResourceCreator;
     TArray<int32> PredeterminedRooms;
@@ -22875,38 +22875,38 @@ struct UCarvedResource
     float Overflow;
 }
 
-struct UDebrisPatchResource
+struct FDebrisPatchResource
 {
     UDebrisPatchComponent* Debris;
 }
 
-struct UDebrisVeinResource
+struct FDebrisVeinResource
 {
     UDebrisVeinComponent* Debris;
 }
 
-struct UVeinResource
+struct FVeinResource
 {
     UVeinResourceCreator* ResourceCreator;
     float VeinLengthToGenerate;
 }
 
-struct UGeneratedInstantCarvers
+struct FGeneratedInstantCarvers
 {
     TArray<FLevelCarverPass> LevelCarverPasses;
 }
 
-struct ULevelCarverPass
+struct FLevelCarverPass
 {
     TArray<FLevelGenerationCarverLists> Lists;
 }
 
-struct ULevelGenerationCarverLists
+struct FLevelGenerationCarverLists
 {
     TArray<FLevelGenerationCarver> Carvers;
 }
 
-struct UTerrainPlacementDebugItem
+struct FTerrainPlacementDebugItem
 {
     TArray<FTerrainPlacementBox> TerrainCheckers;
     bool BoxGood;
@@ -22916,81 +22916,81 @@ struct UTerrainPlacementDebugItem
     FTransform Transform;
 }
 
-struct UTerrainPlacementBox
+struct FTerrainPlacementBox
 {
     FVector Min;
     FVector Max;
     ETerrainPlacementBoxType PlacementType;
 }
 
-struct UGeneratedDebris
+struct FGeneratedDebris
 {
     TMap<UDebrisBase*, UObject*> Debris;
     bool IsValid;
 }
 
-struct UGeneratedDebrisItem
+struct FGeneratedDebrisItem
 {
     UDebrisBase* Debris;
     UObject* Influencer;
 }
 
-struct UGeneratedInfluenceSets
+struct FGeneratedInfluenceSets
 {
     TArray<FGeneratedInfluenceSet> InfluenceSets;
     bool IsValid;
 }
 
-struct UGeneratedInfluenceSet
+struct FGeneratedInfluenceSet
 {
     UObject* CaveInfluencer;
     int32 NetworkID;
     TArray<FCaveInfluence> CaveInfluences;
 }
 
-struct UCollectableSpawnableItem
+struct FCollectableSpawnableItem
 {
     UCollectableResourceData* Resource;
     int32 Amount;
 }
 
-struct UResourceSpawner
+struct FResourceSpawner
 {
     UResourceData* Resource;
     FRandFloatInterval AmountToSpawn;
 }
 
-struct UPLSResource
+struct FPLSResource
 {
     UResourceData* Resource;
     float AmountToGenerate;
 }
 
-struct UTunnelPath
+struct FTunnelPath
 {
     TArray<FVector> Path;
 }
 
-struct UInfluenceSphere
+struct FInfluenceSphere
 {
     UCaveInfluencer* Influencer;
     float Radius;
 }
 
-struct UProfileCategoryTiming
+struct FProfileCategoryTiming
 {
     FString CategoryName;
     float CategoryTime;
 }
 
-struct UProfileEntry
+struct FProfileEntry
 {
     TWeakObjectPtr<UObject> Context;
     FString Category;
     float TimeSpent;
 }
 
-struct UDormantComponentState
+struct FDormantComponentState
 {
     TWeakObjectPtr<UActorComponent> Component;
     TEnumAsByte<ECollisionEnabled::Type> Collision;
@@ -22999,31 +22999,31 @@ struct UDormantComponentState
     uint8 Visible;
 }
 
-struct UProjectileSwitch
+struct FProjectileSwitch
 {
     TSubclassOf<AProjectileBase> projectileClass;
     EProjectileSwitchCriteria CriteriaType;
     float CriteriaThreshhold;
 }
 
-struct UPromotionRewardsRank
+struct FPromotionRewardsRank
 {
     TArray<FClaimableRewardEntry> RewardsAllClasses;
     TMap<UPlayerCharacterID*, FClaimableRewardArray> RewardsCharacterSpecific;
 }
 
-struct URagdollItem
+struct FRagdollItem
 {
     AActor* Actor;
     TArray<UMaterialInstanceDynamic*> Materials;
     UMaterialInstanceDynamic* DropshadowMaterial;
 }
 
-struct UExposedProperty
+struct FExposedProperty
 {
 }
 
-struct UExposedFloat : FExposedProperty
+struct FExposedFloat : FExposedProperty
 {
     FName PropertyName;
     FText Description;
@@ -23031,7 +23031,7 @@ struct UExposedFloat : FExposedProperty
     float MaxValue;
 }
 
-struct UExposableFloat
+struct FExposableFloat
 {
     float Value;
     bool Exposed;
@@ -23040,25 +23040,25 @@ struct UExposableFloat
     float MaxValue;
 }
 
-struct URecoilImpulse
+struct FRecoilImpulse
 {
     float Rotation;
     FVector2D Impulse;
 }
 
-struct UResourceInitalizer
+struct FResourceInitalizer
 {
     UResourceData* Resource;
     float MaxAmount;
 }
 
-struct UResourceDebris
+struct FResourceDebris
 {
     float InfluencerRange;
     UDebrisBase* Debris;
 }
 
-struct URichTextParseResult
+struct FRichTextParseResult
 {
     FText SourceText;
     FString UnformattedString;
@@ -23066,13 +23066,13 @@ struct URichTextParseResult
     TArray<FRichTextToken> Tokens;
 }
 
-struct URichTextToken
+struct FRichTextToken
 {
     FString Tag;
     FString Text;
 }
 
-struct UTextStyleOverride
+struct FTextStyleOverride
 {
     bool bOverrideFont;
     FSlateFontInfo Font;
@@ -23082,16 +23082,16 @@ struct UTextStyleOverride
     float SizeScale;
 }
 
-struct URoomGeneratorGroupInstance
+struct FRoomGeneratorGroupInstance
 {
     TArray<URoomGenerator*> Rooms;
 }
 
-struct URoomNodeBase
+struct FRoomNodeBase
 {
 }
 
-struct URoomNode : FRoomNodeBase
+struct FRoomNode : FRoomNodeBase
 {
     int32 ID;
     ERoomType RoomType;
@@ -23108,14 +23108,14 @@ struct URoomNode : FRoomNodeBase
     TArray<FRoomGeneratorItem> RoomGenerators;
 }
 
-struct URoomGeneratorItem
+struct FRoomGeneratorItem
 {
     URoomGeneratorBase* RoomGenerator;
     FVector Position;
     float Rotation;
 }
 
-struct UGeneratedRoom
+struct FGeneratedRoom
 {
     UTerrainMaterial* Material;
     TArray<FRoomLine> Lines;
@@ -23128,25 +23128,25 @@ struct UGeneratedRoom
     TArray<FTriggerItem> TriggerItems;
 }
 
-struct UTriggerItem
+struct FTriggerItem
 {
     TSubclassOf<ASpawnTrigger> TriggerClass;
     FTransform Transform;
     FName Message;
 }
 
-struct URoomItem
+struct FRoomItem
 {
     TSubclassOf<AActor> Spawnable;
     FVector Location;
     FRotator_NoQuantize Rotation;
 }
 
-struct URotator_NoQuantize : FRotator
+struct FRotator_NoQuantize : FRotator
 {
 }
 
-struct URoomEntrance
+struct FRoomEntrance
 {
     FVector Location;
     FVector Direction;
@@ -23156,14 +23156,14 @@ struct URoomEntrance
     int32 PathObstacleID;
 }
 
-struct UResourceLocation
+struct FResourceLocation
 {
     FVector Location;
     UResourceData* Resource;
     float BaseAmount;
 }
 
-struct URoomBox
+struct FRoomBox
 {
     FVector Position;
     FRotator_NoQuantize Rotation;
@@ -23172,7 +23172,7 @@ struct URoomBox
     UFloodFillSettings* Noise;
 }
 
-struct UPillar
+struct FPillar
 {
     UFloodFillSettings* NoiseOverride;
     TArray<FWeightedLinePoint> Points;
@@ -23180,7 +23180,7 @@ struct UPillar
     float EndcapScale;
 }
 
-struct UWeightedLinePoint
+struct FWeightedLinePoint
 {
     FVector Location;
     float range;
@@ -23189,7 +23189,7 @@ struct UWeightedLinePoint
     float FillAmount;
 }
 
-struct URoomLine
+struct FRoomLine
 {
     UFloodFillSettings* WallNoiseOverride;
     UFloodFillSettings* CeilingNoiseOverride;
@@ -23199,7 +23199,7 @@ struct URoomLine
     TArray<FVector> RightVectors;
 }
 
-struct URoomLinePoint
+struct FRoomLinePoint
 {
     FVector Location;
     float HRange;
@@ -23213,7 +23213,7 @@ struct URoomLinePoint
     float FloorAngle;
 }
 
-struct UTunnelNode : FRoomNodeBase
+struct FTunnelNode : FRoomNodeBase
 {
     int32 EntranceRoomID;
     int32 ExitRoomID;
@@ -23227,7 +23227,7 @@ struct UTunnelNode : FRoomNodeBase
     float WeightedResourceAmount;
 }
 
-struct URandLinePoint
+struct FRandLinePoint
 {
     FVector Location;
     FRandRange range;
@@ -23236,7 +23236,7 @@ struct URandLinePoint
     FRandRange FillAmount;
 }
 
-struct USaveGameSnapShot
+struct FSaveGameSnapShot
 {
     TWeakObjectPtr<UFSDSaveGame> SaveGame;
     FString Filename;
@@ -23247,20 +23247,20 @@ struct USaveGameSnapShot
     TMap<TSubclassOf<UResourceData>, int32> Resources;
 }
 
-struct USchematicGADataEntry : FTableRowBase
+struct FSchematicGADataEntry : FTableRowBase
 {
     int32 SchematicGAID;
     FString SchematicName;
 }
 
-struct USchematicBankItem
+struct FSchematicBankItem
 {
     USchematicPricingTier* PricingTier;
     USchematicRarity* Rarity;
     TArray<USchematic*> Schematics;
 }
 
-struct USchematicType
+struct FSchematicType
 {
     TSoftObjectPtr<UTexture2D> Icon;
     FLinearColor IconTint;
@@ -23268,19 +23268,19 @@ struct USchematicType
     FLinearColor FrameTint;
 }
 
-struct UUnassignedReward
+struct FUnassignedReward
 {
     UReward* Reward;
     int32 Index;
 }
 
-struct USeasonLevel
+struct FSeasonLevel
 {
     UReward* Reward;
     UReward* specialReward;
 }
 
-struct UTrackedStatInfo
+struct FTrackedStatInfo
 {
     UMissionStat* Stat;
     FText Name;
@@ -23288,7 +23288,7 @@ struct UTrackedStatInfo
     UDataAsset* assetReference;
 }
 
-struct UChallengeInfo
+struct FChallengeInfo
 {
     FText Text;
     UTexture2D* Icon;
@@ -23303,20 +23303,20 @@ struct UChallengeInfo
     bool bIsSpecial;
 }
 
-struct UChallengeVariation
+struct FChallengeVariation
 {
     int32 NumberOfWins;
     int32 XPCompleteGain;
     int32 TokenGain;
 }
 
-struct USeasonalEventEntry
+struct FSeasonalEventEntry
 {
     USpecialEvent* SpecialEvent;
     TArray<UMissionTemplate*> BannedMissions;
 }
 
-struct USeasonMissionResult
+struct FSeasonMissionResult
 {
     int32 XPFromMission;
     int32 XPFromChallenges;
@@ -23326,18 +23326,18 @@ struct USeasonMissionResult
     TArray<FSeasonEvent> CompletedEvents;
 }
 
-struct USeasonEvent
+struct FSeasonEvent
 {
     USeasonEventData* Event;
     int32 count;
 }
 
-struct UFSDServerListResponse
+struct FFSDServerListResponse
 {
     TArray<FFSDServerListEntryModel> Lobbies;
 }
 
-struct UFSDServerListEntryModel
+struct FFSDServerListEntryModel
 {
     FString ID;
     FString DRG_SERVERNAME;
@@ -23363,14 +23363,14 @@ struct UFSDServerListEntryModel
     TArray<FFSDServerListEntryModModel> Mods;
 }
 
-struct UFSDServerListEntryModModel
+struct FFSDServerListEntryModModel
 {
     FString Name;
     int32 Category;
     FString Version;
 }
 
-struct UFSDServerListRequest
+struct FFSDServerListRequest
 {
     FString AuthenticationTicket;
     FString IgnoreId;
@@ -23385,14 +23385,14 @@ struct UFSDServerListRequest
     bool DeepDive;
 }
 
-struct UFSDSteamServerListRequest : FFSDServerListRequest
+struct FFSDSteamServerListRequest : FFSDServerListRequest
 {
     FString SteamTicket;
     FString SteamPingLoc;
     TArray<int32> GameTypes;
 }
 
-struct UFriendInfo
+struct FFriendInfo
 {
     FString DisplayName;
     FString RealName;
@@ -23405,7 +23405,7 @@ struct UFriendInfo
     FString PresenceStatus;
 }
 
-struct ULookupSessionResponse
+struct FLookupSessionResponse
 {
     bool Valid;
     FString LobbyId;
@@ -23413,38 +23413,38 @@ struct ULookupSessionResponse
     int32 P2PPORT;
 }
 
-struct ULookupSessionRequest
+struct FLookupSessionRequest
 {
     FString SessionKey;
 }
 
-struct UStopSessionResponse
+struct FStopSessionResponse
 {
     bool success;
 }
 
-struct UStopSessionRequest
+struct FStopSessionRequest
 {
     FString SessionKey;
 }
 
-struct USessionUpdateResponse
+struct FSessionUpdateResponse
 {
     bool success;
 }
 
-struct USessionUpdateRequest
+struct FSessionUpdateRequest
 {
     FString SessionKey;
     int32 NumPlayers;
 }
 
-struct URegisterSessionResponse
+struct FRegisterSessionResponse
 {
     FString SessionKey;
 }
 
-struct URegisterSessionRequest
+struct FRegisterSessionRequest
 {
     FString serverName;
     int32 NumPlayers;
@@ -23453,20 +23453,20 @@ struct URegisterSessionRequest
     int32 P2PPORT;
 }
 
-struct USoundClassManagerItem
+struct FSoundClassManagerItem
 {
 }
 
-struct USoundMixManagerItem
+struct FSoundMixManagerItem
 {
     USoundMix* mix;
 }
 
-struct USpiderAnimInstanceProxy : FAnimInstanceProxy
+struct FSpiderAnimInstanceProxy : FAnimInstanceProxy
 {
 }
 
-struct URandomWalkCycleEntry
+struct FRandomWalkCycleEntry
 {
     float RandomSelectionWeight;
     FRandRange Duration;
@@ -23474,34 +23474,34 @@ struct URandomWalkCycleEntry
     float LastTimePlayed;
 }
 
-struct UActiveStatusEffectBank
+struct FActiveStatusEffectBank
 {
     UStatusEffect* Key;
     UStatusEffect* ActiveEffect;
     TArray<FActiveStatusEffect> Effects;
 }
 
-struct UActiveStatusEffect
+struct FActiveStatusEffect
 {
     TWeakObjectPtr<AActor> Owner;
 }
 
-struct UHeatSource
+struct FHeatSource
 {
     float Temperature;
     int32 Intensity;
 }
 
-struct UTentacleAnimInstanceProxy : FAnimInstanceProxy
+struct FTentacleAnimInstanceProxy : FAnimInstanceProxy
 {
 }
 
-struct UAnimNode_Tentacle : FAnimNode_SkeletalControlBase
+struct FAnimNode_Tentacle : FAnimNode_SkeletalControlBase
 {
     TArray<FBoneReference> BonesToModify;
 }
 
-struct UTentacleTarget
+struct FTentacleTarget
 {
     FVector_NetQuantize Location;
     FRotator Rotation;
@@ -23509,18 +23509,18 @@ struct UTentacleTarget
     bool UseSpring;
 }
 
-struct UTetherMessageSettings
+struct FTetherMessageSettings
 {
 }
 
-struct UTrackMovement
+struct FTrackMovement
 {
     int32 Direction;
     float Distance;
     float Speed;
 }
 
-struct UPipelineMovementData
+struct FPipelineMovementData
 {
     int32 Direction;
     float Distance;
@@ -23530,13 +23530,13 @@ struct UPipelineMovementData
     TWeakObjectPtr<APipelineSegment> PipelineSegment;
 }
 
-struct UTreasureWeight
+struct FTreasureWeight
 {
     float Weight;
     TSubclassOf<UTreasureRewarder> RewarderClass;
 }
 
-struct UVanityNode
+struct FVanityNode
 {
     UReward* Reward;
     int32 NodeID;
@@ -23546,13 +23546,13 @@ struct UVanityNode
     FVector2D Position;
 }
 
-struct UTunnelSettingItem
+struct FTunnelSettingItem
 {
     UTunnelSegmentSetting* SegmentSetting;
     FInt32Interval SegmentSize;
 }
 
-struct UTutorialHint
+struct FTutorialHint
 {
     FText Text;
     FText TaskText;
@@ -23560,82 +23560,82 @@ struct UTutorialHint
     TSoftObjectPtr<UTexture2D> Image;
 }
 
-struct UHeightenedSenseTracker
+struct FHeightenedSenseTracker
 {
     TWeakObjectPtr<AActor> Actor;
     TWeakObjectPtr<UHealthComponentBase> HealthComponent;
     TScriptInterface<IAttackingPointInterface> AttackingPoint;
 }
 
-struct UMasteryItem
+struct FMasteryItem
 {
     int32 NeededMastery;
     TArray<UUnlockReward*> Unlocks;
 }
 
-struct UUpgradeTier
+struct FUpgradeTier
 {
     TArray<UItemUpgrade*> upgrades;
     int32 RequiredCharacterLevel;
     int32 RequiredPlayerRank;
 }
 
-struct UVanityTestCharacterItem
+struct FVanityTestCharacterItem
 {
     USkeletalMesh* Mesh;
     TSubclassOf<UVanityAnimInstance> AnimBP;
 }
 
-struct UTattooArmorItem
+struct FTattooArmorItem
 {
     UVanityTattoo* Tattoo;
     bool IsLeftArm;
     bool FlipTexture;
 }
 
-struct UWeakpointChannel
+struct FWeakpointChannel
 {
     UFSDPhysicalMaterial* WeakPointMaterial;
     FName Bone;
     UMaterialInstanceDynamic* Mid;
 }
 
-struct UWeakpointTask
+struct FWeakpointTask
 {
     FRichCurve GrowCurve;
     FRichCurve FadeCurve;
 }
 
-struct UWeaponHitCounterEffectItem
+struct FWeaponHitCounterEffectItem
 {
     TWeakObjectPtr<AActor> Target;
 }
 
-struct UWeightedRoomSelector
+struct FWeightedRoomSelector
 {
     TArray<FWeightedRoomSelectorItem> Items;
 }
 
-struct UWeightedRoomSelectorItem
+struct FWeightedRoomSelectorItem
 {
     URoomGenerator* Room;
     float Weight;
 }
 
-struct UXPSettings
+struct FXPSettings
 {
     float XP_PerGold;
     float XP_PerKill;
     float XP_OnSurvivedLevel;
 }
 
-struct UZipLineConnectorHandler
+struct FZipLineConnectorHandler
 {
     TSoftClassPtr<AZipLineConnector> ConnectorClass;
     AZipLineConnector* Connector;
 }
 
-struct UZipLine
+struct FZipLine
 {
     FVector Start;
     FVector End;

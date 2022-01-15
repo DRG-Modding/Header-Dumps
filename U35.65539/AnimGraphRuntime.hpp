@@ -56,7 +56,7 @@ class USequencerAnimationSupport : UInterface
 {
 }
 
-struct UAnimNode_SkeletalControlBase : FAnimNode_Base
+struct FAnimNode_SkeletalControlBase : FAnimNode_Base
 {
     FComponentSpacePoseLink ComponentPose;
     int32 LODThreshold;
@@ -70,7 +70,7 @@ struct UAnimNode_SkeletalControlBase : FAnimNode_Base
     FInputScaleBiasClamp AlphaScaleBiasClamp;
 }
 
-struct UAnimNode_BlendSpacePlayer : FAnimNode_AssetPlayerBase
+struct FAnimNode_BlendSpacePlayer : FAnimNode_AssetPlayerBase
 {
     float X;
     float Y;
@@ -83,7 +83,7 @@ struct UAnimNode_BlendSpacePlayer : FAnimNode_AssetPlayerBase
     UBlendSpaceBase* PreviousBlendSpace;
 }
 
-struct UAnimNode_AimOffsetLookAt : FAnimNode_BlendSpacePlayer
+struct FAnimNode_AimOffsetLookAt : FAnimNode_BlendSpacePlayer
 {
     FPoseLink BasePose;
     int32 LODThreshold;
@@ -94,7 +94,7 @@ struct UAnimNode_AimOffsetLookAt : FAnimNode_BlendSpacePlayer
     float alpha;
 }
 
-struct UAnimNode_AnimDynamics : FAnimNode_SkeletalControlBase
+struct FAnimNode_AnimDynamics : FAnimNode_SkeletalControlBase
 {
     float LinearDampingOverride;
     float AngularDampingOverride;
@@ -136,7 +136,7 @@ struct UAnimNode_AnimDynamics : FAnimNode_SkeletalControlBase
     FRotationRetargetingInfo RetargetingSettings;
 }
 
-struct URotationRetargetingInfo
+struct FRotationRetargetingInfo
 {
     bool bEnabled;
     FTransform Source;
@@ -155,13 +155,13 @@ struct URotationRetargetingInfo
     bool bClamp;
 }
 
-struct UAnimPhysPlanarLimit
+struct FAnimPhysPlanarLimit
 {
     FBoneReference DrivingBone;
     FTransform PlaneTransform;
 }
 
-struct UAnimPhysSphericalLimit
+struct FAnimPhysSphericalLimit
 {
     FBoneReference DrivingBone;
     FVector SphereLocalOffset;
@@ -169,7 +169,7 @@ struct UAnimPhysSphericalLimit
     ESphericalLimitType LimitType;
 }
 
-struct UAnimPhysConstraintSetup
+struct FAnimPhysConstraintSetup
 {
     AnimPhysLinearConstraintType LinearXLimitType;
     AnimPhysLinearConstraintType LinearYLimitType;
@@ -185,7 +185,7 @@ struct UAnimPhysConstraintSetup
     FVector AngularTarget;
 }
 
-struct UAnimNode_ApplyAdditive : FAnimNode_Base
+struct FAnimNode_ApplyAdditive : FAnimNode_Base
 {
     FPoseLink Base;
     FPoseLink Additive;
@@ -199,20 +199,20 @@ struct UAnimNode_ApplyAdditive : FAnimNode_Base
     bool bAlphaBoolEnabled;
 }
 
-struct UAnimNode_ApplyLimits : FAnimNode_SkeletalControlBase
+struct FAnimNode_ApplyLimits : FAnimNode_SkeletalControlBase
 {
     TArray<FAngularRangeLimit> AngularRangeLimits;
     TArray<FVector> AngularOffsets;
 }
 
-struct UAngularRangeLimit
+struct FAngularRangeLimit
 {
     FVector LimitMin;
     FVector LimitMax;
     FBoneReference Bone;
 }
 
-struct UAnimNode_BlendBoneByChannel : FAnimNode_Base
+struct FAnimNode_BlendBoneByChannel : FAnimNode_Base
 {
     FPoseLink A;
     FPoseLink B;
@@ -222,7 +222,7 @@ struct UAnimNode_BlendBoneByChannel : FAnimNode_Base
     TEnumAsByte<EBoneControlSpace> TransformsSpace;
 }
 
-struct UBlendBoneByChannelEntry
+struct FBlendBoneByChannelEntry
 {
     FBoneReference SourceBone;
     FBoneReference TargetBone;
@@ -231,7 +231,7 @@ struct UBlendBoneByChannelEntry
     bool bBlendScale;
 }
 
-struct UAnimNode_BlendListBase : FAnimNode_Base
+struct FAnimNode_BlendListBase : FAnimNode_Base
 {
     TArray<FPoseLink> BlendPose;
     TArray<float> BlendTime;
@@ -242,28 +242,28 @@ struct UAnimNode_BlendListBase : FAnimNode_Base
     UBlendProfile* BlendProfile;
 }
 
-struct UAnimNode_BlendListByBool : FAnimNode_BlendListBase
+struct FAnimNode_BlendListByBool : FAnimNode_BlendListBase
 {
     bool bActiveValue;
 }
 
-struct UAnimNode_BlendListByEnum : FAnimNode_BlendListBase
+struct FAnimNode_BlendListByEnum : FAnimNode_BlendListBase
 {
     TArray<int32> EnumToPoseIndex;
     uint8 ActiveEnumValue;
 }
 
-struct UAnimNode_BlendListByInt : FAnimNode_BlendListBase
+struct FAnimNode_BlendListByInt : FAnimNode_BlendListBase
 {
     int32 ActiveChildIndex;
 }
 
-struct UAnimNode_BlendSpaceEvaluator : FAnimNode_BlendSpacePlayer
+struct FAnimNode_BlendSpaceEvaluator : FAnimNode_BlendSpacePlayer
 {
     float NormalizedTime;
 }
 
-struct UAnimNode_BoneDrivenController : FAnimNode_SkeletalControlBase
+struct FAnimNode_BoneDrivenController : FAnimNode_SkeletalControlBase
 {
     FBoneReference SourceBone;
     UCurveFloat* DrivingCurve;
@@ -289,7 +289,7 @@ struct UAnimNode_BoneDrivenController : FAnimNode_SkeletalControlBase
     uint8 bAffectTargetScaleZ;
 }
 
-struct UAnimNode_CCDIK : FAnimNode_SkeletalControlBase
+struct FAnimNode_CCDIK : FAnimNode_SkeletalControlBase
 {
     FVector EffectorLocation;
     TEnumAsByte<EBoneControlSpace> EffectorLocationSpace;
@@ -303,26 +303,26 @@ struct UAnimNode_CCDIK : FAnimNode_SkeletalControlBase
     TArray<float> RotationLimitPerJoints;
 }
 
-struct UBoneSocketTarget
+struct FBoneSocketTarget
 {
     bool bUseSocket;
     FBoneReference BoneReference;
     FSocketReference SocketReference;
 }
 
-struct USocketReference
+struct FSocketReference
 {
     FName SocketName;
 }
 
-struct UAnimNode_Constraint : FAnimNode_SkeletalControlBase
+struct FAnimNode_Constraint : FAnimNode_SkeletalControlBase
 {
     FBoneReference BoneToModify;
     TArray<FConstraint> ConstraintSetup;
     TArray<float> ConstraintWeights;
 }
 
-struct UConstraint
+struct FConstraint
 {
     FBoneReference TargetBone;
     EConstraintOffsetOption OffsetOption;
@@ -330,7 +330,7 @@ struct UConstraint
     FFilterOptionPerAxis PerAxis;
 }
 
-struct UAnimNode_CopyBone : FAnimNode_SkeletalControlBase
+struct FAnimNode_CopyBone : FAnimNode_SkeletalControlBase
 {
     FBoneReference SourceBone;
     FBoneReference TargetBone;
@@ -340,7 +340,7 @@ struct UAnimNode_CopyBone : FAnimNode_SkeletalControlBase
     TEnumAsByte<EBoneControlSpace> ControlSpace;
 }
 
-struct UAnimNode_CopyBoneDelta : FAnimNode_SkeletalControlBase
+struct FAnimNode_CopyBoneDelta : FAnimNode_SkeletalControlBase
 {
     FBoneReference SourceBone;
     FBoneReference TargetBone;
@@ -353,14 +353,14 @@ struct UAnimNode_CopyBoneDelta : FAnimNode_SkeletalControlBase
     float ScaleMultiplier;
 }
 
-struct UAnimNode_CopyPoseFromMesh : FAnimNode_Base
+struct FAnimNode_CopyPoseFromMesh : FAnimNode_Base
 {
     TWeakObjectPtr<USkeletalMeshComponent> SourceMeshComponent;
     bool bUseAttachedParent;
     bool bCopyCurves;
 }
 
-struct UAnimNode_CurveSource : FAnimNode_Base
+struct FAnimNode_CurveSource : FAnimNode_Base
 {
     FPoseLink SourcePose;
     FName SourceBinding;
@@ -368,7 +368,7 @@ struct UAnimNode_CurveSource : FAnimNode_Base
     TScriptInterface<ICurveSourceInterface> CurveSource;
 }
 
-struct UAnimNode_Fabrik : FAnimNode_SkeletalControlBase
+struct FAnimNode_Fabrik : FAnimNode_SkeletalControlBase
 {
     FTransform EffectorTransform;
     FBoneSocketTarget EffectorTarget;
@@ -380,7 +380,7 @@ struct UAnimNode_Fabrik : FAnimNode_SkeletalControlBase
     TEnumAsByte<EBoneRotationSource> EffectorRotationSource;
 }
 
-struct UAnimNode_HandIKRetargeting : FAnimNode_SkeletalControlBase
+struct FAnimNode_HandIKRetargeting : FAnimNode_SkeletalControlBase
 {
     FBoneReference RightHandFK;
     FBoneReference LeftHandFK;
@@ -390,7 +390,7 @@ struct UAnimNode_HandIKRetargeting : FAnimNode_SkeletalControlBase
     float HandFKWeight;
 }
 
-struct UAnimNode_LayeredBoneBlend : FAnimNode_Base
+struct FAnimNode_LayeredBoneBlend : FAnimNode_Base
 {
     FPoseLink BasePose;
     TArray<FPoseLink> BlendPoses;
@@ -406,14 +406,14 @@ struct UAnimNode_LayeredBoneBlend : FAnimNode_Base
     FGuid VirtualBoneGuid;
 }
 
-struct UAnimNode_LegIK : FAnimNode_SkeletalControlBase
+struct FAnimNode_LegIK : FAnimNode_SkeletalControlBase
 {
     float ReachPrecision;
     int32 MaxIterations;
     TArray<FAnimLegIKDefinition> LegsDefinition;
 }
 
-struct UAnimLegIKDefinition
+struct FAnimLegIKDefinition
 {
     FBoneReference IKFootBone;
     FBoneReference FKFootBone;
@@ -425,19 +425,19 @@ struct UAnimLegIKDefinition
     bool bEnableKneeTwistCorrection;
 }
 
-struct UAnimLegIKData
+struct FAnimLegIKData
 {
 }
 
-struct UIKChain
+struct FIKChain
 {
 }
 
-struct UIKChainLink
+struct FIKChainLink
 {
 }
 
-struct UAnimNode_LookAt : FAnimNode_SkeletalControlBase
+struct FAnimNode_LookAt : FAnimNode_SkeletalControlBase
 {
     FBoneReference BoneToModify;
     FBoneSocketTarget LookAtTarget;
@@ -451,14 +451,14 @@ struct UAnimNode_LookAt : FAnimNode_SkeletalControlBase
     float InterpolationTriggerThreashold;
 }
 
-struct UAnimNode_MakeDynamicAdditive : FAnimNode_Base
+struct FAnimNode_MakeDynamicAdditive : FAnimNode_Base
 {
     FPoseLink Base;
     FPoseLink Additive;
     bool bMeshSpaceAdditive;
 }
 
-struct UAnimNode_ModifyBone : FAnimNode_SkeletalControlBase
+struct FAnimNode_ModifyBone : FAnimNode_SkeletalControlBase
 {
     FBoneReference BoneToModify;
     FVector Translation;
@@ -472,7 +472,7 @@ struct UAnimNode_ModifyBone : FAnimNode_SkeletalControlBase
     TEnumAsByte<EBoneControlSpace> ScaleSpace;
 }
 
-struct UAnimNode_ModifyCurve : FAnimNode_Base
+struct FAnimNode_ModifyCurve : FAnimNode_Base
 {
     FPoseLink SourcePose;
     TArray<float> CurveValues;
@@ -481,7 +481,7 @@ struct UAnimNode_ModifyCurve : FAnimNode_Base
     EModifyCurveApplyMode ApplyMode;
 }
 
-struct UAnimNode_MultiWayBlend : FAnimNode_Base
+struct FAnimNode_MultiWayBlend : FAnimNode_Base
 {
     TArray<FPoseLink> Poses;
     TArray<float> DesiredAlphas;
@@ -490,7 +490,7 @@ struct UAnimNode_MultiWayBlend : FAnimNode_Base
     bool bNormalizeAlpha;
 }
 
-struct UAnimNode_ObserveBone : FAnimNode_SkeletalControlBase
+struct FAnimNode_ObserveBone : FAnimNode_SkeletalControlBase
 {
     FBoneReference BoneToObserve;
     TEnumAsByte<EBoneControlSpace> DisplaySpace;
@@ -500,25 +500,25 @@ struct UAnimNode_ObserveBone : FAnimNode_SkeletalControlBase
     FVector Scale;
 }
 
-struct UAnimNode_PoseHandler : FAnimNode_AssetPlayerBase
+struct FAnimNode_PoseHandler : FAnimNode_AssetPlayerBase
 {
     UPoseAsset* PoseAsset;
 }
 
-struct UAnimNode_PoseBlendNode : FAnimNode_PoseHandler
+struct FAnimNode_PoseBlendNode : FAnimNode_PoseHandler
 {
     FPoseLink SourcePose;
     EAlphaBlendOption BlendOption;
     UCurveFloat* CustomCurve;
 }
 
-struct UAnimNode_PoseByName : FAnimNode_PoseHandler
+struct FAnimNode_PoseByName : FAnimNode_PoseHandler
 {
     FName PoseName;
     float PoseWeight;
 }
 
-struct UAnimNode_PoseDriver : FAnimNode_PoseHandler
+struct FAnimNode_PoseDriver : FAnimNode_PoseHandler
 {
     FPoseLink SourcePose;
     TArray<FBoneReference> SourceBones;
@@ -531,7 +531,7 @@ struct UAnimNode_PoseDriver : FAnimNode_PoseHandler
     uint8 bOnlyDriveSelectedBones;
 }
 
-struct URBFParams
+struct FRBFParams
 {
     int32 TargetDimensions;
     ERBFSolverType SolverType;
@@ -546,7 +546,7 @@ struct URBFParams
     float MedianMax;
 }
 
-struct UPoseDriverTarget
+struct FPoseDriverTarget
 {
     TArray<FPoseDriverTransform> BoneTransforms;
     FRotator TargetRotation;
@@ -559,26 +559,26 @@ struct UPoseDriverTarget
     bool bIsHidden;
 }
 
-struct UPoseDriverTransform
+struct FPoseDriverTransform
 {
     FVector TargetTranslation;
     FRotator TargetRotation;
 }
 
-struct UAnimNode_PoseSnapshot : FAnimNode_Base
+struct FAnimNode_PoseSnapshot : FAnimNode_Base
 {
     FName SnapshotName;
     FPoseSnapshot Snapshot;
     ESnapshotSourceMode Mode;
 }
 
-struct UAnimNode_RandomPlayer : FAnimNode_Base
+struct FAnimNode_RandomPlayer : FAnimNode_Base
 {
     TArray<FRandomPlayerSequenceEntry> Entries;
     bool bShuffleMode;
 }
 
-struct URandomPlayerSequenceEntry
+struct FRandomPlayerSequenceEntry
 {
     UAnimSequence* Sequence;
     float ChanceToPlay;
@@ -589,41 +589,20 @@ struct URandomPlayerSequenceEntry
     FAlphaBlend BlendIn;
 }
 
-struct UAnimNode_MeshSpaceRefPose : FAnimNode_Base
+struct FAnimNode_MeshSpaceRefPose : FAnimNode_Base
 {
 }
 
-struct UAnimNode_RefPose : FAnimNode_Base
+struct FAnimNode_RefPose : FAnimNode_Base
 {
     TEnumAsByte<ERefPoseType> RefPoseType;
 }
 
-struct UAnimNode_ResetRoot : FAnimNode_SkeletalControlBase
+struct FAnimNode_ResetRoot : FAnimNode_SkeletalControlBase
 {
 }
 
-struct UAnimNode_RigidBody : FAnimNode_SkeletalControlBase
-{
-    UPhysicsAsset* OverridePhysicsAsset;
-    FVector OverrideWorldGravity;
-    FVector ExternalForce;
-    FVector ComponentLinearAccScale;
-    FVector ComponentLinearVelScale;
-    FVector ComponentAppliedLinearAccClamp;
-    float CachedBoundsScale;
-    FBoneReference BaseBoneRef;
-    TEnumAsByte<ECollisionChannel> OverlapChannel;
-    ESimulationSpace SimulationSpace;
-    bool bForceDisableCollisionBetweenConstraintBodies;
-    uint8 bEnableWorldGeometry;
-    uint8 bOverrideWorldGravity;
-    uint8 bTransferBoneVelocities;
-    uint8 bFreezeIncomingPoseOnStart;
-    uint8 bClampLinearTranslationLimitToRefPose;
-    FSolverIterations OverrideSolverIterations;
-}
-
-struct UAnimNode_RigidBody_Chaos : FAnimNode_SkeletalControlBase
+struct FAnimNode_RigidBody : FAnimNode_SkeletalControlBase
 {
     UPhysicsAsset* OverridePhysicsAsset;
     FVector OverrideWorldGravity;
@@ -644,7 +623,28 @@ struct UAnimNode_RigidBody_Chaos : FAnimNode_SkeletalControlBase
     FSolverIterations OverrideSolverIterations;
 }
 
-struct UAnimNode_RotateRootBone : FAnimNode_Base
+struct FAnimNode_RigidBody_Chaos : FAnimNode_SkeletalControlBase
+{
+    UPhysicsAsset* OverridePhysicsAsset;
+    FVector OverrideWorldGravity;
+    FVector ExternalForce;
+    FVector ComponentLinearAccScale;
+    FVector ComponentLinearVelScale;
+    FVector ComponentAppliedLinearAccClamp;
+    float CachedBoundsScale;
+    FBoneReference BaseBoneRef;
+    TEnumAsByte<ECollisionChannel> OverlapChannel;
+    ESimulationSpace SimulationSpace;
+    bool bForceDisableCollisionBetweenConstraintBodies;
+    uint8 bEnableWorldGeometry;
+    uint8 bOverrideWorldGravity;
+    uint8 bTransferBoneVelocities;
+    uint8 bFreezeIncomingPoseOnStart;
+    uint8 bClampLinearTranslationLimitToRefPose;
+    FSolverIterations OverrideSolverIterations;
+}
+
+struct FAnimNode_RotateRootBone : FAnimNode_Base
 {
     FPoseLink BasePose;
     float Pitch;
@@ -654,7 +654,7 @@ struct UAnimNode_RotateRootBone : FAnimNode_Base
     FRotator MeshToComponent;
 }
 
-struct UAnimNode_RotationMultiplier : FAnimNode_SkeletalControlBase
+struct FAnimNode_RotationMultiplier : FAnimNode_SkeletalControlBase
 {
     FBoneReference TargetBone;
     FBoneReference SourceBone;
@@ -663,7 +663,7 @@ struct UAnimNode_RotationMultiplier : FAnimNode_SkeletalControlBase
     bool bIsAdditive;
 }
 
-struct UAnimNode_RotationOffsetBlendSpace : FAnimNode_BlendSpacePlayer
+struct FAnimNode_RotationOffsetBlendSpace : FAnimNode_BlendSpacePlayer
 {
     FPoseLink BasePose;
     int32 LODThreshold;
@@ -676,7 +676,7 @@ struct UAnimNode_RotationOffsetBlendSpace : FAnimNode_BlendSpacePlayer
     bool bAlphaBoolEnabled;
 }
 
-struct UAnimNode_ScaleChainLength : FAnimNode_Base
+struct FAnimNode_ScaleChainLength : FAnimNode_Base
 {
     FPoseLink InputPose;
     float DefaultChainLength;
@@ -688,7 +688,7 @@ struct UAnimNode_ScaleChainLength : FAnimNode_Base
     EScaleChainInitialLength ChainInitialLength;
 }
 
-struct UAnimNode_SequenceEvaluator : FAnimNode_AssetPlayerBase
+struct FAnimNode_SequenceEvaluator : FAnimNode_AssetPlayerBase
 {
     UAnimSequenceBase* Sequence;
     float ExplicitTime;
@@ -698,14 +698,14 @@ struct UAnimNode_SequenceEvaluator : FAnimNode_AssetPlayerBase
     float StartPosition;
 }
 
-struct UAnimNode_Slot : FAnimNode_Base
+struct FAnimNode_Slot : FAnimNode_Base
 {
     FPoseLink Source;
     FName slotName;
     bool bAlwaysUpdateSourcePose;
 }
 
-struct UAnimNode_SplineIK : FAnimNode_SkeletalControlBase
+struct FAnimNode_SplineIK : FAnimNode_SkeletalControlBase
 {
     FBoneReference StartBone;
     FBoneReference EndBone;
@@ -721,13 +721,13 @@ struct UAnimNode_SplineIK : FAnimNode_SkeletalControlBase
     float Offset;
 }
 
-struct USplineIKCachedBoneData
+struct FSplineIKCachedBoneData
 {
     FBoneReference Bone;
     int32 RefSkeletonIndex;
 }
 
-struct UAnimNode_SpringBone : FAnimNode_SkeletalControlBase
+struct FAnimNode_SpringBone : FAnimNode_SkeletalControlBase
 {
     FBoneReference SpringBone;
     float MaxDisplacement;
@@ -743,11 +743,11 @@ struct UAnimNode_SpringBone : FAnimNode_SkeletalControlBase
     uint8 bRotateZ;
 }
 
-struct UAnimNode_StateResult : FAnimNode_Root
+struct FAnimNode_StateResult : FAnimNode_Root
 {
 }
 
-struct UAnimNode_Trail : FAnimNode_SkeletalControlBase
+struct FAnimNode_Trail : FAnimNode_SkeletalControlBase
 {
     FBoneReference TrailBone;
     int32 ChainLength;
@@ -771,13 +771,13 @@ struct UAnimNode_Trail : FAnimNode_SkeletalControlBase
     float LastBoneRotationAnimAlphaBlend;
 }
 
-struct URotationLimit
+struct FRotationLimit
 {
     FVector LimitMin;
     FVector LimitMax;
 }
 
-struct UAnimNode_TwistCorrectiveNode : FAnimNode_SkeletalControlBase
+struct FAnimNode_TwistCorrectiveNode : FAnimNode_SkeletalControlBase
 {
     FReferenceBoneFrame BaseFrame;
     FReferenceBoneFrame TwistFrame;
@@ -788,13 +788,13 @@ struct UAnimNode_TwistCorrectiveNode : FAnimNode_SkeletalControlBase
     FAnimCurveParam Curve;
 }
 
-struct UReferenceBoneFrame
+struct FReferenceBoneFrame
 {
     FBoneReference Bone;
     FAxis Axis;
 }
 
-struct UAnimNode_TwoBoneIK : FAnimNode_SkeletalControlBase
+struct FAnimNode_TwoBoneIK : FAnimNode_SkeletalControlBase
 {
     FBoneReference IKBone;
     float StartStretchRatio;
@@ -812,7 +812,7 @@ struct UAnimNode_TwoBoneIK : FAnimNode_SkeletalControlBase
     uint8 bAllowTwist;
 }
 
-struct UAnimNode_TwoWayBlend : FAnimNode_Base
+struct FAnimNode_TwoWayBlend : FAnimNode_Base
 {
     FPoseLink A;
     FPoseLink B;
@@ -826,22 +826,22 @@ struct UAnimNode_TwoWayBlend : FAnimNode_Base
     FInputScaleBiasClamp AlphaScaleBiasClamp;
 }
 
-struct UAnimSequencerInstanceProxy : FAnimInstanceProxy
+struct FAnimSequencerInstanceProxy : FAnimInstanceProxy
 {
 }
 
-struct UPositionHistory
+struct FPositionHistory
 {
     TArray<FVector> Positions;
     float range;
 }
 
-struct URBFEntry
+struct FRBFEntry
 {
     TArray<float> Values;
 }
 
-struct URBFTarget : FRBFEntry
+struct FRBFTarget : FRBFEntry
 {
     float ScaleFactor;
     bool bApplyCustomCurve;

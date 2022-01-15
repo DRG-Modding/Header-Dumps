@@ -420,7 +420,7 @@ class UMovieSceneVisibilityTrack : UMovieSceneBoolTrack
 {
 }
 
-struct UMovieScene3DAttachSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieScene3DAttachSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneObjectBindingID AttachBindingID;
     FName AttachSocketName;
@@ -433,7 +433,7 @@ struct UMovieScene3DAttachSectionTemplate : FMovieSceneEvalTemplate
     EDetachmentRule DetachmentScaleRule;
 }
 
-struct UMovieScene3DPathSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieScene3DPathSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneObjectBindingID PathBindingID;
     FMovieSceneFloatChannel TimingCurve;
@@ -444,12 +444,12 @@ struct UMovieScene3DPathSectionTemplate : FMovieSceneEvalTemplate
     uint8 bForceUpright;
 }
 
-struct UMovieSceneTransformMask
+struct FMovieSceneTransformMask
 {
     uint32 Mask;
 }
 
-struct UMovieScene3DTransformKeyStruct : FMovieSceneKeyStruct
+struct FMovieScene3DTransformKeyStruct : FMovieSceneKeyStruct
 {
     FVector Location;
     FRotator Rotation;
@@ -457,30 +457,30 @@ struct UMovieScene3DTransformKeyStruct : FMovieSceneKeyStruct
     FFrameNumber Time;
 }
 
-struct UMovieScene3DScaleKeyStruct : FMovieSceneKeyStruct
+struct FMovieScene3DScaleKeyStruct : FMovieSceneKeyStruct
 {
     FVector Scale;
     FFrameNumber Time;
 }
 
-struct UMovieScene3DRotationKeyStruct : FMovieSceneKeyStruct
+struct FMovieScene3DRotationKeyStruct : FMovieSceneKeyStruct
 {
     FRotator Rotation;
     FFrameNumber Time;
 }
 
-struct UMovieScene3DLocationKeyStruct : FMovieSceneKeyStruct
+struct FMovieScene3DLocationKeyStruct : FMovieSceneKeyStruct
 {
     FVector Location;
     FFrameNumber Time;
 }
 
-struct UMovieSceneComponentTransformSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneComponentTransformSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieScene3DTransformTemplateData TemplateData;
 }
 
-struct UMovieScene3DTransformTemplateData
+struct FMovieScene3DTransformTemplateData
 {
     FMovieSceneFloatChannel TranslationCurve;
     FMovieSceneFloatChannel RotationCurve;
@@ -491,31 +491,31 @@ struct UMovieScene3DTransformTemplateData
     bool bUseQuaternionInterpolation;
 }
 
-struct UMovieSceneActorReferenceData : FMovieSceneChannel
+struct FMovieSceneActorReferenceData : FMovieSceneChannel
 {
     TArray<FFrameNumber> KeyTimes;
     TArray<FMovieSceneActorReferenceKey> KeyValues;
 }
 
-struct UMovieSceneActorReferenceKey
+struct FMovieSceneActorReferenceKey
 {
     FMovieSceneObjectBindingID Object;
     FName ComponentName;
     FName SocketName;
 }
 
-struct UMovieSceneActorReferenceSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneActorReferenceSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieScenePropertySectionData PropertyData;
     FMovieSceneActorReferenceData ActorReferenceData;
 }
 
-struct UMovieSceneAudioSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneAudioSectionTemplate : FMovieSceneEvalTemplate
 {
     UMovieSceneAudioSection* AudioSection;
 }
 
-struct UMovieSceneCameraAnimSectionData
+struct FMovieSceneCameraAnimSectionData
 {
     UCameraAnim* CameraAnim;
     float PlayRate;
@@ -525,17 +525,17 @@ struct UMovieSceneCameraAnimSectionData
     bool bLooping;
 }
 
-struct UMovieSceneAdditiveCameraAnimationTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneAdditiveCameraAnimationTemplate : FMovieSceneEvalTemplate
 {
 }
 
-struct UMovieSceneCameraShakeSectionTemplate : FMovieSceneAdditiveCameraAnimationTemplate
+struct FMovieSceneCameraShakeSectionTemplate : FMovieSceneAdditiveCameraAnimationTemplate
 {
     FMovieSceneCameraShakeSectionData SourceData;
     FFrameNumber SectionStartTime;
 }
 
-struct UMovieSceneCameraShakeSectionData
+struct FMovieSceneCameraShakeSectionData
 {
     TSubclassOf<UCameraShake> ShakeClass;
     float PlayScale;
@@ -543,13 +543,13 @@ struct UMovieSceneCameraShakeSectionData
     FRotator UserDefinedPlaySpace;
 }
 
-struct UMovieSceneCameraAnimSectionTemplate : FMovieSceneAdditiveCameraAnimationTemplate
+struct FMovieSceneCameraAnimSectionTemplate : FMovieSceneAdditiveCameraAnimationTemplate
 {
     FMovieSceneCameraAnimSectionData SourceData;
     FFrameNumber SectionStartTime;
 }
 
-struct UMovieSceneCameraCutSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneCameraCutSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneObjectBindingID CameraBindingID;
     FTransform CutTransform;
@@ -557,93 +557,93 @@ struct UMovieSceneCameraCutSectionTemplate : FMovieSceneEvalTemplate
     bool bIsFinalSection;
 }
 
-struct UMovieSceneColorKeyStruct : FMovieSceneKeyStruct
+struct FMovieSceneColorKeyStruct : FMovieSceneKeyStruct
 {
     FLinearColor Color;
     FFrameNumber Time;
 }
 
-struct UMovieSceneColorSectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneColorSectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneFloatChannel Curves;
     EMovieSceneBlendType BlendType;
 }
 
-struct UMovieSceneEvent
+struct FMovieSceneEvent
 {
     FMovieSceneEventPtrs Ptrs;
 }
 
-struct UMovieSceneEventPtrs
+struct FMovieSceneEventPtrs
 {
     UFunction* Function;
     TFieldPath<FNone> BoundObjectProperty;
 }
 
-struct UMovieSceneEventPayloadVariable
+struct FMovieSceneEventPayloadVariable
 {
     FString Value;
 }
 
-struct UMovieSceneEventChannel : FMovieSceneChannel
+struct FMovieSceneEventChannel : FMovieSceneChannel
 {
     TArray<FFrameNumber> KeyTimes;
     TArray<FMovieSceneEvent> KeyValues;
 }
 
-struct UMovieSceneEventSectionData : FMovieSceneChannel
+struct FMovieSceneEventSectionData : FMovieSceneChannel
 {
     TArray<FFrameNumber> Times;
     TArray<FEventPayload> KeyValues;
 }
 
-struct UEventPayload
+struct FEventPayload
 {
     FName EventName;
     FMovieSceneEventParameters Parameters;
 }
 
-struct UMovieSceneEventParameters
+struct FMovieSceneEventParameters
 {
 }
 
-struct UMovieSceneEventTemplateBase : FMovieSceneEvalTemplate
+struct FMovieSceneEventTemplateBase : FMovieSceneEvalTemplate
 {
     TArray<FMovieSceneObjectBindingID> EventReceivers;
     uint8 bFireEventsWhenForwards;
     uint8 bFireEventsWhenBackwards;
 }
 
-struct UMovieSceneEventRepeaterTemplate : FMovieSceneEventTemplateBase
+struct FMovieSceneEventRepeaterTemplate : FMovieSceneEventTemplateBase
 {
     FMovieSceneEventPtrs EventToTrigger;
 }
 
-struct UMovieSceneEventTriggerTemplate : FMovieSceneEventTemplateBase
+struct FMovieSceneEventTriggerTemplate : FMovieSceneEventTemplateBase
 {
     TArray<FFrameNumber> EventTimes;
     TArray<FMovieSceneEventPtrs> Events;
 }
 
-struct UMovieSceneEventSectionTemplate : FMovieSceneEventTemplateBase
+struct FMovieSceneEventSectionTemplate : FMovieSceneEventTemplateBase
 {
     FMovieSceneEventSectionData EventData;
 }
 
-struct UMovieSceneFadeSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneFadeSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneFloatChannel FadeCurve;
     FLinearColor FadeColor;
     uint8 bFadeAudio;
 }
 
-struct UMovieSceneLevelVisibilitySectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneLevelVisibilitySectionTemplate : FMovieSceneEvalTemplate
 {
     ELevelVisibility Visibility;
     TArray<FName> LevelNames;
 }
 
-struct UMovieSceneParameterSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneParameterSectionTemplate : FMovieSceneEvalTemplate
 {
     TArray<FScalarParameterNameAndCurve> Scalars;
     TArray<FBoolParameterNameAndCurve> Bools;
@@ -653,7 +653,7 @@ struct UMovieSceneParameterSectionTemplate : FMovieSceneEvalTemplate
     TArray<FTransformParameterNameAndCurves> Transforms;
 }
 
-struct UTransformParameterNameAndCurves
+struct FTransformParameterNameAndCurves
 {
     FName ParameterName;
     FMovieSceneFloatChannel Translation;
@@ -661,7 +661,7 @@ struct UTransformParameterNameAndCurves
     FMovieSceneFloatChannel Scale;
 }
 
-struct UColorParameterNameAndCurves
+struct FColorParameterNameAndCurves
 {
     FName ParameterName;
     FMovieSceneFloatChannel RedCurve;
@@ -670,7 +670,7 @@ struct UColorParameterNameAndCurves
     FMovieSceneFloatChannel AlphaCurve;
 }
 
-struct UVectorParameterNameAndCurves
+struct FVectorParameterNameAndCurves
 {
     FName ParameterName;
     FMovieSceneFloatChannel XCurve;
@@ -678,82 +678,82 @@ struct UVectorParameterNameAndCurves
     FMovieSceneFloatChannel ZCurve;
 }
 
-struct UVector2DParameterNameAndCurves
+struct FVector2DParameterNameAndCurves
 {
     FName ParameterName;
     FMovieSceneFloatChannel XCurve;
     FMovieSceneFloatChannel YCurve;
 }
 
-struct UBoolParameterNameAndCurve
+struct FBoolParameterNameAndCurve
 {
     FName ParameterName;
     FMovieSceneBoolChannel ParameterCurve;
 }
 
-struct UScalarParameterNameAndCurve
+struct FScalarParameterNameAndCurve
 {
     FName ParameterName;
     FMovieSceneFloatChannel ParameterCurve;
 }
 
-struct UMovieSceneMaterialParameterCollectionTemplate : FMovieSceneParameterSectionTemplate
+struct FMovieSceneMaterialParameterCollectionTemplate : FMovieSceneParameterSectionTemplate
 {
     UMaterialParameterCollection* MPC;
 }
 
-struct UMovieSceneObjectPropertyTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneObjectPropertyTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneObjectPathChannel ObjectChannel;
 }
 
-struct UMovieSceneComponentMaterialSectionTemplate : FMovieSceneParameterSectionTemplate
+struct FMovieSceneComponentMaterialSectionTemplate : FMovieSceneParameterSectionTemplate
 {
     int32 MaterialIndex;
 }
 
-struct UMovieSceneParticleParameterSectionTemplate : FMovieSceneParameterSectionTemplate
+struct FMovieSceneParticleParameterSectionTemplate : FMovieSceneParameterSectionTemplate
 {
 }
 
-struct UMovieSceneParticleChannel : FMovieSceneByteChannel
+struct FMovieSceneParticleChannel : FMovieSceneByteChannel
 {
 }
 
-struct UMovieSceneParticleSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneParticleSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneParticleChannel ParticleKeys;
 }
 
-struct UMovieScenePrimitiveMaterialTemplate : FMovieSceneEvalTemplate
+struct FMovieScenePrimitiveMaterialTemplate : FMovieSceneEvalTemplate
 {
     int32 MaterialIndex;
     FMovieSceneObjectPathChannel MaterialChannel;
 }
 
-struct UMovieSceneEulerTransformPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneEulerTransformPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieScene3DTransformTemplateData TemplateData;
 }
 
-struct UMovieSceneTransformPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneTransformPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieScene3DTransformTemplateData TemplateData;
 }
 
-struct UMovieSceneVectorPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneVectorPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneFloatChannel ComponentCurves;
     int32 NumChannelsUsed;
     EMovieSceneBlendType BlendType;
 }
 
-struct UMovieSceneStringPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneStringPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneStringChannel StringCurve;
 }
 
-struct UMovieSceneStringChannel : FMovieSceneChannel
+struct FMovieSceneStringChannel : FMovieSceneChannel
 {
     TArray<FFrameNumber> Times;
     TArray<FString> Values;
@@ -761,34 +761,34 @@ struct UMovieSceneStringChannel : FMovieSceneChannel
     bool bHasDefaultValue;
 }
 
-struct UMovieSceneIntegerPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneIntegerPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneIntegerChannel IntegerCurve;
     EMovieSceneBlendType BlendType;
 }
 
-struct UMovieSceneEnumPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneEnumPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneByteChannel EnumCurve;
 }
 
-struct UMovieSceneBytePropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneBytePropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneByteChannel ByteCurve;
 }
 
-struct UMovieSceneFloatPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneFloatPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneFloatChannel FloatFunction;
     EMovieSceneBlendType BlendType;
 }
 
-struct UMovieSceneBoolPropertySectionTemplate : FMovieScenePropertySectionTemplate
+struct FMovieSceneBoolPropertySectionTemplate : FMovieScenePropertySectionTemplate
 {
     FMovieSceneBoolChannel BoolCurve;
 }
 
-struct UMovieSceneSkeletalAnimationParams
+struct FMovieSceneSkeletalAnimationParams
 {
     UAnimSequenceBase* Animation;
     FFrameNumber FirstLoopStartFrameOffset;
@@ -804,48 +804,48 @@ struct UMovieSceneSkeletalAnimationParams
     float EndOffset;
 }
 
-struct UMovieSceneSkeletalAnimationSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneSkeletalAnimationSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneSkeletalAnimationSectionTemplateParameters Params;
 }
 
-struct UMovieSceneSkeletalAnimationSectionTemplateParameters : FMovieSceneSkeletalAnimationParams
+struct FMovieSceneSkeletalAnimationSectionTemplateParameters : FMovieSceneSkeletalAnimationParams
 {
     FFrameNumber SectionStartTime;
     FFrameNumber SectionEndTime;
 }
 
-struct UMovieSceneSlomoSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneSlomoSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneFloatChannel SlomoCurve;
 }
 
-struct UMovieSceneSpawnSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneSpawnSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneBoolChannel Curve;
 }
 
-struct UMovieSceneVectorKeyStructBase : FMovieSceneKeyStruct
+struct FMovieSceneVectorKeyStructBase : FMovieSceneKeyStruct
 {
     FFrameNumber Time;
 }
 
-struct UMovieSceneVector4KeyStruct : FMovieSceneVectorKeyStructBase
+struct FMovieSceneVector4KeyStruct : FMovieSceneVectorKeyStructBase
 {
     FVector4 Vector;
 }
 
-struct UMovieSceneVectorKeyStruct : FMovieSceneVectorKeyStructBase
+struct FMovieSceneVectorKeyStruct : FMovieSceneVectorKeyStructBase
 {
     FVector Vector;
 }
 
-struct UMovieSceneVector2DKeyStruct : FMovieSceneVectorKeyStructBase
+struct FMovieSceneVector2DKeyStruct : FMovieSceneVectorKeyStructBase
 {
     FVector2D Vector;
 }
 
-struct UMovieSceneVisibilitySectionTemplate : FMovieSceneBoolPropertySectionTemplate
+struct FMovieSceneVisibilitySectionTemplate : FMovieSceneBoolPropertySectionTemplate
 {
 }
 

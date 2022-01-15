@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_Renderer_HPP
 #define UE4SS_SDK_Renderer_HPP
 
-struct ULightPropagationVolumeSettings
+struct FLightPropagationVolumeSettings
 {
     uint8 bOverride_LPVIntensity;
     uint8 bOverride_LPVDirectionalOcclusionIntensity;

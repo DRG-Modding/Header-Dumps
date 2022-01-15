@@ -58,7 +58,7 @@ class UTimeSynthComponent : USynthComponent
     void AddQuantizationEventDelegate(ETimeSynthEventQuantization QuantizationType, const OnQuantizationEventBP__DelegateSignature& OnQuantizationEvent);
 }
 
-struct UTimeSynthEnvelopeFollowerSettings
+struct FTimeSynthEnvelopeFollowerSettings
 {
     float AttackTime;
     float ReleaseTime;
@@ -66,33 +66,33 @@ struct UTimeSynthEnvelopeFollowerSettings
     bool bIsAnalogMode;
 }
 
-struct UTimeSynthFilterSettings
+struct FTimeSynthFilterSettings
 {
     ETimeSynthFilterType FilterType;
     float CutoffFrequency;
     float FilterQ;
 }
 
-struct UTimeSynthClipSound
+struct FTimeSynthClipSound
 {
     USoundWave* SoundWave;
     float RandomWeight;
     FVector2D DistanceRange;
 }
 
-struct UTimeSynthClipHandle
+struct FTimeSynthClipHandle
 {
     FName ClipName;
     int32 ClipId;
 }
 
-struct UTimeSynthTimeDef
+struct FTimeSynthTimeDef
 {
     int32 NumBars;
     int32 NumBeats;
 }
 
-struct UTimeSynthQuantizationSettings
+struct FTimeSynthQuantizationSettings
 {
     float BeatsPerMinute;
     int32 BeatsPerBar;
@@ -101,7 +101,7 @@ struct UTimeSynthQuantizationSettings
     ETimeSynthEventQuantization GlobalQuantization;
 }
 
-struct UTimeSynthSpectralData
+struct FTimeSynthSpectralData
 {
     float FrequencyHz;
     float Magnitude;

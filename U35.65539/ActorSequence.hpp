@@ -20,18 +20,18 @@ class UActorSequencePlayer : UMovieSceneSequencePlayer
 {
 }
 
-struct UActorSequenceObjectReferenceMap
+struct FActorSequenceObjectReferenceMap
 {
     TArray<FGuid> BindingIds;
     TArray<FActorSequenceObjectReferences> References;
 }
 
-struct UActorSequenceObjectReferences
+struct FActorSequenceObjectReferences
 {
     TArray<FActorSequenceObjectReference> Array;
 }
 
-struct UActorSequenceObjectReference
+struct FActorSequenceObjectReference
 {
     EActorSequenceObjectReferenceType Type;
     FGuid ActorId;

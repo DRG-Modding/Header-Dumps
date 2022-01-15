@@ -41,18 +41,18 @@ class UTemplateSequenceTrack : UMovieSceneSubTrack
 {
 }
 
-struct UTemplateSequenceBindingOverrideData
+struct FTemplateSequenceBindingOverrideData
 {
     TWeakObjectPtr<UObject> Object;
     bool bOverridesDefault;
 }
 
-struct UTemplateSequenceInstanceData : FMovieSceneSequenceInstanceData
+struct FTemplateSequenceInstanceData : FMovieSceneSequenceInstanceData
 {
     FMovieSceneEvaluationOperand Operand;
 }
 
-struct UTemplateSequenceSectionTemplate : FMovieSceneEvalTemplate
+struct FTemplateSequenceSectionTemplate : FMovieSceneEvalTemplate
 {
     FFrameNumber SectionStartTime;
     FGuid OuterBindingId;

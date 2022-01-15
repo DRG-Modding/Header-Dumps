@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_StickeyAttach_HPP
 #define UE4SS_SDK_StickeyAttach_HPP
 
-class UDEPRECATED_StickeyAttach
+struct FStickeyAttach
 {
     FName Socket_2_902DCD154F05A6E81AE6B880D31B34E5;
     USceneComponent* SceneComponent_5_A419FEEB413DA5CD5FDD83A6BFAF23B1;

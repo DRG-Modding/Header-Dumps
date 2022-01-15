@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_LocationEvent_HPP
 #define UE4SS_SDK_LocationEvent_HPP
 
-class ULocationEvent
+struct FLocationEvent
 {
     FVector Position_2_53BB17B340F2F8CBDB00619E8ACA8A8F;
     FVector Velocity_4_6147F7B84D206402EBDD6CAEC72CB864;

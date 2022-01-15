@@ -41,7 +41,7 @@ class UClothPhysicalMeshDataBase_Legacy : UObject
     TArray<uint32> SelfCollisionIndices;
 }
 
-struct UClothCollisionData
+struct FClothCollisionData
 {
     TArray<FClothCollisionPrim_Sphere> Spheres;
     TArray<FClothCollisionPrim_SphereConnection> SphereConnections;
@@ -49,7 +49,7 @@ struct UClothCollisionData
     TArray<FClothCollisionPrim_Box> Boxes;
 }
 
-struct UClothCollisionPrim_Box
+struct FClothCollisionPrim_Box
 {
     FVector LocalPosition;
     FQuat LocalRotation;
@@ -57,26 +57,26 @@ struct UClothCollisionPrim_Box
     int32 BoneIndex;
 }
 
-struct UClothCollisionPrim_Convex
+struct FClothCollisionPrim_Convex
 {
     TArray<FPlane> Planes;
     TArray<FVector> SurfacePoints;
     int32 BoneIndex;
 }
 
-struct UClothCollisionPrim_SphereConnection
+struct FClothCollisionPrim_SphereConnection
 {
     int32 SphereIndices;
 }
 
-struct UClothCollisionPrim_Sphere
+struct FClothCollisionPrim_Sphere
 {
     int32 BoneIndex;
     float Radius;
     FVector LocalPosition;
 }
 
-struct UClothVertBoneData
+struct FClothVertBoneData
 {
     int32 NumInfluences;
     uint16 BoneIndices;

@@ -248,21 +248,21 @@ class UTestMovieSceneSubSection : UMovieSceneSubSection
 {
 }
 
-struct UMovieSceneEvalTemplateBase
+struct FMovieSceneEvalTemplateBase
 {
 }
 
-struct UMovieSceneEvalTemplate : FMovieSceneEvalTemplateBase
+struct FMovieSceneEvalTemplate : FMovieSceneEvalTemplateBase
 {
     EMovieSceneCompletionMode CompletionMode;
     TWeakObjectPtr<UMovieSceneSection> SourceSectionPtr;
 }
 
-struct UMovieSceneChannel
+struct FMovieSceneChannel
 {
 }
 
-struct UMovieSceneBoolChannel : FMovieSceneChannel
+struct FMovieSceneBoolChannel : FMovieSceneChannel
 {
     TArray<FFrameNumber> Times;
     bool DefaultValue;
@@ -270,7 +270,7 @@ struct UMovieSceneBoolChannel : FMovieSceneChannel
     TArray<bool> Values;
 }
 
-struct UMovieSceneFloatChannel : FMovieSceneChannel
+struct FMovieSceneFloatChannel : FMovieSceneChannel
 {
     TEnumAsByte<ERichCurveExtrapolation> PreInfinityExtrap;
     TEnumAsByte<ERichCurveExtrapolation> PostInfinityExtrap;
@@ -282,11 +282,11 @@ struct UMovieSceneFloatChannel : FMovieSceneChannel
     FFrameRate TickResolution;
 }
 
-struct UMovieSceneKeyHandleMap : FKeyHandleLookupTable
+struct FMovieSceneKeyHandleMap : FKeyHandleLookupTable
 {
 }
 
-struct UMovieSceneFloatValue
+struct FMovieSceneFloatValue
 {
     float Value;
     FMovieSceneTangentData Tangent;
@@ -295,7 +295,7 @@ struct UMovieSceneFloatValue
     uint8 PaddingByte;
 }
 
-struct UMovieSceneTangentData
+struct FMovieSceneTangentData
 {
     float ArriveTangent;
     float LeaveTangent;
@@ -304,7 +304,7 @@ struct UMovieSceneTangentData
     TEnumAsByte<ERichCurveTangentWeightMode> TangentWeightMode;
 }
 
-struct UMovieSceneIntegerChannel : FMovieSceneChannel
+struct FMovieSceneIntegerChannel : FMovieSceneChannel
 {
     TArray<FFrameNumber> Times;
     int32 DefaultValue;
@@ -312,16 +312,16 @@ struct UMovieSceneIntegerChannel : FMovieSceneChannel
     TArray<int32> Values;
 }
 
-struct UMovieSceneTrackImplementation : FMovieSceneEvalTemplateBase
+struct FMovieSceneTrackImplementation : FMovieSceneEvalTemplateBase
 {
 }
 
-struct UMovieScenePropertySectionTemplate : FMovieSceneEvalTemplate
+struct FMovieScenePropertySectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieScenePropertySectionData PropertyData;
 }
 
-struct UMovieScenePropertySectionData
+struct FMovieScenePropertySectionData
 {
     FName PropertyName;
     FString PropertyPath;
@@ -329,44 +329,44 @@ struct UMovieScenePropertySectionData
     FName NotifyFunctionName;
 }
 
-struct UMovieSceneSequenceInstanceData
+struct FMovieSceneSequenceInstanceData
 {
 }
 
-struct UMovieSceneEvaluationOperand
+struct FMovieSceneEvaluationOperand
 {
     FGuid ObjectBindingID;
     FMovieSceneSequenceID SequenceID;
 }
 
-struct UMovieSceneSequenceID
+struct FMovieSceneSequenceID
 {
     uint32 Value;
 }
 
-struct UMovieSceneSectionGroup
+struct FMovieSceneSectionGroup
 {
     TArray<TWeakObjectPtr<UMovieSceneSection>> Sections;
 }
 
-struct UMovieSceneObjectBindingIDs
+struct FMovieSceneObjectBindingIDs
 {
     TArray<FMovieSceneObjectBindingID> IDs;
 }
 
-struct UMovieSceneObjectBindingID
+struct FMovieSceneObjectBindingID
 {
     int32 SequenceID;
     EMovieSceneObjectBindingSpace Space;
     FGuid Guid;
 }
 
-struct UMovieSceneTrackLabels
+struct FMovieSceneTrackLabels
 {
     TArray<FString> Strings;
 }
 
-struct UMovieSceneEditorData
+struct FMovieSceneEditorData
 {
     TMap<FString, FMovieSceneExpansionState> ExpansionStates;
     TArray<FString> PinnedNodes;
@@ -379,44 +379,44 @@ struct UMovieSceneEditorData
     FFloatRange ViewRange;
 }
 
-struct UMovieSceneExpansionState
+struct FMovieSceneExpansionState
 {
     bool bExpanded;
 }
 
-struct UMovieSceneMarkedFrame
+struct FMovieSceneMarkedFrame
 {
     FFrameNumber FrameNumber;
     FString Label;
 }
 
-struct UMovieSceneTimecodeSource
+struct FMovieSceneTimecodeSource
 {
     FTimecode Timecode;
     FFrameNumber DeltaFrame;
 }
 
-struct UMovieSceneBinding
+struct FMovieSceneBinding
 {
     FGuid ObjectGuid;
     FString BindingName;
     TArray<UMovieSceneTrack*> Tracks;
 }
 
-struct UMovieSceneBindingOverrideData
+struct FMovieSceneBindingOverrideData
 {
     FMovieSceneObjectBindingID ObjectBindingID;
     TWeakObjectPtr<UObject> Object;
     bool bOverridesDefault;
 }
 
-struct UOptionalMovieSceneBlendType
+struct FOptionalMovieSceneBlendType
 {
     EMovieSceneBlendType BlendType;
     bool bIsValid;
 }
 
-struct UMovieSceneByteChannel : FMovieSceneChannel
+struct FMovieSceneByteChannel : FMovieSceneChannel
 {
     TArray<FFrameNumber> Times;
     uint8 DefaultValue;
@@ -425,81 +425,81 @@ struct UMovieSceneByteChannel : FMovieSceneChannel
     UEnum* Enum;
 }
 
-struct UMovieSceneEvalTemplatePtr
+struct FMovieSceneEvalTemplatePtr
 {
 }
 
-struct UMovieSceneEmptyStruct
+struct FMovieSceneEmptyStruct
 {
 }
 
-struct UMovieSceneEvaluationField
+struct FMovieSceneEvaluationField
 {
     TArray<FMovieSceneFrameRange> Ranges;
     TArray<FMovieSceneEvaluationGroup> Groups;
     TArray<FMovieSceneEvaluationMetaData> MetaData;
 }
 
-struct UMovieSceneEvaluationMetaData
+struct FMovieSceneEvaluationMetaData
 {
     TArray<FMovieSceneSequenceID> ActiveSequences;
     TArray<FMovieSceneOrderedEvaluationKey> ActiveEntities;
     TMap<FMovieSceneSequenceID, uint32> SubTemplateSerialNumbers;
 }
 
-struct UMovieSceneOrderedEvaluationKey
+struct FMovieSceneOrderedEvaluationKey
 {
     FMovieSceneEvaluationKey Key;
     uint16 SetupIndex;
     uint16 TearDownIndex;
 }
 
-struct UMovieSceneEvaluationKey
+struct FMovieSceneEvaluationKey
 {
     FMovieSceneSequenceID SequenceID;
     FMovieSceneTrackIdentifier TrackIdentifier;
     uint32 SectionIndex;
 }
 
-struct UMovieSceneTrackIdentifier
+struct FMovieSceneTrackIdentifier
 {
     uint32 Value;
 }
 
-struct UMovieSceneEvaluationGroup
+struct FMovieSceneEvaluationGroup
 {
     TArray<FMovieSceneEvaluationGroupLUTIndex> LUTIndices;
     TArray<FMovieSceneEvaluationFieldSegmentPtr> SegmentPtrLUT;
 }
 
-struct UMovieSceneEvaluationFieldTrackPtr
+struct FMovieSceneEvaluationFieldTrackPtr
 {
     FMovieSceneSequenceID SequenceID;
     FMovieSceneTrackIdentifier TrackIdentifier;
 }
 
-struct UMovieSceneEvaluationFieldSegmentPtr : FMovieSceneEvaluationFieldTrackPtr
+struct FMovieSceneEvaluationFieldSegmentPtr : FMovieSceneEvaluationFieldTrackPtr
 {
     FMovieSceneSegmentIdentifier SegmentID;
 }
 
-struct UMovieSceneSegmentIdentifier
+struct FMovieSceneSegmentIdentifier
 {
     int32 IdentifierIndex;
 }
 
-struct UMovieSceneEvaluationGroupLUTIndex
+struct FMovieSceneEvaluationGroupLUTIndex
 {
     int32 LUTOffset;
     int32 NumInitPtrs;
     int32 NumEvalPtrs;
 }
 
-struct UMovieSceneFrameRange
+struct FMovieSceneFrameRange
 {
 }
 
-struct UMovieSceneEvaluationTemplate
+struct FMovieSceneEvaluationTemplate
 {
     TMap<FMovieSceneTrackIdentifier, FMovieSceneEvaluationTrack> Tracks;
     FMovieSceneEvaluationField EvaluationField;
@@ -511,39 +511,39 @@ struct UMovieSceneEvaluationTemplate
     FMovieSceneSubSectionFieldData SubSectionFieldData;
 }
 
-struct UMovieSceneSubSectionFieldData
+struct FMovieSceneSubSectionFieldData
 {
 }
 
-struct UMovieSceneTrackFieldData
+struct FMovieSceneTrackFieldData
 {
 }
 
-struct UMovieSceneTemplateGenerationLedger
+struct FMovieSceneTemplateGenerationLedger
 {
     FMovieSceneTrackIdentifier LastTrackIdentifier;
     TMap<FGuid, FMovieSceneTrackIdentifier> TrackSignatureToTrackIdentifier;
     TMap<FGuid, FMovieSceneFrameRange> SubSectionRanges;
 }
 
-struct UMovieSceneEvaluationTemplateSerialNumber
+struct FMovieSceneEvaluationTemplateSerialNumber
 {
     uint32 Value;
 }
 
-struct UMovieSceneSequenceHierarchy
+struct FMovieSceneSequenceHierarchy
 {
     TMap<FMovieSceneSequenceID, FMovieSceneSubSequenceData> SubSequences;
     TMap<FMovieSceneSequenceID, FMovieSceneSequenceHierarchyNode> Hierarchy;
 }
 
-struct UMovieSceneSequenceHierarchyNode
+struct FMovieSceneSequenceHierarchyNode
 {
     FMovieSceneSequenceID ParentID;
     TArray<FMovieSceneSequenceID> Children;
 }
 
-struct UMovieSceneSubSequenceData
+struct FMovieSceneSubSequenceData
 {
     FSoftObjectPath Sequence;
     FMovieSceneSequenceTransform RootToSequenceTransform;
@@ -560,35 +560,35 @@ struct UMovieSceneSubSequenceData
     FMovieSceneSequenceTransform OuterToInnerTransform;
 }
 
-struct UMovieSceneSequenceTransform
+struct FMovieSceneSequenceTransform
 {
     FMovieSceneTimeTransform LinearTransform;
     TArray<FMovieSceneNestedSequenceTransform> NestedTransforms;
 }
 
-struct UMovieSceneNestedSequenceTransform
+struct FMovieSceneNestedSequenceTransform
 {
     FMovieSceneTimeTransform LinearTransform;
     FMovieSceneTimeWarping Warping;
 }
 
-struct UMovieSceneTimeWarping
+struct FMovieSceneTimeWarping
 {
     FFrameNumber Start;
     FFrameNumber End;
 }
 
-struct UMovieSceneTimeTransform
+struct FMovieSceneTimeTransform
 {
     float TimeScale;
     FFrameTime Offset;
 }
 
-struct UMovieSceneSequenceInstanceDataPtr
+struct FMovieSceneSequenceInstanceDataPtr
 {
 }
 
-struct UMovieSceneEvaluationTrack
+struct FMovieSceneEvaluationTrack
 {
     FGuid ObjectBindingID;
     uint16 EvaluationPriority;
@@ -604,50 +604,50 @@ struct UMovieSceneEvaluationTrack
     uint8 bTearDownPriority;
 }
 
-struct UMovieSceneTrackImplementationPtr
+struct FMovieSceneTrackImplementationPtr
 {
 }
 
-struct USectionEvaluationDataTree
+struct FSectionEvaluationDataTree
 {
 }
 
-struct UMovieSceneEvaluationTrackSegments
+struct FMovieSceneEvaluationTrackSegments
 {
     TArray<int32> SegmentIdentifierToIndex;
     TArray<FMovieSceneSegment> SortedSegments;
 }
 
-struct UMovieSceneSegment
+struct FMovieSceneSegment
 {
 }
 
-struct UMovieSceneSubSectionData
+struct FMovieSceneSubSectionData
 {
     TWeakObjectPtr<UMovieSceneSubSection> Section;
     FGuid ObjectBindingID;
     ESectionEvaluationFlags Flags;
 }
 
-struct UMovieSceneRootEvaluationTemplateInstance
+struct FMovieSceneRootEvaluationTemplateInstance
 {
     TMap<FMovieSceneSequenceID, UObject*> DirectorInstances;
 }
 
-struct UMovieSceneKeyStruct
+struct FMovieSceneKeyStruct
 {
 }
 
-struct UMovieSceneKeyTimeStruct : FMovieSceneKeyStruct
+struct FMovieSceneKeyTimeStruct : FMovieSceneKeyStruct
 {
     FFrameNumber Time;
 }
 
-struct UGeneratedMovieSceneKeyStruct
+struct FGeneratedMovieSceneKeyStruct
 {
 }
 
-struct UMovieSceneObjectPathChannel : FMovieSceneChannel
+struct FMovieSceneObjectPathChannel : FMovieSceneChannel
 {
     UClass* PropertyClass;
     TArray<FFrameNumber> Times;
@@ -655,13 +655,13 @@ struct UMovieSceneObjectPathChannel : FMovieSceneChannel
     FMovieSceneObjectPathChannelKeyValue DefaultValue;
 }
 
-struct UMovieSceneObjectPathChannelKeyValue
+struct FMovieSceneObjectPathChannelKeyValue
 {
     TSoftObjectPtr<UObject> SoftPtr;
     UObject* HardPtr;
 }
 
-struct UMovieScenePossessable
+struct FMovieScenePossessable
 {
     TArray<FName> Tags;
     FGuid Guid;
@@ -670,7 +670,7 @@ struct UMovieScenePossessable
     FGuid ParentGuid;
 }
 
-struct UMovieSceneEasingSettings
+struct FMovieSceneEasingSettings
 {
     int32 AutoEaseInDuration;
     int32 AutoEaseOutDuration;
@@ -682,13 +682,13 @@ struct UMovieSceneEasingSettings
     int32 ManualEaseOutDuration;
 }
 
-struct UMovieSceneSectionEvalOptions
+struct FMovieSceneSectionEvalOptions
 {
     bool bCanEditCompletionMode;
     EMovieSceneCompletionMode CompletionMode;
 }
 
-struct UMovieSceneSectionParameters
+struct FMovieSceneSectionParameters
 {
     FFrameNumber StartFrameOffset;
     bool bCanLoop;
@@ -701,14 +701,14 @@ struct UMovieSceneSectionParameters
     float PostrollTime;
 }
 
-struct USectionEvaluationData
+struct FSectionEvaluationData
 {
     int32 ImplIndex;
     FFrameNumber ForcedTime;
     ESectionEvaluationFlags Flags;
 }
 
-struct UMovieSceneSequencePlaybackSettings
+struct FMovieSceneSequencePlaybackSettings
 {
     uint8 bAutoPlay;
     FMovieSceneSequenceLoopCount LoopCount;
@@ -724,24 +724,24 @@ struct UMovieSceneSequencePlaybackSettings
     uint8 bPauseAtEnd;
 }
 
-struct UMovieSceneSequenceLoopCount
+struct FMovieSceneSequenceLoopCount
 {
     int32 Value;
 }
 
-struct UMovieSceneSequenceReplProperties
+struct FMovieSceneSequenceReplProperties
 {
     FFrameTime LastKnownPosition;
     TEnumAsByte<EMovieScenePlayerStatus::Type> LastKnownStatus;
     int32 LastKnownNumLoops;
 }
 
-struct UMovieSceneWarpCounter
+struct FMovieSceneWarpCounter
 {
     TArray<uint32> WarpCounts;
 }
 
-struct UMovieSceneSpawnable
+struct FMovieSceneSpawnable
 {
     FTransform SpawnTransform;
     TArray<FName> Tags;
@@ -754,16 +754,16 @@ struct UMovieSceneSpawnable
     FName LevelName;
 }
 
-struct UTestMovieSceneEvalTemplate : FMovieSceneEvalTemplate
+struct FTestMovieSceneEvalTemplate : FMovieSceneEvalTemplate
 {
 }
 
-struct UMovieSceneTrackDisplayOptions
+struct FMovieSceneTrackDisplayOptions
 {
     uint8 bShowVerticalFrames;
 }
 
-struct UMovieSceneTrackEvalOptions
+struct FMovieSceneTrackEvalOptions
 {
     uint8 bCanEvaluateNearestSection;
     uint8 bEvalNearestSection;

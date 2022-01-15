@@ -97,32 +97,32 @@ class UMeshDescriptionBase : UObject
     void ComputePolygonTriangulation(FPolygonID PolygonID);
 }
 
-struct UElementID
+struct FElementID
 {
     int32 IDValue;
 }
 
-struct UPolygonGroupID : FElementID
+struct FPolygonGroupID : FElementID
 {
 }
 
-struct UPolygonID : FElementID
+struct FPolygonID : FElementID
 {
 }
 
-struct UVertexID : FElementID
+struct FVertexID : FElementID
 {
 }
 
-struct UVertexInstanceID : FElementID
+struct FVertexInstanceID : FElementID
 {
 }
 
-struct UEdgeID : FElementID
+struct FEdgeID : FElementID
 {
 }
 
-struct UTriangleID : FElementID
+struct FTriangleID : FElementID
 {
 }
 

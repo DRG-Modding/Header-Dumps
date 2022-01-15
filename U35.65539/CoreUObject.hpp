@@ -229,11 +229,11 @@ class UMulticastInlineDelegatePropertyWrapper : UMulticastDelegatePropertyWrappe
 {
 }
 
-struct UDefault__ScriptStruct
+struct FDefault__ScriptStruct
 {
 }
 
-struct UJoinabilitySettings
+struct FJoinabilitySettings
 {
     FName SessionName;
     bool bPublicSearchable;
@@ -244,11 +244,11 @@ struct UJoinabilitySettings
     int32 MaxPartySize;
 }
 
-struct UUniqueNetIdWrapper
+struct FUniqueNetIdWrapper
 {
 }
 
-struct UGuid
+struct FGuid
 {
     int32 A;
     int32 B;
@@ -256,14 +256,14 @@ struct UGuid
     int32 D;
 }
 
-struct UVector
+struct FVector
 {
     float X;
     float Y;
     float Z;
 }
 
-struct UVector4
+struct FVector4
 {
     float X;
     float Y;
@@ -271,31 +271,31 @@ struct UVector4
     float W;
 }
 
-struct UVector2D
+struct FVector2D
 {
     float X;
     float Y;
 }
 
-struct UTwoVectors
+struct FTwoVectors
 {
     FVector v1;
     FVector v2;
 }
 
-struct UPlane : FVector
+struct FPlane : FVector
 {
     float W;
 }
 
-struct URotator
+struct FRotator
 {
     float Pitch;
     float Yaw;
     float Roll;
 }
 
-struct UQuat
+struct FQuat
 {
     float X;
     float Y;
@@ -303,7 +303,7 @@ struct UQuat
     float W;
 }
 
-struct UPackedNormal
+struct FPackedNormal
 {
     uint8 X;
     uint8 Y;
@@ -311,31 +311,31 @@ struct UPackedNormal
     uint8 W;
 }
 
-struct UPackedRGB10A2N
+struct FPackedRGB10A2N
 {
     int32 Packed;
 }
 
-struct UPackedRGBA16N
+struct FPackedRGBA16N
 {
     int32 XY;
     int32 ZW;
 }
 
-struct UIntPoint
+struct FIntPoint
 {
     int32 X;
     int32 Y;
 }
 
-struct UIntVector
+struct FIntVector
 {
     int32 X;
     int32 Y;
     int32 Z;
 }
 
-struct UColor
+struct FColor
 {
     uint8 B;
     uint8 G;
@@ -343,7 +343,7 @@ struct UColor
     uint8 A;
 }
 
-struct ULinearColor
+struct FLinearColor
 {
     float R;
     float G;
@@ -351,28 +351,28 @@ struct ULinearColor
     float A;
 }
 
-struct UBox
+struct FBox
 {
     FVector Min;
     FVector Max;
     uint8 IsValid;
 }
 
-struct UBox2D
+struct FBox2D
 {
     FVector2D Min;
     FVector2D Max;
     uint8 bIsValid;
 }
 
-struct UBoxSphereBounds
+struct FBoxSphereBounds
 {
     FVector Origin;
     FVector BoxExtent;
     float SphereRadius;
 }
 
-struct UOrientedBox
+struct FOrientedBox
 {
     FVector Center;
     FVector AxisX;
@@ -383,7 +383,7 @@ struct UOrientedBox
     float ExtentZ;
 }
 
-struct UMatrix
+struct FMatrix
 {
     FPlane XPlane;
     FPlane YPlane;
@@ -391,7 +391,7 @@ struct UMatrix
     FPlane WPlane;
 }
 
-struct UInterpCurvePointFloat
+struct FInterpCurvePointFloat
 {
     float InVal;
     float OutVal;
@@ -400,14 +400,14 @@ struct UInterpCurvePointFloat
     TEnumAsByte<EInterpCurveMode> InterpMode;
 }
 
-struct UInterpCurveFloat
+struct FInterpCurveFloat
 {
     TArray<FInterpCurvePointFloat> Points;
     bool bIsLooped;
     float LoopKeyOffset;
 }
 
-struct UInterpCurvePointVector2D
+struct FInterpCurvePointVector2D
 {
     float InVal;
     FVector2D OutVal;
@@ -416,14 +416,14 @@ struct UInterpCurvePointVector2D
     TEnumAsByte<EInterpCurveMode> InterpMode;
 }
 
-struct UInterpCurveVector2D
+struct FInterpCurveVector2D
 {
     TArray<FInterpCurvePointVector2D> Points;
     bool bIsLooped;
     float LoopKeyOffset;
 }
 
-struct UInterpCurvePointVector
+struct FInterpCurvePointVector
 {
     float InVal;
     FVector OutVal;
@@ -432,14 +432,14 @@ struct UInterpCurvePointVector
     TEnumAsByte<EInterpCurveMode> InterpMode;
 }
 
-struct UInterpCurveVector
+struct FInterpCurveVector
 {
     TArray<FInterpCurvePointVector> Points;
     bool bIsLooped;
     float LoopKeyOffset;
 }
 
-struct UInterpCurvePointQuat
+struct FInterpCurvePointQuat
 {
     float InVal;
     FQuat OutVal;
@@ -448,14 +448,14 @@ struct UInterpCurvePointQuat
     TEnumAsByte<EInterpCurveMode> InterpMode;
 }
 
-struct UInterpCurveQuat
+struct FInterpCurveQuat
 {
     TArray<FInterpCurvePointQuat> Points;
     bool bIsLooped;
     float LoopKeyOffset;
 }
 
-struct UInterpCurvePointTwoVectors
+struct FInterpCurvePointTwoVectors
 {
     float InVal;
     FTwoVectors OutVal;
@@ -464,14 +464,14 @@ struct UInterpCurvePointTwoVectors
     TEnumAsByte<EInterpCurveMode> InterpMode;
 }
 
-struct UInterpCurveTwoVectors
+struct FInterpCurveTwoVectors
 {
     TArray<FInterpCurvePointTwoVectors> Points;
     bool bIsLooped;
     float LoopKeyOffset;
 }
 
-struct UInterpCurvePointLinearColor
+struct FInterpCurvePointLinearColor
 {
     float InVal;
     FLinearColor OutVal;
@@ -480,54 +480,54 @@ struct UInterpCurvePointLinearColor
     TEnumAsByte<EInterpCurveMode> InterpMode;
 }
 
-struct UInterpCurveLinearColor
+struct FInterpCurveLinearColor
 {
     TArray<FInterpCurvePointLinearColor> Points;
     bool bIsLooped;
     float LoopKeyOffset;
 }
 
-struct UTransform
+struct FTransform
 {
     FQuat Rotation;
     FVector Translation;
     FVector Scale3D;
 }
 
-struct URandomStream
+struct FRandomStream
 {
     int32 InitialSeed;
     int32 Seed;
 }
 
-struct UDateTime
+struct FDateTime
 {
 }
 
-struct UFrameNumber
+struct FFrameNumber
 {
     int32 Value;
 }
 
-struct UFrameRate
+struct FFrameRate
 {
     int32 Numerator;
     int32 Denominator;
 }
 
-struct UFrameTime
+struct FFrameTime
 {
     FFrameNumber FrameNumber;
     float SubFrame;
 }
 
-struct UQualifiedFrameTime
+struct FQualifiedFrameTime
 {
     FFrameTime Time;
     FFrameRate Rate;
 }
 
-struct UTimecode
+struct FTimecode
 {
     int32 Hours;
     int32 Minutes;
@@ -536,72 +536,72 @@ struct UTimecode
     bool bDropFrameFormat;
 }
 
-struct UTimespan
+struct FTimespan
 {
 }
 
-struct USoftObjectPath
+struct FSoftObjectPath
 {
     FName AssetPathName;
     FString SubPathString;
 }
 
-struct USoftClassPath : FSoftObjectPath
+struct FSoftClassPath : FSoftObjectPath
 {
 }
 
-struct UPrimaryAssetType
+struct FPrimaryAssetType
 {
     FName Name;
 }
 
-struct UPrimaryAssetId
+struct FPrimaryAssetId
 {
     FPrimaryAssetType PrimaryAssetType;
     FName PrimaryAssetName;
 }
 
-struct UFallbackStruct
+struct FFallbackStruct
 {
 }
 
-struct UFloatRangeBound
+struct FFloatRangeBound
 {
     TEnumAsByte<ERangeBoundTypes::Type> Type;
     float Value;
 }
 
-struct UFloatRange
+struct FFloatRange
 {
     FFloatRangeBound LowerBound;
     FFloatRangeBound UpperBound;
 }
 
-struct UInt32RangeBound
+struct FInt32RangeBound
 {
     TEnumAsByte<ERangeBoundTypes::Type> Type;
     int32 Value;
 }
 
-struct UInt32Range
+struct FInt32Range
 {
     FInt32RangeBound LowerBound;
     FInt32RangeBound UpperBound;
 }
 
-struct UFloatInterval
+struct FFloatInterval
 {
     float Min;
     float Max;
 }
 
-struct UInt32Interval
+struct FInt32Interval
 {
     int32 Min;
     int32 Max;
 }
 
-struct UPolyglotTextData
+struct FPolyglotTextData
 {
     ELocalizedTextSourceCategory Category;
     FString NativeCulture;
@@ -613,7 +613,7 @@ struct UPolyglotTextData
     FText CachedText;
 }
 
-struct UAutomationEvent
+struct FAutomationEvent
 {
     EAutomationEventType Type;
     FString Message;
@@ -621,7 +621,7 @@ struct UAutomationEvent
     FGuid Artifact;
 }
 
-struct UAutomationExecutionEntry
+struct FAutomationExecutionEntry
 {
     FAutomationEvent Event;
     FString Filename;

@@ -16,7 +16,7 @@ class UTurnBasedMatchInterface : UInterface
     void OnMatchEnded(FString Match);
 }
 
-struct UInAppPurchaseProductInfo
+struct FInAppPurchaseProductInfo
 {
     FString Identifier;
     FString TransactionIdentifier;
@@ -31,26 +31,26 @@ struct UInAppPurchaseProductInfo
     FString ReceiptData;
 }
 
-struct UInAppPurchaseRestoreInfo
+struct FInAppPurchaseRestoreInfo
 {
     FString Identifier;
     FString ReceiptData;
     FString TransactionIdentifier;
 }
 
-struct UNamedInterfaceDef
+struct FNamedInterfaceDef
 {
     FName InterfaceName;
     FString InterfaceClassName;
 }
 
-struct UNamedInterface
+struct FNamedInterface
 {
     FName InterfaceName;
     UObject* InterfaceObject;
 }
 
-struct UInAppPurchaseProductRequest
+struct FInAppPurchaseProductRequest
 {
     FString ProductIdentifier;
     bool bIsConsumable;

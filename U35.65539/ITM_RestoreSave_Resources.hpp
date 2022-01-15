@@ -15,7 +15,7 @@ class UITM_RestoreSave_Resources_C : UUserWidget
     void PreConstruct(bool IsDesignTime);
     void Construct();
     void OnResourceAmountChanged(UResourceData* Resource, float currentAmount);
-    void ExecuteUbergraph_ITM_RestoreSave_Resources(int32 EntryPoint, bool K2Node_Event_IsDesignTime, ResourceAmountChangedDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, UFSDSaveGame* CallFunc_GetFSDSaveGame_ReturnValue, UResourceData* K2Node_CustomEvent_resource, float K2Node_CustomEvent_currentAmount, UITM_TopBar_ResourceCounter_C* CallFunc_Map_Find_Value, bool CallFunc_Map_Find_ReturnValue);
+    void ExecuteUbergraph_ITM_RestoreSave_Resources(int32 EntryPoint, bool K2Node_Event_IsDesignTime, ResourceAmountChangedDelegate__DelegateSignature K2Node_CreateDelegate_OutputDelegate, UFSDSaveGame* CallFunc_GetFSDSaveGame_ReturnValue, UResourceData* K2Node_CustomEvent_Resource, float K2Node_CustomEvent_currentAmount, UITM_TopBar_ResourceCounter_C* CallFunc_Map_Find_Value, bool CallFunc_Map_Find_ReturnValue);
 }
 
 #endif

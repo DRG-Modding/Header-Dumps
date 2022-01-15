@@ -72,7 +72,7 @@ class UOculusSceneCaptureCubemap : UObject
     TArray<USceneCaptureComponent2D*> CaptureComponents;
 }
 
-struct UGuardianTestResult
+struct FGuardianTestResult
 {
     bool IsTriggering;
     ETrackedDeviceType DeviceType;
@@ -81,7 +81,7 @@ struct UGuardianTestResult
     FVector ClosestPointNormal;
 }
 
-struct UHmdUserProfile
+struct FHmdUserProfile
 {
     FString Name;
     FString Gender;
@@ -92,13 +92,13 @@ struct UHmdUserProfile
     TArray<FHmdUserProfileField> ExtraFields;
 }
 
-struct UHmdUserProfileField
+struct FHmdUserProfileField
 {
     FString FieldName;
     FString FieldValue;
 }
 
-struct UOculusSplashDesc
+struct FOculusSplashDesc
 {
     FSoftObjectPath TexturePath;
     FTransform TransformInMeters;

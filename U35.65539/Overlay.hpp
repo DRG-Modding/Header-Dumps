@@ -16,7 +16,7 @@ class ULocalizedOverlays : UOverlays
     TMap<FString, UBasicOverlays*> LocaleToOverlaysMap;
 }
 
-struct UOverlayItem
+struct FOverlayItem
 {
     FTimespan StartTime;
     FTimespan EndTime;

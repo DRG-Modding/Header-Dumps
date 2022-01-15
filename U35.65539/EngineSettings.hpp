@@ -98,13 +98,13 @@ class UHudSettings : UObject
     TArray<FName> DebugDisplay;
 }
 
-struct UAutoCompleteCommand
+struct FAutoCompleteCommand
 {
     FString Command;
     FString Desc;
 }
 
-struct UGameModeName
+struct FGameModeName
 {
     FString Name;
     FSoftClassPath GameMode;

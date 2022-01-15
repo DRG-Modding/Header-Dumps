@@ -19,7 +19,7 @@ class UUdpMessagingSettings : UObject
     TArray<FString> RemoteTunnelEndpoints;
 }
 
-struct UUdpMockMessage
+struct FUdpMockMessage
 {
     TArray<uint8> Data;
 }

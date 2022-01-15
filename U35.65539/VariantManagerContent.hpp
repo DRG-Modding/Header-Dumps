@@ -116,12 +116,12 @@ class UVariantSet : UObject
     FText GetDisplayText();
 }
 
-struct UFunctionCaller
+struct FFunctionCaller
 {
     FName FunctionName;
 }
 
-struct UCapturedPropSegment
+struct FCapturedPropSegment
 {
     FString PropertyName;
     int32 PropertyIndex;

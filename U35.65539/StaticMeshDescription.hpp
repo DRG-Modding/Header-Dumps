@@ -10,7 +10,7 @@ class UStaticMeshDescription : UMeshDescriptionBase
     void CreateCube(FVector Center, FVector HalfExtents, FPolygonGroupID PolygonGroup, FPolygonID& PolygonID_PlusX, FPolygonID& PolygonID_MinusX, FPolygonID& PolygonID_PlusY, FPolygonID& PolygonID_MinusY, FPolygonID& PolygonID_PlusZ, FPolygonID& PolygonID_MinusZ);
 }
 
-struct UUVMapSettings
+struct FUVMapSettings
 {
     FVector Size;
     FVector2D UVTile;

@@ -185,14 +185,14 @@ class AProceduralFoliageVolume : UVolume
     UProceduralFoliageComponent* ProceduralComponent;
 }
 
-struct UFoliageVertexColorChannelMask
+struct FFoliageVertexColorChannelMask
 {
     uint8 UseMask;
     float MaskThreshold;
     uint8 InvertMask;
 }
 
-struct UFoliageTypeObject
+struct FFoliageTypeObject
 {
     UObject* FoliageTypeObject;
     UFoliageType* TypeInstance;
@@ -200,7 +200,7 @@ struct UFoliageTypeObject
     TSubclassOf<UFoliageType_InstancedStaticMesh> Type;
 }
 
-struct UProceduralFoliageInstance
+struct FProceduralFoliageInstance
 {
     FVector Location;
     FQuat Rotation;

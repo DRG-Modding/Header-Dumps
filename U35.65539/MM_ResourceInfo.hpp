@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_MM_ResourceInfo_HPP
 #define UE4SS_SDK_MM_ResourceInfo_HPP
 
-class UMM_ResourceInfo
+struct FMM_ResourceInfo
 {
     FText Name_3_B073FED04084181BB52EB29868B71117;
     FText Description_4_380647EA42C585A1CC22D682637C2FA7;

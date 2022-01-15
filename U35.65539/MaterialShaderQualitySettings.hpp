@@ -13,7 +13,7 @@ class UShaderPlatformQualitySettings : UObject
     FMaterialQualityOverrides QualityOverrides;
 }
 
-struct UMaterialQualityOverrides
+struct FMaterialQualityOverrides
 {
     bool bDiscardQualityDuringCook;
     bool bEnableOverride;

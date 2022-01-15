@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_ChaosSolvers_HPP
 #define UE4SS_SDK_ChaosSolvers_HPP
 
-struct USolverBreakingFilterSettings
+struct FSolverBreakingFilterSettings
 {
     bool FilterEnabled;
     float MinMass;
@@ -9,7 +9,7 @@ struct USolverBreakingFilterSettings
     float MinVolume;
 }
 
-struct USolverCollisionFilterSettings
+struct FSolverCollisionFilterSettings
 {
     bool FilterEnabled;
     float MinMass;
@@ -17,7 +17,7 @@ struct USolverCollisionFilterSettings
     float MinImpulse;
 }
 
-struct USolverTrailingFilterSettings
+struct FSolverTrailingFilterSettings
 {
     bool FilterEnabled;
     float MinMass;

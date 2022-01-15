@@ -1,36 +1,36 @@
 #ifndef UE4SS_SDK_EngineMessages_HPP
 #define UE4SS_SDK_EngineMessages_HPP
 
-struct UEngineServiceNotification
+struct FEngineServiceNotification
 {
     FString Text;
     double TimeSeconds;
 }
 
-struct UEngineServiceTerminate
+struct FEngineServiceTerminate
 {
     FString Username;
 }
 
-struct UEngineServiceExecuteCommand
+struct FEngineServiceExecuteCommand
 {
     FString Command;
     FString Username;
 }
 
-struct UEngineServiceAuthGrant
+struct FEngineServiceAuthGrant
 {
     FString Username;
     FString UserToGrant;
 }
 
-struct UEngineServiceAuthDeny
+struct FEngineServiceAuthDeny
 {
     FString Username;
     FString UserToDeny;
 }
 
-struct UEngineServicePong
+struct FEngineServicePong
 {
     FString CurrentLevel;
     int32 EngineVersion;
@@ -41,7 +41,7 @@ struct UEngineServicePong
     float WorldTimeSeconds;
 }
 
-struct UEngineServicePing
+struct FEngineServicePing
 {
 }
 

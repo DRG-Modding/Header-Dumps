@@ -9,7 +9,7 @@ class UNiagaraDataInterfaceBase : UNiagaraMergeable
 {
 }
 
-struct UNiagaraCompileHash
+struct FNiagaraCompileHash
 {
     TArray<uint8> DataHash;
 }

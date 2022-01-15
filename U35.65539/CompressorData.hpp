@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_CompressorData_HPP
 #define UE4SS_SDK_CompressorData_HPP
 
-class UDEPRECATED_CompressorData
+struct FCompressorData
 {
     USubmixEffectSubmixEQPreset* Submix_12_AC5923FE4AC29161307B5A8C1511F773;
     float TargetFrequency_5_3249A77C4899880D58AE5B8154791C58;

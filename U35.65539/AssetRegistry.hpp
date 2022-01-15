@@ -47,7 +47,7 @@ class UAssetRegistry : UInterface
     bool GetAllAssets(TArray<FAssetData>& OutAssetData, bool bIncludeOnlyOnDiskAssets);
 }
 
-struct UARFilter
+struct FARFilter
 {
     TArray<FName> PackageNames;
     TArray<FName> PackagePaths;
@@ -59,19 +59,19 @@ struct UARFilter
     bool bIncludeOnlyOnDiskAssets;
 }
 
-struct UAssetBundleData
+struct FAssetBundleData
 {
     TArray<FAssetBundleEntry> Bundles;
 }
 
-struct UAssetBundleEntry
+struct FAssetBundleEntry
 {
     FPrimaryAssetId BundleScope;
     FName BundleName;
     TArray<FSoftObjectPath> BundleAssets;
 }
 
-struct UAssetData
+struct FAssetData
 {
     FName ObjectPath;
     FName PackageName;
@@ -80,13 +80,13 @@ struct UAssetData
     FName AssetClass;
 }
 
-struct UTagAndValue
+struct FTagAndValue
 {
     FName Tag;
     FString Value;
 }
 
-struct UAssetRegistryDependencyOptions
+struct FAssetRegistryDependencyOptions
 {
     bool bIncludeSoftPackageReferences;
     bool bIncludeHardPackageReferences;

@@ -126,18 +126,18 @@ class UGameplayTagsDeveloperSettings : UObject
     FString DeveloperConfigName;
 }
 
-struct UGameplayTagContainer
+struct FGameplayTagContainer
 {
     TArray<FGameplayTag> GameplayTags;
     TArray<FGameplayTag> ParentTags;
 }
 
-struct UGameplayTag
+struct FGameplayTag
 {
     FName TagName;
 }
 
-struct UGameplayTagQuery
+struct FGameplayTagQuery
 {
     int32 TokenStreamVersion;
     TArray<FGameplayTag> TagDictionary;
@@ -146,19 +146,19 @@ struct UGameplayTagQuery
     FString AutoDescription;
 }
 
-struct UGameplayTagCreationWidgetHelper
+struct FGameplayTagCreationWidgetHelper
 {
 }
 
-struct UGameplayTagReferenceHelper
+struct FGameplayTagReferenceHelper
 {
 }
 
-struct UGameplayTagNode
+struct FGameplayTagNode
 {
 }
 
-struct UGameplayTagSource
+struct FGameplayTagSource
 {
     FName SourceName;
     EGameplayTagSourceType SourceType;
@@ -166,30 +166,30 @@ struct UGameplayTagSource
     URestrictedGameplayTagsList* SourceRestrictedTagList;
 }
 
-struct UGameplayTagTableRow : FTableRowBase
+struct FGameplayTagTableRow : FTableRowBase
 {
     FName Tag;
     FString DevComment;
 }
 
-struct URestrictedGameplayTagTableRow : FGameplayTagTableRow
+struct FRestrictedGameplayTagTableRow : FGameplayTagTableRow
 {
     bool bAllowNonRestrictedChildren;
 }
 
-struct URestrictedConfigInfo
+struct FRestrictedConfigInfo
 {
     FString RestrictedConfigName;
     TArray<FString> Owners;
 }
 
-struct UGameplayTagCategoryRemap
+struct FGameplayTagCategoryRemap
 {
     FString BaseCategory;
     TArray<FString> RemapCategories;
 }
 
-struct UGameplayTagRedirect
+struct FGameplayTagRedirect
 {
     FName OldTagName;
     FName NewTagName;

@@ -21,7 +21,7 @@ class UAppleImageInterface : UInterface
 {
 }
 
-struct UAppleImageUtilsImageConversionResult
+struct FAppleImageUtilsImageConversionResult
 {
     FString Error;
     TArray<uint8> ImageData;

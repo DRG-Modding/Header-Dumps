@@ -3,18 +3,18 @@
 
 #include "NiagaraShader_enums.hpp"
 
-struct UNiagaraDataInterfaceGPUParamInfo
+struct FNiagaraDataInterfaceGPUParamInfo
 {
     FString DataInterfaceHLSLSymbol;
     FString DIClassName;
     TArray<FNiagaraDataInterfaceGeneratedFunction> GeneratedFunctions;
 }
 
-struct UNiagaraDataInterfaceGeneratedFunction
+struct FNiagaraDataInterfaceGeneratedFunction
 {
 }
 
-struct UNiagaraCompileEvent
+struct FNiagaraCompileEvent
 {
     FNiagaraCompileEventSeverity Severity;
     FString Message;

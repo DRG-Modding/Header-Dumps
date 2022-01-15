@@ -9281,7 +9281,7 @@ struct AFSDRefinery : ADropPod {
 	float RefiningTotalDuration; // 0x350(0x04)
 	FFloatRange PipelineBreakCoolDown; // 0x354(0x10)
 	float PipelineBreakTimePenaltyPerAdditionalPlayers; // 0x364(0x04)
-	FInt32Range MaxSegmentBreakDowns; // 0x368(0x10)
+	FInt32Range MaxSegmentBreakDowns; // 0x368(0x10) // Increase the max number of breakdowns total mod
 	int32_t SegmentBreakDownPenaltyPerAdditionalPlayers; // 0x378(0x04)
 	enum class ERefineryState RefineryState; // 0x384(0x01)
 	enum class ERefineryState PreviousRefineryState; // 0x385(0x01)

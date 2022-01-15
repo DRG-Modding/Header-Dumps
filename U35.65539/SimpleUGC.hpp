@@ -176,12 +176,12 @@ class UUGCSubsystem : UEngineSubsystem
     void ApplyPendingMods(bool FromJoining);
 }
 
-struct UMods
+struct FMods
 {
     TArray<FModDefinition> Mods;
 }
 
-struct UModDefinition
+struct FModDefinition
 {
     FString Name;
     int32 Category;

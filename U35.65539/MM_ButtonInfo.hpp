@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_MM_ButtonInfo_HPP
 #define UE4SS_SDK_MM_ButtonInfo_HPP
 
-class UMM_ButtonInfo
+struct FMM_ButtonInfo
 {
     FText ButtonText_7_C93F8ADD46736C76628F77AA3AD33DE5;
     FText Subtext_13_6DC087A04F73C8C3B2927494E1FBE685;

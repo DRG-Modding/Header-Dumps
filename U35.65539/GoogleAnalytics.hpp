@@ -18,13 +18,13 @@ class UGoogleAnalyticsSettings : UObject
     bool bEnableIDFACollection;
 }
 
-struct UCustomMetric
+struct FCustomMetric
 {
     int32 Index;
     float Value;
 }
 
-struct UCustomDimension
+struct FCustomDimension
 {
     int32 Index;
     FString Value;

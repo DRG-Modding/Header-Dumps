@@ -62,7 +62,7 @@ class UCineCameraComponent : UCameraComponent
     FString GetDefaultFilmbackPresetName();
 }
 
-struct UCameraLookatTrackingSettings
+struct FCameraLookatTrackingSettings
 {
     uint8 bEnableLookAtTracking;
     uint8 bDrawDebugLookAtTrackingPosition;
@@ -72,7 +72,7 @@ struct UCameraLookatTrackingSettings
     uint8 bAllowRoll;
 }
 
-struct UCameraFocusSettings
+struct FCameraFocusSettings
 {
     ECameraFocusMethod FocusMethod;
     float ManualFocusDistance;
@@ -84,20 +84,20 @@ struct UCameraFocusSettings
     float FocusOffset;
 }
 
-struct UCameraTrackingFocusSettings
+struct FCameraTrackingFocusSettings
 {
     TSoftObjectPtr<AActor> ActorToTrack;
     FVector RelativeOffset;
     uint8 bDrawDebugTrackingFocusPoint;
 }
 
-struct UNamedLensPreset
+struct FNamedLensPreset
 {
     FString Name;
     FCameraLensSettings LensSettings;
 }
 
-struct UCameraLensSettings
+struct FCameraLensSettings
 {
     float MinFocalLength;
     float MaxFocalLength;
@@ -107,13 +107,13 @@ struct UCameraLensSettings
     int32 DiaphragmBladeCount;
 }
 
-struct UNamedFilmbackPreset
+struct FNamedFilmbackPreset
 {
     FString Name;
     FCameraFilmbackSettings FilmbackSettings;
 }
 
-struct UCameraFilmbackSettings
+struct FCameraFilmbackSettings
 {
     float SensorWidth;
     float SensorHeight;

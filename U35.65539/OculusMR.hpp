@@ -108,7 +108,7 @@ class UOculusMRFunctionLibrary : UBlueprintFunctionLibrary
     float GetMrcScalingFactor();
 }
 
-struct UOculusMR_PlaneMeshTriangle
+struct FOculusMR_PlaneMeshTriangle
 {
     FVector Vertex0;
     FVector2D UV0;
@@ -118,7 +118,7 @@ struct UOculusMR_PlaneMeshTriangle
     FVector2D UV2;
 }
 
-struct UTrackedCamera
+struct FTrackedCamera
 {
     int32 Index;
     FString Name;

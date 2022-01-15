@@ -140,7 +140,7 @@ class UXRLoadingScreenFunctionLibrary : UBlueprintFunctionLibrary
     void AddLoadingScreenSplash(UTexture* Texture, FVector Translation, FRotator Rotation, FVector2D Size, FRotator DeltaRotation, bool bClearBeforeAdd);
 }
 
-struct UXRDeviceId
+struct FXRDeviceId
 {
     FName SystemName;
     int32 DeviceID;

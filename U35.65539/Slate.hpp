@@ -67,12 +67,12 @@ class UToolMenuBase : UObject
 {
 }
 
-struct UVirtualKeyboardOptions
+struct FVirtualKeyboardOptions
 {
     bool bEnableAutocorrect;
 }
 
-struct UInputChord
+struct FInputChord
 {
     FKey Key;
     uint8 bShift;
@@ -81,13 +81,13 @@ struct UInputChord
     uint8 bCmd;
 }
 
-struct UAnchors
+struct FAnchors
 {
     FVector2D Minimum;
     FVector2D Maximum;
 }
 
-struct UCustomizedToolMenu
+struct FCustomizedToolMenu
 {
     FName Name;
     TMap<FName, FCustomizedToolMenuEntry> Entries;
@@ -96,17 +96,17 @@ struct UCustomizedToolMenu
     TArray<FName> SectionOrder;
 }
 
-struct UCustomizedToolMenuNameArray
+struct FCustomizedToolMenuNameArray
 {
     TArray<FName> Names;
 }
 
-struct UCustomizedToolMenuSection
+struct FCustomizedToolMenuSection
 {
     ECustomizedToolMenuVisibility Visibility;
 }
 
-struct UCustomizedToolMenuEntry
+struct FCustomizedToolMenuEntry
 {
     ECustomizedToolMenuVisibility Visibility;
 }

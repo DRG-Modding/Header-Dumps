@@ -400,18 +400,18 @@ class UVoipListenerSynthComponent : USynthComponent
     bool IsIdling();
 }
 
-struct UBlueprintSessionResult
+struct FBlueprintSessionResult
 {
 }
 
-struct UInAppPurchaseReceiptInfo2
+struct FInAppPurchaseReceiptInfo2
 {
     FString ItemName;
     FString ItemID;
     FString ValidationInfo;
 }
 
-struct UOnlineProxyStoreOffer
+struct FOnlineProxyStoreOffer
 {
     FString OfferId;
     FText Title;
@@ -428,21 +428,21 @@ struct UOnlineProxyStoreOffer
     TMap<FString, FString> DynamicFields;
 }
 
-struct UInAppPurchaseRestoreInfo2
+struct FInAppPurchaseRestoreInfo2
 {
     FString ItemName;
     FString ItemID;
     FString ValidationInfo;
 }
 
-struct UInAppPurchaseReceiptInfo
+struct FInAppPurchaseReceiptInfo
 {
     FString ItemName;
     FString ItemID;
     FString ValidationInfo;
 }
 
-struct UInAppPurchaseProductInfo2
+struct FInAppPurchaseProductInfo2
 {
     FString Identifier;
     FString TransactionIdentifier;
@@ -458,13 +458,13 @@ struct UInAppPurchaseProductInfo2
     TMap<FString, FString> DynamicFields;
 }
 
-struct UInAppPurchaseProductRequest2
+struct FInAppPurchaseProductRequest2
 {
     FString ProductIdentifier;
     bool bIsConsumable;
 }
 
-struct UPlayerReservation
+struct FPlayerReservation
 {
     FUniqueNetIdRepl UniqueId;
     FString ValidationStr;
@@ -473,7 +473,7 @@ struct UPlayerReservation
     float ElapsedTime;
 }
 
-struct UPIELoginSettingsInternal
+struct FPIELoginSettingsInternal
 {
     FString ID;
     FString Token;
@@ -481,7 +481,7 @@ struct UPIELoginSettingsInternal
     TArray<uint8> TokenBytes;
 }
 
-struct UPartyReservation
+struct FPartyReservation
 {
     int32 TeamNum;
     FUniqueNetIdRepl PartyLeader;
@@ -489,7 +489,7 @@ struct UPartyReservation
     TArray<FPlayerReservation> RemovedPartyMembers;
 }
 
-struct USpectatorReservation
+struct FSpectatorReservation
 {
     FUniqueNetIdRepl SpectatorId;
     FPlayerReservation Spectator;

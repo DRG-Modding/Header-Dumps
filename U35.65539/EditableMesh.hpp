@@ -165,118 +165,118 @@ class UEditableStaticMeshAdapter : UEditableMeshAdapter
     int32 StaticMeshLODIndex;
 }
 
-struct UAdaptorPolygon2Group
+struct FAdaptorPolygon2Group
 {
     uint32 RenderingSectionIndex;
     int32 MaterialIndex;
     int32 MaxTriangles;
 }
 
-struct UAdaptorPolygon
+struct FAdaptorPolygon
 {
     FPolygonGroupID PolygonGroupID;
     TArray<FAdaptorTriangleID> TriangulatedPolygonTriangleIndices;
 }
 
-struct UAdaptorTriangleID : FElementID
+struct FAdaptorTriangleID : FElementID
 {
 }
 
-struct UPolygonGroupForPolygon
+struct FPolygonGroupForPolygon
 {
     FPolygonID PolygonID;
     FPolygonGroupID PolygonGroupID;
 }
 
-struct UPolygonGroupToCreate
+struct FPolygonGroupToCreate
 {
     FMeshElementAttributeList PolygonGroupAttributes;
     FPolygonGroupID OriginalPolygonGroupID;
 }
 
-struct UMeshElementAttributeList
+struct FMeshElementAttributeList
 {
     TArray<FMeshElementAttributeData> Attributes;
 }
 
-struct UMeshElementAttributeData
+struct FMeshElementAttributeData
 {
     FName AttributeName;
     int32 AttributeIndex;
     FMeshElementAttributeValue AttributeValue;
 }
 
-struct UMeshElementAttributeValue
+struct FMeshElementAttributeValue
 {
 }
 
-struct UVertexToMove
+struct FVertexToMove
 {
     FVertexID VertexID;
     FVector NewVertexPosition;
 }
 
-struct UChangeVertexInstancesForPolygon
+struct FChangeVertexInstancesForPolygon
 {
     FPolygonID PolygonID;
     TArray<FVertexIndexAndInstanceID> PerimeterVertexIndicesAndInstanceIDs;
     TArray<FVertexInstancesForPolygonHole> VertexIndicesAndInstanceIDsForEachHole;
 }
 
-struct UVertexInstancesForPolygonHole
+struct FVertexInstancesForPolygonHole
 {
     TArray<FVertexIndexAndInstanceID> VertexIndicesAndInstanceIDs;
 }
 
-struct UVertexIndexAndInstanceID
+struct FVertexIndexAndInstanceID
 {
     int32 ContourIndex;
     FVertexInstanceID VertexInstanceID;
 }
 
-struct UVertexAttributesForPolygon
+struct FVertexAttributesForPolygon
 {
     FPolygonID PolygonID;
     TArray<FMeshElementAttributeList> PerimeterVertexAttributeLists;
     TArray<FVertexAttributesForPolygonHole> VertexAttributeListsForEachHole;
 }
 
-struct UVertexAttributesForPolygonHole
+struct FVertexAttributesForPolygonHole
 {
     TArray<FMeshElementAttributeList> VertexAttributeList;
 }
 
-struct UAttributesForEdge
+struct FAttributesForEdge
 {
     FEdgeID EdgeID;
     FMeshElementAttributeList EdgeAttributes;
 }
 
-struct UAttributesForVertexInstance
+struct FAttributesForVertexInstance
 {
     FVertexInstanceID VertexInstanceID;
     FMeshElementAttributeList VertexInstanceAttributes;
 }
 
-struct UAttributesForVertex
+struct FAttributesForVertex
 {
     FVertexID VertexID;
     FMeshElementAttributeList VertexAttributes;
 }
 
-struct UPolygonToSplit
+struct FPolygonToSplit
 {
     FPolygonID PolygonID;
     TArray<FVertexPair> VertexPairsToSplitAt;
 }
 
-struct UVertexPair
+struct FVertexPair
 {
     FVertexID VertexID0;
     FVertexID VertexID1;
 }
 
-struct UPolygonToCreate
+struct FPolygonToCreate
 {
     FPolygonGroupID PolygonGroupID;
     TArray<FVertexAndAttributes> PerimeterVertices;
@@ -284,14 +284,14 @@ struct UPolygonToCreate
     EPolygonEdgeHardness PolygonEdgeHardness;
 }
 
-struct UVertexAndAttributes
+struct FVertexAndAttributes
 {
     FVertexInstanceID VertexInstanceID;
     FVertexID VertexID;
     FMeshElementAttributeList PolygonVertexAttributes;
 }
 
-struct UEdgeToCreate
+struct FEdgeToCreate
 {
     FVertexID VertexID0;
     FVertexID VertexID1;
@@ -299,38 +299,38 @@ struct UEdgeToCreate
     FEdgeID OriginalEdgeID;
 }
 
-struct UVertexInstanceToCreate
+struct FVertexInstanceToCreate
 {
     FVertexID VertexID;
     FMeshElementAttributeList VertexInstanceAttributes;
     FVertexInstanceID OriginalVertexInstanceID;
 }
 
-struct UVertexToCreate
+struct FVertexToCreate
 {
     FMeshElementAttributeList VertexAttributes;
     FVertexID OriginalVertexID;
 }
 
-struct USubdivisionLimitData
+struct FSubdivisionLimitData
 {
     TArray<FVector> VertexPositions;
     TArray<FSubdivisionLimitSection> Sections;
     TArray<FSubdividedWireEdge> SubdividedWireEdges;
 }
 
-struct USubdividedWireEdge
+struct FSubdividedWireEdge
 {
     int32 EdgeVertex0PositionIndex;
     int32 EdgeVertex1PositionIndex;
 }
 
-struct USubdivisionLimitSection
+struct FSubdivisionLimitSection
 {
     TArray<FSubdividedQuad> SubdividedQuads;
 }
 
-struct USubdividedQuad
+struct FSubdividedQuad
 {
     FSubdividedQuadVertex QuadVertex0;
     FSubdividedQuadVertex QuadVertex1;
@@ -338,7 +338,7 @@ struct USubdividedQuad
     FSubdividedQuadVertex QuadVertex3;
 }
 
-struct USubdividedQuadVertex
+struct FSubdividedQuadVertex
 {
     int32 VertexPositionIndex;
     FVector2D TextureCoordinate0;
@@ -349,14 +349,14 @@ struct USubdividedQuadVertex
     float VertexBinormalSign;
 }
 
-struct URenderingPolygonGroup
+struct FRenderingPolygonGroup
 {
     uint32 RenderingSectionIndex;
     int32 MaterialIndex;
     int32 MaxTriangles;
 }
 
-struct URenderingPolygon
+struct FRenderingPolygon
 {
     FPolygonGroupID PolygonGroupID;
     TArray<FTriangleID> TriangulatedPolygonTriangleIndices;

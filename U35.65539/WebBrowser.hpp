@@ -1,15 +1,15 @@
 #ifndef UE4SS_SDK_WebBrowser_HPP
 #define UE4SS_SDK_WebBrowser_HPP
 
-struct UWebJSCallbackBase
+struct FWebJSCallbackBase
 {
 }
 
-struct UWebJSResponse : FWebJSCallbackBase
+struct FWebJSResponse : FWebJSCallbackBase
 {
 }
 
-struct UWebJSFunction : FWebJSCallbackBase
+struct FWebJSFunction : FWebJSCallbackBase
 {
 }
 

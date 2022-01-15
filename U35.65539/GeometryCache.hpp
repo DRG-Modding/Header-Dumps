@@ -94,19 +94,19 @@ class UDEPRECATED_GeometryCacheTrack_TransformGroupAnimation : UGeometryCacheTra
     void SetMesh(const FGeometryCacheMeshData& NewMeshData);
 }
 
-struct UTrackRenderData
+struct FTrackRenderData
 {
 }
 
-struct UGeometryCacheMeshData
+struct FGeometryCacheMeshData
 {
 }
 
-struct UGeometryCacheVertexInfo
+struct FGeometryCacheVertexInfo
 {
 }
 
-struct UGeometryCacheMeshBatchInfo
+struct FGeometryCacheMeshBatchInfo
 {
 }
 

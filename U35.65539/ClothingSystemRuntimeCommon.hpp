@@ -39,7 +39,7 @@ class UClothLODDataCommon_Legacy : UObject
     FClothCollisionData CollisionData;
 }
 
-struct UClothConfig_Legacy
+struct FClothConfig_Legacy
 {
     EClothingWindMethod_Legacy WindMethod;
     FClothConstraintSetup_Legacy VerticalConstraintConfig;
@@ -70,7 +70,7 @@ struct UClothConfig_Legacy
     float AnimDriveDamperStiffness;
 }
 
-struct UClothConstraintSetup_Legacy
+struct FClothConstraintSetup_Legacy
 {
     float Stiffness;
     float StiffnessMultiplier;
@@ -78,13 +78,13 @@ struct UClothConstraintSetup_Legacy
     float CompressionLimit;
 }
 
-struct UClothLODDataCommon
+struct FClothLODDataCommon
 {
     FClothPhysicalMeshData PhysicalMeshData;
     FClothCollisionData CollisionData;
 }
 
-struct UClothPhysicalMeshData
+struct FClothPhysicalMeshData
 {
     TArray<FVector> Vertices;
     TArray<FVector> Normals;
@@ -101,12 +101,12 @@ struct UClothPhysicalMeshData
     TArray<float> AnimDriveMultipliers;
 }
 
-struct UPointWeightMap
+struct FPointWeightMap
 {
     TArray<float> Values;
 }
 
-struct UClothParameterMask_Legacy
+struct FClothParameterMask_Legacy
 {
     FName MaskName;
     EWeightMapTargetCommon CurrentTarget;

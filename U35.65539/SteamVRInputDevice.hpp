@@ -49,7 +49,7 @@ class USteamVRTrackingReferences : UActorComponent
     void HideTrackingReferences();
 }
 
-struct UAnimNode_SteamVRInputAnimPose : FAnimNode_Base
+struct FAnimNode_SteamVRInputAnimPose : FAnimNode_Base
 {
     EMotionRange MotionRange;
     EHand hand;
@@ -59,7 +59,7 @@ struct UAnimNode_SteamVRInputAnimPose : FAnimNode_Base
     FUE4RetargettingRefs UE4RetargettingRefs;
 }
 
-struct UUE4RetargettingRefs
+struct FUE4RetargettingRefs
 {
     bool bIsInitialized;
     bool bIsRightHanded;
@@ -68,7 +68,7 @@ struct UUE4RetargettingRefs
     FVector WristForwardLS_UE4;
 }
 
-struct USteamVRSkeletonTransform
+struct FSteamVRSkeletonTransform
 {
     FTransform Root;
     FTransform wrist;
@@ -103,14 +103,14 @@ struct USteamVRSkeletonTransform
     FTransform Aux_Pinky;
 }
 
-struct UAnimNode_SteamVRSetWristTransform : FAnimNode_Base
+struct FAnimNode_SteamVRSetWristTransform : FAnimNode_Base
 {
     FPoseLink ReferencePose;
     EHandSkeleton HandSkeleton;
     FPoseLink targetPose;
 }
 
-struct USteamVRInputBindingInfo
+struct FSteamVRInputBindingInfo
 {
     FName DevicePathName;
     FName InputPathName;
@@ -118,25 +118,25 @@ struct USteamVRInputBindingInfo
     FName slotName;
 }
 
-struct USteamVRInputOriginInfo
+struct FSteamVRInputOriginInfo
 {
     int32 TrackedDeviceIndex;
     FString RenderModelComponentName;
     FString TrackedDeviceModel;
 }
 
-struct USteamVRActionSet
+struct FSteamVRActionSet
 {
     FString Path;
 }
 
-struct USteamVRAction
+struct FSteamVRAction
 {
     FName Name;
     FString Path;
 }
 
-struct USteamVRFingerSplays
+struct FSteamVRFingerSplays
 {
     float Thumb_Index;
     float Index_Middle;
@@ -144,7 +144,7 @@ struct USteamVRFingerSplays
     float Ring_Pinky;
 }
 
-struct USteamVRFingerCurls
+struct FSteamVRFingerCurls
 {
     float Thumb;
     float Index;

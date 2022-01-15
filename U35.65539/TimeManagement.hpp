@@ -36,13 +36,13 @@ class UTimeSynchronizationSource : UObject
     int32 FrameOffset;
 }
 
-struct UTimedDataInputEvaluationData
+struct FTimedDataInputEvaluationData
 {
     float DistanceToNewestSampleSeconds;
     float DistanceToOldestSampleSeconds;
 }
 
-struct UTimedDataChannelSampleTime
+struct FTimedDataChannelSampleTime
 {
 }
 

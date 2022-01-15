@@ -6,7 +6,7 @@ class UNetAnalyticsAggregatorConfig : UObject
     TArray<FNetAnalyticsDataConfig> NetAnalyticsData;
 }
 
-struct UNetAnalyticsDataConfig
+struct FNetAnalyticsDataConfig
 {
     FName DataName;
     bool bEnabled;

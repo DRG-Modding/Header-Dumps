@@ -1,15 +1,15 @@
 #ifndef UE4SS_SDK_SessionMessages_HPP
 #define UE4SS_SDK_SessionMessages_HPP
 
-struct USessionServiceLogUnsubscribe
+struct FSessionServiceLogUnsubscribe
 {
 }
 
-struct USessionServiceLogSubscribe
+struct FSessionServiceLogSubscribe
 {
 }
 
-struct USessionServiceLog
+struct FSessionServiceLog
 {
     FName Category;
     FString Data;
@@ -18,7 +18,7 @@ struct USessionServiceLog
     uint8 Verbosity;
 }
 
-struct USessionServicePong
+struct FSessionServicePong
 {
     bool Authorized;
     FString BuildDate;
@@ -32,7 +32,7 @@ struct USessionServicePong
     bool Standalone;
 }
 
-struct USessionServicePing
+struct FSessionServicePing
 {
     FString Username;
 }

@@ -700,34 +700,34 @@ class UNiagaraSystem : UFXSystemAsset
     TArray<FName> UserDINamesReadInSystemScripts;
 }
 
-struct UMovieSceneNiagaraParameterSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneNiagaraParameterSectionTemplate : FMovieSceneEvalTemplate
 {
     FNiagaraVariable Parameter;
 }
 
-struct UNiagaraVariableBase
+struct FNiagaraVariableBase
 {
     FName Name;
     FNiagaraTypeDefinition TypeDef;
 }
 
-struct UNiagaraTypeDefinition
+struct FNiagaraTypeDefinition
 {
     UObject* ClassStructOrEnum;
     uint16 UnderlyingType;
 }
 
-struct UNiagaraVariable : FNiagaraVariableBase
+struct FNiagaraVariable : FNiagaraVariableBase
 {
     TArray<uint8> VarData;
 }
 
-struct UMovieSceneNiagaraBoolParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
+struct FMovieSceneNiagaraBoolParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
 {
     FMovieSceneBoolChannel BoolChannel;
 }
 
-struct UMovieSceneNiagaraColorParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
+struct FMovieSceneNiagaraColorParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
 {
     FMovieSceneFloatChannel RedChannel;
     FMovieSceneFloatChannel GreenChannel;
@@ -735,17 +735,17 @@ struct UMovieSceneNiagaraColorParameterSectionTemplate : FMovieSceneNiagaraParam
     FMovieSceneFloatChannel AlphaChannel;
 }
 
-struct UMovieSceneNiagaraFloatParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
+struct FMovieSceneNiagaraFloatParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
 {
     FMovieSceneFloatChannel FloatChannel;
 }
 
-struct UMovieSceneNiagaraIntegerParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
+struct FMovieSceneNiagaraIntegerParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
 {
     FMovieSceneIntegerChannel IntegerChannel;
 }
 
-struct UMovieSceneNiagaraSystemTrackImplementation : FMovieSceneTrackImplementation
+struct FMovieSceneNiagaraSystemTrackImplementation : FMovieSceneTrackImplementation
 {
     FFrameNumber SpawnSectionStartFrame;
     FFrameNumber SpawnSectionEndFrame;
@@ -755,60 +755,60 @@ struct UMovieSceneNiagaraSystemTrackImplementation : FMovieSceneTrackImplementat
     ENiagaraAgeUpdateMode AgeUpdateMode;
 }
 
-struct UMovieSceneNiagaraSystemTrackTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneNiagaraSystemTrackTemplate : FMovieSceneEvalTemplate
 {
 }
 
-struct UMovieSceneNiagaraVectorParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
+struct FMovieSceneNiagaraVectorParameterSectionTemplate : FMovieSceneNiagaraParameterSectionTemplate
 {
     FMovieSceneFloatChannel VectorChannels;
     int32 ChannelsUsed;
 }
 
-struct UNiagaraRandInfo
+struct FNiagaraRandInfo
 {
     int32 Seed1;
     int32 Seed2;
     int32 Seed3;
 }
 
-struct UNiagaraUserParameterBinding
+struct FNiagaraUserParameterBinding
 {
     FNiagaraVariable Parameter;
 }
 
-struct UNiagaraScriptVariableBinding
+struct FNiagaraScriptVariableBinding
 {
     FName Name;
 }
 
-struct UNiagaraVariableDataInterfaceBinding
+struct FNiagaraVariableDataInterfaceBinding
 {
     FNiagaraVariable BoundVariable;
 }
 
-struct UNiagaraVariableAttributeBinding
+struct FNiagaraVariableAttributeBinding
 {
     FNiagaraVariable BoundVariable;
     FNiagaraVariable DataSetVariable;
     FNiagaraVariable DefaultValueIfNonExistent;
 }
 
-struct UNiagaraVariableInfo
+struct FNiagaraVariableInfo
 {
     FNiagaraVariable Variable;
     FText Definition;
     UNiagaraDataInterface* DataInterface;
 }
 
-struct UNiagaraSystemUpdateContext
+struct FNiagaraSystemUpdateContext
 {
     TArray<UNiagaraComponent*> ComponentsToReset;
     TArray<UNiagaraComponent*> ComponentsToReInit;
     TArray<UNiagaraSystem*> SystemSimsToDestroy;
 }
 
-struct UVMExternalFunctionBindingInfo
+struct FVMExternalFunctionBindingInfo
 {
     FName Name;
     FName OwnerName;
@@ -817,19 +817,19 @@ struct UVMExternalFunctionBindingInfo
     TArray<FVMFunctionSpecifier> FunctionSpecifiers;
 }
 
-struct UVMFunctionSpecifier
+struct FVMFunctionSpecifier
 {
     FName Key;
     FName Value;
 }
 
-struct UNiagaraStatScope
+struct FNiagaraStatScope
 {
     FName FullName;
     FName FriendlyName;
 }
 
-struct UNiagaraScriptDataInterfaceCompileInfo
+struct FNiagaraScriptDataInterfaceCompileInfo
 {
     FName Name;
     int32 UserPtrIdx;
@@ -839,7 +839,7 @@ struct UNiagaraScriptDataInterfaceCompileInfo
     bool bIsPlaceholder;
 }
 
-struct UNiagaraScriptDataInterfaceInfo
+struct FNiagaraScriptDataInterfaceInfo
 {
     UNiagaraDataInterface* DataInterface;
     FName Name;
@@ -849,7 +849,7 @@ struct UNiagaraScriptDataInterfaceInfo
     FName RegisteredParameterMapWrite;
 }
 
-struct UNiagaraFunctionSignature
+struct FNiagaraFunctionSignature
 {
     FName Name;
     TArray<FNiagaraVariable> Inputs;
@@ -864,54 +864,54 @@ struct UNiagaraFunctionSignature
     TMap<FName, FName> FunctionSpecifiers;
 }
 
-struct UNiagaraScriptDataUsageInfo
+struct FNiagaraScriptDataUsageInfo
 {
     bool bReadsAttributeData;
 }
 
-struct UNiagaraDataSetProperties
+struct FNiagaraDataSetProperties
 {
     FNiagaraDataSetID ID;
     TArray<FNiagaraVariable> Variables;
 }
 
-struct UNiagaraDataSetID
+struct FNiagaraDataSetID
 {
     FName Name;
     ENiagaraDataSetType Type;
 }
 
-struct UNCPool
+struct FNCPool
 {
     TArray<FNCPoolElement> FreeElements;
     TArray<UNiagaraComponent*> InUseComponents_Auto;
     TArray<UNiagaraComponent*> InUseComponents_Manual;
 }
 
-struct UNCPoolElement
+struct FNCPoolElement
 {
     UNiagaraComponent* Component;
 }
 
-struct UBasicParticleData
+struct FBasicParticleData
 {
     FVector Position;
     float Size;
     FVector Velocity;
 }
 
-struct UMeshTriCoordinate
+struct FMeshTriCoordinate
 {
     int32 Tri;
     FVector BaryCoord;
 }
 
-struct UNDIStaticMeshSectionFilter
+struct FNDIStaticMeshSectionFilter
 {
     TArray<int32> AllowedMaterialSlots;
 }
 
-struct UNiagaraDataSetCompiledData
+struct FNiagaraDataSetCompiledData
 {
     TArray<FNiagaraVariable> Variables;
     TArray<FNiagaraVariableLayoutInfo> VariableLayouts;
@@ -922,14 +922,14 @@ struct UNiagaraDataSetCompiledData
     ENiagaraSimTarget SimTarget;
 }
 
-struct UNiagaraVariableLayoutInfo
+struct FNiagaraVariableLayoutInfo
 {
     uint32 FloatComponentStart;
     uint32 Int32ComponentStart;
     FNiagaraTypeLayoutInfo LayoutInfo;
 }
 
-struct UNiagaraTypeLayoutInfo
+struct FNiagaraTypeLayoutInfo
 {
     TArray<uint32> FloatComponentByteOffsets;
     TArray<uint32> FloatComponentRegisterOffsets;
@@ -937,54 +937,54 @@ struct UNiagaraTypeLayoutInfo
     TArray<uint32> Int32ComponentRegisterOffsets;
 }
 
-struct UNiagaraGraphViewSettings
+struct FNiagaraGraphViewSettings
 {
     FVector2D Location;
     float Zoom;
     bool bIsValid;
 }
 
-struct UNiagaraEmitterScalabilityOverrides
+struct FNiagaraEmitterScalabilityOverrides
 {
     TArray<FNiagaraEmitterScalabilityOverride> Overrides;
 }
 
-struct UNiagaraEmitterScalabilitySettings
+struct FNiagaraEmitterScalabilitySettings
 {
     FNiagaraPlatformSet Platforms;
     uint8 bScaleSpawnCount;
     float SpawnCountScale;
 }
 
-struct UNiagaraPlatformSet
+struct FNiagaraPlatformSet
 {
     int32 QualityLevelMask;
     TArray<FNiagaraDeviceProfileStateEntry> DeviceProfileStates;
 }
 
-struct UNiagaraDeviceProfileStateEntry
+struct FNiagaraDeviceProfileStateEntry
 {
     FName ProfileName;
     uint32 QualityLevelMask;
     uint32 SetQualityLevelMask;
 }
 
-struct UNiagaraEmitterScalabilityOverride : FNiagaraEmitterScalabilitySettings
+struct FNiagaraEmitterScalabilityOverride : FNiagaraEmitterScalabilitySettings
 {
     uint8 bOverrideSpawnCountScale;
 }
 
-struct UNiagaraEmitterScalabilitySettingsArray
+struct FNiagaraEmitterScalabilitySettingsArray
 {
     TArray<FNiagaraEmitterScalabilitySettings> Settings;
 }
 
-struct UNiagaraSystemScalabilityOverrides
+struct FNiagaraSystemScalabilityOverrides
 {
     TArray<FNiagaraSystemScalabilityOverride> Overrides;
 }
 
-struct UNiagaraSystemScalabilitySettings
+struct FNiagaraSystemScalabilitySettings
 {
     FNiagaraPlatformSet Platforms;
     uint8 bCullByDistance;
@@ -995,19 +995,19 @@ struct UNiagaraSystemScalabilitySettings
     float MaxTimeWithoutRender;
 }
 
-struct UNiagaraSystemScalabilityOverride : FNiagaraSystemScalabilitySettings
+struct FNiagaraSystemScalabilityOverride : FNiagaraSystemScalabilitySettings
 {
     uint8 bOverrideDistanceSettings;
     uint8 bOverrideInstanceCountSettings;
     uint8 bOverrideTimeSinceRendererSettings;
 }
 
-struct UNiagaraSystemScalabilitySettingsArray
+struct FNiagaraSystemScalabilitySettingsArray
 {
     TArray<FNiagaraSystemScalabilitySettings> Settings;
 }
 
-struct UNiagaraDetailsLevelScaleOverrides
+struct FNiagaraDetailsLevelScaleOverrides
 {
     float Low;
     float Medium;
@@ -1016,28 +1016,28 @@ struct UNiagaraDetailsLevelScaleOverrides
     float Cine;
 }
 
-struct UNiagaraEmitterScriptProperties
+struct FNiagaraEmitterScriptProperties
 {
     UNiagaraScript* Script;
     TArray<FNiagaraEventReceiverProperties> EventReceivers;
     TArray<FNiagaraEventGeneratorProperties> EventGenerators;
 }
 
-struct UNiagaraEventGeneratorProperties
+struct FNiagaraEventGeneratorProperties
 {
     int32 MaxEventsPerFrame;
     FName ID;
     FNiagaraDataSetCompiledData DataSetCompiledData;
 }
 
-struct UNiagaraEventReceiverProperties
+struct FNiagaraEventReceiverProperties
 {
     FName Name;
     FName SourceEventGenerator;
     FName SourceEmitter;
 }
 
-struct UNiagaraEventScriptProperties : FNiagaraEmitterScriptProperties
+struct FNiagaraEventScriptProperties : FNiagaraEmitterScriptProperties
 {
     EScriptExecutionMode ExecutionMode;
     uint32 SpawnNumber;
@@ -1048,7 +1048,7 @@ struct UNiagaraEventScriptProperties : FNiagaraEmitterScriptProperties
     uint32 MinSpawnNumber;
 }
 
-struct UNiagaraEmitterHandle
+struct FNiagaraEmitterHandle
 {
     FGuid ID;
     FName IdName;
@@ -1057,7 +1057,7 @@ struct UNiagaraEmitterHandle
     UNiagaraEmitter* instance;
 }
 
-struct UNiagaraCollisionEventPayload
+struct FNiagaraCollisionEventPayload
 {
     FVector CollisionPos;
     FVector CollisionNormal;
@@ -1066,18 +1066,18 @@ struct UNiagaraCollisionEventPayload
     int32 PhysicalMaterialIndex;
 }
 
-struct UNiagaraMeshMaterialOverride
+struct FNiagaraMeshMaterialOverride
 {
     UMaterialInterface* ExplicitMat;
     FNiagaraUserParameterBinding UserParamBinding;
 }
 
-struct UNiagaraParameters
+struct FNiagaraParameters
 {
     TArray<FNiagaraVariable> Parameters;
 }
 
-struct UNiagaraParameterStore
+struct FNiagaraParameterStore
 {
     UObject* Owner;
     TArray<FNiagaraVariableWithOffset> SortedParameterOffsets;
@@ -1086,38 +1086,38 @@ struct UNiagaraParameterStore
     TArray<UObject*> UObjects;
 }
 
-struct UNiagaraVariableWithOffset : FNiagaraVariableBase
+struct FNiagaraVariableWithOffset : FNiagaraVariableBase
 {
     int32 Offset;
 }
 
-struct UNiagaraBoundParameter
+struct FNiagaraBoundParameter
 {
     FNiagaraVariable Parameter;
     int32 SrcOffset;
     int32 DestOffset;
 }
 
-struct UNiagaraPlatformSetConflictInfo
+struct FNiagaraPlatformSetConflictInfo
 {
     int32 SetAIndex;
     int32 SetBIndex;
     TArray<FNiagaraPlatformSetConflictEntry> Conflicts;
 }
 
-struct UNiagaraPlatformSetConflictEntry
+struct FNiagaraPlatformSetConflictEntry
 {
     FName ProfileName;
     int32 QualityLevelMask;
 }
 
-struct UNiagaraScalabilityManager
+struct FNiagaraScalabilityManager
 {
     UNiagaraEffectType* EffectType;
     TArray<UNiagaraComponent*> ManagedComponents;
 }
 
-struct UNiagaraVMExecutableData
+struct FNiagaraVMExecutableData
 {
     TArray<uint8> ByteCode;
     TArray<uint8> OptimizedByteCode;
@@ -1138,7 +1138,7 @@ struct UNiagaraVMExecutableData
     TArray<FSimulationStageMetaData> SimulationStageMetaData;
 }
 
-struct USimulationStageMetaData
+struct FSimulationStageMetaData
 {
     FName IterationSource;
     uint8 bSpawnOnly;
@@ -1148,7 +1148,7 @@ struct USimulationStageMetaData
     int32 MaxStage;
 }
 
-struct UNiagaraVMExecutableDataId
+struct FNiagaraVMExecutableDataId
 {
     FGuid CompilerVersionID;
     ENiagaraScriptUsage ScriptUsageType;
@@ -1160,7 +1160,7 @@ struct UNiagaraVMExecutableDataId
     FNiagaraCompileHash BaseScriptCompileHash;
 }
 
-struct UNiagaraModuleDependency
+struct FNiagaraModuleDependency
 {
     FName ID;
     ENiagaraModuleDependencyType Type;
@@ -1168,7 +1168,7 @@ struct UNiagaraModuleDependency
     FText Description;
 }
 
-struct UNiagaraScriptExecutionParameterStore : FNiagaraParameterStore
+struct FNiagaraScriptExecutionParameterStore : FNiagaraParameterStore
 {
     int32 ParameterSize;
     uint32 PaddedParameterSize;
@@ -1176,7 +1176,7 @@ struct UNiagaraScriptExecutionParameterStore : FNiagaraParameterStore
     uint8 bInitialized;
 }
 
-struct UNiagaraScriptExecutionPaddingInfo
+struct FNiagaraScriptExecutionPaddingInfo
 {
     uint16 SrcOffset;
     uint16 DestOffset;
@@ -1184,22 +1184,22 @@ struct UNiagaraScriptExecutionPaddingInfo
     uint16 DestSize;
 }
 
-struct UNiagaraScriptHighlight
+struct FNiagaraScriptHighlight
 {
     FLinearColor Color;
     FText DisplayName;
 }
 
-struct UNiagaraSystemCompileRequest
+struct FNiagaraSystemCompileRequest
 {
     TArray<UObject*> RootObjects;
 }
 
-struct UEmitterCompiledScriptPair
+struct FEmitterCompiledScriptPair
 {
 }
 
-struct UNiagaraSystemCompiledData
+struct FNiagaraSystemCompiledData
 {
     FNiagaraParameterStore InstanceParamStore;
     FNiagaraDataSetCompiledData DataSetCompiledData;
@@ -1215,19 +1215,19 @@ struct UNiagaraSystemCompiledData
     TArray<FNiagaraParameterDataSetBindingCollection> UpdateInstanceEmitterBindings;
 }
 
-struct UNiagaraParameterDataSetBindingCollection
+struct FNiagaraParameterDataSetBindingCollection
 {
     TArray<FNiagaraParameterDataSetBinding> FloatOffsets;
     TArray<FNiagaraParameterDataSetBinding> Int32Offsets;
 }
 
-struct UNiagaraParameterDataSetBinding
+struct FNiagaraParameterDataSetBinding
 {
     int32 ParameterOffset;
     int32 DataSetComponentOffset;
 }
 
-struct UNiagaraEmitterCompiledData
+struct FNiagaraEmitterCompiledData
 {
     TArray<FName> SpawnAttributes;
     FNiagaraVariable EmitterSpawnIntervalVar;
@@ -1239,7 +1239,7 @@ struct UNiagaraEmitterCompiledData
     FNiagaraDataSetCompiledData DataSetCompiledData;
 }
 
-struct UNiagaraVariableMetaData
+struct FNiagaraVariableMetaData
 {
     FText Description;
     FText CategoryName;
@@ -1260,32 +1260,32 @@ struct UNiagaraVariableMetaData
     bool bUseLegacyNameString;
 }
 
-struct UNiagaraInputConditionMetadata
+struct FNiagaraInputConditionMetadata
 {
     FName InputName;
     TArray<FString> TargetValues;
 }
 
-struct UNiagaraParameterScopeInfo
+struct FNiagaraParameterScopeInfo
 {
     ENiagaraParameterScope Scope;
     FString NamespaceString;
 }
 
-struct UNiagaraCompileHashVisitorDebugInfo
+struct FNiagaraCompileHashVisitorDebugInfo
 {
     FString Object;
     TArray<FString> PropertyKeys;
     TArray<FString> PropertyValues;
 }
 
-struct UNiagaraID
+struct FNiagaraID
 {
     int32 Index;
     int32 AcquireTag;
 }
 
-struct UNiagaraSpawnInfo
+struct FNiagaraSpawnInfo
 {
     int32 count;
     float InterpStartDt;
@@ -1293,7 +1293,7 @@ struct UNiagaraSpawnInfo
     int32 SpawnGroup;
 }
 
-struct UNiagaraMatrix
+struct FNiagaraMatrix
 {
     FVector4 Row0;
     FVector4 Row1;
@@ -1301,7 +1301,7 @@ struct UNiagaraMatrix
     FVector4 Row3;
 }
 
-struct UNiagaraTestStruct
+struct FNiagaraTestStruct
 {
     FVector Vector1;
     FVector Vector2;
@@ -1309,41 +1309,41 @@ struct UNiagaraTestStruct
     FNiagaraTestStructInner InnerStruct2;
 }
 
-struct UNiagaraTestStructInner
+struct FNiagaraTestStructInner
 {
     FVector InnerVector1;
     FVector InnerVector2;
 }
 
-struct UNiagaraParameterMap
+struct FNiagaraParameterMap
 {
 }
 
-struct UNiagaraNumeric
+struct FNiagaraNumeric
 {
 }
 
-struct UNiagaraBool
-{
-    int32 Value;
-}
-
-struct UNiagaraInt32
+struct FNiagaraBool
 {
     int32 Value;
 }
 
-struct UNiagaraFloat
+struct FNiagaraInt32
+{
+    int32 Value;
+}
+
+struct FNiagaraFloat
 {
     float Value;
 }
 
-struct UNiagaraUserRedirectionParameterStore : FNiagaraParameterStore
+struct FNiagaraUserRedirectionParameterStore : FNiagaraParameterStore
 {
     TMap<FNiagaraVariable, FNiagaraVariable> UserParameterRedirects;
 }
 
-struct UNiagaraVariant
+struct FNiagaraVariant
 {
     UObject* Object;
     UNiagaraDataInterface* DataInterface;
@@ -1351,7 +1351,7 @@ struct UNiagaraVariant
     ENiagaraVariantMode CurrentMode;
 }
 
-struct UNiagaraWorldManagerTickFunction : FTickFunction
+struct FNiagaraWorldManagerTickFunction : FTickFunction
 {
 }
 

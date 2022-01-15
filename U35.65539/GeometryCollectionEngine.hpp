@@ -249,7 +249,7 @@ class UStaticMeshSimulationComponent : UActorComponent
     void ForceRecreatePhysicsState();
 }
 
-struct UGeomComponentCacheParameters
+struct FGeomComponentCacheParameters
 {
     EGeometryCollectionCacheType CacheMode;
     UGeometryCollectionCache* TargetCache;
@@ -273,7 +273,7 @@ struct UGeomComponentCacheParameters
     float TrailingMinVolumeThreshold;
 }
 
-struct UChaosCollisionEventData
+struct FChaosCollisionEventData
 {
     FVector Location;
     FVector Normal;
@@ -284,14 +284,14 @@ struct UChaosCollisionEventData
     FVector Impulse;
 }
 
-struct UChaosBreakingEventData
+struct FChaosBreakingEventData
 {
     FVector Location;
     FVector Velocity;
     float Mass;
 }
 
-struct UChaosTrailingEventData
+struct FChaosTrailingEventData
 {
     FVector Location;
     FVector Velocity;
@@ -300,7 +300,7 @@ struct UChaosTrailingEventData
     int32 ParticleIndex;
 }
 
-struct UChaosBreakingEventRequestSettings
+struct FChaosBreakingEventRequestSettings
 {
     int32 MaxNumberOfResults;
     float MinRadius;
@@ -310,7 +310,7 @@ struct UChaosBreakingEventRequestSettings
     EChaosBreakingSortMethod SortMethod;
 }
 
-struct UChaosCollisionEventRequestSettings
+struct FChaosCollisionEventRequestSettings
 {
     int32 MaxNumberResults;
     float MinMass;
@@ -320,7 +320,7 @@ struct UChaosCollisionEventRequestSettings
     EChaosCollisionSortMethod SortMethod;
 }
 
-struct UChaosTrailingEventRequestSettings
+struct FChaosTrailingEventRequestSettings
 {
     int32 MaxNumberOfResults;
     float MinMass;
@@ -330,18 +330,18 @@ struct UChaosTrailingEventRequestSettings
     EChaosTrailingSortMethod SortMethod;
 }
 
-struct UGeometryCollectionDebugDrawActorSelectedRigidBody
+struct FGeometryCollectionDebugDrawActorSelectedRigidBody
 {
     int32 ID;
     AChaosSolverActor* Solver;
     AGeometryCollectionActor* GeometryCollection;
 }
 
-struct UGeometryCollectionDebugDrawWarningMessage
+struct FGeometryCollectionDebugDrawWarningMessage
 {
 }
 
-struct UGeometryCollectionSizeSpecificData
+struct FGeometryCollectionSizeSpecificData
 {
     float MaxSize;
     ECollisionTypeEnum CollisionType;

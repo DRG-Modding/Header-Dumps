@@ -57,7 +57,7 @@ class UClothPhysicalMeshDataNv_Legacy : UClothPhysicalMeshDataBase_Legacy
     TArray<float> AnimDriveMultipliers;
 }
 
-struct UClothConstraintSetupNv
+struct FClothConstraintSetupNv
 {
     float Stiffness;
     float StiffnessMultiplier;

@@ -305,14 +305,14 @@ class UDatasmithStaticMeshTemplate : UDatasmithObjectTemplate
     TArray<FDatasmithStaticMaterialTemplate> StaticMaterials;
 }
 
-struct UDatasmithCameraLookatTrackingSettingsTemplate
+struct FDatasmithCameraLookatTrackingSettingsTemplate
 {
     uint8 bEnableLookAtTracking;
     uint8 bAllowRoll;
     TSoftObjectPtr<AActor> ActorToTrack;
 }
 
-struct UDatasmithPostProcessSettingsTemplate
+struct FDatasmithPostProcessSettingsTemplate
 {
     uint8 bOverride_WhiteTemp;
     uint8 bOverride_ColorSaturation;
@@ -332,24 +332,24 @@ struct UDatasmithPostProcessSettingsTemplate
     float DepthOfFieldFstop;
 }
 
-struct UDatasmithCameraFocusSettingsTemplate
+struct FDatasmithCameraFocusSettingsTemplate
 {
     ECameraFocusMethod FocusMethod;
     float ManualFocusDistance;
 }
 
-struct UDatasmithCameraLensSettingsTemplate
+struct FDatasmithCameraLensSettingsTemplate
 {
     float MaxFStop;
 }
 
-struct UDatasmithCameraFilmbackSettingsTemplate
+struct FDatasmithCameraFilmbackSettingsTemplate
 {
     float SensorWidth;
     float SensorHeight;
 }
 
-struct UDatasmithTessellationOptions
+struct FDatasmithTessellationOptions
 {
     float ChordTolerance;
     float MaxEdgeLength;
@@ -357,7 +357,7 @@ struct UDatasmithTessellationOptions
     EDatasmithCADStitchingTechnique StitchingTechnique;
 }
 
-struct UDatasmithImportBaseOptions
+struct FDatasmithImportBaseOptions
 {
     EDatasmithImportScene SceneHandling;
     bool bIncludeGeometry;
@@ -369,7 +369,7 @@ struct UDatasmithImportBaseOptions
     FDatasmithStaticMeshImportOptions StaticMeshOptions;
 }
 
-struct UDatasmithStaticMeshImportOptions
+struct FDatasmithStaticMeshImportOptions
 {
     EDatasmithImportLightmapMin MinLightmapResolution;
     EDatasmithImportLightmapMax MaxLightmapResolution;
@@ -377,39 +377,39 @@ struct UDatasmithStaticMeshImportOptions
     bool bRemoveDegenerates;
 }
 
-struct UDatasmithAssetImportOptions
+struct FDatasmithAssetImportOptions
 {
     FName PackagePath;
 }
 
-struct UDatasmithReimportOptions
+struct FDatasmithReimportOptions
 {
     bool bUpdateActors;
     bool bRespawnDeletedActors;
 }
 
-struct UDatasmithStaticParameterSetTemplate
+struct FDatasmithStaticParameterSetTemplate
 {
     TMap<FName, bool> StaticSwitchParameters;
 }
 
-struct UDatasmithMeshSectionInfoMapTemplate
+struct FDatasmithMeshSectionInfoMapTemplate
 {
     TMap<uint32, FDatasmithMeshSectionInfoTemplate> Map;
 }
 
-struct UDatasmithMeshSectionInfoTemplate
+struct FDatasmithMeshSectionInfoTemplate
 {
     int32 MaterialIndex;
 }
 
-struct UDatasmithStaticMaterialTemplate
+struct FDatasmithStaticMaterialTemplate
 {
     FName MaterialSlotName;
     UMaterialInterface* MaterialInterface;
 }
 
-struct UDatasmithMeshBuildSettingsTemplate
+struct FDatasmithMeshBuildSettingsTemplate
 {
     uint8 bUseMikkTSpace;
     uint8 bRecomputeNormals;

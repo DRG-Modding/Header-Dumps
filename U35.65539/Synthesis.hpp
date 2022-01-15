@@ -426,13 +426,13 @@ class USynthKnob : UWidget
     float GetValue();
 }
 
-struct UModularSynthPresetBankEntry
+struct FModularSynthPresetBankEntry
 {
     FString PresetName;
     FModularSynthPreset Preset;
 }
 
-struct UModularSynthPreset : FTableRowBase
+struct FModularSynthPreset : FTableRowBase
 {
     uint8 bEnablePolyphony;
     ESynth1OscType Osc1Type;
@@ -495,30 +495,30 @@ struct UModularSynthPreset : FTableRowBase
     TArray<FEpicSynth1Patch> Patches;
 }
 
-struct UEpicSynth1Patch
+struct FEpicSynth1Patch
 {
     ESynth1PatchSource PatchSource;
     TArray<FSynth1PatchCable> PatchCables;
 }
 
-struct USynth1PatchCable
+struct FSynth1PatchCable
 {
     float Depth;
     ESynth1PatchDestination Destination;
 }
 
-struct UPatchId
+struct FPatchId
 {
     int32 ID;
 }
 
-struct USourceEffectBitCrusherSettings
+struct FSourceEffectBitCrusherSettings
 {
     float CrushedSampleRate;
     float CrushedBits;
 }
 
-struct USourceEffectChorusSettings
+struct FSourceEffectChorusSettings
 {
     float Depth;
     float Frequency;
@@ -528,7 +528,7 @@ struct USourceEffectChorusSettings
     float Spread;
 }
 
-struct USourceEffectDynamicsProcessorSettings
+struct FSourceEffectDynamicsProcessorSettings
 {
     ESourceEffectDynamicsProcessorType DynamicsProcessorType;
     ESourceEffectDynamicsPeakMode PeakMode;
@@ -544,7 +544,7 @@ struct USourceEffectDynamicsProcessorSettings
     uint8 bAnalogMode;
 }
 
-struct USourceEffectEnvelopeFollowerSettings
+struct FSourceEffectEnvelopeFollowerSettings
 {
     float AttackTime;
     float ReleaseTime;
@@ -552,12 +552,12 @@ struct USourceEffectEnvelopeFollowerSettings
     bool bIsAnalogMode;
 }
 
-struct USourceEffectEQSettings
+struct FSourceEffectEQSettings
 {
     TArray<FSourceEffectEQBand> EQBands;
 }
 
-struct USourceEffectEQBand
+struct FSourceEffectEQBand
 {
     float Frequency;
     float Bandwidth;
@@ -565,7 +565,7 @@ struct USourceEffectEQBand
     uint8 bEnabled;
 }
 
-struct USourceEffectFilterSettings
+struct FSourceEffectFilterSettings
 {
     ESourceEffectFilterCircuit FilterCircuit;
     ESourceEffectFilterType FilterType;
@@ -573,14 +573,14 @@ struct USourceEffectFilterSettings
     float FilterQ;
 }
 
-struct USourceEffectFoldbackDistortionSettings
+struct FSourceEffectFoldbackDistortionSettings
 {
     float InputGainDb;
     float ThresholdDb;
     float OutputGainDb;
 }
 
-struct USourceEffectMidSideSpreaderSettings
+struct FSourceEffectMidSideSpreaderSettings
 {
     EStereoChannelMode InputMode;
     float SpreadAmount;
@@ -588,13 +588,13 @@ struct USourceEffectMidSideSpreaderSettings
     bool bEqualPower;
 }
 
-struct USourceEffectPannerSettings
+struct FSourceEffectPannerSettings
 {
     float Spread;
     float Pan;
 }
 
-struct USourceEffectPhaserSettings
+struct FSourceEffectPhaserSettings
 {
     float WetLevel;
     float Frequency;
@@ -603,7 +603,7 @@ struct USourceEffectPhaserSettings
     bool UseQuadraturePhase;
 }
 
-struct USourceEffectRingModulationSettings
+struct FSourceEffectRingModulationSettings
 {
     ERingModulatorTypeSourceEffect ModulatorType;
     float Frequency;
@@ -612,7 +612,7 @@ struct USourceEffectRingModulationSettings
     float WetLevel;
 }
 
-struct USourceEffectSimpleDelaySettings
+struct FSourceEffectSimpleDelaySettings
 {
     float SpeedOfSound;
     float DelayAmount;
@@ -622,7 +622,7 @@ struct USourceEffectSimpleDelaySettings
     uint8 bDelayBasedOnDistance;
 }
 
-struct USourceEffectStereoDelaySettings
+struct FSourceEffectStereoDelaySettings
 {
     EStereoDelaySourceEffect DelayMode;
     float DelayTimeMsec;
@@ -631,13 +631,13 @@ struct USourceEffectStereoDelaySettings
     float WetLevel;
 }
 
-struct USourceEffectWaveShaperSettings
+struct FSourceEffectWaveShaperSettings
 {
     float Amount;
     float OutputGainDb;
 }
 
-struct USubmixEffectConvolutionReverbSettings
+struct FSubmixEffectConvolutionReverbSettings
 {
     float NormalizationVolumeDb;
     float SurroundRearChannelBleedDb;
@@ -648,14 +648,14 @@ struct USubmixEffectConvolutionReverbSettings
     bool AllowHArdwareAcceleration;
 }
 
-struct USubmixEffectDelaySettings
+struct FSubmixEffectDelaySettings
 {
     float MaximumDelayLength;
     float InterpolationTime;
     float DelayLength;
 }
 
-struct USubmixEffectFilterSettings
+struct FSubmixEffectFilterSettings
 {
     ESubmixFilterType FilterType;
     ESubmixFilterAlgorithm FilterAlgorithm;
@@ -663,7 +663,7 @@ struct USubmixEffectFilterSettings
     float FilterQ;
 }
 
-struct USubmixEffectFlexiverbSettings
+struct FSubmixEffectFlexiverbSettings
 {
     float PreDelay;
     float DecayTime;
@@ -671,14 +671,14 @@ struct USubmixEffectFlexiverbSettings
     int32 Complexity;
 }
 
-struct USubmixEffectTapDelaySettings
+struct FSubmixEffectTapDelaySettings
 {
     float MaximumDelayLength;
     float InterpolationTime;
     TArray<FTapDelayInfo> Taps;
 }
 
-struct UTapDelayInfo
+struct FTapDelayInfo
 {
     ETapLineMode TapLineMode;
     float DelayLength;
@@ -688,7 +688,7 @@ struct UTapDelayInfo
     int32 TapId;
 }
 
-struct USynth2DSliderStyle : FSlateWidgetStyle
+struct FSynth2DSliderStyle : FSlateWidgetStyle
 {
     FSlateBrush NormalThumbImage;
     FSlateBrush DisabledThumbImage;
@@ -698,7 +698,7 @@ struct USynth2DSliderStyle : FSlateWidgetStyle
     float BarThickness;
 }
 
-struct USynthKnobStyle : FSlateWidgetStyle
+struct FSynthKnobStyle : FSlateWidgetStyle
 {
     FSlateBrush LargeKnob;
     FSlateBrush LargeKnobOverlay;
@@ -709,7 +709,7 @@ struct USynthKnobStyle : FSlateWidgetStyle
     ESynthKnobSize KnobSize;
 }
 
-struct USynthSlateStyle : FSlateWidgetStyle
+struct FSynthSlateStyle : FSlateWidgetStyle
 {
     ESynthSlateSizeType SizeType;
     ESynthSlateColorStyle ColorStyle;

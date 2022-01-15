@@ -223,13 +223,13 @@ class UTimeSynchronizableMediaSource : UBaseMediaSource
     double TimeDelay;
 }
 
-struct UMediaCaptureDevice
+struct FMediaCaptureDevice
 {
     FText DisplayName;
     FString URL;
 }
 
-struct UMediaSoundComponentSpectralData
+struct FMediaSoundComponentSpectralData
 {
     float FrequencyHz;
     float Magnitude;

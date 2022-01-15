@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_Serialization_HPP
 #define UE4SS_SDK_Serialization_HPP
 
-struct UStructSerializerTestStruct
+struct FStructSerializerTestStruct
 {
     FStructSerializerNumericTestStruct Numerics;
     FStructSerializerBooleanTestStruct Booleans;
@@ -12,7 +12,7 @@ struct UStructSerializerTestStruct
     FStructSerializerSetTestStruct Sets;
 }
 
-struct UStructSerializerSetTestStruct
+struct FStructSerializerSetTestStruct
 {
     TSet<FString> StrSet;
     TSet<int32> IntSet;
@@ -20,7 +20,7 @@ struct UStructSerializerSetTestStruct
     TSet<FStructSerializerBuiltinTestStruct> StructSet;
 }
 
-struct UStructSerializerBuiltinTestStruct
+struct FStructSerializerBuiltinTestStruct
 {
     FGuid Guid;
     FName Name;
@@ -33,7 +33,7 @@ struct UStructSerializerBuiltinTestStruct
     FColor Color;
 }
 
-struct UStructSerializerMapTestStruct
+struct FStructSerializerMapTestStruct
 {
     TMap<int32, FString> IntToStr;
     TMap<FString, FString> StrToStr;
@@ -41,7 +41,7 @@ struct UStructSerializerMapTestStruct
     TMap<FString, FStructSerializerBuiltinTestStruct> StrToStruct;
 }
 
-struct UStructSerializerArrayTestStruct
+struct FStructSerializerArrayTestStruct
 {
     TArray<int32> Int32Array;
     TArray<uint8> ByteArray;
@@ -52,7 +52,7 @@ struct UStructSerializerArrayTestStruct
     TArray<FStructSerializerBuiltinTestStruct> StructArray;
 }
 
-struct UStructSerializerObjectTestStruct
+struct FStructSerializerObjectTestStruct
 {
     UClass* Class;
     TSubclassOf<UMetaData> SubClass;
@@ -64,7 +64,7 @@ struct UStructSerializerObjectTestStruct
     FSoftObjectPath ObjectPath;
 }
 
-struct UStructSerializerBooleanTestStruct
+struct FStructSerializerBooleanTestStruct
 {
     bool BoolFalse;
     bool BoolTrue;
@@ -78,7 +78,7 @@ struct UStructSerializerBooleanTestStruct
     uint8 Bitfield7Set;
 }
 
-struct UStructSerializerNumericTestStruct
+struct FStructSerializerNumericTestStruct
 {
     int8 Int8;
     int16 Int16;
@@ -92,7 +92,7 @@ struct UStructSerializerNumericTestStruct
     double Double;
 }
 
-struct UStructSerializerByteArray
+struct FStructSerializerByteArray
 {
     int32 Dummy1;
     TArray<uint8> ByteArray;

@@ -605,7 +605,7 @@ class UStaticMeshCarver : UDataAsset
     void ExportPreviewMesh();
 }
 
-struct UCarveSplineSegment
+struct FCarveSplineSegment
 {
     FVector SplineStart;
     FVector SplineStartTangent;
@@ -614,12 +614,12 @@ struct UCarveSplineSegment
     float Radius;
 }
 
-struct UMatrixWithExactSync
+struct FMatrixWithExactSync
 {
     float Values;
 }
 
-struct UBakeEntry
+struct FBakeEntry
 {
     FDeepCSGFloatTreePacked Tree;
     FBox AABB;
@@ -627,7 +627,7 @@ struct UBakeEntry
     TArray<FSmartTerrainMaterialVal> SmartMaterials;
 }
 
-struct USmartTerrainMaterialVal
+struct FSmartTerrainMaterialVal
 {
     uint32 IfEmpty;
     uint32 IfSolid;
@@ -635,67 +635,67 @@ struct USmartTerrainMaterialVal
     TArray<uint32> OverrideValues;
 }
 
-struct UDeepCSGFloatTreePacked
+struct FDeepCSGFloatTreePacked
 {
     FDeepCSGNode Root;
     TArray<int32> encplanes;
 }
 
-struct UDeepCSGNode
+struct FDeepCSGNode
 {
     uint32 Val;
 }
 
-struct UCSGBakedChildInstanceProperties
+struct FCSGBakedChildInstanceProperties
 {
     UCSGBake* BakedCSG;
     int32 VariantIndex;
 }
 
-struct UMeshBaseProperties
+struct FMeshBaseProperties
 {
     bool Enabled;
 }
 
-struct UCSGAddMaterialLayersProperties
+struct FCSGAddMaterialLayersProperties
 {
     TArray<FCSGLayers> Layers;
     FBinaryTerrainMaterialCombiner Inner;
 }
 
-struct UBinaryTerrainMaterialCombiner
+struct FBinaryTerrainMaterialCombiner
 {
     FEmptyBinaryMatProperties IfEmpty;
     FBinaryMatProperties IfSolid;
     TArray<FBinaryMatPatterns> Patterns;
 }
 
-struct UBinaryMatPatterns
+struct FBinaryMatPatterns
 {
     EPattern PatternType;
     UTerrainMaterialCore* PatternMaterial;
     FBinaryMatProperties ReplaceWith;
 }
 
-struct UBinaryMatProperties
+struct FBinaryMatProperties
 {
     EBinaryComb Result;
     UTerrainMaterialCore* Material;
 }
 
-struct UEmptyBinaryMatProperties
+struct FEmptyBinaryMatProperties
 {
     EEmptyBinaryComb Result;
     UTerrainMaterialCore* Material;
 }
 
-struct UCSGLayers
+struct FCSGLayers
 {
     float Offset;
     FBinaryTerrainMaterialCombiner Above;
 }
 
-struct UGeneralTerrainMaterialCombiner
+struct FGeneralTerrainMaterialCombiner
 {
     FGeneralMatPropertiesEmpty IfBothEmpty;
     TArray<FGeneralMatPatterns> Patterns;
@@ -704,26 +704,26 @@ struct UGeneralTerrainMaterialCombiner
     FGeneralMatProperties IfDestSolid;
 }
 
-struct UGeneralMatProperties
+struct FGeneralMatProperties
 {
     EGeneralComb Result;
     UTerrainMaterialCore* Material;
 }
 
-struct UGeneralMatPatterns
+struct FGeneralMatPatterns
 {
     EGeneralPattern PatternType;
     UTerrainMaterialCore* PatternMaterial;
     FGeneralMatProperties ReplaceWith;
 }
 
-struct UGeneralMatPropertiesEmpty
+struct FGeneralMatPropertiesEmpty
 {
     EGeneralCombEmpty Result;
     UTerrainMaterialCore* Material;
 }
 
-struct UBakeSettings
+struct FBakeSettings
 {
     TMap<FName, bool> Bools;
     TMap<FName, int32> Ints;
@@ -731,7 +731,7 @@ struct UBakeSettings
     TMap<FName, FVector> Vectors;
 }
 
-struct UMeshCellNoiseProperties
+struct FMeshCellNoiseProperties
 {
     FVector CellSize;
     float CellOffsetFactor;
@@ -740,31 +740,31 @@ struct UMeshCellNoiseProperties
     int32 Seed;
 }
 
-struct UCSGChildInstanceProperties
+struct FCSGChildInstanceProperties
 {
     TSubclassOf<ACSGBuilder> Mesh;
     FBakeSettings Settings;
     int32 Seed;
 }
 
-struct UCSGConvexColliderProperties
+struct FCSGConvexColliderProperties
 {
     UStaticMesh* collider;
 }
 
-struct UMeshLayerProperties
+struct FMeshLayerProperties
 {
     UTerrainMaterialCore* StartMaterial;
     FBox BoundingBox;
 }
 
-struct UCSGCircleDuplicatorProperties
+struct FCSGCircleDuplicatorProperties
 {
     int32 Num;
     float Radius;
 }
 
-struct UCSGGridDuplicatorProperties
+struct FCSGGridDuplicatorProperties
 {
     int32 NumA;
     int32 NumB;
@@ -772,12 +772,12 @@ struct UCSGGridDuplicatorProperties
     FVector DirectionB;
 }
 
-struct UCSGRandomDisableProperties
+struct FCSGRandomDisableProperties
 {
     float DisableProbability;
 }
 
-struct UCSGRandomizeTransformProperties
+struct FCSGRandomizeTransformProperties
 {
     FBox Translation;
     float RotationMinZ;
@@ -793,7 +793,7 @@ struct UCSGRandomizeTransformProperties
     int32 Seed;
 }
 
-struct UCSGSphereProperties
+struct FCSGSphereProperties
 {
     float Radius;
     float AngleTop;
@@ -802,7 +802,7 @@ struct UCSGSphereProperties
     int32 Sides;
 }
 
-struct UCSGConeProperties
+struct FCSGConeProperties
 {
     float Height;
     float RadiusTop;
@@ -810,39 +810,39 @@ struct UCSGConeProperties
     int32 Sides;
 }
 
-struct UCSGCylinderProperties
+struct FCSGCylinderProperties
 {
     float Height;
     float Radius;
     int32 Sides;
 }
 
-struct UMeshBoxProperties
+struct FMeshBoxProperties
 {
     FVector HalfSize;
     int32 BevelSegments;
     float BevelSize;
 }
 
-struct UConvexNoiseProperties
+struct FConvexNoiseProperties
 {
     float Amplitude;
     float GridSize;
     int32 Seed;
 }
 
-struct USplineModProperties
+struct FSplineModProperties
 {
     FBox ElementBox;
     bool ForceZUp;
 }
 
-struct URemappedProperties
+struct FRemappedProperties
 {
     EPreviewCellSize CellSize;
 }
 
-struct UCSGSDFModulatedInstanceProperties
+struct FCSGSDFModulatedInstanceProperties
 {
     TSubclassOf<ASDFBuilder> SDF;
     TSubclassOf<ASDFBuilder> ModulateSDF;
@@ -854,13 +854,13 @@ struct UCSGSDFModulatedInstanceProperties
     TArray<FSDFModulateLayer> ModulateLayers;
 }
 
-struct USDFModulateLayer
+struct FSDFModulateLayer
 {
     float ModulateDistance;
     float SDFOffset;
 }
 
-struct UCSGSDFInstanceProperties
+struct FCSGSDFInstanceProperties
 {
     TSubclassOf<ASDFBuilder> SDF;
     EPreviewCellSize CellSize;
@@ -868,7 +868,7 @@ struct UCSGSDFInstanceProperties
     int32 Seed;
 }
 
-struct UVoronoiProperties
+struct FVoronoiProperties
 {
     FVector HalfSize;
     int32 NumPoints;
@@ -877,128 +877,128 @@ struct UVoronoiProperties
     bool Inverted;
 }
 
-struct UCSGSTLProperties
+struct FCSGSTLProperties
 {
     UStaticMeshCarver* Mesh;
 }
 
-struct UDeepCSGFloatTree
+struct FDeepCSGFloatTree
 {
     FDeepCSGNode Root;
     TArray<FDeepCSGFloatPlane> Planes;
 }
 
-struct UDeepCSGFloatPlane
+struct FDeepCSGFloatPlane
 {
     FVector4 Plane;
     FDeepCSGNode Top;
     FDeepCSGNode Bottom;
 }
 
-struct UChunkOffset
+struct FChunkOffset
 {
     int16 X;
     int16 Y;
     int16 Z;
 }
 
-struct UChunkId
+struct FChunkId
 {
     int16 X;
     int16 Y;
     int16 Z;
 }
 
-struct UCellId
+struct FCellId
 {
     int16 X;
     int16 Y;
     int16 Z;
 }
 
-struct UDeepCSGTree
+struct FDeepCSGTree
 {
 }
 
-struct UDeepCSGTreeOperations
+struct FDeepCSGTreeOperations
 {
 }
 
-struct UDeepCSGUtils
+struct FDeepCSGUtils
 {
 }
 
-struct ULinearCellId
+struct FLinearCellId
 {
     uint16 X;
     uint16 Y;
     uint16 Z;
 }
 
-struct UEncodedChunkCellId
+struct FEncodedChunkCellId
 {
     FEncodedChunkId ChunkId;
     uint16 cellOffset;
 }
 
-struct UEncodedChunkId
+struct FEncodedChunkId
 {
     uint32 ID;
 }
 
-struct UChunckIDAndOffsetBox
+struct FChunckIDAndOffsetBox
 {
     FChunkId ChunkId;
     FChunkOffset minOffset;
     FChunkOffset maxOffset;
 }
 
-struct UChunckIDAndOffset
+struct FChunckIDAndOffset
 {
     FChunkId ChunkId;
     FChunkOffset Offset;
 }
 
-struct UCellBox
+struct FCellBox
 {
     FCellId Min;
     FCellId Max;
 }
 
-struct USDFHeightMaproperties
+struct FSDFHeightMaproperties
 {
     FVector Scale;
 }
 
-struct USDFOnionProperties
+struct FSDFOnionProperties
 {
     float Thickness;
 }
 
-struct USDFSmoothingProperties
+struct FSDFSmoothingProperties
 {
     float SmoothingDist;
     bool SmoothingEnabled;
 }
 
-struct USDFModifierProperties
+struct FSDFModifierProperties
 {
     float Offset;
     float CellNoise;
     int32 Seed;
 }
 
-struct USDFBaseProperties
+struct FSDFBaseProperties
 {
     bool Enabled;
 }
 
-struct USDFRandomDisableProperties
+struct FSDFRandomDisableProperties
 {
     float DisableProbability;
 }
 
-struct USDFRandomizeTransformProperties
+struct FSDFRandomizeTransformProperties
 {
     FBox Translation;
     float RotationMinZ;
@@ -1014,31 +1014,31 @@ struct USDFRandomizeTransformProperties
     int32 Seed;
 }
 
-struct USDFTorusProperties
+struct FSDFTorusProperties
 {
     float Radius;
     float TubeRadius;
     FName SizeOverrideName;
 }
 
-struct USDFCapsuleProperties
+struct FSDFCapsuleProperties
 {
     float HalfLength;
     float Radius;
 }
 
-struct USDFCylinderProperties
+struct FSDFCylinderProperties
 {
     float HalfLength;
     float Radius;
 }
 
-struct USDFBoxProperties
+struct FSDFBoxProperties
 {
     FVector HalfSize;
 }
 
-struct USDFSphereProperties
+struct FSDFSphereProperties
 {
     float Radius;
     FName RadiusOverrideName;

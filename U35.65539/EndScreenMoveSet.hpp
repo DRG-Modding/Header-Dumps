@@ -1,7 +1,7 @@
 #ifndef UE4SS_SDK_EndScreenMoveSet_HPP
 #define UE4SS_SDK_EndScreenMoveSet_HPP
 
-class UEndScreenMoveSet
+struct FEndScreenMoveSet
 {
     float Weight_20_9172AF0F49C74900EC45C29EEE7FB775;
     TArray<TSoftObjectPtr<UAnimSequence>> Walks_42_3B0B99FD43910DD750F305953173B9CB;

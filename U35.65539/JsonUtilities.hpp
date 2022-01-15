@@ -5,7 +5,7 @@ class UJsonUtilitiesDummyObject : UObject
 {
 }
 
-struct UJsonObjectWrapper
+struct FJsonObjectWrapper
 {
     FString JsonString;
 }

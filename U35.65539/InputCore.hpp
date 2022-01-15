@@ -7,7 +7,7 @@ class UInputCoreTypes : UObject
 {
 }
 
-struct UKey
+struct FKey
 {
     FName KeyName;
 }

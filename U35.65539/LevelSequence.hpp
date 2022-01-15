@@ -117,50 +117,50 @@ class ALevelSequenceMediaController : AActor
     UMediaComponent* GetMediaComponent();
 }
 
-struct ULevelSequenceCameraSettings
+struct FLevelSequenceCameraSettings
 {
     bool bOverrideAspectRatioAxisConstraint;
     TEnumAsByte<EAspectRatioAxisConstraint> AspectRatioAxisConstraint;
 }
 
-struct UBoundActorProxy
+struct FBoundActorProxy
 {
 }
 
-struct ULevelSequenceBindingReferences
+struct FLevelSequenceBindingReferences
 {
     TMap<FGuid, FLevelSequenceBindingReferenceArray> BindingIdToReferences;
     TSet<FGuid> AnimSequenceInstances;
 }
 
-struct ULevelSequenceBindingReferenceArray
+struct FLevelSequenceBindingReferenceArray
 {
     TArray<FLevelSequenceBindingReference> References;
 }
 
-struct ULevelSequenceBindingReference
+struct FLevelSequenceBindingReference
 {
     FString PackageName;
     FSoftObjectPath ExternalObjectPath;
     FString ObjectPath;
 }
 
-struct ULevelSequenceObjectReferenceMap
+struct FLevelSequenceObjectReferenceMap
 {
 }
 
-struct ULevelSequenceLegacyObjectReference
+struct FLevelSequenceLegacyObjectReference
 {
 }
 
-struct ULevelSequenceObject
+struct FLevelSequenceObject
 {
     TLazyObjectPtr<UObject> ObjectOrOwner;
     FString ComponentName;
     TWeakObjectPtr<UObject> CachedComponent;
 }
 
-struct ULevelSequencePlayerSnapshot
+struct FLevelSequencePlayerSnapshot
 {
     FString MasterName;
     FQualifiedFrameTime MasterTime;
@@ -175,7 +175,7 @@ struct ULevelSequencePlayerSnapshot
     FMovieSceneSequenceID ShotID;
 }
 
-struct ULevelSequenceSnapshotSettings
+struct FLevelSequenceSnapshotSettings
 {
     uint8 ZeroPadAmount;
     FFrameRate FrameRate;

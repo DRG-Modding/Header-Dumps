@@ -19,7 +19,7 @@ class UBuildPatchManifest : UObject
     TArray<FCustomFieldData> CustomFields;
 }
 
-struct UFileManifestData
+struct FFileManifestData
 {
     FString Filename;
     FSHAHashData FileHash;
@@ -31,19 +31,19 @@ struct UFileManifestData
     bool bIsCompressed;
 }
 
-struct UChunkPartData
+struct FChunkPartData
 {
     FGuid Guid;
     uint32 Offset;
     uint32 Size;
 }
 
-struct USHAHashData
+struct FSHAHashData
 {
     uint8 Hash;
 }
 
-struct UChunkInfoData
+struct FChunkInfoData
 {
     FGuid Guid;
     uint64 Hash;
@@ -52,7 +52,7 @@ struct UChunkInfoData
     uint8 GroupNumber;
 }
 
-struct UCustomFieldData
+struct FCustomFieldData
 {
     FString Key;
     FString Value;

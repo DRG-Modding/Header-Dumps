@@ -3,7 +3,7 @@
 
 #include "AudioPlatformConfiguration_enums.hpp"
 
-struct UPlatformRuntimeAudioCompressionOverrides
+struct FPlatformRuntimeAudioCompressionOverrides
 {
     bool bOverrideCompressionTimes;
     float DurationThreshold;

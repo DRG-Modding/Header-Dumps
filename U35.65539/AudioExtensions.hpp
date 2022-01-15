@@ -38,13 +38,13 @@ class USoundfieldEffectBase : UObject
     USoundfieldEffectSettingsBase* Settings;
 }
 
-struct USoundModulationParameter
+struct FSoundModulationParameter
 {
     FName Control;
     float Value;
 }
 
-struct USoundModulation
+struct FSoundModulation
 {
     TArray<USoundModulationPluginSourceSettingsBase*> Settings;
 }

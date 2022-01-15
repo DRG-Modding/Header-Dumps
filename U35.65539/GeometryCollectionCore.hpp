@@ -3,12 +3,12 @@
 
 #include "GeometryCollectionCore_enums.hpp"
 
-struct URecordedTransformTrack
+struct FRecordedTransformTrack
 {
     TArray<FRecordedFrame> Records;
 }
 
-struct URecordedFrame
+struct FRecordedFrame
 {
     TArray<FTransform> Transforms;
     TArray<int32> TransformIndices;
@@ -20,7 +20,7 @@ struct URecordedFrame
     float Timestamp;
 }
 
-struct USolverTrailingData
+struct FSolverTrailingData
 {
     FVector Location;
     FVector Velocity;
@@ -30,7 +30,7 @@ struct USolverTrailingData
     int32 ParticleIndexMesh;
 }
 
-struct USolverBreakingData
+struct FSolverBreakingData
 {
     FVector Location;
     FVector Velocity;
@@ -40,7 +40,7 @@ struct USolverBreakingData
     int32 ParticleIndexMesh;
 }
 
-struct USolverCollisionData
+struct FSolverCollisionData
 {
     FVector Location;
     FVector AccumulatedImpulse;

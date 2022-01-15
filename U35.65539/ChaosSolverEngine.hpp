@@ -62,7 +62,7 @@ class UChaosSolverSettings : UDeveloperSettings
     FSoftClassPath DefaultChaosSolverActorClass;
 }
 
-struct UChaosPhysicsCollisionInfo
+struct FChaosPhysicsCollisionInfo
 {
     UPrimitiveComponent* Component;
     UPrimitiveComponent* OtherComponent;
@@ -77,7 +77,7 @@ struct UChaosPhysicsCollisionInfo
     float OtherMass;
 }
 
-struct UChaosBreakEvent
+struct FChaosBreakEvent
 {
     UPrimitiveComponent* Component;
     FVector Location;
@@ -86,16 +86,16 @@ struct UChaosBreakEvent
     float Mass;
 }
 
-struct UChaosHandlerSet
+struct FChaosHandlerSet
 {
     TSet<UObject*> ChaosHandlers;
 }
 
-struct UBreakEventCallbackWrapper
+struct FBreakEventCallbackWrapper
 {
 }
 
-struct UChaosDebugSubstepControl
+struct FChaosDebugSubstepControl
 {
     bool bPause;
     bool bSubstep;

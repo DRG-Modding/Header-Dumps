@@ -11,7 +11,7 @@ class UMovieSceneGeometryCacheTrack : UMovieSceneNameableTrack
     TArray<UMovieSceneSection*> AnimationSections;
 }
 
-struct UMovieSceneGeometryCacheParams
+struct FMovieSceneGeometryCacheParams
 {
     UGeometryCache* GeometryCacheAsset;
     FFrameNumber FirstLoopStartFrameOffset;
@@ -24,12 +24,12 @@ struct UMovieSceneGeometryCacheParams
     FSoftObjectPath GeometryCache;
 }
 
-struct UMovieSceneGeometryCacheSectionTemplate : FMovieSceneEvalTemplate
+struct FMovieSceneGeometryCacheSectionTemplate : FMovieSceneEvalTemplate
 {
     FMovieSceneGeometryCacheSectionTemplateParameters Params;
 }
 
-struct UMovieSceneGeometryCacheSectionTemplateParameters : FMovieSceneGeometryCacheParams
+struct FMovieSceneGeometryCacheSectionTemplateParameters : FMovieSceneGeometryCacheParams
 {
     FFrameNumber SectionStartTime;
     FFrameNumber SectionEndTime;

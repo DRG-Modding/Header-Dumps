@@ -8,7 +8,7 @@ class UITM_MisSel_ResourceIcon_C : UUserWidget
     UTextBlock* DATA_ResourceName;
 
     void SetData(UResourceData* Resource);
-    void ExecuteUbergraph_ITM_MisSel_ResourceIcon(int32 EntryPoint, ESlateVisibility Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, UResourceData* K2Node_CustomEvent_resource, bool CallFunc_IsValid_ReturnValue, FText CallFunc_TextToUpper_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, bool Temp_bool_Variable, ESlateVisibility K2Node_Select_Default);
+    void ExecuteUbergraph_ITM_MisSel_ResourceIcon(int32 EntryPoint, ESlateVisibility Temp_byte_Variable, ESlateVisibility Temp_byte_Variable_1, UResourceData* K2Node_CustomEvent_Resource, bool CallFunc_IsValid_ReturnValue, FText CallFunc_TextToUpper_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, bool Temp_bool_Variable, ESlateVisibility K2Node_Select_Default);
 }
 
 #endif
