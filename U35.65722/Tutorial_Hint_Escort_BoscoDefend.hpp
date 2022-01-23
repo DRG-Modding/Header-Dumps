@@ -1,0 +1,14 @@
+#ifndef UE4SS_SDK_Tutorial_Hint_Escort_BoscoDefend_HPP
+#define UE4SS_SDK_Tutorial_Hint_Escort_BoscoDefend_HPP
+
+class UTutorial_Hint_Escort_BoscoDefend_C : public UTutorialHintComponent
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+
+    void ReceiveOnInitialized();
+    void OnBoscoChanged(class ABosco* Bosco);
+    void OnObjectiveUpdated(class UObjective* Objective);
+    void ExecuteUbergraph_Tutorial_Hint_Escort_BoscoDefend(int32 EntryPoint, bool Temp_bool_IsClosed_Variable, bool Temp_bool_Has_Been_Initd_Variable, FExecuteUbergraph_Tutorial_Hint_Escort_BoscoDefendK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, class UObjective* CallFunc_GetPrimaryObjective_ReturnValue, bool CallFunc_IsValid_ReturnValue, TSubclassOf<class UObjective> CallFunc_GetObjectClass_ReturnValue, TSubclassOf<class UEscortObjective> K2Node_ClassDynamicCast_AsEscort_Objective, bool K2Node_ClassDynamicCast_bSuccess, class ABosco* K2Node_CustomEvent_Bosco, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, bool CallFunc_IsValid_ReturnValue_1, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_2, class UObjective* K2Node_CustomEvent_Objective, class UEscortObjective* K2Node_DynamicCast_AsEscort_Objective, bool K2Node_DynamicCast_bSuccess, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue_1, class UObjective* CallFunc_GetPrimaryObjective_ReturnValue_1, bool CallFunc_EqualEqual_ByteByte_ReturnValue, class UEscortObjective* K2Node_DynamicCast_AsEscort_Objective_1, bool K2Node_DynamicCast_bSuccess_1, FExecuteUbergraph_Tutorial_Hint_Escort_BoscoDefendK2Node_CreateDelegate_OutputDelegate_1 K2Node_CreateDelegate_OutputDelegate_1);
+};
+
+#endif

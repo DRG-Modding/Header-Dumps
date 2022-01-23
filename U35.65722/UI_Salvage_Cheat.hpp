@@ -1,0 +1,26 @@
+#ifndef UE4SS_SDK_UI_Salvage_Cheat_HPP
+#define UE4SS_SDK_UI_Salvage_Cheat_HPP
+
+class UUI_Salvage_Cheat_C : public UUI_MissionCheat_Base_C
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UCheatMenu_BasicButtonWText_C* CheatMenu_ActivateSalvagePod;
+    class UCheatMenu_BasicButtonWText_C* CheatMenu_FinishNextSalvagePoint;
+    class UCheatMenu_BasicButtonWText_C* CheatMenu_RepairAllMules;
+    class UCheatMenu_BasicButtonWText_C* CheatMenu_TeleportToPod;
+    class UVerticalBox* Left;
+    TArray<class UCheatMenu_BasicButtonWText_C*> MuleButtons;
+
+    void TeleportToMule(class AActor* MULE, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue, FHitResult CallFunc_K2_SetActorLocation_SweepHitResult, bool CallFunc_K2_SetActorLocation_ReturnValue);
+    class UCheatMenu_BasicButtonWText_C* CreateMinimuleButton(FString MuleNameFString CallFunc_Concat_StrStr_ReturnValue, class APlayerController* CallFunc_GetOwningPlayer_ReturnValue, FText CallFunc_Conv_StringToText_ReturnValue, class UCheatMenu_BasicButtonWText_C* CallFunc_Create_ReturnValue, class UPanelSlot* CallFunc_AddChild_ReturnValue);
+    void GetSalvageObjective(class USalvageObjective*& AsSalvage Objective, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue, class UObjective* CallFunc_GetPrimaryObjective_ReturnValue, class USalvageObjective* K2Node_DynamicCast_AsSalvage_Objective, bool K2Node_DynamicCast_bSuccess);
+    void Construct();
+    void BndEvt__CheatMenu_BasicButtonWText_K2Node_ComponentBoundEvent_1_OnClicked__DelegateSignature(class UCheatMenu_BasicButtonWText_C* Button);
+    void BndEvt__CheatMenu_ActivateSalvagePod_K2Node_ComponentBoundEvent_0_OnClicked__DelegateSignature(class UCheatMenu_BasicButtonWText_C* Button);
+    void BndEvt__CheatMenu_TeleportToPod_K2Node_ComponentBoundEvent_2_OnClicked__DelegateSignature(class UCheatMenu_BasicButtonWText_C* Button);
+    void BndEvt__CheatMenu_FinishNextSalvagePoint_K2Node_ComponentBoundEvent_3_OnClicked__DelegateSignature(class UCheatMenu_BasicButtonWText_C* Button);
+    void CustomEvent_0(class UCheatMenu_BasicButtonWText_C* Button);
+    void ExecuteUbergraph_UI_Salvage_Cheat(int32 EntryPoint, int32 Temp_int_Array_Index_Variable, FExecuteUbergraph_UI_Salvage_CheatK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, int32 Temp_int_Array_Index_Variable_1, FString CallFunc_Conv_IntToString_ReturnValue, class USalvageObjective* CallFunc_GetSalvageObjective_AsSalvage_Objective, class UCheatMenu_BasicButtonWText_C* K2Node_ComponentBoundEvent_Button_3, class USalvageObjective* CallFunc_GetSalvageObjective_AsSalvage_Objective_1, int32 CallFunc_Array_Length_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, class AMiniMule* CallFunc_Array_Get_Item, class ABP_MiniMule_Salvage_C* K2Node_DynamicCast_AsBP_Mini_Mule_Salvage, bool K2Node_DynamicCast_bSuccess, int32 CallFunc_Array_Length_ReturnValue_1, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, int32 Temp_int_Loop_Counter_Variable_1, bool CallFunc_IsValid_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue_1, int32 CallFunc_Add_IntInt_ReturnValue_1, class UCheatMenu_BasicButtonWText_C* K2Node_ComponentBoundEvent_Button_2, class AGameModeBase* CallFunc_GetGameMode_ReturnValue, class UCheatMenu_BasicButtonWText_C* K2Node_ComponentBoundEvent_Button_1, class AGM_Salvage_C* K2Node_DynamicCast_AsGM_Salvage, bool K2Node_DynamicCast_bSuccess_1, class ABP_DropPod_Escape_Damaged_C* CallFunc_GetActorOfClass_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, FVector CallFunc_Add_VectorVector_ReturnValue, class UCheatMenu_BasicButtonWText_C* K2Node_ComponentBoundEvent_Button, FHitResult CallFunc_K2_SetActorLocation_SweepHitResult, bool CallFunc_K2_SetActorLocation_ReturnValue, class AFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, class AGM_Salvage_C* K2Node_DynamicCast_AsGM_Salvage_1, bool K2Node_DynamicCast_bSuccess_2, class APlayerController* CallFunc_GetOwningPlayer_ReturnValue, bool CallFunc_HasAuthority_ReturnValue, class UCheatMenu_BasicButtonWText_C* K2Node_CustomEvent_Button, class UCheatMenu_BasicButtonWText_C* CallFunc_CreateButton_ReturnValue, int32 CallFunc_Array_Find_ReturnValue, class USalvageObjective* CallFunc_GetSalvageObjective_AsSalvage_Objective_2, class AMiniMule* CallFunc_Array_Get_Item_1);
+};
+
+#endif

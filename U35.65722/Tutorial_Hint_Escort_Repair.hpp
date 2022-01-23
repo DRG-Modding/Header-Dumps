@@ -1,0 +1,18 @@
+#ifndef UE4SS_SDK_Tutorial_Hint_Escort_Repair_HPP
+#define UE4SS_SDK_Tutorial_Hint_Escort_Repair_HPP
+
+class UTutorial_Hint_Escort_Repair_C : public UTutorialHintComponent
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    float AccumilatedDamage;
+    float TotalDamageBeforeShowingHint;
+    class AEscortMule* Drilldozer;
+    class UFriendlyHealthComponent* DrilldozerHealth;
+
+    void ReceiveOnInitialized();
+    void OnPermanentDamage(int32 currSegment, int32 prevSegment);
+    void DorettaDamaged(float Amount);
+    void ExecuteUbergraph_Tutorial_Hint_Escort_Repair(int32 EntryPoint, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, class UObjective* CallFunc_GetPrimaryObjective_ReturnValue, bool CallFunc_IsValid_ReturnValue, TSubclassOf<class UObjective> CallFunc_GetObjectClass_ReturnValue, TSubclassOf<class UEscortObjective> K2Node_ClassDynamicCast_AsEscort_Objective, bool K2Node_ClassDynamicCast_bSuccess, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue_1, class UObjective* CallFunc_GetPrimaryObjective_ReturnValue_1, class UEscortObjective* K2Node_DynamicCast_AsEscort_Objective, bool K2Node_DynamicCast_bSuccess, bool CallFunc_LessEqual_FloatFloat_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, int32 K2Node_CustomEvent_currSegment, int32 K2Node_CustomEvent_prevSegment, bool K2Node_SwitchInteger_CmpSuccess, FExecuteUbergraph_Tutorial_Hint_Escort_RepairK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, float K2Node_CustomEvent_Amount, float CallFunc_Add_FloatFloat_ReturnValue, FExecuteUbergraph_Tutorial_Hint_Escort_RepairK2Node_CreateDelegate_OutputDelegate_1 K2Node_CreateDelegate_OutputDelegate_1, FExecuteUbergraph_Tutorial_Hint_Escort_RepairK2Node_CreateDelegate_OutputDelegate_2 K2Node_CreateDelegate_OutputDelegate_2);
+};
+
+#endif

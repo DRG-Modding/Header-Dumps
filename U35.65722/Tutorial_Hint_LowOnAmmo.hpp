@@ -1,0 +1,20 @@
+#ifndef UE4SS_SDK_Tutorial_Hint_LowOnAmmo_HPP
+#define UE4SS_SDK_Tutorial_Hint_LowOnAmmo_HPP
+
+class UTutorial_Hint_LowOnAmmo_C : public UTutorialHintComponent
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UResourceData* ResourceType;
+    class UCappedResource* Resource;
+    float MinimumAmount;
+    float DelayBeforeActive;
+    bool HasMinedNitraSinceLastTutorial;
+    bool IsTutorialActive;
+
+    void ReceiveOnInitialized();
+    void OnSupplyStatusChangedEvent(float ammoStatus01, float healthStatus01);
+    void OnResourceMined(class UCappedResource* Resource, float Amount);
+    void ExecuteUbergraph_Tutorial_Hint_LowOnAmmo(int32 EntryPoint, FExecuteUbergraph_Tutorial_Hint_LowOnAmmoK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, bool Temp_bool_IsClosed_Variable, class UInventoryList* CallFunc_GetInventoryList_ReturnValue, class AItem* CallFunc_GetItem_ReturnValue, class ARessuplyPodItem* K2Node_DynamicCast_AsRessuply_Pod_Item, bool K2Node_DynamicCast_bSuccess, bool Temp_bool_Has_Been_Initd_Variable, int32 CallFunc_GetResourceCost_ReturnValue, float CallFunc_Conv_IntToFloat_ReturnValue, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue, class UGameData* CallFunc_GetFSDGameData_ReturnValue, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue_1, class UCappedResource* CallFunc_GetResource_ReturnValue, class UInventoryList* CallFunc_GetInventoryList_ReturnValue_1, class AItem* CallFunc_GetItem_ReturnValue_1, FExecuteUbergraph_Tutorial_Hint_LowOnAmmoK2Node_CreateDelegate_OutputDelegate_1 K2Node_CreateDelegate_OutputDelegate_1, class ARessuplyPodItem* K2Node_DynamicCast_AsRessuply_Pod_Item_1, bool K2Node_DynamicCast_bSuccess_1, int32 CallFunc_GetResourceCost_ReturnValue_1, bool Temp_bool_IsClosed_Variable_1, float CallFunc_Conv_IntToFloat_ReturnValue_1, bool CallFunc_GreaterEqual_FloatFloat_ReturnValue, bool Temp_bool_Has_Been_Initd_Variable_1, class UGameData* CallFunc_GetFSDGameData_ReturnValue_1, bool Temp_bool_Has_Been_Initd_Variable_2, class UCappedResource* CallFunc_GetResource_ReturnValue_1, class UGameData* CallFunc_GetFSDGameData_ReturnValue_2, bool CallFunc_GreaterEqual_FloatFloat_ReturnValue_1, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue_2, class UInventoryList* CallFunc_GetInventoryList_ReturnValue_2, class UCappedResource* CallFunc_GetResource_ReturnValue_2, class AItem* CallFunc_GetItem_ReturnValue_2, class ARessuplyPodItem* K2Node_DynamicCast_AsRessuply_Pod_Item_2, bool K2Node_DynamicCast_bSuccess_2, int32 CallFunc_GetResourceCost_ReturnValue_2, bool CallFunc_IsValid_ReturnValue, float CallFunc_Conv_IntToFloat_ReturnValue_2, bool CallFunc_GreaterEqual_FloatFloat_ReturnValue_2, float K2Node_CustomEvent_ammoStatus01, float K2Node_CustomEvent_healthStatus01, bool CallFunc_LessEqual_FloatFloat_ReturnValue, bool CallFunc_LessEqual_FloatFloat_ReturnValue_1, bool CallFunc_LessEqual_FloatFloat_ReturnValue_2, class UCappedResource* K2Node_CustomEvent_resource, float K2Node_CustomEvent_Amount, class UGameData* CallFunc_GetFSDGameData_ReturnValue_3, class UCappedResource* CallFunc_GetResource_ReturnValue_3, bool Temp_bool_IsClosed_Variable_2, bool CallFunc_EqualEqual_ObjectObject_ReturnValue, bool CallFunc_BooleanAND_ReturnValue);
+};
+
+#endif

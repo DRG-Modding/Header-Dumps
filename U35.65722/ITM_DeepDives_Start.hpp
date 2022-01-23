@@ -1,0 +1,45 @@
+#ifndef UE4SS_SDK_ITM_DeepDives_Start_HPP
+#define UE4SS_SDK_ITM_DeepDives_Start_HPP
+
+class UITM_DeepDives_Start_C : public UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UITM_DeepDives_Launcher_C* Hard_Launcher;
+    class UITM_OnlineRestricted_C* ITM_OnlineRestricted;
+    class UITM_ServerList_Warning_C* ITM_ServerList_Warning;
+    class UITM_DeepDives_Launcher_C* Normal_Launcher;
+    class UBasic_RadioButton_C* OptionPrivate;
+    class UBasic_RadioButton_C* OptionPublic;
+    class UBasic_RadioButton_C* OptionSolo;
+    class UBasic_PasswordField_C* PasswordField;
+    FITM_DeepDives_Start_COnJoinMission OnJoinMission;
+    void OnJoinMission(bool EliteDeepDive);
+    FTimerHandle DeepDivesServerTimeout;
+
+    void HandleKeyDown(const FKeyEvent& KeyEvent, bool& OutHandled, FEventReply& OutReply, FEventReply CallFunc_Unhandled_ReturnValue, bool CallFunc_GetIsEnabled_ReturnValue, bool CallFunc_IsVisible_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_Handle_Key_Down_OutHandled, FEventReply CallFunc_Handle_Key_Down_OutReply);
+    FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEventbool CallFunc_HandleKeyDown_OutHandled, FEventReply CallFunc_HandleKeyDown_OutReply);
+    void UpdateOptions(TArray<class UBasic_RadioButton_C*> AllOptions, bool CallFunc_GetIsChecked_ReturnValue, bool CallFunc_SelectVisibility_IsVisible, bool CallFunc_SelectVisibility_VisibilityChanged, ESlateVisibility CallFunc_SelectVisibility_New_Visibility);
+    void OnFailure_00D4455F48B21EAE6492C6AB27B0D8F5();
+    void OnSuccess_00D4455F48B21EAE6492C6AB27B0D8F5();
+    void OnFailure_14795847495E51F942775B86C1C4BCCF();
+    void OnSuccess_14795847495E51F942775B86C1C4BCCF();
+    void BndEvt__OptionPublic_K2Node_ComponentBoundEvent_0_OnCheckStateChanged__DelegateSignature(bool IsChecked);
+    void BndEvt__OptionPrivate_K2Node_ComponentBoundEvent_1_OnCheckStateChanged__DelegateSignature(bool IsChecked);
+    void BndEvt__OptionSolo_K2Node_ComponentBoundEvent_2_OnCheckStateChanged__DelegateSignature(bool IsChecked);
+    void Start Mission(class UDeepDive* mission);
+    void BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_5_OnStartMission__DelegateSignature(class UDeepDive* DeepDive);
+    void BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_6_OnStartMission__DelegateSignature(class UDeepDive* DeepDive);
+    void Open();
+    void BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_3_OnJoinMission__DelegateSignature(bool EliteDeepDive);
+    void BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_4_OnJoinMission__DelegateSignature(bool EliteDeepDive);
+    void Construct();
+    void PreConstruct(bool IsDesignTime);
+    void BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_7_OnRefresh__DelegateSignature(bool success);
+    void OnTimeOut();
+    void RefreshTimeout(bool success);
+    void BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_8_OnRefresh__DelegateSignature(bool success);
+    void ExecuteUbergraph_ITM_DeepDives_Start(int32 EntryPoint, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, bool CallFunc_HasTooManyModsEnabled_ReturnValue, FExecuteUbergraph_ITM_DeepDives_StartK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, bool CallFunc_Not_PreBool_ReturnValue, FExecuteUbergraph_ITM_DeepDives_StartK2Node_CreateDelegate_OutputDelegate_1 K2Node_CreateDelegate_OutputDelegate_1, bool Temp_bool_Variable, FString Temp_string_Variable, FExecuteUbergraph_ITM_DeepDives_StartK2Node_CreateDelegate_OutputDelegate_2 K2Node_CreateDelegate_OutputDelegate_2, class APlayerController* CallFunc_GetOwningPlayer_ReturnValue, FTimerHandle CallFunc_K2_SetTimerDelegate_ReturnValue, class UDestroySessionCallbackProxy* CallFunc_DestroySession_ReturnValue, bool CallFunc_IsValid_ReturnValue, bool CallFunc_IsInActiveSession_ReturnValue, class AFSDGameMode* CallFunc_GetFSDGameMode_ReturnValue, bool K2Node_ComponentBoundEvent_IsChecked_2, bool K2Node_ComponentBoundEvent_IsChecked_1, bool K2Node_ComponentBoundEvent_IsChecked, class UDeepDive* K2Node_CustomEvent_Mission, bool CallFunc_IsValid_ReturnValue_1, class UWindowManager* CallFunc_GetWindowManager_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_1, bool CallFunc_FSDUpdateSessionInfo_ReturnValue, class APlayerController* CallFunc_GetOwningPlayer_ReturnValue_1, FExecuteUbergraph_ITM_DeepDives_StartK2Node_CreateDelegate_OutputDelegate_3 K2Node_CreateDelegate_OutputDelegate_3, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_2, class UDeepDive* K2Node_ComponentBoundEvent_DeepDive_1, FExecuteUbergraph_ITM_DeepDives_StartK2Node_CreateDelegate_OutputDelegate_4 K2Node_CreateDelegate_OutputDelegate_4, class UDeepDive* K2Node_ComponentBoundEvent_DeepDive, bool CallFunc_GetIsChecked_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_3, bool CallFunc_GetIsChecked_ReturnValue_1, bool CallFunc_Not_PreBool_ReturnValue_1, FText CallFunc_GetPassword_Password, bool CallFunc_BooleanAND_ReturnValue, FString CallFunc_Conv_TextToString_ReturnValue, bool CallFunc_GetIsChecked_ReturnValue_2, bool CallFunc_GetIsChecked_ReturnValue_3, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_4, FString K2Node_Select_Default, bool CallFunc_Not_PreBool_ReturnValue_2, bool K2Node_ComponentBoundEvent_EliteDeepDive_1, bool K2Node_ComponentBoundEvent_EliteDeepDive, class AFSDGameModeSpaceRig* CallFunc_GetFSDSRGameMode_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_5, bool CallFunc_FSDUpdateSessionInfo_ReturnValue_1, class AFSDGameModeSpaceRig* CallFunc_GetFSDSRGameMode_ReturnValue_1, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_6, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_7, bool CallFunc_Should_Show_Online_Restriction_Should_Show, bool CallFunc_SetVisibilityIf_IsVisible, bool CallFunc_Should_Show_Online_Restriction_Should_Show_1, EFSDTargetPlatform CallFunc_FSDTargetPlatform_ReturnValue, bool CallFunc_Not_PreBool_ReturnValue_3, bool K2Node_SwitchEnum_CmpSuccess, bool CallFunc_BooleanAND_ReturnValue_1, bool CallFunc_SetVisibilityIf_IsVisible_1, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_8, bool K2Node_Event_IsDesignTime, FText CallFunc_Conv_StringToText_ReturnValue, bool K2Node_ComponentBoundEvent_Success_1, bool CallFunc_K2_TimerExistsHandle_ReturnValue, bool CallFunc_K2_TimerExistsHandle_ReturnValue_1, bool K2Node_CustomEvent_Success, bool K2Node_ComponentBoundEvent_Success, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_9, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue_10, int32 CallFunc_GetMaxPublicConnections_ReturnValue, class UFSDCreateSessionCallbackProxy* CallFunc_FSDCreateSession_ReturnValue, bool CallFunc_IsValid_ReturnValue_2);
+    void OnJoinMission__DelegateSignature(bool EliteDeepDive);
+};
+
+#endif

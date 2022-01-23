@@ -1,0 +1,16 @@
+#ifndef UE4SS_SDK_Options_SonyInputMotionAxisMappingOption_HPP
+#define UE4SS_SDK_Options_SonyInputMotionAxisMappingOption_HPP
+
+class UOptions_SonyInputMotionAxisMappingOption_C : public UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UBasic_OptionSwitcher_C* Basic_OptionSwitcher;
+
+    void Construct();
+    void UINeedsUpdate();
+    void ShowUI();
+    void BndEvt__Basic_OptionSwitcher_K2Node_ComponentBoundEvent_20_OnSelectionChanged__DelegateSignature(FText Value, int32 Index);
+    void ExecuteUbergraph_Options_SonyInputMotionAxisMappingOption(int32 EntryPoint, FExecuteUbergraph_Options_SonyInputMotionAxisMappingOptionK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, int32 Temp_int_Variable, int32 Temp_int_Variable_1, uint8 CallFunc_Conv_IntToByte_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, uint8 CallFunc_GetValidValue_ReturnValue, uint8 CallFunc_Conv_IntToByte_ReturnValue_1, FString CallFunc_GetEnumeratorUserFriendlyName_ReturnValue, uint8 CallFunc_GetEnumeratorValueFromIndex_ReturnValue, FText CallFunc_Conv_StringToText_ReturnValue, int32 CallFunc_Conv_ByteToInt_ReturnValue, int32 CallFunc_MakeLiteralInt_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, int32 CallFunc_Add_Option_Index, FText K2Node_ComponentBoundEvent_Value, int32 K2Node_ComponentBoundEvent_Index, class UFSDSaveGame* CallFunc_GetFSDSaveGame_ReturnValue, uint8 CallFunc_Conv_IntToByte_ReturnValue_2, bool CallFunc_IsValid_ReturnValue, uint8 CallFunc_GetValidValue_ReturnValue_1, ESonyControllerMotionMapping CallFunc_GetSonyInputSettingMotionXMapping_ReturnValue, int32 CallFunc_Conv_ByteToInt_ReturnValue_1, class UFSDSaveGame* CallFunc_GetFSDSaveGame_ReturnValue_1, bool CallFunc_IsValid_ReturnValue_1, class UFSDSaveGame* CallFunc_GetFSDSaveGame_ReturnValue_2);
+};
+
+#endif

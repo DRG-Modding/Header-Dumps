@@ -1,0 +1,24 @@
+#ifndef UE4SS_SDK_ENE_FacilityTentacle_Burrowing_HPP
+#define UE4SS_SDK_ENE_FacilityTentacle_Burrowing_HPP
+
+class AENE_FacilityTentacle_Burrowing_C : public AENE_FacilityTentacle_C
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class USpawnActorWithDebrisPosComponent* SpawnActorWithDebrisPos;
+    class AENE_FacilityTentacle_C* ChildTentacle;
+    float BurrowDuration;
+    FVector Target;
+    class AActor* SpawnActor;
+
+    void PlaceEndTentacles(FVector PlayerLocation, bool& success, class AActor*& SpawnedTentacle, const TArray<FVector>& K2Node_MakeArray_Array, class AProceduralSetup* CallFunc_GetProceduralSetup_ReturnValue, TArray<class AActor*>& CallFunc_PlaceActors_OutSpawnedActors, bool CallFunc_PlaceActors_ReturnValue, class AActor* CallFunc_Array_Get_Item);
+    void GetTentacle(class AENE_FacilityTentacle_C*& tentacle, bool Temp_bool_Variable, bool CallFunc_IsValid_ReturnValue, class AENE_FacilityTentacle_C* K2Node_Select_Default);
+    void FindGroundLocation(bool& success, FVector& Location, bool Temp_bool_Variable, FLinearColor Temp_struct_Variable, FLinearColor Temp_struct_Variable_1, int32 CallFunc_RandomIntegerInRange_ReturnValue, class ADeepCSGWorld* CallFunc_GetCSGWorld_ReturnValue, FVector CallFunc_GetActorRightVector_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue, FVector CallFunc_Multiply_VectorFloat_ReturnValue, float CallFunc_BreakVector_X, float CallFunc_BreakVector_Y, float CallFunc_BreakVector_Z, FVector CallFunc_Multiply_VectorInt_ReturnValue, float CallFunc_Add_FloatFloat_ReturnValue, FVector CallFunc_GetActorForwardVector_ReturnValue, FVector CallFunc_MakeVector_ReturnValue, float CallFunc_BreakVector_X_1, float CallFunc_BreakVector_Y_1, float CallFunc_BreakVector_Z_1, FVector CallFunc_Add_VectorVector_ReturnValue, float CallFunc_Subtract_FloatFloat_ReturnValue, FVector CallFunc_MakeVector_ReturnValue_1, FVector CallFunc_Normal_ReturnValue, FVector CallFunc_Multiply_VectorFloat_ReturnValue_1, FVector CallFunc_Add_VectorVector_ReturnValue_1, FCSGRaycastHitInfo CallFunc_Linecast_hitInfo, bool CallFunc_Linecast_ReturnValue, FLinearColor K2Node_Select_Default);
+    void BurrowingAttack(class AActor* AttackTarget, FVector BurrowLocation);
+    void ChildTentacleDied(class UHealthComponentBase* HealthComponent);
+    void PlayPreBurrowSound();
+    void HandleDeath();
+    void Recieve_OnRep_Owner();
+    void ExecuteUbergraph_ENE_FacilityTentacle_Burrowing(int32 EntryPoint, bool CallFunc_IsValid_ReturnValue, class UTerrainPlacementComponent* CallFunc_GetComponentByClass_ReturnValue, class AActor* K2Node_CustomEvent_AttackTarget, FVector K2Node_CustomEvent_BurrowLocation, bool CallFunc_IsAlive_ReturnValue, bool CallFunc_IsAlive_ReturnValue_1, class UHealthComponentBase* K2Node_CustomEvent_HealthComponent, FVector CallFunc_GetForwardVector_ReturnValue, FVector CallFunc_K2_GetComponentLocation_ReturnValue, FVector CallFunc_Multiply_VectorFloat_ReturnValue, FVector CallFunc_Subtract_VectorVector_ReturnValue, bool CallFunc_IsAlive_ReturnValue_2, FVector CallFunc_K2_GetComponentLocation_ReturnValue_1, bool CallFunc_IsValid_ReturnValue_1, FVector CallFunc_K2_GetActorLocation_ReturnValue, bool CallFunc_PlaceEndTentacles_Success, class AActor* CallFunc_PlaceEndTentacles_SpawnedTentacle, bool CallFunc_IsValid_ReturnValue_2, const FTransform CallFunc_GetTransform_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue_1, FVector CallFunc_K2_GetComponentLocation_ReturnValue_2, FVector CallFunc_GetActorForwardVector_ReturnValue, FRotator CallFunc_FindLookAtRotation_ReturnValue, FVector CallFunc_Multiply_VectorFloat_ReturnValue_1, FTransform CallFunc_MakeTransform_ReturnValue, FVector CallFunc_K2_GetActorLocation_ReturnValue_2, FVector CallFunc_Add_VectorVector_ReturnValue, FVector CallFunc_FindBurrowLocation_outLocation, bool CallFunc_FindBurrowLocation_ReturnValue, FVector CallFunc_Add_VectorVector_ReturnValue_1, FVector CallFunc_GetUpVector_ReturnValue, class AAIController* CallFunc_GetAIController_ReturnValue, class AAIC_FacilityTentacle_C* K2Node_DynamicCast_AsAIC_Facility_Tentacle, bool K2Node_DynamicCast_bSuccess, bool CallFunc_IsAlive_ReturnValue_3, bool CallFunc_BooleanAND_ReturnValue, class AActor* CallFunc_GetOwner_ReturnValue, class ABP_FacilityTentacleManager_C* K2Node_DynamicCast_AsBP_Facility_Tentacle_Manager, bool K2Node_DynamicCast_bSuccess_1, FExecuteUbergraph_ENE_FacilityTentacle_BurrowingK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, class AActor* CallFunc_BeginDeferredActorSpawnFromClass_ReturnValue, class AENE_FacilityTentacle_End_C* CallFunc_FinishSpawningActor_ReturnValue, FVector CallFunc_MakeVector_ReturnValue, FRotator CallFunc_MakeRotFromZX_ReturnValue, FTransform CallFunc_MakeTransform_ReturnValue_1);
+};
+
+#endif

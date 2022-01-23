@@ -1,0 +1,15 @@
+#ifndef UE4SS_SDK_HUD_MinersManualNotification_Manager_HPP
+#define UE4SS_SDK_HUD_MinersManualNotification_Manager_HPP
+
+class UHUD_MinersManualNotification_Manager_C : public UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UVerticalBox* VerticalBox_NotificationHolder;
+    float NotificationScreenTime;
+
+    void Construct();
+    void OnMinersManualNotification(EMinersManualSection Section, FGuid ObjectID, FText Text);
+    void ExecuteUbergraph_HUD_MinersManualNotification_Manager(int32 EntryPoint, int32 Temp_int_Array_Index_Variable, class UHUD_MinersManualNotification_C* CallFunc_Create_ReturnValue, class UFSDGameInstance* CallFunc_GetFSDGameInstance_ReturnValue, EMinersManualSection K2Node_CustomEvent_Section, FGuid K2Node_CustomEvent_ObjectID, FText K2Node_CustomEvent_Text, bool K2Node_SwitchEnum_CmpSuccess, class UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue, FExecuteUbergraph_HUD_MinersManualNotification_ManagerK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, bool Temp_bool_True_if_break_was_hit_Variable, bool CallFunc_Not_PreBool_ReturnValue, class UGameData* CallFunc_GetFSDGameData_ReturnValue, int32 Temp_int_Loop_Counter_Variable, TArray<class UEnemyMinersManualData*>& CallFunc_GetEnemies_ReturnValue, int32 CallFunc_Add_IntInt_ReturnValue, class UEnemyMinersManualData* CallFunc_Array_Get_Item, bool CallFunc_NotEqual_ByteByte_ReturnValue, FFormatArgumentData K2Node_MakeStruct_FormatArgumentData, FText CallFunc_GetEnemyFamilyName_Name, FFormatArgumentData K2Node_MakeStruct_FormatArgumentData_1, bool CallFunc_Not_PreBool_ReturnValue_1, TArray<FFormatArgumentData>& K2Node_MakeArray_Array, FText CallFunc_Format_ReturnValue, bool CallFunc_IsValid_ReturnValue, const FGuid CallFunc_GetSaveGameID_ReturnValue, bool CallFunc_EqualEqual_GuidGuid_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, bool CallFunc_BooleanAND_ReturnValue, bool CallFunc_Less_IntInt_ReturnValue, bool CallFunc_BooleanAND_ReturnValue_1, class UHUD_MinersManualNotification_C* CallFunc_Create_ReturnValue_1, class UVerticalBoxSlot* CallFunc_AddChildToVerticalBox_ReturnValue_1, bool Temp_bool_Variable, FText K2Node_Select_Default);
+};
+
+#endif

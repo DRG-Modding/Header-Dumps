@@ -1,0 +1,56 @@
+#ifndef UE4SS_SDK_MRMesh_HPP
+#define UE4SS_SDK_MRMesh_HPP
+
+#include "MRMesh_enums.hpp"
+
+class UMeshReconstructorBase : public UObject
+{
+
+    void StopReconstruction();
+    void StartReconstruction();
+    void PauseReconstruction();
+    bool IsReconstructionStarted();
+    bool IsReconstructionPaused();
+    void DisconnectMRMesh();
+    void ConnectMRMesh(class UMRMeshComponent* Mesh);
+};
+
+class UMockDataMeshTrackerComponent : public USceneComponent
+{
+    FMockDataMeshTrackerComponentOnMeshTrackerUpdated OnMeshTrackerUpdated;
+    void OnMockDataMeshTrackerUpdated(int32 Index, const TArray<FVector>& Vertices, const TArray<int32>& Triangles, const TArray<FVector>& Normals, const TArray<float>& Confidence);
+    bool ScanWorld;
+    bool RequestNormals;
+    bool RequestVertexConfidence;
+    EMeshTrackerVertexColorMode VertexColorMode;
+    TArray<FColor> BlockVertexColors;
+    FLinearColor VertexColorFromConfidenceZero;
+    FLinearColor VertexColorFromConfidenceOne;
+    float UpdateInterval;
+    class UMRMeshComponent* MRMesh;
+
+    void OnMockDataMeshTrackerUpdated__DelegateSignature(int32 Index, const TArray<FVector>& Vertices, const TArray<int32>& Triangles, const TArray<FVector>& Normals, const TArray<float>& Confidence);
+    void DisconnectMRMesh(class UMRMeshComponent* InMRMeshPtr);
+    void ConnectMRMesh(class UMRMeshComponent* InMRMeshPtr);
+};
+
+class UMRMeshComponent : public UPrimitiveComponent
+{
+    class UMaterialInterface* Material;
+    bool bCreateMeshProxySections;
+    bool bUpdateNavMeshOnMeshUpdate;
+    bool bNeverCreateCollisionMesh;
+    class UBodySetup* CachedBodySetup;
+    TArray<class UBodySetup*> BodySetups;
+    class UMaterialInterface* WireframeMaterial;
+
+    bool IsConnected();
+    void ForceNavMeshUpdate();
+    void Clear();
+};
+
+struct FMRMeshConfiguration
+{
+};
+
+#endif

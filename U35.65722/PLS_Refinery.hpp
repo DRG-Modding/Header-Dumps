@@ -1,0 +1,18 @@
+#ifndef UE4SS_SDK_PLS_Refinery_HPP
+#define UE4SS_SDK_PLS_Refinery_HPP
+
+class APLS_Refinery_C : public APLS_Fractured_Base_C
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class URoomGeneratorGroup* Room Group;
+    FRoomGeneratorGroupInstance Group Instance;
+    class URoomGenerator* Start Room;
+    float ChanceOfTunnelRoom;
+
+    void GetDNARoomCount(int32& RoomCount, class UMissionDNA* CallFunc_GetMissionDNA_ReturnValue, class UBP_RefineryDNA_C* K2Node_DynamicCast_AsBP_Refinery_DNA, bool K2Node_DynamicCast_bSuccess);
+    class URoomGenerator* SelectRoomFromDNA(int32 QueryIndexbool Temp_bool_Variable, int32 Temp_int_Variable, class UMissionDNA* CallFunc_GetMissionDNA_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, bool CallFunc_GreaterEqual_IntInt_ReturnValue, int32 K2Node_Select_Default, class URoomGenerator* CallFunc_GetRandomRoomWithTags_ReturnValue);
+    void CreateCaveGraph();
+    void ExecuteUbergraph_PLS_Refinery(int32 EntryPoint, class AFSDGameState* CallFunc_GetFSDGameState_ReturnValue, int32 CallFunc_GetDNARoomCount_RoomCount, class UObjective* CallFunc_GetPrimaryObjective_ReturnValue, int32 CallFunc_Subtract_IntInt_ReturnValue, class URefineryObjective* K2Node_DynamicCast_AsRefinery_Objective, bool K2Node_DynamicCast_bSuccess, FRoomGeneratorGroupInstance CallFunc_CreateGroupInstance_ReturnValue, class URoomGenerator* CallFunc_GetRandomRoom_Room, class URoomGenerator* CallFunc_SelectRoomFromDNA_ReturnValue, class URoomGenerator* CallFunc_SelectRoomFromDNA_ReturnValue_1, FVector CallFunc_AddRoom_outCenter, FRoomNode CallFunc_AddRoom_outRoom, int32 CallFunc_AddRoom_ReturnValue, FVector CallFunc_AddRoom_outCenter_1, FRoomNode CallFunc_AddRoom_outRoom_1, int32 CallFunc_AddRoom_ReturnValue_1, class URoomGenerator* CallFunc_SelectRoomFromDNA_ReturnValue_2, bool CallFunc_Greater_IntInt_ReturnValue, FVector CallFunc_AddRoom_outCenter_2, FRoomNode CallFunc_AddRoom_outRoom_2, int32 CallFunc_AddRoom_ReturnValue_2, class URoomGenerator* CallFunc_SelectRoomFromDNA_ReturnValue_3, int32 CallFunc_GetDNARoomCount_RoomCount_1, FVector CallFunc_AddRoom_outCenter_3, FRoomNode CallFunc_AddRoom_outRoom_3, int32 CallFunc_AddRoom_ReturnValue_3, int32 CallFunc_Subtract_IntInt_ReturnValue_1, int32 CallFunc_ConnectRoomIds_ReturnValue, bool CallFunc_Greater_IntInt_ReturnValue_1, FVector CallFunc_AddRoom_outCenter_4, FRoomNode CallFunc_AddRoom_outRoom_4, int32 CallFunc_AddRoom_ReturnValue_4, int32 CallFunc_GetDNARoomCount_RoomCount_2, int32 CallFunc_ConnectRoomIds_ReturnValue_1, int32 CallFunc_Subtract_IntInt_ReturnValue_2, int32 CallFunc_ConnectRoomIds_ReturnValue_2, class URoomGenerator* CallFunc_SelectRoomFromDNA_ReturnValue_4, FVector CallFunc_AddRoom_outCenter_5, FRoomNode CallFunc_AddRoom_outRoom_5, int32 CallFunc_AddRoom_ReturnValue_5, float CallFunc_RandomFloatFromStream_ReturnValue, bool CallFunc_Greater_IntInt_ReturnValue_2, int32 CallFunc_ConnectRoomIds_ReturnValue_3, int32 CallFunc_ConnectRoomIds_ReturnValue_4, bool CallFunc_GreaterEqual_FloatFloat_ReturnValue);
+};
+
+#endif

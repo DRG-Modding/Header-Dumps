@@ -1,0 +1,34 @@
+#ifndef UE4SS_SDK_WPN_Cryospray_HPP
+#define UE4SS_SDK_WPN_Cryospray_HPP
+
+class AWPN_Cryospray_C : public ACryosprayItem
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UAudioComponent* AudioPressurerising;
+    class UFirstPersonPointLightComponent* GaugeLight;
+    class UFirstPersonStaticMeshComponent* FirstPersonStaticMesh;
+    class UFirstPersonStaticMeshComponent* FP_Widget_Shooting_Gauge;
+    class UFirstPersonParticleSystemComponent* PressureVent_Particle;
+    class UFirstPersonWidgetComponent* FPwidget_Ammo;
+    class UCrosshairAggregator* CrosshairAggregator;
+    class UPointLightComponent* MuzzleLight;
+    class UWeaponDisplay_CryoSpray_Ammo_C* UI_Ammo;
+    class UParticleSystemComponent* ChargeInstance;
+    class UParticleSystem* LaunchProjectileParticlesFP;
+    class UParticleSystem* LaunchProjectileParticlesTP;
+
+    void GetGearStatEntry(class AFSDPlayerState* PlayerState, TArray<FGearStatEntry>& Stats, FText CallFunc_MakeLiteralText_ReturnValue, FText CallFunc_MakeLiteralText_ReturnValue_1, TSubclassOf<class AWPN_Cryospray_C> CallFunc_GetObjectClass_ReturnValue, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry, bool CallFunc_UPGDESC_Generic_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_CryoSprayProjectile_GearStatEntry, bool CallFunc_UPGDESC_CryoSprayProjectile_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue, int32 CallFunc_Array_Add_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_CryoSprayProjectile_GearStatEntry_1, bool CallFunc_UPGDESC_CryoSprayProjectile_HasUpgradedValue_1, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades, int32 CallFunc_Array_Add_ReturnValue_2, int32 CallFunc_Array_Add_ReturnValue_3, FGearStatEntry CallFunc_UPGDESC_DamageBonus_Flat_GearStatEntry, bool CallFunc_UPGDESC_DamageBonus_Flat_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_Cryospray_GearStatEntry, bool CallFunc_UPGDESC_Cryospray_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue_4, int32 CallFunc_Array_Add_ReturnValue_5, FGearStatEntry CallFunc_UPGDESC_Cryospray_GearStatEntry_1, bool CallFunc_UPGDESC_Cryospray_HasUpgradedValue_1, FGearStatEntry CallFunc_UPGDESC_Cryospray_GearStatEntry_2, bool CallFunc_UPGDESC_Cryospray_HasUpgradedValue_2, int32 CallFunc_Array_Add_ReturnValue_6, int32 CallFunc_Array_Add_ReturnValue_7, FGearStatEntry CallFunc_UPGDESC_Cryospray_GearStatEntry_3, bool CallFunc_UPGDESC_Cryospray_HasUpgradedValue_3, FGearStatEntry CallFunc_UPGDESC_Cryospray_GearStatEntry_4, bool CallFunc_UPGDESC_Cryospray_HasUpgradedValue_4, int32 CallFunc_Array_Add_ReturnValue_8, int32 CallFunc_Array_Add_ReturnValue_9, FGearStatEntry CallFunc_UPGDESC_Cryospray_GearStatEntry_5, bool CallFunc_UPGDESC_Cryospray_HasUpgradedValue_5, FGearStatEntry CallFunc_UPGDESC_Cryospray_GearStatEntry_6, bool CallFunc_UPGDESC_Cryospray_HasUpgradedValue_6, int32 CallFunc_Array_Add_ReturnValue_10, int32 CallFunc_Array_Add_ReturnValue_11, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_1, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_1, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry, bool CallFunc_UPGDESC_Damage_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue_12, int32 CallFunc_Array_Add_ReturnValue_13);
+    void UserConstructionScript();
+    void BndEvt__Aggregator_K2Node_ComponentBoundEvent_0_AmountChangedSignature__DelegateSignature(int32 Amount);
+    void Update Ammo Display();
+    void ReceiveRepressurisingChanged(bool Value);
+    void RecieveEquipped();
+    void RecieveUnequipped();
+    void Toggle RepressurerisingFX(bool On);
+    void OnProjectileLaunched(const FVector& Location);
+    void ReceiveBeginPlay();
+    void OnPreProjectileLaunch();
+    void ExecuteUbergraph_WPN_Cryospray(int32 EntryPoint, class USoundBase* Temp_object_Variable, bool Temp_bool_Variable, bool CallFunc_IsValid_ReturnValue, bool CallFunc_IsValid_ReturnValue_1, int32 K2Node_ComponentBoundEvent_Amount, int32 CallFunc_GetClipAmount_ReturnValue, float CallFunc_Conv_IntToFloat_ReturnValue, float CallFunc_Conv_IntToFloat_ReturnValue_1, float CallFunc_Divide_FloatFloat_ReturnValue, bool K2Node_Event_value, bool K2Node_CustomEvent_On, class USoundBase* Temp_object_Variable_1, class UUserWidget* CallFunc_GetUserWidgetObject_ReturnValue, class UWeaponDisplay_CryoSpray_Ammo_C* K2Node_DynamicCast_AsWeapon_Display_Cryo_Spray_Ammo, bool K2Node_DynamicCast_bSuccess, bool CallFunc_IsLocallyControlled_ReturnValue, const FVector K2Node_Event_location, bool CallFunc_IsLocallyControlled_ReturnValue_1, bool CallFunc_IsFirstPerson_ReturnValue, class USceneComponent* K2Node_Select_Default, class UAudioComponent* CallFunc_SpawnSoundAttached_ReturnValue, bool CallFunc_IsLocallyControlled_ReturnValue_2, float CallFunc_Montage_Play_ReturnValue, bool CallFunc_IsFirstPerson_ReturnValue_1, float CallFunc_Montage_Play_ReturnValue_1, bool CallFunc_IsFirstPerson_ReturnValue_2, float CallFunc_Montage_Play_ReturnValue_2, float CallFunc_Montage_Play_ReturnValue_3, class UParticleSystemComponent* CallFunc_SpawnEmitterAttached_ReturnValue, class UParticleSystemComponent* CallFunc_SpawnFirstPersonEmitterAttached_ReturnValue, class UParticleSystemComponent* CallFunc_SpawnEmitterAttached_ReturnValue_1, bool Temp_bool_Variable_1, class USoundBase* K2Node_Select_Default_1, class UAudioComponent* CallFunc_SpawnSoundAttached_ReturnValue_1, class UParticleSystemComponent* CallFunc_SpawnFirstPersonEmitterAttached_ReturnValue_1);
+};
+
+#endif

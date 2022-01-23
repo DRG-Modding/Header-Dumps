@@ -1,0 +1,17 @@
+#ifndef UE4SS_SDK_WPN_FlareGun_HPP
+#define UE4SS_SDK_WPN_FlareGun_HPP
+
+class AWPN_FlareGun_C : public AFlareGun
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UFirstPersonWidgetComponent* FirstPersonWidget;
+    class UFirstPersonStaticMeshComponent* FirstPersonStaticMesh;
+    class UCrosshairAggregator* CrosshairAggregator;
+    class UProjectileLauncherComponent* ProjectileLauncher;
+
+    void GetGearStatEntry(class AFSDPlayerState* PlayerState, TArray<FGearStatEntry>& Stats, TSubclassOf<class AWPN_FlareGun_C> CallFunc_GetObjectClass_ReturnValue, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_1, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_1, int32 CallFunc_Array_Add_ReturnValue, int32 CallFunc_Array_Add_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_2, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_2, FGearStatEntry CallFunc_UPGDESC_FlaregunProjectile_GearStatEntry, bool CallFunc_UPGDESC_FlaregunProjectile_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue_2, int32 CallFunc_Array_Add_ReturnValue_3, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_3, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_3, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_4, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_4, int32 CallFunc_Array_Add_ReturnValue_4, int32 CallFunc_Array_Add_ReturnValue_5);
+    void ReceiveBeginPlay();
+    void ExecuteUbergraph_WPN_FlareGun(int32 EntryPoint, class UUserWidget* CallFunc_GetUserWidgetObject_ReturnValue, class UWeaponDisplay_Base_AmmoCount_C* K2Node_DynamicCast_AsWeapon_Display_Base_Ammo_Count, bool K2Node_DynamicCast_bSuccess);
+};
+
+#endif

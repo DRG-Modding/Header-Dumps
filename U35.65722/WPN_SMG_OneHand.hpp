@@ -1,0 +1,32 @@
+#ifndef UE4SS_SDK_WPN_SMG_OneHand_HPP
+#define UE4SS_SDK_WPN_SMG_OneHand_HPP
+
+class AWPN_SMG_OneHand_C : public AElectricalSMG
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UParticleSystemComponent* ParticleSystem;
+    class UFirstPersonParticleSystemComponent* FirstPersonParticleSystem;
+    class UStaticMeshComponent* TP_SMG_MAG;
+    class UFirstPersonStaticMeshComponent* SMG_Mag_Full;
+    class UFirstPersonWidgetComponent* FirstPersonWidget;
+    class UDamageComponent* Damage;
+    class UPointLightComponent* MuzzleLight;
+    class UHitscanComponent* HitScan;
+    class UCrosshairAggregator* CrosshairAggregator;
+    FVector SalineConductorScale;
+
+    void GetElectrutionChance(float& Chance, int32 Temp_int_Array_Index_Variable, int32 Temp_int_Loop_Counter_Variable, int32 CallFunc_Add_IntInt_ReturnValue, int32 CallFunc_Array_Length_ReturnValue, class UDamageBonusBase* CallFunc_Array_Get_Item, bool CallFunc_Less_IntInt_ReturnValue, class UPushStatusEffectDamageBonus* K2Node_DynamicCast_AsPush_Status_Effect_Damage_Bonus, bool K2Node_DynamicCast_bSuccess, TSubclassOf<class USTE_ElectricSMG_C> K2Node_ClassDynamicCast_AsSTE_Electric_SMG, bool K2Node_ClassDynamicCast_bSuccess);
+    void GetGearStatEntry(class AFSDPlayerState* PlayerState, TArray<FGearStatEntry>& Stats, FText CallFunc_GetUpgradeName_ReturnValue, TSubclassOf<class AWPN_SMG_OneHand_C> CallFunc_GetObjectClass_ReturnValue, FText CallFunc_GetUpgradeName_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry, bool CallFunc_UPGDESC_Generic_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue, TSubclassOf<class AWPN_SMG_OneHand_C> CallFunc_GetObjectClass_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_1, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_1, TSubclassOf<class AWPN_SMG_OneHand_C> CallFunc_GetObjectClass_ReturnValue_2, int32 CallFunc_Array_Add_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_DamageBonus_StatusBonus_GearStatEntry, bool CallFunc_UPGDESC_DamageBonus_StatusBonus_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_ElectricalSMG_GearStatEntry, bool CallFunc_UPGDESC_ElectricalSMG_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue_2, int32 CallFunc_Array_Add_ReturnValue_3, FGearStatEntry CallFunc_UPGDESC_DamageBonus_Flat_GearStatEntry, bool CallFunc_UPGDESC_DamageBonus_Flat_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_DamageBonus_PushStatus_GearStatEntry, bool CallFunc_UPGDESC_DamageBonus_PushStatus_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue_4, int32 CallFunc_Array_Add_ReturnValue_5, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry, bool CallFunc_UPGDESC_Damage_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_HitScan_GearStatEntry, bool CallFunc_UPGDESC_HitScan_HasAnyUpgrades, int32 CallFunc_Array_Add_ReturnValue_6, int32 CallFunc_Array_Add_ReturnValue_7, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_1, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_1, int32 CallFunc_Array_Add_ReturnValue_8, int32 CallFunc_Array_Add_ReturnValue_9, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_2, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_2, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_3, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_3, int32 CallFunc_Array_Add_ReturnValue_10, int32 CallFunc_Array_Add_ReturnValue_11, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry_1, bool CallFunc_UPGDESC_Damage_HasUpgradedValue_1, int32 CallFunc_Array_Add_ReturnValue_12, TSubclassOf<class AWPN_SMG_OneHand_C> CallFunc_GetObjectClass_ReturnValue_3, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_4, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_4, int32 CallFunc_Array_Add_ReturnValue_13);
+    void UserConstructionScript();
+    void ReceiveBeginPlay();
+    void Receive_ReloadBegin();
+    void Receive_ReloadEnd();
+    void CustomEvent1(const class UItemUpgrade* Event);
+    void ElectriyPlatform(const FHitResult& Hit, bool AlwaysPenetrate);
+    void Recieve_UpdateMeshses(bool IsFirstPerson);
+    void RecieveEquipped();
+    void Server_OnHit(FVector Location);
+    void ExecuteUbergraph_WPN_SMG_OneHand(int32 EntryPoint, FVector K2Node_CustomEvent_Location, FTransform CallFunc_Conv_VectorToTransform_ReturnValue, FVector CallFunc_BreakTransform_Location, FRotator CallFunc_BreakTransform_Rotation, FVector CallFunc_BreakTransform_Scale, class UUserWidget* CallFunc_GetUserWidgetObject_ReturnValue, class UWeaponDisplay_Base_AmmoCount_C* K2Node_DynamicCast_AsWeapon_Display_Base_Ammo_Count, bool K2Node_DynamicCast_bSuccess, const class UItemUpgrade* K2Node_Event_Event, bool CallFunc_EqualEqual_ObjectObject_ReturnValue, const FHitResult K2Node_CustomEvent_Hit, bool K2Node_CustomEvent_alwaysPenetrate, const TArray<class UPhysicalMaterial*>& K2Node_MakeArray_Array, bool CallFunc_BreakHitResult_bBlockingHit, bool CallFunc_BreakHitResult_bInitialOverlap, float CallFunc_BreakHitResult_Time, float CallFunc_BreakHitResult_Distance, FVector CallFunc_BreakHitResult_Location, FVector CallFunc_BreakHitResult_ImpactPoint, FVector CallFunc_BreakHitResult_Normal, FVector CallFunc_BreakHitResult_ImpactNormal, class UPhysicalMaterial* CallFunc_BreakHitResult_PhysMat, class AActor* CallFunc_BreakHitResult_HitActor, class UPrimitiveComponent* CallFunc_BreakHitResult_HitComponent, FName CallFunc_BreakHitResult_HitBoneName, int32 CallFunc_BreakHitResult_HitItem, int32 CallFunc_BreakHitResult_FaceIndex, FVector CallFunc_BreakHitResult_TraceStart, FVector CallFunc_BreakHitResult_TraceEnd, bool K2Node_Event_isFirstPerson, bool CallFunc_Array_Contains_ReturnValue, FExecuteUbergraph_WPN_SMG_OneHandK2Node_CreateDelegate_OutputDelegate K2Node_CreateDelegate_OutputDelegate, FTransform CallFunc_MakeTransform_ReturnValue, class AActor* CallFunc_BeginDeferredActorSpawnFromClass_ReturnValue, class ABP_SMG_ElectrifiedPlatforms_C* CallFunc_FinishSpawningActor_ReturnValue, float CallFunc_GetElectrutionChance_Chance, bool CallFunc_IsLocallyControlled_ReturnValue, bool CallFunc_RandomBoolWithWeight_ReturnValue);
+};
+
+#endif

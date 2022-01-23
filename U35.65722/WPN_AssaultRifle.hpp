@@ -1,0 +1,30 @@
+#ifndef UE4SS_SDK_WPN_AssaultRifle_HPP
+#define UE4SS_SDK_WPN_AssaultRifle_HPP
+
+class AWPN_AssaultRifle_C : public AAssaultRifle
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UStaticMeshComponent* TP_AnimationMag;
+    class UFirstPersonStaticMeshComponent* FP_AnimationMag;
+    class UDamageComponent* Damage;
+    class UFirstPersonWidgetComponent* FirstPersonWidget;
+    class UStaticMeshComponent* TP_Mag;
+    class UFirstPersonStaticMeshComponent* FP_Mag;
+    class UPointLightComponent* MuzzleLight;
+    class UHitscanComponent* HitScan;
+    class UCrosshairAggregator* CrosshairAggregator;
+
+    class UStaticMeshComponent* Receive_GetTPAnimationEventMesh();
+    class UFirstPersonStaticMeshComponent* Receive_GetFPAnimationEventMesh();
+    void GetGearStatEntry(class AFSDPlayerState* PlayerState, TArray<FGearStatEntry>& Stats, TSubclassOf<class AWPN_AssaultRifle_C> CallFunc_GetObjectClass_ReturnValue, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry, bool CallFunc_UPGDESC_Generic_HasUpgradedValue, int32 CallFunc_Array_Add_ReturnValue, TSubclassOf<class AWPN_AssaultRifle_C> CallFunc_GetObjectClass_ReturnValue_1, FGearStatEntry CallFunc_UPGDESC_HitScan_GearStatEntry, bool CallFunc_UPGDESC_HitScan_HasAnyUpgrades, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades, int32 CallFunc_Array_Add_ReturnValue_1, int32 CallFunc_Array_Add_ReturnValue_2, TSubclassOf<class AWPN_AssaultRifle_C> CallFunc_GetObjectClass_ReturnValue_2, FGearStatEntry CallFunc_UPGDESC_DamageBonus_Random_GearStatEntry, bool CallFunc_UPGDESC_DamageBonus_Random_HasUpgradedValue, TSubclassOf<class AWPN_AssaultRifle_C> CallFunc_GetObjectClass_ReturnValue_3, FGearStatEntry CallFunc_UPGDESC_Generic_GearStatEntry_1, bool CallFunc_UPGDESC_Generic_HasUpgradedValue_1, int32 CallFunc_Array_Add_ReturnValue_3, int32 CallFunc_Array_Add_ReturnValue_4, TSubclassOf<class AWPN_AssaultRifle_C> CallFunc_GetObjectClass_ReturnValue_4, FGearStatEntry CallFunc_UPGDESC_HitScan_GearStatEntry_1, bool CallFunc_UPGDESC_HitScan_HasAnyUpgrades_1, FGearStatEntry CallFunc_UPGDESC_HitScan_GearStatEntry_2, bool CallFunc_UPGDESC_HitScan_HasAnyUpgrades_2, int32 CallFunc_Array_Add_ReturnValue_5, int32 CallFunc_Array_Add_ReturnValue_6, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry, bool CallFunc_UPGDESC_Damage_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry_1, bool CallFunc_UPGDESC_Damage_HasUpgradedValue_1, int32 CallFunc_Array_Add_ReturnValue_7, int32 CallFunc_Array_Add_ReturnValue_8, FGearStatEntry CallFunc_UPGDESC_AssaultRifle_GearStatEntry, bool CallFunc_UPGDESC_AssaultRifle_HasUpgradedValue, FGearStatEntry CallFunc_UPGDESC_AssaultRifle_GearStatEntry_1, bool CallFunc_UPGDESC_AssaultRifle_HasUpgradedValue_1, int32 CallFunc_Array_Add_ReturnValue_9, int32 CallFunc_Array_Add_ReturnValue_10, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry_2, bool CallFunc_UPGDESC_Damage_HasUpgradedValue_2, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry_3, bool CallFunc_UPGDESC_Damage_HasUpgradedValue_3, int32 CallFunc_Array_Add_ReturnValue_11, int32 CallFunc_Array_Add_ReturnValue_12, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_1, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_1, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_2, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_2, int32 CallFunc_Array_Add_ReturnValue_13, int32 CallFunc_Array_Add_ReturnValue_14, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_3, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_3, FGearStatEntry CallFunc_UPGDESC_AmmoDriven_GearStatEntry_4, bool CallFunc_UPGDESC_AmmoDriven_HasAnyUpgrades_4, int32 CallFunc_Array_Add_ReturnValue_15, int32 CallFunc_Array_Add_ReturnValue_16, FGearStatEntry CallFunc_UPGDESC_Damage_GearStatEntry_4, bool CallFunc_UPGDESC_Damage_HasUpgradedValue_4, int32 CallFunc_Array_Add_ReturnValue_17);
+    void UserConstructionScript();
+    void RecieveEquipped();
+    void Recieve_UpdateMeshses(bool IsFirstPerson);
+    void ReceiveBeginPlay();
+    void Receive_ReloadBegin();
+    void Receive_ReloadEnd();
+    void OnSkinChanged(class USkinEffect* Skin);
+    void ExecuteUbergraph_WPN_AssaultRifle(int32 EntryPoint, bool K2Node_Event_isFirstPerson, class UUserWidget* CallFunc_GetUserWidgetObject_ReturnValue, class UWeaponDisplay_Base_AmmoCount_C* K2Node_DynamicCast_AsWeapon_Display_Base_Ammo_Count, bool K2Node_DynamicCast_bSuccess, bool CallFunc_IsFirstPerson_ReturnValue, class USkinEffect* K2Node_Event_skin);
+};
+
+#endif

@@ -437,7 +437,7 @@ class AFSDPawn : APawn
     void BackOffFromLocation(const FVector& fromLocation);
 }
 
-class ADeepPathfinderCharacter : UFSDPawn
+class ADeepPathfinderCharacter : AFSDPawn
 {
     UDeepPathfinderMovement* PathfinderMovement;
     USkeletalMeshComponent* Mesh;
@@ -1613,7 +1613,7 @@ class UBoscoProjectileAbillity : UBoscoAbillity
     TSubclassOf<AProjectile> projectileClass;
 }
 
-class ABosco : UDeepPathfinderCharacter
+class ABosco : ADeepPathfinderCharacter
 {
     UHealthComponent* HealthComponent;
     UBoscoAbillityComponent* AbillityComponent;
