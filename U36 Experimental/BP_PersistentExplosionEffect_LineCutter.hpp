@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_BP_PersistentExplosionEffect_LineCutter_HPP
+#define UE4SS_SDK_BP_PersistentExplosionEffect_LineCutter_HPP
+
+class ABP_PersistentExplosionEffect_LineCutter_C : public ABP_Damage_Cloud_Base_C
+{
+};
+
+#endif
