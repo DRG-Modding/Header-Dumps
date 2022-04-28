@@ -1,8 +1,0 @@
-#ifndef UE4SS_SDK_BP_CrystalFormations_SlantedPillars_05_HPP
-#define UE4SS_SDK_BP_CrystalFormations_SlantedPillars_05_HPP
-
-class ABP_CrystalFormations_SlantedPillars_05_C : ABP_CrystalFormations_SlantedPillars_Base_C
-{
-}
-
-#endif

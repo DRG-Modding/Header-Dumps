@@ -1,8 +1,0 @@
-#ifndef UE4SS_SDK_BP_ThornVinesChokingWoodRoots_1_HPP
-#define UE4SS_SDK_BP_ThornVinesChokingWoodRoots_1_HPP
-
-class ABP_ThornVinesChokingWoodRoots_1_C : ABP_ThornVinesChokingWoodRoots_Base_C
-{
-}
-
-#endif

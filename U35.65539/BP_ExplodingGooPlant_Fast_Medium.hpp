@@ -1,8 +1,0 @@
-#ifndef UE4SS_SDK_BP_ExplodingGooPlant_Fast_Medium_HPP
-#define UE4SS_SDK_BP_ExplodingGooPlant_Fast_Medium_HPP
-
-class ABP_ExplodingGooPlant_Fast_Medium_C : ABP_ExplodingGooPlant_Fast_Base_C
-{
-}
-
-#endif

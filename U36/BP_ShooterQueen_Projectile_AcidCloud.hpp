@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_BP_ShooterQueen_Projectile_AcidCloud_HPP
+#define UE4SS_SDK_BP_ShooterQueen_Projectile_AcidCloud_HPP
+
+class ABP_ShooterQueen_Projectile_AcidCloud_C : public ABP_Damage_Cloud_Base_C
+{
+};
+
+#endif

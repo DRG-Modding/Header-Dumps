@@ -1,8 +1,0 @@
-#ifndef UE4SS_SDK_CP_PrestigeAssignment_ArmorHunt_100_ScaleBrigade_HPP
-#define UE4SS_SDK_CP_PrestigeAssignment_ArmorHunt_100_ScaleBrigade_HPP
-
-class UCP_PrestigeAssignment_ArmorHunt_100_ScaleBrigade_C : UCampaign
-{
-}
-
-#endif
