@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_STE_WoodlouseYounglingElectricResistance_HPP
+#define UE4SS_SDK_STE_WoodlouseYounglingElectricResistance_HPP
+
+class USTE_WoodlouseYounglingElectricResistance_C : public UStatusEffect
+{
+};
+
+#endif

@@ -1,0 +1,90 @@
+#ifndef UE4SS_SDK_MENU_UpgradeScreen_HPP
+#define UE4SS_SDK_MENU_UpgradeScreen_HPP
+
+class UMENU_UpgradeScreen_C : public UWindowWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UWidgetAnimation* ItemDesc_Hover;
+    class UWidgetAnimation* ItemDesc_Click;
+    class UBasic_Menu_ColorBar_C* Basic_Menu_ColorBar;
+    class UBasic_Popup_YesNoPrompt_C* Basic_Popup_YesNoPrompt;
+    class UButton* BTN_Info;
+    class UTextBlock* DATA_GearDesc;
+    class UTextBlock* DATA_ItemCategory;
+    class UBorder* Description_BG;
+    class UHorizontalBox* GearTabsHolder;
+    class UImage* Icon_Info_Base;
+    class UImage* Icon_Info_Brackets;
+    class UOverlay* InfoOverlay;
+    class UVerticalBox* ItemDescHolder;
+    class UTextBlock* ItemName;
+    class UWidgetSwitcher* ItemTypeSwitcher;
+    class UITM_DragRotateCharacter_C* ITM_DragRotateCharacter;
+    class UITM_LoadoutSelectorBar_C* ITM_LoadoutSelectorBar;
+    class UWND_Skins_C* ITM_Skins_Color;
+    class UWND_Skins_C* ITM_Skins_Mesh;
+    class UITM_UnlockedCelebration_C* ITM_UnlockedCelebration;
+    class UITM_UpgGear_SideBar_GrenadeSelect_C* ITM_UpgGear_GrenadeSelect;
+    class UITM_UpgGear_SideBar_C* ITM_UpgGear_Upgrades;
+    class UMENU_SpaceRigTemplate_C* MENU_SpaceRigTemplate;
+    class UOverlay* Overlay_GearTabHolder;
+    class UNamedSlot* PutStuffHere;
+    class UBorder* StatBox_BG;
+    class UVerticalBox* StatBox_Holder;
+    class UBasic_Menu_ColorBar_C* StatsColorBar;
+    FMENU_UpgradeScreen_COnCloseClicked OnCloseClicked;
+    void OnCloseClicked();
+    TSubclassOf<class APlayerCharacter> CharacterClass;
+    TSubclassOf<class AActor> itemClass;
+    class UUpgradableGearComponent* Upgradable;
+    EItemCategory ItemCategory;
+    FMENU_UpgradeScreen_COnItemChanged OnItemChanged;
+    void OnItemChanged(TSubclassOf<class AActor> NewItemClass);
+    bool ItemDescClicked;
+    bool ShowTabsBar;
+    FMENU_UpgradeScreen_COnItemPurchased OnItemPurchased;
+    void OnItemPurchased();
+    class UDialogDataAsset* ShoutUpgradePurchased;
+    bool LoadoutSwitched;
+    bool IsBoscoUpgScreen;
+
+    void Toggle Auto GearStats Preview(bool IsOn);
+    void ChangeItemCustom(TSubclassOf<class AActor> InItemClass, bool EquipItem, bool IsUnlocked);
+    void GetItemTabIndex(TSubclassOf<class AActor> InItemClass, int32& OutIndex);
+    void SelectNextTab(int32 Direction);
+    void GetYesNoPrompt(class UBasic_Popup_YesNoPrompt_C*& YesNoPrompt);
+    void RefreshGearStats(FString Entry);
+    void GetTabItems(TSubclassOf<class APlayerCharacter> InCharacterClass, EItemCategory InCategory, TArray<class TSubclassOf<AActor>>& Tab Items);
+    void BuildGearTabs();
+    void ChangeItem(TSubclassOf<class AActor> InItemClass);
+    void RefreshItemDetails();
+    void Show(TSubclassOf<class APlayerCharacter> InCharacterClass, TSubclassOf<class AActor> InItemClass, EItemCategory InItemCategory);
+    void PreConstruct(bool IsDesignTime);
+    void BndEvt__MENU_SpaceRigTemplate_K2Node_ComponentBoundEvent_24_OnClosedClicked__DelegateSignature();
+    void ReceiveSelectNextCommand();
+    void ReceiveSelectPreviousCommand();
+    void Construct();
+    void OnClosed();
+    void OnShown();
+    void BndEvt__ITM_UpgGear_Upgrades_K2Node_ComponentBoundEvent_1_OnItemPurchased__DelegateSignature();
+    void BndEvt__Button_0_K2Node_ComponentBoundEvent_2_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__BTN_Info_K2Node_ComponentBoundEvent_3_OnButtonHoverEvent__DelegateSignature();
+    void BndEvt__BTN_Info_K2Node_ComponentBoundEvent_4_OnButtonHoverEvent__DelegateSignature();
+    void ReceiveCloseCommand();
+    void ReceiveOkCommand();
+    void OnGrenadeSelected(TSubclassOf<class AActor> itemClass, bool Equip, bool IsUnlocked);
+    void OnPreviewUpgradeChangedEvent(class UItemUpgrade* PreviewUpgrade);
+    void OnItemRewarded(FMasteryItem Reward);
+    void OnFinished(TArray<class UUnlockReward*>& Rewards);
+    void BndEvt__ITM_LoadoutSelectorBar_K2Node_ComponentBoundEvent_0_NewLoadoutSelected__DelegateSignature();
+    void BndEvt__ITM_Skins_Color_K2Node_ComponentBoundEvent_5_OnOpened__DelegateSignature();
+    void BndEvt__ITM_Skins_Mesh_K2Node_ComponentBoundEvent_6_OnOpened__DelegateSignature();
+    void BndEvt__ITM_UpgGear_GrenadeSelect_K2Node_ComponentBoundEvent_7_OnGrenadePurchased__DelegateSignature();
+    void BndEvt__Basic_Popup_YesNoPrompt_K2Node_ComponentBoundEvent_8_OnClickedYesNo__DelegateSignature(bool InYes);
+    void ExecuteUbergraph_MENU_UpgradeScreen(int32 EntryPoint);
+    void OnItemPurchased__DelegateSignature();
+    void OnItemChanged__DelegateSignature(TSubclassOf<class AActor> NewItemClass);
+    void OnCloseClicked__DelegateSignature();
+};
+
+#endif

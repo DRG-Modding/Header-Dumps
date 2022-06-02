@@ -1,0 +1,91 @@
+#ifndef UE4SS_SDK_BP_RivalBombEvent_HPP
+#define UE4SS_SDK_BP_RivalBombEvent_HPP
+
+class ABP_RivalBombEvent_C : public ARivalBomb
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UTerrainPlacementComponent* terrainPlacement;
+    class UStaticMeshComponent* SM_Carver_DropPodDrill001;
+    class ULevelGenerationCarverComponent* LevelGenerationCarver;
+    class UStaticMeshComponent* TriggerAreaDisplay;
+    class UNiagaraComponent* NS_RivalBomb_Agitated_02;
+    class UNiagaraComponent* NS_RivalBomb_Agitated_01;
+    class UAudioComponent* RivalBombPostHackIdle_Cue;
+    class UNiagaraComponent* NS_RivalBomb_Vault_OpenBeam;
+    class UNiagaraComponent* NS_RivalBomb_Explosion;
+    class UNiagaraComponent* NS_RivalBomb_Vault_Open;
+    class UNiagaraComponent* NS_RivalBomb_Idle;
+    class UNiagaraComponent* NS_WeakpointImpact_03;
+    class UNiagaraComponent* NS_WeakpointImpact_02;
+    class UNiagaraComponent* NS_WeakpointImpact_01;
+    class UNiagaraComponent* NS_WeakpointBroken_03;
+    class UNiagaraComponent* NS_WeakpointBroken_02;
+    class UNiagaraComponent* NS_WeakpointBroken_01;
+    class USphereComponent* HackUseTrigger_01;
+    class USphereComponent* HackUseTrigger_03;
+    class USphereComponent* HackUseTrigger_02;
+    class USingleUsableComponent* StartEventUsable_03;
+    class USingleUsableComponent* StartEventUsable_02;
+    class USingleUsableComponent* StartEventUsable_01;
+    class UStaticMeshComponent* SM_RivalBomb_WeakpointBroken_03;
+    class UStaticMeshComponent* SM_RivalBomb_WeakpointBroken_02;
+    class UStaticMeshComponent* SM_RivalBomb_WeakpointBroken_01;
+    class UStaticMeshComponent* SM_RivalBomb_Weakpoint_03;
+    class UStaticMeshComponent* SM_RivalBomb_Weakpoint_02;
+    class UStaticMeshComponent* SM_RivalBomb_Weakpoint_01;
+    class USimpleObjectInfoComponent* SimpleObjectInfo;
+    class UPointLightComponent* PointLight;
+    class UAudioComponent* RivalBombPreHackIdle_Cue;
+    class UPointLightComponent* PointLight2;
+    class UPointLightComponent* PointLight1;
+    class USkeletalMeshComponent* SK_RivalBomb;
+    class UDamageComponent* DamageClose;
+    class UDamageComponent* DamageFar;
+    class USpawnActorWithDebrisPosComponent* SpawnActorWithDebrisPos;
+    float AnimDamageZone_Range01_A8D794FC49AE559A25D7C090C7F900D4;
+    TEnumAsByte<ETimelineDirection::Type> AnimDamageZone__Direction_A8D794FC49AE559A25D7C090C7F900D4;
+    class UTimelineComponent* AnimDamageZone;
+    float CustomEventTime;
+    class USoundBase* BombCountdownAlarmCue;
+    class USoundBase* BombExplosionCue;
+    class USoundBase* BombDisarmedCue;
+    class UParticleSystem* ExplosionParticles;
+    class UEWC_BombEvent_C* EventWave;
+    class UABP_RivalBomb_C* AnimInstance;
+    bool Weakpoint1Broken;
+    bool Weakpoint2Broken;
+    bool Weakpoint3Broken;
+    class UMaterialInterface* M_Off;
+
+    bool GetAllWeakpointsBroken();
+    void SetAudioPlaying(class UAudioComponent* AudioComponent, bool IsPlaying);
+    void Server Only Shout Nearest(class UDialogDataAsset* Shout);
+    void Server Only Mission Shout(class UDialogDataAsset* Shout);
+    void UpdateWeakPoint(int32 Index, bool InTriggerEvents);
+    void OnRep_Weakpoint3Broken();
+    void OnRep_Weakpoint2Broken();
+    void OnRep_Weakpoint1Broken();
+    void OnRep_CustomEventTime();
+    void AnimDamageZone__FinishedFunc();
+    void AnimDamageZone__UpdateFunc();
+    void StartEventUI();
+    void ReceiveBeginPlay();
+    void OnEventTriggered();
+    void OnEventFinished(bool eventSuccess);
+    void FinishEventUI();
+    void ChangeLightMaterial(class UMaterialInterface* Material);
+    void BndEvt__BP_RivalBombEvent_StartEventUsable_01_K2Node_ComponentBoundEvent_0_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);
+    void BndEvt__BP_RivalBombEvent_StartEventUsable_02_K2Node_ComponentBoundEvent_2_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);
+    void BndEvt__BP_RivalBombEvent_StartEventUsable_03_K2Node_ComponentBoundEvent_3_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);
+    void All Weakpoints Broken();
+    void TimeProgressChanged_Event(float CurrentProgress);
+    void Setup WeakPoints();
+    void ShowDamageZone();
+    void ReceiveDataCellPickedUp();
+    void UpdateState();
+    void CancelCurrentWave();
+    void TurnOff();
+    void ExecuteUbergraph_BP_RivalBombEvent(int32 EntryPoint);
+};
+
+#endif
