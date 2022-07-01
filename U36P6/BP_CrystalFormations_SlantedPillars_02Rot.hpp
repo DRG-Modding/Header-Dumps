@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_BP_CrystalFormations_SlantedPillars_02Rot_HPP
+#define UE4SS_SDK_BP_CrystalFormations_SlantedPillars_02Rot_HPP
+
+class ABP_CrystalFormations_SlantedPillars_02Rot_C : public ABP_CrystalFormations_SlantedPillars_Base_C
+{
+};
+
+#endif

@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_ENE_Spider_Grunt_Attacker_Radioactive_HPP
+#define UE4SS_SDK_ENE_Spider_Grunt_Attacker_Radioactive_HPP
+
+class AENE_Spider_Grunt_Attacker_Radioactive_C : public AENE_Spider_Grunt_Attacker_C
+{
+};
+
+#endif

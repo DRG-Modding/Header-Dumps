@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_AFE_TP_TemperatureShockDetached_HPP
+#define UE4SS_SDK_AFE_TP_TemperatureShockDetached_HPP
+
+class UAFE_TP_TemperatureShockDetached_C : public USpawnAtLocationParticleAfflictionEffect
+{
+};
+
+#endif
