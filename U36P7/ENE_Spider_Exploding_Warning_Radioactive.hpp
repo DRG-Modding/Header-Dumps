@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_ENE_Spider_Exploding_Warning_Radioactive_HPP
+#define UE4SS_SDK_ENE_Spider_Exploding_Warning_Radioactive_HPP
+
+class AENE_Spider_Exploding_Warning_Radioactive_C : public AENE_Spider_Exploding_Radioactive_C
+{
+};
+
+#endif
