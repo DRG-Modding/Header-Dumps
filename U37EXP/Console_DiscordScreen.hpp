@@ -1,0 +1,96 @@
+#ifndef UE4SS_SDK_Console_DiscordScreen_HPP
+#define UE4SS_SDK_Console_DiscordScreen_HPP
+
+class UConsole_DiscordScreen_C : public UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UWidgetAnimation* Disappear;
+    class UWidgetAnimation* CreditsBlinkAnimation;
+    class UWidgetAnimation* LogoAnimation;
+    class UBasic_Menu_LargeWindowWithHeader_C* Basic_Menu_LargeWindowWithHeader;
+    class UVerticalBox* ClaimReward;
+    class UVerticalBox* COLLECT;
+    class UTextBlock* CollectTextLabel;
+    class UConsoleScreen_Notification_C* ConsoleScreen_Notification;
+    class UUI_ImageTinted_C* CreditsBlink;
+    class UCanvasPanel* CreditsPanel;
+    class UITM_CommunityGoal_ConsoleScreenV2_C* CurrentProgress;
+    class UVerticalBox* FreeBeers;
+    class UImage* Image_1;
+    class UImage* Image_2;
+    class UImage* Image_3;
+    class UITM_Community_Console_ClaimReward_C* ITM_Community_Console_ClaimReward;
+    class UITM_CommunityGoalRecruitment_ConsoleScreenV1_C* ITM_CommunityGoalRecruitment_ConsoleScreenV1;
+    class UITM_FactionLogo_C* ITM_FactionLogo;
+    class UITM_FactionLogo_C* ITM_FactionLogo_C_1;
+    class UITM_FactionLogo_C* ITM_FactionLogo_C_2;
+    class UVerticalBox* JOIN;
+    class UTextBlock* JoinTextLabel;
+    class UVerticalBox* LOADING;
+    class UWidgetSwitcher* MainWidgetSwitcher;
+    class UTextBlock* Name;
+    class UTextBlock* Online;
+    class UVerticalBox* Progress;
+    class UVerticalBox* RECRUITMENT;
+    class UVerticalBox* SELECTFACTION;
+    class USizeBox* SydicateLogoBox;
+    class UTextBlock* TextBlock_0;
+    class UTextBlock* TextBlock_1;
+    class UTextBlock* TextBlock_2;
+    class UTextBlock* TextBlock_3;
+    class UTextBlock* Total;
+    class UITM_CommunityGoal_TotalProgress_ConsoleScreenV2_C* TotalProgress;
+    class UCircularThrobber* Twitch_Loading;
+    class UUI_ImageTinted_C* UI_ImageTinted;
+    class UUI_ImageTinted_C* UI_ImageTinted_C_2;
+    class ABP_PlayerController_SpaceRig_C* Player;
+    float TimeSinceLastUpdate;
+    bool IsUserIn;
+    int32 CurrentPresence;
+    int32 CurrentMember;
+    int32 PreviousPresence;
+    int32 PreviousMember;
+    float TimeSinceLoadStarted;
+    bool IsLoading;
+    float LoadingTime;
+    FText JoinText;
+    FText CollectText;
+    FText DoneText;
+    bool State;
+    FConsole_DiscordScreen_CScreenChanged ScreenChanged;
+    void ScreenChanged();
+    TArray<class UCommunityGoalFaction*> FactionData;
+    ECommunityUIState CurrentState;
+
+    void Handle Community Goal Content state();
+    void Update Content Switcher Content();
+    void MinersUnionTier(float& DSMUTier);
+    void Set Goals(TArray<FString>& Goals, TArray<float>& Values, TArray<int32>& Members);
+    void StopAllLogos();
+    void FactionLogosOn();
+    void SetUsable(bool Usable);
+    void SetScreen(bool Appear, bool force);
+    void LogoOn();
+    void CreditsOn();
+    void ClearTextLabels();
+    void StartLoad(float LoadingTime);
+    void RefreshUI();
+    void Construct();
+    void Tick(FGeometry MyGeometry, float InDeltaTime);
+    void UpdateUI(const FDiscordServerData& discordServerCount);
+    void UserInServer(bool isInServer);
+    void Do Running Text(FText Text, int32 Index, class UTextBlock* Target);
+    void PreConstruct(bool IsDesignTime);
+    void Init();
+    void Stop();
+    void TimedUserRequest(float Time);
+    void RequestUserInByTime();
+    void OnFactionsDataRecievedEvent(const TArray<FString>& Goals, const TArray<float>& Values, const TArray<int32>& Members);
+    void OnCGSData(bool stateReceived);
+    void OnCheckUI();
+    void OnGoalInitialized();
+    void ExecuteUbergraph_Console_DiscordScreen(int32 EntryPoint);
+    void ScreenChanged__DelegateSignature();
+};
+
+#endif
