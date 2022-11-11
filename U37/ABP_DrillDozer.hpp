@@ -1,0 +1,94 @@
+#ifndef UE4SS_SDK_ABP_DrillDozer_HPP
+#define UE4SS_SDK_ABP_DrillDozer_HPP
+
+class UABP_DrillDozer_C : public UEscortMuleAnimInstance
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    FAnimNode_Root AnimGraphNode_Root;
+    FAnimNode_ModifyBone AnimGraphNode_ModifyBone_4;
+    FAnimNode_ModifyBone AnimGraphNode_ModifyBone_3;
+    FAnimNode_ConvertComponentToLocalSpace AnimGraphNode_ComponentToLocalSpace_1;
+    FAnimNode_ModifyBone AnimGraphNode_ModifyBone_2;
+    FAnimNode_ModifyBone AnimGraphNode_ModifyBone_1;
+    FAnimNode_LayeredBoneBlend AnimGraphNode_LayeredBoneBlend;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_12;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_11;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_10;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_9;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_14;
+    FAnimNode_StateResult AnimGraphNode_StateResult_11;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_13;
+    FAnimNode_StateResult AnimGraphNode_StateResult_10;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_12;
+    FAnimNode_StateResult AnimGraphNode_StateResult_9;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_11;
+    FAnimNode_StateResult AnimGraphNode_StateResult_8;
+    FAnimNode_StateMachine AnimGraphNode_StateMachine_2;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_8;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_7;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_6;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_5;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_10;
+    FAnimNode_StateResult AnimGraphNode_StateResult_7;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_9;
+    FAnimNode_StateResult AnimGraphNode_StateResult_6;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_8;
+    FAnimNode_StateResult AnimGraphNode_StateResult_5;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_7;
+    FAnimNode_StateResult AnimGraphNode_StateResult_4;
+    FAnimNode_StateMachine AnimGraphNode_StateMachine_1;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_4;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_3;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_2;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_1;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_6;
+    FAnimNode_StateResult AnimGraphNode_StateResult_3;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_5;
+    FAnimNode_StateResult AnimGraphNode_StateResult_2;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_4;
+    FAnimNode_StateResult AnimGraphNode_StateResult_1;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_3;
+    FAnimNode_StateResult AnimGraphNode_StateResult;
+    FAnimNode_StateMachine AnimGraphNode_StateMachine;
+    FAnimNode_ApplyAdditive AnimGraphNode_ApplyAdditive;
+    FAnimNode_BlendListByBool AnimGraphNode_BlendListByBool_1;
+    FAnimNode_RefPose AnimGraphNode_IdentityPose;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_2;
+    FAnimNode_Slot AnimGraphNode_Slot;
+    FAnimNode_RefPose AnimGraphNode_LocalRefPose;
+    FAnimNode_MeshSpaceRefPose AnimGraphNode_MeshRefPose;
+    FAnimNode_BlendListByBool AnimGraphNode_BlendListByBool;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_1;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer;
+    FAnimNode_ModifyBone AnimGraphNode_ModifyBone;
+    FAnimNode_ConvertLocalToComponentSpace AnimGraphNode_LocalToComponentSpace;
+    FAnimNode_ConvertComponentToLocalSpace AnimGraphNode_ComponentToLocalSpace;
+    float DeltaTimeX;
+    class AEscortMule* MULE;
+    float RSuspensionAlpha;
+    FRotator RTrackRotation;
+    float LSuspensionAlpha;
+    FRotator LTrackRotation;
+    float TraceDistance;
+    TArray<class AActor*> TraceIgnoreActors;
+    float HammerPosition;
+
+    void AnimGraph(FPoseLink& AnimGraph);
+    void ApplyForces(float& SuspensionAlpha, FRotator& TrackRotator, float TargetDist, FRotator TargetRotation);
+    void FindHits(FName FrontSocket, FName CenterSocket, FName BackSocket, int32& NumberOfHits, float& ZDist, FRotator& Rotation);
+    void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_DrillDozer_AnimGraphNode_ModifyBone_644B4D324C3487FB1FFBDDB7E60E99BF();
+    void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_DrillDozer_AnimGraphNode_ModifyBone_4EC2EAF14F6A06C6251C51AC7BA1E0AA();
+    void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_DrillDozer_AnimGraphNode_ModifyBone_13FD043546687779160898A8F65A71D6();
+    void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_DrillDozer_AnimGraphNode_ModifyBone_C91695E7487CC9A6BB4EA5BD0943F9BD();
+    void EvaluateGraphExposedInputs_ExecuteUbergraph_ABP_DrillDozer_AnimGraphNode_ModifyBone_A7305A8D44B2DD313A90ECAD52DB6615();
+    void BlueprintUpdateAnimation(float DeltaTimeX);
+    void BlueprintBeginPlay();
+    void LookAround();
+    void StartTimer();
+    void OnTookDamage(class UHealthComponent* Health);
+    void DamageTaken(float Amount);
+    void ExecuteUbergraph_ABP_DrillDozer(int32 EntryPoint);
+};
+
+#endif

@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_Loadout_GrenadeProxy_DamageEnhancer_HPP
+#define UE4SS_SDK_Loadout_GrenadeProxy_DamageEnhancer_HPP
+
+class ALoadout_GrenadeProxy_DamageEnhancer_C : public ALoadout_GrenadeProxy_Ball_C
+{
+};
+
+#endif
