@@ -1,8 +1,0 @@
-#ifndef UE4SS_SDK_BP_GooCannon_GooPuddle_ImprovedPoison_HPP
-#define UE4SS_SDK_BP_GooCannon_GooPuddle_ImprovedPoison_HPP
-
-class ABP_GooCannon_GooPuddle_ImprovedPoison_C : public ABP_GooCannon_GooPuddle_C
-{
-};
-
-#endif
