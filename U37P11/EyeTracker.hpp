@@ -3,21 +3,21 @@
 
 #include "EyeTracker_enums.hpp"
 
+struct FEyeTrackerGazeData
+{
+    FVector GazeOrigin;
+    FVector GazeDirection;
+    FVector FixationPoint;
+    float ConfidenceValue;
+
+};
+
 struct FEyeTrackerStereoGazeData
 {
     FVector LeftEyeOrigin;
     FVector LeftEyeDirection;
     FVector RightEyeOrigin;
     FVector RightEyeDirection;
-    FVector FixationPoint;
-    float ConfidenceValue;
-
-};
-
-struct FEyeTrackerGazeData
-{
-    FVector GazeOrigin;
-    FVector GazeDirection;
     FVector FixationPoint;
     float ConfidenceValue;
 

@@ -8,7 +8,7 @@ class UITM_ServerList_Entry_PlayerIcons_C : public UUserWidget
     class UImage* Player2;
     class UImage* Player3;
     class UImage* Player4;
-    class UTextBlock* TooltipBox;
+    class UTextBlock* ToolTipBox;
     class UTexture2D* TextureEmpty;
     float Icon Size;
     class UTOOLTIP_ServerEntry_Team_C* ToolTip;

@@ -3,53 +3,6 @@
 
 #include "AnimationCore_enums.hpp"
 
-class UAnimationDataSourceRegistry : public UObject
-{
-    TMap<class FName, class TWeakObjectPtr<UObject>> DataSources;
-
-};
-
-struct FCCDIKChainLink
-{
-};
-
-struct FAxis
-{
-    FVector Axis;
-    bool bInLocalSpace;
-
-};
-
-struct FConstraintDescriptor
-{
-    EConstraintType Type;
-
-};
-
-struct FConstraintData
-{
-    FConstraintDescriptor Constraint;
-    float Weight;
-    bool bMaintainOffset;
-    FTransform Offset;
-    FTransform CurrentTransform;
-
-};
-
-struct FFilterOptionPerAxis
-{
-    bool bX;
-    bool bY;
-    bool bZ;
-
-};
-
-struct FConstraintDescriptionEx
-{
-    FFilterOptionPerAxis AxesFilterOption;
-
-};
-
 struct FAimConstraintDescription : public FConstraintDescriptionEx
 {
     FAxis LookAt_Axis;
@@ -59,9 +12,24 @@ struct FAimConstraintDescription : public FConstraintDescriptionEx
 
 };
 
-struct FTransformConstraintDescription : public FConstraintDescriptionEx
+struct FAxis
 {
-    ETransformConstraintType TransformType;
+    FVector Axis;
+    bool bInLocalSpace;
+
+};
+
+struct FCCDIKChainLink
+{
+};
+
+struct FConstraintData
+{
+    FConstraintDescriptor Constraint;
+    float Weight;
+    bool bMaintainOffset;
+    FTransform Offset;
+    FTransform CurrentTransform;
 
 };
 
@@ -77,13 +45,15 @@ struct FConstraintDescription
 
 };
 
-struct FTransformConstraint
+struct FConstraintDescriptionEx
 {
-    FConstraintDescription Operator;
-    FName SourceNode;
-    FName TargetNode;
-    float Weight;
-    bool bMaintainOffset;
+    FFilterOptionPerAxis AxesFilterOption;
+
+};
+
+struct FConstraintDescriptor
+{
+    EConstraintType Type;
 
 };
 
@@ -93,14 +63,6 @@ struct FConstraintOffset
     FQuat Rotation;
     FVector Scale;
     FTransform Parent;
-
-};
-
-struct FTransformFilter
-{
-    FFilterOptionPerAxis TranslationFilter;
-    FFilterOptionPerAxis RotationFilter;
-    FFilterOptionPerAxis ScaleFilter;
 
 };
 
@@ -116,16 +78,17 @@ struct FFABRIKChainLink
 {
 };
 
-struct FNodeChain
+struct FFilterOptionPerAxis
 {
-    TArray<FName> Nodes;
+    bool bX;
+    bool bY;
+    bool bZ;
 
 };
 
-struct FNodeObject
+struct FNodeChain
 {
-    FName Name;
-    FName ParentName;
+    TArray<FName> Nodes;
 
 };
 
@@ -143,10 +106,47 @@ struct FNodeHierarchyWithUserData
 
 };
 
+struct FNodeObject
+{
+    FName Name;
+    FName ParentName;
+
+};
+
+struct FTransformConstraint
+{
+    FConstraintDescription Operator;
+    FName SourceNode;
+    FName TargetNode;
+    float Weight;
+    bool bMaintainOffset;
+
+};
+
+struct FTransformConstraintDescription : public FConstraintDescriptionEx
+{
+    ETransformConstraintType TransformType;
+
+};
+
+struct FTransformFilter
+{
+    FFilterOptionPerAxis TranslationFilter;
+    FFilterOptionPerAxis RotationFilter;
+    FFilterOptionPerAxis ScaleFilter;
+
+};
+
 struct FTransformNoScale
 {
     FVector Location;
     FQuat Rotation;
+
+};
+
+class UAnimationDataSourceRegistry : public UObject
+{
+    TMap<class FName, class TWeakObjectPtr<UObject>> DataSources;
 
 };
 

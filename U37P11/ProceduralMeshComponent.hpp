@@ -3,10 +3,33 @@
 
 #include "ProceduralMeshComponent_enums.hpp"
 
+struct FProcMeshSection
+{
+    TArray<FProcMeshVertex> ProcVertexBuffer;
+    TArray<uint32> ProcIndexBuffer;
+    FBox SectionLocalBox;
+    bool bEnableCollision;
+    bool bSectionVisible;
+
+};
+
 struct FProcMeshTangent
 {
     FVector TangentX;
     bool bFlipTangentY;
+
+};
+
+struct FProcMeshVertex
+{
+    FVector Position;
+    FVector Normal;
+    FProcMeshTangent Tangent;
+    FColor Color;
+    FVector2D UV0;
+    FVector2D UV1;
+    FVector2D UV2;
+    FVector2D UV3;
 
 };
 
@@ -23,29 +46,6 @@ class UKismetProceduralMeshLibrary : public UBlueprintFunctionLibrary
     void CopyProceduralMeshFromStaticMeshComponent(class UStaticMeshComponent* StaticMeshComponent, int32 LODIndex, class UProceduralMeshComponent* ProcMeshComponent, bool bCreateCollision);
     void ConvertQuadToTriangles(TArray<int32>& Triangles, int32 Vert0, int32 Vert1, int32 Vert2, int32 Vert3);
     void CalculateTangentsForMesh(const TArray<FVector>& Vertices, const TArray<int32>& Triangles, const TArray<FVector2D>& UVs, TArray<FVector>& Normals, TArray<FProcMeshTangent>& Tangents);
-};
-
-struct FProcMeshVertex
-{
-    FVector Position;
-    FVector Normal;
-    FProcMeshTangent Tangent;
-    FColor Color;
-    FVector2D UV0;
-    FVector2D UV1;
-    FVector2D UV2;
-    FVector2D UV3;
-
-};
-
-struct FProcMeshSection
-{
-    TArray<FProcMeshVertex> ProcVertexBuffer;
-    TArray<uint32> ProcIndexBuffer;
-    FBox SectionLocalBox;
-    bool bEnableCollision;
-    bool bSectionVisible;
-
 };
 
 class UProceduralMeshComponent : public UMeshComponent

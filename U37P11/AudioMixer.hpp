@@ -3,42 +3,74 @@
 
 #include "AudioMixer_enums.hpp"
 
-class USynthComponent : public USceneComponent
+struct FSubmixEffectDynamicProcessorFilterSettings
 {
-    uint8 bAutoDestroy;
-    uint8 bStopWhenOwnerDestroyed;
-    uint8 bAllowSpatialization;
-    uint8 bOverrideAttenuation;
-    uint8 bEnableBusSends;
-    uint8 bEnableBaseSubmix;
-    uint8 bEnableSubmixSends;
-    class USoundAttenuation* AttenuationSettings;
-    FSoundAttenuationSettings AttenuationOverrides;
-    class USoundConcurrency* ConcurrencySettings;
-    TSet<USoundConcurrency*> ConcurrencySet;
-    class USoundClass* SoundClass;
-    class USoundEffectSourcePresetChain* SourceEffectChain;
-    class USoundSubmixBase* SoundSubmix;
-    TArray<FSoundSubmixSendInfo> SoundSubmixSends;
-    TArray<FSoundSourceBusSendInfo> BusSends;
-    TArray<FSoundSourceBusSendInfo> PreEffectBusSends;
-    uint8 bIsUISound;
-    uint8 bIsPreviewSound;
-    int32 EnvelopeFollowerAttackTime;
-    int32 EnvelopeFollowerReleaseTime;
-    FSynthComponentOnAudioEnvelopeValue OnAudioEnvelopeValue;
-    void OnSynthEnvelopeValue(const float EnvelopeValue);
-    class USynthSound* Synth;
-    class UAudioComponent* AudioComponent;
+    uint8 bEnabled;
+    float Cutoff;
+    float GainDb;
 
-    void Stop();
-    void Start();
-    void SetVolumeMultiplier(float VolumeMultiplier);
-    void SetSubmixSend(class USoundSubmixBase* Submix, float SendLevel);
-    void SetOutputToBusOnly(bool bInOutputToBusOnly);
-    void SetLowPassFilterFrequency(float InLowPassFilterFrequency);
-    void SetLowPassFilterEnabled(bool InLowPassFilterEnabled);
-    bool IsPlaying();
+};
+
+struct FSubmixEffectDynamicsProcessorSettings
+{
+    ESubmixEffectDynamicsProcessorType DynamicsProcessorType;
+    ESubmixEffectDynamicsPeakMode PeakMode;
+    ESubmixEffectDynamicsChannelLinkMode LinkMode;
+    float InputGainDb;
+    float ThresholdDb;
+    float Ratio;
+    float KneeBandwidthDb;
+    float LookAheadMsec;
+    float AttackTimeMsec;
+    float ReleaseTimeMsec;
+    ESubmixEffectDynamicsKeySource KeySource;
+    class UAudioBus* ExternalAudioBus;
+    class USoundSubmix* ExternalSubmix;
+    uint8 bChannelLinked;
+    uint8 bAnalogMode;
+    uint8 bBypass;
+    uint8 bKeyAudition;
+    float KeyGainDb;
+    float OutputGainDb;
+    FSubmixEffectDynamicProcessorFilterSettings KeyHighshelf;
+    FSubmixEffectDynamicProcessorFilterSettings KeyLowshelf;
+
+};
+
+struct FSubmixEffectEQBand
+{
+    float Frequency;
+    float Bandwidth;
+    float GainDb;
+    uint8 bEnabled;
+
+};
+
+struct FSubmixEffectReverbSettings
+{
+    bool bBypassEarlyReflections;
+    float ReflectionsDelay;
+    float GainHF;
+    float ReflectionsGain;
+    bool bBypassLateReflections;
+    float LateDelay;
+    float DecayTime;
+    float Density;
+    float Diffusion;
+    float AirAbsorptionGainHF;
+    float DecayHFRatio;
+    float LateGain;
+    float Gain;
+    float WetLevel;
+    float DryLevel;
+    bool bBypass;
+
+};
+
+struct FSubmixEffectSubmixEQSettings
+{
+    TArray<FSubmixEffectEQBand> EQBands;
+
 };
 
 class UAudioGenerator : public UObject
@@ -116,101 +148,6 @@ class UQuartzClockHandle : public UObject
     float GetBeatsPerMinute(const class UObject* WorldContextObject);
 };
 
-struct FSubmixEffectDynamicProcessorFilterSettings
-{
-    uint8 bEnabled;
-    float Cutoff;
-    float GainDb;
-
-};
-
-struct FSubmixEffectDynamicsProcessorSettings
-{
-    ESubmixEffectDynamicsProcessorType DynamicsProcessorType;
-    ESubmixEffectDynamicsPeakMode PeakMode;
-    ESubmixEffectDynamicsChannelLinkMode LinkMode;
-    float InputGainDb;
-    float ThresholdDb;
-    float Ratio;
-    float KneeBandwidthDb;
-    float LookAheadMsec;
-    float AttackTimeMsec;
-    float ReleaseTimeMsec;
-    ESubmixEffectDynamicsKeySource KeySource;
-    class UAudioBus* ExternalAudioBus;
-    class USoundSubmix* ExternalSubmix;
-    uint8 bChannelLinked;
-    uint8 bAnalogMode;
-    uint8 bBypass;
-    uint8 bKeyAudition;
-    float KeyGainDb;
-    float OutputGainDb;
-    FSubmixEffectDynamicProcessorFilterSettings KeyHighshelf;
-    FSubmixEffectDynamicProcessorFilterSettings KeyLowshelf;
-
-};
-
-class USubmixEffectDynamicsProcessorPreset : public USoundEffectSubmixPreset
-{
-    FSubmixEffectDynamicsProcessorSettings Settings;
-
-    void SetSettings(const FSubmixEffectDynamicsProcessorSettings& Settings);
-    void SetExternalSubmix(class USoundSubmix* Submix);
-    void SetAudioBus(class UAudioBus* AudioBus);
-    void ResetKey();
-};
-
-struct FSubmixEffectEQBand
-{
-    float Frequency;
-    float Bandwidth;
-    float GainDb;
-    uint8 bEnabled;
-
-};
-
-struct FSubmixEffectSubmixEQSettings
-{
-    TArray<FSubmixEffectEQBand> EQBands;
-
-};
-
-class USubmixEffectSubmixEQPreset : public USoundEffectSubmixPreset
-{
-    FSubmixEffectSubmixEQSettings Settings;
-
-    void SetSettings(const FSubmixEffectSubmixEQSettings& InSettings);
-};
-
-struct FSubmixEffectReverbSettings
-{
-    bool bBypassEarlyReflections;
-    float ReflectionsDelay;
-    float GainHF;
-    float ReflectionsGain;
-    bool bBypassLateReflections;
-    float LateDelay;
-    float DecayTime;
-    float Density;
-    float Diffusion;
-    float AirAbsorptionGainHF;
-    float DecayHFRatio;
-    float LateGain;
-    float Gain;
-    float WetLevel;
-    float DryLevel;
-    bool bBypass;
-
-};
-
-class USubmixEffectReverbPreset : public USoundEffectSubmixPreset
-{
-    FSubmixEffectReverbSettings Settings;
-
-    void SetSettingsWithReverbEffect(const class UReverbEffect* InReverbEffect, const float WetLevel, const float DryLevel);
-    void SetSettings(const FSubmixEffectReverbSettings& InSettings);
-};
-
 class UQuartzSubsystem : public UTickableWorldSubsystem
 {
 
@@ -233,6 +170,69 @@ class UQuartzSubsystem : public UTickableWorldSubsystem
     void DeleteClockByName(const class UObject* WorldContextObject, FName ClockName);
     void DeleteClockByHandle(const class UObject* WorldContextObject, class UQuartzClockHandle*& InClockHandle);
     class UQuartzClockHandle* CreateNewClock(const class UObject* WorldContextObject, FName ClockName, FQuartzClockSettings InSettings, bool bOverrideSettingsIfClockExists, bool bUseAudioEngineClockManager);
+};
+
+class USubmixEffectDynamicsProcessorPreset : public USoundEffectSubmixPreset
+{
+    FSubmixEffectDynamicsProcessorSettings Settings;
+
+    void SetSettings(const FSubmixEffectDynamicsProcessorSettings& Settings);
+    void SetExternalSubmix(class USoundSubmix* Submix);
+    void SetAudioBus(class UAudioBus* AudioBus);
+    void ResetKey();
+};
+
+class USubmixEffectReverbPreset : public USoundEffectSubmixPreset
+{
+    FSubmixEffectReverbSettings Settings;
+
+    void SetSettingsWithReverbEffect(const class UReverbEffect* InReverbEffect, const float WetLevel, const float DryLevel);
+    void SetSettings(const FSubmixEffectReverbSettings& InSettings);
+};
+
+class USubmixEffectSubmixEQPreset : public USoundEffectSubmixPreset
+{
+    FSubmixEffectSubmixEQSettings Settings;
+
+    void SetSettings(const FSubmixEffectSubmixEQSettings& InSettings);
+};
+
+class USynthComponent : public USceneComponent
+{
+    uint8 bAutoDestroy;
+    uint8 bStopWhenOwnerDestroyed;
+    uint8 bAllowSpatialization;
+    uint8 bOverrideAttenuation;
+    uint8 bEnableBusSends;
+    uint8 bEnableBaseSubmix;
+    uint8 bEnableSubmixSends;
+    class USoundAttenuation* AttenuationSettings;
+    FSoundAttenuationSettings AttenuationOverrides;
+    class USoundConcurrency* ConcurrencySettings;
+    TSet<USoundConcurrency*> ConcurrencySet;
+    class USoundClass* SoundClass;
+    class USoundEffectSourcePresetChain* SourceEffectChain;
+    class USoundSubmixBase* SoundSubmix;
+    TArray<FSoundSubmixSendInfo> SoundSubmixSends;
+    TArray<FSoundSourceBusSendInfo> BusSends;
+    TArray<FSoundSourceBusSendInfo> PreEffectBusSends;
+    uint8 bIsUISound;
+    uint8 bIsPreviewSound;
+    int32 EnvelopeFollowerAttackTime;
+    int32 EnvelopeFollowerReleaseTime;
+    FSynthComponentOnAudioEnvelopeValue OnAudioEnvelopeValue;
+    void OnSynthEnvelopeValue(const float EnvelopeValue);
+    class USynthSound* Synth;
+    class UAudioComponent* AudioComponent;
+
+    void Stop();
+    void Start();
+    void SetVolumeMultiplier(float VolumeMultiplier);
+    void SetSubmixSend(class USoundSubmixBase* Submix, float SendLevel);
+    void SetOutputToBusOnly(bool bInOutputToBusOnly);
+    void SetLowPassFilterFrequency(float InLowPassFilterFrequency);
+    void SetLowPassFilterEnabled(bool InLowPassFilterEnabled);
+    bool IsPlaying();
 };
 
 class USynthSound : public USoundWaveProcedural

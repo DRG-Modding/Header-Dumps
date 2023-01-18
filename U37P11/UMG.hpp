@@ -3,124 +3,11 @@
 
 #include "UMG_enums.hpp"
 
-class UVisual : public UObject
+struct FAnchorData
 {
-};
-
-struct FWidgetTransform
-{
-    FVector2D Translation;
-    FVector2D Scale;
-    FVector2D Shear;
-    float Angle;
-
-};
-
-struct FEventReply
-{
-};
-
-class UWidget : public UVisual
-{
-    class UPanelSlot* Slot;
-    FWidgetBIsEnabledDelegate bIsEnabledDelegate;
-    bool GetBool();
-    FText ToolTipText;
-    FWidgetToolTipTextDelegate ToolTipTextDelegate;
-    FText GetText();
-    class UWidget* ToolTipWidget;
-    FWidgetToolTipWidgetDelegate ToolTipWidgetDelegate;
-    class UWidget* GetWidget();
-    FWidgetVisibilityDelegate VisibilityDelegate;
-    ESlateVisibility GetSlateVisibility();
-    FWidgetTransform RenderTransform;
-    FVector2D RenderTransformPivot;
-    uint8 bIsVariable;
-    uint8 bCreatedByConstructionScript;
-    uint8 bIsEnabled;
-    uint8 bOverride_Cursor;
-    class USlateAccessibleWidgetData* AccessibleWidgetData;
-    uint8 bIsVolatile;
-    TEnumAsByte<EMouseCursor::Type> Cursor;
-    EWidgetClipping Clipping;
-    ESlateVisibility Visibility;
-    float RenderOpacity;
-    class UWidgetNavigation* Navigation;
-    EFlowDirectionPreference FlowDirectionPreference;
-    TArray<class UPropertyBinding*> NativeBindings;
-
-    void SetVisibility(ESlateVisibility InVisibility);
-    void SetUserFocus(class APlayerController* PlayerController);
-    void SetToolTipText(const FText& InToolTipText);
-    void SetToolTip(class UWidget* Widget);
-    void SetRenderTranslation(FVector2D Translation);
-    void SetRenderTransformPivot(FVector2D Pivot);
-    void SetRenderTransformAngle(float Angle);
-    void SetRenderTransform(FWidgetTransform InTransform);
-    void SetRenderShear(FVector2D Shear);
-    void SetRenderScale(FVector2D Scale);
-    void SetRenderOpacity(float InOpacity);
-    void SetNavigationRuleExplicit(EUINavigation Direction, class UWidget* InWidget);
-    void SetNavigationRuleCustomBoundary(EUINavigation Direction, FSetNavigationRuleCustomBoundaryInCustomDelegate InCustomDelegate);
-    void SetNavigationRuleCustom(EUINavigation Direction, FSetNavigationRuleCustomInCustomDelegate InCustomDelegate);
-    void SetNavigationRuleBase(EUINavigation Direction, EUINavigationRule Rule);
-    void SetNavigationRule(EUINavigation Direction, EUINavigationRule Rule, FName WidgetToFocus);
-    void SetKeyboardFocus();
-    void SetIsEnabled(bool bInIsEnabled);
-    void SetFocus();
-    void SetCursor(TEnumAsByte<EMouseCursor::Type> InCursor);
-    void SetClipping(EWidgetClipping InClipping);
-    void SetAllNavigationRules(EUINavigationRule Rule, FName WidgetToFocus);
-    void ResetCursor();
-    void RemoveFromParent();
-    FEventReply OnReply__DelegateSignature();
-    FEventReply OnPointerEvent__DelegateSignature(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
-    bool IsVisible();
-    bool IsHovered();
-    void InvalidateLayoutAndVolatility();
-    bool HasUserFocusedDescendants(class APlayerController* PlayerController);
-    bool HasUserFocus(class APlayerController* PlayerController);
-    bool HasMouseCaptureByUser(int32 UserIndex, int32 PointerIndex);
-    bool HasMouseCapture();
-    bool HasKeyboardFocus();
-    bool HasFocusedDescendants();
-    bool HasAnyUserFocus();
-    class UWidget* GetWidget__DelegateSignature();
-    ESlateVisibility GetVisibility();
-    FGeometry GetTickSpaceGeometry();
-    FText GetText__DelegateSignature();
-    ESlateVisibility GetSlateVisibility__DelegateSignature();
-    FSlateColor GetSlateColor__DelegateSignature();
-    FSlateBrush GetSlateBrush__DelegateSignature();
-    float GetRenderTransformAngle();
-    float GetRenderOpacity();
-    class UPanelWidget* GetParent();
-    FGeometry GetPaintSpaceGeometry();
-    class APlayerController* GetOwningPlayer();
-    class ULocalPlayer* GetOwningLocalPlayer();
-    TEnumAsByte<EMouseCursor::Type> GetMouseCursor__DelegateSignature();
-    FLinearColor GetLinearColor__DelegateSignature();
-    bool GetIsEnabled();
-    int32 GetInt32__DelegateSignature();
-    class UGameInstance* GetGameInstance();
-    float GetFloat__DelegateSignature();
-    FVector2D GetDesiredSize();
-    EWidgetClipping GetClipping();
-    ECheckBoxState GetCheckBoxState__DelegateSignature();
-    FGeometry GetCachedGeometry();
-    bool GetBool__DelegateSignature();
-    FText GetAccessibleText();
-    FText GetAccessibleSummaryText();
-    class UWidget* GenerateWidgetForString__DelegateSignature(FString Item);
-    class UWidget* GenerateWidgetForObject__DelegateSignature(class UObject* Item);
-    void ForceVolatile(bool bForce);
-    void ForceLayoutPrepass();
-};
-
-struct FNamedSlotBinding
-{
-    FName Name;
-    class UWidget* Content;
+    FMargin Offsets;
+    FAnchors Anchors;
+    FVector2D Alignment;
 
 };
 
@@ -134,212 +21,75 @@ struct FAnimationEventBinding
 
 };
 
+struct FBlueprintWidgetAnimationDelegateBinding
+{
+    EWidgetAnimationEvent Action;
+    FName AnimationToBind;
+    FName FunctionNameToBind;
+    FName UserTag;
+
+};
+
+struct FDelegateRuntimeBinding
+{
+    FString ObjectName;
+    FName PropertyName;
+    FName FunctionName;
+    FDynamicPropertyPath SourcePath;
+    EBindingKind Kind;
+
+};
+
+struct FDynamicPropertyPath : public FCachedPropertyPath
+{
+};
+
+struct FEventReply
+{
+};
+
+struct FMovieScene2DTransformMask
+{
+    uint32 Mask;
+
+};
+
+struct FMovieSceneWidgetMaterialSectionTemplate : public FMovieSceneParameterSectionTemplate
+{
+    TArray<FName> BrushPropertyNamePath;
+
+};
+
+struct FNamedSlotBinding
+{
+    FName Name;
+    class UWidget* Content;
+
+};
+
 struct FPaintContext
 {
 };
 
-class UUserWidget : public UWidget
+struct FRadialBoxSettings
 {
-    FLinearColor ColorAndOpacity;
-    FUserWidgetColorAndOpacityDelegate ColorAndOpacityDelegate;
-    FLinearColor GetLinearColor();
-    FSlateColor ForegroundColor;
-    FUserWidgetForegroundColorDelegate ForegroundColorDelegate;
-    FSlateColor GetSlateColor();
-    FUserWidgetOnVisibilityChanged OnVisibilityChanged;
-    void OnVisibilityChangedEvent(ESlateVisibility InVisibility);
-    FMargin Padding;
-    TArray<class UUMGSequencePlayer*> ActiveSequencePlayers;
-    class UUMGSequenceTickManager* AnimationTickManager;
-    TArray<class UUMGSequencePlayer*> StoppedSequencePlayers;
-    TArray<FNamedSlotBinding> NamedSlotBindings;
-    class UWidgetTree* WidgetTree;
-    int32 Priority;
-    uint8 bSupportsKeyboardFocus;
-    uint8 bIsFocusable;
-    uint8 bStopAction;
-    uint8 bHasScriptImplementedTick;
-    uint8 bHasScriptImplementedPaint;
-    EWidgetTickFrequency TickFrequency;
-    class UInputComponent* InputComponent;
-    TArray<FAnimationEventBinding> AnimationCallbacks;
+    float StartingAngle;
+    bool bDistributeItemsEvenly;
+    float AngleBetweenItems;
+    float SectorCentralAngle;
 
-    void UnregisterInputComponent();
-    void UnbindFromAnimationStarted(class UWidgetAnimation* Animation, FUnbindFromAnimationStartedDelegate Delegate);
-    void UnbindFromAnimationFinished(class UWidgetAnimation* Animation, FUnbindFromAnimationFinishedDelegate Delegate);
-    void UnbindAllFromAnimationStarted(class UWidgetAnimation* Animation);
-    void UnbindAllFromAnimationFinished(class UWidgetAnimation* Animation);
-    void Tick(FGeometry MyGeometry, float InDeltaTime);
-    void StopListeningForInputAction(FName ActionName, TEnumAsByte<EInputEvent> EventType);
-    void StopListeningForAllInputActions();
-    void StopAnimationsAndLatentActions();
-    void StopAnimation(const class UWidgetAnimation* InAnimation);
-    void StopAllAnimations();
-    void SetPositionInViewport(FVector2D Position, bool bRemoveDPIScale);
-    void SetPlaybackSpeed(const class UWidgetAnimation* InAnimation, float PlaybackSpeed);
-    void SetPadding(FMargin InPadding);
-    void SetOwningPlayer(class APlayerController* LocalPlayerController);
-    void SetNumLoopsToPlay(const class UWidgetAnimation* InAnimation, int32 NumLoopsToPlay);
-    void SetInputActionPriority(int32 NewPriority);
-    void SetInputActionBlocking(bool bShouldBlock);
-    void SetForegroundColor(FSlateColor InForegroundColor);
-    void SetDesiredSizeInViewport(FVector2D Size);
-    void SetColorAndOpacity(FLinearColor InColorAndOpacity);
-    void SetAnimationCurrentTime(const class UWidgetAnimation* InAnimation, float InTime);
-    void SetAnchorsInViewport(FAnchors Anchors);
-    void SetAlignmentInViewport(FVector2D Alignment);
-    void ReverseAnimation(const class UWidgetAnimation* InAnimation);
-    void RemoveFromViewport();
-    void RegisterInputComponent();
-    void PreConstruct(bool IsDesignTime);
-    void PlaySound(class USoundBase* SoundToPlay);
-    class UUMGSequencePlayer* PlayAnimationTimeRange(class UWidgetAnimation* InAnimation, float StartAtTime, float EndAtTime, int32 NumLoopsToPlay, TEnumAsByte<EUMGSequencePlayMode::Type> PlayMode, float PlaybackSpeed, bool bRestoreState);
-    class UUMGSequencePlayer* PlayAnimationReverse(class UWidgetAnimation* InAnimation, float PlaybackSpeed, bool bRestoreState);
-    class UUMGSequencePlayer* PlayAnimationForward(class UWidgetAnimation* InAnimation, float PlaybackSpeed, bool bRestoreState);
-    class UUMGSequencePlayer* PlayAnimation(class UWidgetAnimation* InAnimation, float StartAtTime, int32 NumLoopsToPlay, TEnumAsByte<EUMGSequencePlayMode::Type> PlayMode, float PlaybackSpeed, bool bRestoreState);
-    float PauseAnimation(const class UWidgetAnimation* InAnimation);
-    FEventReply OnTouchStarted(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
-    FEventReply OnTouchMoved(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
-    FEventReply OnTouchGesture(FGeometry MyGeometry, const FPointerEvent& GestureEvent);
-    FEventReply OnTouchForceChanged(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
-    FEventReply OnTouchEnded(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
-    void OnRemovedFromFocusPath(FFocusEvent InFocusEvent);
-    FEventReply OnPreviewMouseButtonDown(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
-    FEventReply OnPreviewKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
-    void OnPaint(FPaintContext& Context);
-    FEventReply OnMouseWheel(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
-    FEventReply OnMouseMove(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
-    void OnMouseLeave(const FPointerEvent& MouseEvent);
-    void OnMouseEnter(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
-    void OnMouseCaptureLost();
-    FEventReply OnMouseButtonUp(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
-    FEventReply OnMouseButtonDown(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
-    FEventReply OnMouseButtonDoubleClick(FGeometry InMyGeometry, const FPointerEvent& InMouseEvent);
-    FEventReply OnMotionDetected(FGeometry MyGeometry, FMotionEvent InMotionEvent);
-    FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
-    FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
-    FEventReply OnKeyChar(FGeometry MyGeometry, FCharacterEvent InCharacterEvent);
-    void OnInitialized();
-    FEventReply OnFocusReceived(FGeometry MyGeometry, FFocusEvent InFocusEvent);
-    void OnFocusLost(FFocusEvent InFocusEvent);
-    bool OnDrop(FGeometry MyGeometry, FPointerEvent PointerEvent, class UDragDropOperation* Operation);
-    bool OnDragOver(FGeometry MyGeometry, FPointerEvent PointerEvent, class UDragDropOperation* Operation);
-    void OnDragLeave(FPointerEvent PointerEvent, class UDragDropOperation* Operation);
-    void OnDragEnter(FGeometry MyGeometry, FPointerEvent PointerEvent, class UDragDropOperation* Operation);
-    void OnDragDetected(FGeometry MyGeometry, const FPointerEvent& PointerEvent, class UDragDropOperation*& Operation);
-    void OnDragCancelled(const FPointerEvent& PointerEvent, class UDragDropOperation* Operation);
-    void OnAnimationStarted(const class UWidgetAnimation* Animation);
-    void OnAnimationFinished(const class UWidgetAnimation* Animation);
-    FEventReply OnAnalogValueChanged(FGeometry MyGeometry, FAnalogInputEvent InAnalogInputEvent);
-    void OnAddedToFocusPath(FFocusEvent InFocusEvent);
-    void ListenForInputAction(FName ActionName, TEnumAsByte<EInputEvent> EventType, bool bConsume, FListenForInputActionCallback Callback);
-    bool IsPlayingAnimation();
-    bool IsListeningForInputAction(FName ActionName);
-    bool IsInViewport();
-    bool IsInteractable();
-    bool IsAnyAnimationPlaying();
-    bool IsAnimationPlayingForward(const class UWidgetAnimation* InAnimation);
-    bool IsAnimationPlaying(const class UWidgetAnimation* InAnimation);
-    class APawn* GetOwningPlayerPawn();
-    class APlayerCameraManager* GetOwningPlayerCameraManager();
-    bool GetIsVisible();
-    float GetAnimationCurrentTime(const class UWidgetAnimation* InAnimation);
-    FAnchors GetAnchorsInViewport();
-    FVector2D GetAlignmentInViewport();
-    void FlushAnimations();
-    void Destruct();
-    void Construct();
-    void CancelLatentActions();
-    void BindToAnimationStarted(class UWidgetAnimation* Animation, FBindToAnimationStartedDelegate Delegate);
-    void BindToAnimationFinished(class UWidgetAnimation* Animation, FBindToAnimationFinishedDelegate Delegate);
-    void BindToAnimationEvent(class UWidgetAnimation* Animation, FBindToAnimationEventDelegate Delegate, EWidgetAnimationEvent AnimationEvent, FName UserTag);
-    void AddToViewport(int32 ZOrder);
-    bool AddToPlayerScreen(int32 ZOrder);
 };
 
-class URichTextBlockDecorator : public UObject
+struct FRichImageRow : public FTableRowBase
 {
+    FSlateBrush Brush;
+
 };
 
-class UWidgetComponent : public UMeshComponent
+struct FRichTextStyleRow : public FTableRowBase
 {
-    EWidgetSpace Space;
-    EWidgetTimingPolicy TimingPolicy;
-    TSubclassOf<class UUserWidget> WidgetClass;
-    FIntPoint DrawSize;
-    bool bManuallyRedraw;
-    bool bRedrawRequested;
-    float RedrawTime;
-    FIntPoint CurrentDrawSize;
-    bool bDrawAtDesiredSize;
-    FVector2D Pivot;
-    bool bReceiveHardwareInput;
-    bool bWindowFocusable;
-    EWindowVisibility WindowVisibility;
-    bool bApplyGammaCorrection;
-    class ULocalPlayer* OwnerPlayer;
-    FLinearColor BackgroundColor;
-    FLinearColor TintColorAndOpacity;
-    float OpacityFromTexture;
-    EWidgetBlendMode BlendMode;
-    bool bIsTwoSided;
-    bool TickWhenOffscreen;
-    class UBodySetup* BodySetup;
-    class UMaterialInterface* TranslucentMaterial;
-    class UMaterialInterface* TranslucentMaterial_OneSided;
-    class UMaterialInterface* OpaqueMaterial;
-    class UMaterialInterface* OpaqueMaterial_OneSided;
-    class UMaterialInterface* MaskedMaterial;
-    class UMaterialInterface* MaskedMaterial_OneSided;
-    class UTextureRenderTarget2D* RenderTarget;
-    class UMaterialInstanceDynamic* MaterialInstance;
-    bool bAddedToScreen;
-    bool bEditTimeUsable;
-    FName SharedLayerName;
-    int32 LayerZOrder;
-    EWidgetGeometryMode GeometryMode;
-    float CylinderArcAngle;
-    ETickMode TickMode;
-    class UUserWidget* Widget;
+    FTextBlockStyle TextStyle;
 
-    void SetWindowVisibility(EWindowVisibility InVisibility);
-    void SetWindowFocusable(bool bInWindowFocusable);
-    void SetWidgetSpace(EWidgetSpace NewSpace);
-    void SetWidget(class UUserWidget* Widget);
-    void SetTwoSided(const bool bWantTwoSided);
-    void SetTintColorAndOpacity(const FLinearColor NewTintColorAndOpacity);
-    void SetTickWhenOffscreen(const bool bWantTickWhenOffscreen);
-    void SetTickMode(ETickMode InTickMode);
-    void SetRedrawTime(float InRedrawTime);
-    void SetPivot(const FVector2D& InPivot);
-    void SetOwnerPlayer(class ULocalPlayer* LocalPlayer);
-    void SetManuallyRedraw(bool bUseManualRedraw);
-    void SetGeometryMode(EWidgetGeometryMode InGeometryMode);
-    void SetDrawSize(FVector2D Size);
-    void SetDrawAtDesiredSize(bool bInDrawAtDesiredSize);
-    void SetCylinderArcAngle(const float InCylinderArcAngle);
-    void SetBackgroundColor(const FLinearColor NewBackgroundColor);
-    void RequestRenderUpdate();
-    void RequestRedraw();
-    bool IsWidgetVisible();
-    EWindowVisibility GetWindowVisiblility();
-    bool GetWindowFocusable();
-    EWidgetSpace GetWidgetSpace();
-    class UUserWidget* GetWidget();
-    class UUserWidget* GetUserWidgetObject();
-    bool GetTwoSided();
-    bool GetTickWhenOffscreen();
-    class UTextureRenderTarget2D* GetRenderTarget();
-    float GetRedrawTime();
-    FVector2D GetPivot();
-    class ULocalPlayer* GetOwnerPlayer();
-    class UMaterialInstanceDynamic* GetMaterialInstance();
-    bool GetManuallyRedraw();
-    EWidgetGeometryMode GetGeometryMode();
-    FVector2D GetDrawSize();
-    bool GetDrawAtDesiredSize();
-    float GetCylinderArcAngle();
-    FVector2D GetCurrentDrawSize();
 };
 
 struct FShapedTextOptions
@@ -351,80 +101,81 @@ struct FShapedTextOptions
 
 };
 
-class UTextLayoutWidget : public UWidget
+struct FSlateChildSize
 {
-    FShapedTextOptions ShapedTextOptions;
-    TEnumAsByte<ETextJustify::Type> Justification;
-    ETextWrappingPolicy WrappingPolicy;
-    uint8 AutoWrapText;
-    float WrapTextAt;
-    FMargin Margin;
-    float LineHeightPercentage;
+    float Value;
+    TEnumAsByte<ESlateSizeRule::Type> SizeRule;
 
-    void SetJustification(TEnumAsByte<ETextJustify::Type> InJustification);
 };
 
-class UTextBlock : public UTextLayoutWidget
+struct FSlateMeshVertex
 {
-    FText Text;
-    FTextBlockTextDelegate TextDelegate;
-    FText GetText();
-    FSlateColor ColorAndOpacity;
-    FTextBlockColorAndOpacityDelegate ColorAndOpacityDelegate;
-    FSlateColor GetSlateColor();
-    FSlateFontInfo Font;
-    FSlateBrush StrikeBrush;
-    FVector2D ShadowOffset;
-    FLinearColor ShadowColorAndOpacity;
-    FTextBlockShadowColorAndOpacityDelegate ShadowColorAndOpacityDelegate;
-    FLinearColor GetLinearColor();
-    float MinDesiredWidth;
-    bool bWrapWithInvalidationPanel;
-    bool bAutoWrapText;
-    ETextTransformPolicy TextTransformPolicy;
-    bool bSimpleTextMode;
+    FVector2D Position;
+    FColor Color;
+    FVector2D UV0;
+    FVector2D UV1;
+    FVector2D UV2;
+    FVector2D UV3;
+    FVector2D UV4;
+    FVector2D UV5;
 
-    void SetTextTransformPolicy(ETextTransformPolicy InTransformPolicy);
-    void SetText(FText InText);
-    void SetStrikeBrush(FSlateBrush InStrikeBrush);
-    void SetShadowOffset(FVector2D InShadowOffset);
-    void SetShadowColorAndOpacity(FLinearColor InShadowColorAndOpacity);
-    void SetOpacity(float InOpacity);
-    void SetMinDesiredWidth(float InMinDesiredWidth);
-    void SetFont(FSlateFontInfo InFontInfo);
-    void SetColorAndOpacity(FSlateColor InColorAndOpacity);
-    void SetAutoWrapText(bool InAutoTextWrap);
-    FText GetText();
-    class UMaterialInstanceDynamic* GetDynamicOutlineMaterial();
-    class UMaterialInstanceDynamic* GetDynamicFontMaterial();
 };
 
-class URichTextBlock : public UTextLayoutWidget
+struct FUserWidgetPool
 {
-    FText Text;
-    class UDataTable* TextStyleSet;
-    TArray<class TSubclassOf<URichTextBlockDecorator>> DecoratorClasses;
-    bool bOverrideDefaultStyle;
-    FTextBlockStyle DefaultTextStyleOverride;
-    float MinDesiredWidth;
-    ETextTransformPolicy TextTransformPolicy;
-    FTextBlockStyle DefaultTextStyle;
-    TArray<class URichTextBlockDecorator*> InstanceDecorators;
+    TArray<class UUserWidget*> ActiveWidgets;
+    TArray<class UUserWidget*> InactiveWidgets;
 
-    void SetTextTransformPolicy(ETextTransformPolicy InTransformPolicy);
-    void SetTextStyleSet(class UDataTable* NewTextStyleSet);
-    void SetText(const FText& InText);
-    void SetMinDesiredWidth(float InMinDesiredWidth);
-    void SetDefaultTextStyle(const FTextBlockStyle& InDefaultTextStyle);
-    void SetDefaultStrikeBrush(FSlateBrush& InStrikeBrush);
-    void SetDefaultShadowOffset(FVector2D InShadowOffset);
-    void SetDefaultShadowColorAndOpacity(FLinearColor InShadowColorAndOpacity);
-    void SetDefaultFont(FSlateFontInfo InFontInfo);
-    void SetDefaultColorAndOpacity(FSlateColor InColorAndOpacity);
-    void SetAutoWrapText(bool InAutoTextWrap);
-    FText GetText();
-    class URichTextBlockDecorator* GetDecoratorByClass(TSubclassOf<class URichTextBlockDecorator> DecoratorClass);
-    void ClearAllDefaultStyleOverrides();
+};
+
+struct FWidgetAnimationBinding
+{
+    FName WidgetName;
+    FName SlotWidgetName;
+    FGuid AnimationGuid;
+    bool bIsRootWidget;
+
+};
+
+struct FWidgetComponentInstanceData : public FSceneComponentInstanceData
+{
+};
+
+struct FWidgetNavigationData
+{
+    EUINavigationRule Rule;
+    FName WidgetToFocus;
+    TWeakObjectPtr<class UWidget> Widget;
+    FWidgetNavigationDataCustomDelegate CustomDelegate;
+    class UWidget* CustomWidgetNavigationDelegate(EUINavigation Navigation);
+
+};
+
+struct FWidgetTransform
+{
+    FVector2D Translation;
+    FVector2D Scale;
+    FVector2D Shear;
+    float Angle;
+
+};
+
+class INamedSlotInterface : public IInterface
+{
+};
+
+class IUserListEntry : public IInterface
+{
+
+    void BP_OnItemSelectionChanged(bool bIsSelected);
+    void BP_OnItemExpansionChanged(bool bIsExpanded);
+    void BP_OnEntryReleased();
+};
+
+class IUserObjectListEntry : public IUserListEntry
+{
+
+    void OnListItemObjectSet(class UObject* ListItemObject);
 };
 
 class UAsyncTaskDownloadImage : public UBlueprintAsyncActionBase
@@ -435,30 +186,6 @@ class UAsyncTaskDownloadImage : public UBlueprintAsyncActionBase
     void DownloadImageDelegate(class UTexture2DDynamic* Texture);
 
     class UAsyncTaskDownloadImage* DownloadImage(FString URL);
-};
-
-class UPanelWidget : public UWidget
-{
-    TArray<class UPanelSlot*> Slots;
-
-    bool RemoveChildAt(int32 Index);
-    bool RemoveChild(class UWidget* Content);
-    bool HasChild(class UWidget* Content);
-    bool HasAnyChildren();
-    int32 GetChildrenCount();
-    int32 GetChildIndex(const class UWidget* Content);
-    class UWidget* GetChildAt(int32 Index);
-    TArray<class UWidget*> GetAllChildren();
-    void ClearChildren();
-    class UPanelSlot* AddChild(class UWidget* Content);
-};
-
-class UContentWidget : public UPanelWidget
-{
-
-    class UPanelSlot* SetContent(class UWidget* Content);
-    class UPanelSlot* GetContentSlot();
-    class UWidget* GetContent();
 };
 
 class UBackgroundBlur : public UContentWidget
@@ -481,13 +208,6 @@ class UBackgroundBlur : public UContentWidget
     void SetApplyAlphaToBlur(bool bInApplyAlphaToBlur);
 };
 
-class UPanelSlot : public UVisual
-{
-    class UPanelWidget* Parent;
-    class UWidget* Content;
-
-};
-
 class UBackgroundBlurSlot : public UPanelSlot
 {
     FMargin Padding;
@@ -497,18 +217,6 @@ class UBackgroundBlurSlot : public UPanelSlot
     void SetVerticalAlignment(TEnumAsByte<EVerticalAlignment> InVerticalAlignment);
     void SetPadding(FMargin InPadding);
     void SetHorizontalAlignment(TEnumAsByte<EHorizontalAlignment> InHorizontalAlignment);
-};
-
-struct FDynamicPropertyPath : public FCachedPropertyPath
-{
-};
-
-class UPropertyBinding : public UObject
-{
-    TWeakObjectPtr<class UObject> SourceObject;
-    FDynamicPropertyPath SourcePath;
-    FName DestinationProperty;
-
 };
 
 class UBoolBinding : public UPropertyBinding
@@ -618,14 +326,6 @@ class UCanvasPanel : public UPanelWidget
 {
 
     class UCanvasPanelSlot* AddChildToCanvas(class UWidget* Content);
-};
-
-struct FAnchorData
-{
-    FMargin Offsets;
-    FAnchors Anchors;
-    FVector2D Alignment;
-
 };
 
 class UCanvasPanelSlot : public UPanelSlot
@@ -763,6 +463,18 @@ class UComboBoxString : public UWidget
     void AddOption(FString Option);
 };
 
+class UContentWidget : public UPanelWidget
+{
+
+    class UPanelSlot* SetContent(class UWidget* Content);
+    class UPanelSlot* GetContentSlot();
+    class UWidget* GetContent();
+};
+
+class UDefault__WidgetBlueprintGeneratedClass
+{
+};
+
 class UDragDropOperation : public UObject
 {
     FString Tag;
@@ -782,27 +494,14 @@ class UDragDropOperation : public UObject
     void DragCancelled(const FPointerEvent& PointerEvent);
 };
 
-struct FSlateChildSize
+class UDynamicEntryBox : public UDynamicEntryBoxBase
 {
-    float Value;
-    TEnumAsByte<ESlateSizeRule::Type> SizeRule;
+    TSubclassOf<class UUserWidget> EntryWidgetClass;
 
-};
-
-struct FRadialBoxSettings
-{
-    float StartingAngle;
-    bool bDistributeItemsEvenly;
-    float AngleBetweenItems;
-    float SectorCentralAngle;
-
-};
-
-struct FUserWidgetPool
-{
-    TArray<class UUserWidget*> ActiveWidgets;
-    TArray<class UUserWidget*> InactiveWidgets;
-
+    void Reset(bool bDeleteWidgets);
+    void RemoveEntry(class UUserWidget* EntryWidget);
+    class UUserWidget* BP_CreateEntryOfClass(TSubclassOf<class UUserWidget> EntryClass);
+    class UUserWidget* BP_CreateEntry();
 };
 
 class UDynamicEntryBoxBase : public UWidget
@@ -821,16 +520,6 @@ class UDynamicEntryBoxBase : public UWidget
     void SetEntrySpacing(const FVector2D& InEntrySpacing);
     int32 GetNumEntries();
     TArray<class UUserWidget*> GetAllEntries();
-};
-
-class UDynamicEntryBox : public UDynamicEntryBoxBase
-{
-    TSubclassOf<class UUserWidget> EntryWidgetClass;
-
-    void Reset(bool bDeleteWidgets);
-    void RemoveEntry(class UUserWidget* EntryWidget);
-    class UUserWidget* BP_CreateEntryOfClass(TSubclassOf<class UUserWidget> EntryClass);
-    class UUserWidget* BP_CreateEntry();
 };
 
 class UEditableText : public UWidget
@@ -1077,57 +766,6 @@ class UInvalidationBox : public UContentWidget
     bool GetCanCache();
 };
 
-class IUserListEntry : public IInterface
-{
-
-    void BP_OnItemSelectionChanged(bool bIsSelected);
-    void BP_OnItemExpansionChanged(bool bIsExpanded);
-    void BP_OnEntryReleased();
-};
-
-class UUserListEntryLibrary : public UBlueprintFunctionLibrary
-{
-
-    bool IsListItemSelected(TScriptInterface<class IUserListEntry> UserListEntry);
-    bool IsListItemExpanded(TScriptInterface<class IUserListEntry> UserListEntry);
-    class UListViewBase* GetOwningListView(TScriptInterface<class IUserListEntry> UserListEntry);
-};
-
-class IUserObjectListEntry : public IUserListEntry
-{
-
-    void OnListItemObjectSet(class UObject* ListItemObject);
-};
-
-class UUserObjectListEntryLibrary : public UBlueprintFunctionLibrary
-{
-
-    class UObject* GetListItemObject(TScriptInterface<class IUserObjectListEntry> UserObjectListEntry);
-};
-
-class UListViewBase : public UWidget
-{
-    TSubclassOf<class UUserWidget> EntryWidgetClass;
-    float WheelScrollMultiplier;
-    bool bEnableScrollAnimation;
-    bool bEnableFixedLineOffset;
-    float FixedLineScrollOffset;
-    FListViewBaseBP_OnEntryGenerated BP_OnEntryGenerated;
-    void OnListEntryGeneratedDynamic(class UUserWidget* Widget);
-    FListViewBaseBP_OnEntryReleased BP_OnEntryReleased;
-    void OnListEntryReleasedDynamic(class UUserWidget* Widget);
-    FUserWidgetPool EntryWidgetPool;
-
-    void SetWheelScrollMultiplier(float NewWheelScrollMultiplier);
-    void SetScrollOffset(const float InScrollOffset);
-    void SetScrollbarVisibility(ESlateVisibility InVisibility);
-    void ScrollToTop();
-    void ScrollToBottom();
-    void RequestRefresh();
-    void RegenerateAllEntries();
-    TArray<class UUserWidget*> GetDisplayedEntryWidgets();
-};
-
 class UListView : public UListViewBase
 {
     TEnumAsByte<EOrientation> Orientation;
@@ -1176,6 +814,29 @@ class UListView : public UListViewBase
     void AddItem(class UObject* Item);
 };
 
+class UListViewBase : public UWidget
+{
+    TSubclassOf<class UUserWidget> EntryWidgetClass;
+    float WheelScrollMultiplier;
+    bool bEnableScrollAnimation;
+    bool bEnableFixedLineOffset;
+    float FixedLineScrollOffset;
+    FListViewBaseBP_OnEntryGenerated BP_OnEntryGenerated;
+    void OnListEntryGeneratedDynamic(class UUserWidget* Widget);
+    FListViewBaseBP_OnEntryReleased BP_OnEntryReleased;
+    void OnListEntryReleasedDynamic(class UUserWidget* Widget);
+    FUserWidgetPool EntryWidgetPool;
+
+    void SetWheelScrollMultiplier(float NewWheelScrollMultiplier);
+    void SetScrollOffset(const float InScrollOffset);
+    void SetScrollbarVisibility(ESlateVisibility InVisibility);
+    void ScrollToTop();
+    void ScrollToBottom();
+    void RequestRefresh();
+    void RegenerateAllEntries();
+    TArray<class UUserWidget*> GetDisplayedEntryWidgets();
+};
+
 class UListViewDesignerPreviewItem : public UObject
 {
 };
@@ -1214,12 +875,6 @@ class UMouseCursorBinding : public UPropertyBinding
 
 class UMovieScene2DTransformPropertySystem : public UMovieScenePropertySystem
 {
-};
-
-struct FMovieScene2DTransformMask
-{
-    uint32 Mask;
-
 };
 
 class UMovieScene2DTransformSection : public UMovieSceneSection
@@ -1328,10 +983,6 @@ class UNamedSlot : public UContentWidget
 {
 };
 
-class INamedSlotInterface : public IInterface
-{
-};
-
 class UNativeWidgetHost : public UWidget
 {
 };
@@ -1351,6 +1002,29 @@ class UOverlaySlot : public UPanelSlot
     void SetVerticalAlignment(TEnumAsByte<EVerticalAlignment> InVerticalAlignment);
     void SetPadding(FMargin InPadding);
     void SetHorizontalAlignment(TEnumAsByte<EHorizontalAlignment> InHorizontalAlignment);
+};
+
+class UPanelSlot : public UVisual
+{
+    class UPanelWidget* Parent;
+    class UWidget* Content;
+
+};
+
+class UPanelWidget : public UWidget
+{
+    TArray<class UPanelSlot*> Slots;
+
+    bool RemoveChildAt(int32 Index);
+    bool RemoveChild(class UWidget* Content);
+    bool HasChild(class UWidget* Content);
+    bool HasAnyChildren();
+    int32 GetChildrenCount();
+    int32 GetChildIndex(const class UWidget* Content);
+    class UWidget* GetChildAt(int32 Index);
+    TArray<class UWidget*> GetAllChildren();
+    void ClearChildren();
+    class UPanelSlot* AddChild(class UWidget* Content);
 };
 
 class UProgressBar : public UWidget
@@ -1375,6 +1049,14 @@ class UProgressBar : public UWidget
     void SetFillColorAndOpacity(FLinearColor InColor);
 };
 
+class UPropertyBinding : public UObject
+{
+    TWeakObjectPtr<class UObject> SourceObject;
+    FDynamicPropertyPath SourcePath;
+    FName DestinationProperty;
+
+};
+
 class URetainerBox : public UContentWidget
 {
     bool bRetainRender;
@@ -1391,6 +1073,38 @@ class URetainerBox : public UContentWidget
     void SetEffectMaterial(class UMaterialInterface* EffectMaterial);
     void RequestRender();
     class UMaterialInstanceDynamic* GetEffectMaterial();
+};
+
+class URichTextBlock : public UTextLayoutWidget
+{
+    FText Text;
+    class UDataTable* TextStyleSet;
+    TArray<class TSubclassOf<URichTextBlockDecorator>> DecoratorClasses;
+    bool bOverrideDefaultStyle;
+    FTextBlockStyle DefaultTextStyleOverride;
+    float MinDesiredWidth;
+    ETextTransformPolicy TextTransformPolicy;
+    FTextBlockStyle DefaultTextStyle;
+    TArray<class URichTextBlockDecorator*> InstanceDecorators;
+
+    void SetTextTransformPolicy(ETextTransformPolicy InTransformPolicy);
+    void SetTextStyleSet(class UDataTable* NewTextStyleSet);
+    void SetText(const FText& InText);
+    void SetMinDesiredWidth(float InMinDesiredWidth);
+    void SetDefaultTextStyle(const FTextBlockStyle& InDefaultTextStyle);
+    void SetDefaultStrikeBrush(FSlateBrush& InStrikeBrush);
+    void SetDefaultShadowOffset(FVector2D InShadowOffset);
+    void SetDefaultShadowColorAndOpacity(FLinearColor InShadowColorAndOpacity);
+    void SetDefaultFont(FSlateFontInfo InFontInfo);
+    void SetDefaultColorAndOpacity(FSlateColor InColorAndOpacity);
+    void SetAutoWrapText(bool InAutoTextWrap);
+    FText GetText();
+    class URichTextBlockDecorator* GetDecoratorByClass(TSubclassOf<class URichTextBlockDecorator> DecoratorClass);
+    void ClearAllDefaultStyleOverrides();
+};
+
+class URichTextBlockDecorator : public UObject
+{
 };
 
 class URichTextBlockImageDecorator : public URichTextBlockDecorator
@@ -1558,6 +1272,20 @@ class USizeBoxSlot : public UPanelSlot
     void SetHorizontalAlignment(TEnumAsByte<EHorizontalAlignment> InHorizontalAlignment);
 };
 
+class USlateAccessibleWidgetData : public UObject
+{
+    bool bCanChildrenBeAccessible;
+    ESlateAccessibleBehavior AccessibleBehavior;
+    ESlateAccessibleBehavior AccessibleSummaryBehavior;
+    FText AccessibleText;
+    FSlateAccessibleWidgetDataAccessibleTextDelegate AccessibleTextDelegate;
+    FText GetText();
+    FText AccessibleSummaryText;
+    FSlateAccessibleWidgetDataAccessibleSummaryTextDelegate AccessibleSummaryTextDelegate;
+    FText GetText();
+
+};
+
 class USlateBlueprintLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -1579,19 +1307,6 @@ class USlateBlueprintLibrary : public UBlueprintFunctionLibrary
     FVector2D AbsoluteToLocal(const FGeometry& Geometry, FVector2D AbsoluteCoordinate);
 };
 
-struct FSlateMeshVertex
-{
-    FVector2D Position;
-    FColor Color;
-    FVector2D UV0;
-    FVector2D UV1;
-    FVector2D UV2;
-    FVector2D UV3;
-    FVector2D UV4;
-    FVector2D UV5;
-
-};
-
 class USlateVectorArtData : public UObject
 {
     TArray<FSlateMeshVertex> VertexData;
@@ -1599,20 +1314,6 @@ class USlateVectorArtData : public UObject
     class UMaterialInterface* Material;
     FVector2D ExtentMin;
     FVector2D ExtentMax;
-
-};
-
-class USlateAccessibleWidgetData : public UObject
-{
-    bool bCanChildrenBeAccessible;
-    ESlateAccessibleBehavior AccessibleBehavior;
-    ESlateAccessibleBehavior AccessibleSummaryBehavior;
-    FText AccessibleText;
-    FSlateAccessibleWidgetDataAccessibleTextDelegate AccessibleTextDelegate;
-    FText GetText();
-    FText AccessibleSummaryText;
-    FSlateAccessibleWidgetDataAccessibleSummaryTextDelegate AccessibleSummaryTextDelegate;
-    FText GetText();
 
 };
 
@@ -1733,6 +1434,54 @@ class UTextBinding : public UPropertyBinding
     FString GetStringValue();
 };
 
+class UTextBlock : public UTextLayoutWidget
+{
+    FText Text;
+    FTextBlockTextDelegate TextDelegate;
+    FText GetText();
+    FSlateColor ColorAndOpacity;
+    FTextBlockColorAndOpacityDelegate ColorAndOpacityDelegate;
+    FSlateColor GetSlateColor();
+    FSlateFontInfo Font;
+    FSlateBrush StrikeBrush;
+    FVector2D ShadowOffset;
+    FLinearColor ShadowColorAndOpacity;
+    FTextBlockShadowColorAndOpacityDelegate ShadowColorAndOpacityDelegate;
+    FLinearColor GetLinearColor();
+    float MinDesiredWidth;
+    bool bWrapWithInvalidationPanel;
+    bool bAutoWrapText;
+    ETextTransformPolicy TextTransformPolicy;
+    bool bSimpleTextMode;
+
+    void SetTextTransformPolicy(ETextTransformPolicy InTransformPolicy);
+    void SetText(FText InText);
+    void SetStrikeBrush(FSlateBrush InStrikeBrush);
+    void SetShadowOffset(FVector2D InShadowOffset);
+    void SetShadowColorAndOpacity(FLinearColor InShadowColorAndOpacity);
+    void SetOpacity(float InOpacity);
+    void SetMinDesiredWidth(float InMinDesiredWidth);
+    void SetFont(FSlateFontInfo InFontInfo);
+    void SetColorAndOpacity(FSlateColor InColorAndOpacity);
+    void SetAutoWrapText(bool InAutoTextWrap);
+    FText GetText();
+    class UMaterialInstanceDynamic* GetDynamicOutlineMaterial();
+    class UMaterialInstanceDynamic* GetDynamicFontMaterial();
+};
+
+class UTextLayoutWidget : public UWidget
+{
+    FShapedTextOptions ShapedTextOptions;
+    TEnumAsByte<ETextJustify::Type> Justification;
+    ETextWrappingPolicy WrappingPolicy;
+    uint8 AutoWrapText;
+    float WrapTextAt;
+    FMargin Margin;
+    float LineHeightPercentage;
+
+    void SetJustification(TEnumAsByte<ETextJustify::Type> InJustification);
+};
+
 class UThrobber : public UWidget
 {
     int32 NumberOfPieces;
@@ -1814,6 +1563,139 @@ class UUniformGridSlot : public UPanelSlot
     void SetColumn(int32 InColumn);
 };
 
+class UUserListEntryLibrary : public UBlueprintFunctionLibrary
+{
+
+    bool IsListItemSelected(TScriptInterface<class IUserListEntry> UserListEntry);
+    bool IsListItemExpanded(TScriptInterface<class IUserListEntry> UserListEntry);
+    class UListViewBase* GetOwningListView(TScriptInterface<class IUserListEntry> UserListEntry);
+};
+
+class UUserObjectListEntryLibrary : public UBlueprintFunctionLibrary
+{
+
+    class UObject* GetListItemObject(TScriptInterface<class IUserObjectListEntry> UserObjectListEntry);
+};
+
+class UUserWidget : public UWidget
+{
+    FLinearColor ColorAndOpacity;
+    FUserWidgetColorAndOpacityDelegate ColorAndOpacityDelegate;
+    FLinearColor GetLinearColor();
+    FSlateColor ForegroundColor;
+    FUserWidgetForegroundColorDelegate ForegroundColorDelegate;
+    FSlateColor GetSlateColor();
+    FUserWidgetOnVisibilityChanged OnVisibilityChanged;
+    void OnVisibilityChangedEvent(ESlateVisibility InVisibility);
+    FMargin Padding;
+    TArray<class UUMGSequencePlayer*> ActiveSequencePlayers;
+    class UUMGSequenceTickManager* AnimationTickManager;
+    TArray<class UUMGSequencePlayer*> StoppedSequencePlayers;
+    TArray<FNamedSlotBinding> NamedSlotBindings;
+    class UWidgetTree* WidgetTree;
+    int32 Priority;
+    uint8 bSupportsKeyboardFocus;
+    uint8 bIsFocusable;
+    uint8 bStopAction;
+    uint8 bHasScriptImplementedTick;
+    uint8 bHasScriptImplementedPaint;
+    EWidgetTickFrequency TickFrequency;
+    class UInputComponent* InputComponent;
+    TArray<FAnimationEventBinding> AnimationCallbacks;
+
+    void UnregisterInputComponent();
+    void UnbindFromAnimationStarted(class UWidgetAnimation* Animation, FUnbindFromAnimationStartedDelegate Delegate);
+    void UnbindFromAnimationFinished(class UWidgetAnimation* Animation, FUnbindFromAnimationFinishedDelegate Delegate);
+    void UnbindAllFromAnimationStarted(class UWidgetAnimation* Animation);
+    void UnbindAllFromAnimationFinished(class UWidgetAnimation* Animation);
+    void Tick(FGeometry MyGeometry, float InDeltaTime);
+    void StopListeningForInputAction(FName ActionName, TEnumAsByte<EInputEvent> EventType);
+    void StopListeningForAllInputActions();
+    void StopAnimationsAndLatentActions();
+    void StopAnimation(const class UWidgetAnimation* InAnimation);
+    void StopAllAnimations();
+    void SetPositionInViewport(FVector2D Position, bool bRemoveDPIScale);
+    void SetPlaybackSpeed(const class UWidgetAnimation* InAnimation, float PlaybackSpeed);
+    void SetPadding(FMargin InPadding);
+    void SetOwningPlayer(class APlayerController* LocalPlayerController);
+    void SetNumLoopsToPlay(const class UWidgetAnimation* InAnimation, int32 NumLoopsToPlay);
+    void SetInputActionPriority(int32 NewPriority);
+    void SetInputActionBlocking(bool bShouldBlock);
+    void SetForegroundColor(FSlateColor InForegroundColor);
+    void SetDesiredSizeInViewport(FVector2D Size);
+    void SetColorAndOpacity(FLinearColor InColorAndOpacity);
+    void SetAnimationCurrentTime(const class UWidgetAnimation* InAnimation, float InTime);
+    void SetAnchorsInViewport(FAnchors Anchors);
+    void SetAlignmentInViewport(FVector2D Alignment);
+    void ReverseAnimation(const class UWidgetAnimation* InAnimation);
+    void RemoveFromViewport();
+    void RegisterInputComponent();
+    void PreConstruct(bool IsDesignTime);
+    void PlaySound(class USoundBase* SoundToPlay);
+    class UUMGSequencePlayer* PlayAnimationTimeRange(class UWidgetAnimation* InAnimation, float StartAtTime, float EndAtTime, int32 NumLoopsToPlay, TEnumAsByte<EUMGSequencePlayMode::Type> PlayMode, float PlaybackSpeed, bool bRestoreState);
+    class UUMGSequencePlayer* PlayAnimationReverse(class UWidgetAnimation* InAnimation, float PlaybackSpeed, bool bRestoreState);
+    class UUMGSequencePlayer* PlayAnimationForward(class UWidgetAnimation* InAnimation, float PlaybackSpeed, bool bRestoreState);
+    class UUMGSequencePlayer* PlayAnimation(class UWidgetAnimation* InAnimation, float StartAtTime, int32 NumLoopsToPlay, TEnumAsByte<EUMGSequencePlayMode::Type> PlayMode, float PlaybackSpeed, bool bRestoreState);
+    float PauseAnimation(const class UWidgetAnimation* InAnimation);
+    FEventReply OnTouchStarted(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
+    FEventReply OnTouchMoved(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
+    FEventReply OnTouchGesture(FGeometry MyGeometry, const FPointerEvent& GestureEvent);
+    FEventReply OnTouchForceChanged(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
+    FEventReply OnTouchEnded(FGeometry MyGeometry, const FPointerEvent& InTouchEvent);
+    void OnRemovedFromFocusPath(FFocusEvent InFocusEvent);
+    FEventReply OnPreviewMouseButtonDown(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+    FEventReply OnPreviewKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
+    void OnPaint(FPaintContext& Context);
+    FEventReply OnMouseWheel(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+    FEventReply OnMouseMove(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+    void OnMouseLeave(const FPointerEvent& MouseEvent);
+    void OnMouseEnter(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+    void OnMouseCaptureLost();
+    FEventReply OnMouseButtonUp(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+    FEventReply OnMouseButtonDown(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+    FEventReply OnMouseButtonDoubleClick(FGeometry InMyGeometry, const FPointerEvent& InMouseEvent);
+    FEventReply OnMotionDetected(FGeometry MyGeometry, FMotionEvent InMotionEvent);
+    FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
+    FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
+    FEventReply OnKeyChar(FGeometry MyGeometry, FCharacterEvent InCharacterEvent);
+    void OnInitialized();
+    FEventReply OnFocusReceived(FGeometry MyGeometry, FFocusEvent InFocusEvent);
+    void OnFocusLost(FFocusEvent InFocusEvent);
+    bool OnDrop(FGeometry MyGeometry, FPointerEvent PointerEvent, class UDragDropOperation* Operation);
+    bool OnDragOver(FGeometry MyGeometry, FPointerEvent PointerEvent, class UDragDropOperation* Operation);
+    void OnDragLeave(FPointerEvent PointerEvent, class UDragDropOperation* Operation);
+    void OnDragEnter(FGeometry MyGeometry, FPointerEvent PointerEvent, class UDragDropOperation* Operation);
+    void OnDragDetected(FGeometry MyGeometry, const FPointerEvent& PointerEvent, class UDragDropOperation*& Operation);
+    void OnDragCancelled(const FPointerEvent& PointerEvent, class UDragDropOperation* Operation);
+    void OnAnimationStarted(const class UWidgetAnimation* Animation);
+    void OnAnimationFinished(const class UWidgetAnimation* Animation);
+    FEventReply OnAnalogValueChanged(FGeometry MyGeometry, FAnalogInputEvent InAnalogInputEvent);
+    void OnAddedToFocusPath(FFocusEvent InFocusEvent);
+    void ListenForInputAction(FName ActionName, TEnumAsByte<EInputEvent> EventType, bool bConsume, FListenForInputActionCallback Callback);
+    bool IsPlayingAnimation();
+    bool IsListeningForInputAction(FName ActionName);
+    bool IsInViewport();
+    bool IsInteractable();
+    bool IsAnyAnimationPlaying();
+    bool IsAnimationPlayingForward(const class UWidgetAnimation* InAnimation);
+    bool IsAnimationPlaying(const class UWidgetAnimation* InAnimation);
+    class APawn* GetOwningPlayerPawn();
+    class APlayerCameraManager* GetOwningPlayerCameraManager();
+    bool GetIsVisible();
+    float GetAnimationCurrentTime(const class UWidgetAnimation* InAnimation);
+    FAnchors GetAnchorsInViewport();
+    FVector2D GetAlignmentInViewport();
+    void FlushAnimations();
+    void Destruct();
+    void Construct();
+    void CancelLatentActions();
+    void BindToAnimationStarted(class UWidgetAnimation* Animation, FBindToAnimationStartedDelegate Delegate);
+    void BindToAnimationFinished(class UWidgetAnimation* Animation, FBindToAnimationFinishedDelegate Delegate);
+    void BindToAnimationEvent(class UWidgetAnimation* Animation, FBindToAnimationEventDelegate Delegate, EWidgetAnimationEvent AnimationEvent, FName UserTag);
+    void AddToViewport(int32 ZOrder);
+    bool AddToPlayerScreen(int32 ZOrder);
+};
+
 class UVerticalBox : public UPanelWidget
 {
 
@@ -1851,13 +1733,105 @@ class UVisibilityBinding : public UPropertyBinding
     ESlateVisibility GetValue();
 };
 
-struct FWidgetAnimationBinding
+class UVisual : public UObject
 {
-    FName WidgetName;
-    FName SlotWidgetName;
-    FGuid AnimationGuid;
-    bool bIsRootWidget;
+};
 
+class UWidget : public UVisual
+{
+    class UPanelSlot* Slot;
+    FWidgetBIsEnabledDelegate bIsEnabledDelegate;
+    bool GetBool();
+    FText ToolTipText;
+    FWidgetToolTipTextDelegate ToolTipTextDelegate;
+    FText GetText();
+    class UWidget* ToolTipWidget;
+    FWidgetToolTipWidgetDelegate ToolTipWidgetDelegate;
+    class UWidget* GetWidget();
+    FWidgetVisibilityDelegate VisibilityDelegate;
+    ESlateVisibility GetSlateVisibility();
+    FWidgetTransform RenderTransform;
+    FVector2D RenderTransformPivot;
+    uint8 bIsVariable;
+    uint8 bCreatedByConstructionScript;
+    uint8 bIsEnabled;
+    uint8 bOverride_Cursor;
+    class USlateAccessibleWidgetData* AccessibleWidgetData;
+    uint8 bIsVolatile;
+    TEnumAsByte<EMouseCursor::Type> Cursor;
+    EWidgetClipping Clipping;
+    ESlateVisibility Visibility;
+    float RenderOpacity;
+    class UWidgetNavigation* Navigation;
+    EFlowDirectionPreference FlowDirectionPreference;
+    TArray<class UPropertyBinding*> NativeBindings;
+
+    void SetVisibility(ESlateVisibility InVisibility);
+    void SetUserFocus(class APlayerController* PlayerController);
+    void SetToolTipText(const FText& InToolTipText);
+    void SetToolTip(class UWidget* Widget);
+    void SetRenderTranslation(FVector2D Translation);
+    void SetRenderTransformPivot(FVector2D Pivot);
+    void SetRenderTransformAngle(float Angle);
+    void SetRenderTransform(FWidgetTransform InTransform);
+    void SetRenderShear(FVector2D Shear);
+    void SetRenderScale(FVector2D Scale);
+    void SetRenderOpacity(float InOpacity);
+    void SetNavigationRuleExplicit(EUINavigation Direction, class UWidget* InWidget);
+    void SetNavigationRuleCustomBoundary(EUINavigation Direction, FSetNavigationRuleCustomBoundaryInCustomDelegate InCustomDelegate);
+    void SetNavigationRuleCustom(EUINavigation Direction, FSetNavigationRuleCustomInCustomDelegate InCustomDelegate);
+    void SetNavigationRuleBase(EUINavigation Direction, EUINavigationRule Rule);
+    void SetNavigationRule(EUINavigation Direction, EUINavigationRule Rule, FName WidgetToFocus);
+    void SetKeyboardFocus();
+    void SetIsEnabled(bool bInIsEnabled);
+    void SetFocus();
+    void SetCursor(TEnumAsByte<EMouseCursor::Type> InCursor);
+    void SetClipping(EWidgetClipping InClipping);
+    void SetAllNavigationRules(EUINavigationRule Rule, FName WidgetToFocus);
+    void ResetCursor();
+    void RemoveFromParent();
+    FEventReply OnReply__DelegateSignature();
+    FEventReply OnPointerEvent__DelegateSignature(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+    bool IsVisible();
+    bool IsHovered();
+    void InvalidateLayoutAndVolatility();
+    bool HasUserFocusedDescendants(class APlayerController* PlayerController);
+    bool HasUserFocus(class APlayerController* PlayerController);
+    bool HasMouseCaptureByUser(int32 UserIndex, int32 PointerIndex);
+    bool HasMouseCapture();
+    bool HasKeyboardFocus();
+    bool HasFocusedDescendants();
+    bool HasAnyUserFocus();
+    class UWidget* GetWidget__DelegateSignature();
+    ESlateVisibility GetVisibility();
+    FGeometry GetTickSpaceGeometry();
+    FText GetText__DelegateSignature();
+    ESlateVisibility GetSlateVisibility__DelegateSignature();
+    FSlateColor GetSlateColor__DelegateSignature();
+    FSlateBrush GetSlateBrush__DelegateSignature();
+    float GetRenderTransformAngle();
+    float GetRenderOpacity();
+    class UPanelWidget* GetParent();
+    FGeometry GetPaintSpaceGeometry();
+    class APlayerController* GetOwningPlayer();
+    class ULocalPlayer* GetOwningLocalPlayer();
+    TEnumAsByte<EMouseCursor::Type> GetMouseCursor__DelegateSignature();
+    FLinearColor GetLinearColor__DelegateSignature();
+    bool GetIsEnabled();
+    int32 GetInt32__DelegateSignature();
+    class UGameInstance* GetGameInstance();
+    float GetFloat__DelegateSignature();
+    FVector2D GetDesiredSize();
+    EWidgetClipping GetClipping();
+    ECheckBoxState GetCheckBoxState__DelegateSignature();
+    FGeometry GetCachedGeometry();
+    bool GetBool__DelegateSignature();
+    FText GetAccessibleText();
+    FText GetAccessibleSummaryText();
+    class UWidget* GenerateWidgetForString__DelegateSignature(FString Item);
+    class UWidget* GenerateWidgetForObject__DelegateSignature(class UObject* Item);
+    void ForceVolatile(bool bForce);
+    void ForceLayoutPrepass();
 };
 
 class UWidgetAnimation : public UMovieSceneSequence
@@ -1875,15 +1849,6 @@ class UWidgetAnimation : public UMovieSceneSequence
     float GetEndTime();
     void BindToAnimationStarted(class UUserWidget* Widget, FBindToAnimationStartedDelegate Delegate);
     void BindToAnimationFinished(class UUserWidget* Widget, FBindToAnimationFinishedDelegate Delegate);
-};
-
-struct FBlueprintWidgetAnimationDelegateBinding
-{
-    EWidgetAnimationEvent Action;
-    FName AnimationToBind;
-    FName FunctionNameToBind;
-    FName UserTag;
-
 };
 
 class UWidgetAnimationDelegateBinding : public UDynamicBlueprintBinding
@@ -1905,16 +1870,6 @@ class UWidgetBinding : public UPropertyBinding
 {
 
     class UWidget* GetValue();
-};
-
-struct FDelegateRuntimeBinding
-{
-    FString ObjectName;
-    FName PropertyName;
-    FName FunctionName;
-    FDynamicPropertyPath SourcePath;
-    EBindingKind Kind;
-
 };
 
 class UWidgetBlueprintGeneratedClass : public UBlueprintGeneratedClass
@@ -1988,6 +1943,87 @@ class UWidgetBlueprintLibrary : public UBlueprintFunctionLibrary
     void CancelDragDrop();
 };
 
+class UWidgetComponent : public UMeshComponent
+{
+    EWidgetSpace Space;
+    EWidgetTimingPolicy TimingPolicy;
+    TSubclassOf<class UUserWidget> WidgetClass;
+    FIntPoint DrawSize;
+    bool bManuallyRedraw;
+    bool bRedrawRequested;
+    float RedrawTime;
+    FIntPoint CurrentDrawSize;
+    bool bDrawAtDesiredSize;
+    FVector2D Pivot;
+    bool bReceiveHardwareInput;
+    bool bWindowFocusable;
+    EWindowVisibility WindowVisibility;
+    bool bApplyGammaCorrection;
+    class ULocalPlayer* OwnerPlayer;
+    FLinearColor BackgroundColor;
+    FLinearColor TintColorAndOpacity;
+    float OpacityFromTexture;
+    EWidgetBlendMode BlendMode;
+    bool bIsTwoSided;
+    bool TickWhenOffscreen;
+    class UBodySetup* BodySetup;
+    class UMaterialInterface* TranslucentMaterial;
+    class UMaterialInterface* TranslucentMaterial_OneSided;
+    class UMaterialInterface* OpaqueMaterial;
+    class UMaterialInterface* OpaqueMaterial_OneSided;
+    class UMaterialInterface* MaskedMaterial;
+    class UMaterialInterface* MaskedMaterial_OneSided;
+    class UTextureRenderTarget2D* RenderTarget;
+    class UMaterialInstanceDynamic* MaterialInstance;
+    bool bAddedToScreen;
+    bool bEditTimeUsable;
+    FName SharedLayerName;
+    int32 LayerZOrder;
+    EWidgetGeometryMode GeometryMode;
+    float CylinderArcAngle;
+    ETickMode TickMode;
+    class UUserWidget* Widget;
+
+    void SetWindowVisibility(EWindowVisibility InVisibility);
+    void SetWindowFocusable(bool bInWindowFocusable);
+    void SetWidgetSpace(EWidgetSpace NewSpace);
+    void SetWidget(class UUserWidget* Widget);
+    void SetTwoSided(const bool bWantTwoSided);
+    void SetTintColorAndOpacity(const FLinearColor NewTintColorAndOpacity);
+    void SetTickWhenOffscreen(const bool bWantTickWhenOffscreen);
+    void SetTickMode(ETickMode InTickMode);
+    void SetRedrawTime(float InRedrawTime);
+    void SetPivot(const FVector2D& InPivot);
+    void SetOwnerPlayer(class ULocalPlayer* LocalPlayer);
+    void SetManuallyRedraw(bool bUseManualRedraw);
+    void SetGeometryMode(EWidgetGeometryMode InGeometryMode);
+    void SetDrawSize(FVector2D Size);
+    void SetDrawAtDesiredSize(bool bInDrawAtDesiredSize);
+    void SetCylinderArcAngle(const float InCylinderArcAngle);
+    void SetBackgroundColor(const FLinearColor NewBackgroundColor);
+    void RequestRenderUpdate();
+    void RequestRedraw();
+    bool IsWidgetVisible();
+    EWindowVisibility GetWindowVisiblility();
+    bool GetWindowFocusable();
+    EWidgetSpace GetWidgetSpace();
+    class UUserWidget* GetWidget();
+    class UUserWidget* GetUserWidgetObject();
+    bool GetTwoSided();
+    bool GetTickWhenOffscreen();
+    class UTextureRenderTarget2D* GetRenderTarget();
+    float GetRedrawTime();
+    FVector2D GetPivot();
+    class ULocalPlayer* GetOwnerPlayer();
+    class UMaterialInstanceDynamic* GetMaterialInstance();
+    bool GetManuallyRedraw();
+    EWidgetGeometryMode GetGeometryMode();
+    FVector2D GetDrawSize();
+    bool GetDrawAtDesiredSize();
+    float GetCylinderArcAngle();
+    FVector2D GetCurrentDrawSize();
+};
+
 class UWidgetInteractionComponent : public USceneComponent
 {
     FWidgetInteractionComponentOnHoveredWidgetChanged OnHoveredWidgetChanged;
@@ -2053,16 +2089,6 @@ class UWidgetLayoutLibrary : public UBlueprintFunctionLibrary
     bool GetMousePositionScaledByDPI(class APlayerController* Player, float& LocationX, float& LocationY);
     FVector2D GetMousePositionOnViewport(class UObject* WorldContextObject);
     FVector2D GetMousePositionOnPlatform();
-};
-
-struct FWidgetNavigationData
-{
-    EUINavigationRule Rule;
-    FName WidgetToFocus;
-    TWeakObjectPtr<class UWidget> Widget;
-    FWidgetNavigationDataCustomDelegate CustomDelegate;
-    class UWidget* CustomWidgetNavigationDelegate(EUINavigation Navigation);
-
 };
 
 class UWidgetNavigation : public UObject
@@ -2152,32 +2178,6 @@ class UWrapBoxSlot : public UPanelSlot
     void SetHorizontalAlignment(TEnumAsByte<EHorizontalAlignment> InHorizontalAlignment);
     void SetFillSpanWhenLessThan(float InFillSpanWhenLessThan);
     void SetFillEmptySpace(bool InbFillEmptySpace);
-};
-
-struct FMovieSceneWidgetMaterialSectionTemplate : public FMovieSceneParameterSectionTemplate
-{
-    TArray<FName> BrushPropertyNamePath;
-
-};
-
-struct FRichTextStyleRow : public FTableRowBase
-{
-    FTextBlockStyle TextStyle;
-
-};
-
-struct FRichImageRow : public FTableRowBase
-{
-    FSlateBrush Brush;
-
-};
-
-struct FWidgetComponentInstanceData : public FSceneComponentInstanceData
-{
-};
-
-class UDefault__WidgetBlueprintGeneratedClass
-{
 };
 
 #endif

@@ -3,10 +3,13 @@
 
 #include "OculusHMD_enums.hpp"
 
-struct FHmdUserProfileField
+struct FGuardianTestResult
 {
-    FString FieldName;
-    FString FieldValue;
+    bool IsTriggering;
+    ETrackedDeviceType DeviceType;
+    float ClosestDistance;
+    FVector ClosestPoint;
+    FVector ClosestPointNormal;
 
 };
 
@@ -22,13 +25,22 @@ struct FHmdUserProfile
 
 };
 
-struct FGuardianTestResult
+struct FHmdUserProfileField
 {
-    bool IsTriggering;
-    ETrackedDeviceType DeviceType;
-    float ClosestDistance;
-    FVector ClosestPoint;
-    FVector ClosestPointNormal;
+    FString FieldName;
+    FString FieldValue;
+
+};
+
+struct FOculusSplashDesc
+{
+    FSoftObjectPath TexturePath;
+    FTransform TransformInMeters;
+    FVector2D QuadSizeInMeters;
+    FQuat DeltaRotation;
+    FVector2D TextureOffset;
+    FVector2D TextureScale;
+    bool bNoAlphaChannel;
 
 };
 
@@ -73,18 +85,6 @@ class UOculusFunctionLibrary : public UBlueprintFunctionLibrary
     void EnableOrientationTracking(bool bOrientationTracking);
     void ClearLoadingSplashScreens();
     void AddLoadingSplashScreen(class UTexture2D* Texture, FVector TranslationInMeters, FRotator Rotation, FVector2D SizeInMeters, FRotator DeltaRotation, bool bClearBeforeAdd);
-};
-
-struct FOculusSplashDesc
-{
-    FSoftObjectPath TexturePath;
-    FTransform TransformInMeters;
-    FVector2D QuadSizeInMeters;
-    FQuat DeltaRotation;
-    FVector2D TextureOffset;
-    FVector2D TextureScale;
-    bool bNoAlphaChannel;
-
 };
 
 class UOculusHMDRuntimeSettings : public UObject

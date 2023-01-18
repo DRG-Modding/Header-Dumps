@@ -7,6 +7,10 @@ struct FGameplayResourceSet
 {
 };
 
+class IGameplayTaskOwnerInterface : public IInterface
+{
+};
+
 class UGameplayTask : public UObject
 {
     FName InstanceName;
@@ -16,6 +20,14 @@ class UGameplayTask : public UObject
     void ReadyForActivation();
     void GenericGameplayTaskDelegate__DelegateSignature();
     void EndTask();
+};
+
+class UGameplayTaskResource : public UObject
+{
+    int32 ManualResourceID;
+    int8 AutoResourceID;
+    uint8 bManuallySetID;
+
 };
 
 class UGameplayTask_ClaimResource : public UGameplayTask
@@ -54,18 +66,6 @@ class UGameplayTask_WaitDelay : public UGameplayTask
 
     class UGameplayTask_WaitDelay* TaskWaitDelay(TScriptInterface<class IGameplayTaskOwnerInterface> TaskOwner, float Time, const uint8 Priority);
     void TaskDelayDelegate__DelegateSignature();
-};
-
-class IGameplayTaskOwnerInterface : public IInterface
-{
-};
-
-class UGameplayTaskResource : public UObject
-{
-    int32 ManualResourceID;
-    int8 AutoResourceID;
-    uint8 bManuallySetID;
-
 };
 
 class UGameplayTasksComponent : public UActorComponent

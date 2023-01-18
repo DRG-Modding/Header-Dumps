@@ -3,10 +3,16 @@
 
 #include "Synthesis_enums.hpp"
 
-struct FSynth1PatchCable
+struct FDynamicsBandSettings
 {
-    float Depth;
-    ESynth1PatchDestination Destination;
+    float CrossoverTopFrequency;
+    float AttackTimeMsec;
+    float ReleaseTimeMsec;
+    float ThresholdDb;
+    float Ratio;
+    float KneeBandwidthDb;
+    float InputGainDb;
+    float OutputGainDb;
 
 };
 
@@ -88,22 +94,365 @@ struct FModularSynthPresetBankEntry
 
 };
 
-class UModularSynthPresetBank : public UObject
-{
-    TArray<FModularSynthPresetBankEntry> Presets;
-
-};
-
-class UModularSynthLibrary : public UBlueprintFunctionLibrary
-{
-
-    void AddModularSynthPresetToBankAsset(class UModularSynthPresetBank* InBank, const FModularSynthPreset& Preset, FString PresetName);
-};
-
 struct FPatchId
 {
     int32 ID;
 
+};
+
+struct FSourceEffectBitCrusherBaseSettings
+{
+    float SampleRate;
+    float BitDepth;
+
+};
+
+struct FSourceEffectBitCrusherSettings
+{
+    float CrushedSampleRate;
+    FSoundModulationDestinationSettings SampleRateModulation;
+    float CrushedBits;
+    FSoundModulationDestinationSettings BitModulation;
+
+};
+
+struct FSourceEffectChorusBaseSettings
+{
+    float Depth;
+    float Frequency;
+    float Feedback;
+    float WetLevel;
+    float DryLevel;
+    float Spread;
+
+};
+
+struct FSourceEffectChorusSettings
+{
+    float Depth;
+    float Frequency;
+    float Feedback;
+    float WetLevel;
+    float DryLevel;
+    float Spread;
+    FSoundModulationDestinationSettings DepthModulation;
+    FSoundModulationDestinationSettings FrequencyModulation;
+    FSoundModulationDestinationSettings FeedbackModulation;
+    FSoundModulationDestinationSettings WetModulation;
+    FSoundModulationDestinationSettings DryModulation;
+    FSoundModulationDestinationSettings SpreadModulation;
+
+};
+
+struct FSourceEffectDynamicsProcessorSettings
+{
+    ESourceEffectDynamicsProcessorType DynamicsProcessorType;
+    ESourceEffectDynamicsPeakMode PeakMode;
+    float LookAheadMsec;
+    float AttackTimeMsec;
+    float ReleaseTimeMsec;
+    float ThresholdDb;
+    float Ratio;
+    float KneeBandwidthDb;
+    float InputGainDb;
+    float OutputGainDb;
+    uint8 bStereoLinked;
+    uint8 bAnalogMode;
+
+};
+
+struct FSourceEffectEQBand
+{
+    float Frequency;
+    float Bandwidth;
+    float GainDb;
+    uint8 bEnabled;
+
+};
+
+struct FSourceEffectEQSettings
+{
+    TArray<FSourceEffectEQBand> EQBands;
+
+};
+
+struct FSourceEffectEnvelopeFollowerSettings
+{
+    float AttackTime;
+    float ReleaseTime;
+    EEnvelopeFollowerPeakMode PeakMode;
+    bool bIsAnalogMode;
+
+};
+
+struct FSourceEffectFilterAudioBusModulationSettings
+{
+    class UAudioBus* AudioBus;
+    int32 EnvelopeFollowerAttackTimeMsec;
+    int32 EnvelopeFollowerReleaseTimeMsec;
+    float EnvelopeGainMultiplier;
+    ESourceEffectFilterParam FilterParam;
+    float MinFrequencyModulation;
+    float MaxFrequencyModulation;
+    float MinResonanceModulation;
+    float MaxResonanceModulation;
+
+};
+
+struct FSourceEffectFilterSettings
+{
+    ESourceEffectFilterCircuit FilterCircuit;
+    ESourceEffectFilterType FilterType;
+    float CutoffFrequency;
+    float FilterQ;
+    TArray<FSourceEffectFilterAudioBusModulationSettings> AudioBusModulation;
+
+};
+
+struct FSourceEffectFoldbackDistortionSettings
+{
+    float InputGainDb;
+    float ThresholdDb;
+    float OutputGainDb;
+
+};
+
+struct FSourceEffectMidSideSpreaderSettings
+{
+    float SpreadAmount;
+    EStereoChannelMode InputMode;
+    EStereoChannelMode OutputMode;
+    bool bEqualPower;
+
+};
+
+struct FSourceEffectPannerSettings
+{
+    float Spread;
+    float Pan;
+
+};
+
+struct FSourceEffectPhaserSettings
+{
+    float WetLevel;
+    float Frequency;
+    float Feedback;
+    EPhaserLFOType LFOType;
+    bool UseQuadraturePhase;
+
+};
+
+struct FSourceEffectRingModulationSettings
+{
+    ERingModulatorTypeSourceEffect ModulatorType;
+    float Frequency;
+    float Depth;
+    float DryLevel;
+    float WetLevel;
+    class UAudioBus* AudioBusModulator;
+
+};
+
+struct FSourceEffectSimpleDelaySettings
+{
+    float SpeedOfSound;
+    float DelayAmount;
+    float DryAmount;
+    float WetAmount;
+    float Feedback;
+    uint8 bDelayBasedOnDistance;
+
+};
+
+struct FSourceEffectStereoDelaySettings
+{
+    EStereoDelaySourceEffect DelayMode;
+    float DelayTimeMsec;
+    float Feedback;
+    float DelayRatio;
+    float WetLevel;
+    float DryLevel;
+    bool bFilterEnabled;
+    EStereoDelayFiltertype FilterType;
+    float FilterFrequency;
+    float FilterQ;
+
+};
+
+struct FSourceEffectWaveShaperSettings
+{
+    float Amount;
+    float OutputGainDb;
+
+};
+
+struct FSubmixEffectConvolutionReverbSettings
+{
+    float NormalizationVolumeDb;
+    bool bBypass;
+    bool bMixInputChannelFormatToImpulseResponseFormat;
+    bool bMixReverbOutputToOutputChannelFormat;
+    float SurroundRearChannelBleedDb;
+    bool bInvertRearChannelBleedPhase;
+    bool bSurroundRearChannelFlip;
+    float SurroundRearChannelBleedAmount;
+    class UAudioImpulseResponse* ImpulseResponse;
+    bool AllowHArdwareAcceleration;
+
+};
+
+struct FSubmixEffectDelaySettings
+{
+    float MaximumDelayLength;
+    float InterpolationTime;
+    float DelayLength;
+
+};
+
+struct FSubmixEffectFilterSettings
+{
+    ESubmixFilterType FilterType;
+    ESubmixFilterAlgorithm FilterAlgorithm;
+    float FilterFrequency;
+    float FilterQ;
+
+};
+
+struct FSubmixEffectFlexiverbSettings
+{
+    float PreDelay;
+    float DecayTime;
+    float RoomDampening;
+    int32 Complexity;
+
+};
+
+struct FSubmixEffectMultibandCompressorSettings
+{
+    ESubmixEffectDynamicsProcessorType DynamicsProcessorType;
+    ESubmixEffectDynamicsPeakMode PeakMode;
+    float LookAheadMsec;
+    bool bLinkChannels;
+    bool bAnalogMode;
+    bool bFourPole;
+    TArray<FDynamicsBandSettings> Bands;
+
+};
+
+struct FSubmixEffectStereoDelaySettings
+{
+    EStereoDelaySourceEffect DelayMode;
+    float DelayTimeMsec;
+    float Feedback;
+    float DelayRatio;
+    float WetLevel;
+    float DryLevel;
+    bool bFilterEnabled;
+    EStereoDelayFiltertype FilterType;
+    float FilterFrequency;
+    float FilterQ;
+
+};
+
+struct FSubmixEffectTapDelaySettings
+{
+    float MaximumDelayLength;
+    float InterpolationTime;
+    TArray<FTapDelayInfo> Taps;
+
+};
+
+struct FSynth1PatchCable
+{
+    float Depth;
+    ESynth1PatchDestination Destination;
+
+};
+
+struct FSynth2DSliderStyle : public FSlateWidgetStyle
+{
+    FSlateBrush NormalThumbImage;
+    FSlateBrush DisabledThumbImage;
+    FSlateBrush NormalBarImage;
+    FSlateBrush DisabledBarImage;
+    FSlateBrush BackgroundImage;
+    float BarThickness;
+
+};
+
+struct FSynthKnobStyle : public FSlateWidgetStyle
+{
+    FSlateBrush LargeKnob;
+    FSlateBrush LargeKnobOverlay;
+    FSlateBrush MediumKnob;
+    FSlateBrush MediumKnobOverlay;
+    float MinValueAngle;
+    float MaxValueAngle;
+    ESynthKnobSize KnobSize;
+
+};
+
+struct FSynthSlateStyle : public FSlateWidgetStyle
+{
+    ESynthSlateSizeType SizeType;
+    ESynthSlateColorStyle ColorStyle;
+
+};
+
+struct FTapDelayInfo
+{
+    ETapLineMode TapLineMode;
+    float DelayLength;
+    float Gain;
+    int32 OutputChannel;
+    float PanInDegrees;
+    int32 TapId;
+
+};
+
+class UAudioImpulseResponse : public UObject
+{
+    TArray<float> ImpulseResponse;
+    int32 NumChannels;
+    int32 SampleRate;
+    float NormalizationVolumeDb;
+    bool bTrueStereo;
+    TArray<float> IRData;
+
+};
+
+class UEnvelopeFollowerListener : public UActorComponent
+{
+    FEnvelopeFollowerListenerOnEnvelopeFollowerUpdate OnEnvelopeFollowerUpdate;
+    void OnEnvelopeFollowerUpdate(float EnvelopeValue);
+
+};
+
+class UGranularSynth : public USynthComponent
+{
+    class USoundWave* GranulatedSoundWave;
+
+    void SetSustainGain(const float SustainGain);
+    void SetSoundWave(class USoundWave* InSoundWave);
+    void SetScrubMode(const bool bScrubMode);
+    void SetReleaseTimeMsec(const float ReleaseTimeMsec);
+    void SetPlayheadTime(const float InPositionSec, const float LerpTimeSec, EGranularSynthSeekType SeekType);
+    void SetPlaybackSpeed(const float InPlayheadRate);
+    void SetGrainVolume(const float BaseVolume, const FVector2D VolumeRange);
+    void SetGrainsPerSecond(const float InGrainsPerSecond);
+    void SetGrainProbability(const float InGrainProbability);
+    void SetGrainPitch(const float BasePitch, const FVector2D PitchRange);
+    void SetGrainPan(const float BasePan, const FVector2D PanRange);
+    void SetGrainEnvelopeType(const EGranularSynthEnvelopeType EnvelopeType);
+    void SetGrainDuration(const float BaseDurationMsec, const FVector2D DurationRange);
+    void SetDecayTime(const float DecayTimeMsec);
+    void SetAttackTime(const float AttackTimeMsec);
+    void NoteOn(const float Note, const int32 Velocity, const float Duration);
+    void NoteOff(const float Note, const bool bKill);
+    bool IsLoaded();
+    float GetSampleDuration();
+    float GetCurrentPlayheadTime();
 };
 
 class UModularSynthComponent : public USynthComponent
@@ -171,19 +520,26 @@ class UModularSynthComponent : public USynthComponent
     FPatchId CreatePatch(const ESynth1PatchSource PatchSource, const TArray<FSynth1PatchCable>& PatchCables, const bool bEnableByDefault);
 };
 
-struct FSourceEffectBitCrusherSettings
+class UModularSynthLibrary : public UBlueprintFunctionLibrary
 {
-    float CrushedSampleRate;
-    FSoundModulationDestinationSettings SampleRateModulation;
-    float CrushedBits;
-    FSoundModulationDestinationSettings BitModulation;
+
+    void AddModularSynthPresetToBankAsset(class UModularSynthPresetBank* InBank, const FModularSynthPreset& Preset, FString PresetName);
+};
+
+class UModularSynthPresetBank : public UObject
+{
+    TArray<FModularSynthPresetBankEntry> Presets;
 
 };
 
-struct FSourceEffectBitCrusherBaseSettings
+class UMonoWaveTableSynthPreset : public UObject
 {
-    float SampleRate;
-    float BitDepth;
+    FString PresetName;
+    uint8 bLockKeyframesToGridBool;
+    int32 LockKeyframesToGrid;
+    int32 WaveTableResolution;
+    TArray<FRuntimeFloatCurve> WaveTable;
+    uint8 bNormalizeWaveTables;
 
 };
 
@@ -197,34 +553,6 @@ class USourceEffectBitCrusherPreset : public USoundEffectSourcePreset
     void SetModulationSettings(const FSourceEffectBitCrusherSettings& ModulationSettings);
     void SetBits(float Bits);
     void SetBitModulator(const class USoundModulatorBase* Modulator);
-};
-
-struct FSourceEffectChorusSettings
-{
-    float Depth;
-    float Frequency;
-    float Feedback;
-    float WetLevel;
-    float DryLevel;
-    float Spread;
-    FSoundModulationDestinationSettings DepthModulation;
-    FSoundModulationDestinationSettings FrequencyModulation;
-    FSoundModulationDestinationSettings FeedbackModulation;
-    FSoundModulationDestinationSettings WetModulation;
-    FSoundModulationDestinationSettings DryModulation;
-    FSoundModulationDestinationSettings SpreadModulation;
-
-};
-
-struct FSourceEffectChorusBaseSettings
-{
-    float Depth;
-    float Frequency;
-    float Feedback;
-    float WetLevel;
-    float DryLevel;
-    float Spread;
-
 };
 
 class USourceEffectChorusPreset : public USoundEffectSourcePreset
@@ -247,23 +575,6 @@ class USourceEffectChorusPreset : public USoundEffectSourcePreset
     void SetDepth(float Depth);
 };
 
-struct FSourceEffectDynamicsProcessorSettings
-{
-    ESourceEffectDynamicsProcessorType DynamicsProcessorType;
-    ESourceEffectDynamicsPeakMode PeakMode;
-    float LookAheadMsec;
-    float AttackTimeMsec;
-    float ReleaseTimeMsec;
-    float ThresholdDb;
-    float Ratio;
-    float KneeBandwidthDb;
-    float InputGainDb;
-    float OutputGainDb;
-    uint8 bStereoLinked;
-    uint8 bAnalogMode;
-
-};
-
 class USourceEffectDynamicsProcessorPreset : public USoundEffectSourcePreset
 {
     FSourceEffectDynamicsProcessorSettings Settings;
@@ -271,20 +582,11 @@ class USourceEffectDynamicsProcessorPreset : public USoundEffectSourcePreset
     void SetSettings(const FSourceEffectDynamicsProcessorSettings& InSettings);
 };
 
-class UEnvelopeFollowerListener : public UActorComponent
+class USourceEffectEQPreset : public USoundEffectSourcePreset
 {
-    FEnvelopeFollowerListenerOnEnvelopeFollowerUpdate OnEnvelopeFollowerUpdate;
-    void OnEnvelopeFollowerUpdate(float EnvelopeValue);
+    FSourceEffectEQSettings Settings;
 
-};
-
-struct FSourceEffectEnvelopeFollowerSettings
-{
-    float AttackTime;
-    float ReleaseTime;
-    EEnvelopeFollowerPeakMode PeakMode;
-    bool bIsAnalogMode;
-
+    void SetSettings(const FSourceEffectEQSettings& InSettings);
 };
 
 class USourceEffectEnvelopeFollowerPreset : public USoundEffectSourcePreset
@@ -296,65 +598,11 @@ class USourceEffectEnvelopeFollowerPreset : public USoundEffectSourcePreset
     void RegisterEnvelopeFollowerListener(class UEnvelopeFollowerListener* EnvelopeFollowerListener);
 };
 
-struct FSourceEffectEQBand
-{
-    float Frequency;
-    float Bandwidth;
-    float GainDb;
-    uint8 bEnabled;
-
-};
-
-struct FSourceEffectEQSettings
-{
-    TArray<FSourceEffectEQBand> EQBands;
-
-};
-
-class USourceEffectEQPreset : public USoundEffectSourcePreset
-{
-    FSourceEffectEQSettings Settings;
-
-    void SetSettings(const FSourceEffectEQSettings& InSettings);
-};
-
-struct FSourceEffectFilterAudioBusModulationSettings
-{
-    class UAudioBus* AudioBus;
-    int32 EnvelopeFollowerAttackTimeMsec;
-    int32 EnvelopeFollowerReleaseTimeMsec;
-    float EnvelopeGainMultiplier;
-    ESourceEffectFilterParam FilterParam;
-    float MinFrequencyModulation;
-    float MaxFrequencyModulation;
-    float MinResonanceModulation;
-    float MaxResonanceModulation;
-
-};
-
-struct FSourceEffectFilterSettings
-{
-    ESourceEffectFilterCircuit FilterCircuit;
-    ESourceEffectFilterType FilterType;
-    float CutoffFrequency;
-    float FilterQ;
-    TArray<FSourceEffectFilterAudioBusModulationSettings> AudioBusModulation;
-
-};
-
 class USourceEffectFilterPreset : public USoundEffectSourcePreset
 {
     FSourceEffectFilterSettings Settings;
 
     void SetSettings(const FSourceEffectFilterSettings& InSettings);
-};
-
-struct FSourceEffectFoldbackDistortionSettings
-{
-    float InputGainDb;
-    float ThresholdDb;
-    float OutputGainDb;
-
 };
 
 class USourceEffectFoldbackDistortionPreset : public USoundEffectSourcePreset
@@ -364,27 +612,11 @@ class USourceEffectFoldbackDistortionPreset : public USoundEffectSourcePreset
     void SetSettings(const FSourceEffectFoldbackDistortionSettings& InSettings);
 };
 
-struct FSourceEffectMidSideSpreaderSettings
-{
-    float SpreadAmount;
-    EStereoChannelMode InputMode;
-    EStereoChannelMode OutputMode;
-    bool bEqualPower;
-
-};
-
 class USourceEffectMidSideSpreaderPreset : public USoundEffectSourcePreset
 {
     FSourceEffectMidSideSpreaderSettings Settings;
 
     void SetSettings(const FSourceEffectMidSideSpreaderSettings& InSettings);
-};
-
-struct FSourceEffectPannerSettings
-{
-    float Spread;
-    float Pan;
-
 };
 
 class USourceEffectPannerPreset : public USoundEffectSourcePreset
@@ -394,32 +626,11 @@ class USourceEffectPannerPreset : public USoundEffectSourcePreset
     void SetSettings(const FSourceEffectPannerSettings& InSettings);
 };
 
-struct FSourceEffectPhaserSettings
-{
-    float WetLevel;
-    float Frequency;
-    float Feedback;
-    EPhaserLFOType LFOType;
-    bool UseQuadraturePhase;
-
-};
-
 class USourceEffectPhaserPreset : public USoundEffectSourcePreset
 {
     FSourceEffectPhaserSettings Settings;
 
     void SetSettings(const FSourceEffectPhaserSettings& InSettings);
-};
-
-struct FSourceEffectRingModulationSettings
-{
-    ERingModulatorTypeSourceEffect ModulatorType;
-    float Frequency;
-    float Depth;
-    float DryLevel;
-    float WetLevel;
-    class UAudioBus* AudioBusModulator;
-
 };
 
 class USourceEffectRingModulationPreset : public USoundEffectSourcePreset
@@ -429,37 +640,11 @@ class USourceEffectRingModulationPreset : public USoundEffectSourcePreset
     void SetSettings(const FSourceEffectRingModulationSettings& InSettings);
 };
 
-struct FSourceEffectSimpleDelaySettings
-{
-    float SpeedOfSound;
-    float DelayAmount;
-    float DryAmount;
-    float WetAmount;
-    float Feedback;
-    uint8 bDelayBasedOnDistance;
-
-};
-
 class USourceEffectSimpleDelayPreset : public USoundEffectSourcePreset
 {
     FSourceEffectSimpleDelaySettings Settings;
 
     void SetSettings(const FSourceEffectSimpleDelaySettings& InSettings);
-};
-
-struct FSourceEffectStereoDelaySettings
-{
-    EStereoDelaySourceEffect DelayMode;
-    float DelayTimeMsec;
-    float Feedback;
-    float DelayRatio;
-    float WetLevel;
-    float DryLevel;
-    bool bFilterEnabled;
-    EStereoDelayFiltertype FilterType;
-    float FilterFrequency;
-    float FilterQ;
-
 };
 
 class USourceEffectStereoDelayPreset : public USoundEffectSourcePreset
@@ -469,44 +654,11 @@ class USourceEffectStereoDelayPreset : public USoundEffectSourcePreset
     void SetSettings(const FSourceEffectStereoDelaySettings& InSettings);
 };
 
-struct FSourceEffectWaveShaperSettings
-{
-    float Amount;
-    float OutputGainDb;
-
-};
-
 class USourceEffectWaveShaperPreset : public USoundEffectSourcePreset
 {
     FSourceEffectWaveShaperSettings Settings;
 
     void SetSettings(const FSourceEffectWaveShaperSettings& InSettings);
-};
-
-class UAudioImpulseResponse : public UObject
-{
-    TArray<float> ImpulseResponse;
-    int32 NumChannels;
-    int32 SampleRate;
-    float NormalizationVolumeDb;
-    bool bTrueStereo;
-    TArray<float> IRData;
-
-};
-
-struct FSubmixEffectConvolutionReverbSettings
-{
-    float NormalizationVolumeDb;
-    bool bBypass;
-    bool bMixInputChannelFormatToImpulseResponseFormat;
-    bool bMixReverbOutputToOutputChannelFormat;
-    float SurroundRearChannelBleedDb;
-    bool bInvertRearChannelBleedPhase;
-    bool bSurroundRearChannelFlip;
-    float SurroundRearChannelBleedAmount;
-    class UAudioImpulseResponse* ImpulseResponse;
-    bool AllowHArdwareAcceleration;
-
 };
 
 class USubmixEffectConvolutionReverbPreset : public USoundEffectSubmixPreset
@@ -520,14 +672,6 @@ class USubmixEffectConvolutionReverbPreset : public USoundEffectSubmixPreset
     void SetImpulseResponse(class UAudioImpulseResponse* InImpulseResponse);
 };
 
-struct FSubmixEffectDelaySettings
-{
-    float MaximumDelayLength;
-    float InterpolationTime;
-    float DelayLength;
-
-};
-
 class USubmixEffectDelayPreset : public USoundEffectSubmixPreset
 {
     FSubmixEffectDelaySettings Settings;
@@ -537,15 +681,6 @@ class USubmixEffectDelayPreset : public USoundEffectSubmixPreset
     void SetInterpolationTime(float Time);
     void SetDelay(float Length);
     float GetMaxDelayInMilliseconds();
-};
-
-struct FSubmixEffectFilterSettings
-{
-    ESubmixFilterType FilterType;
-    ESubmixFilterAlgorithm FilterAlgorithm;
-    float FilterFrequency;
-    float FilterQ;
-
 };
 
 class USubmixEffectFilterPreset : public USoundEffectSubmixPreset
@@ -561,45 +696,11 @@ class USubmixEffectFilterPreset : public USoundEffectSubmixPreset
     void SetFilterAlgorithm(ESubmixFilterAlgorithm InAlgorithm);
 };
 
-struct FSubmixEffectFlexiverbSettings
-{
-    float PreDelay;
-    float DecayTime;
-    float RoomDampening;
-    int32 Complexity;
-
-};
-
 class USubmixEffectFlexiverbPreset : public USoundEffectSubmixPreset
 {
     FSubmixEffectFlexiverbSettings Settings;
 
     void SetSettings(const FSubmixEffectFlexiverbSettings& InSettings);
-};
-
-struct FDynamicsBandSettings
-{
-    float CrossoverTopFrequency;
-    float AttackTimeMsec;
-    float ReleaseTimeMsec;
-    float ThresholdDb;
-    float Ratio;
-    float KneeBandwidthDb;
-    float InputGainDb;
-    float OutputGainDb;
-
-};
-
-struct FSubmixEffectMultibandCompressorSettings
-{
-    ESubmixEffectDynamicsProcessorType DynamicsProcessorType;
-    ESubmixEffectDynamicsPeakMode PeakMode;
-    float LookAheadMsec;
-    bool bLinkChannels;
-    bool bAnalogMode;
-    bool bFourPole;
-    TArray<FDynamicsBandSettings> Bands;
-
 };
 
 class USubmixEffectMultibandCompressorPreset : public USoundEffectSubmixPreset
@@ -609,45 +710,11 @@ class USubmixEffectMultibandCompressorPreset : public USoundEffectSubmixPreset
     void SetSettings(const FSubmixEffectMultibandCompressorSettings& InSettings);
 };
 
-struct FSubmixEffectStereoDelaySettings
-{
-    EStereoDelaySourceEffect DelayMode;
-    float DelayTimeMsec;
-    float Feedback;
-    float DelayRatio;
-    float WetLevel;
-    float DryLevel;
-    bool bFilterEnabled;
-    EStereoDelayFiltertype FilterType;
-    float FilterFrequency;
-    float FilterQ;
-
-};
-
 class USubmixEffectStereoDelayPreset : public USoundEffectSubmixPreset
 {
     FSubmixEffectStereoDelaySettings Settings;
 
     void SetSettings(const FSubmixEffectStereoDelaySettings& InSettings);
-};
-
-struct FTapDelayInfo
-{
-    ETapLineMode TapLineMode;
-    float DelayLength;
-    float Gain;
-    int32 OutputChannel;
-    float PanInDegrees;
-    int32 TapId;
-
-};
-
-struct FSubmixEffectTapDelaySettings
-{
-    float MaximumDelayLength;
-    float InterpolationTime;
-    TArray<FTapDelayInfo> Taps;
-
 };
 
 class USubmixEffectTapDelayPreset : public USoundEffectSubmixPreset
@@ -662,17 +729,6 @@ class USubmixEffectTapDelayPreset : public USoundEffectSubmixPreset
     void GetTap(int32 TapId, FTapDelayInfo& TapInfo);
     float GetMaxDelayInMilliseconds();
     void AddTap(int32& TapId);
-};
-
-struct FSynth2DSliderStyle : public FSlateWidgetStyle
-{
-    FSlateBrush NormalThumbImage;
-    FSlateBrush DisabledThumbImage;
-    FSlateBrush NormalBarImage;
-    FSlateBrush DisabledBarImage;
-    FSlateBrush BackgroundImage;
-    float BarThickness;
-
 };
 
 class USynth2DSlider : public UWidget
@@ -708,43 +764,6 @@ class USynth2DSlider : public UWidget
     void SetLocked(bool InValue);
     void SetIndentHandle(bool InValue);
     FVector2D GetValue();
-};
-
-class UGranularSynth : public USynthComponent
-{
-    class USoundWave* GranulatedSoundWave;
-
-    void SetSustainGain(const float SustainGain);
-    void SetSoundWave(class USoundWave* InSoundWave);
-    void SetScrubMode(const bool bScrubMode);
-    void SetReleaseTimeMsec(const float ReleaseTimeMsec);
-    void SetPlayheadTime(const float InPositionSec, const float LerpTimeSec, EGranularSynthSeekType SeekType);
-    void SetPlaybackSpeed(const float InPlayheadRate);
-    void SetGrainVolume(const float BaseVolume, const FVector2D VolumeRange);
-    void SetGrainsPerSecond(const float InGrainsPerSecond);
-    void SetGrainProbability(const float InGrainProbability);
-    void SetGrainPitch(const float BasePitch, const FVector2D PitchRange);
-    void SetGrainPan(const float BasePan, const FVector2D PanRange);
-    void SetGrainEnvelopeType(const EGranularSynthEnvelopeType EnvelopeType);
-    void SetGrainDuration(const float BaseDurationMsec, const FVector2D DurationRange);
-    void SetDecayTime(const float DecayTimeMsec);
-    void SetAttackTime(const float AttackTimeMsec);
-    void NoteOn(const float Note, const int32 Velocity, const float Duration);
-    void NoteOff(const float Note, const bool bKill);
-    bool IsLoaded();
-    float GetSampleDuration();
-    float GetCurrentPlayheadTime();
-};
-
-class UMonoWaveTableSynthPreset : public UObject
-{
-    FString PresetName;
-    uint8 bLockKeyframesToGridBool;
-    int32 LockKeyframesToGrid;
-    int32 WaveTableResolution;
-    TArray<FRuntimeFloatCurve> WaveTable;
-    uint8 bNormalizeWaveTables;
-
 };
 
 class USynthComponentMonoWaveTable : public USynthComponent
@@ -810,44 +829,6 @@ class USynthComponentToneGenerator : public USynthComponent
     void SetFrequency(float InFrequency);
 };
 
-class USynthSamplePlayer : public USynthComponent
-{
-    class USoundWave* SoundWave;
-    FSynthSamplePlayerOnSampleLoaded OnSampleLoaded;
-    void OnSampleLoaded();
-    FSynthSamplePlayerOnSamplePlaybackProgress OnSamplePlaybackProgress;
-    void OnSamplePlaybackProgress(float ProgressPercent, float ProgressTimeSeconds);
-
-    void SetSoundWave(class USoundWave* InSoundWave);
-    void SetScrubTimeWidth(float InScrubTimeWidthSec);
-    void SetScrubMode(bool bScrubMode);
-    void SetPitch(float InPitch, float TimeSec);
-    void SeekToTime(float TimeSec, ESamplePlayerSeekType SeekType, bool bWrap);
-    bool IsLoaded();
-    float GetSampleDuration();
-    float GetCurrentPlaybackProgressTime();
-    float GetCurrentPlaybackProgressPercent();
-};
-
-class USynthesisUtilitiesBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
-{
-
-    float GetLogFrequency(float InLinearValue, float InDomainMin, float InDomainMax, float InRangeMin, float InRangeMax);
-    float GetLinearFrequency(float InLogFrequencyValue, float InDomainMin, float InDomainMax, float InRangeMin, float InRangeMax);
-};
-
-struct FSynthKnobStyle : public FSlateWidgetStyle
-{
-    FSlateBrush LargeKnob;
-    FSlateBrush LargeKnobOverlay;
-    FSlateBrush MediumKnob;
-    FSlateBrush MediumKnobOverlay;
-    float MinValueAngle;
-    float MaxValueAngle;
-    ESynthKnobSize KnobSize;
-
-};
-
 class USynthKnob : public UWidget
 {
     float Value;
@@ -879,11 +860,30 @@ class USynthKnob : public UWidget
     float GetValue();
 };
 
-struct FSynthSlateStyle : public FSlateWidgetStyle
+class USynthSamplePlayer : public USynthComponent
 {
-    ESynthSlateSizeType SizeType;
-    ESynthSlateColorStyle ColorStyle;
+    class USoundWave* SoundWave;
+    FSynthSamplePlayerOnSampleLoaded OnSampleLoaded;
+    void OnSampleLoaded();
+    FSynthSamplePlayerOnSamplePlaybackProgress OnSamplePlaybackProgress;
+    void OnSamplePlaybackProgress(float ProgressPercent, float ProgressTimeSeconds);
 
+    void SetSoundWave(class USoundWave* InSoundWave);
+    void SetScrubTimeWidth(float InScrubTimeWidthSec);
+    void SetScrubMode(bool bScrubMode);
+    void SetPitch(float InPitch, float TimeSec);
+    void SeekToTime(float TimeSec, ESamplePlayerSeekType SeekType, bool bWrap);
+    bool IsLoaded();
+    float GetSampleDuration();
+    float GetCurrentPlaybackProgressTime();
+    float GetCurrentPlaybackProgressPercent();
+};
+
+class USynthesisUtilitiesBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+{
+
+    float GetLogFrequency(float InLinearValue, float InDomainMin, float InDomainMax, float InRangeMin, float InRangeMax);
+    float GetLinearFrequency(float InLogFrequencyValue, float InDomainMin, float InDomainMax, float InRangeMin, float InRangeMax);
 };
 
 #endif

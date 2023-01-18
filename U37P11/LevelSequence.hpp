@@ -1,26 +1,18 @@
 #ifndef UE4SS_SDK_LevelSequence_HPP
 #define UE4SS_SDK_LevelSequence_HPP
 
-class UAnimSequenceLevelSequenceLink : public UAssetUserData
+struct FBoundActorProxy
+{
+};
+
+struct FLevelSequenceAnimSequenceLinkItem
 {
     FGuid SkelTrackGuid;
-    FSoftObjectPath PathToLevelSequence;
+    FSoftObjectPath PathToAnimSequence;
+    bool bExportTransforms;
+    bool bExportCurves;
+    bool bRecordInWorldSpace;
 
-};
-
-class UDefaultLevelSequenceInstanceData : public UObject
-{
-    class AActor* TransformOriginActor;
-    FTransform TransformOrigin;
-
-};
-
-class ILevelSequenceMetaData : public IInterface
-{
-};
-
-struct FLevelSequenceObjectReferenceMap
-{
 };
 
 struct FLevelSequenceBindingReference
@@ -44,6 +36,17 @@ struct FLevelSequenceBindingReferences
 
 };
 
+struct FLevelSequenceCameraSettings
+{
+    bool bOverrideAspectRatioAxisConstraint;
+    TEnumAsByte<EAspectRatioAxisConstraint> AspectRatioAxisConstraint;
+
+};
+
+struct FLevelSequenceLegacyObjectReference
+{
+};
+
 struct FLevelSequenceObject
 {
     TLazyObjectPtr<class UObject> ObjectOrOwner;
@@ -52,38 +55,30 @@ struct FLevelSequenceObject
 
 };
 
-class ULevelSequence : public UMovieSceneSequence
-{
-    class UMovieScene* MovieScene;
-    FLevelSequenceObjectReferenceMap ObjectReferences;
-    FLevelSequenceBindingReferences BindingReferences;
-    TMap<class FString, class FLevelSequenceObject> PossessedObjects;
-    UClass* DirectorClass;
-    TArray<class UAssetUserData*> AssetUserData;
-
-    void RemoveMetaDataByClass(UClass* InClass);
-    class UObject* FindOrAddMetaDataByClass(UClass* InClass);
-    class UObject* FindMetaDataByClass(UClass* InClass);
-    class UObject* CopyMetaData(class UObject* InMetaData);
-};
-
-class ULevelSequenceBurnInInitSettings : public UObject
+struct FLevelSequenceObjectReferenceMap
 {
 };
 
-class ULevelSequenceBurnInOptions : public UObject
+struct FLevelSequencePlayerSnapshot
 {
-    bool bUseBurnIn;
-    FSoftClassPath BurnInClass;
-    class ULevelSequenceBurnInInitSettings* Settings;
+    FString MasterName;
+    FQualifiedFrameTime MasterTime;
+    FQualifiedFrameTime SourceTime;
+    FString CurrentShotName;
+    FQualifiedFrameTime CurrentShotLocalTime;
+    FQualifiedFrameTime CurrentShotSourceTime;
+    FString SourceTimecode;
+    TSoftObjectPtr<UCameraComponent> CameraComponent;
+    FLevelSequenceSnapshotSettings Settings;
+    class ULevelSequence* ActiveShot;
+    FMovieSceneSequenceID ShotID;
 
-    void SetBurnIn(FSoftClassPath InBurnInClass);
 };
 
-struct FLevelSequenceCameraSettings
+struct FLevelSequenceSnapshotSettings
 {
-    bool bOverrideAspectRatioAxisConstraint;
-    TEnumAsByte<EAspectRatioAxisConstraint> AspectRatioAxisConstraint;
+    uint8 ZeroPadAmount;
+    FFrameRate FrameRate;
 
 };
 
@@ -122,42 +117,59 @@ class ALevelSequenceActor : public AActor
     void AddBinding(FMovieSceneObjectBindingID Binding, class AActor* Actor, bool bAllowBindingsFromAsset);
 };
 
-struct FLevelSequenceAnimSequenceLinkItem
+class ALevelSequenceMediaController : public AActor
+{
+    class ALevelSequenceActor* Sequence;
+    class UMediaComponent* MediaComponent;
+    float ServerStartTimeSeconds;
+
+    void SynchronizeToServer(float DesyncThresholdSeconds);
+    void Play();
+    void OnRep_ServerStartTimeSeconds();
+    class ALevelSequenceActor* GetSequence();
+    class UMediaComponent* GetMediaComponent();
+};
+
+class ILevelSequenceMetaData : public IInterface
+{
+};
+
+class UAnimSequenceLevelSequenceLink : public UAssetUserData
 {
     FGuid SkelTrackGuid;
-    FSoftObjectPath PathToAnimSequence;
-    bool bExportTransforms;
-    bool bExportCurves;
-    bool bRecordInWorldSpace;
+    FSoftObjectPath PathToLevelSequence;
 
+};
+
+class UDefaultLevelSequenceInstanceData : public UObject
+{
+    class AActor* TransformOriginActor;
+    FTransform TransformOrigin;
+
+};
+
+class ULegacyLevelSequenceDirectorBlueprint : public UBlueprint
+{
+};
+
+class ULevelSequence : public UMovieSceneSequence
+{
+    class UMovieScene* MovieScene;
+    FLevelSequenceObjectReferenceMap ObjectReferences;
+    FLevelSequenceBindingReferences BindingReferences;
+    TMap<class FString, class FLevelSequenceObject> PossessedObjects;
+    UClass* DirectorClass;
+    TArray<class UAssetUserData*> AssetUserData;
+
+    void RemoveMetaDataByClass(UClass* InClass);
+    class UObject* FindOrAddMetaDataByClass(UClass* InClass);
+    class UObject* FindMetaDataByClass(UClass* InClass);
+    class UObject* CopyMetaData(class UObject* InMetaData);
 };
 
 class ULevelSequenceAnimSequenceLink : public UAssetUserData
 {
     TArray<FLevelSequenceAnimSequenceLinkItem> AnimSequenceLinks;
-
-};
-
-struct FLevelSequenceSnapshotSettings
-{
-    uint8 ZeroPadAmount;
-    FFrameRate FrameRate;
-
-};
-
-struct FLevelSequencePlayerSnapshot
-{
-    FString MasterName;
-    FQualifiedFrameTime MasterTime;
-    FQualifiedFrameTime SourceTime;
-    FString CurrentShotName;
-    FQualifiedFrameTime CurrentShotLocalTime;
-    FQualifiedFrameTime CurrentShotSourceTime;
-    FString SourceTimecode;
-    TSoftObjectPtr<UCameraComponent> CameraComponent;
-    FLevelSequenceSnapshotSettings Settings;
-    class ULevelSequence* ActiveShot;
-    FMovieSceneSequenceID ShotID;
 
 };
 
@@ -168,6 +180,19 @@ class ULevelSequenceBurnIn : public UUserWidget
 
     void SetSettings(class UObject* InSettings);
     TSubclassOf<class ULevelSequenceBurnInInitSettings> GetSettingsClass();
+};
+
+class ULevelSequenceBurnInInitSettings : public UObject
+{
+};
+
+class ULevelSequenceBurnInOptions : public UObject
+{
+    bool bUseBurnIn;
+    FSoftClassPath BurnInClass;
+    class ULevelSequenceBurnInInitSettings* Settings;
+
+    void SetBurnIn(FSoftClassPath InBurnInClass);
 };
 
 class ULevelSequenceDirector : public UObject
@@ -182,10 +207,6 @@ class ULevelSequenceDirector : public UObject
     class UObject* GetBoundObject(FMovieSceneObjectBindingID ObjectBinding);
     TArray<class AActor*> GetBoundActors(FMovieSceneObjectBindingID ObjectBinding);
     class AActor* GetBoundActor(FMovieSceneObjectBindingID ObjectBinding);
-};
-
-class ULegacyLevelSequenceDirectorBlueprint : public UBlueprint
-{
 };
 
 class ULevelSequencePlayer : public UMovieSceneSequencePlayer
@@ -204,27 +225,6 @@ class ULevelSequenceProjectSettings : public UDeveloperSettings
     FString DefaultTickResolution;
     EUpdateClockSource DefaultClockSource;
 
-};
-
-class ALevelSequenceMediaController : public AActor
-{
-    class ALevelSequenceActor* Sequence;
-    class UMediaComponent* MediaComponent;
-    float ServerStartTimeSeconds;
-
-    void SynchronizeToServer(float DesyncThresholdSeconds);
-    void Play();
-    void OnRep_ServerStartTimeSeconds();
-    class ALevelSequenceActor* GetSequence();
-    class UMediaComponent* GetMediaComponent();
-};
-
-struct FBoundActorProxy
-{
-};
-
-struct FLevelSequenceLegacyObjectReference
-{
 };
 
 #endif

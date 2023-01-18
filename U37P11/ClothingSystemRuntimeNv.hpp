@@ -49,6 +49,15 @@ class UClothConfigNv : public UClothConfigCommon
 
 };
 
+class UClothPhysicalMeshDataNv_Legacy : public UClothPhysicalMeshDataBase_Legacy
+{
+    TArray<float> MaxDistances;
+    TArray<float> BackstopDistances;
+    TArray<float> BackstopRadiuses;
+    TArray<float> AnimDriveMultipliers;
+
+};
+
 class UClothingSimulationFactoryNv : public UClothingSimulationFactory
 {
 };
@@ -57,15 +66,6 @@ class UClothingSimulationInteractorNv : public UClothingSimulationInteractor
 {
 
     void SetAnimDriveDamperStiffness(float InStiffness);
-};
-
-class UClothPhysicalMeshDataNv_Legacy : public UClothPhysicalMeshDataBase_Legacy
-{
-    TArray<float> MaxDistances;
-    TArray<float> BackstopDistances;
-    TArray<float> BackstopRadiuses;
-    TArray<float> AnimDriveMultipliers;
-
 };
 
 #endif

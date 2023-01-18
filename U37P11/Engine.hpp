@@ -3,623 +3,614 @@
 
 #include "Engine_enums.hpp"
 
-class UBlueprintFunctionLibrary : public UObject
+struct FA2CSPose : public FA2Pose
 {
-};
-
-class UPlayer : public UObject
-{
-    class APlayerController* PlayerController;
-    int32 CurrentNetSpeed;
-    int32 ConfiguredInternetSpeed;
-    int32 ConfiguredLanSpeed;
+    TArray<uint8> ComponentSpaceFlags;
 
 };
 
-struct FUniqueNetIdRepl : public FUniqueNetIdWrapper
+struct FA2Pose
 {
-    TArray<uint8> ReplicationBytes;
+    TArray<FTransform> Bones;
 
 };
 
-class UNetConnection : public UPlayer
+struct FActiveCameraShakeInfo
 {
-    TArray<class UChildConnection*> Children;
-    class UNetDriver* Driver;
-    TSubclassOf<class UPackageMap> PackageMapClass;
-    class UPackageMap* PackageMap;
-    TArray<class UChannel*> OpenChannels;
-    TArray<class AActor*> SentTemporaries;
-    class AActor* ViewTarget;
-    class AActor* owningActor;
-    int32 MaxPacket;
-    uint8 InternalAck;
-    FUniqueNetIdRepl PlayerId;
-    double LastReceiveTime;
-    TArray<class UChannel*> ChannelsToTick;
+    class UCameraShakeBase* ShakeInstance;
+    TWeakObjectPtr<class UCameraShakeSourceComponent> ShakeSource;
+    bool bIsCustomInitialized;
 
 };
 
-struct FChannelDefinition
+struct FActiveForceFeedbackEffect
 {
-    FName ChannelName;
-    FName ClassName;
-    UClass* ChannelClass;
-    int32 StaticChannelIndex;
-    bool bTickOnCreate;
-    bool bServerOpen;
-    bool bClientOpen;
-    bool bInitialServer;
-    bool bInitialClient;
+    class UForceFeedbackEffect* ForceFeedbackEffect;
 
 };
 
-class UNetDriver : public UObject
+struct FActiveHapticFeedbackEffect
 {
-    FString NetConnectionClassName;
-    FString ReplicationDriverClassName;
-    int32 MaxDownloadSize;
-    uint8 bClampListenServerTickRate;
-    int32 NetServerMaxTickRate;
-    int32 MaxNetTickRate;
-    int32 MaxInternetClientRate;
-    int32 MaxClientRate;
-    float ServerTravelPause;
-    float SpawnPrioritySeconds;
-    float RelevantTimeout;
-    float KeepAliveTime;
-    float InitialConnectTimeout;
-    float ConnectionTimeout;
-    float TimeoutMultiplierForUnoptimizedBuilds;
-    bool bNoTimeouts;
-    bool bNeverApplyNetworkEmulationSettings;
-    class UNetConnection* ServerConnection;
-    TArray<class UNetConnection*> ClientConnections;
-    int32 RecentlyDisconnectedTrackingTime;
-    class UWorld* World;
-    class UPackage* WorldPackage;
-    UClass* NetConnectionClass;
-    UClass* ReplicationDriverClass;
-    FName NetDriverName;
-    TArray<FChannelDefinition> ChannelDefinitions;
-    TMap<class FName, class FChannelDefinition> ChannelDefinitionMap;
-    TArray<class UChannel*> ActorChannelPool;
-    float Time;
-    class UReplicationDriver* ReplicationDriver;
+    class UHapticFeedbackEffect_Base* HapticEffect;
 
 };
 
-class UBlueprintAsyncActionBase : public UObject
-{
-
-    void Activate();
-};
-
-class UOnlineBlueprintCallProxyBase : public UBlueprintAsyncActionBase
+struct FActorComponentDuplicatedObjectData
 {
 };
 
-struct FTickFunction
+struct FActorComponentInstanceData
 {
-    TEnumAsByte<ETickingGroup> TickGroup;
-    TEnumAsByte<ETickingGroup> EndTickGroup;
-    uint8 bTickEvenWhenPaused;
-    uint8 bCanEverTick;
-    uint8 bStartWithTickEnabled;
-    uint8 bAllowTickOnDedicatedServer;
-    float TickInterval;
+    class UObject* SourceComponentTemplate;
+    EComponentCreationMethod SourceComponentCreationMethod;
+    int32 SourceComponentTypeSerializedIndex;
+    TArray<uint8> SavedProperties;
+    FActorComponentDuplicatedObjectData UniqueTransientPackage;
+    TArray<FActorComponentDuplicatedObjectData> DuplicatedObjects;
+    TArray<class UObject*> ReferencedObjects;
+    TArray<FName> ReferencedNames;
 
-};
-
-struct FActorTickFunction : public FTickFunction
-{
-};
-
-struct FRepMovement
-{
-    FVector LinearVelocity;
-    FVector AngularVelocity;
-    FVector Location;
-    FRotator Rotation;
-    uint8 bSimulatedPhysicSleep;
-    uint8 bRepPhysics;
-    EVectorQuantization LocationQuantizationLevel;
-    EVectorQuantization VelocityQuantizationLevel;
-    ERotatorQuantization RotationQuantizationLevel;
-
-};
-
-struct FVector_NetQuantize100 : public FVector
-{
-};
-
-struct FRepAttachment
-{
-    class AActor* AttachParent;
-    FVector_NetQuantize100 LocationOffset;
-    FVector_NetQuantize100 RelativeScale3D;
-    FRotator RotationOffset;
-    FName AttachSocket;
-    class USceneComponent* AttachComponent;
-
-};
-
-struct FVector_NetQuantize : public FVector
-{
-};
-
-struct FVector_NetQuantizeNormal : public FVector
-{
-};
-
-struct FHitResult
-{
-    int32 FaceIndex;
-    float Time;
-    float Distance;
-    FVector_NetQuantize Location;
-    FVector_NetQuantize ImpactPoint;
-    FVector_NetQuantizeNormal Normal;
-    FVector_NetQuantizeNormal ImpactNormal;
-    FVector_NetQuantize TraceStart;
-    FVector_NetQuantize TraceEnd;
-    float PenetrationDepth;
-    int32 Item;
-    uint8 ElementIndex;
-    uint8 bBlockingHit;
-    uint8 bStartPenetrating;
-    TWeakObjectPtr<class UPhysicalMaterial> PhysMaterial;
-    TWeakObjectPtr<class AActor> Actor;
-    TWeakObjectPtr<class UPrimitiveComponent> Component;
-    FName BoneName;
-    FName MyBoneName;
-
-};
-
-class AActor : public UObject
-{
-    FActorTickFunction PrimaryActorTick;
-    uint8 bNetTemporary;
-    uint8 bNetStartup;
-    uint8 bOnlyRelevantToOwner;
-    uint8 bAlwaysRelevant;
-    uint8 bReplicateMovement;
-    uint8 bHidden;
-    uint8 bTearOff;
-    uint8 bForceNetAddressable;
-    uint8 bExchangedRoles;
-    uint8 bNetLoadOnClient;
-    uint8 bNetUseOwnerRelevancy;
-    uint8 bRelevantForNetworkReplays;
-    uint8 bRelevantForLevelBounds;
-    uint8 bReplayRewindable;
-    uint8 bAllowTickBeforeBeginPlay;
-    uint8 bAutoDestroyWhenFinished;
-    uint8 bCanBeDamaged;
-    uint8 bBlockInput;
-    uint8 bCollideWhenPlacing;
-    uint8 bFindCameraComponentWhenViewTarget;
-    uint8 bGenerateOverlapEventsDuringLevelStreaming;
-    uint8 bIgnoresOriginShifting;
-    uint8 bEnableAutoLODGeneration;
-    uint8 bIsEditorOnlyActor;
-    uint8 bActorSeamlessTraveled;
-    uint8 bReplicates;
-    uint8 bCanBeInCluster;
-    uint8 bAllowReceiveTickEventOnDedicatedServer;
-    uint8 bActorEnableCollision;
-    uint8 bActorIsBeingDestroyed;
-    EActorUpdateOverlapsMethod UpdateOverlapsMethodDuringLevelStreaming;
-    EActorUpdateOverlapsMethod DefaultUpdateOverlapsMethodDuringLevelStreaming;
-    TEnumAsByte<ENetRole> RemoteRole;
-    FRepMovement ReplicatedMovement;
-    float InitialLifeSpan;
-    float CustomTimeDilation;
-    FRepAttachment AttachmentReplication;
-    class AActor* Owner;
-    FName NetDriverName;
-    TEnumAsByte<ENetRole> Role;
-    TEnumAsByte<ENetDormancy> NetDormancy;
-    ESpawnActorCollisionHandlingMethod SpawnCollisionHandlingMethod;
-    TEnumAsByte<EAutoReceiveInput::Type> AutoReceiveInput;
-    int32 InputPriority;
-    class UInputComponent* InputComponent;
-    float NetCullDistanceSquared;
-    int32 NetTag;
-    float NetUpdateFrequency;
-    float MinNetUpdateFrequency;
-    float NetPriority;
-    class APawn* Instigator;
-    TArray<class AActor*> Children;
-    class USceneComponent* RootComponent;
-    TArray<class AMatineeActor*> ControllingMatineeActors;
-    TArray<FName> Layers;
-    TWeakObjectPtr<class UChildActorComponent> ParentComponent;
-    TArray<FName> Tags;
-    FActorOnTakeAnyDamage OnTakeAnyDamage;
-    void TakeAnyDamageSignature(class AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, class AActor* DamageCauser);
-    FActorOnTakePointDamage OnTakePointDamage;
-    void TakePointDamageSignature(class AActor* DamagedActor, float Damage, class AController* InstigatedBy, FVector HitLocation, class UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const class UDamageType* DamageType, class AActor* DamageCauser);
-    FActorOnTakeRadialDamage OnTakeRadialDamage;
-    void TakeRadialDamageSignature(class AActor* DamagedActor, float Damage, const class UDamageType* DamageType, FVector Origin, FHitResult HitInfo, class AController* InstigatedBy, class AActor* DamageCauser);
-    FActorOnActorBeginOverlap OnActorBeginOverlap;
-    void ActorBeginOverlapSignature(class AActor* OverlappedActor, class AActor* OtherActor);
-    FActorOnActorEndOverlap OnActorEndOverlap;
-    void ActorEndOverlapSignature(class AActor* OverlappedActor, class AActor* OtherActor);
-    FActorOnBeginCursorOver OnBeginCursorOver;
-    void ActorBeginCursorOverSignature(class AActor* TouchedActor);
-    FActorOnEndCursorOver OnEndCursorOver;
-    void ActorEndCursorOverSignature(class AActor* TouchedActor);
-    FActorOnClicked OnClicked;
-    void ActorOnClickedSignature(class AActor* TouchedActor, FKey ButtonPressed);
-    FActorOnReleased OnReleased;
-    void ActorOnReleasedSignature(class AActor* TouchedActor, FKey ButtonReleased);
-    FActorOnInputTouchBegin OnInputTouchBegin;
-    void ActorOnInputTouchBeginSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
-    FActorOnInputTouchEnd OnInputTouchEnd;
-    void ActorOnInputTouchEndSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
-    FActorOnInputTouchEnter OnInputTouchEnter;
-    void ActorBeginTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
-    FActorOnInputTouchLeave OnInputTouchLeave;
-    void ActorEndTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
-    FActorOnActorHit OnActorHit;
-    void ActorHitSignature(class AActor* SelfActor, class AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
-    FActorOnDestroyed OnDestroyed;
-    void ActorDestroyedSignature(class AActor* DestroyedActor);
-    FActorOnEndPlay OnEndPlay;
-    void ActorEndPlaySignature(class AActor* Actor, TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
-    TArray<class UActorComponent*> InstanceComponents;
-    TArray<class UActorComponent*> BlueprintCreatedComponents;
-
-    bool WasRecentlyRendered(float Tolerance);
-    void UserConstructionScript();
-    void TearOff();
-    void SnapRootComponentTo(class AActor* InParentActor, FName InSocketName);
-    void SetTickGroup(TEnumAsByte<ETickingGroup> NewTickGroup);
-    void SetTickableWhenPaused(bool bTickableWhenPaused);
-    void SetReplicates(bool bInReplicates);
-    void SetReplicateMovement(bool bInReplicateMovement);
-    void SetOwner(class AActor* NewOwner);
-    void SetNetDormancy(TEnumAsByte<ENetDormancy> NewDormancy);
-    void SetLifeSpan(float InLifespan);
-    void SetAutoDestroyWhenFinished(bool bVal);
-    void SetActorTickInterval(float TickInterval);
-    void SetActorTickEnabled(bool bEnabled);
-    void SetActorScale3D(FVector NewScale3D);
-    void SetActorRelativeScale3D(FVector NewRelativeScale);
-    void SetActorHiddenInGame(bool bNewHidden);
-    void SetActorEnableCollision(bool bNewActorEnableCollision);
-    void RemoveTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
-    void RemoveTickPrerequisiteActor(class AActor* PrerequisiteActor);
-    void ReceiveTick(float DeltaSeconds);
-    void ReceiveRadialDamage(float DamageReceived, const class UDamageType* DamageType, FVector Origin, const FHitResult& HitInfo, class AController* InstigatedBy, class AActor* DamageCauser);
-    void ReceivePointDamage(float Damage, const class UDamageType* DamageType, FVector HitLocation, FVector HitNormal, class UPrimitiveComponent* HitComponent, FName BoneName, FVector ShotFromDirection, class AController* InstigatedBy, class AActor* DamageCauser, const FHitResult& HitInfo);
-    void ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit);
-    void ReceiveEndPlay(TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
-    void ReceiveDestroyed();
-    void ReceiveBeginPlay();
-    void ReceiveAnyDamage(float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, class AActor* DamageCauser);
-    void ReceiveActorOnReleased(FKey ButtonReleased);
-    void ReceiveActorOnInputTouchLeave(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
-    void ReceiveActorOnInputTouchEnter(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
-    void ReceiveActorOnInputTouchEnd(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
-    void ReceiveActorOnInputTouchBegin(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
-    void ReceiveActorOnClicked(FKey ButtonPressed);
-    void ReceiveActorEndOverlap(class AActor* OtherActor);
-    void ReceiveActorEndCursorOver();
-    void ReceiveActorBeginOverlap(class AActor* OtherActor);
-    void ReceiveActorBeginCursorOver();
-    void PrestreamTextures(float Seconds, bool bEnableStreaming, int32 CinematicTextureGroups);
-    void OnRep_ReplicateMovement();
-    void OnRep_ReplicatedMovement();
-    void OnRep_Owner();
-    void OnRep_Instigator();
-    void OnRep_AttachmentReplication();
-    void MakeNoise(float Loudness, class APawn* NoiseInstigator, FVector NoiseLocation, float MaxRange, FName Tag);
-    class UMaterialInstanceDynamic* MakeMIDForMaterial(class UMaterialInterface* Parent);
-    bool K2_TeleportTo(FVector DestLocation, FRotator DestRotation);
-    bool K2_SetActorTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    bool K2_SetActorRotation(FRotator NewRotation, bool bTeleportPhysics);
-    void K2_SetActorRelativeTransform(const FTransform& NewRelativeTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetActorRelativeRotation(FRotator NewRelativeRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetActorRelativeLocation(FVector NewRelativeLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    bool K2_SetActorLocationAndRotation(FVector NewLocation, FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    bool K2_SetActorLocation(FVector NewLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_OnReset();
-    void K2_OnEndViewTarget(class APlayerController* PC);
-    void K2_OnBecomeViewTarget(class APlayerController* PC);
-    class USceneComponent* K2_GetRootComponent();
-    TArray<class UActorComponent*> K2_GetComponentsByClass(TSubclassOf<class UActorComponent> ComponentClass);
-    FRotator K2_GetActorRotation();
-    FVector K2_GetActorLocation();
-    void K2_DetachFromActor(EDetachmentRule LocationRule, EDetachmentRule RotationRule, EDetachmentRule ScaleRule);
-    void K2_DestroyComponent(class UActorComponent* Component);
-    void K2_DestroyActor();
-    void K2_AttachToComponent(class USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule, bool bWeldSimulatedBodies);
-    void K2_AttachToActor(class AActor* ParentActor, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule, bool bWeldSimulatedBodies);
-    void K2_AttachRootComponentToActor(class AActor* InParentActor, FName InSocketName, TEnumAsByte<EAttachLocation::Type> AttachLocationType, bool bWeldSimulatedBodies);
-    void K2_AttachRootComponentTo(class USceneComponent* InParent, FName InSocketName, TEnumAsByte<EAttachLocation::Type> AttachLocationType, bool bWeldSimulatedBodies);
-    void K2_AddActorWorldTransformKeepScale(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddActorWorldTransform(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddActorWorldRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddActorWorldOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddActorLocalTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddActorLocalRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddActorLocalOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    bool IsOverlappingActor(const class AActor* Other);
-    bool IsChildActor();
-    bool IsActorTickEnabled();
-    bool IsActorBeingDestroyed();
-    bool HasAuthority();
-    float GetVerticalDistanceTo(const class AActor* OtherActor);
-    FVector GetVelocity();
-    FTransform GetTransform();
-    bool GetTickableWhenPaused();
-    float GetSquaredHorizontalDistanceTo(const class AActor* OtherActor);
-    float GetSquaredDistanceTo(const class AActor* OtherActor);
-    TEnumAsByte<ENetRole> GetRemoteRole();
-    class UChildActorComponent* GetParentComponent();
-    class AActor* GetParentActor();
-    class AActor* GetOwner();
-    void GetOverlappingComponents(TArray<class UPrimitiveComponent*>& OverlappingComponents);
-    void GetOverlappingActors(TArray<class AActor*>& OverlappingActors, TSubclassOf<class AActor> ClassFilter);
-    TEnumAsByte<ENetRole> GetLocalRole();
-    float GetLifeSpan();
-    class AController* GetInstigatorController();
-    class APawn* GetInstigator();
-    FVector GetInputVectorAxisValue(const FKey InputAxisKey);
-    float GetInputAxisValue(const FName InputAxisName);
-    float GetInputAxisKeyValue(const FKey InputAxisKey);
-    float GetHorizontalDotProductTo(const class AActor* OtherActor);
-    float GetHorizontalDistanceTo(const class AActor* OtherActor);
-    float GetGameTimeSinceCreation();
-    float GetDotProductTo(const class AActor* OtherActor);
-    float GetDistanceTo(const class AActor* OtherActor);
-    TArray<class UActorComponent*> GetComponentsByTag(TSubclassOf<class UActorComponent> ComponentClass, FName Tag);
-    TArray<class UActorComponent*> GetComponentsByInterface(TSubclassOf<class UInterface> Interface);
-    class UActorComponent* GetComponentByClass(TSubclassOf<class UActorComponent> ComponentClass);
-    FName GetAttachParentSocketName();
-    class AActor* GetAttachParentActor();
-    void GetAttachedActors(TArray<class AActor*>& OutActors, bool bResetArray);
-    void GetAllChildActors(TArray<class AActor*>& ChildActors, bool bIncludeDescendants);
-    FVector GetActorUpVector();
-    float GetActorTimeDilation();
-    float GetActorTickInterval();
-    FVector GetActorScale3D();
-    FVector GetActorRightVector();
-    FVector GetActorRelativeScale3D();
-    FVector GetActorForwardVector();
-    void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation);
-    bool GetActorEnableCollision();
-    void GetActorBounds(bool bOnlyCollidingComponents, FVector& Origin, FVector& BoxExtent, bool bIncludeFromChildActors);
-    void ForceNetUpdate();
-    void FlushNetDormancy();
-    void FinishAddComponent(class UActorComponent* Component, bool bManualAttachment, const FTransform& RelativeTransform);
-    void EnableInput(class APlayerController* PlayerController);
-    void DisableInput(class APlayerController* PlayerController);
-    void DetachRootComponentFromParent(bool bMaintainWorldPosition);
-    void AddTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
-    void AddTickPrerequisiteActor(class AActor* PrerequisiteActor);
-    class UActorComponent* AddComponentByClass(TSubclassOf<class UActorComponent> Class, bool bManualAttachment, const FTransform& RelativeTransform, bool bDeferredFinish);
-    class UActorComponent* AddComponent(FName TemplateName, bool bManualAttachment, const FTransform& RelativeTransform, const class UObject* ComponentTemplateContext, bool bDeferredFinish);
-    bool ActorHasTag(FName Tag);
-};
-
-class UOnlineEngineInterface : public UObject
-{
-};
-
-class UOnlineSession : public UObject
-{
 };
 
 struct FActorComponentTickFunction : public FTickFunction
 {
 };
 
-struct FSimpleMemberReference
-{
-    class UObject* MemberParent;
-    FName MemberName;
-    FGuid MemberGuid;
-
-};
-
-class UActorComponent : public UObject
-{
-    FActorComponentTickFunction PrimaryComponentTick;
-    TArray<FName> ComponentTags;
-    TArray<class UAssetUserData*> AssetUserData;
-    int32 UCSSerializationIndex;
-    uint8 bNetAddressable;
-    uint8 bReplicates;
-    uint8 bAutoActivate;
-    uint8 bIsActive;
-    uint8 bEditableWhenInherited;
-    uint8 bCanEverAffectNavigation;
-    uint8 bIsEditorOnly;
-    EComponentCreationMethod CreationMethod;
-    FActorComponentOnComponentActivated OnComponentActivated;
-    void ActorComponentActivatedSignature(class UActorComponent* Component, bool bReset);
-    FActorComponentOnComponentDeactivated OnComponentDeactivated;
-    void ActorComponentDeactivateSignature(class UActorComponent* Component);
-    TArray<FSimpleMemberReference> UCSModifiedProperties;
-
-    void ToggleActive();
-    void SetTickGroup(TEnumAsByte<ETickingGroup> NewTickGroup);
-    void SetTickableWhenPaused(bool bTickableWhenPaused);
-    void SetIsReplicated(bool ShouldReplicate);
-    void SetComponentTickIntervalAndCooldown(float TickInterval);
-    void SetComponentTickInterval(float TickInterval);
-    void SetComponentTickEnabled(bool bEnabled);
-    void SetAutoActivate(bool bNewAutoActivate);
-    void SetActive(bool bNewActive, bool bReset);
-    void RemoveTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
-    void RemoveTickPrerequisiteActor(class AActor* PrerequisiteActor);
-    void ReceiveTick(float DeltaSeconds);
-    void ReceiveEndPlay(TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
-    void ReceiveBeginPlay();
-    void OnRep_IsActive();
-    void K2_DestroyComponent(class UObject* Object);
-    bool IsComponentTickEnabled();
-    bool IsBeingDestroyed();
-    bool IsActive();
-    class AActor* GetOwner();
-    float GetComponentTickInterval();
-    void Deactivate();
-    bool ComponentHasTag(FName Tag);
-    void AddTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
-    void AddTickPrerequisiteActor(class AActor* PrerequisiteActor);
-    void Activate(bool bReset);
-};
-
-class USceneComponent : public UActorComponent
-{
-    TWeakObjectPtr<class APhysicsVolume> PhysicsVolume;
-    class USceneComponent* AttachParent;
-    FName AttachSocketName;
-    TArray<class USceneComponent*> AttachChildren;
-    TArray<class USceneComponent*> ClientAttachedChildren;
-    FVector RelativeLocation;
-    FRotator RelativeRotation;
-    FVector RelativeScale3D;
-    FVector ComponentVelocity;
-    uint8 bComponentToWorldUpdated;
-    uint8 bAbsoluteLocation;
-    uint8 bAbsoluteRotation;
-    uint8 bAbsoluteScale;
-    uint8 bVisible;
-    uint8 bShouldBeAttached;
-    uint8 bShouldSnapLocationWhenAttached;
-    uint8 bShouldSnapRotationWhenAttached;
-    uint8 bShouldUpdatePhysicsVolume;
-    uint8 bHiddenInGame;
-    uint8 bBoundsChangeTriggersStreamingDataRebuild;
-    uint8 bUseAttachParentBound;
-    TEnumAsByte<EComponentMobility::Type> Mobility;
-    TEnumAsByte<EDetailMode> DetailMode;
-    FSceneComponentPhysicsVolumeChangedDelegate PhysicsVolumeChangedDelegate;
-    void PhysicsVolumeChanged(class APhysicsVolume* NewVolume);
-
-    void ToggleVisibility(bool bPropagateToChildren);
-    bool SnapTo(class USceneComponent* InParent, FName InSocketName);
-    void SetWorldScale3D(FVector NewScale);
-    void SetVisibility(bool bNewVisibility, bool bPropagateToChildren);
-    void SetShouldUpdatePhysicsVolume(bool bInShouldUpdatePhysicsVolume);
-    void SetRelativeScale3D(FVector NewScale3D);
-    void SetMobility(TEnumAsByte<EComponentMobility::Type> NewMobility);
-    void SetHiddenInGame(bool NewHidden, bool bPropagateToChildren);
-    void SetAbsolute(bool bNewAbsoluteLocation, bool bNewAbsoluteRotation, bool bNewAbsoluteScale);
-    void ResetRelativeTransform();
-    void OnRep_Visibility(bool OldValue);
-    void OnRep_Transform();
-    void OnRep_AttachSocketName();
-    void OnRep_AttachParent();
-    void OnRep_AttachChildren();
-    void K2_SetWorldTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetWorldRotation(FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetWorldLocationAndRotation(FVector NewLocation, FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetWorldLocation(FVector NewLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetRelativeTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetRelativeRotation(FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetRelativeLocationAndRotation(FVector NewLocation, FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_SetRelativeLocation(FVector NewLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    FTransform K2_GetComponentToWorld();
-    FVector K2_GetComponentScale();
-    FRotator K2_GetComponentRotation();
-    FVector K2_GetComponentLocation();
-    void K2_DetachFromComponent(EDetachmentRule LocationRule, EDetachmentRule RotationRule, EDetachmentRule ScaleRule, bool bCallModify);
-    bool K2_AttachToComponent(class USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule, bool bWeldSimulatedBodies);
-    bool K2_AttachTo(class USceneComponent* InParent, FName InSocketName, TEnumAsByte<EAttachLocation::Type> AttachType, bool bWeldSimulatedBodies);
-    void K2_AddWorldTransformKeepScale(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddWorldTransform(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddWorldRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddWorldOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddRelativeRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddRelativeLocation(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddLocalTransform(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddLocalRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    void K2_AddLocalOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
-    bool IsVisible();
-    bool IsSimulatingPhysics(FName BoneName);
-    bool IsAnySimulatingPhysics();
-    FVector GetUpVector();
-    FTransform GetSocketTransform(FName InSocketName, TEnumAsByte<ERelativeTransformSpace> TransformSpace);
-    FRotator GetSocketRotation(FName InSocketName);
-    FQuat GetSocketQuaternion(FName InSocketName);
-    FVector GetSocketLocation(FName InSocketName);
-    bool GetShouldUpdatePhysicsVolume();
-    FVector GetRightVector();
-    FTransform GetRelativeTransform();
-    class APhysicsVolume* GetPhysicsVolume();
-    void GetParentComponents(TArray<class USceneComponent*>& Parents);
-    int32 GetNumChildrenComponents();
-    FVector GetForwardVector();
-    FVector GetComponentVelocity();
-    void GetChildrenComponents(bool bIncludeAllDescendants, TArray<class USceneComponent*>& Children);
-    class USceneComponent* GetChildComponent(int32 ChildIndex);
-    FName GetAttachSocketName();
-    class USceneComponent* GetAttachParent();
-    TArray<FName> GetAllSocketNames();
-    bool DoesSocketExist(FName InSocketName);
-    void DetachFromParent(bool bMaintainWorldPosition, bool bCallModify);
-};
-
-struct FKeyHandleMap
+struct FActorTickFunction : public FTickFunction
 {
 };
 
-struct FIndexedCurve
+struct FAlphaBlend
 {
-    FKeyHandleMap KeyHandlesToIndices;
+    class UCurveFloat* CustomCurve;
+    float BlendTime;
+    EAlphaBlendOption BlendOption;
 
 };
 
-struct FRealCurve : public FIndexedCurve
+struct FAngularDriveConstraint
 {
-    float DefaultValue;
-    TEnumAsByte<ERichCurveExtrapolation> PreInfinityExtrap;
-    TEnumAsByte<ERichCurveExtrapolation> PostInfinityExtrap;
+    FConstraintDrive TwistDrive;
+    FConstraintDrive SwingDrive;
+    FConstraintDrive SlerpDrive;
+    FRotator OrientationTarget;
+    FVector AngularVelocityTarget;
+    TEnumAsByte<EAngularDriveMode::Type> AngularDriveMode;
 
 };
 
-struct FRichCurveKey
+struct FAnimBlueprintDebugData
 {
+};
+
+struct FAnimBlueprintFunction
+{
+    FName Name;
+    FName Group;
+    int32 OutputPoseNodeIndex;
+    TArray<FName> InputPoseNames;
+    TArray<int32> InputPoseNodeIndices;
+    bool bImplemented;
+
+};
+
+struct FAnimBlueprintFunctionData
+{
+    TFieldPath<FStructProperty> OutputPoseNodeProperty;
+    TArray<TFieldPath<FStructProperty>> InputPoseNodeProperties;
+    TArray<TFieldPath<FProperty>> InputProperties;
+
+};
+
+struct FAnimControlTrackKey
+{
+    float StartTime;
+    class UAnimSequence* AnimSeq;
+    float AnimStartOffset;
+    float AnimEndOffset;
+    float AnimPlayRate;
+    uint8 bLooping;
+    uint8 bReverse;
+
+};
+
+struct FAnimCurveBase
+{
+    FName LastObservedName;
+    FSmartName Name;
+    int32 CurveTypeFlags;
+
+};
+
+struct FAnimCurveParam
+{
+    FName Name;
+
+};
+
+struct FAnimCurveType
+{
+};
+
+struct FAnimGraphBlendOptions
+{
+    float BlendInTime;
+    float BlendOutTime;
+
+};
+
+struct FAnimGroupInfo
+{
+    FName Name;
+    FLinearColor Color;
+
+};
+
+struct FAnimGroupInstance
+{
+};
+
+struct FAnimInstanceProxy
+{
+};
+
+struct FAnimInstanceSubsystemData
+{
+};
+
+struct FAnimLinkableElement
+{
+    class UAnimMontage* LinkedMontage;
+    int32 SlotIndex;
+    int32 SegmentIndex;
+    TEnumAsByte<EAnimLinkMethod::Type> LinkMethod;
+    TEnumAsByte<EAnimLinkMethod::Type> CachedLinkMethod;
+    float SegmentBeginTime;
+    float SegmentLength;
+    float LinkValue;
+    class UAnimSequenceBase* LinkedSequence;
+
+};
+
+struct FAnimMontageInstance
+{
+    class UAnimMontage* Montage;
+    bool bPlaying;
+    float DefaultBlendTimeMultiplier;
+    TArray<int32> NextSections;
+    TArray<int32> PrevSections;
+    TArray<FAnimNotifyEvent> ActiveStateBranchingPoints;
+    float Position;
+    float PlayRate;
+    FAlphaBlend Blend;
+    int32 DisableRootMotionCount;
+
+};
+
+struct FAnimNode_ApplyMeshSpaceAdditive : public FAnimNode_Base
+{
+    FPoseLink Base;
+    FPoseLink Additive;
+    EAnimAlphaInputType AlphaInputType;
+    float alpha;
+    uint8 bAlphaBoolEnabled;
+    FInputAlphaBoolBlend AlphaBoolBlend;
+    FName AlphaCurveName;
+    FInputScaleBias AlphaScaleBias;
+    FInputScaleBiasClamp AlphaScaleBiasClamp;
+    int32 LODThreshold;
+
+};
+
+struct FAnimNode_AssetPlayerBase : public FAnimNode_Base
+{
+    FName GroupName;
+    TEnumAsByte<EAnimGroupRole::Type> GroupRole;
+    EAnimSyncGroupScope GroupScope;
+    bool bIgnoreForRelevancyTest;
+    float BlendWeight;
+    float InternalTimeAccumulator;
+
+};
+
+struct FAnimNode_Base
+{
+};
+
+struct FAnimNode_ConvertComponentToLocalSpace : public FAnimNode_Base
+{
+    FComponentSpacePoseLink ComponentPose;
+
+};
+
+struct FAnimNode_ConvertLocalToComponentSpace : public FAnimNode_Base
+{
+    FPoseLink LocalPose;
+
+};
+
+struct FAnimNode_CustomProperty : public FAnimNode_Base
+{
+    TArray<FName> SourcePropertyNames;
+    TArray<FName> DestPropertyNames;
+    class UObject* TargetInstance;
+
+};
+
+struct FAnimNode_Inertialization : public FAnimNode_Base
+{
+    FPoseLink Source;
+
+};
+
+struct FAnimNode_LinkedAnimGraph : public FAnimNode_CustomProperty
+{
+    TArray<FPoseLink> InputPoses;
+    TArray<FName> InputPoseNames;
+    TSubclassOf<class UAnimInstance> InstanceClass;
+    FName Tag;
+    uint8 bReceiveNotifiesFromLinkedInstances;
+    uint8 bPropagateNotifiesToLinkedInstances;
+
+};
+
+struct FAnimNode_LinkedAnimLayer : public FAnimNode_LinkedAnimGraph
+{
+    TSubclassOf<class UAnimLayerInterface> Interface;
+    FName Layer;
+
+};
+
+struct FAnimNode_LinkedInputPose : public FAnimNode_Base
+{
+    FName Name;
+    FName Graph;
+    FPoseLink InputPose;
+
+};
+
+struct FAnimNode_Root : public FAnimNode_Base
+{
+    FPoseLink Result;
+    FName Name;
+    FName Group;
+
+};
+
+struct FAnimNode_SaveCachedPose : public FAnimNode_Base
+{
+    FPoseLink pose;
+    FName CachePoseName;
+
+};
+
+struct FAnimNode_SequencePlayer : public FAnimNode_AssetPlayerBase
+{
+    class UAnimSequenceBase* Sequence;
+    float PlayRateBasis;
+    float PlayRate;
+    FInputScaleBiasClamp PlayRateScaleBiasClamp;
+    float StartPosition;
+    bool bLoopAnimation;
+
+};
+
+struct FAnimNode_SingleNode : public FAnimNode_Base
+{
+    FPoseLink SourcePose;
+
+};
+
+struct FAnimNode_StateMachine : public FAnimNode_Base
+{
+    int32 StateMachineIndexInClass;
+    int32 MaxTransitionsPerFrame;
+    bool bSkipFirstUpdateTransition;
+    bool bReinitializeOnBecomingRelevant;
+
+};
+
+struct FAnimNode_TransitionPoseEvaluator : public FAnimNode_Base
+{
+    int32 FramesToCachePose;
+    TEnumAsByte<EEvaluatorDataSource::Type> DataSource;
+    TEnumAsByte<EEvaluatorMode::Type> EvaluatorMode;
+
+};
+
+struct FAnimNode_TransitionResult : public FAnimNode_Base
+{
+    bool bCanEnterTransition;
+
+};
+
+struct FAnimNode_UseCachedPose : public FAnimNode_Base
+{
+    FPoseLink LinkToCachingNode;
+    FName CachePoseName;
+
+};
+
+struct FAnimNotifyArray
+{
+    TArray<FAnimNotifyEventReference> Notifies;
+
+};
+
+struct FAnimNotifyEvent : public FAnimLinkableElement
+{
+    float DisplayTime;
+    float TriggerTimeOffset;
+    float EndTriggerTimeOffset;
+    float TriggerWeightThreshold;
+    FName NotifyName;
+    class UAnimNotify* Notify;
+    class UAnimNotifyState* NotifyStateClass;
+    float Duration;
+    FAnimLinkableElement EndLink;
+    bool bConvertedFromBranchingPoint;
+    TEnumAsByte<EMontageNotifyTickType::Type> MontageTickType;
+    float NotifyTriggerChance;
+    TEnumAsByte<ENotifyFilterType::Type> NotifyFilterType;
+    int32 NotifyFilterLOD;
+    bool bTriggerOnDedicatedServer;
+    bool bTriggerOnFollower;
+    int32 TrackIndex;
+
+};
+
+struct FAnimNotifyEventReference
+{
+    class UObject* NotifySource;
+
+};
+
+struct FAnimNotifyQueue
+{
+    TArray<FAnimNotifyEventReference> AnimNotifies;
+    TMap<class FName, class FAnimNotifyArray> UnfilteredMontageAnimNotifies;
+
+};
+
+struct FAnimNotifyTrack
+{
+    FName TrackName;
+    FLinearColor TrackColor;
+
+};
+
+struct FAnimParentNodeAssetOverride
+{
+    class UAnimationAsset* NewAsset;
+    FGuid ParentNodeGuid;
+
+};
+
+struct FAnimSegment
+{
+    class UAnimSequenceBase* AnimReference;
+    float StartPos;
+    float AnimStartTime;
+    float AnimEndTime;
+    float AnimPlayRate;
+    int32 LoopingCount;
+
+};
+
+struct FAnimSequenceTrackContainer
+{
+    TArray<FRawAnimSequenceTrack> AnimationTracks;
+    TArray<FName> TrackNames;
+
+};
+
+struct FAnimSetMeshLinkup
+{
+    TArray<int32> BoneToTrackTable;
+
+};
+
+struct FAnimSingleNodeInstanceProxy : public FAnimInstanceProxy
+{
+};
+
+struct FAnimSlotDesc
+{
+    FName slotName;
+    int32 NumChannels;
+
+};
+
+struct FAnimSlotGroup
+{
+    FName GroupName;
+    TArray<FName> SlotNames;
+
+};
+
+struct FAnimSlotInfo
+{
+    FName slotName;
+    TArray<float> ChannelWeights;
+
+};
+
+struct FAnimSyncMarker
+{
+    FName MarkerName;
+    float Time;
+
+};
+
+struct FAnimTickRecord
+{
+    class UAnimationAsset* SourceAsset;
+
+};
+
+struct FAnimTrack
+{
+    TArray<FAnimSegment> AnimSegments;
+
+};
+
+struct FAnimUpdateRateParameters
+{
+    EUpdateRateShiftBucket ShiftBucket;
+    uint8 bInterpolateSkippedFrames;
+    uint8 bShouldUseLodMap;
+    uint8 bShouldUseMinLod;
+    uint8 bSkipUpdate;
+    uint8 bSkipEvaluation;
+    int32 UpdateRate;
+    int32 EvaluationRate;
+    float TickedPoseOffestTime;
+    float AdditionalTime;
+    int32 BaseNonRenderedUpdateRate;
+    int32 MaxEvalRateForInterpolation;
+    TArray<float> BaseVisibleDistanceFactorThesholds;
+    TMap<int32, int32> LODToFrameSkipMap;
+    int32 SkippedUpdateFrames;
+    int32 SkippedEvalFrames;
+
+};
+
+struct FAnimationActiveTransitionEntry
+{
+    class UBlendProfile* BlendProfile;
+
+};
+
+struct FAnimationErrorStats
+{
+};
+
+struct FAnimationFrameSnapshot
+{
+};
+
+struct FAnimationGroupReference
+{
+    FName GroupName;
+    TEnumAsByte<EAnimGroupRole::Type> GroupRole;
+    EAnimSyncGroupScope GroupScope;
+
+};
+
+struct FAnimationPotentialTransition
+{
+};
+
+struct FAnimationRecordingSettings
+{
+    bool bRecordInWorldSpace;
+    bool bRemoveRootAnimation;
+    bool bAutoSaveAsset;
+    float SampleRate;
+    float Length;
     TEnumAsByte<ERichCurveInterpMode> InterpMode;
     TEnumAsByte<ERichCurveTangentMode> TangentMode;
-    TEnumAsByte<ERichCurveTangentWeightMode> TangentWeightMode;
-    float Time;
-    float Value;
-    float ArriveTangent;
-    float ArriveTangentWeight;
-    float LeaveTangent;
-    float LeaveTangentWeight;
+    bool bRecordTransforms;
+    bool bRecordCurves;
 
 };
 
-struct FRichCurve : public FRealCurve
+struct FAnimationState : public FAnimationStateBase
 {
-    TArray<FRichCurveKey> Keys;
+    TArray<FAnimationTransitionRule> Transitions;
+    int32 StateRootNodeIndex;
+    int32 StartNotify;
+    int32 EndNotify;
+    int32 FullyBlendedNotify;
 
 };
 
-struct FRuntimeFloatCurve
+struct FAnimationStateBase
 {
-    FRichCurve EditorCurveData;
-    class UCurveFloat* ExternalCurve;
+    FName StateName;
 
 };
 
-struct FBaseAttenuationSettings
+struct FAnimationTransitionBetweenStates : public FAnimationStateBase
 {
-    EAttenuationDistanceModel DistanceAlgorithm;
-    TEnumAsByte<EAttenuationShape::Type> AttenuationShape;
-    float dBAttenuationAtMax;
-    ENaturalSoundFalloffMode FalloffMode;
-    FVector AttenuationShapeExtents;
-    float ConeOffset;
-    float FalloffDistance;
-    FRuntimeFloatCurve CustomAttenuationCurve;
+    int32 previousState;
+    int32 NextState;
+    float CrossfadeDuration;
+    int32 StartNotify;
+    int32 EndNotify;
+    int32 InterruptNotify;
+    EAlphaBlendOption BlendMode;
+    class UCurveFloat* CustomCurve;
+    class UBlendProfile* BlendProfile;
+    TEnumAsByte<ETransitionLogicType::Type> LogicType;
+
+};
+
+struct FAnimationTransitionRule
+{
+    FName RuleToExecute;
+    bool TransitionReturnVal;
+    int32 TransitionIndex;
+
+};
+
+struct FAssetEditorOrbitCameraPosition
+{
+    bool bIsSet;
+    FVector CamOrbitPoint;
+    FVector CamOrbitZoom;
+    FRotator CamOrbitRotation;
+
+};
+
+struct FAssetImportInfo
+{
+};
+
+struct FAssetManagerRedirect
+{
+    FString Old;
+    FString New;
+
+};
+
+struct FAssetManagerSearchRules
+{
+    TArray<FString> AssetScanPaths;
+    TArray<FString> IncludePatterns;
+    TArray<FString> ExcludePatterns;
+    UClass* AssetBaseClass;
+    bool bHasBlueprintClasses;
+    bool bForceSynchronousScan;
+    bool bSkipVirtualPathExpansion;
+    bool bSkipManagerIncludeCheck;
+
+};
+
+struct FAssetMapping
+{
+    class UAnimationAsset* SourceAsset;
+    class UAnimationAsset* TargetAsset;
+
+};
+
+struct FAtmospherePrecomputeInstanceData : public FSceneComponentInstanceData
+{
+};
+
+struct FAtmospherePrecomputeParameters
+{
+    float DensityHeight;
+    float DecayHeight;
+    int32 MaxScatteringOrder;
+    int32 TransmittanceTexWidth;
+    int32 TransmittanceTexHeight;
+    int32 IrradianceTexWidth;
+    int32 IrradianceTexHeight;
+    int32 InscatterAltitudeSampleNum;
+    int32 InscatterMuNum;
+    int32 InscatterMuSNum;
+    int32 InscatterNuNum;
 
 };
 
@@ -636,195 +627,385 @@ struct FAttenuationSubmixSendSettings
 
 };
 
-struct FSoundAttenuationPluginSettings
+struct FAudioComponentParam
 {
-    TArray<class USpatializationPluginSourceSettingsBase*> SpatializationPluginSettingsArray;
-    TArray<class UOcclusionPluginSourceSettingsBase*> OcclusionPluginSettingsArray;
-    TArray<class UReverbPluginSourceSettingsBase*> ReverbPluginSettingsArray;
+    FName ParamName;
+    float FloatParam;
+    bool BoolParam;
+    int32 IntParam;
+    class USoundWave* SoundWaveParam;
 
 };
 
-struct FSoundAttenuationSettings : public FBaseAttenuationSettings
+struct FAudioEQEffect : public FAudioEffectParameters
 {
-    uint8 bAttenuate;
-    uint8 bSpatialize;
-    uint8 bAttenuateWithLPF;
-    uint8 bEnableListenerFocus;
-    uint8 bEnableFocusInterpolation;
-    uint8 bEnableOcclusion;
-    uint8 bUseComplexCollisionForOcclusion;
-    uint8 bEnableReverbSend;
-    uint8 bEnablePriorityAttenuation;
-    uint8 bApplyNormalizationToStereoSounds;
-    uint8 bEnableLogFrequencyScaling;
-    uint8 bEnableSubmixSends;
-    TEnumAsByte<ESoundSpatializationAlgorithm> SpatializationAlgorithm;
-    float BinauralRadius;
-    EAirAbsorptionMethod AbsorptionMethod;
-    TEnumAsByte<ECollisionChannel> OcclusionTraceChannel;
-    EReverbSendMethod ReverbSendMethod;
-    EPriorityAttenuationMethod PriorityAttenuationMethod;
-    float OmniRadius;
-    float StereoSpread;
-    float LPFRadiusMin;
-    float LPFRadiusMax;
-    FRuntimeFloatCurve CustomLowpassAirAbsorptionCurve;
-    FRuntimeFloatCurve CustomHighpassAirAbsorptionCurve;
-    float LPFFrequencyAtMin;
-    float LPFFrequencyAtMax;
-    float HPFFrequencyAtMin;
-    float HPFFrequencyAtMax;
-    float FocusAzimuth;
-    float NonFocusAzimuth;
-    float FocusDistanceScale;
-    float NonFocusDistanceScale;
-    float FocusPriorityScale;
-    float NonFocusPriorityScale;
-    float FocusVolumeAttenuation;
-    float NonFocusVolumeAttenuation;
-    float FocusAttackInterpSpeed;
-    float FocusReleaseInterpSpeed;
-    float OcclusionLowPassFilterFrequency;
-    float OcclusionVolumeAttenuation;
-    float OcclusionInterpolationTime;
-    float ReverbWetLevelMin;
-    float ReverbWetLevelMax;
-    float ReverbDistanceMin;
-    float ReverbDistanceMax;
-    float ManualReverbSendLevel;
-    FRuntimeFloatCurve CustomReverbSendCurve;
-    TArray<FAttenuationSubmixSendSettings> SubmixSendSettings;
-    float PriorityAttenuationMin;
-    float PriorityAttenuationMax;
-    float PriorityAttenuationDistanceMin;
-    float PriorityAttenuationDistanceMax;
-    float ManualPriorityAttenuation;
-    FRuntimeFloatCurve CustomPriorityAttenuationCurve;
-    FSoundAttenuationPluginSettings PluginSettings;
+    float FrequencyCenter0;
+    float Gain0;
+    float Bandwidth0;
+    float FrequencyCenter1;
+    float Gain1;
+    float Bandwidth1;
+    float FrequencyCenter2;
+    float Gain2;
+    float Bandwidth2;
+    float FrequencyCenter3;
+    float Gain3;
+    float Bandwidth3;
 
 };
 
-struct FSoundSubmixSendInfo
-{
-    ESendLevelControlMethod SendLevelControlMethod;
-    ESubmixSendStage SendStage;
-    class USoundSubmixBase* SoundSubmix;
-    float SendLevel;
-    float MinSendLevel;
-    float MaxSendLevel;
-    float MinSendDistance;
-    float MaxSendDistance;
-    FRuntimeFloatCurve CustomSendLevelCurve;
-
-};
-
-struct FSoundSourceBusSendInfo
-{
-    ESourceBusSendLevelControlMethod SourceBusSendLevelControlMethod;
-    class USoundSourceBus* SoundSourceBus;
-    class UAudioBus* AudioBus;
-    float SendLevel;
-    float MinSendLevel;
-    float MaxSendLevel;
-    float MinSendDistance;
-    float MaxSendDistance;
-    FRuntimeFloatCurve CustomSendLevelCurve;
-
-};
-
-struct FTableRowBase
+struct FAudioEffectParameters
 {
 };
 
-class USoundEffectPreset : public UObject
+struct FAudioQualitySettings
 {
-};
-
-class USoundEffectSourcePreset : public USoundEffectPreset
-{
-};
-
-struct FSoundModulationDestinationSettings
-{
-    float Value;
-    class USoundModulatorBase* Modulator;
+    FText DisplayName;
+    int32 MaxChannels;
 
 };
 
-class USoundEffectSubmixPreset : public USoundEffectPreset
+struct FAudioReverbEffect : public FAudioEffectParameters
 {
 };
 
-struct FLightingChannels
+struct FAudioVolumeSubmixOverrideSettings
 {
-    uint8 bChannel0;
-    uint8 bChannel1;
-    uint8 bChannel2;
+    class USoundSubmix* Submix;
+    TArray<class USoundEffectSubmixPreset*> SubmixEffectChain;
+    float CrossfadeTime;
 
 };
 
-struct FCustomPrimitiveData
+struct FAudioVolumeSubmixSendSettings
 {
-    TArray<float> Data;
+    EAudioVolumeLocationState ListenerLocationState;
+    EAudioVolumeLocationState SourceLocationState;
+    TArray<FSoundSubmixSendInfo> SubmixSends;
 
 };
 
-struct FCollisionResponseContainer
+struct FAutoCompleteNode
 {
-    TEnumAsByte<ECollisionResponse> WorldStatic;
-    TEnumAsByte<ECollisionResponse> WorldDynamic;
-    TEnumAsByte<ECollisionResponse> Pawn;
-    TEnumAsByte<ECollisionResponse> Visibility;
-    TEnumAsByte<ECollisionResponse> Camera;
-    TEnumAsByte<ECollisionResponse> PhysicsBody;
-    TEnumAsByte<ECollisionResponse> Vehicle;
-    TEnumAsByte<ECollisionResponse> Destructible;
-    TEnumAsByte<ECollisionResponse> EngineTraceChannel1;
-    TEnumAsByte<ECollisionResponse> EngineTraceChannel2;
-    TEnumAsByte<ECollisionResponse> EngineTraceChannel3;
-    TEnumAsByte<ECollisionResponse> EngineTraceChannel4;
-    TEnumAsByte<ECollisionResponse> EngineTraceChannel5;
-    TEnumAsByte<ECollisionResponse> EngineTraceChannel6;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel1;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel2;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel3;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel4;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel5;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel6;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel7;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel8;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel9;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel10;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel11;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel12;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel13;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel14;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel15;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel16;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel17;
-    TEnumAsByte<ECollisionResponse> GameTraceChannel18;
+    int32 IndexChar;
+    TArray<int32> AutoCompleteListIndices;
 
 };
 
-struct FResponseChannel
+struct FBPComponentClassOverride
 {
-    FName Channel;
-    TEnumAsByte<ECollisionResponse> Response;
+    FName ComponentName;
+    UClass* ComponentClass;
 
 };
 
-struct FCollisionResponse
+struct FBPEditorBookmarkNode
 {
-    FCollisionResponseContainer ResponseToChannels;
-    TArray<FResponseChannel> ResponseArray;
+    FGuid NodeGuid;
+    FGuid ParentGuid;
+    FText DisplayName;
 
 };
 
-struct FWalkableSlopeOverride
+struct FBPInterfaceDescription
 {
-    TEnumAsByte<EWalkableSlopeBehavior> WalkableSlopeBehavior;
-    float WalkableSlopeAngle;
+    TSubclassOf<class UInterface> Interface;
+    TArray<class UEdGraph*> Graphs;
 
+};
+
+struct FBPVariableDescription
+{
+    FName VarName;
+    FGuid VarGuid;
+    FEdGraphPinType VarType;
+    FString FriendlyName;
+    FText Category;
+    uint64 PropertyFlags;
+    FName RepNotifyFunc;
+    TEnumAsByte<ELifetimeCondition> ReplicationCondition;
+    TArray<FBPVariableMetaDataEntry> MetaDataArray;
+    FString DefaultValue;
+
+};
+
+struct FBPVariableMetaDataEntry
+{
+    FName DataKey;
+    FString DataValue;
+
+};
+
+struct FBakedAnimationState
+{
+    FName StateName;
+    TArray<FBakedStateExitTransition> Transitions;
+    int32 StateRootNodeIndex;
+    int32 StartNotify;
+    int32 EndNotify;
+    int32 FullyBlendedNotify;
+    bool bIsAConduit;
+    int32 EntryRuleNodeIndex;
+    TArray<int32> PlayerNodeIndices;
+    TArray<int32> LayerNodeIndices;
+    bool bAlwaysResetOnEntry;
+
+};
+
+struct FBakedAnimationStateMachine
+{
+    FName MachineName;
+    int32 InitialState;
+    TArray<FBakedAnimationState> States;
+    TArray<FAnimationTransitionBetweenStates> Transitions;
+
+};
+
+struct FBakedCustomAttributePerBoneData
+{
+    int32 BoneTreeIndex;
+    TArray<FBakedStringCustomAttribute> StringAttributes;
+    TArray<FBakedIntegerCustomAttribute> IntAttributes;
+    TArray<FBakedFloatCustomAttribute> FloatAttributes;
+
+};
+
+struct FBakedFloatCustomAttribute
+{
+    FName AttributeName;
+    FSimpleCurve FloatCurve;
+
+};
+
+struct FBakedIntegerCustomAttribute
+{
+    FName AttributeName;
+    FIntegralCurve IntCurve;
+
+};
+
+struct FBakedStateExitTransition
+{
+    int32 CanTakeDelegateIndex;
+    int32 CustomResultNodeIndex;
+    int32 TransitionIndex;
+    bool bDesiredTransitionReturnValue;
+    bool bAutomaticRemainingTimeRule;
+    TArray<int32> PoseEvaluatorLinks;
+
+};
+
+struct FBakedStringCustomAttribute
+{
+    FName AttributeName;
+    FStringCurve StringCurve;
+
+};
+
+struct FBandwidthTestGenerator
+{
+    TArray<FBandwidthTestItem> ReplicatedBuffers;
+
+};
+
+struct FBandwidthTestItem
+{
+    TArray<uint8> Kilobyte;
+
+};
+
+struct FBaseAttenuationSettings
+{
+    EAttenuationDistanceModel DistanceAlgorithm;
+    TEnumAsByte<EAttenuationShape::Type> AttenuationShape;
+    float dBAttenuationAtMax;
+    ENaturalSoundFalloffMode FalloffMode;
+    FVector AttenuationShapeExtents;
+    float ConeOffset;
+    float FalloffDistance;
+    FRuntimeFloatCurve CustomAttenuationCurve;
+
+};
+
+struct FBasedMovementInfo
+{
+    class UPrimitiveComponent* MovementBase;
+    FName BoneName;
+    FVector_NetQuantize100 Location;
+    FRotator Rotation;
+    bool bServerHasBaseComponent;
+    bool bRelativeRotation;
+    bool bServerHasVelocity;
+
+};
+
+struct FBasedPosition
+{
+    class AActor* Base;
+    FVector Position;
+    FVector CachedBaseLocation;
+    FRotator CachedBaseRotation;
+    FVector CachedTransPosition;
+
+};
+
+struct FBatchedLine
+{
+    FVector Start;
+    FVector End;
+    FLinearColor Color;
+    float Thickness;
+    float RemainingLifeTime;
+    uint8 DepthPriority;
+
+};
+
+struct FBatchedPoint
+{
+    FVector Position;
+    FLinearColor Color;
+    float PointSize;
+    float RemainingLifeTime;
+    uint8 DepthPriority;
+
+};
+
+struct FBeamModifierOptions
+{
+    uint8 bModify;
+    uint8 bScale;
+    uint8 bLock;
+
+};
+
+struct FBeamTargetData
+{
+    FName TargetName;
+    float TargetPercentage;
+
+};
+
+struct FBlendFilter
+{
+};
+
+struct FBlendParameter
+{
+    FString DisplayName;
+    float Min;
+    float Max;
+    int32 GridNum;
+
+};
+
+struct FBlendProfileBoneEntry
+{
+    FBoneReference BoneReference;
+    float BlendScale;
+
+};
+
+struct FBlendSample
+{
+    class UAnimSequence* Animation;
+    FVector SampleValue;
+    float RateScale;
+
+};
+
+struct FBlendSampleData
+{
+    int32 SampleDataIndex;
+    class UAnimSequence* Animation;
+    float TotalWeight;
+    float Time;
+    float PreviousTime;
+    float SamplePlayRate;
+
+};
+
+struct FBlueprintComponentChangedPropertyInfo
+{
+    FName PropertyName;
+    int32 ArrayIndex;
+    class UStruct* PropertyScope;
+
+};
+
+struct FBlueprintComponentDelegateBinding
+{
+    FName ComponentPropertyName;
+    FName DelegatePropertyName;
+    FName FunctionNameToBind;
+
+};
+
+struct FBlueprintCookedComponentInstancingData
+{
+    TArray<FBlueprintComponentChangedPropertyInfo> ChangedPropertyList;
+    bool bHasValidCookedData;
+
+};
+
+struct FBlueprintDebugData
+{
+};
+
+struct FBlueprintEditorPromotionSettings
+{
+    FFilePath FirstMeshPath;
+    FFilePath SecondMeshPath;
+    FFilePath DefaultParticleAsset;
+
+};
+
+struct FBlueprintInputActionDelegateBinding : public FBlueprintInputDelegateBinding
+{
+    FName InputActionName;
+    TEnumAsByte<EInputEvent> InputKeyEvent;
+    FName FunctionNameToBind;
+
+};
+
+struct FBlueprintInputAxisDelegateBinding : public FBlueprintInputDelegateBinding
+{
+    FName InputAxisName;
+    FName FunctionNameToBind;
+
+};
+
+struct FBlueprintInputAxisKeyDelegateBinding : public FBlueprintInputDelegateBinding
+{
+    FKey AxisKey;
+    FName FunctionNameToBind;
+
+};
+
+struct FBlueprintInputDelegateBinding
+{
+    uint8 bConsumeInput;
+    uint8 bExecuteWhenPaused;
+    uint8 bOverrideParentBinding;
+
+};
+
+struct FBlueprintInputKeyDelegateBinding : public FBlueprintInputDelegateBinding
+{
+    FInputChord InputChord;
+    TEnumAsByte<EInputEvent> InputKeyEvent;
+    FName FunctionNameToBind;
+
+};
+
+struct FBlueprintInputTouchDelegateBinding : public FBlueprintInputDelegateBinding
+{
+    TEnumAsByte<EInputEvent> InputKeyEvent;
+    FName FunctionNameToBind;
+
+};
+
+struct FBlueprintMacroCosmeticInfo
+{
 };
 
 struct FBodyInstance : public FBodyInstanceCore
@@ -869,383 +1050,1950 @@ struct FBodyInstance : public FBodyInstanceCore
 
 };
 
-class UPrimitiveComponent : public USceneComponent
+struct FBoneFilter
 {
-    float MinDrawDistance;
-    float LDMaxDrawDistance;
-    float CachedMaxDrawDistance;
-    TEnumAsByte<ESceneDepthPriorityGroup> DepthPriorityGroup;
-    TEnumAsByte<ESceneDepthPriorityGroup> ViewOwnerDepthPriorityGroup;
-    TEnumAsByte<EIndirectLightingCacheQuality> IndirectLightingCacheQuality;
-    ELightmapType LightmapType;
-    uint8 bUseMaxLODAsImposter;
-    uint8 bBatchImpostersAsInstances;
-    uint8 bNeverDistanceCull;
-    uint8 bAlwaysCreatePhysicsState;
-    uint8 bGenerateOverlapEvents;
-    uint8 bMultiBodyOverlap;
-    uint8 bTraceComplexOnMove;
-    uint8 bReturnMaterialOnMove;
-    uint8 bUseViewOwnerDepthPriorityGroup;
-    uint8 bAllowCullDistanceVolume;
-    uint8 bHasMotionBlurVelocityMeshes;
-    uint8 bVisibleInReflectionCaptures;
-    uint8 bVisibleInRealTimeSkyCaptures;
-    uint8 bVisibleInRayTracing;
-    uint8 bRenderInMainPass;
-    uint8 bRenderInDepthPass;
-    uint8 bReceivesDecals;
-    uint8 bOwnerNoSee;
-    uint8 bOnlyOwnerSee;
-    uint8 bTreatAsBackgroundForOcclusion;
-    uint8 bUseAsOccluder;
-    uint8 bSelectable;
-    uint8 bForceMipStreaming;
-    uint8 bHasPerInstanceHitProxies;
-    uint8 CastShadow;
-    uint8 bAffectDynamicIndirectLighting;
-    uint8 bAffectDistanceFieldLighting;
-    uint8 bCastDynamicShadow;
-    uint8 bCastStaticShadow;
-    uint8 bCastVolumetricTranslucentShadow;
-    uint8 bCastContactShadow;
-    uint8 bSelfShadowOnly;
-    uint8 bCastFarShadow;
-    uint8 bCastInsetShadow;
-    uint8 bCastCinematicShadow;
-    uint8 bCastHiddenShadow;
-    uint8 bCastShadowAsTwoSided;
-    uint8 bLightAsIfStatic;
-    uint8 bLightAttachmentsAsGroup;
-    uint8 bExcludeFromLightAttachmentGroup;
-    uint8 bReceiveMobileCSMShadows;
-    uint8 bSingleSampleShadowFromStationaryLights;
-    uint8 bIgnoreRadialImpulse;
-    uint8 bIgnoreRadialForce;
-    uint8 bApplyImpulseOnDamage;
-    uint8 bReplicatePhysicsToAutonomousProxy;
-    uint8 bFillCollisionUnderneathForNavmesh;
-    uint8 AlwaysLoadOnClient;
-    uint8 AlwaysLoadOnServer;
-    uint8 bUseEditorCompositing;
-    uint8 bRenderCustomDepth;
-    uint8 bVisibleInSceneCaptureOnly;
-    uint8 bHiddenInSceneCapture;
-    TEnumAsByte<EHasCustomNavigableGeometry::Type> bHasCustomNavigableGeometry;
-    TEnumAsByte<ECanBeCharacterBase> CanCharacterStepUpOn;
-    FLightingChannels LightingChannels;
-    ERendererStencilMask CustomDepthStencilWriteMask;
-    int32 CustomDepthStencilValue;
-    FCustomPrimitiveData CustomPrimitiveData;
-    FCustomPrimitiveData CustomPrimitiveDataInternal;
-    int32 TranslucencySortPriority;
-    float TranslucencySortDistanceOffset;
-    int32 VisibilityId;
-    TArray<class URuntimeVirtualTexture*> RuntimeVirtualTextures;
-    int8 VirtualTextureLodBias;
-    int8 VirtualTextureCullMips;
-    int8 VirtualTextureMinCoverage;
-    ERuntimeVirtualTextureMainPassType VirtualTextureRenderPassType;
-    float LpvBiasMultiplier;
-    float BoundsScale;
-    TArray<class AActor*> MoveIgnoreActors;
-    TArray<class UPrimitiveComponent*> MoveIgnoreComponents;
-    FBodyInstance BodyInstance;
-    FPrimitiveComponentOnComponentHit OnComponentHit;
-    void ComponentHitSignature(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-    FPrimitiveComponentOnComponentBeginOverlap OnComponentBeginOverlap;
-    void ComponentBeginOverlapSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-    FPrimitiveComponentOnComponentEndOverlap OnComponentEndOverlap;
-    void ComponentEndOverlapSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-    FPrimitiveComponentOnComponentWake OnComponentWake;
-    void ComponentWakeSignature(class UPrimitiveComponent* WakingComponent, FName BoneName);
-    FPrimitiveComponentOnComponentSleep OnComponentSleep;
-    void ComponentSleepSignature(class UPrimitiveComponent* SleepingComponent, FName BoneName);
-    FPrimitiveComponentOnBeginCursorOver OnBeginCursorOver;
-    void ComponentBeginCursorOverSignature(class UPrimitiveComponent* TouchedComponent);
-    FPrimitiveComponentOnEndCursorOver OnEndCursorOver;
-    void ComponentEndCursorOverSignature(class UPrimitiveComponent* TouchedComponent);
-    FPrimitiveComponentOnClicked OnClicked;
-    void ComponentOnClickedSignature(class UPrimitiveComponent* TouchedComponent, FKey ButtonPressed);
-    FPrimitiveComponentOnReleased OnReleased;
-    void ComponentOnReleasedSignature(class UPrimitiveComponent* TouchedComponent, FKey ButtonReleased);
-    FPrimitiveComponentOnInputTouchBegin OnInputTouchBegin;
-    void ComponentOnInputTouchBeginSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
-    FPrimitiveComponentOnInputTouchEnd OnInputTouchEnd;
-    void ComponentOnInputTouchEndSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
-    FPrimitiveComponentOnInputTouchEnter OnInputTouchEnter;
-    void ComponentBeginTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
-    FPrimitiveComponentOnInputTouchLeave OnInputTouchLeave;
-    void ComponentEndTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
-    class UPrimitiveComponent* LODParentPrimitive;
-
-    bool WasRecentlyRendered(float Tolerance);
-    void WakeRigidBody(FName BoneName);
-    void WakeAllRigidBodies();
-    void SetWalkableSlopeOverride(const FWalkableSlopeOverride& NewOverride);
-    void SetVisibleInSceneCaptureOnly(bool bValue);
-    void SetUseCCD(bool InUseCCD, FName BoneName);
-    void SetTranslucentSortPriority(int32 NewTranslucentSortPriority);
-    void SetTranslucencySortDistanceOffset(float NewTranslucencySortDistanceOffset);
-    void SetSingleSampleShadowFromStationaryLights(bool bNewSingleSampleShadowFromStationaryLights);
-    void SetSimulatePhysics(bool bSimulate);
-    void SetRenderInMainPass(bool bValue);
-    void SetRenderCustomDepth(bool bValue);
-    void SetReceivesDecals(bool bNewReceivesDecals);
-    void SetPhysMaterialOverride(class UPhysicalMaterial* NewPhysMaterial);
-    void SetPhysicsMaxAngularVelocityInRadians(float NewMaxAngVel, bool bAddToCurrent, FName BoneName);
-    void SetPhysicsMaxAngularVelocityInDegrees(float NewMaxAngVel, bool bAddToCurrent, FName BoneName);
-    void SetPhysicsMaxAngularVelocity(float NewMaxAngVel, bool bAddToCurrent, FName BoneName);
-    void SetPhysicsLinearVelocity(FVector NewVel, bool bAddToCurrent, FName BoneName);
-    void SetPhysicsAngularVelocityInRadians(FVector NewAngVel, bool bAddToCurrent, FName BoneName);
-    void SetPhysicsAngularVelocityInDegrees(FVector NewAngVel, bool bAddToCurrent, FName BoneName);
-    void SetPhysicsAngularVelocity(FVector NewAngVel, bool bAddToCurrent, FName BoneName);
-    void SetOwnerNoSee(bool bNewOwnerNoSee);
-    void SetOnlyOwnerSee(bool bNewOnlyOwnerSee);
-    void SetNotifyRigidBodyCollision(bool bNewNotifyRigidBodyCollision);
-    void SetMaterialByName(FName MaterialSlotName, class UMaterialInterface* Material);
-    void SetMaterial(int32 ElementIndex, class UMaterialInterface* Material);
-    void SetMassScale(FName BoneName, float InMassScale);
-    void SetMassOverrideInKg(FName BoneName, float MassInKg, bool bOverrideMass);
-    void SetLinearDamping(float InDamping);
-    void SetLightingChannels(bool bChannel0, bool bChannel1, bool bChannel2);
-    void SetLightAttachmentsAsGroup(bool bInLightAttachmentsAsGroup);
-    void SetHiddenInSceneCapture(bool bValue);
-    void SetGenerateOverlapEvents(bool bInGenerateOverlapEvents);
-    void SetExcludeFromLightAttachmentGroup(bool bInExcludeFromLightAttachmentGroup);
-    void SetEnableGravity(bool bGravityEnabled);
-    void SetDefaultCustomPrimitiveDataVector4(int32 DataIndex, FVector4 Value);
-    void SetDefaultCustomPrimitiveDataVector3(int32 DataIndex, FVector Value);
-    void SetDefaultCustomPrimitiveDataVector2(int32 DataIndex, FVector2D Value);
-    void SetDefaultCustomPrimitiveDataFloat(int32 DataIndex, float Value);
-    void SetCustomPrimitiveDataVector4(int32 DataIndex, FVector4 Value);
-    void SetCustomPrimitiveDataVector3(int32 DataIndex, FVector Value);
-    void SetCustomPrimitiveDataVector2(int32 DataIndex, FVector2D Value);
-    void SetCustomPrimitiveDataFloat(int32 DataIndex, float Value);
-    void SetCustomDepthStencilWriteMask(ERendererStencilMask WriteMaskBit);
-    void SetCustomDepthStencilValue(int32 Value);
-    void SetCullDistance(float NewCullDistance);
-    void SetConstraintMode(TEnumAsByte<EDOFMode::Type> ConstraintMode);
-    void SetCollisionResponseToChannel(TEnumAsByte<ECollisionChannel> Channel, TEnumAsByte<ECollisionResponse> NewResponse);
-    void SetCollisionResponseToAllChannels(TEnumAsByte<ECollisionResponse> NewResponse);
-    void SetCollisionProfileName(FName InCollisionProfileName, bool bUpdateOverlaps);
-    void SetCollisionObjectType(TEnumAsByte<ECollisionChannel> Channel);
-    void SetCollisionEnabled(TEnumAsByte<ECollisionEnabled::Type> NewType);
-    void SetCenterOfMass(FVector CenterOfMassOffset, FName BoneName);
-    void SetCastShadow(bool NewCastShadow);
-    void SetCastInsetShadow(bool bInCastInsetShadow);
-    void SetCastHiddenShadow(bool NewCastHiddenShadow);
-    void SetBoundsScale(float NewBoundsScale);
-    void SetAngularDamping(float InDamping);
-    void SetAllUseCCD(bool InUseCCD);
-    void SetAllPhysicsLinearVelocity(FVector NewVel, bool bAddToCurrent);
-    void SetAllPhysicsAngularVelocityInRadians(const FVector& NewAngVel, bool bAddToCurrent);
-    void SetAllPhysicsAngularVelocityInDegrees(const FVector& NewAngVel, bool bAddToCurrent);
-    void SetAllMassScale(float InMassScale);
-    FVector ScaleByMomentOfInertia(FVector InputVector, FName BoneName);
-    void PutRigidBodyToSleep(FName BoneName);
-    bool K2_SphereTraceComponent(FVector TraceStart, FVector TraceEnd, float SphereRadius, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
-    bool K2_SphereOverlapComponent(FVector InSphereCentre, float InSphereRadius, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
-    bool K2_LineTraceComponent(FVector TraceStart, FVector TraceEnd, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
-    bool K2_IsQueryCollisionEnabled();
-    bool K2_IsPhysicsCollisionEnabled();
-    bool K2_IsCollisionEnabled();
-    bool K2_BoxOverlapComponent(FVector InBoxCentre, const FBox InBox, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
-    bool IsOverlappingComponent(const class UPrimitiveComponent* OtherComp);
-    bool IsOverlappingActor(const class AActor* Other);
-    bool IsGravityEnabled();
-    bool IsAnyRigidBodyAwake();
-    void IgnoreComponentWhenMoving(class UPrimitiveComponent* Component, bool bShouldIgnore);
-    void IgnoreActorWhenMoving(class AActor* Actor, bool bShouldIgnore);
-    FWalkableSlopeOverride GetWalkableSlopeOverride();
-    FVector GetPhysicsLinearVelocityAtPoint(FVector Point, FName BoneName);
-    FVector GetPhysicsLinearVelocity(FName BoneName);
-    FVector GetPhysicsAngularVelocityInRadians(FName BoneName);
-    FVector GetPhysicsAngularVelocityInDegrees(FName BoneName);
-    FVector GetPhysicsAngularVelocity(FName BoneName);
-    void GetOverlappingComponents(TArray<class UPrimitiveComponent*>& OutOverlappingComponents);
-    void GetOverlappingActors(TArray<class AActor*>& OverlappingActors, TSubclassOf<class AActor> ClassFilter);
-    int32 GetNumMaterials();
-    class UMaterialInterface* GetMaterialFromCollisionFaceIndex(int32 FaceIndex, int32& SectionIndex);
-    class UMaterialInterface* GetMaterial(int32 ElementIndex);
-    float GetMassScale(FName BoneName);
-    float GetMass();
-    float GetLinearDamping();
-    FVector GetInertiaTensor(FName BoneName);
-    bool GetGenerateOverlapEvents();
-    TEnumAsByte<ECollisionResponse> GetCollisionResponseToChannel(TEnumAsByte<ECollisionChannel> Channel);
-    FName GetCollisionProfileName();
-    TEnumAsByte<ECollisionChannel> GetCollisionObjectType();
-    TEnumAsByte<ECollisionEnabled::Type> GetCollisionEnabled();
-    float GetClosestPointOnCollision(const FVector& Point, FVector& OutPointOnBody, FName BoneName);
-    FVector GetCenterOfMass(FName BoneName);
-    float GetAngularDamping();
-    class UMaterialInstanceDynamic* CreateDynamicMaterialInstance(int32 ElementIndex, class UMaterialInterface* SourceMaterial, FName OptionalName);
-    class UMaterialInstanceDynamic* CreateAndSetMaterialInstanceDynamicFromMaterial(int32 ElementIndex, class UMaterialInterface* Parent);
-    class UMaterialInstanceDynamic* CreateAndSetMaterialInstanceDynamic(int32 ElementIndex);
-    TArray<class UPrimitiveComponent*> CopyArrayOfMoveIgnoreComponents();
-    TArray<class AActor*> CopyArrayOfMoveIgnoreActors();
-    void ClearMoveIgnoreComponents();
-    void ClearMoveIgnoreActors();
-    bool CanCharacterStepUp(class APawn* Pawn);
-    void AddTorqueInRadians(FVector Torque, FName BoneName, bool bAccelChange);
-    void AddTorqueInDegrees(FVector Torque, FName BoneName, bool bAccelChange);
-    void AddTorque(FVector Torque, FName BoneName, bool bAccelChange);
-    void AddRadialImpulse(FVector Origin, float Radius, float Strength, TEnumAsByte<ERadialImpulseFalloff> Falloff, bool bVelChange);
-    void AddRadialForce(FVector Origin, float Radius, float Strength, TEnumAsByte<ERadialImpulseFalloff> Falloff, bool bAccelChange);
-    void AddImpulseAtLocation(FVector Impulse, FVector Location, FName BoneName);
-    void AddImpulse(FVector Impulse, FName BoneName, bool bVelChange);
-    void AddForceAtLocationLocal(FVector force, FVector Location, FName BoneName);
-    void AddForceAtLocation(FVector force, FVector Location, FName BoneName);
-    void AddForce(FVector force, FName BoneName, bool bAccelChange);
-    void AddAngularImpulseInRadians(FVector Impulse, FName BoneName, bool bVelChange);
-    void AddAngularImpulseInDegrees(FVector Impulse, FName BoneName, bool bVelChange);
-    void AddAngularImpulse(FVector Impulse, FName BoneName, bool bVelChange);
-};
-
-class UFXSystemComponent : public UPrimitiveComponent
-{
-
-    void SetVectorParameter(FName ParameterName, FVector Param);
-    void SetUseAutoManageAttachment(bool bAutoManage);
-    void SetIntParameter(FName ParameterName, int32 Param);
-    void SetFloatParameter(FName ParameterName, float Param);
-    void SetEmitterEnable(FName EmitterName, bool bNewEnableState);
-    void SetColorParameter(FName ParameterName, FLinearColor Param);
-    void SetBoolParameter(FName ParameterName, bool Param);
-    void SetAutoAttachmentParameters(class USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule);
-    void SetActorParameter(FName ParameterName, class AActor* Param);
-    void ReleaseToPool();
-    class UFXSystemAsset* GetFXSystemAsset();
-};
-
-class UFXSystemAsset : public UObject
-{
-    uint32 MaxPoolSize;
-    uint32 PoolPrimeSize;
+    bool bExcludeSelf;
+    FName BoneName;
 
 };
 
-class UAnimNotify : public UObject
+struct FBoneMirrorExport
 {
-
-    bool Received_Notify(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation);
-    FString GetNotifyName();
-};
-
-class UAnimNotifyState : public UObject
-{
-
-    bool Received_NotifyTick(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation, float FrameDeltaTime);
-    bool Received_NotifyEnd(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation);
-    bool Received_NotifyBegin(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation, float TotalDuration);
-    FString GetNotifyName();
-};
-
-class UBlueprintCore : public UObject
-{
-    UClass* SkeletonGeneratedClass;
-    UClass* GeneratedClass;
-    bool bLegacyNeedToPurgeSkelRefs;
-    FGuid BlueprintGuid;
+    FName BoneName;
+    FName SourceBoneName;
+    TEnumAsByte<EAxis::Type> BoneFlipAxis;
 
 };
 
-struct FBPComponentClassOverride
+struct FBoneMirrorInfo
+{
+    int32 SourceIndex;
+    TEnumAsByte<EAxis::Type> BoneFlipAxis;
+
+};
+
+struct FBoneNode
+{
+    FName Name;
+    int32 ParentIndex;
+    TEnumAsByte<EBoneTranslationRetargetingMode::Type> TranslationRetargetingMode;
+
+};
+
+struct FBoneReductionSetting
+{
+    TArray<FName> BonesToRemove;
+
+};
+
+struct FBoneReference
+{
+    FName BoneName;
+
+};
+
+struct FBookmark2DJumpToSettings
+{
+};
+
+struct FBookmarkBaseJumpToSettings
+{
+};
+
+struct FBookmarkJumpToSettings : public FBookmarkBaseJumpToSettings
+{
+};
+
+struct FBoolTrackKey
+{
+    float Time;
+    uint8 Value;
+
+};
+
+struct FBranchFilter
+{
+    FName BoneName;
+    int32 BlendDepth;
+
+};
+
+struct FBranchingPoint : public FAnimLinkableElement
+{
+    FName EventName;
+    float DisplayTime;
+    float TriggerTimeOffset;
+
+};
+
+struct FBranchingPointMarker
+{
+    int32 NotifyIndex;
+    float TriggerTime;
+    TEnumAsByte<EAnimNotifyEventType::Type> NotifyEventType;
+
+};
+
+struct FBranchingPointNotifyPayload
+{
+};
+
+struct FBroadphaseSettings
+{
+    bool bUseMBPOnClient;
+    bool bUseMBPOnServer;
+    bool bUseMBPOuterBounds;
+    FBox MBPBounds;
+    FBox MBPOuterBounds;
+    uint32 MBPNumSubdivs;
+
+};
+
+struct FBuildPromotionImportWorkflowSettings
+{
+    FEditorImportWorkflowDefinition Diffuse;
+    FEditorImportWorkflowDefinition Normal;
+    FEditorImportWorkflowDefinition StaticMesh;
+    FEditorImportWorkflowDefinition ReimportStaticMesh;
+    FEditorImportWorkflowDefinition BlendShapeMesh;
+    FEditorImportWorkflowDefinition MorphMesh;
+    FEditorImportWorkflowDefinition SkeletalMesh;
+    FEditorImportWorkflowDefinition Animation;
+    FEditorImportWorkflowDefinition Sound;
+    FEditorImportWorkflowDefinition SurroundSound;
+    TArray<FEditorImportWorkflowDefinition> OtherAssetsToImport;
+
+};
+
+struct FBuildPromotionNewProjectSettings
+{
+    FDirectoryPath NewProjectFolderOverride;
+    FString NewProjectNameOverride;
+
+};
+
+struct FBuildPromotionOpenAssetSettings
+{
+    FFilePath BlueprintAsset;
+    FFilePath MaterialAsset;
+    FFilePath ParticleSystemAsset;
+    FFilePath SkeletalMeshAsset;
+    FFilePath StaticMeshAsset;
+    FFilePath TextureAsset;
+
+};
+
+struct FBuildPromotionTestSettings
+{
+    FFilePath DefaultStaticMeshAsset;
+    FBuildPromotionImportWorkflowSettings ImportWorkflow;
+    FBuildPromotionOpenAssetSettings OpenAssets;
+    FBuildPromotionNewProjectSettings NewProjectSettings;
+    FFilePath SourceControlMaterial;
+
+};
+
+struct FBuilderPoly
+{
+    TArray<int32> VertexIndices;
+    int32 Direction;
+    FName ItemName;
+    int32 PolyFlags;
+
+};
+
+struct FCachedAnimAssetPlayerData
+{
+    FName StateMachineName;
+    FName StateName;
+
+};
+
+struct FCachedAnimRelevancyData
+{
+    FName StateMachineName;
+    FName StateName;
+
+};
+
+struct FCachedAnimStateArray
+{
+    TArray<FCachedAnimStateData> States;
+
+};
+
+struct FCachedAnimStateData
+{
+    FName StateMachineName;
+    FName StateName;
+
+};
+
+struct FCachedAnimTransitionData
+{
+    FName StateMachineName;
+    FName FromStateName;
+    FName ToStateName;
+
+};
+
+struct FCachedKeyToActionInfo
+{
+    class UPlayerInput* PlayerInput;
+
+};
+
+struct FCachedPoseIndices
+{
+    TArray<int32> OrderedSavedPoseNodeIndices;
+
+};
+
+struct FCameraCacheEntry
+{
+    float Timestamp;
+    FMinimalViewInfo POV;
+
+};
+
+struct FCameraCutInfo
+{
+    FVector Location;
+    float Timestamp;
+
+};
+
+struct FCameraExposureSettings
+{
+    TEnumAsByte<EAutoExposureMethod> Method;
+    float LowPercent;
+    float HighPercent;
+    float MinBrightness;
+    float MaxBrightness;
+    float SpeedUp;
+    float SpeedDown;
+    float Bias;
+    class UCurveFloat* BiasCurve;
+    class UTexture* MeterMask;
+    float HistogramLogMin;
+    float HistogramLogMax;
+    float CalibrationConstant;
+    uint8 ApplyPhysicalCameraExposure;
+
+};
+
+struct FCameraPreviewInfo
+{
+    TSubclassOf<class APawn> PawnClass;
+    class UAnimSequence* AnimSeq;
+    FVector Location;
+    FRotator Rotation;
+    class APawn* PawnInst;
+
+};
+
+struct FCameraShakeDuration
+{
+    float Duration;
+    ECameraShakeDurationType Type;
+
+};
+
+struct FCameraShakeInfo
+{
+    FCameraShakeDuration Duration;
+    float BlendIn;
+    float BlendOut;
+
+};
+
+struct FCameraShakeScrubParams
+{
+    float AbsoluteTime;
+    float ShakeScale;
+    float DynamicScale;
+    float BlendingWeight;
+    FMinimalViewInfo POV;
+
+};
+
+struct FCameraShakeStartParams
+{
+    bool bIsRestarting;
+
+};
+
+struct FCameraShakeStopParams
+{
+    bool bImmediately;
+
+};
+
+struct FCameraShakeUpdateParams
+{
+    float DeltaTime;
+    float ShakeScale;
+    float DynamicScale;
+    float BlendingWeight;
+    FMinimalViewInfo POV;
+
+};
+
+struct FCameraShakeUpdateResult
+{
+};
+
+struct FCanvasIcon
+{
+    class UTexture* Texture;
+    float U;
+    float V;
+    float UL;
+    float VL;
+
+};
+
+struct FCanvasUVTri
+{
+    FVector2D V0_Pos;
+    FVector2D V0_UV;
+    FLinearColor V0_Color;
+    FVector2D V1_Pos;
+    FVector2D V1_UV;
+    FLinearColor V1_Color;
+    FVector2D V2_Pos;
+    FVector2D V2_UV;
+    FLinearColor V2_Color;
+
+};
+
+struct FChannelDefinition
+{
+    FName ChannelName;
+    FName ClassName;
+    UClass* ChannelClass;
+    int32 StaticChannelIndex;
+    bool bTickOnCreate;
+    bool bServerOpen;
+    bool bClientOpen;
+    bool bInitialServer;
+    bool bInitialClient;
+
+};
+
+struct FChaosPhysicsSettings
+{
+    EChaosThreadingMode DefaultThreadingModel;
+    EChaosSolverTickMode DedicatedThreadTickMode;
+    EChaosBufferMode DedicatedThreadBufferMode;
+
+};
+
+struct FCharacterMoveResponsePackedBits : public FCharacterNetworkSerializationPackedBits
+{
+};
+
+struct FCharacterMovementComponentPostPhysicsTickFunction : public FTickFunction
+{
+};
+
+struct FCharacterNetworkSerializationPackedBits
+{
+};
+
+struct FCharacterServerMovePackedBits : public FCharacterNetworkSerializationPackedBits
+{
+};
+
+struct FChildActorAttachedActorInfo
+{
+    TWeakObjectPtr<class AActor> Actor;
+    FName SocketName;
+    FTransform RelativeTransform;
+
+};
+
+struct FChildActorComponentInstanceData : public FSceneComponentInstanceData
+{
+    TSubclassOf<class AActor> ChildActorClass;
+    FName ChildActorName;
+    TArray<FChildActorAttachedActorInfo> AttachedActors;
+
+};
+
+struct FClassRedirect
+{
+    FName ObjectName;
+    FName OldClassName;
+    FName NewClassName;
+    FName OldSubobjName;
+    FName NewSubobjName;
+    FName NewClassClass;
+    FName NewClassPackage;
+    bool InstanceOnly;
+
+};
+
+struct FClientReceiveData
+{
+    class APlayerController* LocalPC;
+    FName MessageType;
+    int32 MessageIndex;
+    FString MessageString;
+    class APlayerState* RelatedPlayerState_1;
+    class APlayerState* RelatedPlayerState_2;
+    class UObject* OptionalObject;
+
+};
+
+struct FClothPhysicsProperties_Legacy
+{
+    float VerticalResistance;
+    float HorizontalResistance;
+    float BendResistance;
+    float ShearResistance;
+    float Friction;
+    float Damping;
+    float TetherStiffness;
+    float TetherLimit;
+    float Drag;
+    float StiffnessFrequency;
+    float GravityScale;
+    float MassScale;
+    float InertiaBlend;
+    float SelfCollisionThickness;
+    float SelfCollisionSquashScale;
+    float SelfCollisionStiffness;
+    float SolverFrequency;
+    float FiberCompression;
+    float FiberExpansion;
+    float FiberResistance;
+
+};
+
+struct FClothingAssetData_Legacy
+{
+    FName AssetName;
+    FString ApexFileName;
+    bool bClothPropertiesChanged;
+    FClothPhysicsProperties_Legacy PhysicsProperties;
+
+};
+
+struct FClusterNode
+{
+    FVector BoundMin;
+    int32 FirstChild;
+    FVector BoundMax;
+    int32 LastChild;
+    int32 FirstInstance;
+    int32 LastInstance;
+    FVector MinInstanceScale;
+    FVector MaxInstanceScale;
+
+};
+
+struct FClusterNode_DEPRECATED
+{
+    FVector BoundMin;
+    int32 FirstChild;
+    FVector BoundMax;
+    int32 LastChild;
+    int32 FirstInstance;
+    int32 LastInstance;
+
+};
+
+struct FCollectionParameterBase
+{
+    FName ParameterName;
+    FGuid ID;
+
+};
+
+struct FCollectionReference
+{
+    FName CollectionName;
+
+};
+
+struct FCollectionScalarParameter : public FCollectionParameterBase
+{
+    float DefaultValue;
+
+};
+
+struct FCollectionVectorParameter : public FCollectionParameterBase
+{
+    FLinearColor DefaultValue;
+
+};
+
+struct FCollisionImpactData
+{
+    TArray<FRigidBodyContactInfo> ContactInfos;
+    FVector TotalNormalImpulse;
+    FVector TotalFrictionImpulse;
+    bool bIsVelocityDeltaUnderThreshold;
+
+};
+
+struct FCollisionProfileName
+{
+    FName Name;
+
+};
+
+struct FCollisionResponse
+{
+    FCollisionResponseContainer ResponseToChannels;
+    TArray<FResponseChannel> ResponseArray;
+
+};
+
+struct FCollisionResponseContainer
+{
+    TEnumAsByte<ECollisionResponse> WorldStatic;
+    TEnumAsByte<ECollisionResponse> WorldDynamic;
+    TEnumAsByte<ECollisionResponse> Pawn;
+    TEnumAsByte<ECollisionResponse> Visibility;
+    TEnumAsByte<ECollisionResponse> Camera;
+    TEnumAsByte<ECollisionResponse> PhysicsBody;
+    TEnumAsByte<ECollisionResponse> Vehicle;
+    TEnumAsByte<ECollisionResponse> Destructible;
+    TEnumAsByte<ECollisionResponse> EngineTraceChannel1;
+    TEnumAsByte<ECollisionResponse> EngineTraceChannel2;
+    TEnumAsByte<ECollisionResponse> EngineTraceChannel3;
+    TEnumAsByte<ECollisionResponse> EngineTraceChannel4;
+    TEnumAsByte<ECollisionResponse> EngineTraceChannel5;
+    TEnumAsByte<ECollisionResponse> EngineTraceChannel6;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel1;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel2;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel3;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel4;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel5;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel6;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel7;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel8;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel9;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel10;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel11;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel12;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel13;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel14;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel15;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel16;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel17;
+    TEnumAsByte<ECollisionResponse> GameTraceChannel18;
+
+};
+
+struct FCollisionResponseTemplate
+{
+    FName Name;
+    TEnumAsByte<ECollisionEnabled::Type> CollisionEnabled;
+    bool bCanModify;
+    FName ObjectTypeName;
+    TArray<FResponseChannel> CustomResponses;
+
+};
+
+struct FColorGradePerRangeSettings
+{
+    FVector4 Saturation;
+    FVector4 Contrast;
+    FVector4 Gamma;
+    FVector4 Gain;
+    FVector4 Offset;
+
+};
+
+struct FColorGradingSettings
+{
+    FColorGradePerRangeSettings Global;
+    FColorGradePerRangeSettings Shadows;
+    FColorGradePerRangeSettings Midtones;
+    FColorGradePerRangeSettings Highlights;
+    float ShadowsMax;
+    float HighlightsMin;
+
+};
+
+struct FColorMaterialInput : public FMaterialInput
+{
+};
+
+struct FCompilerNativizationOptions
+{
+    FName PlatformName;
+    bool ServerOnlyPlatform;
+    bool ClientOnlyPlatform;
+    bool bExcludeMonolithicHeaders;
+    TArray<FName> ExcludedModules;
+    TSet<FSoftObjectPath> ExcludedAssets;
+    TArray<FString> ExcludedFolderPaths;
+
+};
+
+struct FComponentKey
+{
+    UClass* OwnerClass;
+    FName SCSVariableName;
+    FGuid AssociatedGuid;
+
+};
+
+struct FComponentOverrideRecord
+{
+    UClass* ComponentClass;
+    class UActorComponent* ComponentTemplate;
+    FComponentKey ComponentKey;
+    FBlueprintCookedComponentInstancingData CookedComponentInstancingData;
+
+};
+
+struct FComponentReference
+{
+    class AActor* OtherActor;
+    FName ComponentProperty;
+    FString PathToComponent;
+
+};
+
+struct FComponentSpacePose
+{
+    TArray<FTransform> Transforms;
+    TArray<FName> Names;
+
+};
+
+struct FComponentSpacePoseLink : public FPoseLinkBase
+{
+};
+
+struct FComponentSync
+{
+    FName Name;
+    ESyncOption SyncOption;
+
+};
+
+struct FCompositeSection : public FAnimLinkableElement
+{
+    FName SectionName;
+    float StartTime;
+    FName NextSectionName;
+    TArray<class UAnimMetaData*> MetaData;
+
+};
+
+struct FCompressedRichCurve
+{
+};
+
+struct FCompressedTrack
+{
+    TArray<uint8> ByteStream;
+    TArray<float> Times;
+    float Mins;
+    float Ranges;
+
+};
+
+struct FConeConstraint : public FConstraintBaseParams
+{
+    float Swing1LimitDegrees;
+    float Swing2LimitDegrees;
+    TEnumAsByte<EAngularConstraintMotion> Swing1Motion;
+    TEnumAsByte<EAngularConstraintMotion> Swing2Motion;
+
+};
+
+struct FConstrainComponentPropName
 {
     FName ComponentName;
-    UClass* ComponentClass;
 
 };
 
-class UBlueprint : public UBlueprintCore
+struct FConstraintBaseParams
 {
-    UClass* ParentClass;
-    TEnumAsByte<EBlueprintType> BlueprintType;
-    uint8 bRecompileOnLoad;
-    uint8 bHasBeenRegenerated;
-    uint8 bIsRegeneratingOnLoad;
-    int32 BlueprintSystemVersion;
-    class USimpleConstructionScript* SimpleConstructionScript;
-    TArray<class UActorComponent*> ComponentTemplates;
-    TArray<class UTimelineTemplate*> Timelines;
-    TArray<FBPComponentClassOverride> ComponentClassOverrides;
-    class UInheritableComponentHandler* InheritableComponentHandler;
+    float Stiffness;
+    float Damping;
+    float Restitution;
+    float ContactDistance;
+    uint8 bSoftConstraint;
 
 };
 
-struct FBlueprintComponentChangedPropertyInfo
+struct FConstraintDrive
 {
-    FName PropertyName;
-    int32 ArrayIndex;
-    class UStruct* PropertyScope;
+    float Stiffness;
+    float Damping;
+    float MaxForce;
+    uint8 bEnablePositionDrive;
+    uint8 bEnableVelocityDrive;
 
 };
 
-struct FBlueprintCookedComponentInstancingData
+struct FConstraintInstance : public FConstraintInstanceBase
 {
-    TArray<FBlueprintComponentChangedPropertyInfo> ChangedPropertyList;
-    bool bHasValidCookedData;
+    FName JointName;
+    FName ConstraintBone1;
+    FName ConstraintBone2;
+    FVector Pos1;
+    FVector PriAxis1;
+    FVector SecAxis1;
+    FVector Pos2;
+    FVector PriAxis2;
+    FVector SecAxis2;
+    FRotator AngularRotationOffset;
+    uint8 bScaleLinearLimits;
+    FConstraintProfileProperties ProfileInstance;
 
 };
 
-class UBlueprintGeneratedClass : public UClass
-{
-    int32 NumReplicatedProperties;
-    uint8 bHasNativizedParent;
-    uint8 bHasCookedComponentInstancingData;
-    TArray<class UDynamicBlueprintBinding*> DynamicBindingObjects;
-    TArray<class UActorComponent*> ComponentTemplates;
-    TArray<class UTimelineTemplate*> Timelines;
-    TArray<FBPComponentClassOverride> ComponentClassOverrides;
-    class USimpleConstructionScript* SimpleConstructionScript;
-    class UInheritableComponentHandler* InheritableComponentHandler;
-    class UStructProperty* UberGraphFramePointerProperty;
-    class UFunction* UberGraphFunction;
-    TMap<class FName, class FBlueprintCookedComponentInstancingData> CookedComponentInstancingData;
-
-};
-
-class USubsystem : public UObject
+struct FConstraintInstanceBase
 {
 };
 
-class UDynamicSubsystem : public USubsystem
+struct FConstraintProfileProperties
+{
+    float ProjectionLinearTolerance;
+    float ProjectionAngularTolerance;
+    float ProjectionLinearAlpha;
+    float ProjectionAngularAlpha;
+    float LinearBreakThreshold;
+    float LinearPlasticityThreshold;
+    float AngularBreakThreshold;
+    float AngularPlasticityThreshold;
+    FLinearConstraint LinearLimit;
+    FConeConstraint ConeLimit;
+    FTwistConstraint TwistLimit;
+    FLinearDriveConstraint LinearDrive;
+    FAngularDriveConstraint AngularDrive;
+    uint8 bDisableCollision;
+    uint8 bParentDominates;
+    uint8 bEnableProjection;
+    uint8 bEnableSoftProjection;
+    uint8 bAngularBreakable;
+    uint8 bAngularPlasticity;
+    uint8 bLinearBreakable;
+    uint8 bLinearPlasticity;
+
+};
+
+struct FConvolutionBloomSettings
+{
+    class UTexture2D* Texture;
+    float Size;
+    FVector2D CenterUV;
+    float PreFilterMin;
+    float PreFilterMax;
+    float PreFilterMult;
+    float BufferScale;
+
+};
+
+struct FCullDistanceSizePair
+{
+    float Size;
+    float CullDistance;
+
+};
+
+struct FCurveAtlasColorAdjustments
+{
+    uint8 bChromaKeyTexture;
+    float AdjustBrightness;
+    float AdjustBrightnessCurve;
+    float AdjustVibrance;
+    float AdjustSaturation;
+    float AdjustRGBCurve;
+    float AdjustHue;
+    float AdjustMinAlpha;
+    float AdjustMaxAlpha;
+
+};
+
+struct FCurveEdEntry
+{
+    class UObject* CurveObject;
+    FColor CurveColor;
+    FString CurveName;
+    int32 bHideCurve;
+    int32 bColorCurve;
+    int32 bFloatingPointColorCurve;
+    int32 bClamp;
+    float ClampLow;
+    float ClampHigh;
+
+};
+
+struct FCurveEdTab
+{
+    FString TabName;
+    TArray<FCurveEdEntry> Curves;
+    float ViewStartInput;
+    float ViewEndInput;
+    float ViewStartOutput;
+    float ViewEndOutput;
+
+};
+
+struct FCurveMetaData
 {
 };
 
-class UEngineSubsystem : public UDynamicSubsystem
+struct FCurveTableRowHandle
 {
+    class UCurveTable* CurveTable;
+    FName RowName;
+
 };
 
-class UStereoLayerShape : public UObject
+struct FCurveTrack
 {
+    FName CurveName;
+    TArray<float> CurveWeights;
+
 };
 
-class UStereoLayerShapeQuad : public UStereoLayerShape
+struct FCustomAttribute
 {
-};
-
-class UMeshComponent : public UPrimitiveComponent
-{
-    TArray<class UMaterialInterface*> OverrideMaterials;
-    uint8 bEnableMaterialParameterCaching;
-
-    void SetVectorParameterValueOnMaterials(const FName ParameterName, const FVector ParameterValue);
-    void SetScalarParameterValueOnMaterials(const FName ParameterName, const float ParameterValue);
-    void PrestreamTextures(float Seconds, bool bPrioritizeCharacterTextures, int32 CinematicTextureGroups);
-    bool IsMaterialSlotNameValid(FName MaterialSlotName);
-    TArray<FName> GetMaterialSlotNames();
-    TArray<class UMaterialInterface*> GetMaterials();
-    int32 GetMaterialIndex(FName MaterialSlotName);
-};
-
-struct FKShapeElem
-{
-    float RestOffset;
     FName Name;
-    uint8 bContributeToMass;
-    TEnumAsByte<ECollisionEnabled::Type> CollisionEnabled;
+    int32 VariantType;
+    TArray<float> Times;
+
+};
+
+struct FCustomAttributePerBoneData
+{
+    int32 BoneTreeIndex;
+    TArray<FCustomAttribute> Attributes;
+
+};
+
+struct FCustomAttributeSetting
+{
+    FString Name;
+    FString Meaning;
+
+};
+
+struct FCustomChannelSetup
+{
+    TEnumAsByte<ECollisionChannel> Channel;
+    TEnumAsByte<ECollisionResponse> DefaultResponse;
+    bool bTraceType;
+    bool bStaticObject;
+    FName Name;
+
+};
+
+struct FCustomDefine
+{
+    FString DefineName;
+    FString DefineValue;
+
+};
+
+struct FCustomInput
+{
+    FName InputName;
+    FExpressionInput Input;
+
+};
+
+struct FCustomOutput
+{
+    FName OutputName;
+    TEnumAsByte<ECustomMaterialOutputType> OutputType;
+
+};
+
+struct FCustomPrimitiveData
+{
+    TArray<float> Data;
+
+};
+
+struct FCustomProfile
+{
+    FName Name;
+    TArray<FResponseChannel> CustomResponses;
+
+};
+
+struct FDamageEvent
+{
+    TSubclassOf<class UDamageType> DamageTypeClass;
+
+};
+
+struct FDataDrivenConsoleVariable
+{
+    FDataDrivenCVarType Type;
+    FString Name;
+    FString ToolTip;
+    float DefaultValueFloat;
+    int32 DefaultValueInt;
+    bool DefaultValueBool;
+
+};
+
+struct FDataTableCategoryHandle
+{
+    class UDataTable* DataTable;
+    FName ColumnName;
+    FName RowContents;
+
+};
+
+struct FDataTableRowHandle
+{
+    class UDataTable* DataTable;
+    FName RowName;
+
+};
+
+struct FDebugCameraControllerSettingsViewModeIndex
+{
+    TEnumAsByte<EViewModeIndex> ViewModeIndex;
+
+};
+
+struct FDebugDisplayProperty
+{
+    class UObject* obj;
+    UClass* WithinClass;
+
+};
+
+struct FDebugFloatHistory
+{
+    TArray<float> Samples;
+    float MaxSamples;
+    float MinValue;
+    float MaxValue;
+    bool bAutoAdjustMinMax;
+
+};
+
+struct FDebugTextInfo
+{
+    class AActor* SrcActor;
+    FVector SrcActorOffset;
+    FVector SrcActorDesiredOffset;
+    FString DebugText;
+    float TimeRemaining;
+    float Duration;
+    FColor TextColor;
+    uint8 bAbsoluteLocation;
+    uint8 bKeepAttachedToActor;
+    uint8 bDrawShadow;
+    FVector OrigActorLocation;
+    class UFont* Font;
+    float FontScale;
+
+};
+
+struct FDebuggingInfoForSingleFunction
+{
+};
+
+struct FDefaultAudioBusSettings
+{
+    FSoftObjectPath AudioBus;
+
+};
+
+struct FDefault__UserDefinedStruct
+{
+};
+
+struct FDelegateArray
+{
+    TArray<FDelegateArrayDelegates> Delegates;
+
+};
+
+struct FDepthFieldGlowInfo
+{
+    uint8 bEnableGlow;
+    FLinearColor GlowColor;
+    FVector2D GlowOuterRadius;
+    FVector2D GlowInnerRadius;
+
+};
+
+struct FDialogueContext
+{
+    class UDialogueVoice* Speaker;
+    TArray<class UDialogueVoice*> Targets;
+
+};
+
+struct FDialogueContextMapping
+{
+    FDialogueContext Context;
+    class USoundWave* SoundWave;
+    FString LocalizationKeyFormat;
+    class UDialogueSoundWaveProxy* Proxy;
+
+};
+
+struct FDialogueWaveParameter
+{
+    class UDialogueWave* DialogueWave;
+    FDialogueContext Context;
+
+};
+
+struct FDirectorTrackCut
+{
+    float Time;
+    float TransitionTime;
+    FName TargetCamGroup;
+    int32 ShotNumber;
+
+};
+
+struct FDirectoryPath
+{
+    FString Path;
+
+};
+
+struct FDistanceDatum
+{
+    float FadeInDistanceStart;
+    float FadeInDistanceEnd;
+    float FadeOutDistanceStart;
+    float FadeOutDistanceEnd;
+    float Volume;
+
+};
+
+struct FDistributionLookupTable
+{
+    float TimeScale;
+    float TimeBias;
+    TArray<float> Values;
+    uint8 Op;
+    uint8 EntryCount;
+    uint8 EntryStride;
+    uint8 SubEntryStride;
+    uint8 LockFlag;
+
+};
+
+struct FDrawToRenderTargetContext
+{
+    class UTextureRenderTarget2D* RenderTarget;
+
+};
+
+struct FDropNoteInfo
+{
+    FVector Location;
+    FRotator Rotation;
+    FString Comment;
+
+};
+
+struct FDummySpacerCameraTypes
+{
+};
+
+struct FDynamicTextureInstance : public FStreamableTextureInstance
+{
+    class UTexture2D* Texture;
+    bool bAttached;
+    float OriginalRadius;
+
+};
+
+struct FEdGraphPinReference
+{
+    TWeakObjectPtr<class UEdGraphNode> OwningNode;
+    FGuid PinId;
+
+};
+
+struct FEdGraphPinType
+{
+    FName PinCategory;
+    FName PinSubCategory;
+    TWeakObjectPtr<class UObject> PinSubCategoryObject;
+    FSimpleMemberReference PinSubCategoryMemberReference;
+    FEdGraphTerminalType PinValueType;
+    EPinContainerType ContainerType;
+    uint8 bIsArray;
+    uint8 bIsReference;
+    uint8 bIsConst;
+    uint8 bIsWeakPointer;
+    uint8 bIsUObjectWrapper;
+
+};
+
+struct FEdGraphSchemaAction
+{
+    FText MenuDescription;
+    FText TooltipDescription;
+    FText Category;
+    FText Keywords;
+    int32 Grouping;
+    int32 SectionID;
+    TArray<FString> MenuDescriptionArray;
+    TArray<FString> FullSearchTitlesArray;
+    TArray<FString> FullSearchKeywordsArray;
+    TArray<FString> FullSearchCategoryArray;
+    TArray<FString> LocalizedMenuDescriptionArray;
+    TArray<FString> LocalizedFullSearchTitlesArray;
+    TArray<FString> LocalizedFullSearchKeywordsArray;
+    TArray<FString> LocalizedFullSearchCategoryArray;
+    FString SearchText;
+
+};
+
+struct FEdGraphSchemaAction_NewNode : public FEdGraphSchemaAction
+{
+    class UEdGraphNode* NodeTemplate;
+
+};
+
+struct FEdGraphTerminalType
+{
+    FName TerminalCategory;
+    FName TerminalSubCategory;
+    TWeakObjectPtr<class UObject> TerminalSubCategoryObject;
+    bool bTerminalIsConst;
+    bool bTerminalIsWeakPointer;
+    bool bTerminalIsUObjectWrapper;
+
+};
+
+struct FEditedDocumentInfo
+{
+    FSoftObjectPath EditedObjectPath;
+    FVector2D SavedViewOffset;
+    float SavedZoomAmount;
+    class UObject* EditedObject;
+
+};
+
+struct FEditorElement
+{
+    int32 Indices;
+    float Weights;
+
+};
+
+struct FEditorImportExportTestDefinition
+{
+    FFilePath ImportFilePath;
+    FString ExportFileExtension;
+    bool bSkipExport;
+    TArray<FImportFactorySettingValues> FactorySettings;
+
+};
+
+struct FEditorImportWorkflowDefinition
+{
+    FFilePath ImportFilePath;
+    TArray<FImportFactorySettingValues> FactorySettings;
+
+};
+
+struct FEditorMapPerformanceTestDefinition
+{
+    FSoftObjectPath PerformanceTestmap;
+    int32 TestTimer;
+
+};
+
+struct FEmitterDynamicParameter
+{
+    FName ParamName;
+    uint8 bUseEmitterTime;
+    uint8 bSpawnTimeOnly;
+    TEnumAsByte<EEmitterDynamicParameterValue> ValueMethod;
+    uint8 bScaleVelocityByParamValue;
+    FRawDistributionFloat ParamValue;
+
+};
+
+struct FEndPhysicsTickFunction : public FTickFunction
+{
+};
+
+struct FEngineShowFlagsSetting
+{
+    FString ShowFlagName;
+    bool Enabled;
+
+};
+
+struct FEquirectProps
+{
+    FBox2D LeftUVRect;
+    FBox2D RightUVRect;
+    FVector2D LeftScale;
+    FVector2D RightScale;
+    FVector2D LeftBias;
+    FVector2D RightBias;
+
+};
+
+struct FEventGraphFastCallPair
+{
+    class UFunction* FunctionToPatch;
+    int32 EventGraphCallOffset;
+
+};
+
+struct FEventTrackKey
+{
+    float Time;
+    FName EventName;
+
+};
+
+struct FExponentialHeightFogData
+{
+    float FogDensity;
+    float FogHeightFalloff;
+    float FogHeightOffset;
+
+};
+
+struct FExposedValueCopyRecord
+{
+    int32 CopyIndex;
+    EPostCopyOperation PostCopyOperation;
+
+};
+
+struct FExposedValueHandler
+{
+    FName BoundFunction;
+    TArray<FExposedValueCopyRecord> CopyRecords;
+    class UFunction* Function;
+    TFieldPath<FStructProperty> ValueHandlerNodeProperty;
+
+};
+
+struct FExposureSettings
+{
+    float FixedEV100;
+    bool bFixed;
+
+};
+
+struct FExpressionInput
+{
+    int32 OutputIndex;
+    FName InputName;
+    FName ExpressionName;
+
+};
+
+struct FExpressionOutput
+{
+    FName OutputName;
+
+};
+
+struct FExternalToolDefinition
+{
+    FString ToolName;
+    FFilePath ExecutablePath;
+    FString CommandLineOptions;
+    FDirectoryPath WorkingDirectory;
+    FString ScriptExtension;
+    FDirectoryPath ScriptDirectory;
+
+};
+
+struct FFastArraySerializer
+{
+    int32 ArrayReplicationKey;
+    EFastArraySerializerDeltaFlags DeltaFlags;
+
+};
+
+struct FFastArraySerializerItem
+{
+    int32 ReplicationID;
+    int32 ReplicationKey;
+    int32 MostRecentArrayReplicationKey;
+
+};
+
+struct FFilePath
+{
+    FString FilePath;
+
+};
+
+struct FFilmStockSettings
+{
+    float Slope;
+    float Toe;
+    float Shoulder;
+    float BlackClip;
+    float WhiteClip;
+
+};
+
+struct FFindFloorResult
+{
+    uint8 bBlockingHit;
+    uint8 bWalkableFloor;
+    uint8 bLineTrace;
+    float FloorDist;
+    float LineDist;
+    FHitResult HitResult;
+
+};
+
+struct FFloatCurve : public FAnimCurveBase
+{
+    FRichCurve FloatCurve;
+
+};
+
+struct FFloatDistribution
+{
+    FDistributionLookupTable Table;
+
+};
+
+struct FFloatRK4SpringInterpolator
+{
+    float StiffnessConstant;
+    float DampeningRatio;
+
+};
+
+struct FFloatSpringState
+{
+};
+
+struct FFontCharacter
+{
+    int32 StartU;
+    int32 StartV;
+    int32 USize;
+    int32 VSize;
+    uint8 TextureIndex;
+    int32 VerticalOffset;
+
+};
+
+struct FFontImportOptionsData
+{
+    FString FontName;
+    float Height;
+    uint8 bEnableAntialiasing;
+    uint8 bEnableBold;
+    uint8 bEnableItalic;
+    uint8 bEnableUnderline;
+    uint8 bAlphaOnly;
+    TEnumAsByte<EFontImportCharacterSet> CharacterSet;
+    FString Chars;
+    FString UnicodeRange;
+    FString CharsFilePath;
+    FString CharsFileWildcard;
+    uint8 bCreatePrintableOnly;
+    uint8 bIncludeASCIIRange;
+    FLinearColor ForegroundColor;
+    uint8 bEnableDropShadow;
+    int32 TexturePageWidth;
+    int32 TexturePageMaxHeight;
+    int32 XPadding;
+    int32 YPadding;
+    int32 ExtendBoxTop;
+    int32 ExtendBoxBottom;
+    int32 ExtendBoxRight;
+    int32 ExtendBoxLeft;
+    uint8 bEnableLegacyMode;
+    int32 Kerning;
+    uint8 bUseDistanceFieldAlpha;
+    int32 DistanceFieldScaleFactor;
+    float DistanceFieldScanRadiusScale;
+
+};
+
+struct FFontParameterValue
+{
+    FMaterialParameterInfo ParameterInfo;
+    class UFont* FontValue;
+    int32 FontPage;
+    FGuid ExpressionGUID;
+
+};
+
+struct FFontRenderInfo
+{
+    uint8 bClipText;
+    uint8 bEnableShadow;
+    FDepthFieldGlowInfo GlowInfo;
+
+};
+
+struct FForceFeedbackAttenuationSettings : public FBaseAttenuationSettings
+{
+};
+
+struct FForceFeedbackChannelDetails
+{
+    uint8 bAffectsLeftLarge;
+    uint8 bAffectsLeftSmall;
+    uint8 bAffectsRightLarge;
+    uint8 bAffectsRightSmall;
+    FRuntimeFloatCurve Curve;
+
+};
+
+struct FForceFeedbackParameters
+{
+    FName Tag;
+    bool bLooping;
+    bool bIgnoreTimeDilation;
+    bool bPlayWhilePaused;
+
+};
+
+struct FFormatArgumentData
+{
+    FString ArgumentName;
+    TEnumAsByte<EFormatArgumentType::Type> ArgumentValueType;
+    FText ArgumentValue;
+    int32 ArgumentValueInt;
+    float ArgumentValueFloat;
+    ETextGender ArgumentValueGender;
+
+};
+
+struct FFractureEffect
+{
+    class UParticleSystem* ParticleSystem;
+    class USoundBase* Sound;
+
+};
+
+struct FFreezablePerPlatformInt
+{
+};
+
+struct FFullyLoadedPackagesInfo
+{
+    TEnumAsByte<EFullyLoadPackageType> FullyLoadType;
+    FString Tag;
+    TArray<FName> PackagesToLoad;
+    TArray<class UObject*> LoadedObjects;
+
+};
+
+struct FFunctionExpressionInput
+{
+    class UMaterialExpressionFunctionInput* ExpressionInput;
+    FGuid ExpressionInputId;
+    FExpressionInput Input;
+
+};
+
+struct FFunctionExpressionOutput
+{
+    class UMaterialExpressionFunctionOutput* ExpressionOutput;
+    FGuid ExpressionOutputId;
+    FExpressionOutput Output;
+
+};
+
+struct FGPUSpriteEmitterInfo
+{
+    class UParticleModuleRequired* RequiredModule;
+    class UParticleModuleSpawn* SpawnModule;
+    class UParticleModuleSpawnPerUnit* SpawnPerUnitModule;
+    TArray<class UParticleModule*> SpawnModules;
+    FGPUSpriteLocalVectorFieldInfo LocalVectorField;
+    FFloatDistribution VectorFieldScale;
+    FFloatDistribution DragCoefficient;
+    FFloatDistribution PointAttractorStrength;
+    FFloatDistribution Resilience;
+    FVector ConstantAcceleration;
+    FVector PointAttractorPosition;
+    float PointAttractorRadiusSq;
+    FVector OrbitOffsetBase;
+    FVector OrbitOffsetRange;
+    FVector2D InvMaxSize;
+    float InvRotationRateScale;
+    float MaxLifetime;
+    int32 MaxParticleCount;
+    TEnumAsByte<EParticleScreenAlignment> ScreenAlignment;
+    TEnumAsByte<EParticleAxisLock> LockAxisFlag;
+    uint8 bEnableCollision;
+    TEnumAsByte<EParticleCollisionMode::Type> CollisionMode;
+    uint8 bRemoveHMDRoll;
+    float MinFacingCameraBlendDistance;
+    float MaxFacingCameraBlendDistance;
+    FRawDistributionVector DynamicColor;
+    FRawDistributionFloat DynamicAlpha;
+    FRawDistributionVector DynamicColorScale;
+    FRawDistributionFloat DynamicAlphaScale;
+
+};
+
+struct FGPUSpriteLocalVectorFieldInfo
+{
+    class UVectorField* Field;
+    FTransform Transform;
+    FRotator MinInitialRotation;
+    FRotator MaxInitialRotation;
+    FRotator RotationRate;
+    float Intensity;
+    float Tightness;
+    uint8 bIgnoreComponentTransform;
+    uint8 bTileX;
+    uint8 bTileY;
+    uint8 bTileZ;
+    uint8 bUseFixDT;
+
+};
+
+struct FGPUSpriteResourceData
+{
+    TArray<FColor> QuantizedColorSamples;
+    TArray<FColor> QuantizedMiscSamples;
+    TArray<FColor> QuantizedSimulationAttrSamples;
+    FVector4 ColorScale;
+    FVector4 ColorBias;
+    FVector4 MiscScale;
+    FVector4 MiscBias;
+    FVector4 SimulationAttrCurveScale;
+    FVector4 SimulationAttrCurveBias;
+    FVector4 SubImageSize;
+    FVector4 SizeBySpeed;
+    FVector ConstantAcceleration;
+    FVector OrbitOffsetBase;
+    FVector OrbitOffsetRange;
+    FVector OrbitFrequencyBase;
+    FVector OrbitFrequencyRange;
+    FVector OrbitPhaseBase;
+    FVector OrbitPhaseRange;
+    float GlobalVectorFieldScale;
+    float GlobalVectorFieldTightness;
+    float PerParticleVectorFieldScale;
+    float PerParticleVectorFieldBias;
+    float DragCoefficientScale;
+    float DragCoefficientBias;
+    float ResilienceScale;
+    float ResilienceBias;
+    float CollisionRadiusScale;
+    float CollisionRadiusBias;
+    float CollisionTimeBias;
+    float CollisionRandomSpread;
+    float CollisionRandomDistribution;
+    float OneMinusFriction;
+    float RotationRateScale;
+    float CameraMotionBlurAmount;
+    TEnumAsByte<EParticleScreenAlignment> ScreenAlignment;
+    TEnumAsByte<EParticleAxisLock> LockAxisFlag;
+    FVector2D PivotOffset;
+    uint8 bRemoveHMDRoll;
+    float MinFacingCameraBlendDistance;
+    float MaxFacingCameraBlendDistance;
+
+};
+
+struct FGameNameRedirect
+{
+    FName OldGameName;
+    FName NewGameName;
+
+};
+
+struct FGaussianSumBloomSettings
+{
+    float Intensity;
+    float Threshold;
+    float SizeScale;
+    float Filter1Size;
+    float Filter2Size;
+    float Filter3Size;
+    float Filter4Size;
+    float Filter5Size;
+    float Filter6Size;
+    FLinearColor Filter1Tint;
+    FLinearColor Filter2Tint;
+    FLinearColor Filter3Tint;
+    FLinearColor Filter4Tint;
+    FLinearColor Filter5Tint;
+    FLinearColor Filter6Tint;
+
+};
+
+struct FGenericStruct
+{
+    int32 Data;
+
+};
+
+struct FGeomSelection
+{
+    int32 Type;
+    int32 Index;
+    int32 SelectionIndex;
+
+};
+
+struct FGraphAssetPlayerInformation
+{
+    TArray<int32> PlayerNodeIndices;
+
+};
+
+struct FGraphReference
+{
+    class UEdGraph* MacroGraph;
+    class UBlueprint* GraphBlueprint;
+    FGuid GraphGuid;
+
+};
+
+struct FGridBlendSample
+{
+    FEditorElement GridElement;
+    float BlendWeight;
+
+};
+
+struct FHLODISMComponentDesc
+{
+    class UStaticMesh* StaticMesh;
+    class UMaterialInterface* Material;
+    TArray<FTransform> Instances;
+
+};
+
+struct FHLODInstancingKey
+{
+    class UStaticMesh* StaticMesh;
+    class UMaterialInterface* Material;
+
+};
+
+struct FHLODProxyMesh
+{
+    TLazyObjectPtr<class ALODActor> LODActor;
+    class UStaticMesh* StaticMesh;
+    FName Key;
+
+};
+
+struct FHapticFeedbackDetails_Curve
+{
+    FRuntimeFloatCurve Frequency;
+    FRuntimeFloatCurve Amplitude;
+
+};
+
+struct FHardwareCursorReference
+{
+    FName CursorPath;
+    FVector2D HotSpot;
+
+};
+
+struct FHierarchicalSimplification
+{
+    float TransitionScreenSize;
+    float OverrideDrawDistance;
+    uint8 bUseOverrideDrawDistance;
+    uint8 bAllowSpecificExclusion;
+    uint8 bSimplifyMesh;
+    uint8 bOnlyGenerateClustersForVolumes;
+    uint8 bReusePreviousLevelClusters;
+    FMeshProxySettings ProxySetting;
+    FMeshMergingSettings MergeSetting;
+    float DesiredBoundRadius;
+    float DesiredFillingPercentage;
+    int32 MinNumberOfActorsToBuild;
+
+};
+
+struct FHitResult
+{
+    int32 FaceIndex;
+    float Time;
+    float Distance;
+    FVector_NetQuantize Location;
+    FVector_NetQuantize ImpactPoint;
+    FVector_NetQuantizeNormal Normal;
+    FVector_NetQuantizeNormal ImpactNormal;
+    FVector_NetQuantize TraceStart;
+    FVector_NetQuantize TraceEnd;
+    float PenetrationDepth;
+    int32 Item;
+    uint8 ElementIndex;
+    uint8 bBlockingHit;
+    uint8 bStartPenetrating;
+    TWeakObjectPtr<class UPhysicalMaterial> PhysMaterial;
+    TWeakObjectPtr<class AActor> Actor;
+    TWeakObjectPtr<class UPrimitiveComponent> Component;
+    FName BoneName;
+    FName MyBoneName;
+
+};
+
+struct FImportFactorySettingValues
+{
+    FString SettingName;
+    FString Value;
+
+};
+
+struct FImportanceTexture
+{
+    FIntPoint Size;
+    int32 NumMips;
+    TArray<float> MarginalCDF;
+    TArray<float> ConditionalCDF;
+    TArray<FColor> TextureData;
+    TWeakObjectPtr<class UTexture2D> Texture;
+    TEnumAsByte<EImportanceWeight::Type> Weighting;
+
+};
+
+struct FIndexedCurve
+{
+    FKeyHandleMap KeyHandlesToIndices;
+
+};
+
+struct FInertializationBoneDiff
+{
+};
+
+struct FInertializationCurveDiff
+{
+};
+
+struct FInertializationPose
+{
+};
+
+struct FInertializationPoseDiff
+{
+};
+
+struct FInputActionKeyMapping
+{
+    FName ActionName;
+    uint8 bShift;
+    uint8 bCtrl;
+    uint8 bAlt;
+    uint8 bCmd;
+    FKey Key;
+
+};
+
+struct FInputActionSpeechMapping
+{
+    FName ActionName;
+    FName SpeechKeyword;
+
+};
+
+struct FInputAlphaBoolBlend
+{
+    float BlendInTime;
+    float BlendOutTime;
+    EAlphaBlendOption BlendOption;
+    bool bInitialized;
+    class UCurveFloat* CustomCurve;
+    FAlphaBlend AlphaBlend;
+
+};
+
+struct FInputAxisConfigEntry
+{
+    FName AxisKeyName;
+    FInputAxisProperties AxisProperties;
+
+};
+
+struct FInputAxisKeyMapping
+{
+    FName AxisName;
+    float Scale;
+    FKey Key;
+
+};
+
+struct FInputAxisProperties
+{
+    float DeadZone;
+    float Sensitivity;
+    float Exponent;
+    uint8 bInvert;
+
+};
+
+struct FInputBlendPose
+{
+    TArray<FBranchFilter> BranchFilters;
+
+};
+
+struct FInputRange
+{
+    float Min;
+    float Max;
+
+};
+
+struct FInputScaleBias
+{
+    float Scale;
+    float Bias;
+
+};
+
+struct FInputScaleBiasClamp
+{
+    bool bMapRange;
+    bool bClampResult;
+    bool bInterpResult;
+    FInputRange InRange;
+    FInputRange OutRange;
+    float Scale;
+    float Bias;
+    float ClampMin;
+    float ClampMax;
+    float InterpSpeedIncreasing;
+    float InterpSpeedDecreasing;
+
+};
+
+struct FInstancedStaticMeshComponentInstanceData : public FSceneComponentInstanceData
+{
+    class UStaticMesh* StaticMesh;
+    FInstancedStaticMeshLightMapInstanceData CachedStaticLighting;
+    TArray<FInstancedStaticMeshInstanceData> PerInstanceSMData;
+    TArray<float> PerInstanceSMCustomData;
+    int32 InstancingRandomSeed;
+
+};
+
+struct FInstancedStaticMeshInstanceData
+{
+    FMatrix Transform;
+
+};
+
+struct FInstancedStaticMeshLightMapInstanceData
+{
+    FTransform Transform;
+    TArray<FGuid> MapBuildDataIds;
+
+};
+
+struct FInstancedStaticMeshMappingInfo
+{
+};
+
+struct FIntegralCurve : public FIndexedCurve
+{
+    TArray<FIntegralKey> Keys;
+    int32 DefaultValue;
+    bool bUseDefaultValueBeforeFirstKey;
+
+};
+
+struct FIntegralKey
+{
+    float Time;
+    int32 Value;
+
+};
+
+struct FInteriorSettings
+{
+    bool bIsWorldSettings;
+    float ExteriorVolume;
+    float ExteriorTime;
+    float ExteriorLPF;
+    float ExteriorLPFTime;
+    float InteriorVolume;
+    float InteriorTime;
+    float InteriorLPF;
+    float InteriorLPFTime;
+
+};
+
+struct FInterpControlPoint
+{
+    FVector PositionControlPoint;
+    bool bPositionIsRelative;
+
+};
+
+struct FInterpEdSelKey
+{
+    class UInterpGroup* Group;
+    class UInterpTrack* Track;
+    int32 KeyIndex;
+    float UnsnappedPosition;
+
+};
+
+struct FInterpGroupActorInfo
+{
+    FName ObjectName;
+    TArray<class AActor*> Actors;
+
+};
+
+struct FInterpLookupPoint
+{
+    FName GroupName;
+    float Time;
+
+};
+
+struct FInterpLookupTrack
+{
+    TArray<FInterpLookupPoint> Points;
+
+};
+
+struct FInterpolationParameter
+{
+    float InterpolationTime;
+    TEnumAsByte<EFilterInterpolationType> InterpolationType;
+
+};
+
+struct FKAggregateGeom
+{
+    TArray<FKSphereElem> SphereElems;
+    TArray<FKBoxElem> BoxElems;
+    TArray<FKSphylElem> SphylElems;
+    TArray<FKConvexElem> ConvexElems;
+    TArray<FKTaperedCapsuleElem> TaperedCapsuleElems;
+
+};
+
+struct FKBoxElem : public FKShapeElem
+{
+    FVector Center;
+    FRotator Rotation;
+    float X;
+    float Y;
+    float Z;
 
 };
 
@@ -1258,6 +3006,78 @@ struct FKConvexElem : public FKShapeElem
 
 };
 
+struct FKShapeElem
+{
+    float RestOffset;
+    FName Name;
+    uint8 bContributeToMass;
+    TEnumAsByte<ECollisionEnabled::Type> CollisionEnabled;
+
+};
+
+struct FKSphereElem : public FKShapeElem
+{
+    FVector Center;
+    float Radius;
+
+};
+
+struct FKSphylElem : public FKShapeElem
+{
+    FVector Center;
+    FRotator Rotation;
+    float Radius;
+    float Length;
+
+};
+
+struct FKTaperedCapsuleElem : public FKShapeElem
+{
+    FVector Center;
+    FRotator Rotation;
+    float Radius0;
+    float Radius1;
+    float Length;
+
+};
+
+struct FKeyBind
+{
+    FKey Key;
+    FString Command;
+    uint8 Control;
+    uint8 Shift;
+    uint8 Alt;
+    uint8 Cmd;
+    uint8 bIgnoreCtrl;
+    uint8 bIgnoreShift;
+    uint8 bIgnoreAlt;
+    uint8 bIgnoreCmd;
+    uint8 bDisabled;
+
+};
+
+struct FKeyHandleLookupTable
+{
+};
+
+struct FKeyHandleMap
+{
+};
+
+struct FLODMappingData
+{
+    TArray<int32> Mapping;
+    TArray<int32> InverseMapping;
+
+};
+
+struct FLODSoloTrack
+{
+    TArray<uint8> SoloEnableSetting;
+
+};
+
 struct FLatentActionInfo
 {
     int32 Linkage;
@@ -1267,31 +3087,1211 @@ struct FLatentActionInfo
 
 };
 
-class UCameraShakeBase : public UObject
-{
-    bool bSingleInstance;
-    float ShakeScale;
-    class UCameraShakePattern* RootShakePattern;
-    class APlayerCameraManager* CameraManager;
-
-    void SetRootShakePattern(class UCameraShakePattern* InPattern);
-    class UCameraShakePattern* GetRootShakePattern();
-};
-
-class UCameraShakePattern : public UObject
+struct FLatentActionManager
 {
 };
 
-struct FWeightedBlendable
+struct FLaunchOnTestSettings
 {
-    float Weight;
-    class UObject* Object;
+    FFilePath LaunchOnTestmap;
+    FString DeviceID;
 
 };
 
-struct FWeightedBlendables
+struct FLayerActorStats
 {
-    TArray<FWeightedBlendable> Array;
+    UClass* Type;
+    int32 Total;
+
+};
+
+struct FLensBloomSettings
+{
+    FGaussianSumBloomSettings GaussianSum;
+    FConvolutionBloomSettings Convolution;
+    TEnumAsByte<EBloomMethod> Method;
+
+};
+
+struct FLensImperfectionSettings
+{
+    class UTexture* DirtMask;
+    float DirtMaskIntensity;
+    FLinearColor DirtMaskTint;
+
+};
+
+struct FLensSettings
+{
+    FLensBloomSettings Bloom;
+    FLensImperfectionSettings Imperfections;
+    float ChromaticAberration;
+
+};
+
+struct FLevelCollection
+{
+    class AGameStateBase* GameState;
+    class UNetDriver* NetDriver;
+    class UDemoNetDriver* DemoNetDriver;
+    class ULevel* PersistentLevel;
+    TSet<ULevel*> Levels;
+
+};
+
+struct FLevelNameAndTime
+{
+    FString LevelName;
+    uint32 LevelChangeTimeInMS;
+
+};
+
+struct FLevelSimplificationDetails
+{
+    bool bCreatePackagePerAsset;
+    float DetailsPercentage;
+    FMaterialProxySettings StaticMeshMaterialSettings;
+    bool bOverrideLandscapeExportLOD;
+    int32 LandscapeExportLOD;
+    FMaterialProxySettings LandscapeMaterialSettings;
+    bool bBakeFoliageToLandscape;
+    bool bBakeGrassToLandscape;
+    bool bGenerateMeshNormalMap;
+    bool bGenerateMeshMetallicMap;
+    bool bGenerateMeshRoughnessMap;
+    bool bGenerateMeshSpecularMap;
+    bool bGenerateLandscapeNormalMap;
+    bool bGenerateLandscapeMetallicMap;
+    bool bGenerateLandscapeRoughnessMap;
+    bool bGenerateLandscapeSpecularMap;
+
+};
+
+struct FLevelStreamingStatus
+{
+    FName PackageName;
+    uint8 bShouldBeLoaded;
+    uint8 bShouldBeVisible;
+    uint32 LODIndex;
+
+};
+
+struct FLevelViewportInfo
+{
+    FVector CamPosition;
+    FRotator CamRotation;
+    float CamOrthoZoom;
+    bool CamUpdated;
+
+};
+
+struct FLightingChannels
+{
+    uint8 bChannel0;
+    uint8 bChannel1;
+    uint8 bChannel2;
+
+};
+
+struct FLightmassDebugOptions
+{
+    uint8 bDebugMode;
+    uint8 bStatsEnabled;
+    uint8 bGatherBSPSurfacesAcrossComponents;
+    float CoplanarTolerance;
+    uint8 bUseImmediateImport;
+    uint8 bImmediateProcessMappings;
+    uint8 bSortMappings;
+    uint8 bDumpBinaryFiles;
+    uint8 bDebugMaterials;
+    uint8 bPadMappings;
+    uint8 bDebugPaddings;
+    uint8 bOnlyCalcDebugTexelMappings;
+    uint8 bUseRandomColors;
+    uint8 bColorBordersGreen;
+    uint8 bColorByExecutionTime;
+    float ExecutionTimeDivisor;
+
+};
+
+struct FLightmassDirectionalLightSettings : public FLightmassLightSettings
+{
+    float LightSourceAngle;
+
+};
+
+struct FLightmassLightSettings
+{
+    float IndirectLightingSaturation;
+    float ShadowExponent;
+    bool bUseAreaShadowsForStationaryLight;
+
+};
+
+struct FLightmassMaterialInterfaceSettings
+{
+    float EmissiveBoost;
+    float DiffuseBoost;
+    float ExportResolutionScale;
+    uint8 bCastShadowAsMasked;
+    uint8 bOverrideCastShadowAsMasked;
+    uint8 bOverrideEmissiveBoost;
+    uint8 bOverrideDiffuseBoost;
+    uint8 bOverrideExportResolutionScale;
+
+};
+
+struct FLightmassPointLightSettings : public FLightmassLightSettings
+{
+};
+
+struct FLightmassPrimitiveSettings
+{
+    uint8 bUseTwoSidedLighting;
+    uint8 bShadowIndirectOnly;
+    uint8 bUseEmissiveForStaticLighting;
+    uint8 bUseVertexNormalForHemisphereGather;
+    float EmissiveLightFalloffExponent;
+    float EmissiveLightExplicitInfluenceRadius;
+    float EmissiveBoost;
+    float DiffuseBoost;
+    float FullyOccludedSamplesFraction;
+
+};
+
+struct FLightmassWorldInfoSettings
+{
+    float StaticLightingLevelScale;
+    int32 NumIndirectLightingBounces;
+    int32 NumSkyLightingBounces;
+    float IndirectLightingQuality;
+    float IndirectLightingSmoothness;
+    FColor EnvironmentColor;
+    float EnvironmentIntensity;
+    float EmissiveBoost;
+    float DiffuseBoost;
+    TEnumAsByte<EVolumeLightingMethod> VolumeLightingMethod;
+    uint8 bUseAmbientOcclusion;
+    uint8 bGenerateAmbientOcclusionMaterialMask;
+    uint8 bVisualizeMaterialDiffuse;
+    uint8 bVisualizeAmbientOcclusion;
+    uint8 bCompressLightmaps;
+    float VolumetricLightmapDetailCellSize;
+    float VolumetricLightmapMaximumBrickMemoryMb;
+    float VolumetricLightmapSphericalHarmonicSmoothing;
+    float VolumeLightSamplePlacementScale;
+    float DirectIlluminationOcclusionFraction;
+    float IndirectIlluminationOcclusionFraction;
+    float OcclusionExponent;
+    float FullyOccludedSamplesFraction;
+    float MaxOcclusionDistance;
+
+};
+
+struct FLinearConstraint : public FConstraintBaseParams
+{
+    float Limit;
+    TEnumAsByte<ELinearConstraintMotion> XMotion;
+    TEnumAsByte<ELinearConstraintMotion> YMotion;
+    TEnumAsByte<ELinearConstraintMotion> ZMotion;
+
+};
+
+struct FLinearDriveConstraint
+{
+    FVector PositionTarget;
+    FVector VelocityTarget;
+    FConstraintDrive XDrive;
+    FConstraintDrive YDrive;
+    FConstraintDrive ZDrive;
+    uint8 bEnablePositionDrive;
+
+};
+
+struct FLocalSpacePose
+{
+    TArray<FTransform> Transforms;
+    TArray<FName> Names;
+
+};
+
+struct FLocationBoneSocketInfo
+{
+    FName BoneSocketName;
+    FVector Offset;
+
+};
+
+struct FMTDResult
+{
+    FVector Direction;
+    float Distance;
+
+};
+
+struct FMarkerSyncAnimPosition
+{
+    FName PreviousMarkerName;
+    FName NextMarkerName;
+    float PositionBetweenMarkers;
+
+};
+
+struct FMarkerSyncData
+{
+    TArray<FAnimSyncMarker> AuthoredSyncMarkers;
+
+};
+
+struct FMaterialAttributesInput : public FExpressionInput
+{
+    int32 PropertyConnectedBitmask;
+
+};
+
+struct FMaterialCachedExpressionData
+{
+    FMaterialCachedParameters Parameters;
+    TArray<class UObject*> ReferencedTextures;
+    TArray<FMaterialFunctionInfo> FunctionInfos;
+    TArray<FMaterialParameterCollectionInfo> ParameterCollectionInfos;
+    TArray<class UMaterialFunctionInterface*> DefaultLayers;
+    TArray<class UMaterialFunctionInterface*> DefaultLayerBlends;
+    TArray<class ULandscapeGrassType*> GrassTypes;
+    TArray<FName> DynamicParameterNames;
+    TArray<bool> QualityLevelsUsed;
+    uint8 bHasRuntimeVirtualTextureOutput;
+    uint8 bHasSceneColor;
+
+};
+
+struct FMaterialCachedParameterEntry
+{
+    TArray<uint64> NameHashes;
+    TArray<FMaterialParameterInfo> ParameterInfos;
+    TArray<FGuid> ExpressionGuids;
+
+};
+
+struct FMaterialCachedParameters
+{
+    FMaterialCachedParameterEntry RuntimeEntries;
+    TArray<float> ScalarValues;
+    TArray<FLinearColor> VectorValues;
+    TArray<class UTexture*> TextureValues;
+    TArray<class UFont*> FontValues;
+    TArray<int32> FontPageValues;
+    TArray<class URuntimeVirtualTexture*> RuntimeVirtualTextureValues;
+
+};
+
+struct FMaterialEditorPromotionSettings
+{
+    FFilePath DefaultMaterialAsset;
+    FFilePath DefaultDiffuseTexture;
+    FFilePath DefaultNormalTexture;
+
+};
+
+struct FMaterialFunctionInfo
+{
+    FGuid StateId;
+    class UMaterialFunctionInterface* Function;
+
+};
+
+struct FMaterialInput
+{
+    int32 OutputIndex;
+    FName InputName;
+    FName ExpressionName;
+
+};
+
+struct FMaterialInstanceBasePropertyOverrides
+{
+    uint8 bOverride_OpacityMaskClipValue;
+    uint8 bOverride_BlendMode;
+    uint8 bOverride_ShadingModel;
+    uint8 bOverride_DitheredLODTransition;
+    uint8 bOverride_CastDynamicShadowAsMasked;
+    uint8 bOverride_TwoSided;
+    uint8 TwoSided;
+    uint8 DitheredLODTransition;
+    uint8 bCastDynamicShadowAsMasked;
+    TEnumAsByte<EBlendMode> BlendMode;
+    TEnumAsByte<EMaterialShadingModel> ShadingModel;
+    float OpacityMaskClipValue;
+
+};
+
+struct FMaterialLayersFunctions
+{
+    TArray<class UMaterialFunctionInterface*> Layers;
+    TArray<class UMaterialFunctionInterface*> Blends;
+    TArray<bool> LayerStates;
+    FString KeyString;
+
+};
+
+struct FMaterialParameterCollectionInfo
+{
+    FGuid StateId;
+    class UMaterialParameterCollection* ParameterCollection;
+
+};
+
+struct FMaterialParameterInfo
+{
+    FName Name;
+    TEnumAsByte<EMaterialParameterAssociation> Association;
+    int32 Index;
+
+};
+
+struct FMaterialProxySettings
+{
+    FIntPoint TextureSize;
+    float GutterSpace;
+    float MetallicConstant;
+    float RoughnessConstant;
+    float AnisotropyConstant;
+    float SpecularConstant;
+    float OpacityConstant;
+    float OpacityMaskConstant;
+    float AmbientOcclusionConstant;
+    TEnumAsByte<ETextureSizingType> TextureSizingType;
+    TEnumAsByte<EMaterialMergeType> MaterialMergeType;
+    TEnumAsByte<EBlendMode> BlendMode;
+    uint8 bAllowTwoSidedMaterial;
+    uint8 bNormalMap;
+    uint8 bTangentMap;
+    uint8 bMetallicMap;
+    uint8 bRoughnessMap;
+    uint8 bAnisotropyMap;
+    uint8 bSpecularMap;
+    uint8 bEmissiveMap;
+    uint8 bOpacityMap;
+    uint8 bOpacityMaskMap;
+    uint8 bAmbientOcclusionMap;
+    FIntPoint DiffuseTextureSize;
+    FIntPoint NormalTextureSize;
+    FIntPoint TangentTextureSize;
+    FIntPoint MetallicTextureSize;
+    FIntPoint RoughnessTextureSize;
+    FIntPoint AnisotropyTextureSize;
+    FIntPoint SpecularTextureSize;
+    FIntPoint EmissiveTextureSize;
+    FIntPoint OpacityTextureSize;
+    FIntPoint OpacityMaskTextureSize;
+    FIntPoint AmbientOcclusionTextureSize;
+
+};
+
+struct FMaterialRemapIndex
+{
+    uint32 ImportVersionKey;
+    TArray<int32> MaterialRemap;
+
+};
+
+struct FMaterialShadingModelField
+{
+    uint16 ShadingModelField;
+
+};
+
+struct FMaterialSpriteElement
+{
+    class UMaterialInterface* Material;
+    class UCurveFloat* DistanceToOpacityCurve;
+    uint8 bSizeIsInScreenSpace;
+    float BaseSizeX;
+    float BaseSizeY;
+    class UCurveFloat* DistanceToSizeCurve;
+
+};
+
+struct FMaterialTextureInfo
+{
+    float SamplingScale;
+    int32 UVChannelIndex;
+    FName TextureName;
+
+};
+
+struct FMemberReference
+{
+    class UObject* MemberParent;
+    FString MemberScope;
+    FName MemberName;
+    FGuid MemberGuid;
+    bool bSelfContext;
+    bool bWasDeprecated;
+
+};
+
+struct FMeshBuildSettings
+{
+    uint8 bUseMikkTSpace;
+    uint8 bRecomputeNormals;
+    uint8 bRecomputeTangents;
+    uint8 bComputeWeightedNormals;
+    uint8 bRemoveDegenerates;
+    uint8 bBuildAdjacencyBuffer;
+    uint8 bBuildReversedIndexBuffer;
+    uint8 bUseHighPrecisionTangentBasis;
+    uint8 bUseFullPrecisionUVs;
+    uint8 bGenerateLightmapUVs;
+    uint8 bGenerateDistanceFieldAsIfTwoSided;
+    uint8 bSupportFaceRemap;
+    int32 MinLightmapResolution;
+    int32 SrcLightmapIndex;
+    int32 DstLightmapIndex;
+    float BuildScale;
+    FVector BuildScale3D;
+    float DistanceFieldResolutionScale;
+    class UStaticMesh* DistanceFieldReplacementMesh;
+
+};
+
+struct FMeshInstancingSettings
+{
+    TSubclassOf<class AActor> ActorClassToUse;
+    int32 InstanceReplacementThreshold;
+    EMeshInstancingReplacementMethod MeshReplacementMethod;
+    bool bSkipMeshesWithVertexColors;
+    bool bUseHLODVolumes;
+    TSubclassOf<class UInstancedStaticMeshComponent> ISMComponentToUse;
+
+};
+
+struct FMeshMergingSettings
+{
+    int32 TargetLightMapResolution;
+    EUVOutput OutputUVs;
+    FMaterialProxySettings MaterialSettings;
+    int32 GutterSize;
+    int32 SpecificLOD;
+    EMeshLODSelectionType LODSelectionType;
+    uint8 bGenerateLightMapUV;
+    uint8 bComputedLightMapResolution;
+    uint8 bPivotPointAtZero;
+    uint8 bMergePhysicsData;
+    uint8 bMergeMaterials;
+    uint8 bCreateMergedMaterial;
+    uint8 bBakeVertexDataToMesh;
+    uint8 bUseVertexDataForBakingMaterial;
+    uint8 bUseTextureBinning;
+    uint8 bReuseMeshLightmapUVs;
+    uint8 bMergeEquivalentMaterials;
+    uint8 bUseLandscapeCulling;
+    uint8 bIncludeImposters;
+    uint8 bAllowDistanceField;
+
+};
+
+struct FMeshProxySettings
+{
+    int32 ScreenSize;
+    float VoxelSize;
+    FMaterialProxySettings MaterialSettings;
+    float MergeDistance;
+    FColor UnresolvedGeometryColor;
+    float MaxRayCastDist;
+    float HardAngleThreshold;
+    int32 LightMapResolution;
+    TEnumAsByte<EProxyNormalComputationMethod::Type> NormalCalculationMethod;
+    TEnumAsByte<ELandscapeCullingPrecision::Type> LandscapeCullingPrecision;
+    uint8 bCalculateCorrectLODModel;
+    uint8 bOverrideVoxelSize;
+    uint8 bOverrideTransferDistance;
+    uint8 bUseHardAngleThreshold;
+    uint8 bComputeLightMapResolution;
+    uint8 bRecalculateNormals;
+    uint8 bUseLandscapeCulling;
+    uint8 bAllowAdjacency;
+    uint8 bAllowDistanceField;
+    uint8 bReuseMeshLightmapUVs;
+    uint8 bCreateCollision;
+    uint8 bAllowVertexColors;
+    uint8 bGenerateLightmapUVs;
+
+};
+
+struct FMeshReductionSettings
+{
+    float PercentTriangles;
+    float PercentVertices;
+    float MaxDeviation;
+    float PixelError;
+    float WeldingThreshold;
+    float HardAngleThreshold;
+    int32 BaseLODModel;
+    TEnumAsByte<EMeshFeatureImportance::Type> SilhouetteImportance;
+    TEnumAsByte<EMeshFeatureImportance::Type> TextureImportance;
+    TEnumAsByte<EMeshFeatureImportance::Type> ShadingImportance;
+    uint8 bRecalculateNormals;
+    uint8 bGenerateUniqueLightmapUVs;
+    uint8 bKeepSymmetry;
+    uint8 bVisibilityAided;
+    uint8 bCullOccluded;
+    EStaticMeshReductionTerimationCriterion TerminationCriterion;
+    TEnumAsByte<EMeshFeatureImportance::Type> VisibilityAggressiveness;
+    TEnumAsByte<EMeshFeatureImportance::Type> VertexColorImportance;
+
+};
+
+struct FMeshSectionInfo
+{
+    int32 MaterialIndex;
+    bool bEnableCollision;
+    bool bCastShadow;
+    bool bVisibleInRayTracing;
+    bool bForceOpaque;
+
+};
+
+struct FMeshSectionInfoMap
+{
+    TMap<uint32, FMeshSectionInfo> Map;
+
+};
+
+struct FMeshUVChannelInfo
+{
+    bool bInitialized;
+    bool bOverrideDensities;
+    float LocalUVDensities;
+
+};
+
+struct FMinimalViewInfo
+{
+    FVector Location;
+    FRotator Rotation;
+    float FOV;
+    float DesiredFOV;
+    float OrthoWidth;
+    float OrthoNearClipPlane;
+    float OrthoFarClipPlane;
+    float AspectRatio;
+    uint8 bConstrainAspectRatio;
+    uint8 bUseFieldOfViewForLOD;
+    TEnumAsByte<ECameraProjectionMode::Type> ProjectionMode;
+    float PostProcessBlendWeight;
+    FPostProcessSettings PostProcessSettings;
+    FVector2D OffCenterProjectionOffset;
+
+};
+
+struct FModulatorContinuousParams
+{
+    FName ParameterName;
+    float Default;
+    float MinInput;
+    float MaxInput;
+    float MinOutput;
+    float MaxOutput;
+    TEnumAsByte<ModulationParamMode> ParamMode;
+
+};
+
+struct FMovementProperties
+{
+    uint8 bCanCrouch;
+    uint8 bCanJump;
+    uint8 bCanWalk;
+    uint8 bCanSwim;
+    uint8 bCanFly;
+
+};
+
+struct FMulticastRecordOptions
+{
+    FString FuncPathName;
+    bool bServerSkip;
+    bool bClientSkip;
+
+};
+
+struct FNameCurve : public FIndexedCurve
+{
+    TArray<FNameCurveKey> Keys;
+
+};
+
+struct FNameCurveKey
+{
+    float Time;
+    FName Value;
+
+};
+
+struct FNameMapping
+{
+    FName NodeName;
+    FName BoneName;
+
+};
+
+struct FNamedColor
+{
+    FColor Value;
+    FName Name;
+
+};
+
+struct FNamedCurveValue
+{
+    FName Name;
+    float Value;
+
+};
+
+struct FNamedEmitterMaterial
+{
+    FName Name;
+    class UMaterialInterface* Material;
+
+};
+
+struct FNamedFloat
+{
+    float Value;
+    FName Name;
+
+};
+
+struct FNamedNetDriver
+{
+    class UNetDriver* NetDriver;
+
+};
+
+struct FNamedTransform
+{
+    FTransform Value;
+    FName Name;
+
+};
+
+struct FNamedVector
+{
+    FVector Value;
+    FName Name;
+
+};
+
+struct FNavAgentProperties : public FMovementProperties
+{
+    float AgentRadius;
+    float AgentHeight;
+    float AgentStepHeight;
+    float NavWalkingSearchHeightScale;
+    FSoftClassPath PreferredNavData;
+
+};
+
+struct FNavAgentSelector
+{
+    uint8 bSupportsAgent0;
+    uint8 bSupportsAgent1;
+    uint8 bSupportsAgent2;
+    uint8 bSupportsAgent3;
+    uint8 bSupportsAgent4;
+    uint8 bSupportsAgent5;
+    uint8 bSupportsAgent6;
+    uint8 bSupportsAgent7;
+    uint8 bSupportsAgent8;
+    uint8 bSupportsAgent9;
+    uint8 bSupportsAgent10;
+    uint8 bSupportsAgent11;
+    uint8 bSupportsAgent12;
+    uint8 bSupportsAgent13;
+    uint8 bSupportsAgent14;
+    uint8 bSupportsAgent15;
+
+};
+
+struct FNavAvoidanceData
+{
+};
+
+struct FNavAvoidanceMask
+{
+    uint8 bGroup0;
+    uint8 bGroup1;
+    uint8 bGroup2;
+    uint8 bGroup3;
+    uint8 bGroup4;
+    uint8 bGroup5;
+    uint8 bGroup6;
+    uint8 bGroup7;
+    uint8 bGroup8;
+    uint8 bGroup9;
+    uint8 bGroup10;
+    uint8 bGroup11;
+    uint8 bGroup12;
+    uint8 bGroup13;
+    uint8 bGroup14;
+    uint8 bGroup15;
+    uint8 bGroup16;
+    uint8 bGroup17;
+    uint8 bGroup18;
+    uint8 bGroup19;
+    uint8 bGroup20;
+    uint8 bGroup21;
+    uint8 bGroup22;
+    uint8 bGroup23;
+    uint8 bGroup24;
+    uint8 bGroup25;
+    uint8 bGroup26;
+    uint8 bGroup27;
+    uint8 bGroup28;
+    uint8 bGroup29;
+    uint8 bGroup30;
+    uint8 bGroup31;
+
+};
+
+struct FNavDataConfig : public FNavAgentProperties
+{
+    FName Name;
+    FColor Color;
+    FVector DefaultQueryExtent;
+    TSubclassOf<class AActor> NavigationDataClass;
+    TSoftClassPtr<AActor> NavDataClass;
+
+};
+
+struct FNavigationLink : public FNavigationLinkBase
+{
+    FVector Left;
+    FVector Right;
+
+};
+
+struct FNavigationLinkBase
+{
+    float LeftProjectHeight;
+    float MaxFallDownLength;
+    float SnapRadius;
+    float SnapHeight;
+    FNavAgentSelector SupportedAgents;
+    uint8 bSupportsAgent0;
+    uint8 bSupportsAgent1;
+    uint8 bSupportsAgent2;
+    uint8 bSupportsAgent3;
+    uint8 bSupportsAgent4;
+    uint8 bSupportsAgent5;
+    uint8 bSupportsAgent6;
+    uint8 bSupportsAgent7;
+    uint8 bSupportsAgent8;
+    uint8 bSupportsAgent9;
+    uint8 bSupportsAgent10;
+    uint8 bSupportsAgent11;
+    uint8 bSupportsAgent12;
+    uint8 bSupportsAgent13;
+    uint8 bSupportsAgent14;
+    uint8 bSupportsAgent15;
+    TEnumAsByte<ENavLinkDirection::Type> Direction;
+    uint8 bUseSnapHeight;
+    uint8 bSnapToCheapestArea;
+    uint8 bCustomFlag0;
+    uint8 bCustomFlag1;
+    uint8 bCustomFlag2;
+    uint8 bCustomFlag3;
+    uint8 bCustomFlag4;
+    uint8 bCustomFlag5;
+    uint8 bCustomFlag6;
+    uint8 bCustomFlag7;
+    TSubclassOf<class UNavAreaBase> AreaClass;
+
+};
+
+struct FNavigationSegmentLink : public FNavigationLinkBase
+{
+    FVector LeftStart;
+    FVector LeftEnd;
+    FVector RightStart;
+    FVector RightEnd;
+
+};
+
+struct FNetDriverDefinition
+{
+    FName DefName;
+    FName DriverClassName;
+    FName DriverClassNameFallback;
+
+};
+
+struct FNetViewer
+{
+    class UNetConnection* Connection;
+    class AActor* InViewer;
+    class AActor* ViewTarget;
+    FVector ViewLocation;
+    FVector ViewDir;
+
+};
+
+struct FNetworkEmulationProfileDescription
+{
+    FString ProfileName;
+    FString ToolTip;
+
+};
+
+struct FNode
+{
+    FName Name;
+    FName ParentName;
+    FTransform Transform;
+    FString DisplayName;
+    bool bAdvanced;
+
+};
+
+struct FNodeItem
+{
+    FName ParentName;
+    FTransform Transform;
+
+};
+
+struct FNodeToCodeAssociation
+{
+};
+
+struct FOrbitOptions
+{
+    uint8 bProcessDuringSpawn;
+    uint8 bProcessDuringUpdate;
+    uint8 bUseEmitterTime;
+
+};
+
+struct FOverlapResult
+{
+    TWeakObjectPtr<class AActor> Actor;
+    TWeakObjectPtr<class UPrimitiveComponent> Component;
+    uint8 bBlockingHit;
+
+};
+
+struct FPOV
+{
+    FVector Location;
+    FRotator Rotation;
+    float FOV;
+
+};
+
+struct FPSCPool
+{
+    TArray<FPSCPoolElem> FreeElements;
+
+};
+
+struct FPSCPoolElem
+{
+    class UParticleSystemComponent* PSC;
+
+};
+
+struct FPacketSimulationSettings
+{
+    int32 PktLoss;
+    int32 PktLossMaxSize;
+    int32 PktLossMinSize;
+    int32 PktOrder;
+    int32 PktDup;
+    int32 PktLag;
+    int32 PktLagVariance;
+    int32 PktLagMin;
+    int32 PktLagMax;
+    int32 PktIncomingLagMin;
+    int32 PktIncomingLagMax;
+    int32 PktIncomingLoss;
+    int32 PktJitter;
+
+};
+
+struct FPaintedVertex
+{
+    FVector Position;
+    FColor Color;
+    FVector4 Normal;
+
+};
+
+struct FParameterChannelNames
+{
+    FText R;
+    FText G;
+    FText B;
+    FText A;
+
+};
+
+struct FParameterGroupData
+{
+    FString GroupName;
+    int32 GroupSortPriority;
+
+};
+
+struct FParticleBurst
+{
+    int32 Count;
+    int32 CountLow;
+    float Time;
+
+};
+
+struct FParticleCurvePair
+{
+    FString CurveName;
+    class UObject* CurveObject;
+
+};
+
+struct FParticleEditorPromotionSettings
+{
+    FFilePath DefaultParticleAsset;
+
+};
+
+struct FParticleEmitterReplayFrame
+{
+};
+
+struct FParticleEvent_GenerateInfo
+{
+    TEnumAsByte<EParticleEventType> Type;
+    int32 Frequency;
+    int32 ParticleFrequency;
+    uint8 FirstTimeOnly;
+    uint8 LastTimeOnly;
+    uint8 UseReflectedImpactVector;
+    uint8 bUseOrbitOffset;
+    FName CustomName;
+    TArray<class UParticleModuleEventSendToGame*> ParticleModuleEventsToSendToGame;
+
+};
+
+struct FParticleRandomSeedInfo
+{
+    FName ParameterName;
+    uint8 bGetSeedFromInstance;
+    uint8 bInstanceSeedIsIndex;
+    uint8 bResetSeedOnEmitterLooping;
+    uint8 bRandomlySelectSeedArray;
+    TArray<int32> RandomSeeds;
+
+};
+
+struct FParticleReplayTrackKey
+{
+    float Time;
+    float Duration;
+    int32 ClipIDNumber;
+
+};
+
+struct FParticleSysParam
+{
+    FName Name;
+    TEnumAsByte<EParticleSysParamType> ParamType;
+    float Scalar;
+    float Scalar_Low;
+    FVector Vector;
+    FVector Vector_Low;
+    FColor Color;
+    class AActor* Actor;
+    class UMaterialInterface* Material;
+
+};
+
+struct FParticleSystemLOD
+{
+};
+
+struct FParticleSystemReplayFrame
+{
+};
+
+struct FParticleSystemWorldManagerTickFunction : public FTickFunction
+{
+};
+
+struct FPassiveSoundMixModifier
+{
+    class USoundMix* SoundMix;
+    float MinVolumeThreshold;
+    float MaxVolumeThreshold;
+
+};
+
+struct FPerBoneBlendWeight
+{
+    int32 SourceIndex;
+    float BlendWeight;
+
+};
+
+struct FPerBoneBlendWeights
+{
+    TArray<FPerBoneBlendWeight> BoneBlendWeights;
+
+};
+
+struct FPerBoneInterpolation
+{
+    FBoneReference BoneReference;
+    float InterpolationSpeedPerSec;
+
+};
+
+struct FPerPlatformBool
+{
+    bool Default;
+
+};
+
+struct FPerPlatformFloat
+{
+    float Default;
+
+};
+
+struct FPerPlatformInt
+{
+    int32 Default;
+
+};
+
+struct FPhysicalAnimationData
+{
+    FName BodyName;
+    uint8 bIsLocalSimulation;
+    float OrientationStrength;
+    float AngularVelocityStrength;
+    float PositionStrength;
+    float VelocityStrength;
+    float MaxLinearForce;
+    float MaxAngularForce;
+
+};
+
+struct FPhysicalAnimationProfile
+{
+    FName ProfileName;
+    FPhysicalAnimationData PhysicalAnimationData;
+
+};
+
+struct FPhysicalSurfaceName
+{
+    TEnumAsByte<EPhysicalSurface> Type;
+    FName Name;
+
+};
+
+struct FPhysicsConstraintProfileHandle
+{
+    FConstraintProfileProperties ProfileProperties;
+    FName ProfileName;
+
+};
+
+struct FPlatformInterfaceData
+{
+    FName DataName;
+    TEnumAsByte<EPlatformInterfaceDataType> Type;
+    int32 IntValue;
+    float FloatValue;
+    FString StringValue;
+    class UObject* ObjectValue;
+
+};
+
+struct FPlatformInterfaceDelegateResult
+{
+    bool bSuccessful;
+    FPlatformInterfaceData Data;
+
+};
+
+struct FPlayerMuteList
+{
+    bool bHasVoiceHandshakeCompleted;
+    int32 VoiceChannelIdx;
+
+};
+
+struct FPluginRedirect
+{
+    FString OldPluginName;
+    FString NewPluginName;
+
+};
+
+struct FPointDamageEvent : public FDamageEvent
+{
+    float Damage;
+    FVector_NetQuantizeNormal ShotDirection;
+    FHitResult HitInfo;
+
+};
+
+struct FPointerToUberGraphFrame
+{
+};
+
+struct FPooledCameraShakes
+{
+    TArray<class UCameraShakeBase*> PooledShakes;
+
+};
+
+struct FPoseData
+{
+    TArray<FTransform> LocalSpacePose;
+    TMap<int32, int32> TrackToBufferIndex;
+    TArray<float> CurveData;
+
+};
+
+struct FPoseDataContainer
+{
+    TArray<FSmartName> PoseNames;
+    TArray<FName> Tracks;
+    TMap<FName, int32> TrackMap;
+    TArray<FPoseData> Poses;
+    TArray<FAnimCurveBase> Curves;
+
+};
+
+struct FPoseLink : public FPoseLinkBase
+{
+};
+
+struct FPoseLinkBase
+{
+    int32 LinkID;
+
+};
+
+struct FPoseSnapshot
+{
+    TArray<FTransform> LocalTransforms;
+    TArray<FName> BoneNames;
+    FName SkeletalMeshName;
+    FName SnapshotName;
+    bool bIsValid;
 
 };
 
@@ -1674,54 +4674,659 @@ struct FPostProcessSettings
 
 };
 
-struct FMinimalViewInfo
+struct FPrecomputedLightInstanceData : public FSceneComponentInstanceData
+{
+    FTransform Transform;
+    FGuid LightGuid;
+    int32 PreviewShadowMapChannel;
+
+};
+
+struct FPrecomputedSkyLightInstanceData : public FSceneComponentInstanceData
+{
+    FGuid LightGuid;
+    float AverageBrightness;
+
+};
+
+struct FPredictProjectilePathParams
+{
+    FVector StartLocation;
+    FVector LaunchVelocity;
+    bool bTraceWithCollision;
+    float ProjectileRadius;
+    float MaxSimTime;
+    bool bTraceWithChannel;
+    TEnumAsByte<ECollisionChannel> TraceChannel;
+    TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+    TArray<class AActor*> ActorsToIgnore;
+    float SimFrequency;
+    float OverrideGravityZ;
+    TEnumAsByte<EDrawDebugTrace::Type> DrawDebugType;
+    float DrawDebugTime;
+    bool bTraceComplex;
+
+};
+
+struct FPredictProjectilePathPointData
 {
     FVector Location;
+    FVector Velocity;
+    float Time;
+
+};
+
+struct FPredictProjectilePathResult
+{
+    TArray<FPredictProjectilePathPointData> PathData;
+    FPredictProjectilePathPointData LastTraceDestination;
+    FHitResult HitResult;
+
+};
+
+struct FPreviewAssetAttachContainer
+{
+    TArray<FPreviewAttachedObjectPair> AttachedObjects;
+
+};
+
+struct FPreviewAttachedObjectPair
+{
+    TSoftObjectPtr<UObject> AttachedObject;
+    class UObject* Object;
+    FName AttachedTo;
+
+};
+
+struct FPreviewMeshCollectionEntry
+{
+    TSoftObjectPtr<USkeletalMesh> SkeletalMesh;
+
+};
+
+struct FPrimaryAssetRules
+{
+    int32 Priority;
+    int32 ChunkId;
+    bool bApplyRecursively;
+    EPrimaryAssetCookRule CookRule;
+
+};
+
+struct FPrimaryAssetRulesCustomOverride
+{
+    FPrimaryAssetType PrimaryAssetType;
+    FDirectoryPath FilterDirectory;
+    FString FilterString;
+    FPrimaryAssetRules Rules;
+
+};
+
+struct FPrimaryAssetRulesOverride
+{
+    FPrimaryAssetId PrimaryAssetId;
+    FPrimaryAssetRules Rules;
+
+};
+
+struct FPrimaryAssetTypeInfo
+{
+    FName PrimaryAssetType;
+    TSoftClassPtr<UObject> AssetBaseClass;
+    UClass* AssetBaseClassLoaded;
+    bool bHasBlueprintClasses;
+    bool bIsEditorOnly;
+    TArray<FDirectoryPath> Directories;
+    TArray<FSoftObjectPath> SpecificAssets;
+    FPrimaryAssetRules Rules;
+    TArray<FString> AssetScanPaths;
+    bool bIsDynamicAsset;
+    int32 NumberOfAssets;
+
+};
+
+struct FPrimitiveComponentInstanceData : public FSceneComponentInstanceData
+{
+    FTransform ComponentTransform;
+    int32 VisibilityId;
+    class UPrimitiveComponent* LODParent;
+
+};
+
+struct FPrimitiveMaterialRef
+{
+    class UPrimitiveComponent* Primitive;
+    class UDecalComponent* Decal;
+    int32 ElementIndex;
+
+};
+
+struct FPurchaseInfo
+{
+    FString Identifier;
+    FString DisplayName;
+    FString DisplayDescription;
+    FString DisplayPrice;
+
+};
+
+struct FQuartzClockSettings
+{
+    FQuartzTimeSignature TimeSignature;
+    bool bIgnoreLevelChange;
+
+};
+
+struct FQuartzPulseOverrideStep
+{
+    int32 NumberOfPulses;
+    EQuartzCommandQuantization PulseDuration;
+
+};
+
+struct FQuartzQuantizationBoundary
+{
+    EQuartzCommandQuantization Quantization;
+    float Multiplier;
+    EQuarztQuantizationReference CountingReferencePoint;
+    bool bFireOnClockStart;
+
+};
+
+struct FQuartzTimeSignature
+{
+    int32 NumBeats;
+    EQuartzTimeSignatureQuantization BeatType;
+    TArray<FQuartzPulseOverrideStep> OptionalPulseOverride;
+
+};
+
+struct FQuartzTransportTimeStamp
+{
+    int32 Bars;
+    int32 Beat;
+    float BeatFraction;
+    float Seconds;
+
+};
+
+struct FQueuedDrawDebugItem
+{
+    TEnumAsByte<EDrawDebugItemType::Type> ItemType;
+    FVector StartLoc;
+    FVector EndLoc;
+    FVector Center;
     FRotator Rotation;
-    float FOV;
-    float DesiredFOV;
-    float OrthoWidth;
-    float OrthoNearClipPlane;
-    float OrthoFarClipPlane;
-    float AspectRatio;
-    uint8 bConstrainAspectRatio;
-    uint8 bUseFieldOfViewForLOD;
-    TEnumAsByte<ECameraProjectionMode::Type> ProjectionMode;
-    float PostProcessBlendWeight;
-    FPostProcessSettings PostProcessSettings;
-    FVector2D OffCenterProjectionOffset;
+    float Radius;
+    float Size;
+    int32 Segments;
+    FColor Color;
+    bool bPersistentLines;
+    float LifeTime;
+    float Thickness;
+    FString Message;
+    FVector2D TextScale;
 
 };
 
-struct FDirectoryPath
+struct FRadialDamageEvent : public FDamageEvent
 {
-    FString Path;
+    FRadialDamageParams Params;
+    FVector Origin;
+    TArray<FHitResult> ComponentHits;
 
 };
 
-struct FKeyHandleLookupTable
+struct FRadialDamageParams
 {
-};
-
-class UCommandlet : public UObject
-{
-    FString HelpDescription;
-    FString HelpUsage;
-    FString HelpWebLink;
-    TArray<FString> HelpParamNames;
-    TArray<FString> HelpParamDescriptions;
-    uint8 IsServer;
-    uint8 IsClient;
-    uint8 IsEditor;
-    uint8 LogToConsole;
-    uint8 ShowErrorCount;
-    uint8 ShowProgress;
+    float BaseDamage;
+    float MinimumDamage;
+    float InnerRadius;
+    float OuterRadius;
+    float DamageFalloff;
 
 };
 
-struct FVertexOffsetUsage
+struct FRawAnimSequenceTrack
 {
-    int32 Usage;
+    TArray<FVector> PosKeys;
+    TArray<FQuat> RotKeys;
+    TArray<FVector> ScaleKeys;
+
+};
+
+struct FRawCurveTracks
+{
+    TArray<FFloatCurve> FloatCurves;
+
+};
+
+struct FRawDistribution
+{
+    FDistributionLookupTable Table;
+
+};
+
+struct FRawDistributionFloat : public FRawDistribution
+{
+    float MinValue;
+    float MaxValue;
+    class UDistributionFloat* Distribution;
+
+};
+
+struct FRawDistributionVector : public FRawDistribution
+{
+    float MinValue;
+    float MaxValue;
+    FVector MinValueVec;
+    FVector MaxValueVec;
+    class UDistributionVector* Distribution;
+
+};
+
+struct FRealCurve : public FIndexedCurve
+{
+    float DefaultValue;
+    TEnumAsByte<ERichCurveExtrapolation> PreInfinityExtrap;
+    TEnumAsByte<ERichCurveExtrapolation> PostInfinityExtrap;
+
+};
+
+struct FRedirector
+{
+    FName OldName;
+    FName NewName;
+
+};
+
+struct FReferencePose
+{
+    FName PoseName;
+    TArray<FTransform> ReferencePose;
+
+};
+
+struct FRepAttachment
+{
+    class AActor* AttachParent;
+    FVector_NetQuantize100 LocationOffset;
+    FVector_NetQuantize100 RelativeScale3D;
+    FRotator RotationOffset;
+    FName AttachSocket;
+    class USceneComponent* AttachComponent;
+
+};
+
+struct FRepMovement
+{
+    FVector LinearVelocity;
+    FVector AngularVelocity;
+    FVector Location;
+    FRotator Rotation;
+    uint8 bSimulatedPhysicSleep;
+    uint8 bRepPhysics;
+    EVectorQuantization LocationQuantizationLevel;
+    EVectorQuantization VelocityQuantizationLevel;
+    ERotatorQuantization RotationQuantizationLevel;
+
+};
+
+struct FRepRootMotionMontage
+{
+    bool bIsActive;
+    class UAnimMontage* AnimMontage;
+    float Position;
+    FVector_NetQuantize100 Location;
+    FRotator Rotation;
+    class UPrimitiveComponent* MovementBase;
+    FName MovementBaseBoneName;
+    bool bRelativePosition;
+    bool bRelativeRotation;
+    FRootMotionSourceGroup AuthoritativeRootMotion;
+    FVector_NetQuantize10 Acceleration;
+    FVector_NetQuantize10 LinearVelocity;
+
+};
+
+struct FReplicatedStaticActorDestructionInfo
+{
+    UClass* ObjClass;
+
+};
+
+struct FResponseChannel
+{
+    FName Channel;
+    TEnumAsByte<ECollisionResponse> Response;
+
+};
+
+struct FReverbSettings
+{
+    bool bApplyReverb;
+    class UReverbEffect* ReverbEffect;
+    class USoundEffectSubmixPreset* ReverbPluginEffect;
+    float Volume;
+    float FadeTime;
+
+};
+
+struct FRichCurve : public FRealCurve
+{
+    TArray<FRichCurveKey> Keys;
+
+};
+
+struct FRichCurveKey
+{
+    TEnumAsByte<ERichCurveInterpMode> InterpMode;
+    TEnumAsByte<ERichCurveTangentMode> TangentMode;
+    TEnumAsByte<ERichCurveTangentWeightMode> TangentWeightMode;
+    float Time;
+    float Value;
+    float ArriveTangent;
+    float ArriveTangentWeight;
+    float LeaveTangent;
+    float LeaveTangentWeight;
+
+};
+
+struct FRigConfiguration
+{
+    class URig* Rig;
+    TArray<FNameMapping> BoneMappingTable;
+
+};
+
+struct FRigTransformConstraint
+{
+    TEnumAsByte<EConstraintTransform::Type> TranformType;
+    FName ParentSpace;
+    float Weight;
+
+};
+
+struct FRigidBodyContactInfo
+{
+    FVector ContactPosition;
+    FVector ContactNormal;
+    float ContactPenetration;
+    class UPhysicalMaterial* PhysMaterial;
+
+};
+
+struct FRigidBodyErrorCorrection
+{
+    float PingExtrapolation;
+    float PingLimit;
+    float ErrorPerLinearDifference;
+    float ErrorPerAngularDifference;
+    float MaxRestoredStateError;
+    float MaxLinearHardSnapDistance;
+    float PositionLerp;
+    float AngleLerp;
+    float LinearVelocityCoefficient;
+    float AngularVelocityCoefficient;
+    float ErrorAccumulationSeconds;
+    float ErrorAccumulationDistanceSq;
+    float ErrorAccumulationSimilarity;
+
+};
+
+struct FRigidBodyState
+{
+    FVector_NetQuantize100 Position;
+    FQuat Quaternion;
+    FVector_NetQuantize100 LinVel;
+    FVector_NetQuantize100 AngVel;
+    uint8 Flags;
+
+};
+
+struct FRollbackNetStartupActorInfo
+{
+    class UObject* Archetype;
+    class ULevel* Level;
+    TArray<class UObject*> ObjReferences;
+
+};
+
+struct FRootMotionExtractionStep
+{
+    class UAnimSequence* AnimSequence;
+    float StartPosition;
+    float EndPosition;
+
+};
+
+struct FRootMotionFinishVelocitySettings
+{
+    ERootMotionFinishVelocityMode Mode;
+    FVector SetVelocity;
+    float ClampVelocity;
+
+};
+
+struct FRootMotionMovementParams
+{
+    bool bHasRootMotion;
+    float BlendWeight;
+    FTransform RootMotionTransform;
+
+};
+
+struct FRootMotionSource
+{
+    uint16 Priority;
+    uint16 LocalID;
+    ERootMotionAccumulateMode AccumulateMode;
+    FName InstanceName;
+    float StartTime;
+    float CurrentTime;
+    float PreviousTime;
+    float Duration;
+    FRootMotionSourceStatus Status;
+    FRootMotionSourceSettings Settings;
+    bool bInLocalSpace;
+    FRootMotionMovementParams RootMotionParams;
+    FRootMotionFinishVelocitySettings FinishVelocityParams;
+
+};
+
+struct FRootMotionSourceGroup
+{
+    uint8 bHasAdditiveSources;
+    uint8 bHasOverrideSources;
+    uint8 bHasOverrideSourcesWithIgnoreZAccumulate;
+    uint8 bIsAdditiveVelocityApplied;
+    FRootMotionSourceSettings LastAccumulatedSettings;
+    FVector_NetQuantize10 LastPreAdditiveVelocity;
+
+};
+
+struct FRootMotionSourceSettings
+{
+    uint8 Flags;
+
+};
+
+struct FRootMotionSourceStatus
+{
+    uint8 Flags;
+
+};
+
+struct FRootMotionSource_ConstantForce : public FRootMotionSource
+{
+    FVector force;
+    class UCurveFloat* StrengthOverTime;
+
+};
+
+struct FRootMotionSource_JumpForce : public FRootMotionSource
+{
+    FRotator Rotation;
+    float Distance;
+    float Height;
+    bool bDisableTimeout;
+    class UCurveVector* PathOffsetCurve;
+    class UCurveFloat* TimeMappingCurve;
+
+};
+
+struct FRootMotionSource_MoveToDynamicForce : public FRootMotionSource
+{
+    FVector StartLocation;
+    FVector InitialTargetLocation;
+    FVector TargetLocation;
+    bool bRestrictSpeedToExpected;
+    class UCurveVector* PathOffsetCurve;
+    class UCurveFloat* TimeMappingCurve;
+
+};
+
+struct FRootMotionSource_MoveToForce : public FRootMotionSource
+{
+    FVector StartLocation;
+    FVector TargetLocation;
+    bool bRestrictSpeedToExpected;
+    class UCurveVector* PathOffsetCurve;
+
+};
+
+struct FRootMotionSource_RadialForce : public FRootMotionSource
+{
+    FVector Location;
+    class AActor* LocationActor;
+    float Radius;
+    float Strength;
+    bool bIsPush;
+    bool bNoZForce;
+    class UCurveFloat* StrengthDistanceFalloff;
+    class UCurveFloat* StrengthOverTime;
+    bool bUseFixedWorldDirection;
+    FRotator FixedWorldDirection;
+
+};
+
+struct FRotationTrack
+{
+    TArray<FQuat> RotKeys;
+    TArray<float> Times;
+
+};
+
+struct FRuntimeCurveLinearColor
+{
+    FRichCurve ColorCurves;
+    class UCurveLinearColor* ExternalCurve;
+
+};
+
+struct FRuntimeFloatCurve
+{
+    FRichCurve EditorCurveData;
+    class UCurveFloat* ExternalCurve;
+
+};
+
+struct FRuntimeVirtualTextureParameterValue
+{
+    FMaterialParameterInfo ParameterInfo;
+    class URuntimeVirtualTexture* ParameterValue;
+    FGuid ExpressionGUID;
+
+};
+
+struct FScalarMaterialInput : public FMaterialInput
+{
+};
+
+struct FScalarParameterAtlasInstanceData
+{
+    bool bIsUsedAsAtlasPosition;
+    TSoftObjectPtr<UCurveLinearColor> Curve;
+    TSoftObjectPtr<UCurveLinearColorAtlas> Atlas;
+
+};
+
+struct FScalarParameterValue
+{
+    FMaterialParameterInfo ParameterInfo;
+    float ParameterValue;
+    FGuid ExpressionGUID;
+
+};
+
+struct FScaleTrack
+{
+    TArray<FVector> ScaleKeys;
+    TArray<float> Times;
+
+};
+
+struct FSceneComponentInstanceData : public FActorComponentInstanceData
+{
+    TMap<class USceneComponent*, class FTransform> AttachedInstanceComponents;
+
+};
+
+struct FSceneViewExtensionIsActiveFunctor
+{
+};
+
+struct FScreenMessageString
+{
+    uint64 Key;
+    FString ScreenMessage;
+    FColor DisplayColor;
+    float TimeToDisplay;
+    float CurrentTimeDisplayed;
+    FVector2D TextScale;
+
+};
+
+struct FShadingModelMaterialInput : public FMaterialInput
+{
+};
+
+struct FSimpleCurve : public FRealCurve
+{
+    TEnumAsByte<ERichCurveInterpMode> InterpMode;
+    TArray<FSimpleCurveKey> Keys;
+
+};
+
+struct FSimpleCurveKey
+{
+    float Time;
+    float Value;
+
+};
+
+struct FSimpleMemberReference
+{
+    class UObject* MemberParent;
+    FName MemberName;
+    FGuid MemberGuid;
+
+};
+
+struct FSimulatedRootMotionReplicatedMove
+{
+    float Time;
+    FRepRootMotionMontage RootMotion;
+
+};
+
+struct FSingleAnimationPlayData
+{
+    class UAnimationAsset* AnimToPlay;
+    uint8 bSavedLooping;
+    uint8 bSavedPlaying;
+    float SavedPosition;
+    float SavedPlayRate;
 
 };
 
@@ -1738,460 +5343,353 @@ struct FSkelMeshSkinWeightInfo
 
 };
 
-class USkinnedMeshComponent : public UMeshComponent
+struct FSkeletalMaterial
 {
-    class USkeletalMesh* SkeletalMesh;
-    TWeakObjectPtr<class USkinnedMeshComponent> MasterPoseComponent;
-    TArray<ESkinCacheUsage> SkinCacheUsage;
-    TArray<FVertexOffsetUsage> VertexOffsetUsage;
-    class UPhysicsAsset* PhysicsAssetOverride;
-    int32 ForcedLodModel;
-    int32 MinLodModel;
-    float StreamingDistanceMultiplier;
-    TArray<FSkelMeshComponentLODInfo> LODInfo;
-    EVisibilityBasedAnimTickOption VisibilityBasedAnimTickOption;
-    uint8 bOverrideMinLod;
-    uint8 bUseBoundsFromMasterPoseComponent;
-    uint8 bForceWireframe;
-    uint8 bDisplayBones;
-    uint8 bDisableMorphTarget;
-    uint8 bHideSkin;
-    uint8 bPerBoneMotionBlur;
-    uint8 bComponentUseFixedSkelBounds;
-    uint8 bConsiderAllBodiesForBounds;
-    uint8 bSyncAttachParentLOD;
-    uint8 bCanHighlightSelectedSections;
-    uint8 bRecentlyRendered;
-    uint8 bCastCapsuleDirectShadow;
-    uint8 bCastCapsuleIndirectShadow;
-    uint8 bCPUSkinning;
-    uint8 bEnableUpdateRateOptimizations;
-    uint8 bDisplayDebugUpdateRateOptimizations;
-    uint8 bRenderStatic;
-    uint8 bIgnoreMasterPoseComponentLOD;
-    uint8 bCachedLocalBoundsUpToDate;
-    uint8 bForceMeshObjectUpdate;
-    float CapsuleIndirectShadowMinVisibility;
-    FBoxSphereBounds CachedWorldSpaceBounds;
-    FMatrix CachedWorldToLocalTransform;
-
-    void UnloadSkinWeightProfile(FName InProfileName);
-    void UnHideBoneByName(FName BoneName);
-    void TransformToBoneSpace(FName BoneName, FVector InPosition, FRotator InRotation, FVector& OutPosition, FRotator& OutRotation);
-    void TransformFromBoneSpace(FName BoneName, FVector InPosition, FRotator InRotation, FVector& OutPosition, FRotator& OutRotation);
-    void ShowMaterialSection(int32 MaterialID, int32 SectionIndex, bool bShow, int32 LODIndex);
-    void ShowAllMaterialSections(int32 LODIndex);
-    void SetVertexOffsetUsage(int32 LODIndex, int32 Usage);
-    void SetVertexColorOverride_LinearColor(int32 LODIndex, const TArray<FLinearColor>& VertexColors);
-    bool SetSkinWeightProfile(FName InProfileName);
-    void SetSkinWeightOverride(int32 LODIndex, const TArray<FSkelMeshSkinWeightInfo>& SkinWeights);
-    void SetSkeletalMesh(class USkeletalMesh* NewMesh, bool bReinitPose);
-    void SetRenderStatic(bool bNewValue);
-    void SetPreSkinningOffsets(int32 LODIndex, TArray<FVector> Offsets);
-    void SetPostSkinningOffsets(int32 LODIndex, TArray<FVector> Offsets);
-    void SetPhysicsAsset(class UPhysicsAsset* NewPhysicsAsset, bool bForceReInit);
-    void SetMinLOD(int32 InNewMinLOD);
-    void SetMasterPoseComponent(class USkinnedMeshComponent* NewMasterBoneComponent, bool bForceUpdate);
-    void SetForcedLOD(int32 InNewForcedLOD);
-    void SetCastCapsuleIndirectShadow(bool bNewValue);
-    void SetCastCapsuleDirectShadow(bool bNewValue);
-    void SetCapsuleIndirectShadowMinVisibility(float NewValue);
-    bool IsUsingSkinWeightProfile();
-    bool IsMaterialSectionShown(int32 MaterialID, int32 LODIndex);
-    bool IsBoneHiddenByName(FName BoneName);
-    void HideBoneByName(FName BoneName, TEnumAsByte<EPhysBodyOp> PhysBodyOption);
-    int32 GetVertexOffsetUsage(int32 LODIndex);
-    bool GetTwistAndSwingAngleOfDeltaRotationFromRefPose(FName BoneName, float& OutTwistAngle, float& OutSwingAngle);
-    FName GetSocketBoneName(FName InSocketName);
-    FVector GetRefPosePosition(int32 BoneIndex);
-    FName GetParentBone(FName BoneName);
-    int32 GetNumLODs();
-    int32 GetNumBones();
-    int32 GetForcedLOD();
-    FTransform GetDeltaTransformFromRefPose(FName BoneName, FName BaseName);
-    FName GetCurrentSkinWeightProfileName();
-    FName GetBoneName(int32 BoneIndex);
-    int32 GetBoneIndex(FName BoneName);
-    FName FindClosestBone_K2(FVector TestLocation, FVector& BoneLocation, float IgnoreScale, bool bRequirePhysicsAsset);
-    void ClearVertexColorOverride(int32 LODIndex);
-    void ClearSkinWeightProfile();
-    void ClearSkinWeightOverride(int32 LODIndex);
-    bool BoneIsChildOf(FName BoneName, FName ParentBoneName);
-};
-
-struct FSingleAnimationPlayData
-{
-    class UAnimationAsset* AnimToPlay;
-    uint8 bSavedLooping;
-    uint8 bSavedPlaying;
-    float SavedPosition;
-    float SavedPlayRate;
+    class UMaterialInterface* MaterialInterface;
+    FName MaterialSlotName;
+    FMeshUVChannelInfo UVChannelData;
 
 };
 
-struct FPoseSnapshot
+struct FSkeletalMeshBuildSettings
 {
-    TArray<FTransform> LocalTransforms;
-    TArray<FName> BoneNames;
-    FName SkeletalMeshName;
-    FName SnapshotName;
-    bool bIsValid;
+    uint8 bRecomputeNormals;
+    uint8 bRecomputeTangents;
+    uint8 bUseMikkTSpace;
+    uint8 bComputeWeightedNormals;
+    uint8 bRemoveDegenerates;
+    uint8 bUseHighPrecisionTangentBasis;
+    uint8 bUseFullPrecisionUVs;
+    uint8 bBuildAdjacencyBuffer;
+    float ThresholdPosition;
+    float ThresholdTangentNormal;
+    float ThresholdUV;
+    float MorphThresholdPosition;
 
 };
 
-class USkeletalMeshComponent : public USkinnedMeshComponent
+struct FSkeletalMeshClothBuildParams
 {
-    UClass* AnimBlueprintGeneratedClass;
-    TSubclassOf<class UAnimInstance> AnimClass;
-    class UAnimInstance* AnimScriptInstance;
-    class UAnimInstance* PostProcessAnimInstance;
-    FSingleAnimationPlayData AnimationData;
-    FVector RootBoneTranslation;
-    FVector LineCheckBoundsScale;
-    TArray<class UAnimInstance*> LinkedInstances;
-    TArray<FTransform> CachedBoneSpaceTransforms;
-    TArray<FTransform> CachedComponentSpaceTransforms;
-    float GlobalAnimRateScale;
-    TEnumAsByte<EKinematicBonesUpdateToPhysics::Type> KinematicBonesUpdateType;
-    TEnumAsByte<EPhysicsTransformUpdateMode::Type> PhysicsTransformUpdateMode;
-    TEnumAsByte<EAnimationMode::Type> AnimationMode;
-    uint8 bDisablePostProcessBlueprint;
-    uint8 bUpdateOverlapsOnAnimationFinalize;
-    uint8 bHasValidBodies;
-    uint8 bBlendPhysics;
-    uint8 bEnablePhysicsOnDedicatedServer;
-    uint8 bUpdateJointsFromAnimation;
-    uint8 bDisableClothSimulation;
-    uint8 bDisableRigidBodyAnimNode;
-    uint8 bAllowAnimCurveEvaluation;
-    uint8 bDisableAnimCurves;
-    uint8 bCollideWithEnvironment;
-    uint8 bCollideWithAttachedChildren;
-    uint8 bLocalSpaceSimulation;
-    uint8 bResetAfterTeleport;
-    uint8 bDeferKinematicBoneUpdate;
-    uint8 bNoSkeletonUpdate;
-    uint8 bPauseAnims;
-    uint8 bUseRefPoseOnInitAnim;
-    uint8 bEnablePerPolyCollision;
-    uint8 bForceRefpose;
-    uint8 bOnlyAllowAutonomousTickPose;
-    uint8 bIsAutonomousTickPose;
-    uint8 bOldForceRefPose;
-    uint8 bShowPrePhysBones;
-    uint8 bRequiredBonesUpToDate;
-    uint8 bAnimTreeInitialised;
-    uint8 bIncludeComponentLocationIntoBounds;
-    uint8 bEnableLineCheckWithBounds;
-    uint8 bPropagateCurvesToSlaves;
-    uint8 bSkipKinematicUpdateWhenInterpolating;
-    uint8 bSkipBoundsUpdateWhenInterpolating;
-    uint8 bNeedsQueuedAnimEventsDispatched;
-    uint16 CachedAnimCurveUidVersion;
-    float ClothBlendWeight;
-    bool bWaitForParallelClothTask;
-    TArray<FName> DisallowedAnimCurves;
-    class UBodySetup* BodySetup;
-    FSkeletalMeshComponentOnConstraintBroken OnConstraintBroken;
-    void ConstraintBrokenSignature(int32 ConstraintIndex);
-    TSubclassOf<class UClothingSimulationFactory> ClothingSimulationFactory;
-    float TeleportDistanceThreshold;
-    float TeleportRotationThreshold;
-    uint32 LastPoseTickFrame;
-    class UClothingSimulationInteractor* ClothingInteractor;
-    FSkeletalMeshComponentOnAnimInitialized OnAnimInitialized;
-    void OnAnimInitialized();
-
-    void UnlinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
-    void UnbindClothFromMasterPoseComponent(bool bRestoreSimulationSpace);
-    void ToggleDisablePostProcessBlueprint();
-    void TermBodiesBelow(FName ParentBoneName);
-    void SuspendClothingSimulation();
-    void Stop();
-    void SnapshotPose(FPoseSnapshot& Snapshot);
-    void SetUpdateClothInEditor(const bool NewUpdateState);
-    void SetUpdateAnimationInEditor(const bool NewUpdateState);
-    void SetTeleportRotationThreshold(float Threshold);
-    void SetTeleportDistanceThreshold(float Threshold);
-    void SetPosition(float InPos, bool bFireNotifies);
-    void SetPlayRate(float Rate);
-    void SetPhysicsBlendWeight(float PhysicsBlendWeight);
-    void SetNotifyRigidBodyCollisionBelow(bool bNewNotifyRigidBodyCollision, FName BoneName, bool bIncludeSelf);
-    void SetMorphTarget(FName MorphTargetName, float Value, bool bRemoveZeroWeight);
-    void SetEnablePhysicsBlending(bool bNewBlendPhysics);
-    void SetEnableGravityOnAllBodiesBelow(bool bEnableGravity, FName BoneName, bool bIncludeSelf);
-    void SetEnableBodyGravity(bool bEnableGravity, FName BoneName);
-    void SetDisablePostProcessBlueprint(bool bInDisablePostProcess);
-    void SetDisableAnimCurves(bool bInDisableAnimCurves);
-    void SetConstraintProfileForAll(FName ProfileName, bool bDefaultIfNotFound);
-    void SetConstraintProfile(FName JointName, FName ProfileName, bool bDefaultIfNotFound);
-    void SetClothMaxDistanceScale(float Scale);
-    void SetBodyNotifyRigidBodyCollision(bool bNewNotifyRigidBodyCollision, FName BoneName);
-    void SetAnimClass(UClass* NewClass);
-    void SetAnimationMode(TEnumAsByte<EAnimationMode::Type> InAnimationMode);
-    void SetAnimation(class UAnimationAsset* NewAnimToPlay);
-    void SetAngularLimits(FName InBoneName, float Swing1LimitAngle, float TwistLimitAngle, float Swing2LimitAngle);
-    void SetAllowRigidBodyAnimNode(bool bInAllow, bool bReinitAnim);
-    void SetAllowedAnimCurvesEvaluation(const TArray<FName>& List, bool bAllow);
-    void SetAllowAnimCurveEvaluation(bool bInAllow);
-    void SetAllMotorsAngularVelocityDrive(bool bEnableSwingDrive, bool bEnableTwistDrive, bool bSkipCustomPhysicsType);
-    void SetAllMotorsAngularPositionDrive(bool bEnableSwingDrive, bool bEnableTwistDrive, bool bSkipCustomPhysicsType);
-    void SetAllMotorsAngularDriveParams(float InSpring, float InDamping, float InForceLimit, bool bSkipCustomPhysicsType);
-    void SetAllBodiesSimulatePhysics(bool bNewSimulate);
-    void SetAllBodiesPhysicsBlendWeight(float PhysicsBlendWeight, bool bSkipCustomPhysicsType);
-    void SetAllBodiesBelowSimulatePhysics(const FName& InBoneName, bool bNewSimulate, bool bIncludeSelf);
-    void SetAllBodiesBelowPhysicsBlendWeight(const FName& InBoneName, float PhysicsBlendWeight, bool bSkipCustomPhysicsType, bool bIncludeSelf);
-    void ResumeClothingSimulation();
-    void ResetClothTeleportMode();
-    void ResetAnimInstanceDynamics(ETeleportType InTeleportType);
-    void ResetAllowedAnimCurveEvaluation();
-    void ResetAllBodiesSimulatePhysics();
-    void PlayAnimation(class UAnimationAsset* NewAnimToPlay, bool bLooping);
-    void Play(bool bLooping);
-    void OverrideAnimationData(class UAnimationAsset* InAnimToPlay, bool bIsLooping, bool bIsPlaying, float Position, float PlayRate);
-    void LinkAnimGraphByTag(FName InTag, TSubclassOf<class UAnimInstance> InClass);
-    void LinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
-    bool K2_GetClosestPointOnPhysicsAsset(const FVector& WorldPosition, FVector& ClosestWorldPosition, FVector& Normal, FName& BoneName, float& Distance);
-    bool IsPlaying();
-    bool IsClothingSimulationSuspended();
-    bool IsBodyGravityEnabled(FName BoneName);
-    bool HasValidAnimationInstance();
-    float GetTeleportRotationThreshold();
-    float GetTeleportDistanceThreshold();
-    bool GetStringAttribute_Ref(const FName& BoneName, const FName& AttributeName, FString& OutValue, ECustomBoneAttributeLookup LookupType);
-    bool GetStringAttribute(const FName& BoneName, const FName& AttributeName, FString DefaultValue, FString& OutValue, ECustomBoneAttributeLookup LookupType);
-    FVector GetSkeletalCenterOfMass();
-    class UAnimInstance* GetPostProcessInstance();
-    float GetPosition();
-    float GetPlayRate();
-    float GetMorphTarget(FName MorphTargetName);
-    class UAnimInstance* GetLinkedAnimLayerInstanceByGroup(FName InGroup);
-    class UAnimInstance* GetLinkedAnimLayerInstanceByClass(TSubclassOf<class UAnimInstance> InClass);
-    void GetLinkedAnimGraphInstancesByTag(FName InTag, TArray<class UAnimInstance*>& OutLinkedInstances);
-    class UAnimInstance* GetLinkedAnimGraphInstanceByTag(FName InTag);
-    bool GetIntegerAttribute_Ref(const FName& BoneName, const FName& AttributeName, int32& OutValue, ECustomBoneAttributeLookup LookupType);
-    bool GetIntegerAttribute(const FName& BoneName, const FName& AttributeName, int32 DefaultValue, int32& OutValue, ECustomBoneAttributeLookup LookupType);
-    bool GetFloatAttribute_Ref(const FName& BoneName, const FName& AttributeName, float& OutValue, ECustomBoneAttributeLookup LookupType);
-    bool GetFloatAttribute(const FName& BoneName, const FName& AttributeName, float DefaultValue, float& OutValue, ECustomBoneAttributeLookup LookupType);
-    bool GetDisablePostProcessBlueprint();
-    bool GetDisableAnimCurves();
-    void GetCurrentJointAngles(FName InBoneName, float& Swing1Angle, float& TwistAngle, float& Swing2Angle);
-    float GetClothMaxDistanceScale();
-    class UClothingSimulationInteractor* GetClothingSimulationInteractor();
-    float GetBoneMass(FName BoneName, bool bScaleMass);
-    class UAnimInstance* GetAnimInstance();
-    UClass* GetAnimClass();
-    TEnumAsByte<EAnimationMode::Type> GetAnimationMode();
-    bool GetAllowRigidBodyAnimNode();
-    bool GetAllowedAnimCurveEvaluate();
-    void ForceClothNextUpdateTeleportAndReset();
-    void ForceClothNextUpdateTeleport();
-    FName FindConstraintBoneName(int32 ConstraintIndex);
-    void ClearMorphTargets();
-    void BreakConstraint(FVector Impulse, FVector HitLocation, FName InBoneName);
-    void BindClothToMasterPoseComponent();
-    void AllowAnimCurveEvaluation(FName NameOfCurve, bool bAllow);
-    void AddImpulseToAllBodiesBelow(FVector Impulse, FName BoneName, bool bVelChange, bool bIncludeSelf);
-    void AddForceToAllBodiesBelow(FVector force, FName BoneName, bool bAccelChange, bool bIncludeSelf);
-    void AccumulateAllBodiesBelowPhysicsBlendWeight(const FName& InBoneName, float AddPhysicsBlendWeight, bool bSkipCustomPhysicsType);
-};
-
-struct FAnimNotifyEventReference
-{
-    class UObject* NotifySource;
+    TWeakObjectPtr<class UClothingAssetBase> TargetAsset;
+    int32 TargetLod;
+    bool bRemapParameters;
+    FString AssetName;
+    int32 LODIndex;
+    int32 SourceSection;
+    bool bRemoveFromMesh;
+    TSoftObjectPtr<UPhysicsAsset> PhysicsAsset;
 
 };
 
-struct FAnimNotifyArray
+struct FSkeletalMeshComponentClothTickFunction : public FTickFunction
 {
-    TArray<FAnimNotifyEventReference> Notifies;
+};
+
+struct FSkeletalMeshComponentEndPhysicsTickFunction : public FTickFunction
+{
+};
+
+struct FSkeletalMeshLODGroupSettings
+{
+    FPerPlatformFloat ScreenSize;
+    float LODHysteresis;
+    EBoneFilterActionOption BoneFilterActionOption;
+    TArray<FBoneFilter> BoneList;
+    TArray<FName> BonesToPrioritize;
+    float WeightOfPrioritization;
+    class UAnimSequence* BakePose;
+    FSkeletalMeshOptimizationSettings ReductionSettings;
 
 };
 
-struct FAnimNotifyQueue
+struct FSkeletalMeshLODInfo
 {
-    TArray<FAnimNotifyEventReference> AnimNotifies;
-    TMap<class FName, class FAnimNotifyArray> UnfilteredMontageAnimNotifies;
+    FPerPlatformFloat ScreenSize;
+    float LODHysteresis;
+    TArray<int32> LODMaterialMap;
+    FSkeletalMeshBuildSettings BuildSettings;
+    FSkeletalMeshOptimizationSettings ReductionSettings;
+    TArray<FBoneReference> BonesToRemove;
+    TArray<FBoneReference> BonesToPrioritize;
+    float WeightOfPrioritization;
+    class UAnimSequence* BakePose;
+    class UAnimSequence* BakePoseOverride;
+    FString SourceImportFilename;
+    ESkinCacheUsage SkinCacheUsage;
+    uint8 bHasBeenSimplified;
+    uint8 bHasPerLODVertexColors;
+    uint8 bAllowCPUAccess;
+    uint8 bSupportUniformlyDistributedSampling;
 
 };
 
-struct FAnimLinkableElement
+struct FSkeletalMeshOptimizationSettings
 {
-    class UAnimMontage* LinkedMontage;
-    int32 SlotIndex;
-    int32 SegmentIndex;
-    TEnumAsByte<EAnimLinkMethod::Type> LinkMethod;
-    TEnumAsByte<EAnimLinkMethod::Type> CachedLinkMethod;
-    float SegmentBeginTime;
-    float SegmentLength;
-    float LinkValue;
-    class UAnimSequenceBase* LinkedSequence;
+    TEnumAsByte<SkeletalMeshTerminationCriterion> TerminationCriterion;
+    float NumOfTrianglesPercentage;
+    float NumOfVertPercentage;
+    uint32 MaxNumOfTriangles;
+    uint32 MaxNumOfVerts;
+    float MaxDeviationPercentage;
+    TEnumAsByte<SkeletalMeshOptimizationType> ReductionMethod;
+    TEnumAsByte<SkeletalMeshOptimizationImportance> SilhouetteImportance;
+    TEnumAsByte<SkeletalMeshOptimizationImportance> TextureImportance;
+    TEnumAsByte<SkeletalMeshOptimizationImportance> ShadingImportance;
+    TEnumAsByte<SkeletalMeshOptimizationImportance> SkinningImportance;
+    uint8 bRemapMorphTargets;
+    uint8 bRecalcNormals;
+    float WeldingThreshold;
+    float NormalsThreshold;
+    int32 MaxBonesPerVertex;
+    uint8 bEnforceBoneBoundaries;
+    float VolumeImportance;
+    uint8 bLockEdges;
+    uint8 bLockColorBounaries;
+    int32 BaseLOD;
 
 };
 
-struct FAnimNotifyEvent : public FAnimLinkableElement
+struct FSkeletalMeshSamplingBuiltData
 {
-    float DisplayTime;
-    float TriggerTimeOffset;
-    float EndTriggerTimeOffset;
-    float TriggerWeightThreshold;
-    FName NotifyName;
-    class UAnimNotify* Notify;
-    class UAnimNotifyState* NotifyStateClass;
-    float Duration;
-    FAnimLinkableElement EndLink;
-    bool bConvertedFromBranchingPoint;
-    TEnumAsByte<EMontageNotifyTickType::Type> MontageTickType;
-    float NotifyTriggerChance;
-    TEnumAsByte<ENotifyFilterType::Type> NotifyFilterType;
-    int32 NotifyFilterLOD;
-    bool bTriggerOnDedicatedServer;
-    bool bTriggerOnFollower;
-    int32 TrackIndex;
+    TArray<FSkeletalMeshSamplingLODBuiltData> WholeMeshBuiltData;
+    TArray<FSkeletalMeshSamplingRegionBuiltData> RegionBuiltData;
 
 };
 
-struct FMarkerSyncAnimPosition
+struct FSkeletalMeshSamplingInfo
 {
-    FName PreviousMarkerName;
-    FName NextMarkerName;
-    float PositionBetweenMarkers;
+    TArray<FSkeletalMeshSamplingRegion> Regions;
+    FSkeletalMeshSamplingBuiltData BuiltData;
 
 };
 
-class UAnimInstance : public UObject
+struct FSkeletalMeshSamplingLODBuiltData
 {
-    class USkeleton* CurrentSkeleton;
-    TEnumAsByte<ERootMotionMode::Type> RootMotionMode;
-    uint8 bUseMultiThreadedAnimationUpdate;
-    uint8 bUsingCopyPoseFromMesh;
-    uint8 bReceiveNotifiesFromLinkedInstances;
-    uint8 bPropagateNotifiesToLinkedInstances;
-    uint8 bQueueMontageEvents;
-    FAnimInstanceOnMontageBlendingOut OnMontageBlendingOut;
-    void OnMontageBlendingOutStartedMCDelegate(class UAnimMontage* Montage, bool bInterrupted);
-    FAnimInstanceOnMontageStarted OnMontageStarted;
-    void OnMontageStartedMCDelegate(class UAnimMontage* Montage);
-    FAnimInstanceOnMontageEnded OnMontageEnded;
-    void OnMontageEndedMCDelegate(class UAnimMontage* Montage, bool bInterrupted);
-    FAnimInstanceOnAllMontageInstancesEnded OnAllMontageInstancesEnded;
-    void OnAllMontageInstancesEndedMCDelegate();
-    FAnimNotifyQueue NotifyQueue;
-    TArray<FAnimNotifyEvent> ActiveAnimNotifyState;
-
-    void UnlockAIResources(bool bUnlockMovement, bool UnlockAILogic);
-    void UnlinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
-    class APawn* TryGetPawnOwner();
-    void StopSlotAnimation(float InBlendOutTime, FName SlotNodeName);
-    void SnapshotPose(FPoseSnapshot& Snapshot);
-    void SetRootMotionMode(TEnumAsByte<ERootMotionMode::Type> Value);
-    void SetReceiveNotifiesFromLinkedInstances(bool bSet);
-    void SetPropagateNotifiesToLinkedInstances(bool bSet);
-    void SetMorphTarget(FName MorphTargetName, float Value);
-    void SavePoseSnapshot(FName SnapshotName);
-    void ResetDynamics(ETeleportType InTeleportType);
-    class UAnimMontage* PlaySlotAnimationAsDynamicMontage(class UAnimSequenceBase* Asset, FName SlotNodeName, float BlendInTime, float BlendOutTime, float InPlayRate, int32 LoopCount, float BlendOutTriggerTime, float InTimeToStartMontageAt);
-    float PlaySlotAnimation(class UAnimSequenceBase* Asset, FName SlotNodeName, float BlendInTime, float BlendOutTime, float InPlayRate, int32 LoopCount);
-    void Montage_StopGroupByName(float InBlendOutTime, FName GroupName);
-    void Montage_Stop(float InBlendOutTime, const class UAnimMontage* Montage);
-    void Montage_SetPosition(const class UAnimMontage* Montage, float NewPosition);
-    void Montage_SetPlayRate(const class UAnimMontage* Montage, float NewPlayRate);
-    void Montage_SetNextSection(FName SectionNameToChange, FName NextSection, const class UAnimMontage* Montage);
-    void Montage_Resume(const class UAnimMontage* Montage);
-    float Montage_Play(class UAnimMontage* MontageToPlay, float InPlayRate, EMontagePlayReturnType ReturnValueType, float InTimeToStartMontageAt, bool bStopAllMontages);
-    void Montage_Pause(const class UAnimMontage* Montage);
-    void Montage_JumpToSectionsEnd(FName SectionName, const class UAnimMontage* Montage);
-    void Montage_JumpToSection(FName SectionName, const class UAnimMontage* Montage);
-    bool Montage_IsPlaying(const class UAnimMontage* Montage);
-    bool Montage_IsActive(const class UAnimMontage* Montage);
-    float Montage_GetPosition(const class UAnimMontage* Montage);
-    float Montage_GetPlayRate(const class UAnimMontage* Montage);
-    bool Montage_GetIsStopped(const class UAnimMontage* Montage);
-    FName Montage_GetCurrentSection(const class UAnimMontage* Montage);
-    float Montage_GetBlendTime(const class UAnimMontage* Montage);
-    void LockAIResources(bool bLockMovement, bool LockAILogic);
-    void LinkAnimGraphByTag(FName InTag, TSubclassOf<class UAnimInstance> InClass);
-    void LinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
-    bool IsSyncGroupBetweenMarkers(FName InSyncGroupName, FName PreviousMarker, FName NextMarker, bool bRespectMarkerOrder);
-    bool IsPlayingSlotAnimation(const class UAnimSequenceBase* Asset, FName SlotNodeName);
-    bool IsAnyMontagePlaying();
-    bool HasMarkerBeenHitThisFrame(FName SyncGroup, FName MarkerName);
-    bool GetTimeToClosestMarker(FName SyncGroup, FName MarkerName, float& OutMarkerTime);
-    FMarkerSyncAnimPosition GetSyncGroupPosition(FName InSyncGroupName);
-    float GetRelevantAnimTimeRemainingFraction(int32 MachineIndex, int32 StateIndex);
-    float GetRelevantAnimTimeRemaining(int32 MachineIndex, int32 StateIndex);
-    float GetRelevantAnimTimeFraction(int32 MachineIndex, int32 StateIndex);
-    float GetRelevantAnimTime(int32 MachineIndex, int32 StateIndex);
-    float GetRelevantAnimLength(int32 MachineIndex, int32 StateIndex);
-    bool GetReceiveNotifiesFromLinkedInstances();
-    bool GetPropagateNotifiesToLinkedInstances();
-    class USkeletalMeshComponent* GetOwningComponent();
-    class AActor* GetOwningActor();
-    void GetLinkedAnimLayerInstancesByGroup(FName InGroup, TArray<class UAnimInstance*>& OutLinkedInstances);
-    class UAnimInstance* GetLinkedAnimLayerInstanceByGroupAndClass(FName InGroup, TSubclassOf<class UAnimInstance> InClass);
-    class UAnimInstance* GetLinkedAnimLayerInstanceByGroup(FName InGroup);
-    class UAnimInstance* GetLinkedAnimLayerInstanceByClass(TSubclassOf<class UAnimInstance> InClass);
-    void GetLinkedAnimGraphInstancesByTag(FName InTag, TArray<class UAnimInstance*>& OutLinkedInstances);
-    class UAnimInstance* GetLinkedAnimGraphInstanceByTag(FName InTag);
-    float GetInstanceTransitionTimeElapsedFraction(int32 MachineIndex, int32 TransitionIndex);
-    float GetInstanceTransitionTimeElapsed(int32 MachineIndex, int32 TransitionIndex);
-    float GetInstanceTransitionCrossfadeDuration(int32 MachineIndex, int32 TransitionIndex);
-    float GetInstanceStateWeight(int32 MachineIndex, int32 StateIndex);
-    float GetInstanceMachineWeight(int32 MachineIndex);
-    float GetInstanceCurrentStateElapsedTime(int32 MachineIndex);
-    float GetInstanceAssetPlayerTimeFromEndFraction(int32 AssetPlayerIndex);
-    float GetInstanceAssetPlayerTimeFromEnd(int32 AssetPlayerIndex);
-    float GetInstanceAssetPlayerTimeFraction(int32 AssetPlayerIndex);
-    float GetInstanceAssetPlayerTime(int32 AssetPlayerIndex);
-    float GetInstanceAssetPlayerLength(int32 AssetPlayerIndex);
-    float GetCurveValue(FName CurveName);
-    FName GetCurrentStateName(int32 MachineIndex);
-    class UAnimMontage* GetCurrentActiveMontage();
-    void GetAllCurveNames(TArray<FName>& OutNames);
-    void GetActiveCurveNames(EAnimCurveType CurveType, TArray<FName>& OutNames);
-    void ClearMorphTargets();
-    float CalculateDirection(const FVector& Velocity, const FRotator& BaseRotation);
-    void BlueprintUpdateAnimation(float DeltaTimeX);
-    void BlueprintPostEvaluateAnimation();
-    void BlueprintLinkedAnimationLayersInitialized();
-    void BlueprintInitializeAnimation();
-    void BlueprintBeginPlay();
 };
 
-struct FPerPlatformInt
+struct FSkeletalMeshSamplingRegion
 {
-    int32 Default;
+    FName Name;
+    int32 LODIndex;
+    uint8 bSupportUniformlyDistributedSampling;
+    TArray<FSkeletalMeshSamplingRegionMaterialFilter> MaterialFilters;
+    TArray<FSkeletalMeshSamplingRegionBoneFilter> BoneFilters;
 
 };
 
-struct FPerPlatformBool
+struct FSkeletalMeshSamplingRegionBoneFilter
 {
-    bool Default;
+    FName BoneName;
+    uint8 bIncludeOrExclude;
+    uint8 bApplyToChildren;
 
 };
 
-struct FPerPlatformFloat
+struct FSkeletalMeshSamplingRegionBuiltData
 {
-    float Default;
+};
+
+struct FSkeletalMeshSamplingRegionMaterialFilter
+{
+    FName MaterialName;
 
 };
 
-struct FAudioComponentParam
+struct FSkeletonToMeshLinkup
 {
-    FName ParamName;
-    float FloatParam;
-    bool BoolParam;
-    int32 IntParam;
-    class USoundWave* SoundWaveParam;
+    TArray<int32> SkeletonToMeshTable;
+    TArray<int32> MeshToSkeletonTable;
 
 };
 
-struct FSoundModulationDefaultSettings
+struct FSkinWeightProfileInfo
 {
-    FSoundModulationDestinationSettings VolumeModulationDestination;
-    FSoundModulationDestinationSettings PitchModulationDestination;
-    FSoundModulationDestinationSettings HighpassModulationDestination;
-    FSoundModulationDestinationSettings LowpassModulationDestination;
+    FName Name;
+    FPerPlatformBool DefaultProfile;
+    FPerPlatformInt DefaultProfileFromLODIndex;
+
+};
+
+struct FSkinWeightProfileManagerTickFunction : public FTickFunction
+{
+};
+
+struct FSlotAnimationTrack
+{
+    FName slotName;
+    FAnimTrack AnimTrack;
+
+};
+
+struct FSlotEvaluationPose
+{
+    TEnumAsByte<EAdditiveAnimationType> AdditiveType;
+    float Weight;
+
+};
+
+struct FSmartName
+{
+    FName DisplayName;
+
+};
+
+struct FSmartNameContainer
+{
+};
+
+struct FSmartNameMapping
+{
+};
+
+struct FSolverIterations
+{
+    float FixedTimeStep;
+    int32 SolverIterations;
+    int32 JointIterations;
+    int32 CollisionIterations;
+    int32 SolverPushOutIterations;
+    int32 JointPushOutIterations;
+    int32 CollisionPushOutIterations;
+
+};
+
+struct FSoundAttenuationPluginSettings
+{
+    TArray<class USpatializationPluginSourceSettingsBase*> SpatializationPluginSettingsArray;
+    TArray<class UOcclusionPluginSourceSettingsBase*> OcclusionPluginSettingsArray;
+    TArray<class UReverbPluginSourceSettingsBase*> ReverbPluginSettingsArray;
+
+};
+
+struct FSoundAttenuationSettings : public FBaseAttenuationSettings
+{
+    uint8 bAttenuate;
+    uint8 bSpatialize;
+    uint8 bAttenuateWithLPF;
+    uint8 bEnableListenerFocus;
+    uint8 bEnableFocusInterpolation;
+    uint8 bEnableOcclusion;
+    uint8 bUseComplexCollisionForOcclusion;
+    uint8 bEnableReverbSend;
+    uint8 bEnablePriorityAttenuation;
+    uint8 bApplyNormalizationToStereoSounds;
+    uint8 bEnableLogFrequencyScaling;
+    uint8 bEnableSubmixSends;
+    TEnumAsByte<ESoundSpatializationAlgorithm> SpatializationAlgorithm;
+    float BinauralRadius;
+    EAirAbsorptionMethod AbsorptionMethod;
+    TEnumAsByte<ECollisionChannel> OcclusionTraceChannel;
+    EReverbSendMethod ReverbSendMethod;
+    EPriorityAttenuationMethod PriorityAttenuationMethod;
+    float OmniRadius;
+    float StereoSpread;
+    float LPFRadiusMin;
+    float LPFRadiusMax;
+    FRuntimeFloatCurve CustomLowpassAirAbsorptionCurve;
+    FRuntimeFloatCurve CustomHighpassAirAbsorptionCurve;
+    float LPFFrequencyAtMin;
+    float LPFFrequencyAtMax;
+    float HPFFrequencyAtMin;
+    float HPFFrequencyAtMax;
+    float FocusAzimuth;
+    float NonFocusAzimuth;
+    float FocusDistanceScale;
+    float NonFocusDistanceScale;
+    float FocusPriorityScale;
+    float NonFocusPriorityScale;
+    float FocusVolumeAttenuation;
+    float NonFocusVolumeAttenuation;
+    float FocusAttackInterpSpeed;
+    float FocusReleaseInterpSpeed;
+    float OcclusionLowPassFilterFrequency;
+    float OcclusionVolumeAttenuation;
+    float OcclusionInterpolationTime;
+    float ReverbWetLevelMin;
+    float ReverbWetLevelMax;
+    float ReverbDistanceMin;
+    float ReverbDistanceMax;
+    float ManualReverbSendLevel;
+    FRuntimeFloatCurve CustomReverbSendCurve;
+    TArray<FAttenuationSubmixSendSettings> SubmixSendSettings;
+    float PriorityAttenuationMin;
+    float PriorityAttenuationMax;
+    float PriorityAttenuationDistanceMin;
+    float PriorityAttenuationDistanceMax;
+    float ManualPriorityAttenuation;
+    FRuntimeFloatCurve CustomPriorityAttenuationCurve;
+    FSoundAttenuationPluginSettings PluginSettings;
+
+};
+
+struct FSoundClassAdjuster
+{
+    class USoundClass* SoundClassObject;
+    float VolumeAdjuster;
+    float PitchAdjuster;
+    float LowPassFilterFrequency;
+    uint8 bApplyToChildren;
+    float VoiceCenterChannelVolumeAdjuster;
+
+};
+
+struct FSoundClassEditorData
+{
+};
+
+struct FSoundClassProperties
+{
+    float Volume;
+    float Pitch;
+    float LowPassFilterFrequency;
+    float AttenuationDistanceScale;
+    float LFEBleed;
+    float VoiceCenterChannelVolume;
+    float RadioFilterVolume;
+    float RadioFilterVolumeThreshold;
+    uint8 bApplyEffects;
+    uint8 bAlwaysPlay;
+    uint8 bIsUISound;
+    uint8 bIsMusic;
+    uint8 bCenterChannelOnly;
+    uint8 bApplyAmbientVolumes;
+    uint8 bReverb;
+    float Default2DReverbSendAmount;
+    FSoundModulationDefaultSettings ModulationSettings;
+    TEnumAsByte<EAudioOutputTarget::Type> OutputTarget;
+    ESoundWaveLoadingBehavior LoadingBehavior;
+    class USoundSubmix* DefaultSubmix;
+
+};
+
+struct FSoundConcurrencySettings
+{
+    int32 MaxCount;
+    uint8 bLimitToOwner;
+    TEnumAsByte<EMaxConcurrentResolutionRule::Type> ResolutionRule;
+    float RetriggerTime;
+    float VolumeScale;
+    EConcurrencyVolumeScaleMode VolumeScaleMode;
+    float VolumeScaleAttackTime;
+    uint8 bVolumeScaleCanRelease;
+    float VolumeScaleReleaseTime;
+    float VoiceStealReleaseTime;
+
+};
+
+struct FSoundDebugEntry
+{
+    FName DebugName;
+    FSoftObjectPath Sound;
+
+};
+
+struct FSoundGroup
+{
+    TEnumAsByte<ESoundGroup> SoundGroup;
+    FString DisplayName;
+    uint8 bAlwaysDecompressOnLoad;
+    float DecompressedDuration;
 
 };
 
@@ -2204,18 +5702,97 @@ struct FSoundModulationDefaultRoutingSettings : public FSoundModulationDefaultSe
 
 };
 
-struct FQuartzQuantizationBoundary
+struct FSoundModulationDefaultSettings
 {
-    EQuartzCommandQuantization Quantization;
-    float Multiplier;
-    EQuarztQuantizationReference CountingReferencePoint;
-    bool bFireOnClockStart;
+    FSoundModulationDestinationSettings VolumeModulationDestination;
+    FSoundModulationDestinationSettings PitchModulationDestination;
+    FSoundModulationDestinationSettings HighpassModulationDestination;
+    FSoundModulationDestinationSettings LowpassModulationDestination;
+
+};
+
+struct FSoundModulationDestinationSettings
+{
+    float Value;
+    class USoundModulatorBase* Modulator;
+
+};
+
+struct FSoundNodeEditorData
+{
+};
+
+struct FSoundSourceBusSendInfo
+{
+    ESourceBusSendLevelControlMethod SourceBusSendLevelControlMethod;
+    class USoundSourceBus* SoundSourceBus;
+    class UAudioBus* AudioBus;
+    float SendLevel;
+    float MinSendLevel;
+    float MaxSendLevel;
+    float MinSendDistance;
+    float MaxSendDistance;
+    FRuntimeFloatCurve CustomSendLevelCurve;
+
+};
+
+struct FSoundSubmixSendInfo
+{
+    ESendLevelControlMethod SendLevelControlMethod;
+    ESubmixSendStage SendStage;
+    class USoundSubmixBase* SoundSubmix;
+    float SendLevel;
+    float MinSendLevel;
+    float MaxSendLevel;
+    float MinSendDistance;
+    float MaxSendDistance;
+    FRuntimeFloatCurve CustomSendLevelCurve;
+
+};
+
+struct FSoundSubmixSpectralAnalysisBandSettings
+{
+    float BandFrequency;
+    int32 AttackTimeMsec;
+    int32 ReleaseTimeMsec;
+    float QFactor;
+
+};
+
+struct FSoundTrackKey
+{
+    float Time;
+    float Volume;
+    float Pitch;
+    class USoundBase* Sound;
+
+};
+
+struct FSoundWaveEnvelopeDataPerSound
+{
+    float Envelope;
+    float PlaybackTime;
+    class USoundWave* SoundWave;
+
+};
+
+struct FSoundWaveEnvelopeTimeData
+{
+    float Amplitude;
+    float TimeSec;
 
 };
 
 struct FSoundWaveSpectralData
 {
     float FrequencyHz;
+    float Magnitude;
+    float NormalizedMagnitude;
+
+};
+
+struct FSoundWaveSpectralDataEntry
+{
     float Magnitude;
     float NormalizedMagnitude;
 
@@ -2229,11 +5806,299 @@ struct FSoundWaveSpectralDataPerSound
 
 };
 
-struct FSoundWaveEnvelopeDataPerSound
+struct FSoundWaveSpectralTimeData
 {
-    float Envelope;
-    float PlaybackTime;
-    class USoundWave* SoundWave;
+    TArray<FSoundWaveSpectralDataEntry> Data;
+    float TimeSec;
+
+};
+
+struct FSourceEffectChainEntry
+{
+    class USoundEffectSourcePreset* Preset;
+    uint8 bBypass;
+
+};
+
+struct FSplineCurves
+{
+    FInterpCurveVector Position;
+    FInterpCurveQuat Rotation;
+    FInterpCurveVector Scale;
+    FInterpCurveFloat ReparamTable;
+    class USplineMetadata* MetaData;
+    uint32 Version;
+
+};
+
+struct FSplineInstanceData : public FSceneComponentInstanceData
+{
+    bool bSplineHasBeenEdited;
+    FSplineCurves SplineCurves;
+    FSplineCurves SplineCurvesPreUCS;
+
+};
+
+struct FSplineMeshInstanceData : public FSceneComponentInstanceData
+{
+    FVector StartPos;
+    FVector EndPos;
+    FVector StartTangent;
+    FVector EndTangent;
+
+};
+
+struct FSplineMeshParams
+{
+    FVector StartPos;
+    FVector StartTangent;
+    FVector2D StartScale;
+    float StartRoll;
+    FVector2D StartOffset;
+    FVector EndPos;
+    FVector2D EndScale;
+    FVector EndTangent;
+    float EndRoll;
+    FVector2D EndOffset;
+
+};
+
+struct FSplinePoint
+{
+    float InputKey;
+    FVector Position;
+    FVector ArriveTangent;
+    FVector LeaveTangent;
+    FRotator Rotation;
+    FVector Scale;
+    TEnumAsByte<ESplinePointType::Type> Type;
+
+};
+
+struct FSpriteCategoryInfo
+{
+    FName Category;
+    FText DisplayName;
+    FText Description;
+
+};
+
+struct FStartPhysicsTickFunction : public FTickFunction
+{
+};
+
+struct FStatColorMapEntry
+{
+    float In;
+    FColor Out;
+
+};
+
+struct FStatColorMapping
+{
+    FString StatName;
+    TArray<FStatColorMapEntry> ColorMap;
+    uint8 DisableBlend;
+
+};
+
+struct FStateMachineDebugData
+{
+};
+
+struct FStateMachineStateDebugData
+{
+};
+
+struct FStaticComponentMaskParameter : public FStaticParameterBase
+{
+    bool R;
+    bool G;
+    bool B;
+    bool A;
+
+};
+
+struct FStaticComponentMaskValue
+{
+    bool R;
+    bool G;
+    bool B;
+    bool A;
+
+};
+
+struct FStaticMaterial
+{
+    class UMaterialInterface* MaterialInterface;
+    FName MaterialSlotName;
+    FName ImportedMaterialSlotName;
+    FMeshUVChannelInfo UVChannelData;
+
+};
+
+struct FStaticMaterialLayersParameter : public FStaticParameterBase
+{
+    FMaterialLayersFunctions Value;
+
+};
+
+struct FStaticMeshComponentInstanceData : public FPrimitiveComponentInstanceData
+{
+    class UStaticMesh* StaticMesh;
+    TArray<FStaticMeshVertexColorLODData> VertexColorLODs;
+    TArray<FGuid> CachedStaticLighting;
+    TArray<FStreamingTextureBuildInfo> StreamingTextureData;
+
+};
+
+struct FStaticMeshComponentLODInfo
+{
+};
+
+struct FStaticMeshOptimizationSettings
+{
+    TEnumAsByte<EOptimizationType> ReductionMethod;
+    float NumOfTrianglesPercentage;
+    float MaxDeviationPercentage;
+    float WeldingThreshold;
+    bool bRecalcNormals;
+    float NormalsThreshold;
+    uint8 SilhouetteImportance;
+    uint8 TextureImportance;
+    uint8 ShadingImportance;
+
+};
+
+struct FStaticMeshSourceModel
+{
+    FMeshBuildSettings BuildSettings;
+    FMeshReductionSettings ReductionSettings;
+    float LODDistance;
+    FPerPlatformFloat ScreenSize;
+    FString SourceImportFilename;
+
+};
+
+struct FStaticMeshVertexColorLODData
+{
+    TArray<FPaintedVertex> PaintedVertices;
+    TArray<FColor> VertexBufferColors;
+    uint32 LODIndex;
+
+};
+
+struct FStaticParameterBase
+{
+    FMaterialParameterInfo ParameterInfo;
+    bool bOverride;
+    FGuid ExpressionGUID;
+
+};
+
+struct FStaticParameterSet
+{
+    TArray<FStaticSwitchParameter> StaticSwitchParameters;
+    TArray<FStaticComponentMaskParameter> StaticComponentMaskParameters;
+    TArray<FStaticTerrainLayerWeightParameter> TerrainLayerWeightParameters;
+    TArray<FStaticMaterialLayersParameter> MaterialLayersParameters;
+
+};
+
+struct FStaticSwitchParameter : public FStaticParameterBase
+{
+    bool Value;
+
+};
+
+struct FStaticTerrainLayerWeightParameter : public FStaticParameterBase
+{
+    int32 WeightmapIndex;
+    bool bWeightBasedBlend;
+
+};
+
+struct FStreamableTextureInstance
+{
+};
+
+struct FStreamedAudioPlatformData
+{
+};
+
+struct FStreamingLevelsToConsider
+{
+    TArray<class ULevelStreaming*> StreamingLevels;
+
+};
+
+struct FStreamingRenderAssetPrimitiveInfo
+{
+    class UStreamableRenderAsset* RenderAsset;
+    FBoxSphereBounds Bounds;
+    float TexelFactor;
+    uint32 PackedRelativeBox;
+    uint8 bAllowInvalidTexelFactorWhenUnregistered;
+
+};
+
+struct FStreamingTextureBuildInfo
+{
+    uint32 PackedRelativeBox;
+    int32 TextureLevelIndex;
+    float TexelFactor;
+
+};
+
+struct FStringCurve : public FIndexedCurve
+{
+    FString DefaultValue;
+    TArray<FStringCurveKey> Keys;
+
+};
+
+struct FStringCurveKey
+{
+    float Time;
+    FString Value;
+
+};
+
+struct FStructRedirect
+{
+    FName OldStructName;
+    FName NewStructName;
+
+};
+
+struct FSubTrackGroup
+{
+    FString GroupName;
+    TArray<int32> TrackIndices;
+    uint8 bIsCollapsed;
+    uint8 bIsSelected;
+
+};
+
+struct FSubsurfaceProfileStruct
+{
+    FLinearColor SurfaceAlbedo;
+    FLinearColor MeanFreePathColor;
+    float MeanFreePathDistance;
+    float WorldUnitScale;
+    bool bEnableBurley;
+    float ScatterRadius;
+    FLinearColor SubsurfaceColor;
+    FLinearColor FalloffColor;
+    FLinearColor BoundaryColorBleed;
+    float ExtinctionScale;
+    float NormalScale;
+    float ScatteringDistribution;
+    float IOR;
+    float Roughness0;
+    float Roughness1;
+    float LobeMix;
+    FLinearColor TransmissionTintColor;
 
 };
 
@@ -2244,169 +6109,1524 @@ struct FSubtitleCue
 
 };
 
-class UAudioComponent : public USceneComponent
+struct FSupportedSubTrackInfo
 {
-    class USoundBase* Sound;
-    TArray<FAudioComponentParam> InstanceParameters;
-    class USoundClass* SoundClassOverride;
-    uint8 bAutoDestroy;
-    uint8 bStopWhenOwnerDestroyed;
-    uint8 bShouldRemainActiveIfDropped;
-    uint8 bAllowSpatialization;
-    uint8 bOverrideAttenuation;
-    uint8 bOverrideSubtitlePriority;
-    uint8 bIsUISound;
-    uint8 bEnableLowPassFilter;
-    uint8 bOverridePriority;
-    uint8 bSuppressSubtitles;
-    uint8 bAutoManageAttachment;
-    FName AudioComponentUserID;
-    float PitchModulationMin;
-    float PitchModulationMax;
-    float VolumeModulationMin;
-    float VolumeModulationMax;
-    float VolumeMultiplier;
-    int32 EnvelopeFollowerAttackTime;
-    int32 EnvelopeFollowerReleaseTime;
-    float Priority;
-    float SubtitlePriority;
-    class USoundEffectSourcePresetChain* SourceEffectChain;
-    float PitchMultiplier;
-    float LowPassFilterFrequency;
+    TSubclassOf<class UInterpTrack> SupportedClass;
+    FString SubTrackName;
+    int32 GroupIndex;
+
+};
+
+struct FSwarmDebugOptions
+{
+    uint8 bDistributionEnabled;
+    uint8 bForceContentExport;
+    uint8 bInitialized;
+
+};
+
+struct FTTEventTrack : public FTTTrackBase
+{
+    FName FunctionName;
+    class UCurveFloat* CurveKeys;
+
+};
+
+struct FTTFloatTrack : public FTTPropertyTrack
+{
+    class UCurveFloat* CurveFloat;
+
+};
+
+struct FTTLinearColorTrack : public FTTPropertyTrack
+{
+    class UCurveLinearColor* CurveLinearColor;
+
+};
+
+struct FTTPropertyTrack : public FTTTrackBase
+{
+    FName PropertyName;
+
+};
+
+struct FTTTrackBase
+{
+    FName TrackName;
+    bool bIsExternalCurve;
+
+};
+
+struct FTTTrackId
+{
+    int32 TrackType;
+    int32 TrackIndex;
+
+};
+
+struct FTTVectorTrack : public FTTPropertyTrack
+{
+    class UCurveVector* CurveVector;
+
+};
+
+struct FTViewTarget
+{
+    class AActor* Target;
+    FMinimalViewInfo POV;
+    class APlayerState* PlayerState;
+
+};
+
+struct FTableRowBase
+{
+};
+
+struct FTentDistribution
+{
+    float TipAltitude;
+    float TipValue;
+    float Width;
+
+};
+
+struct FTextSizingParameters
+{
+    float DrawX;
+    float DrawY;
+    float DrawXL;
+    float DrawYL;
+    FVector2D Scaling;
+    class UFont* DrawFont;
+    FVector2D SpacingAdjust;
+
+};
+
+struct FTextureFormatSettings
+{
+    TEnumAsByte<TextureCompressionSettings> CompressionSettings;
+    uint8 CompressionNoAlpha;
+    uint8 CompressionNone;
+    uint8 CompressionYCoCg;
+    uint8 sRGB;
+
+};
+
+struct FTextureLODGroup
+{
+    TEnumAsByte<TextureGroup> Group;
+    int32 LODBias;
+    int32 LODBias_Smaller;
+    int32 LODBias_Smallest;
+    int32 NumStreamedMips;
+    TEnumAsByte<TextureMipGenSettings> MipGenSettings;
+    int32 MinLODSize;
+    int32 MaxLODSize;
+    int32 MaxLODSize_Smaller;
+    int32 MaxLODSize_Smallest;
+    int32 OptionalLODBias;
+    int32 OptionalMaxLODSize;
+    FName MinMagFilter;
+    FName MipFilter;
+    ETextureMipLoadOptions MipLoadOptions;
+    bool HighPriorityLoad;
+    bool DuplicateNonOptionalMips;
+    float Downscale;
+    ETextureDownscaleOptions DownscaleOptions;
+    int32 VirtualTextureTileCountBias;
+    int32 VirtualTextureTileSizeBias;
+    TEnumAsByte<ETextureLossyCompressionAmount> LossyCompressionAmount;
+
+};
+
+struct FTextureParameterValue
+{
+    FMaterialParameterInfo ParameterInfo;
+    class UTexture* ParameterValue;
+    FGuid ExpressionGUID;
+
+};
+
+struct FTexturePlatformData
+{
+};
+
+struct FTextureSource
+{
+};
+
+struct FTextureSourceBlock
+{
+    int32 BlockX;
+    int32 BlockY;
+    int32 SizeX;
+    int32 SizeY;
+    int32 NumSlices;
+    int32 NumMips;
+
+};
+
+struct FTickFunction
+{
+    TEnumAsByte<ETickingGroup> TickGroup;
+    TEnumAsByte<ETickingGroup> EndTickGroup;
+    uint8 bTickEvenWhenPaused;
+    uint8 bCanEverTick;
+    uint8 bStartWithTickEnabled;
+    uint8 bAllowTickOnDedicatedServer;
+    float TickInterval;
+
+};
+
+struct FTickPrerequisite
+{
+};
+
+struct FTimeStretchCurve
+{
+    float SamplingRate;
+    float CurveValueMinPrecision;
+    TArray<FTimeStretchCurveMarker> Markers;
+    float Sum_dT_i_by_C_i;
+
+};
+
+struct FTimeStretchCurveInstance
+{
+    bool bHasValidData;
+
+};
+
+struct FTimeStretchCurveMarker
+{
+    float Time;
+    float alpha;
+
+};
+
+struct FTimeline
+{
+    TEnumAsByte<ETimelineLengthMode> LengthMode;
+    uint8 bLooping;
+    uint8 bReversePlayback;
+    uint8 bPlaying;
+    float Length;
+    float PlayRate;
+    float Position;
+    TArray<FTimelineEventEntry> Events;
+    TArray<FTimelineVectorTrack> InterpVectors;
+    TArray<FTimelineFloatTrack> InterpFloats;
+    TArray<FTimelineLinearColorTrack> InterpLinearColors;
+    FTimelineTimelinePostUpdateFunc TimelinePostUpdateFunc;
+    void OnTimelineEvent();
+    FTimelineTimelineFinishedFunc TimelineFinishedFunc;
+    void OnTimelineEvent();
+    TWeakObjectPtr<class UObject> PropertySetObject;
+    FName DirectionPropertyName;
+
+};
+
+struct FTimelineEventEntry
+{
+    float Time;
+    FTimelineEventEntryEventFunc EventFunc;
+    void OnTimelineEvent();
+
+};
+
+struct FTimelineFloatTrack
+{
+    class UCurveFloat* FloatCurve;
+    FTimelineFloatTrackInterpFunc InterpFunc;
+    void OnTimelineFloat(float Output);
+    FName TrackName;
+    FName FloatPropertyName;
+
+};
+
+struct FTimelineLinearColorTrack
+{
+    class UCurveLinearColor* LinearColorCurve;
+    FTimelineLinearColorTrackInterpFunc InterpFunc;
+    void OnTimelineLinearColor(FLinearColor Output);
+    FName TrackName;
+    FName LinearColorPropertyName;
+
+};
+
+struct FTimelineVectorTrack
+{
+    class UCurveVector* VectorCurve;
+    FTimelineVectorTrackInterpFunc InterpFunc;
+    void OnTimelineVector(FVector Output);
+    FName TrackName;
+    FName VectorPropertyName;
+
+};
+
+struct FTimerHandle
+{
+    uint64 Handle;
+
+};
+
+struct FToggleTrackKey
+{
+    float Time;
+    TEnumAsByte<ETrackToggleAction> ToggleAction;
+
+};
+
+struct FTouchInputControl
+{
+    class UTexture2D* Image1;
+    class UTexture2D* Image2;
+    FVector2D Center;
+    FVector2D VisualSize;
+    FVector2D ThumbSize;
+    FVector2D InteractionSize;
+    FVector2D InputScale;
+    FKey MainInputKey;
+    FKey AltInputKey;
+
+};
+
+struct FTrackToSkeletonMap
+{
+    int32 BoneTreeIndex;
+
+};
+
+struct FTransformBase
+{
+    FName Node;
+    FTransformBaseConstraint Constraints;
+
+};
+
+struct FTransformBaseConstraint
+{
+    TArray<FRigTransformConstraint> TransformConstraints;
+
+};
+
+struct FTransformCurve : public FAnimCurveBase
+{
+    FVectorCurve TranslationCurve;
+    FVectorCurve RotationCurve;
+    FVectorCurve ScaleCurve;
+
+};
+
+struct FTranslationTrack
+{
+    TArray<FVector> PosKeys;
+    TArray<float> Times;
+
+};
+
+struct FTwistConstraint : public FConstraintBaseParams
+{
+    float TwistLimitDegrees;
+    TEnumAsByte<EAngularConstraintMotion> TwistMotion;
+
+};
+
+struct FURL
+{
+    FString Protocol;
+    FString Host;
+    int32 Port;
+    int32 Valid;
+    FString Map;
+    FString RedirectURL;
+    TArray<FString> Op;
+    FString Portal;
+
+};
+
+struct FUniqueNetIdRepl : public FUniqueNetIdWrapper
+{
+    TArray<uint8> ReplicationBytes;
+
+};
+
+struct FUpdateLevelStreamingLevelStatus
+{
+    FName PackageName;
+    int32 LODIndex;
+    bool bNewShouldBeLoaded;
+    bool bNewShouldBeVisible;
+    bool bNewShouldBlockOnLoad;
+
+};
+
+struct FUpdateLevelVisibilityLevelInfo
+{
+    FName PackageName;
+    FName Filename;
+    uint8 bIsVisible;
+
+};
+
+struct FUserActivity
+{
+    FString ActionName;
+
+};
+
+struct FVector2MaterialInput : public FMaterialInput
+{
+};
+
+struct FVector4Distribution
+{
+    FDistributionLookupTable Table;
+
+};
+
+struct FVectorCurve : public FAnimCurveBase
+{
+    FRichCurve FloatCurves;
+
+};
+
+struct FVectorDistribution
+{
+    FDistributionLookupTable Table;
+
+};
+
+struct FVectorMaterialInput : public FMaterialInput
+{
+};
+
+struct FVectorParameterValue
+{
+    FMaterialParameterInfo ParameterInfo;
+    FLinearColor ParameterValue;
+    FGuid ExpressionGUID;
+
+};
+
+struct FVectorRK4SpringInterpolator
+{
+    float StiffnessConstant;
+    float DampeningRatio;
+
+};
+
+struct FVectorSpringState
+{
+};
+
+struct FVector_NetQuantize : public FVector
+{
+};
+
+struct FVector_NetQuantize10 : public FVector
+{
+};
+
+struct FVector_NetQuantize100 : public FVector
+{
+};
+
+struct FVector_NetQuantizeNormal : public FVector
+{
+};
+
+struct FVertexOffsetUsage
+{
+    int32 Usage;
+
+};
+
+struct FViewTargetTransitionParams
+{
+    float BlendTime;
+    TEnumAsByte<EViewTargetBlendFunction> BlendFunction;
+    float BlendExp;
+    uint8 bLockOutgoing;
+
+};
+
+struct FVirtualBone
+{
+    FName SourceBoneName;
+    FName TargetBoneName;
+    FName VirtualBoneName;
+
+};
+
+struct FVirtualTextureBuildSettings
+{
+    int32 TileSize;
+    int32 TileBorderSize;
+    bool bEnableCompressCrunch;
+    bool bEnableCompressZlib;
+
+};
+
+struct FVirtualTextureSpacePoolConfig
+{
+    int32 MinTileSize;
+    int32 MaxTileSize;
+    TArray<TEnumAsByte<EPixelFormat>> Formats;
+    int32 SizeInMegabyte;
+    bool bAllowSizeScale;
+    uint32 ScalabilityGroup;
+
+};
+
+struct FVisibilityTrackKey
+{
+    float Time;
+    TEnumAsByte<EVisibilityTrackAction> Action;
+    TEnumAsByte<EVisibilityTrackCondition> ActiveCondition;
+
+};
+
+struct FVoiceSettings
+{
+    class USceneComponent* ComponentToAttachTo;
     class USoundAttenuation* AttenuationSettings;
-    FSoundAttenuationSettings AttenuationOverrides;
-    class USoundConcurrency* ConcurrencySettings;
-    TSet<USoundConcurrency*> ConcurrencySet;
-    EAttachmentRule AutoAttachLocationRule;
-    EAttachmentRule AutoAttachRotationRule;
-    EAttachmentRule AutoAttachScaleRule;
-    FSoundModulationDefaultRoutingSettings ModulationRouting;
-    FAudioComponentOnAudioPlayStateChanged OnAudioPlayStateChanged;
-    void OnAudioPlayStateChanged(EAudioComponentPlayState PlayState);
-    FAudioComponentOnAudioVirtualizationChanged OnAudioVirtualizationChanged;
-    void OnAudioVirtualizationChanged(bool bIsVirtualized);
-    FAudioComponentOnAudioFinished OnAudioFinished;
-    void OnAudioFinished();
-    FAudioComponentOnAudioPlaybackPercent OnAudioPlaybackPercent;
-    void OnAudioPlaybackPercent(const class USoundWave* PlayingSoundWave, const float PlaybackPercent);
-    FAudioComponentOnAudioSingleEnvelopeValue OnAudioSingleEnvelopeValue;
-    void OnAudioSingleEnvelopeValue(const class USoundWave* PlayingSoundWave, const float EnvelopeValue);
-    FAudioComponentOnAudioMultiEnvelopeValue OnAudioMultiEnvelopeValue;
-    void OnAudioMultiEnvelopeValue(const float AverageEnvelopeValue, const float MaxEnvelope, const int32 NumWaveInstances);
-    FAudioComponentOnQueueSubtitles OnQueueSubtitles;
-    void OnQueueSubtitles(const TArray<FSubtitleCue>& Subtitles, float CueDuration);
-    TWeakObjectPtr<class USceneComponent> AutoAttachParent;
-    FName AutoAttachSocketName;
+    class USoundEffectSourcePresetChain* SourceEffectChain;
 
-    void StopDelayed(float DelayTime);
+};
+
+struct FWalkableSlopeOverride
+{
+    TEnumAsByte<EWalkableSlopeBehavior> WalkableSlopeBehavior;
+    float WalkableSlopeAngle;
+
+};
+
+struct FWeightedBlendable
+{
+    float Weight;
+    class UObject* Object;
+
+};
+
+struct FWeightedBlendables
+{
+    TArray<FWeightedBlendable> Array;
+
+};
+
+struct FWorldContext
+{
+    FURL LastURL;
+    FURL LastRemoteURL;
+    class UPendingNetGame* PendingNetGame;
+    TArray<FFullyLoadedPackagesInfo> PackagesToFullyLoad;
+    TArray<class ULevel*> LoadedLevelsForPendingMapChange;
+    TArray<class UObjectReferencer*> ObjectReferencers;
+    TArray<FLevelStreamingStatus> PendingLevelStreamingStatusUpdates;
+    class UGameViewportClient* GameViewport;
+    class UGameInstance* OwningGameInstance;
+    TArray<FNamedNetDriver> ActiveNetDrivers;
+
+};
+
+struct FWorldPSCPool
+{
+    TMap<class UParticleSystem*, class FPSCPool> WorldParticleSystemPools;
+
+};
+
+struct FWrappedStringElement
+{
+    FString Value;
+    FVector2D LineExtent;
+
+};
+
+class AActor : public UObject
+{
+    FActorTickFunction PrimaryActorTick;
+    uint8 bNetTemporary;
+    uint8 bNetStartup;
+    uint8 bOnlyRelevantToOwner;
+    uint8 bAlwaysRelevant;
+    uint8 bReplicateMovement;
+    uint8 bHidden;
+    uint8 bTearOff;
+    uint8 bForceNetAddressable;
+    uint8 bExchangedRoles;
+    uint8 bNetLoadOnClient;
+    uint8 bNetUseOwnerRelevancy;
+    uint8 bRelevantForNetworkReplays;
+    uint8 bRelevantForLevelBounds;
+    uint8 bReplayRewindable;
+    uint8 bAllowTickBeforeBeginPlay;
+    uint8 bAutoDestroyWhenFinished;
+    uint8 bCanBeDamaged;
+    uint8 bBlockInput;
+    uint8 bCollideWhenPlacing;
+    uint8 bFindCameraComponentWhenViewTarget;
+    uint8 bGenerateOverlapEventsDuringLevelStreaming;
+    uint8 bIgnoresOriginShifting;
+    uint8 bEnableAutoLODGeneration;
+    uint8 bIsEditorOnlyActor;
+    uint8 bActorSeamlessTraveled;
+    uint8 bReplicates;
+    uint8 bCanBeInCluster;
+    uint8 bAllowReceiveTickEventOnDedicatedServer;
+    uint8 bActorEnableCollision;
+    uint8 bActorIsBeingDestroyed;
+    EActorUpdateOverlapsMethod UpdateOverlapsMethodDuringLevelStreaming;
+    EActorUpdateOverlapsMethod DefaultUpdateOverlapsMethodDuringLevelStreaming;
+    TEnumAsByte<ENetRole> RemoteRole;
+    FRepMovement ReplicatedMovement;
+    float InitialLifeSpan;
+    float CustomTimeDilation;
+    FRepAttachment AttachmentReplication;
+    class AActor* Owner;
+    FName NetDriverName;
+    TEnumAsByte<ENetRole> Role;
+    TEnumAsByte<ENetDormancy> NetDormancy;
+    ESpawnActorCollisionHandlingMethod SpawnCollisionHandlingMethod;
+    TEnumAsByte<EAutoReceiveInput::Type> AutoReceiveInput;
+    int32 InputPriority;
+    class UInputComponent* InputComponent;
+    float NetCullDistanceSquared;
+    int32 NetTag;
+    float NetUpdateFrequency;
+    float MinNetUpdateFrequency;
+    float NetPriority;
+    class APawn* Instigator;
+    TArray<class AActor*> Children;
+    class USceneComponent* RootComponent;
+    TArray<class AMatineeActor*> ControllingMatineeActors;
+    TArray<FName> Layers;
+    TWeakObjectPtr<class UChildActorComponent> ParentComponent;
+    TArray<FName> Tags;
+    FActorOnTakeAnyDamage OnTakeAnyDamage;
+    void TakeAnyDamageSignature(class AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, class AActor* DamageCauser);
+    FActorOnTakePointDamage OnTakePointDamage;
+    void TakePointDamageSignature(class AActor* DamagedActor, float Damage, class AController* InstigatedBy, FVector HitLocation, class UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const class UDamageType* DamageType, class AActor* DamageCauser);
+    FActorOnTakeRadialDamage OnTakeRadialDamage;
+    void TakeRadialDamageSignature(class AActor* DamagedActor, float Damage, const class UDamageType* DamageType, FVector Origin, FHitResult HitInfo, class AController* InstigatedBy, class AActor* DamageCauser);
+    FActorOnActorBeginOverlap OnActorBeginOverlap;
+    void ActorBeginOverlapSignature(class AActor* OverlappedActor, class AActor* OtherActor);
+    FActorOnActorEndOverlap OnActorEndOverlap;
+    void ActorEndOverlapSignature(class AActor* OverlappedActor, class AActor* OtherActor);
+    FActorOnBeginCursorOver OnBeginCursorOver;
+    void ActorBeginCursorOverSignature(class AActor* TouchedActor);
+    FActorOnEndCursorOver OnEndCursorOver;
+    void ActorEndCursorOverSignature(class AActor* TouchedActor);
+    FActorOnClicked OnClicked;
+    void ActorOnClickedSignature(class AActor* TouchedActor, FKey ButtonPressed);
+    FActorOnReleased OnReleased;
+    void ActorOnReleasedSignature(class AActor* TouchedActor, FKey ButtonReleased);
+    FActorOnInputTouchBegin OnInputTouchBegin;
+    void ActorOnInputTouchBeginSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
+    FActorOnInputTouchEnd OnInputTouchEnd;
+    void ActorOnInputTouchEndSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
+    FActorOnInputTouchEnter OnInputTouchEnter;
+    void ActorBeginTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
+    FActorOnInputTouchLeave OnInputTouchLeave;
+    void ActorEndTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class AActor* TouchedActor);
+    FActorOnActorHit OnActorHit;
+    void ActorHitSignature(class AActor* SelfActor, class AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+    FActorOnDestroyed OnDestroyed;
+    void ActorDestroyedSignature(class AActor* DestroyedActor);
+    FActorOnEndPlay OnEndPlay;
+    void ActorEndPlaySignature(class AActor* Actor, TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
+    TArray<class UActorComponent*> InstanceComponents;
+    TArray<class UActorComponent*> BlueprintCreatedComponents;
+
+    bool WasRecentlyRendered(float Tolerance);
+    void UserConstructionScript();
+    void TearOff();
+    void SnapRootComponentTo(class AActor* InParentActor, FName InSocketName);
+    void SetTickGroup(TEnumAsByte<ETickingGroup> NewTickGroup);
+    void SetTickableWhenPaused(bool bTickableWhenPaused);
+    void SetReplicates(bool bInReplicates);
+    void SetReplicateMovement(bool bInReplicateMovement);
+    void SetOwner(class AActor* NewOwner);
+    void SetNetDormancy(TEnumAsByte<ENetDormancy> NewDormancy);
+    void SetLifeSpan(float InLifespan);
+    void SetAutoDestroyWhenFinished(bool bVal);
+    void SetActorTickInterval(float TickInterval);
+    void SetActorTickEnabled(bool bEnabled);
+    void SetActorScale3D(FVector NewScale3D);
+    void SetActorRelativeScale3D(FVector NewRelativeScale);
+    void SetActorHiddenInGame(bool bNewHidden);
+    void SetActorEnableCollision(bool bNewActorEnableCollision);
+    void RemoveTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
+    void RemoveTickPrerequisiteActor(class AActor* PrerequisiteActor);
+    void ReceiveTick(float DeltaSeconds);
+    void ReceiveRadialDamage(float DamageReceived, const class UDamageType* DamageType, FVector Origin, const FHitResult& HitInfo, class AController* InstigatedBy, class AActor* DamageCauser);
+    void ReceivePointDamage(float Damage, const class UDamageType* DamageType, FVector HitLocation, FVector HitNormal, class UPrimitiveComponent* HitComponent, FName BoneName, FVector ShotFromDirection, class AController* InstigatedBy, class AActor* DamageCauser, const FHitResult& HitInfo);
+    void ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit);
+    void ReceiveEndPlay(TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
+    void ReceiveDestroyed();
+    void ReceiveBeginPlay();
+    void ReceiveAnyDamage(float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, class AActor* DamageCauser);
+    void ReceiveActorOnReleased(FKey ButtonReleased);
+    void ReceiveActorOnInputTouchLeave(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
+    void ReceiveActorOnInputTouchEnter(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
+    void ReceiveActorOnInputTouchEnd(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
+    void ReceiveActorOnInputTouchBegin(const TEnumAsByte<ETouchIndex::Type> FingerIndex);
+    void ReceiveActorOnClicked(FKey ButtonPressed);
+    void ReceiveActorEndOverlap(class AActor* OtherActor);
+    void ReceiveActorEndCursorOver();
+    void ReceiveActorBeginOverlap(class AActor* OtherActor);
+    void ReceiveActorBeginCursorOver();
+    void PrestreamTextures(float Seconds, bool bEnableStreaming, int32 CinematicTextureGroups);
+    void OnRep_ReplicateMovement();
+    void OnRep_ReplicatedMovement();
+    void OnRep_Owner();
+    void OnRep_Instigator();
+    void OnRep_AttachmentReplication();
+    void MakeNoise(float Loudness, class APawn* NoiseInstigator, FVector NoiseLocation, float MaxRange, FName Tag);
+    class UMaterialInstanceDynamic* MakeMIDForMaterial(class UMaterialInterface* Parent);
+    bool K2_TeleportTo(FVector DestLocation, FRotator DestRotation);
+    bool K2_SetActorTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    bool K2_SetActorRotation(FRotator NewRotation, bool bTeleportPhysics);
+    void K2_SetActorRelativeTransform(const FTransform& NewRelativeTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetActorRelativeRotation(FRotator NewRelativeRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetActorRelativeLocation(FVector NewRelativeLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    bool K2_SetActorLocationAndRotation(FVector NewLocation, FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    bool K2_SetActorLocation(FVector NewLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_OnReset();
+    void K2_OnEndViewTarget(class APlayerController* PC);
+    void K2_OnBecomeViewTarget(class APlayerController* PC);
+    class USceneComponent* K2_GetRootComponent();
+    TArray<class UActorComponent*> K2_GetComponentsByClass(TSubclassOf<class UActorComponent> ComponentClass);
+    FRotator K2_GetActorRotation();
+    FVector K2_GetActorLocation();
+    void K2_DetachFromActor(EDetachmentRule LocationRule, EDetachmentRule RotationRule, EDetachmentRule ScaleRule);
+    void K2_DestroyComponent(class UActorComponent* Component);
+    void K2_DestroyActor();
+    void K2_AttachToComponent(class USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule, bool bWeldSimulatedBodies);
+    void K2_AttachToActor(class AActor* ParentActor, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule, bool bWeldSimulatedBodies);
+    void K2_AttachRootComponentToActor(class AActor* InParentActor, FName InSocketName, TEnumAsByte<EAttachLocation::Type> AttachLocationType, bool bWeldSimulatedBodies);
+    void K2_AttachRootComponentTo(class USceneComponent* InParent, FName InSocketName, TEnumAsByte<EAttachLocation::Type> AttachLocationType, bool bWeldSimulatedBodies);
+    void K2_AddActorWorldTransformKeepScale(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddActorWorldTransform(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddActorWorldRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddActorWorldOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddActorLocalTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddActorLocalRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddActorLocalOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    bool IsOverlappingActor(const class AActor* Other);
+    bool IsChildActor();
+    bool IsActorTickEnabled();
+    bool IsActorBeingDestroyed();
+    bool HasAuthority();
+    float GetVerticalDistanceTo(const class AActor* OtherActor);
+    FVector GetVelocity();
+    FTransform GetTransform();
+    bool GetTickableWhenPaused();
+    float GetSquaredHorizontalDistanceTo(const class AActor* OtherActor);
+    float GetSquaredDistanceTo(const class AActor* OtherActor);
+    TEnumAsByte<ENetRole> GetRemoteRole();
+    class UChildActorComponent* GetParentComponent();
+    class AActor* GetParentActor();
+    class AActor* GetOwner();
+    void GetOverlappingComponents(TArray<class UPrimitiveComponent*>& OverlappingComponents);
+    void GetOverlappingActors(TArray<class AActor*>& OverlappingActors, TSubclassOf<class AActor> ClassFilter);
+    TEnumAsByte<ENetRole> GetLocalRole();
+    float GetLifeSpan();
+    class AController* GetInstigatorController();
+    class APawn* GetInstigator();
+    FVector GetInputVectorAxisValue(const FKey InputAxisKey);
+    float GetInputAxisValue(const FName InputAxisName);
+    float GetInputAxisKeyValue(const FKey InputAxisKey);
+    float GetHorizontalDotProductTo(const class AActor* OtherActor);
+    float GetHorizontalDistanceTo(const class AActor* OtherActor);
+    float GetGameTimeSinceCreation();
+    float GetDotProductTo(const class AActor* OtherActor);
+    float GetDistanceTo(const class AActor* OtherActor);
+    TArray<class UActorComponent*> GetComponentsByTag(TSubclassOf<class UActorComponent> ComponentClass, FName Tag);
+    TArray<class UActorComponent*> GetComponentsByInterface(TSubclassOf<class UInterface> Interface);
+    class UActorComponent* GetComponentByClass(TSubclassOf<class UActorComponent> ComponentClass);
+    FName GetAttachParentSocketName();
+    class AActor* GetAttachParentActor();
+    void GetAttachedActors(TArray<class AActor*>& OutActors, bool bResetArray);
+    void GetAllChildActors(TArray<class AActor*>& ChildActors, bool bIncludeDescendants);
+    FVector GetActorUpVector();
+    float GetActorTimeDilation();
+    float GetActorTickInterval();
+    FVector GetActorScale3D();
+    FVector GetActorRightVector();
+    FVector GetActorRelativeScale3D();
+    FVector GetActorForwardVector();
+    void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation);
+    bool GetActorEnableCollision();
+    void GetActorBounds(bool bOnlyCollidingComponents, FVector& Origin, FVector& BoxExtent, bool bIncludeFromChildActors);
+    void ForceNetUpdate();
+    void FlushNetDormancy();
+    void FinishAddComponent(class UActorComponent* Component, bool bManualAttachment, const FTransform& RelativeTransform);
+    void EnableInput(class APlayerController* PlayerController);
+    void DisableInput(class APlayerController* PlayerController);
+    void DetachRootComponentFromParent(bool bMaintainWorldPosition);
+    void AddTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
+    void AddTickPrerequisiteActor(class AActor* PrerequisiteActor);
+    class UActorComponent* AddComponentByClass(TSubclassOf<class UActorComponent> Class, bool bManualAttachment, const FTransform& RelativeTransform, bool bDeferredFinish);
+    class UActorComponent* AddComponent(FName TemplateName, bool bManualAttachment, const FTransform& RelativeTransform, const class UObject* ComponentTemplateContext, bool bDeferredFinish);
+    bool ActorHasTag(FName Tag);
+};
+
+class AAmbientSound : public AActor
+{
+    class UAudioComponent* AudioComponent;
+
     void Stop();
-    void SetWaveParameter(FName InName, class USoundWave* InWave);
-    void SetVolumeMultiplier(float NewVolumeMultiplier);
-    void SetUISound(bool bInUISound);
-    void SetSubmixSend(class USoundSubmixBase* Submix, float SendLevel);
-    void SetSourceBusSendPreEffect(class USoundSourceBus* SoundSourceBus, float SourceBusSendLevel);
-    void SetSourceBusSendPostEffect(class USoundSourceBus* SoundSourceBus, float SourceBusSendLevel);
-    void SetSound(class USoundBase* NewSound);
-    void SetPitchMultiplier(float NewPitchMultiplier);
-    void SetPaused(bool bPause);
-    void SetOutputToBusOnly(bool bInOutputToBusOnly);
-    void SetLowPassFilterFrequency(float InLowPassFilterFrequency);
-    void SetLowPassFilterEnabled(bool InLowPassFilterEnabled);
-    void SetIntParameter(FName InName, int32 inInt);
-    void SetFloatParameter(FName InName, float InFloat);
-    void SetBoolParameter(FName InName, bool InBool);
-    void SetAudioBusSendPreEffect(class UAudioBus* AudioBus, float AudioBusSendLevel);
-    void SetAudioBusSendPostEffect(class UAudioBus* AudioBus, float AudioBusSendLevel);
-    void PlayQuantized(const class UObject* WorldContextObject, class UQuartzClockHandle*& InClockHandle, FQuartzQuantizationBoundary& InQuantizationBoundary, const FPlayQuantizedInDelegate& InDelegate, float InStartTime, float InFadeInDuration, float InFadeVolumeLevel, EAudioFaderCurve InFadeCurve);
     void Play(float StartTime);
-    bool IsVirtualized();
-    bool IsPlaying();
-    bool HasCookedFFTData();
-    bool HasCookedAmplitudeEnvelopeData();
-    EAudioComponentPlayState GetPlayState();
-    bool GetCookedFFTDataForAllPlayingSounds(TArray<FSoundWaveSpectralDataPerSound>& OutSoundWaveSpectralData);
-    bool GetCookedFFTData(const TArray<float>& FrequenciesToGet, TArray<FSoundWaveSpectralData>& OutSoundWaveSpectralData);
-    bool GetCookedEnvelopeDataForAllPlayingSounds(TArray<FSoundWaveEnvelopeDataPerSound>& OutEnvelopeData);
-    bool GetCookedEnvelopeData(float& OutEnvelopeData);
-    void FadeOut(float FadeoutDuration, float FadeVolumeLevel, const EAudioFaderCurve FadeCurve);
-    void FadeIn(float FadeInDuration, float FadeVolumeLevel, float StartTime, const EAudioFaderCurve FadeCurve);
-    bool BP_GetAttenuationSettingsToApply(FSoundAttenuationSettings& OutAttenuationSettings);
-    void AdjustVolume(float AdjustVolumeDuration, float AdjustVolumeLevel, const EAudioFaderCurve FadeCurve);
-    void AdjustAttenuation(const FSoundAttenuationSettings& InAttenuationSettings);
+    void FadeOut(float FadeoutDuration, float FadeVolumeLevel);
+    void FadeIn(float FadeInDuration, float FadeVolumeLevel);
+    void AdjustVolume(float AdjustVolumeDuration, float AdjustVolumeLevel);
 };
 
-class UAssetImportData : public UObject
+class AAtmosphericFog : public AInfo
 {
-};
-
-class UAssetUserData : public UObject
-{
-};
-
-struct FComponentReference
-{
-    class AActor* OtherActor;
-    FName ComponentProperty;
-    FString PathToComponent;
+    class UAtmosphericFogComponent* AtmosphericFogComponent;
 
 };
 
-class UPoseableMeshComponent : public USkinnedMeshComponent
+class AAudioVolume : public AVolume
 {
+    float Priority;
+    uint8 bEnabled;
+    FReverbSettings Settings;
+    FInteriorSettings AmbientZoneSettings;
+    TArray<FAudioVolumeSubmixSendSettings> SubmixSendSettings;
+    TArray<FAudioVolumeSubmixOverrideSettings> SubmixOverrideSettings;
 
-    void SetBoneTransformByName(FName BoneName, const FTransform& InTransform, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    void SetBoneScaleByName(FName BoneName, FVector InScale3D, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    void SetBoneRotationByName(FName BoneName, FRotator InRotation, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    void SetBoneLocationByName(FName BoneName, FVector InLocation, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    void ResetBoneTransformByName(FName BoneName);
-    FTransform GetBoneTransformByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    FVector GetBoneScaleByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    FRotator GetBoneRotationByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    FVector GetBoneLocationByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
-    void CopyPoseFromSkeletalComponent(class USkeletalMeshComponent* InComponentToCopy);
+    void SetSubmixSendSettings(const TArray<FAudioVolumeSubmixSendSettings>& NewSubmixSendSettings);
+    void SetSubmixOverrideSettings(const TArray<FAudioVolumeSubmixOverrideSettings>& NewSubmixOverrideSettings);
+    void SetReverbSettings(const FReverbSettings& NewReverbSettings);
+    void SetPriority(float NewPriority);
+    void SetInteriorSettings(const FInteriorSettings& NewInteriorSettings);
+    void SetEnabled(bool bNewEnabled);
+    void OnRep_bEnabled();
 };
 
-class ASceneCapture : public AActor
+class ABandwidthTestActor : public AActor
 {
-    class UStaticMeshComponent* MeshComp;
+    FBandwidthTestGenerator BandwidthGenerator;
+
+};
+
+class ABlockingVolume : public AVolume
+{
+};
+
+class ABoxReflectionCapture : public AReflectionCapture
+{
+};
+
+class ABrush : public AActor
+{
+    TEnumAsByte<EBrushType> BrushType;
+    FColor BrushColor;
+    int32 PolyFlags;
+    uint8 bColored;
+    uint8 bSolidWhenSelected;
+    uint8 bPlaceableFromClassBrowser;
+    uint8 bNotForClientOrServer;
+    class UModel* Brush;
+    class UBrushComponent* BrushComponent;
+    uint8 bInManipulation;
+    TArray<FGeomSelection> SavedSelections;
+
+};
+
+class ABrushShape : public ABrush
+{
+};
+
+class ACameraActor : public AActor
+{
+    TEnumAsByte<EAutoReceiveInput::Type> AutoActivateForPlayer;
+    class UCameraComponent* CameraComponent;
     class USceneComponent* SceneComponent;
+    uint8 bConstrainAspectRatio;
+    float AspectRatio;
+    float FOVAngle;
+    float PostProcessBlendWeight;
+    FPostProcessSettings PostProcessSettings;
 
+    int32 GetAutoActivatePlayerIndex();
 };
 
-class ASceneCapture2D : public ASceneCapture
-{
-    class USceneCaptureComponent2D* CaptureComponent2D;
-
-    void OnInterpToggle(bool bEnable);
-};
-
-class UDataAsset : public UObject
-{
-    TSubclassOf<class UDataAsset> NativeClass;
-
-};
-
-class UGameInstance : public UObject
-{
-    TArray<class ULocalPlayer*> LocalPlayers;
-    class UOnlineSession* OnlineSession;
-    TArray<class UObject*> ReferencedObjects;
-    FGameInstanceOnPawnControllerChangedDelegates OnPawnControllerChangedDelegates;
-    void OnPawnControllerChanged(class APawn* Pawn, class AController* Controller);
-
-    void ReceiveShutdown();
-    void ReceiveInit();
-    void HandleTravelError(TEnumAsByte<ETravelFailure::Type> FailureType);
-    void HandleNetworkError(TEnumAsByte<ENetworkFailure::Type> FailureType, bool bIsServer);
-    void DebugRemovePlayer(int32 ControllerId);
-    void DebugCreatePlayer(int32 ControllerId);
-};
-
-class UGameInstanceSubsystem : public USubsystem
+class ACameraBlockingVolume : public AVolume
 {
 };
 
-class UWorldSubsystem : public USubsystem
+class ACameraShakeSourceActor : public AActor
+{
+    class UCameraShakeSourceComponent* CameraShakeSourceComponent;
+
+};
+
+class ACharacter : public APawn
+{
+    class USkeletalMeshComponent* Mesh;
+    class UCharacterMovementComponent* CharacterMovement;
+    class UCapsuleComponent* CapsuleComponent;
+    FBasedMovementInfo BasedMovement;
+    FBasedMovementInfo ReplicatedBasedMovement;
+    float AnimRootMotionTranslationScale;
+    FVector BaseTranslationOffset;
+    FQuat BaseRotationOffset;
+    float ReplicatedServerLastTransformUpdateTimeStamp;
+    float ReplayLastTransformUpdateTimeStamp;
+    uint8 ReplicatedMovementMode;
+    bool bInBaseReplication;
+    float CrouchedEyeHeight;
+    uint8 bIsCrouched;
+    uint8 bProxyIsJumpForceApplied;
+    uint8 bPressedJump;
+    uint8 bClientUpdating;
+    uint8 bClientWasFalling;
+    uint8 bClientResimulateRootMotion;
+    uint8 bClientResimulateRootMotionSources;
+    uint8 bSimGravityDisabled;
+    uint8 bClientCheckEncroachmentOnNetUpdate;
+    uint8 bServerMoveIgnoreRootMotion;
+    uint8 bWasJumping;
+    float JumpKeyHoldTime;
+    float JumpForceTimeRemaining;
+    float ProxyJumpForceStartedTime;
+    float JumpMaxHoldTime;
+    int32 JumpMaxCount;
+    int32 JumpCurrentCount;
+    int32 JumpCurrentCountPreJump;
+    FCharacterOnReachedJumpApex OnReachedJumpApex;
+    void CharacterReachedApexSignature();
+    FCharacterMovementModeChangedDelegate MovementModeChangedDelegate;
+    void MovementModeChangedSignature(class ACharacter* Character, TEnumAsByte<EMovementMode> PrevMovementMode, uint8 PreviousCustomMode);
+    FCharacterOnCharacterMovementUpdated OnCharacterMovementUpdated;
+    void CharacterMovementUpdatedSignature(float DeltaSeconds, FVector OldLocation, FVector OldVelocity);
+    FRootMotionSourceGroup SavedRootMotion;
+    FRootMotionMovementParams ClientRootMotionParams;
+    TArray<FSimulatedRootMotionReplicatedMove> RootMotionRepMoves;
+    FRepRootMotionMontage RepRootMotion;
+
+    void UnCrouch(bool bClientSimulation);
+    void StopJumping();
+    void StopAnimMontage(class UAnimMontage* AnimMontage);
+    void ServerMovePacked(const FCharacterServerMovePackedBits& PackedBits);
+    void ServerMoveOld(float OldTimeStamp, FVector_NetQuantize10 OldAccel, uint8 OldMoveFlags);
+    void ServerMoveNoBase(float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 CompressedMoveFlags, uint8 ClientRoll, uint32 View, uint8 ClientMovementMode);
+    void ServerMoveDualNoBase(float TimeStamp0, FVector_NetQuantize10 InAccel0, uint8 PendingFlags, uint32 View0, float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 NewFlags, uint8 ClientRoll, uint32 View, uint8 ClientMovementMode);
+    void ServerMoveDualHybridRootMotion(float TimeStamp0, FVector_NetQuantize10 InAccel0, uint8 PendingFlags, uint32 View0, float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 NewFlags, uint8 ClientRoll, uint32 View, class UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode);
+    void ServerMoveDual(float TimeStamp0, FVector_NetQuantize10 InAccel0, uint8 PendingFlags, uint32 View0, float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 NewFlags, uint8 ClientRoll, uint32 View, class UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode);
+    void ServerMove(float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 CompressedMoveFlags, uint8 ClientRoll, uint32 View, class UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode);
+    void RootMotionDebugClientPrintOnScreen(FString inString);
+    float PlayAnimMontage(class UAnimMontage* AnimMontage, float InPlayRate, FName StartSectionName);
+    void OnWalkingOffLedge(const FVector& PreviousFloorImpactNormal, const FVector& PreviousFloorContactNormal, const FVector& PreviousLocation, float TimeDelta);
+    void OnRep_RootMotion();
+    void OnRep_ReplicatedBasedMovement();
+    void OnRep_ReplayLastTransformUpdateTimeStamp();
+    void OnRep_IsCrouched();
+    void OnLaunched(FVector LaunchVelocity, bool bXYOverride, bool bZOverride);
+    void OnLanded(const FHitResult& Hit);
+    void OnJumped();
+    void LaunchCharacter(FVector LaunchVelocity, bool bXYOverride, bool bZOverride);
+    void K2_UpdateCustomMovement(float DeltaTime);
+    void K2_OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust);
+    void K2_OnMovementModeChanged(TEnumAsByte<EMovementMode> PrevMovementMode, TEnumAsByte<EMovementMode> NewMovementMode, uint8 PrevCustomMode, uint8 NewCustomMode);
+    void K2_OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust);
+    void Jump();
+    bool IsPlayingRootMotion();
+    bool IsPlayingNetworkedRootMotionMontage();
+    bool IsJumpProvidingForce();
+    bool HasAnyRootMotion();
+    class UAnimMontage* GetCurrentMontage();
+    FVector GetBaseTranslationOffset();
+    FRotator GetBaseRotationOffsetRotator();
+    float GetAnimRootMotionTranslationScale();
+    void Crouch(bool bClientSimulation);
+    void ClientVeryShortAdjustPosition(float Timestamp, FVector NewLoc, class UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
+    void ClientMoveResponsePacked(const FCharacterMoveResponsePackedBits& PackedBits);
+    void ClientCheatWalk();
+    void ClientCheatGhost();
+    void ClientCheatFly();
+    void ClientAdjustRootMotionSourcePosition(float Timestamp, FRootMotionSourceGroup ServerRootMotion, bool bHasAnimRootMotion, float ServerMontageTrackPosition, FVector ServerLoc, FVector_NetQuantizeNormal ServerRotation, float ServerVelZ, class UPrimitiveComponent* ServerBase, FName ServerBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
+    void ClientAdjustRootMotionPosition(float Timestamp, float ServerMontageTrackPosition, FVector ServerLoc, FVector_NetQuantizeNormal ServerRotation, float ServerVelZ, class UPrimitiveComponent* ServerBase, FName ServerBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
+    void ClientAdjustPosition(float Timestamp, FVector NewLoc, FVector NewVel, class UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
+    void ClientAckGoodMove(float Timestamp);
+    bool CanJumpInternal();
+    bool CanJump();
+    bool CanCrouch();
+    void CacheInitialMeshOffset(FVector MeshRelativeLocation, FRotator MeshRelativeRotation);
+};
+
+class AController : public AActor
+{
+    class APlayerState* PlayerState;
+    FControllerOnInstigatedAnyDamage OnInstigatedAnyDamage;
+    void InstigatedAnyDamageSignature(float Damage, const class UDamageType* DamageType, class AActor* DamagedActor, class AActor* DamageCauser);
+    FName StateName;
+    class APawn* Pawn;
+    class ACharacter* Character;
+    class USceneComponent* TransformComponent;
+    FRotator ControlRotation;
+    uint8 bAttachToPawn;
+
+    void UnPossess();
+    void StopMovement();
+    void SetInitialLocationAndRotation(const FVector& NewLocation, const FRotator& NewRotation);
+    void SetIgnoreMoveInput(bool bNewMoveInput);
+    void SetIgnoreLookInput(bool bNewLookInput);
+    void SetControlRotation(const FRotator& NewRotation);
+    void ResetIgnoreMoveInput();
+    void ResetIgnoreLookInput();
+    void ResetIgnoreInputFlags();
+    void ReceiveUnPossess(class APawn* UnpossessedPawn);
+    void ReceivePossess(class APawn* PossessedPawn);
+    void ReceiveInstigatedAnyDamage(float Damage, const class UDamageType* DamageType, class AActor* DamagedActor, class AActor* DamageCauser);
+    void Possess(class APawn* InPawn);
+    void OnRep_PlayerState();
+    void OnRep_Pawn();
+    bool LineOfSightTo(const class AActor* Other, FVector ViewPoint, bool bAlternateChecks);
+    class APawn* K2_GetPawn();
+    bool IsPlayerController();
+    bool IsMoveInputIgnored();
+    bool IsLookInputIgnored();
+    bool IsLocalPlayerController();
+    bool IsLocalController();
+    class AActor* GetViewTarget();
+    FRotator GetDesiredRotation();
+    FRotator GetControlRotation();
+    void ClientSetRotation(FRotator NewRotation, bool bResetCamera);
+    void ClientSetLocation(FVector NewLocation, FRotator NewRotation);
+    class APlayerController* CastToPlayerController();
+};
+
+class ACullDistanceVolume : public AVolume
+{
+    TArray<FCullDistanceSizePair> CullDistances;
+    uint8 bEnabled;
+
+};
+
+class ADebugCameraController : public APlayerController
+{
+    uint8 bShowSelectedInfo;
+    uint8 bIsFrozenRendering;
+    uint8 bIsOrbitingSelectedActor;
+    uint8 bOrbitPivotUseCenter;
+    uint8 bEnableBufferVisualization;
+    uint8 bEnableBufferVisualizationFullMode;
+    uint8 bIsBufferVisualizationInputSetup;
+    uint8 bLastDisplayEnabled;
+    class UDrawFrustumComponent* DrawFrustum;
+    class AActor* SelectedActor;
+    class UPrimitiveComponent* SelectedComponent;
+    FHitResult SelectedHitPoint;
+    class APlayerController* OriginalControllerRef;
+    class UPlayer* OriginalPlayer;
+    float SpeedScale;
+    float InitialMaxSpeed;
+    float InitialAccel;
+    float InitialDecel;
+
+    void ToggleDisplay();
+    void ShowDebugSelectedInfo();
+    void SetPawnMovementSpeedScale(float NewSpeedScale);
+    void ReceiveOnDeactivate(class APlayerController* RestoredPC);
+    void ReceiveOnActorSelected(class AActor* NewSelectedActor, const FVector& SelectHitLocation, const FVector& SelectHitNormal, const FHitResult& Hit);
+    void ReceiveOnActivate(class APlayerController* OriginalPC);
+    class AActor* GetSelectedActor();
+};
+
+class ADebugCameraHUD : public AHUD
+{
+};
+
+class ADecalActor : public AActor
+{
+    class UDecalComponent* Decal;
+
+    void SetDecalMaterial(class UMaterialInterface* NewDecalMaterial);
+    class UMaterialInterface* GetDecalMaterial();
+    class UMaterialInstanceDynamic* CreateDynamicMaterialInstance();
+};
+
+class ADefaultPawn : public APawn
+{
+    float BaseTurnRate;
+    float BaseLookUpRate;
+    class UPawnMovementComponent* MovementComponent;
+    class USphereComponent* CollisionComponent;
+    class UStaticMeshComponent* MeshComponent;
+    uint8 bAddDefaultMovementBindings;
+
+    void TurnAtRate(float Rate);
+    void MoveUp_World(float Val);
+    void MoveRight(float Val);
+    void MoveForward(float Val);
+    void LookUpAtRate(float Rate);
+};
+
+class ADefaultPhysicsVolume : public APhysicsVolume
+{
+};
+
+class ADirectionalLight : public ALight
+{
+};
+
+class ADocumentationActor : public AActor
+{
+};
+
+class AEmitter : public AActor
+{
+    class UParticleSystemComponent* ParticleSystemComponent;
+    uint8 bDestroyOnSystemFinish;
+    uint8 bPostUpdateTickGroup;
+    uint8 bCurrentlyActive;
+    FEmitterOnParticleSpawn OnParticleSpawn;
+    void ParticleSpawnSignature(FName EventName, float EmitterTime, FVector Location, FVector Velocity);
+    FEmitterOnParticleBurst OnParticleBurst;
+    void ParticleBurstSignature(FName EventName, float EmitterTime, int32 ParticleCount);
+    FEmitterOnParticleDeath OnParticleDeath;
+    void ParticleDeathSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction);
+    FEmitterOnParticleCollide OnParticleCollide;
+    void ParticleCollisionSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction, FVector Normal, FName BoneName, class UPhysicalMaterial* PhysMat);
+
+    void ToggleActive();
+    void SetVectorParameter(FName ParameterName, FVector Param);
+    void SetTemplate(class UParticleSystem* NewTemplate);
+    void SetMaterialParameter(FName ParameterName, class UMaterialInterface* Param);
+    void SetFloatParameter(FName ParameterName, float Param);
+    void SetColorParameter(FName ParameterName, FLinearColor Param);
+    void SetActorParameter(FName ParameterName, class AActor* Param);
+    void OnRep_bCurrentlyActive();
+    void OnParticleSystemFinished(class UParticleSystemComponent* FinishedComponent);
+    bool IsActive();
+    void Deactivate();
+    void Activate();
+};
+
+class AEmitterCameraLensEffectBase : public AEmitter
+{
+    class UParticleSystem* PS_CameraEffect;
+    class UParticleSystem* PS_CameraEffectNonExtremeContent;
+    class APlayerCameraManager* BaseCamera;
+    FTransform RelativeTransform;
+    float BaseFOV;
+    uint8 bAllowMultipleInstances;
+    uint8 bResetWhenRetriggered;
+    TArray<class TSubclassOf<AEmitterCameraLensEffectBase>> EmittersToTreatAsSame;
+    float DistFromCamera;
+
+};
+
+class AExponentialHeightFog : public AInfo
+{
+    class UExponentialHeightFogComponent* Component;
+    uint8 bEnabled;
+
+    void OnRep_bEnabled();
+};
+
+class AGameMode : public AGameModeBase
+{
+    FName MatchState;
+    uint8 bDelayedStart;
+    int32 NumSpectators;
+    int32 NumPlayers;
+    int32 NumBots;
+    float MinRespawnDelay;
+    int32 NumTravellingPlayers;
+    TSubclassOf<class ULocalMessage> EngineMessageClass;
+    TArray<class APlayerState*> InactivePlayerArray;
+    float InactivePlayerStateLifeSpan;
+    int32 MaxInactivePlayers;
+    bool bHandleDedicatedServerReplays;
+
+    void StartMatch();
+    void SetBandwidthLimit(float AsyncIOBandwidthLimit);
+    void Say(FString Msg);
+    void RestartGame();
+    bool ReadyToStartMatch();
+    bool ReadyToEndMatch();
+    void K2_OnSetMatchState(FName NewState);
+    bool IsMatchInProgress();
+    FName GetMatchState();
+    void EndMatch();
+    void AbortMatch();
+};
+
+class AGameModeBase : public AInfo
+{
+    FString OptionsString;
+    TSubclassOf<class AGameSession> GameSessionClass;
+    TSubclassOf<class AGameStateBase> GameStateClass;
+    TSubclassOf<class APlayerController> PlayerControllerClass;
+    TSubclassOf<class APlayerState> PlayerStateClass;
+    TSubclassOf<class AHUD> hudClass;
+    TSubclassOf<class APawn> DefaultPawnClass;
+    TSubclassOf<class ASpectatorPawn> SpectatorClass;
+    TSubclassOf<class APlayerController> ReplaySpectatorPlayerControllerClass;
+    TSubclassOf<class AServerStatReplicator> ServerStatReplicatorClass;
+    class AGameSession* GameSession;
+    class AGameStateBase* GameState;
+    class AServerStatReplicator* ServerStatReplicator;
+    FText DefaultPlayerName;
+    uint8 bUseSeamlessTravel;
+    uint8 bStartPlayersAsSpectators;
+    uint8 bPauseable;
+
+    void StartPlay();
+    class APawn* SpawnDefaultPawnFor(class AController* NewPlayer, class AActor* StartSpot);
+    class APawn* SpawnDefaultPawnAtTransform(class AController* NewPlayer, const FTransform& SpawnTransform);
+    bool ShouldReset(class AActor* ActorToReset);
+    void ReturnToMainMenuHost();
+    void RestartPlayerAtTransform(class AController* NewPlayer, const FTransform& SpawnTransform);
+    void RestartPlayerAtPlayerStart(class AController* NewPlayer, class AActor* StartSpot);
+    void RestartPlayer(class AController* NewPlayer);
+    void ResetLevel();
+    bool PlayerCanRestart(class APlayerController* Player);
+    bool MustSpectate(class APlayerController* NewPlayerController);
+    void K2_PostLogin(class APlayerController* NewPlayer);
+    void K2_OnSwapPlayerControllers(class APlayerController* OldPC, class APlayerController* NewPC);
+    void K2_OnRestartPlayer(class AController* NewPlayer);
+    void K2_OnLogout(class AController* ExitingController);
+    void K2_OnChangeName(class AController* Other, FString NewName, bool bNameChange);
+    class AActor* K2_FindPlayerStart(class AController* Player, FString IncomingName);
+    void InitStartSpot(class AActor* StartSpot, class AController* NewPlayer);
+    void InitializeHUDForPlayer(class APlayerController* NewPlayer);
+    bool HasMatchStarted();
+    bool HasMatchEnded();
+    void HandleStartingNewPlayer(class APlayerController* NewPlayer);
+    int32 GetNumSpectators();
+    int32 GetNumPlayers();
+    UClass* GetDefaultPawnClassForController(class AController* InController);
+    class AActor* FindPlayerStart(class AController* Player, FString IncomingName);
+    class AActor* ChoosePlayerStart(class AController* Player);
+    void ChangeName(class AController* Controller, FString NewName, bool bNameChange);
+    bool CanSpectate(class APlayerController* Viewer, class APlayerState* ViewTarget);
+};
+
+class AGameNetworkManager : public AInfo
+{
+    float BadPacketLossThreshold;
+    float SeverePacketLossThreshold;
+    int32 BadPingThreshold;
+    int32 SeverePingThreshold;
+    int32 AdjustedNetSpeed;
+    float LastNetSpeedUpdateTime;
+    int32 TotalNetBandwidth;
+    int32 MinDynamicBandwidth;
+    int32 MaxDynamicBandwidth;
+    uint8 bIsStandbyCheckingEnabled;
+    uint8 bHasStandbyCheatTriggered;
+    float StandbyRxCheatTime;
+    float StandbyTxCheatTime;
+    float PercentMissingForRxStandby;
+    float PercentMissingForTxStandby;
+    float PercentForBadPing;
+    float JoinInProgressStandbyWaitTime;
+    float MoveRepSize;
+    float MAXPOSITIONERRORSQUARED;
+    float MAXNEARZEROVELOCITYSQUARED;
+    float CLIENTADJUSTUPDATECOST;
+    float MAXCLIENTUPDATEINTERVAL;
+    float MaxClientForcedUpdateDuration;
+    float ServerForcedUpdateHitchThreshold;
+    float ServerForcedUpdateHitchCooldown;
+    float MaxMoveDeltaTime;
+    float MaxClientSmoothingDeltaTime;
+    float ClientNetSendMoveDeltaTime;
+    float ClientNetSendMoveDeltaTimeThrottled;
+    float ClientNetSendMoveDeltaTimeStationary;
+    int32 ClientNetSendMoveThrottleAtNetSpeed;
+    int32 ClientNetSendMoveThrottleOverPlayerCount;
+    bool ClientAuthorativePosition;
+    float ClientErrorUpdateRateLimit;
+    float ClientNetCamUpdateDeltaTime;
+    float ClientNetCamUpdatePositionLimit;
+    bool bMovementTimeDiscrepancyDetection;
+    bool bMovementTimeDiscrepancyResolution;
+    float MovementTimeDiscrepancyMaxTimeMargin;
+    float MovementTimeDiscrepancyMinTimeMargin;
+    float MovementTimeDiscrepancyResolutionRate;
+    float MovementTimeDiscrepancyDriftAllowance;
+    bool bMovementTimeDiscrepancyForceCorrectionsDuringResolution;
+    bool bUseDistanceBasedRelevancy;
+
+};
+
+class AGameSession : public AInfo
+{
+    int32 MaxSpectators;
+    int32 MaxPlayers;
+    int32 MaxPartySize;
+    uint8 MaxSplitscreensPerConnection;
+    bool bRequiresPushToTalk;
+    FName SessionName;
+
+};
+
+class AGameState : public AGameStateBase
+{
+    FName MatchState;
+    FName PreviousMatchState;
+    int32 ElapsedTime;
+
+    void OnRep_MatchState();
+    void OnRep_ElapsedTime();
+};
+
+class AGameStateBase : public AInfo
+{
+    TSubclassOf<class AGameModeBase> GameModeClass;
+    class AGameModeBase* AuthorityGameMode;
+    TSubclassOf<class ASpectatorPawn> SpectatorClass;
+    TArray<class APlayerState*> PlayerArray;
+    bool bReplicatedHasBegunPlay;
+    float ReplicatedWorldTimeSeconds;
+    float ServerWorldTimeSecondsDelta;
+    float ServerWorldTimeSecondsUpdateFrequency;
+
+    void OnRep_SpectatorClass();
+    void OnRep_ReplicatedWorldTimeSeconds();
+    void OnRep_ReplicatedHasBegunPlay();
+    void OnRep_GameModeClass();
+    bool HasMatchStarted();
+    bool HasMatchEnded();
+    bool HasBegunPlay();
+    float GetServerWorldTimeSeconds();
+    float GetPlayerStartTime(class AController* Controller);
+    float GetPlayerRespawnDelay(class AController* Controller);
+};
+
+class AGeneratedMeshAreaLight : public ASpotLight
+{
+};
+
+class AHUD : public AActor
+{
+    class APlayerController* PlayerOwner;
+    uint8 bLostFocusPaused;
+    uint8 bShowHUD;
+    uint8 bShowDebugInfo;
+    int32 CurrentTargetIndex;
+    uint8 bShowHitBoxDebugInfo;
+    uint8 bShowOverlays;
+    uint8 bEnableDebugTextShadow;
+    TArray<class AActor*> PostRenderedActors;
+    TArray<FName> DebugDisplay;
+    TArray<FName> ToggledDebugCategories;
+    class UCanvas* Canvas;
+    class UCanvas* DebugCanvas;
+    TArray<FDebugTextInfo> DebugTextList;
+    TSubclassOf<class AActor> ShowDebugTargetDesiredClass;
+    class AActor* ShowDebugTargetActor;
+
+    void ShowHUD();
+    void ShowDebugToggleSubCategory(FName Category);
+    void ShowDebugForReticleTargetToggle(TSubclassOf<class AActor> DesiredClass);
+    void ShowDebug(FName DebugType);
+    void RemoveDebugText(class AActor* SrcActor, bool bLeaveDurationText);
+    void RemoveAllDebugStrings();
+    void ReceiveHitBoxRelease(const FName BoxName);
+    void ReceiveHitBoxEndCursorOver(const FName BoxName);
+    void ReceiveHitBoxClick(const FName BoxName);
+    void ReceiveHitBoxBeginCursorOver(const FName BoxName);
+    void ReceiveDrawHUD(int32 SizeX, int32 SizeY);
+    FVector Project(FVector Location);
+    void PreviousDebugTarget();
+    void NextDebugTarget();
+    void GetTextSize(FString Text, float& OutWidth, float& OutHeight, class UFont* Font, float Scale);
+    class APlayerController* GetOwningPlayerController();
+    class APawn* GetOwningPawn();
+    void GetActorsInSelectionRectangle(TSubclassOf<class AActor> ClassFilter, const FVector2D& FirstPoint, const FVector2D& SecondPoint, TArray<class AActor*>& OutActors, bool bIncludeNonCollidingComponents, bool bActorMustBeFullyEnclosed);
+    void DrawTextureSimple(class UTexture* Texture, float ScreenX, float ScreenY, float Scale, bool bScalePosition);
+    void DrawTexture(class UTexture* Texture, float ScreenX, float ScreenY, float ScreenW, float ScreenH, float TextureU, float TextureV, float TextureUWidth, float TextureVHeight, FLinearColor TintColor, TEnumAsByte<EBlendMode> BlendMode, float Scale, bool bScalePosition, float Rotation, FVector2D RotPivot);
+    void DrawText(FString Text, FLinearColor TextColor, float ScreenX, float ScreenY, class UFont* Font, float Scale, bool bScalePosition);
+    void DrawRect(FLinearColor RectColor, float ScreenX, float ScreenY, float ScreenW, float ScreenH);
+    void DrawMaterialTriangle(class UMaterialInterface* Material, FVector2D V0_Pos, FVector2D V1_Pos, FVector2D V2_Pos, FVector2D V0_UV, FVector2D V1_UV, FVector2D V2_UV, FLinearColor V0_Color, FLinearColor V1_Color, FLinearColor V2_Color);
+    void DrawMaterialSimple(class UMaterialInterface* Material, float ScreenX, float ScreenY, float ScreenW, float ScreenH, float Scale, bool bScalePosition);
+    void DrawMaterial(class UMaterialInterface* Material, float ScreenX, float ScreenY, float ScreenW, float ScreenH, float MaterialU, float MaterialV, float MaterialUWidth, float MaterialVHeight, float Scale, bool bScalePosition, float Rotation, FVector2D RotPivot);
+    void DrawLine(float StartScreenX, float StartScreenY, float EndScreenX, float EndScreenY, FLinearColor LineColor, float LineThickness);
+    void Deproject(float ScreenX, float ScreenY, FVector& WorldPosition, FVector& WorldDirection);
+    void AddHitBox(FVector2D Position, FVector2D Size, FName InName, bool bConsumesInput, int32 Priority);
+    void AddDebugText(FString DebugText, class AActor* SrcActor, float Duration, FVector Offset, FVector DesiredOffset, FColor TextColor, bool bSkipOverwriteCheck, bool bAbsoluteLocation, bool bKeepAttachedToActor, class UFont* InFont, float FontScale, bool bDrawShadow);
+};
+
+class AInfo : public AActor
+{
+};
+
+class AKillZVolume : public APhysicsVolume
+{
+};
+
+class ALODActor : public AActor
+{
+    class UStaticMeshComponent* StaticMeshComponent;
+    TMap<class FHLODInstancingKey, class UInstancedStaticMeshComponent*> InstancedStaticMeshComponents;
+    class UHLODProxy* Proxy;
+    FName Key;
+    float LODDrawDistance;
+    int32 LODLevel;
+    TArray<class AActor*> SubActors;
+    uint8 CachedNumHLODLevels;
+
+};
+
+class ALevelBounds : public AActor
+{
+    class UBoxComponent* BoxComponent;
+    bool bAutoUpdateBounds;
+
+};
+
+class ALevelScriptActor : public AActor
+{
+    uint8 bInputEnabled;
+
+    void WorldOriginLocationChanged(FIntVector OldOriginLocation, FIntVector NewOriginLocation);
+    void SetCinematicMode(bool bCinematicMode, bool bHidePlayer, bool bAffectsHUD, bool bAffectsMovement, bool bAffectsTurning);
+    bool RemoteEvent(FName EventName);
+    void LevelReset();
+};
+
+class ALevelStreamingVolume : public AVolume
+{
+    TArray<FName> StreamingLevelNames;
+    uint8 bEditorPreVisOnly;
+    uint8 bDisabled;
+    TEnumAsByte<EStreamingVolumeUsage> StreamingUsage;
+
+};
+
+class ALight : public AActor
+{
+    class ULightComponent* LightComponent;
+    uint8 bEnabled;
+
+    void ToggleEnabled();
+    void SetLightFunctionScale(FVector NewLightFunctionScale);
+    void SetLightFunctionMaterial(class UMaterialInterface* NewLightFunctionMaterial);
+    void SetLightFunctionFadeDistance(float NewLightFunctionFadeDistance);
+    void SetLightColor(FLinearColor NewLightColor);
+    void SetEnabled(bool bSetEnabled);
+    void SetCastShadows(bool bNewValue);
+    void SetBrightness(float NewBrightness);
+    void SetAffectTranslucentLighting(bool bNewValue);
+    void OnRep_bEnabled();
+    bool IsEnabled();
+    FLinearColor GetLightColor();
+    float GetBrightness();
+};
+
+class ALightmassCharacterIndirectDetailVolume : public AVolume
+{
+};
+
+class ALightmassImportanceVolume : public AVolume
+{
+};
+
+class ALightmassPortal : public AActor
+{
+    class ULightmassPortalComponent* PortalComponent;
+
+};
+
+class AMaterialInstanceActor : public AActor
+{
+    TArray<class AActor*> TargetActors;
+
+};
+
+class AMatineeActor : public AActor
+{
+    class UInterpData* MatineeData;
+    FName MatineeControllerName;
+    float PlayRate;
+    uint8 bPlayOnLevelLoad;
+    uint8 bForceStartPos;
+    float ForceStartPosition;
+    uint8 bLooping;
+    uint8 bRewindOnPlay;
+    uint8 bNoResetOnRewind;
+    uint8 bRewindIfAlreadyPlaying;
+    uint8 bDisableRadioFilter;
+    uint8 bClientSideOnly;
+    uint8 bSkipUpdateIfNotVisible;
+    uint8 bIsSkippable;
+    int32 PreferredSplitScreenNum;
+    uint8 bDisableMovementInput;
+    uint8 bDisableLookAtInput;
+    uint8 bHidePlayer;
+    uint8 bHideHud;
+    TArray<FInterpGroupActorInfo> GroupActorInfos;
+    uint8 bShouldShowGore;
+    TArray<class UInterpGroupInst*> GroupInst;
+    TArray<FCameraCutInfo> CameraCuts;
+    uint8 bIsPlaying;
+    uint8 bReversePlayback;
+    uint8 bPaused;
+    uint8 bPendingStop;
+    float InterpPosition;
+    uint8 ReplicationForceIsPlaying;
+    FMatineeActorOnPlay OnPlay;
+    void OnMatineeEvent();
+    FMatineeActorOnStop OnStop;
+    void OnMatineeEvent();
+    FMatineeActorOnPause OnPause;
+    void OnMatineeEvent();
+
+    void Stop();
+    void SetPosition(float NewPosition, bool bJump);
+    void SetLoopingState(bool bNewLooping);
+    void Reverse();
+    void Play();
+    void Pause();
+    void EnableGroupByName(FString GroupName, bool bEnable);
+    void ChangePlaybackDirection();
+};
+
+class AMatineeActorCameraAnim : public AMatineeActor
+{
+    class UCameraAnim* CameraAnim;
+
+};
+
+class AMeshMergeCullingVolume : public AVolume
+{
+};
+
+class ANavigationObjectBase : public AActor
+{
+    class UCapsuleComponent* CapsuleComponent;
+    class UBillboardComponent* GoodSprite;
+    class UBillboardComponent* BadSprite;
+    uint8 bIsPIEPlayerStart;
+
+};
+
+class ANote : public AActor
+{
+};
+
+class APainCausingVolume : public APhysicsVolume
+{
+    uint8 bPainCausing;
+    float DamagePerSec;
+    TSubclassOf<class UDamageType> DamageType;
+    float PainInterval;
+    uint8 bEntryPain;
+    uint8 BACKUP_bPainCausing;
+    class AController* DamageInstigator;
+
+};
+
+class AParticleEventManager : public AActor
 {
 };
 
@@ -2458,628 +7678,115 @@ class APawn : public AActor
     void AddControllerPitchInput(float Val);
 };
 
-class UPrimaryDataAsset : public UDataAsset
+class APhysicsConstraintActor : public ARigidBodyBase
 {
-};
-
-struct FStaticMeshComponentLODInfo
-{
-};
-
-struct FStreamingTextureBuildInfo
-{
-    uint32 PackedRelativeBox;
-    int32 TextureLevelIndex;
-    float TexelFactor;
+    class UPhysicsConstraintComponent* ConstraintComp;
+    class AActor* ConstraintActor1;
+    class AActor* ConstraintActor2;
+    uint8 bDisableCollision;
 
 };
 
-struct FLightmassPrimitiveSettings
+class APhysicsThruster : public ARigidBodyBase
 {
-    uint8 bUseTwoSidedLighting;
-    uint8 bShadowIndirectOnly;
-    uint8 bUseEmissiveForStaticLighting;
-    uint8 bUseVertexNormalForHemisphereGather;
-    float EmissiveLightFalloffExponent;
-    float EmissiveLightExplicitInfluenceRadius;
-    float EmissiveBoost;
-    float DiffuseBoost;
-    float FullyOccludedSamplesFraction;
+    class UPhysicsThrusterComponent* ThrusterComponent;
 
 };
 
-class UStaticMeshComponent : public UMeshComponent
+class APhysicsVolume : public AVolume
 {
-    int32 ForcedLodModel;
-    int32 PreviousLODLevel;
-    int32 MinLOD;
-    int32 SubDivisionStepSize;
-    class UStaticMesh* StaticMesh;
-    FColor WireframeColorOverride;
-    uint8 bEvaluateWorldPositionOffset;
-    uint8 bOverrideWireframeColor;
-    uint8 bOverrideMinLod;
-    uint8 bOverrideNavigationExport;
-    uint8 bForceNavigationObstacle;
-    uint8 bDisallowMeshPaintPerInstance;
-    uint8 bIgnoreInstanceForTextureStreaming;
-    uint8 bOverrideLightMapRes;
-    uint8 bCastDistanceFieldIndirectShadow;
-    uint8 bOverrideDistanceFieldSelfShadowBias;
-    uint8 bUseSubDivisions;
-    uint8 bUseDefaultCollision;
-    uint8 bReverseCulling;
-    int32 OverriddenLightMapRes;
-    float DistanceFieldIndirectShadowMinVisibility;
-    float DistanceFieldSelfShadowBias;
-    float StreamingDistanceMultiplier;
-    TArray<FStaticMeshComponentLODInfo> LODData;
-    TArray<FStreamingTextureBuildInfo> StreamingTextureData;
-    FLightmassPrimitiveSettings LightmassSettings;
-
-    bool SetStaticMesh(class UStaticMesh* NewMesh);
-    void SetReverseCulling(bool ReverseCulling);
-    void SetForcedLodModel(int32 NewForcedLodModel);
-    void SetEvaluateWorldPositionOffsetInRayTracing(bool NewValue);
-    void SetDistanceFieldSelfShadowBias(float NewValue);
-    void OnRep_StaticMesh(class UStaticMesh* OldStaticMesh);
-    void GetLocalBounds(FVector& Min, FVector& Max);
-};
-
-struct FReverbSettings
-{
-    bool bApplyReverb;
-    class UReverbEffect* ReverbEffect;
-    class USoundEffectSubmixPreset* ReverbPluginEffect;
-    float Volume;
-    float FadeTime;
+    float TerminalVelocity;
+    int32 Priority;
+    float FluidFriction;
+    uint8 bWaterVolume;
+    uint8 bPhysicsOnContact;
 
 };
 
-class AController : public AActor
+class APlanarReflection : public ASceneCapture
 {
-    class APlayerState* PlayerState;
-    FControllerOnInstigatedAnyDamage OnInstigatedAnyDamage;
-    void InstigatedAnyDamageSignature(float Damage, const class UDamageType* DamageType, class AActor* DamagedActor, class AActor* DamageCauser);
-    FName StateName;
-    class APawn* Pawn;
-    class ACharacter* Character;
+    class UPlanarReflectionComponent* PlanarReflectionComponent;
+    bool bShowPreviewPlane;
+
+    void OnInterpToggle(bool bEnable);
+};
+
+class APlaneReflectionCapture : public AReflectionCapture
+{
+};
+
+class APlayerCameraManager : public AActor
+{
+    class APlayerController* PCOwner;
     class USceneComponent* TransformComponent;
-    FRotator ControlRotation;
-    uint8 bAttachToPawn;
+    float DefaultFOV;
+    float DefaultOrthoWidth;
+    float DefaultAspectRatio;
+    FCameraCacheEntry CameraCache;
+    FCameraCacheEntry LastFrameCameraCache;
+    FTViewTarget ViewTarget;
+    FTViewTarget PendingViewTarget;
+    FCameraCacheEntry CameraCachePrivate;
+    FCameraCacheEntry LastFrameCameraCachePrivate;
+    TArray<class UCameraModifier*> ModifierList;
+    TArray<class TSubclassOf<UCameraModifier>> DefaultModifiers;
+    float FreeCamDistance;
+    FVector FreeCamOffset;
+    FVector ViewTargetOffset;
+    FPlayerCameraManagerOnAudioFadeChangeEvent OnAudioFadeChangeEvent;
+    void OnAudioFadeChangeSignature(bool bFadeOut, float FadeTime);
+    TArray<class AEmitterCameraLensEffectBase*> CameraLensEffects;
+    class UCameraModifier_CameraShake* CachedCameraShakeMod;
+    class UCameraAnimInst* AnimInstPool;
+    TArray<FPostProcessSettings> PostProcessBlendCache;
+    TArray<class UCameraAnimInst*> ActiveAnims;
+    TArray<class UCameraAnimInst*> FreeAnims;
+    class ACameraActor* AnimCameraActor;
+    uint8 bIsOrthographic;
+    uint8 bDefaultConstrainAspectRatio;
+    uint8 bClientSimulatingViewTarget;
+    uint8 bUseClientSideCameraUpdates;
+    uint8 bGameCameraCutThisFrame;
+    float ViewPitchMin;
+    float ViewPitchMax;
+    float ViewYawMin;
+    float ViewYawMax;
+    float ViewRollMin;
+    float ViewRollMax;
+    float ServerUpdateCameraTimeout;
 
-    void UnPossess();
-    void StopMovement();
-    void SetInitialLocationAndRotation(const FVector& NewLocation, const FRotator& NewRotation);
-    void SetIgnoreMoveInput(bool bNewMoveInput);
-    void SetIgnoreLookInput(bool bNewLookInput);
-    void SetControlRotation(const FRotator& NewRotation);
-    void ResetIgnoreMoveInput();
-    void ResetIgnoreLookInput();
-    void ResetIgnoreInputFlags();
-    void ReceiveUnPossess(class APawn* UnpossessedPawn);
-    void ReceivePossess(class APawn* PossessedPawn);
-    void ReceiveInstigatedAnyDamage(float Damage, const class UDamageType* DamageType, class AActor* DamagedActor, class AActor* DamageCauser);
-    void Possess(class APawn* InPawn);
-    void OnRep_PlayerState();
-    void OnRep_Pawn();
-    bool LineOfSightTo(const class AActor* Other, FVector ViewPoint, bool bAlternateChecks);
-    class APawn* K2_GetPawn();
-    bool IsPlayerController();
-    bool IsMoveInputIgnored();
-    bool IsLookInputIgnored();
-    bool IsLocalPlayerController();
-    bool IsLocalController();
-    class AActor* GetViewTarget();
-    FRotator GetDesiredRotation();
-    FRotator GetControlRotation();
-    void ClientSetRotation(FRotator NewRotation, bool bResetCamera);
-    void ClientSetLocation(FVector NewLocation, FRotator NewRotation);
-    class APlayerController* CastToPlayerController();
-};
-
-struct FInstancedStaticMeshInstanceData
-{
-    FMatrix Transform;
-
-};
-
-struct FInstancedStaticMeshMappingInfo
-{
-};
-
-class UInstancedStaticMeshComponent : public UStaticMeshComponent
-{
-    TArray<FInstancedStaticMeshInstanceData> PerInstanceSMData;
-    int32 NumCustomDataFloats;
-    TArray<float> PerInstanceSMCustomData;
-    int32 InstancingRandomSeed;
-    int32 InstanceStartCullDistance;
-    int32 InstanceEndCullDistance;
-    TArray<int32> InstanceReorderTable;
-    int32 NumPendingLightmaps;
-    TArray<FInstancedStaticMeshMappingInfo> CachedMappings;
-
-    bool UpdateInstanceTransform(int32 InstanceIndex, const FTransform& NewInstanceTransform, bool bWorldSpace, bool bMarkRenderStateDirty, bool bTeleport);
-    bool SetCustomDataValue(int32 InstanceIndex, int32 CustomDataIndex, float CustomDataValue, bool bMarkRenderStateDirty);
-    void SetCullDistances(int32 StartCullDistance, int32 EndCullDistance);
-    bool RemoveInstance(int32 InstanceIndex);
-    bool GetInstanceTransform(int32 InstanceIndex, FTransform& OutInstanceTransform, bool bWorldSpace);
-    TArray<int32> GetInstancesOverlappingSphere(const FVector& Center, float Radius, bool bSphereInWorldSpace);
-    TArray<int32> GetInstancesOverlappingBox(const FBox& Box, bool bBoxInWorldSpace);
-    int32 GetInstanceCount();
-    void ClearInstances();
-    bool BatchUpdateInstancesTransforms(int32 StartInstanceIndex, const TArray<FTransform>& NewInstancesTransforms, bool bWorldSpace, bool bMarkRenderStateDirty, bool bTeleport);
-    bool BatchUpdateInstancesTransform(int32 StartInstanceIndex, int32 NumInstances, const FTransform& NewInstancesTransform, bool bWorldSpace, bool bMarkRenderStateDirty, bool bTeleport);
-    int32 AddInstanceWorldSpace(const FTransform& WorldTransform);
-    TArray<int32> AddInstances(const TArray<FTransform>& InstanceTransforms, bool bShouldReturnIndices);
-    int32 AddInstance(const FTransform& InstanceTransform);
-};
-
-class UHierarchicalInstancedStaticMeshComponent : public UInstancedStaticMeshComponent
-{
-    TArray<int32> SortedInstances;
-    int32 NumBuiltInstances;
-    FBox BuiltInstanceBounds;
-    FBox UnbuiltInstanceBounds;
-    TArray<FBox> UnbuiltInstanceBoundsList;
-    uint8 bEnableDensityScaling;
-    int32 OcclusionLayerNumNodes;
-    FBoxSphereBounds CacheMeshExtendedBounds;
-    bool bDisableCollision;
-    int32 InstanceCountToRender;
-
-    bool RemoveInstances(const TArray<int32>& InstancesToRemove);
-};
-
-class UMovementComponent : public UActorComponent
-{
-    class USceneComponent* UpdatedComponent;
-    class UPrimitiveComponent* UpdatedPrimitive;
-    FVector Velocity;
-    FVector PlaneConstraintNormal;
-    FVector PlaneConstraintOrigin;
-    uint8 bUpdateOnlyIfRendered;
-    uint8 bAutoUpdateTickRegistration;
-    uint8 bTickBeforeOwner;
-    uint8 bAutoRegisterUpdatedComponent;
-    uint8 bConstrainToPlane;
-    uint8 bSnapToPlaneAtStart;
-    uint8 bAutoRegisterPhysicsVolumeUpdates;
-    uint8 bComponentShouldUpdatePhysicsVolume;
-    EPlaneConstraintAxisSetting PlaneConstraintAxisSetting;
-
-    void StopMovementImmediately();
-    void SnapUpdatedComponentToPlane();
-    void SetUpdatedComponent(class USceneComponent* NewUpdatedComponent);
-    void SetPlaneConstraintOrigin(FVector PlaneOrigin);
-    void SetPlaneConstraintNormal(FVector PlaneNormal);
-    void SetPlaneConstraintFromVectors(FVector Forward, FVector Up);
-    void SetPlaneConstraintEnabled(bool bEnabled);
-    void SetPlaneConstraintAxisSetting(EPlaneConstraintAxisSetting NewAxisSetting);
-    void PhysicsVolumeChanged(class APhysicsVolume* NewVolume);
-    bool K2_MoveUpdatedComponent(FVector Delta, FRotator NewRotation, FHitResult& OutHit, bool bSweep, bool bTeleport);
-    float K2_GetModifiedMaxSpeed();
-    float K2_GetMaxSpeedModifier();
-    bool IsExceedingMaxSpeed(float MaxSpeed);
-    FVector GetPlaneConstraintOrigin();
-    FVector GetPlaneConstraintNormal();
-    EPlaneConstraintAxisSetting GetPlaneConstraintAxisSetting();
-    class APhysicsVolume* GetPhysicsVolume();
-    float GetMaxSpeed();
-    float GetGravityZ();
-    FVector ConstrainNormalToPlane(FVector Normal);
-    FVector ConstrainLocationToPlane(FVector Location);
-    FVector ConstrainDirectionToPlane(FVector Direction);
-};
-
-struct FMovementProperties
-{
-    uint8 bCanCrouch;
-    uint8 bCanJump;
-    uint8 bCanWalk;
-    uint8 bCanSwim;
-    uint8 bCanFly;
-
-};
-
-struct FNavAgentProperties : public FMovementProperties
-{
-    float AgentRadius;
-    float AgentHeight;
-    float AgentStepHeight;
-    float NavWalkingSearchHeightScale;
-    FSoftClassPath PreferredNavData;
-
-};
-
-class UNavMovementComponent : public UMovementComponent
-{
-    FNavAgentProperties NavAgentProps;
-    float FixedPathBrakingDistance;
-    uint8 bUpdateNavAgentWithOwnersCollision;
-    uint8 bUseAccelerationForPaths;
-    uint8 bUseFixedBrakingDistanceForPaths;
-    FMovementProperties MovementState;
-    class UObject* PathFollowingComp;
-
-    void StopMovementKeepPathing();
-    void StopActiveMovement();
-    bool IsSwimming();
-    bool IsMovingOnGround();
-    bool IsFlying();
-    bool IsFalling();
-    bool IsCrouching();
-};
-
-class UPawnMovementComponent : public UNavMovementComponent
-{
-    class APawn* PawnOwner;
-
-    FVector K2_GetInputVector();
-    bool IsMoveInputIgnored();
-    FVector GetPendingInputVector();
-    class APawn* GetPawnOwner();
-    FVector GetLastInputVector();
-    FVector ConsumeInputVector();
-    void AddInputVector(FVector WorldVector, bool bForce);
-};
-
-class UShapeComponent : public UPrimitiveComponent
-{
-    class UBodySetup* ShapeBodySetup;
-    TSubclassOf<class UNavAreaBase> AreaClass;
-    FColor ShapeColor;
-    uint8 bDrawOnlyIfSelected;
-    uint8 bShouldCollideWhenPlacing;
-    uint8 bDynamicObstacle;
-
-};
-
-class UCapsuleComponent : public UShapeComponent
-{
-    float CapsuleHalfHeight;
-    float CapsuleRadius;
-
-    void SetCapsuleSize(float InRadius, float InHalfHeight, bool bUpdateOverlaps);
-    void SetCapsuleRadius(float Radius, bool bUpdateOverlaps);
-    void SetCapsuleHalfHeight(float HalfHeight, bool bUpdateOverlaps);
-    void GetUnscaledCapsuleSize_WithoutHemisphere(float& OutRadius, float& OutHalfHeightWithoutHemisphere);
-    void GetUnscaledCapsuleSize(float& OutRadius, float& OutHalfHeight);
-    float GetUnscaledCapsuleRadius();
-    float GetUnscaledCapsuleHalfHeight_WithoutHemisphere();
-    float GetUnscaledCapsuleHalfHeight();
-    float GetShapeScale();
-    void GetScaledCapsuleSize_WithoutHemisphere(float& OutRadius, float& OutHalfHeightWithoutHemisphere);
-    void GetScaledCapsuleSize(float& OutRadius, float& OutHalfHeight);
-    float GetScaledCapsuleRadius();
-    float GetScaledCapsuleHalfHeight_WithoutHemisphere();
-    float GetScaledCapsuleHalfHeight();
-};
-
-struct FAnimInstanceProxy
-{
-};
-
-struct FFastArraySerializer
-{
-    int32 ArrayReplicationKey;
-    EFastArraySerializerDeltaFlags DeltaFlags;
-
-};
-
-struct FFastArraySerializerItem
-{
-    int32 ReplicationID;
-    int32 ReplicationKey;
-    int32 MostRecentArrayReplicationKey;
-
-};
-
-struct FParticleSysParam
-{
-    FName Name;
-    TEnumAsByte<EParticleSysParamType> ParamType;
-    float Scalar;
-    float Scalar_Low;
-    FVector Vector;
-    FVector Vector_Low;
-    FColor Color;
-    class AActor* Actor;
-    class UMaterialInterface* Material;
-
-};
-
-class UParticleSystemComponent : public UFXSystemComponent
-{
-    class UParticleSystem* Template;
-    TArray<class UMaterialInterface*> EmitterMaterials;
-    TArray<class USkeletalMeshComponent*> SkelMeshComponents;
-    uint8 bResetOnDetach;
-    uint8 bUpdateOnDedicatedServer;
-    uint8 bAllowRecycling;
-    uint8 bAutoManageAttachment;
-    uint8 bAutoAttachWeldSimulatedBodies;
-    uint8 bWarmingUp;
-    uint8 bOverrideLODMethod;
-    uint8 bSkipUpdateDynamicDataDuringTick;
-    TEnumAsByte<ParticleSystemLODMethod> LODMethod;
-    EParticleSignificanceLevel RequiredSignificance;
-    TArray<FParticleSysParam> InstanceParameters;
-    FParticleSystemComponentOnParticleSpawn OnParticleSpawn;
-    void ParticleSpawnSignature(FName EventName, float EmitterTime, FVector Location, FVector Velocity);
-    FParticleSystemComponentOnParticleBurst OnParticleBurst;
-    void ParticleBurstSignature(FName EventName, float EmitterTime, int32 ParticleCount);
-    FParticleSystemComponentOnParticleDeath OnParticleDeath;
-    void ParticleDeathSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction);
-    FParticleSystemComponentOnParticleCollide OnParticleCollide;
-    void ParticleCollisionSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction, FVector Normal, FName BoneName, class UPhysicalMaterial* PhysMat);
-    bool bOldPositionValid;
-    FVector OldPosition;
-    FVector PartSysVelocity;
-    float WarmupTime;
-    float WarmupTickRate;
-    float SecondsBeforeInactive;
-    float MaxTimeBeforeForceUpdateTransform;
-    TArray<class UParticleSystemReplay*> ReplayClips;
-    float CustomTimeDilation;
-    TWeakObjectPtr<class USceneComponent> AutoAttachParent;
-    FName AutoAttachSocketName;
-    EAttachmentRule AutoAttachLocationRule;
-    EAttachmentRule AutoAttachRotationRule;
-    EAttachmentRule AutoAttachScaleRule;
-    FParticleSystemComponentOnSystemFinished OnSystemFinished;
-    void OnSystemFinished(class UParticleSystemComponent* PSystem);
-
-    void SetTrailSourceData(FName InFirstSocketName, FName InSecondSocketName, TEnumAsByte<ETrailWidthMode> InWidthMode, float InWidth);
-    void SetTemplate(class UParticleSystem* NewTemplate);
-    void SetMaterialParameter(FName ParameterName, class UMaterialInterface* Param);
-    void SetBeamTargetTangent(int32 EmitterIndex, FVector NewTangentPoint, int32 TargetIndex);
-    void SetBeamTargetStrength(int32 EmitterIndex, float NewTargetStrength, int32 TargetIndex);
-    void SetBeamTargetPoint(int32 EmitterIndex, FVector NewTargetPoint, int32 TargetIndex);
-    void SetBeamSourceTangent(int32 EmitterIndex, FVector NewTangentPoint, int32 SourceIndex);
-    void SetBeamSourceStrength(int32 EmitterIndex, float NewSourceStrength, int32 SourceIndex);
-    void SetBeamSourcePoint(int32 EmitterIndex, FVector NewSourcePoint, int32 SourceIndex);
-    void SetBeamEndPoint(int32 EmitterIndex, FVector NewEndPoint);
-    void SetAutoAttachParams(class USceneComponent* Parent, FName SocketName, TEnumAsByte<EAttachLocation::Type> LocationType);
-    int32 GetNumActiveParticles();
-    class UMaterialInterface* GetNamedMaterial(FName InName);
-    bool GetBeamTargetTangent(int32 EmitterIndex, int32 TargetIndex, FVector& OutTangentPoint);
-    bool GetBeamTargetStrength(int32 EmitterIndex, int32 TargetIndex, float& OutTargetStrength);
-    bool GetBeamTargetPoint(int32 EmitterIndex, int32 TargetIndex, FVector& OutTargetPoint);
-    bool GetBeamSourceTangent(int32 EmitterIndex, int32 SourceIndex, FVector& OutTangentPoint);
-    bool GetBeamSourceStrength(int32 EmitterIndex, int32 SourceIndex, float& OutSourceStrength);
-    bool GetBeamSourcePoint(int32 EmitterIndex, int32 SourceIndex, FVector& OutSourcePoint);
-    bool GetBeamEndPoint(int32 EmitterIndex, FVector& OutEndPoint);
-    void GenerateParticleEvent(const FName InEventName, const float InEmitterTime, const FVector InLocation, const FVector InDirection, const FVector InVelocity);
-    void EndTrails();
-    class UMaterialInstanceDynamic* CreateNamedDynamicMaterialInstance(FName InName, class UMaterialInterface* SourceMaterial);
-    void BeginTrails(FName InFirstSocketName, FName InSecondSocketName, TEnumAsByte<ETrailWidthMode> InWidthMode, float InWidth);
-};
-
-class ULightComponentBase : public USceneComponent
-{
-    FGuid LightGuid;
-    float Brightness;
-    float Intensity;
-    FColor LightColor;
-    uint8 bAffectsWorld;
-    uint8 CastShadows;
-    uint8 CastStaticShadows;
-    uint8 CastDynamicShadows;
-    uint8 bAffectTranslucentLighting;
-    uint8 bTransmission;
-    uint8 bCastVolumetricShadow;
-    uint8 bCastDeepShadow;
-    uint8 bCastRaytracedShadow;
-    uint8 bAffectReflection;
-    uint8 bAffectGlobalIllumination;
-    float DeepShadowLayerDistribution;
-    float IndirectLightingIntensity;
-    float VolumetricScatteringIntensity;
-    int32 SamplesPerPixel;
-
-    void SetSamplesPerPixel(int32 NewValue);
-    void SetCastVolumetricShadow(bool bNewValue);
-    void SetCastShadows(bool bNewValue);
-    void SetCastRaytracedShadow(bool bNewValue);
-    void SetCastDeepShadow(bool bNewValue);
-    void SetAffectReflection(bool bNewValue);
-    void SetAffectGlobalIllumination(bool bNewValue);
-    FLinearColor GetLightColor();
-};
-
-class ULightComponent : public ULightComponentBase
-{
-    float Temperature;
-    float MaxDrawDistance;
-    float MaxDistanceFadeRange;
-    uint8 bUseTemperature;
-    int32 ShadowMapChannel;
-    float MinRoughness;
-    float SpecularScale;
-    float ShadowResolutionScale;
-    float ShadowBias;
-    float ShadowSlopeBias;
-    float ShadowSharpen;
-    float ContactShadowLength;
-    uint8 ContactShadowLengthInWS;
-    uint8 InverseSquaredFalloff;
-    uint8 CastTranslucentShadows;
-    uint8 bCastShadowsFromCinematicObjectsOnly;
-    uint8 bAffectDynamicIndirectLighting;
-    uint8 bForceCachedShadowsForMovablePrimitives;
-    FLightingChannels LightingChannels;
-    class UMaterialInterface* LightFunctionMaterial;
-    FVector LightFunctionScale;
-    class UTextureLightProfile* IESTexture;
-    uint8 bUseIESBrightness;
-    float IESBrightnessScale;
-    float LightFunctionFadeDistance;
-    float DisabledBrightness;
-    uint8 bEnableLightShaftBloom;
-    float BloomScale;
-    float BloomThreshold;
-    float BloomMaxBrightness;
-    FColor BloomTint;
-    bool bUseRayTracedDistanceFieldShadows;
-    float RayStartOffsetDepthScale;
-
-    void SetVolumetricScatteringIntensity(float NewIntensity);
-    void SetUseTemperature(bool bNewValue);
-    void SetUseIESBrightness(bool bNewValue);
-    void SetTransmission(bool bNewValue);
-    void SetTemperature(float NewTemperature);
-    void SetSpecularScale(float NewValue);
-    void SetShadowSlopeBias(float NewValue);
-    void SetShadowBias(float NewValue);
-    void SetLightingChannels(bool bChannel0, bool bChannel1, bool bChannel2);
-    void SetLightFunctionScale(FVector NewLightFunctionScale);
-    void SetLightFunctionMaterial(class UMaterialInterface* NewLightFunctionMaterial);
-    void SetLightFunctionFadeDistance(float NewLightFunctionFadeDistance);
-    void SetLightFunctionDisabledBrightness(float NewValue);
-    void SetLightColor(FLinearColor NewLightColor, bool bSRGB);
-    void SetIntensity(float NewIntensity);
-    void SetIndirectLightingIntensity(float NewIntensity);
-    void SetIESTexture(class UTextureLightProfile* NewValue);
-    void SetIESBrightnessScale(float NewValue);
-    void SetForceCachedShadowsForMovablePrimitives(bool bNewValue);
-    void SetEnableLightShaftBloom(bool bNewValue);
-    void SetBloomTint(FColor NewValue);
-    void SetBloomThreshold(float NewValue);
-    void SetBloomScale(float NewValue);
-    void SetBloomMaxBrightness(float NewValue);
-    void SetAffectTranslucentLighting(bool bNewValue);
-    void SetAffectDynamicIndirectLighting(bool bNewValue);
-};
-
-struct FLightmassLightSettings
-{
-    float IndirectLightingSaturation;
-    float ShadowExponent;
-    bool bUseAreaShadowsForStationaryLight;
-
-};
-
-struct FLightmassPointLightSettings : public FLightmassLightSettings
-{
-};
-
-class ULocalLightComponent : public ULightComponent
-{
-    ELightUnits IntensityUnits;
-    float Radius;
-    float AttenuationRadius;
-    FLightmassPointLightSettings LightmassSettings;
-
-    void SetIntensityUnits(ELightUnits NewIntensityUnits);
-    void SetAttenuationRadius(float NewRadius);
-    float GetUnitsConversionFactor(ELightUnits SrcUnits, ELightUnits TargetUnits, float CosHalfConeAngle);
-};
-
-class UPointLightComponent : public ULocalLightComponent
-{
-    uint8 bUseInverseSquaredFalloff;
-    float LightFalloffExponent;
-    float SourceRadius;
-    float SoftSourceRadius;
-    float SourceLength;
-
-    void SetSourceRadius(float bNewValue);
-    void SetSourceLength(float NewValue);
-    void SetSoftSourceRadius(float bNewValue);
-    void SetLightFalloffExponent(float NewLightFalloffExponent);
-};
-
-class USphereComponent : public UShapeComponent
-{
-    float SphereRadius;
-
-    void SetSphereRadius(float InSphereRadius, bool bUpdateOverlaps);
-    float GetUnscaledSphereRadius();
-    float GetShapeScale();
-    float GetScaledSphereRadius();
-};
-
-class UAnimNotify_PlaySound : public UAnimNotify
-{
-    class USoundBase* Sound;
-    float VolumeMultiplier;
-    float PitchMultiplier;
-    uint8 bFollow;
-    FName AttachName;
-
-};
-
-class UAnimNotifyState_TimedParticleEffect : public UAnimNotifyState
-{
-    class UParticleSystem* PSTemplate;
-    FName SocketName;
-    FVector LocationOffset;
-    FRotator RotationOffset;
-    bool bDestroyAtEnd;
-
-};
-
-class UAssetManager : public UObject
-{
-    TArray<class UObject*> ObjectReferenceList;
-    bool bIsGlobalAsyncScanEnvironment;
-    bool bShouldGuessTypeAndName;
-    bool bShouldUseSynchronousLoad;
-    bool bIsLoadingFromPakFiles;
-    bool bShouldAcquireMissingChunksOnLoad;
-    bool bOnlyCookProductionAssets;
-    bool bIsBulkScanning;
-    bool bIsPrimaryAssetDirectoryCurrent;
-    bool bIsManagementDatabaseCurrent;
-    bool bUpdateManagementDatabaseAfterScan;
-    bool bIncludeOnlyOnDiskAssets;
-    bool bHasCompletedInitialScan;
-    int32 NumberOfSpawnedNotifications;
-
-};
-
-struct FActiveForceFeedbackEffect
-{
-    class UForceFeedbackEffect* ForceFeedbackEffect;
-
-};
-
-struct FViewTargetTransitionParams
-{
-    float BlendTime;
-    TEnumAsByte<EViewTargetBlendFunction> BlendFunction;
-    float BlendExp;
-    uint8 bLockOutgoing;
-
-};
-
-struct FUpdateLevelVisibilityLevelInfo
-{
-    FName PackageName;
-    FName Filename;
-    uint8 bIsVisible;
-
-};
-
-struct FUpdateLevelStreamingLevelStatus
-{
-    FName PackageName;
-    int32 LODIndex;
-    bool bNewShouldBeLoaded;
-    bool bNewShouldBeVisible;
-    bool bNewShouldBlockOnLoad;
-
-};
-
-struct FForceFeedbackParameters
-{
-    FName Tag;
-    bool bLooping;
-    bool bIgnoreTimeDilation;
-    bool bPlayWhilePaused;
-
+    void SwapPendingViewTargetWhenUsingClientSideCameraUpdates();
+    void StopCameraShake(class UCameraShakeBase* ShakeInstance, bool bImmediately);
+    void StopCameraFade();
+    void StopCameraAnimInst(class UCameraAnimInst* AnimInst, bool bImmediate);
+    void StopAllInstancesOfCameraShakeFromSource(TSubclassOf<class UCameraShakeBase> Shake, class UCameraShakeSourceComponent* SourceComponent, bool bImmediately);
+    void StopAllInstancesOfCameraShake(TSubclassOf<class UCameraShakeBase> Shake, bool bImmediately);
+    void StopAllInstancesOfCameraAnim(class UCameraAnim* Anim, bool bImmediate);
+    void StopAllCameraShakesFromSource(class UCameraShakeSourceComponent* SourceComponent, bool bImmediately);
+    void StopAllCameraShakes(bool bImmediately);
+    void StopAllCameraAnims(bool bImmediate);
+    class UCameraShakeBase* StartCameraShakeFromSource(TSubclassOf<class UCameraShakeBase> ShakeClass, class UCameraShakeSourceComponent* SourceComponent, float Scale, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
+    class UCameraShakeBase* StartCameraShake(TSubclassOf<class UCameraShakeBase> ShakeClass, float Scale, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
+    void StartCameraFade(float FromAlpha, float ToAlpha, float Duration, FLinearColor Color, bool bShouldFadeAudio, bool bHoldWhenFinished);
+    void SetManualCameraFade(float InFadeAmount, FLinearColor Color, bool bInFadeAudio);
+    void SetGameCameraCutThisFrame();
+    bool RemoveCameraModifier(class UCameraModifier* ModifierToRemove);
+    void RemoveCameraLensEffect(class AEmitterCameraLensEffectBase* Emitter);
+    class UCameraAnimInst* PlayCameraAnim(class UCameraAnim* Anim, float Rate, float Scale, float BlendInTime, float BlendOutTime, bool bLoop, bool bRandomStartTime, float Duration, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
+    void PhotographyCameraModify(const FVector NewCameraLocation, const FVector PreviousCameraLocation, const FVector OriginalCameraLocation, FVector& ResultCameraLocation);
+    void OnPhotographySessionStart();
+    void OnPhotographySessionEnd();
+    void OnPhotographyMultiPartCaptureStart();
+    void OnPhotographyMultiPartCaptureEnd();
+    class APlayerController* GetOwningPlayerController();
+    float GetFOVAngle();
+    FRotator GetCameraRotation();
+    FVector GetCameraLocation();
+    class UCameraModifier* FindCameraModifierByClass(TSubclassOf<class UCameraModifier> ModifierClass);
+    void ClearCameraLensEffects();
+    bool BlueprintUpdateCamera(class AActor* CameraTarget, FVector& NewCameraLocation, FRotator& NewCameraRotation, float& NewCameraFOV);
+    class UCameraModifier* AddNewCameraModifier(TSubclassOf<class UCameraModifier> ModifierClass);
+    class AEmitterCameraLensEffectBase* AddCameraLensEffect(TSubclassOf<class AEmitterCameraLensEffectBase> LensEffectEmitterClass);
 };
 
 class APlayerController : public AController
@@ -3269,504 +7976,14 @@ class APlayerController : public AController
     void ActivateTouchInterface(class UTouchInterface* NewTouchInterface);
 };
 
-class UCheatManager : public UObject
-{
-    class ADebugCameraController* DebugCameraControllerRef;
-    TSubclassOf<class ADebugCameraController> DebugCameraControllerClass;
-    TArray<class UCheatManagerExtension*> CheatManagerExtensions;
-
-    void Walk();
-    void ViewSelf();
-    void ViewPlayer(FString S);
-    void ViewClass(TSubclassOf<class AActor> DesiredClass);
-    void ViewActor(FName ActorName);
-    void UpdateSafeArea();
-    void ToggleServerStatReplicatorUpdateStatNet();
-    void ToggleServerStatReplicatorClientOverwrite();
-    void ToggleDebugCamera();
-    void ToggleAILogging();
-    void TestCollisionDistance();
-    void Teleport();
-    void Summon(FString ClassName);
-    void StreamLevelOut(FName PackageName);
-    void StreamLevelIn(FName PackageName);
-    void SpawnServerStatReplicator();
-    void Slomo(float NewTimeDilation);
-    void SetWorldOrigin();
-    void SetMouseSensitivityToDefault();
-    void ServerToggleAILogging();
-    void ReceiveInitCheatManager();
-    void ReceiveEndPlay();
-    void PlayersOnly();
-    void OnlyLoadLevel(FName PackageName);
-    void LogLoc();
-    void InvertMouse();
-    void God();
-    void Ghost();
-    void FreezeFrame(float Delay);
-    void Fly();
-    void FlushLog();
-    void EnableDebugCamera();
-    void DumpVoiceMutingState();
-    void DumpPartyState();
-    void DumpOnlineSessionState();
-    void DumpChatState();
-    void DisableDebugCamera();
-    void DestroyTarget();
-    void DestroyServerStatReplicator();
-    void DestroyPawns(TSubclassOf<class APawn> aClass);
-    void DestroyAllPawnsExceptTarget();
-    void DestroyAll(TSubclassOf<class AActor> aClass);
-    void DebugCapsuleSweepSize(float HalfHeight, float Radius);
-    void DebugCapsuleSweepPawn();
-    void DebugCapsuleSweepComplex(bool bTraceComplex);
-    void DebugCapsuleSweepClear();
-    void DebugCapsuleSweepChannel(TEnumAsByte<ECollisionChannel> Channel);
-    void DebugCapsuleSweepCapture();
-    void DebugCapsuleSweep();
-    void DamageTarget(float damageAmount);
-    void CheatScript(FString ScriptName);
-    void ChangeSize(float F);
-    void BugItStringCreator(FVector ViewLocation, FRotator ViewRotation, FString& GoString, FString& LocString);
-    void BugItGo(float X, float Y, float Z, float Pitch, float Yaw, float Roll);
-    void BugIt(FString ScreenShotDescription);
-};
-
-class UDPICustomScalingRule : public UObject
-{
-};
-
-class AInfo : public AActor
-{
-};
-
-class AGameModeBase : public AInfo
-{
-    FString OptionsString;
-    TSubclassOf<class AGameSession> GameSessionClass;
-    TSubclassOf<class AGameStateBase> GameStateClass;
-    TSubclassOf<class APlayerController> PlayerControllerClass;
-    TSubclassOf<class APlayerState> PlayerStateClass;
-    TSubclassOf<class AHUD> hudClass;
-    TSubclassOf<class APawn> DefaultPawnClass;
-    TSubclassOf<class ASpectatorPawn> SpectatorClass;
-    TSubclassOf<class APlayerController> ReplaySpectatorPlayerControllerClass;
-    TSubclassOf<class AServerStatReplicator> ServerStatReplicatorClass;
-    class AGameSession* GameSession;
-    class AGameStateBase* GameState;
-    class AServerStatReplicator* ServerStatReplicator;
-    FText DefaultPlayerName;
-    uint8 bUseSeamlessTravel;
-    uint8 bStartPlayersAsSpectators;
-    uint8 bPauseable;
-
-    void StartPlay();
-    class APawn* SpawnDefaultPawnFor(class AController* NewPlayer, class AActor* StartSpot);
-    class APawn* SpawnDefaultPawnAtTransform(class AController* NewPlayer, const FTransform& SpawnTransform);
-    bool ShouldReset(class AActor* ActorToReset);
-    void ReturnToMainMenuHost();
-    void RestartPlayerAtTransform(class AController* NewPlayer, const FTransform& SpawnTransform);
-    void RestartPlayerAtPlayerStart(class AController* NewPlayer, class AActor* StartSpot);
-    void RestartPlayer(class AController* NewPlayer);
-    void ResetLevel();
-    bool PlayerCanRestart(class APlayerController* Player);
-    bool MustSpectate(class APlayerController* NewPlayerController);
-    void K2_PostLogin(class APlayerController* NewPlayer);
-    void K2_OnSwapPlayerControllers(class APlayerController* OldPC, class APlayerController* NewPC);
-    void K2_OnRestartPlayer(class AController* NewPlayer);
-    void K2_OnLogout(class AController* ExitingController);
-    void K2_OnChangeName(class AController* Other, FString NewName, bool bNameChange);
-    class AActor* K2_FindPlayerStart(class AController* Player, FString IncomingName);
-    void InitStartSpot(class AActor* StartSpot, class AController* NewPlayer);
-    void InitializeHUDForPlayer(class APlayerController* NewPlayer);
-    bool HasMatchStarted();
-    bool HasMatchEnded();
-    void HandleStartingNewPlayer(class APlayerController* NewPlayer);
-    int32 GetNumSpectators();
-    int32 GetNumPlayers();
-    UClass* GetDefaultPawnClassForController(class AController* InController);
-    class AActor* FindPlayerStart(class AController* Player, FString IncomingName);
-    class AActor* ChoosePlayerStart(class AController* Player);
-    void ChangeName(class AController* Controller, FString NewName, bool bNameChange);
-    bool CanSpectate(class APlayerController* Viewer, class APlayerState* ViewTarget);
-};
-
-class AGameMode : public AGameModeBase
-{
-    FName MatchState;
-    uint8 bDelayedStart;
-    int32 NumSpectators;
-    int32 NumPlayers;
-    int32 NumBots;
-    float MinRespawnDelay;
-    int32 NumTravellingPlayers;
-    TSubclassOf<class ULocalMessage> EngineMessageClass;
-    TArray<class APlayerState*> InactivePlayerArray;
-    float InactivePlayerStateLifeSpan;
-    int32 MaxInactivePlayers;
-    bool bHandleDedicatedServerReplays;
-
-    void StartMatch();
-    void SetBandwidthLimit(float AsyncIOBandwidthLimit);
-    void Say(FString Msg);
-    void RestartGame();
-    bool ReadyToStartMatch();
-    bool ReadyToEndMatch();
-    void K2_OnSetMatchState(FName NewState);
-    bool IsMatchInProgress();
-    FName GetMatchState();
-    void EndMatch();
-    void AbortMatch();
-};
-
-class AGameSession : public AInfo
-{
-    int32 MaxSpectators;
-    int32 MaxPlayers;
-    int32 MaxPartySize;
-    uint8 MaxSplitscreensPerConnection;
-    bool bRequiresPushToTalk;
-    FName SessionName;
-
-};
-
-class AGameStateBase : public AInfo
-{
-    TSubclassOf<class AGameModeBase> GameModeClass;
-    class AGameModeBase* AuthorityGameMode;
-    TSubclassOf<class ASpectatorPawn> SpectatorClass;
-    TArray<class APlayerState*> PlayerArray;
-    bool bReplicatedHasBegunPlay;
-    float ReplicatedWorldTimeSeconds;
-    float ServerWorldTimeSecondsDelta;
-    float ServerWorldTimeSecondsUpdateFrequency;
-
-    void OnRep_SpectatorClass();
-    void OnRep_ReplicatedWorldTimeSeconds();
-    void OnRep_ReplicatedHasBegunPlay();
-    void OnRep_GameModeClass();
-    bool HasMatchStarted();
-    bool HasMatchEnded();
-    bool HasBegunPlay();
-    float GetServerWorldTimeSeconds();
-    float GetPlayerStartTime(class AController* Controller);
-    float GetPlayerRespawnDelay(class AController* Controller);
-};
-
-class AGameState : public AGameStateBase
-{
-    FName MatchState;
-    FName PreviousMatchState;
-    int32 ElapsedTime;
-
-    void OnRep_MatchState();
-    void OnRep_ElapsedTime();
-};
-
-class UGameUserSettings : public UObject
-{
-    bool bUseVSync;
-    bool bUseDynamicResolution;
-    uint32 ResolutionSizeX;
-    uint32 ResolutionSizeY;
-    uint32 LastUserConfirmedResolutionSizeX;
-    uint32 LastUserConfirmedResolutionSizeY;
-    int32 WindowPosX;
-    int32 WindowPosY;
-    int32 FullscreenMode;
-    int32 LastConfirmedFullscreenMode;
-    int32 PreferredFullscreenMode;
-    uint32 Version;
-    int32 AudioQualityLevel;
-    int32 LastConfirmedAudioQualityLevel;
-    float FrameRateLimit;
-    int32 DesiredScreenWidth;
-    bool bUseDesiredScreenHeight;
-    int32 DesiredScreenHeight;
-    int32 LastUserConfirmedDesiredScreenWidth;
-    int32 LastUserConfirmedDesiredScreenHeight;
-    float LastRecommendedScreenWidth;
-    float LastRecommendedScreenHeight;
-    float LastCPUBenchmarkResult;
-    float LastGPUBenchmarkResult;
-    TArray<float> LastCPUBenchmarkSteps;
-    TArray<float> LastGPUBenchmarkSteps;
-    float LastGPUBenchmarkMultiplier;
-    bool bUseHDRDisplayOutput;
-    int32 HDRDisplayOutputNits;
-    FGameUserSettingsOnGameUserSettingsUINeedsUpdate OnGameUserSettingsUINeedsUpdate;
-    void OnGameUserSettingsUINeedsUpdate();
-
-    void ValidateSettings();
-    bool SupportsHDRDisplayOutput();
-    void SetVSyncEnabled(bool bEnable);
-    void SetVisualEffectQuality(int32 Value);
-    void SetViewDistanceQuality(int32 Value);
-    void SetToDefaults();
-    void SetTextureQuality(int32 Value);
-    void SetShadowQuality(int32 Value);
-    void SetShadingQuality(int32 Value);
-    void SetScreenResolution(FIntPoint Resolution);
-    void SetResolutionScaleValueEx(float NewScaleValue);
-    void SetResolutionScaleValue(int32 NewScaleValue);
-    void SetResolutionScaleNormalized(float NewScaleNormalized);
-    void SetPostProcessingQuality(int32 Value);
-    void SetOverallScalabilityLevel(int32 Value);
-    void SetFullscreenMode(TEnumAsByte<EWindowMode::Type> InFullscreenMode);
-    void SetFrameRateLimit(float NewLimit);
-    void SetFoliageQuality(int32 Value);
-    void SetDynamicResolutionEnabled(bool bEnable);
-    void SetBenchmarkFallbackValues();
-    void SetAudioQualityLevel(int32 QualityLevel);
-    void SetAntiAliasingQuality(int32 Value);
-    void SaveSettings();
-    void RunHardwareBenchmark(int32 WorkScale, float CPUMultiplier, float GPUMultiplier);
-    void RevertVideoMode();
-    void ResetToCurrentSettings();
-    void LoadSettings(bool bForceReload);
-    bool IsVSyncEnabled();
-    bool IsVSyncDirty();
-    bool IsScreenResolutionDirty();
-    bool IsHDREnabled();
-    bool IsFullscreenModeDirty();
-    bool IsDynamicResolutionEnabled();
-    bool IsDynamicResolutionDirty();
-    bool IsDirty();
-    int32 GetVisualEffectQuality();
-    int32 GetViewDistanceQuality();
-    int32 GetTextureQuality();
-    int32 GetSyncInterval();
-    int32 GetShadowQuality();
-    int32 GetShadingQuality();
-    FIntPoint GetScreenResolution();
-    float GetResolutionScaleNormalized();
-    void GetResolutionScaleInformationEx(float& CurrentScaleNormalized, float& CurrentScaleValue, float& MinScaleValue, float& MaxScaleValue);
-    void GetResolutionScaleInformation(float& CurrentScaleNormalized, int32& CurrentScaleValue, int32& MinScaleValue, int32& MaxScaleValue);
-    float GetRecommendedResolutionScale();
-    TEnumAsByte<EWindowMode::Type> GetPreferredFullscreenMode();
-    int32 GetPostProcessingQuality();
-    int32 GetOverallScalabilityLevel();
-    FIntPoint GetLastConfirmedScreenResolution();
-    TEnumAsByte<EWindowMode::Type> GetLastConfirmedFullscreenMode();
-    class UGameUserSettings* GetGameUserSettings();
-    TEnumAsByte<EWindowMode::Type> GetFullscreenMode();
-    float GetFrameRateLimit();
-    int32 GetFramePace();
-    int32 GetFoliageQuality();
-    FIntPoint GetDesktopResolution();
-    FIntPoint GetDefaultWindowPosition();
-    TEnumAsByte<EWindowMode::Type> GetDefaultWindowMode();
-    float GetDefaultResolutionScale();
-    FIntPoint GetDefaultResolution();
-    int32 GetCurrentHDRDisplayNits();
-    int32 GetAudioQualityLevel();
-    int32 GetAntiAliasingQuality();
-    void EnableHDRDisplayOutput(bool bEnable, int32 DisplayNits);
-    void ConfirmVideoMode();
-    void ApplySettings(bool bCheckForCommandLineOverrides);
-    void ApplyResolutionSettings(bool bCheckForCommandLineOverrides);
-    void ApplyNonResolutionSettings();
-    void ApplyHardwareBenchmarkResults();
-};
-
-struct FDebugTextInfo
-{
-    class AActor* SrcActor;
-    FVector SrcActorOffset;
-    FVector SrcActorDesiredOffset;
-    FString DebugText;
-    float TimeRemaining;
-    float Duration;
-    FColor TextColor;
-    uint8 bAbsoluteLocation;
-    uint8 bKeepAttachedToActor;
-    uint8 bDrawShadow;
-    FVector OrigActorLocation;
-    class UFont* Font;
-    float FontScale;
-
-};
-
-class AHUD : public AActor
-{
-    class APlayerController* PlayerOwner;
-    uint8 bLostFocusPaused;
-    uint8 bShowHUD;
-    uint8 bShowDebugInfo;
-    int32 CurrentTargetIndex;
-    uint8 bShowHitBoxDebugInfo;
-    uint8 bShowOverlays;
-    uint8 bEnableDebugTextShadow;
-    TArray<class AActor*> PostRenderedActors;
-    TArray<FName> DebugDisplay;
-    TArray<FName> ToggledDebugCategories;
-    class UCanvas* Canvas;
-    class UCanvas* DebugCanvas;
-    TArray<FDebugTextInfo> DebugTextList;
-    TSubclassOf<class AActor> ShowDebugTargetDesiredClass;
-    class AActor* ShowDebugTargetActor;
-
-    void ShowHUD();
-    void ShowDebugToggleSubCategory(FName Category);
-    void ShowDebugForReticleTargetToggle(TSubclassOf<class AActor> DesiredClass);
-    void ShowDebug(FName DebugType);
-    void RemoveDebugText(class AActor* SrcActor, bool bLeaveDurationText);
-    void RemoveAllDebugStrings();
-    void ReceiveHitBoxRelease(const FName BoxName);
-    void ReceiveHitBoxEndCursorOver(const FName BoxName);
-    void ReceiveHitBoxClick(const FName BoxName);
-    void ReceiveHitBoxBeginCursorOver(const FName BoxName);
-    void ReceiveDrawHUD(int32 SizeX, int32 SizeY);
-    FVector Project(FVector Location);
-    void PreviousDebugTarget();
-    void NextDebugTarget();
-    void GetTextSize(FString Text, float& OutWidth, float& OutHeight, class UFont* Font, float Scale);
-    class APlayerController* GetOwningPlayerController();
-    class APawn* GetOwningPawn();
-    void GetActorsInSelectionRectangle(TSubclassOf<class AActor> ClassFilter, const FVector2D& FirstPoint, const FVector2D& SecondPoint, TArray<class AActor*>& OutActors, bool bIncludeNonCollidingComponents, bool bActorMustBeFullyEnclosed);
-    void DrawTextureSimple(class UTexture* Texture, float ScreenX, float ScreenY, float Scale, bool bScalePosition);
-    void DrawTexture(class UTexture* Texture, float ScreenX, float ScreenY, float ScreenW, float ScreenH, float TextureU, float TextureV, float TextureUWidth, float TextureVHeight, FLinearColor TintColor, TEnumAsByte<EBlendMode> BlendMode, float Scale, bool bScalePosition, float Rotation, FVector2D RotPivot);
-    void DrawText(FString Text, FLinearColor TextColor, float ScreenX, float ScreenY, class UFont* Font, float Scale, bool bScalePosition);
-    void DrawRect(FLinearColor RectColor, float ScreenX, float ScreenY, float ScreenW, float ScreenH);
-    void DrawMaterialTriangle(class UMaterialInterface* Material, FVector2D V0_Pos, FVector2D V1_Pos, FVector2D V2_Pos, FVector2D V0_UV, FVector2D V1_UV, FVector2D V2_UV, FLinearColor V0_Color, FLinearColor V1_Color, FLinearColor V2_Color);
-    void DrawMaterialSimple(class UMaterialInterface* Material, float ScreenX, float ScreenY, float ScreenW, float ScreenH, float Scale, bool bScalePosition);
-    void DrawMaterial(class UMaterialInterface* Material, float ScreenX, float ScreenY, float ScreenW, float ScreenH, float MaterialU, float MaterialV, float MaterialUWidth, float MaterialVHeight, float Scale, bool bScalePosition, float Rotation, FVector2D RotPivot);
-    void DrawLine(float StartScreenX, float StartScreenY, float EndScreenX, float EndScreenY, FLinearColor LineColor, float LineThickness);
-    void Deproject(float ScreenX, float ScreenY, FVector& WorldPosition, FVector& WorldDirection);
-    void AddHitBox(FVector2D Position, FVector2D Size, FName InName, bool bConsumesInput, int32 Priority);
-    void AddDebugText(FString DebugText, class AActor* SrcActor, float Duration, FVector Offset, FVector DesiredOffset, FColor TextColor, bool bSkipOverwriteCheck, bool bAbsoluteLocation, bool bKeepAttachedToActor, class UFont* InFont, float FontScale, bool bDrawShadow);
-};
-
-class UKismetArrayLibrary : public UBlueprintFunctionLibrary
-{
-
-    void SetArrayPropertyByName(class UObject* Object, FName PropertyName, const TArray<int32>& Value);
-    void FilterArray(const TArray<class AActor*>& TargetArray, TSubclassOf<class AActor> FilterClass, TArray<class AActor*>& FilteredArray);
-    void Array_Swap(const TArray<int32>& TargetArray, int32 FirstIndex, int32 SecondIndex);
-    void Array_Shuffle(const TArray<int32>& TargetArray);
-    void Array_Set(const TArray<int32>& TargetArray, int32 Index, const int32& Item, bool bSizeToFit);
-    void Array_Reverse(const TArray<int32>& TargetArray);
-    void Array_Resize(const TArray<int32>& TargetArray, int32 Size);
-    bool Array_RemoveItem(const TArray<int32>& TargetArray, const int32& Item);
-    void Array_Remove(const TArray<int32>& TargetArray, int32 IndexToRemove);
-    void Array_RandomFromStream(const TArray<int32>& TargetArray, FRandomStream& RandomStream, int32& OutItem, int32& OutIndex);
-    void Array_Random(const TArray<int32>& TargetArray, int32& OutItem, int32& OutIndex);
-    int32 Array_Length(const TArray<int32>& TargetArray);
-    int32 Array_LastIndex(const TArray<int32>& TargetArray);
-    bool Array_IsValidIndex(const TArray<int32>& TargetArray, int32 IndexToTest);
-    void Array_Insert(const TArray<int32>& TargetArray, const int32& NewItem, int32 Index);
-    bool Array_Identical(const TArray<int32>& ArrayA, const TArray<int32>& ArrayB);
-    void Array_Get(const TArray<int32>& TargetArray, int32 Index, int32& Item);
-    int32 Array_Find(const TArray<int32>& TargetArray, const int32& ItemToFind);
-    bool Array_Contains(const TArray<int32>& TargetArray, const int32& ItemToFind);
-    void Array_Clear(const TArray<int32>& TargetArray);
-    void Array_Append(const TArray<int32>& TargetArray, const TArray<int32>& SourceArray);
-    int32 Array_AddUnique(const TArray<int32>& TargetArray, const int32& NewItem);
-    int32 Array_Add(const TArray<int32>& TargetArray, const int32& NewItem);
-};
-
-struct FCameraCacheEntry
-{
-    float Timestamp;
-    FMinimalViewInfo POV;
-
-};
-
-struct FTViewTarget
-{
-    class AActor* Target;
-    FMinimalViewInfo POV;
-    class APlayerState* PlayerState;
-
-};
-
-class APlayerCameraManager : public AActor
-{
-    class APlayerController* PCOwner;
-    class USceneComponent* TransformComponent;
-    float DefaultFOV;
-    float DefaultOrthoWidth;
-    float DefaultAspectRatio;
-    FCameraCacheEntry CameraCache;
-    FCameraCacheEntry LastFrameCameraCache;
-    FTViewTarget ViewTarget;
-    FTViewTarget PendingViewTarget;
-    FCameraCacheEntry CameraCachePrivate;
-    FCameraCacheEntry LastFrameCameraCachePrivate;
-    TArray<class UCameraModifier*> ModifierList;
-    TArray<class TSubclassOf<UCameraModifier>> DefaultModifiers;
-    float FreeCamDistance;
-    FVector FreeCamOffset;
-    FVector ViewTargetOffset;
-    FPlayerCameraManagerOnAudioFadeChangeEvent OnAudioFadeChangeEvent;
-    void OnAudioFadeChangeSignature(bool bFadeOut, float FadeTime);
-    TArray<class AEmitterCameraLensEffectBase*> CameraLensEffects;
-    class UCameraModifier_CameraShake* CachedCameraShakeMod;
-    class UCameraAnimInst* AnimInstPool;
-    TArray<FPostProcessSettings> PostProcessBlendCache;
-    TArray<class UCameraAnimInst*> ActiveAnims;
-    TArray<class UCameraAnimInst*> FreeAnims;
-    class ACameraActor* AnimCameraActor;
-    uint8 bIsOrthographic;
-    uint8 bDefaultConstrainAspectRatio;
-    uint8 bClientSimulatingViewTarget;
-    uint8 bUseClientSideCameraUpdates;
-    uint8 bGameCameraCutThisFrame;
-    float ViewPitchMin;
-    float ViewPitchMax;
-    float ViewYawMin;
-    float ViewYawMax;
-    float ViewRollMin;
-    float ViewRollMax;
-    float ServerUpdateCameraTimeout;
-
-    void SwapPendingViewTargetWhenUsingClientSideCameraUpdates();
-    void StopCameraShake(class UCameraShakeBase* ShakeInstance, bool bImmediately);
-    void StopCameraFade();
-    void StopCameraAnimInst(class UCameraAnimInst* AnimInst, bool bImmediate);
-    void StopAllInstancesOfCameraShakeFromSource(TSubclassOf<class UCameraShakeBase> Shake, class UCameraShakeSourceComponent* SourceComponent, bool bImmediately);
-    void StopAllInstancesOfCameraShake(TSubclassOf<class UCameraShakeBase> Shake, bool bImmediately);
-    void StopAllInstancesOfCameraAnim(class UCameraAnim* Anim, bool bImmediate);
-    void StopAllCameraShakesFromSource(class UCameraShakeSourceComponent* SourceComponent, bool bImmediately);
-    void StopAllCameraShakes(bool bImmediately);
-    void StopAllCameraAnims(bool bImmediate);
-    class UCameraShakeBase* StartCameraShakeFromSource(TSubclassOf<class UCameraShakeBase> ShakeClass, class UCameraShakeSourceComponent* SourceComponent, float Scale, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
-    class UCameraShakeBase* StartCameraShake(TSubclassOf<class UCameraShakeBase> ShakeClass, float Scale, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
-    void StartCameraFade(float FromAlpha, float ToAlpha, float Duration, FLinearColor Color, bool bShouldFadeAudio, bool bHoldWhenFinished);
-    void SetManualCameraFade(float InFadeAmount, FLinearColor Color, bool bInFadeAudio);
-    void SetGameCameraCutThisFrame();
-    bool RemoveCameraModifier(class UCameraModifier* ModifierToRemove);
-    void RemoveCameraLensEffect(class AEmitterCameraLensEffectBase* Emitter);
-    class UCameraAnimInst* PlayCameraAnim(class UCameraAnim* Anim, float Rate, float Scale, float BlendInTime, float BlendOutTime, bool bLoop, bool bRandomStartTime, float Duration, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
-    void PhotographyCameraModify(const FVector NewCameraLocation, const FVector PreviousCameraLocation, const FVector OriginalCameraLocation, FVector& ResultCameraLocation);
-    void OnPhotographySessionStart();
-    void OnPhotographySessionEnd();
-    void OnPhotographyMultiPartCaptureStart();
-    void OnPhotographyMultiPartCaptureEnd();
-    class APlayerController* GetOwningPlayerController();
-    float GetFOVAngle();
-    FRotator GetCameraRotation();
-    FVector GetCameraLocation();
-    class UCameraModifier* FindCameraModifierByClass(TSubclassOf<class UCameraModifier> ModifierClass);
-    void ClearCameraLensEffects();
-    bool BlueprintUpdateCamera(class AActor* CameraTarget, FVector& NewCameraLocation, FRotator& NewCameraRotation, float& NewCameraFOV);
-    class UCameraModifier* AddNewCameraModifier(TSubclassOf<class UCameraModifier> ModifierClass);
-    class AEmitterCameraLensEffectBase* AddCameraLensEffect(TSubclassOf<class AEmitterCameraLensEffectBase> LensEffectEmitterClass);
-};
-
-class ANavigationObjectBase : public AActor
-{
-    class UCapsuleComponent* CapsuleComponent;
-    class UBillboardComponent* GoodSprite;
-    class UBillboardComponent* BadSprite;
-    uint8 bIsPIEPlayerStart;
-
-};
-
 class APlayerStart : public ANavigationObjectBase
 {
     FName PlayerStartTag;
 
+};
+
+class APlayerStartPIE : public APlayerStart
+{
 };
 
 class APlayerState : public AInfo
@@ -3798,98 +8015,265 @@ class APlayerState : public AInfo
     FString GetPlayerName();
 };
 
-class UProjectileMovementComponent : public UMovementComponent
+class APointLight : public ALight
 {
-    float InitialSpeed;
-    float MaxSpeed;
-    uint8 bRotationFollowsVelocity;
-    uint8 bRotationRemainsVertical;
-    uint8 bShouldBounce;
-    uint8 bInitialVelocityInLocalSpace;
-    uint8 bForceSubStepping;
-    uint8 bSimulationEnabled;
-    uint8 bSweepCollision;
-    uint8 bIsHomingProjectile;
-    uint8 bBounceAngleAffectsFriction;
-    uint8 bIsSliding;
-    uint8 bInterpMovement;
-    uint8 bInterpRotation;
-    float PreviousHitTime;
-    FVector PreviousHitNormal;
-    float ProjectileGravityScale;
-    float Buoyancy;
-    float Bounciness;
-    float Friction;
-    float BounceVelocityStopSimulatingThreshold;
-    float MinFrictionFraction;
-    FProjectileMovementComponentOnProjectileBounce OnProjectileBounce;
-    void OnProjectileBounceDelegate(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
-    FProjectileMovementComponentOnProjectileStop OnProjectileStop;
-    void OnProjectileStopDelegate(const FHitResult& ImpactResult);
-    float HomingAccelerationMagnitude;
-    TWeakObjectPtr<class USceneComponent> HomingTargetComponent;
-    float MaxSimulationTimeStep;
-    int32 MaxSimulationIterations;
-    int32 BounceAdditionalIterations;
-    float InterpLocationTime;
-    float InterpRotationTime;
-    float InterpLocationMaxLagDistance;
-    float InterpLocationSnapToTargetDistance;
+    class UPointLightComponent* PointLightComponent;
 
-    void StopSimulating(const FHitResult& HitResult);
-    void SetVelocityInLocalSpace(FVector NewVelocity);
-    void SetInterpolatedComponent(class USceneComponent* Component);
-    void ResetInterpolation();
-    void OnProjectileStopDelegate__DelegateSignature(const FHitResult& ImpactResult);
-    void OnProjectileBounceDelegate__DelegateSignature(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
-    void MoveInterpolationTarget(const FVector& NewLocation, const FRotator& NewRotation);
-    FVector LimitVelocity(FVector NewVelocity);
-    bool IsVelocityUnderSimulationThreshold();
-    bool IsInterpolationComplete();
+    void SetRadius(float NewRadius);
+    void SetLightFalloffExponent(float NewLightFalloffExponent);
 };
 
-class USaveGame : public UObject
+class APostProcessVolume : public AVolume
 {
+    FPostProcessSettings Settings;
+    float Priority;
+    float BlendRadius;
+    float BlendWeight;
+    uint8 bEnabled;
+    uint8 bUnbound;
+
+    void AddOrUpdateBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight);
 };
 
-struct FTimerHandle
+class APrecomputedVisibilityOverrideVolume : public AVolume
 {
-    uint64 Handle;
+    TArray<class AActor*> OverrideVisibleActors;
+    TArray<class AActor*> OverrideInvisibleActors;
+    TArray<FName> OverrideInvisibleLevels;
 
 };
 
-struct FInteriorSettings
+class APrecomputedVisibilityVolume : public AVolume
 {
-    bool bIsWorldSettings;
-    float ExteriorVolume;
-    float ExteriorTime;
-    float ExteriorLPF;
-    float ExteriorLPFTime;
-    float InteriorVolume;
-    float InteriorTime;
-    float InteriorLPF;
-    float InteriorLPFTime;
+};
+
+class ARadialForceActor : public ARigidBodyBase
+{
+    class URadialForceComponent* ForceComponent;
+
+    void ToggleForce();
+    void FireImpulse();
+    void EnableForce();
+    void DisableForce();
+};
+
+class ARectLight : public ALight
+{
+    class URectLightComponent* RectLightComponent;
 
 };
 
-struct FBroadphaseSettings
+class AReflectionCapture : public AActor
 {
-    bool bUseMBPOnClient;
-    bool bUseMBPOnServer;
-    bool bUseMBPOuterBounds;
-    FBox MBPBounds;
-    FBox MBPOuterBounds;
-    uint32 MBPNumSubdivs;
+    class UReflectionCaptureComponent* CaptureComponent;
 
 };
 
-struct FNetViewer
+class ARigidBodyBase : public AActor
 {
-    class UNetConnection* Connection;
-    class AActor* InViewer;
-    class AActor* ViewTarget;
-    FVector ViewLocation;
-    FVector ViewDir;
+};
+
+class ARuntimeVirtualTextureVolume : public AActor
+{
+    class URuntimeVirtualTextureComponent* VirtualTextureComponent;
+
+};
+
+class ASceneCapture : public AActor
+{
+    class UStaticMeshComponent* MeshComp;
+    class USceneComponent* SceneComponent;
+
+};
+
+class ASceneCapture2D : public ASceneCapture
+{
+    class USceneCaptureComponent2D* CaptureComponent2D;
+
+    void OnInterpToggle(bool bEnable);
+};
+
+class ASceneCaptureCube : public ASceneCapture
+{
+    class USceneCaptureComponentCube* CaptureComponentCube;
+
+    void OnInterpToggle(bool bEnable);
+};
+
+class AServerStatReplicator : public AInfo
+{
+    bool bUpdateStatNet;
+    bool bOverwriteClientStats;
+    uint32 Channels;
+    uint32 InRate;
+    uint32 OutRate;
+    uint32 MaxPacketOverhead;
+    uint32 InRateClientMax;
+    uint32 InRateClientMin;
+    uint32 InRateClientAvg;
+    uint32 InPacketsClientMax;
+    uint32 InPacketsClientMin;
+    uint32 InPacketsClientAvg;
+    uint32 OutRateClientMax;
+    uint32 OutRateClientMin;
+    uint32 OutRateClientAvg;
+    uint32 OutPacketsClientMax;
+    uint32 OutPacketsClientMin;
+    uint32 OutPacketsClientAvg;
+    uint32 NetNumClients;
+    uint32 InPackets;
+    uint32 OutPackets;
+    uint32 InBunches;
+    uint32 OutBunches;
+    uint32 OutLoss;
+    uint32 InLoss;
+    uint32 VoiceBytesSent;
+    uint32 VoiceBytesRecv;
+    uint32 VoicePacketsSent;
+    uint32 VoicePacketsRecv;
+    uint32 PercentInVoice;
+    uint32 PercentOutVoice;
+    uint32 NumActorChannels;
+    uint32 NumConsideredActors;
+    uint32 PrioritizedActors;
+    uint32 NumRelevantActors;
+    uint32 NumRelevantDeletedActors;
+    uint32 NumReplicatedActorAttempts;
+    uint32 NumReplicatedActors;
+    uint32 NumActors;
+    uint32 NumNetActors;
+    uint32 NumDormantActors;
+    uint32 NumInitiallyDormantActors;
+    uint32 NumNetGUIDsAckd;
+    uint32 NumNetGUIDsPending;
+    uint32 NumNetGUIDsUnAckd;
+    uint32 ObjPathBytes;
+    uint32 NetGUIDOutRate;
+    uint32 NetGUIDInRate;
+    uint32 NetSaturated;
+
+};
+
+class ASkeletalMeshActor : public AActor
+{
+    uint8 bShouldDoAnimNotifies;
+    uint8 bWakeOnLevelStart;
+    class USkeletalMeshComponent* SkeletalMeshComponent;
+    class USkeletalMesh* ReplicatedMesh;
+    class UPhysicsAsset* ReplicatedPhysAsset;
+    class UMaterialInterface* ReplicatedMaterial0;
+    class UMaterialInterface* ReplicatedMaterial1;
+
+    void OnRep_ReplicatedPhysAsset();
+    void OnRep_ReplicatedMesh();
+    void OnRep_ReplicatedMaterial1();
+    void OnRep_ReplicatedMaterial0();
+};
+
+class ASkyAtmosphere : public AInfo
+{
+    class USkyAtmosphereComponent* SkyAtmosphereComponent;
+
+};
+
+class ASkyLight : public AInfo
+{
+    class USkyLightComponent* LightComponent;
+    uint8 bEnabled;
+
+    void OnRep_bEnabled();
+};
+
+class ASpectatorPawn : public ADefaultPawn
+{
+};
+
+class ASphereReflectionCapture : public AReflectionCapture
+{
+    class UDrawSphereComponent* DrawCaptureRadius;
+
+};
+
+class ASplineMeshActor : public AActor
+{
+    class USplineMeshComponent* SplineMeshComponent;
+
+};
+
+class ASpotLight : public ALight
+{
+    class USpotLightComponent* SpotLightComponent;
+
+    void SetOuterConeAngle(float NewOuterConeAngle);
+    void SetInnerConeAngle(float NewInnerConeAngle);
+};
+
+class AStaticMeshActor : public AActor
+{
+    class UStaticMeshComponent* StaticMeshComponent;
+    bool bStaticMeshReplicateMovement;
+    ENavDataGatheringMode NavigationGeometryGatheringMode;
+
+    void SetMobility(TEnumAsByte<EComponentMobility::Type> InMobility);
+};
+
+class ATargetPoint : public AActor
+{
+};
+
+class ATextRenderActor : public AActor
+{
+    class UTextRenderComponent* TextRender;
+
+};
+
+class ATriggerBase : public AActor
+{
+    class UShapeComponent* CollisionComponent;
+
+};
+
+class ATriggerBox : public ATriggerBase
+{
+};
+
+class ATriggerCapsule : public ATriggerBase
+{
+};
+
+class ATriggerSphere : public ATriggerBase
+{
+};
+
+class ATriggerVolume : public AVolume
+{
+};
+
+class AVectorFieldVolume : public AActor
+{
+    class UVectorFieldComponent* VectorFieldComponent;
+
+};
+
+class AVolume : public ABrush
+{
+};
+
+class AVolumetricCloud : public AInfo
+{
+    class UVolumetricCloudComponent* VolumetricCloudComponent;
+
+};
+
+class AVolumetricLightmapDensityVolume : public AVolume
+{
+    FInt32Interval AllowedMipLevelRange;
+
+};
+
+class AWindDirectionalSource : public AInfo
+{
+    class UWindDirectionalSourceComponent* Component;
 
 };
 
@@ -3951,246 +8335,1574 @@ class AWorldSettings : public AInfo
     void OnRep_WorldGravityZ();
 };
 
-struct FInputAxisKeyMapping
+class IAnimClassInterface : public IInterface
 {
-    FName AxisName;
-    float Scale;
-    FKey Key;
+};
+
+class IAnimLayerInterface : public IInterface
+{
+};
+
+class IBlendableInterface : public IInterface
+{
+};
+
+class IBoneReferenceSkeletonProvider : public IInterface
+{
+};
+
+class ICurveSourceInterface : public IInterface
+{
+
+    float GetCurveValue(FName CurveName);
+    void GetCurves(TArray<FNamedCurveValue>& OutValues);
+    FName GetBindingName();
+};
+
+class IDestructibleInterface : public IInterface
+{
+};
+
+class IImportantToggleSettingInterface : public IInterface
+{
+};
+
+class IInterface_ActorSubobject : public IInterface
+{
+};
+
+class IInterface_AssetUserData : public IInterface
+{
+};
+
+class IInterface_CollisionDataProvider : public IInterface
+{
+};
+
+class IInterface_PostProcessVolume : public IInterface
+{
+};
+
+class IInterface_PreviewMeshProvider : public IInterface
+{
+};
+
+class ILODSyncInterface : public IInterface
+{
+};
+
+class ILevelPartitionInterface : public IInterface
+{
+};
+
+class IMatineeAnimInterface : public IInterface
+{
+};
+
+class IMatineeInterface : public IInterface
+{
+};
+
+class INavAgentInterface : public IInterface
+{
+};
+
+class INavEdgeProviderInterface : public IInterface
+{
+};
+
+class INavPathObserverInterface : public IInterface
+{
+};
+
+class INavRelevantInterface : public IInterface
+{
+};
+
+class INavigationDataInterface : public IInterface
+{
+};
+
+class INetworkPredictionInterface : public IInterface
+{
+};
+
+class INodeMappingProviderInterface : public IInterface
+{
+};
+
+class IPathFollowingAgentInterface : public IInterface
+{
+};
+
+class IPreviewCollectionInterface : public IInterface
+{
+};
+
+class IRVOAvoidanceInterface : public IInterface
+{
+};
+
+class ISlateTextureAtlasInterface : public IInterface
+{
+};
+
+class IVisualLoggerDebugSnapshotInterface : public IInterface
+{
+};
+
+class UAISystemBase : public UObject
+{
+    FSoftClassPath AISystemClassName;
+    FName AISystemModuleName;
+    bool bInstantiateAISystemOnClient;
 
 };
 
-struct FInputActionKeyMapping
+class UActorChannel : public UChannel
 {
-    FName ActionName;
-    uint8 bShift;
-    uint8 bCtrl;
-    uint8 bAlt;
-    uint8 bCmd;
-    FKey Key;
+    class AActor* Actor;
+    TArray<class UObject*> CreateSubObjects;
 
 };
 
-struct FBasedMovementInfo
+class UActorComponent : public UObject
 {
-    class UPrimitiveComponent* MovementBase;
-    FName BoneName;
-    FVector_NetQuantize100 Location;
+    FActorComponentTickFunction PrimaryComponentTick;
+    TArray<FName> ComponentTags;
+    TArray<class UAssetUserData*> AssetUserData;
+    int32 UCSSerializationIndex;
+    uint8 bNetAddressable;
+    uint8 bReplicates;
+    uint8 bAutoActivate;
+    uint8 bIsActive;
+    uint8 bEditableWhenInherited;
+    uint8 bCanEverAffectNavigation;
+    uint8 bIsEditorOnly;
+    EComponentCreationMethod CreationMethod;
+    FActorComponentOnComponentActivated OnComponentActivated;
+    void ActorComponentActivatedSignature(class UActorComponent* Component, bool bReset);
+    FActorComponentOnComponentDeactivated OnComponentDeactivated;
+    void ActorComponentDeactivateSignature(class UActorComponent* Component);
+    TArray<FSimpleMemberReference> UCSModifiedProperties;
+
+    void ToggleActive();
+    void SetTickGroup(TEnumAsByte<ETickingGroup> NewTickGroup);
+    void SetTickableWhenPaused(bool bTickableWhenPaused);
+    void SetIsReplicated(bool ShouldReplicate);
+    void SetComponentTickIntervalAndCooldown(float TickInterval);
+    void SetComponentTickInterval(float TickInterval);
+    void SetComponentTickEnabled(bool bEnabled);
+    void SetAutoActivate(bool bNewAutoActivate);
+    void SetActive(bool bNewActive, bool bReset);
+    void RemoveTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
+    void RemoveTickPrerequisiteActor(class AActor* PrerequisiteActor);
+    void ReceiveTick(float DeltaSeconds);
+    void ReceiveEndPlay(TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
+    void ReceiveBeginPlay();
+    void OnRep_IsActive();
+    void K2_DestroyComponent(class UObject* Object);
+    bool IsComponentTickEnabled();
+    bool IsBeingDestroyed();
+    bool IsActive();
+    class AActor* GetOwner();
+    float GetComponentTickInterval();
+    void Deactivate();
+    bool ComponentHasTag(FName Tag);
+    void AddTickPrerequisiteComponent(class UActorComponent* PrerequisiteComponent);
+    void AddTickPrerequisiteActor(class AActor* PrerequisiteActor);
+    void Activate(bool bReset);
+};
+
+class UActorComponentInstanceDataTransientOuter : public UObject
+{
+};
+
+class UAimOffsetBlendSpace : public UBlendSpace
+{
+};
+
+class UAimOffsetBlendSpace1D : public UBlendSpace1D
+{
+};
+
+class UAnimBlueprint : public UBlueprint
+{
+    class USkeleton* TargetSkeleton;
+    TArray<FAnimGroupInfo> Groups;
+    bool bUseMultiThreadedAnimationUpdate;
+    bool bWarnAboutBlueprintUsage;
+
+};
+
+class UAnimBlueprintGeneratedClass : public UBlueprintGeneratedClass
+{
+    TArray<FBakedAnimationStateMachine> BakedStateMachines;
+    class USkeleton* TargetSkeleton;
+    TArray<FAnimNotifyEvent> AnimNotifies;
+    TMap<class FName, class FCachedPoseIndices> OrderedSavedPoseIndicesMap;
+    TArray<FName> SyncGroupNames;
+    TArray<FExposedValueHandler> EvaluateGraphExposedInputs;
+    TMap<class FName, class FGraphAssetPlayerInformation> GraphAssetPlayerInformation;
+    TMap<class FName, class FAnimGraphBlendOptions> GraphBlendOptions;
+    FPropertyAccessLibrary PropertyAccessLibrary;
+
+};
+
+class UAnimBoneCompressionCodec : public UObject
+{
+    FString Description;
+
+};
+
+class UAnimBoneCompressionSettings : public UObject
+{
+    TArray<class UAnimBoneCompressionCodec*> Codecs;
+
+};
+
+class UAnimClassData : public UObject
+{
+    TArray<FBakedAnimationStateMachine> BakedStateMachines;
+    class USkeleton* TargetSkeleton;
+    TArray<FAnimNotifyEvent> AnimNotifies;
+    TMap<class FName, class FCachedPoseIndices> OrderedSavedPoseIndicesMap;
+    TArray<FAnimBlueprintFunction> AnimBlueprintFunctions;
+    TArray<FAnimBlueprintFunctionData> AnimBlueprintFunctionData;
+    TArray<TFieldPath<FStructProperty>> AnimNodeProperties;
+    TArray<TFieldPath<FStructProperty>> LinkedAnimGraphNodeProperties;
+    TArray<TFieldPath<FStructProperty>> LinkedAnimLayerNodeProperties;
+    TArray<TFieldPath<FStructProperty>> PreUpdateNodeProperties;
+    TArray<TFieldPath<FStructProperty>> DynamicResetNodeProperties;
+    TArray<TFieldPath<FStructProperty>> StateMachineNodeProperties;
+    TArray<TFieldPath<FStructProperty>> InitializationNodeProperties;
+    TMap<class FName, class FGraphAssetPlayerInformation> GraphNameAssetPlayers;
+    TArray<FName> SyncGroupNames;
+    TArray<FExposedValueHandler> EvaluateGraphExposedInputs;
+    TMap<class FName, class FAnimGraphBlendOptions> GraphBlendOptions;
+    FPropertyAccessLibrary PropertyAccessLibrary;
+
+};
+
+class UAnimComposite : public UAnimCompositeBase
+{
+    FAnimTrack AnimationTrack;
+
+};
+
+class UAnimCompositeBase : public UAnimSequenceBase
+{
+};
+
+class UAnimCompress : public UAnimBoneCompressionCodec
+{
+    uint8 bNeedsSkeleton;
+    TEnumAsByte<AnimationCompressionFormat> TranslationCompressionFormat;
+    TEnumAsByte<AnimationCompressionFormat> RotationCompressionFormat;
+    TEnumAsByte<AnimationCompressionFormat> ScaleCompressionFormat;
+
+};
+
+class UAnimCompress_BitwiseCompressOnly : public UAnimCompress
+{
+};
+
+class UAnimCompress_LeastDestructive : public UAnimCompress_BitwiseCompressOnly
+{
+};
+
+class UAnimCompress_PerTrackCompression : public UAnimCompress_RemoveLinearKeys
+{
+    float MaxZeroingThreshold;
+    float MaxPosDiffBitwise;
+    float MaxAngleDiffBitwise;
+    float MaxScaleDiffBitwise;
+    TArray<TEnumAsByte<AnimationCompressionFormat>> AllowedRotationFormats;
+    TArray<TEnumAsByte<AnimationCompressionFormat>> AllowedTranslationFormats;
+    TArray<TEnumAsByte<AnimationCompressionFormat>> AllowedScaleFormats;
+    uint8 bResampleAnimation;
+    float ResampledFramerate;
+    int32 MinKeysForResampling;
+    uint8 bUseAdaptiveError;
+    uint8 bUseOverrideForEndEffectors;
+    int32 TrackHeightBias;
+    float ParentingDivisor;
+    float ParentingDivisorExponent;
+    uint8 bUseAdaptiveError2;
+    float RotationErrorSourceRatio;
+    float TranslationErrorSourceRatio;
+    float ScaleErrorSourceRatio;
+    float MaxErrorPerTrackRatio;
+    float PerturbationProbeSize;
+
+};
+
+class UAnimCompress_RemoveEverySecondKey : public UAnimCompress
+{
+    int32 MinKeys;
+    uint8 bStartAtSecondKey;
+
+};
+
+class UAnimCompress_RemoveLinearKeys : public UAnimCompress
+{
+    float MaxPosDiff;
+    float MaxAngleDiff;
+    float MaxScaleDiff;
+    float MaxEffectorDiff;
+    float MinEffectorDiff;
+    float EffectorDiffSocket;
+    float ParentKeyScale;
+    uint8 bRetarget;
+    uint8 bActuallyFilterLinearKeys;
+
+};
+
+class UAnimCompress_RemoveTrivialKeys : public UAnimCompress
+{
+    float MaxPosDiff;
+    float MaxAngleDiff;
+    float MaxScaleDiff;
+
+};
+
+class UAnimCurveCompressionCodec : public UObject
+{
+};
+
+class UAnimCurveCompressionCodec_CompressedRichCurve : public UAnimCurveCompressionCodec
+{
+};
+
+class UAnimCurveCompressionCodec_UniformIndexable : public UAnimCurveCompressionCodec
+{
+};
+
+class UAnimCurveCompressionCodec_UniformlySampled : public UAnimCurveCompressionCodec
+{
+};
+
+class UAnimCurveCompressionSettings : public UObject
+{
+    class UAnimCurveCompressionCodec* Codec;
+
+};
+
+class UAnimInstance : public UObject
+{
+    class USkeleton* CurrentSkeleton;
+    TEnumAsByte<ERootMotionMode::Type> RootMotionMode;
+    uint8 bUseMultiThreadedAnimationUpdate;
+    uint8 bUsingCopyPoseFromMesh;
+    uint8 bReceiveNotifiesFromLinkedInstances;
+    uint8 bPropagateNotifiesToLinkedInstances;
+    uint8 bQueueMontageEvents;
+    FAnimInstanceOnMontageBlendingOut OnMontageBlendingOut;
+    void OnMontageBlendingOutStartedMCDelegate(class UAnimMontage* Montage, bool bInterrupted);
+    FAnimInstanceOnMontageStarted OnMontageStarted;
+    void OnMontageStartedMCDelegate(class UAnimMontage* Montage);
+    FAnimInstanceOnMontageEnded OnMontageEnded;
+    void OnMontageEndedMCDelegate(class UAnimMontage* Montage, bool bInterrupted);
+    FAnimInstanceOnAllMontageInstancesEnded OnAllMontageInstancesEnded;
+    void OnAllMontageInstancesEndedMCDelegate();
+    FAnimNotifyQueue NotifyQueue;
+    TArray<FAnimNotifyEvent> ActiveAnimNotifyState;
+
+    void UnlockAIResources(bool bUnlockMovement, bool UnlockAILogic);
+    void UnlinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
+    class APawn* TryGetPawnOwner();
+    void StopSlotAnimation(float InBlendOutTime, FName SlotNodeName);
+    void SnapshotPose(FPoseSnapshot& Snapshot);
+    void SetRootMotionMode(TEnumAsByte<ERootMotionMode::Type> Value);
+    void SetReceiveNotifiesFromLinkedInstances(bool bSet);
+    void SetPropagateNotifiesToLinkedInstances(bool bSet);
+    void SetMorphTarget(FName MorphTargetName, float Value);
+    void SavePoseSnapshot(FName SnapshotName);
+    void ResetDynamics(ETeleportType InTeleportType);
+    class UAnimMontage* PlaySlotAnimationAsDynamicMontage(class UAnimSequenceBase* Asset, FName SlotNodeName, float BlendInTime, float BlendOutTime, float InPlayRate, int32 LoopCount, float BlendOutTriggerTime, float InTimeToStartMontageAt);
+    float PlaySlotAnimation(class UAnimSequenceBase* Asset, FName SlotNodeName, float BlendInTime, float BlendOutTime, float InPlayRate, int32 LoopCount);
+    void Montage_StopGroupByName(float InBlendOutTime, FName GroupName);
+    void Montage_Stop(float InBlendOutTime, const class UAnimMontage* Montage);
+    void Montage_SetPosition(const class UAnimMontage* Montage, float NewPosition);
+    void Montage_SetPlayRate(const class UAnimMontage* Montage, float NewPlayRate);
+    void Montage_SetNextSection(FName SectionNameToChange, FName NextSection, const class UAnimMontage* Montage);
+    void Montage_Resume(const class UAnimMontage* Montage);
+    float Montage_Play(class UAnimMontage* MontageToPlay, float InPlayRate, EMontagePlayReturnType ReturnValueType, float InTimeToStartMontageAt, bool bStopAllMontages);
+    void Montage_Pause(const class UAnimMontage* Montage);
+    void Montage_JumpToSectionsEnd(FName SectionName, const class UAnimMontage* Montage);
+    void Montage_JumpToSection(FName SectionName, const class UAnimMontage* Montage);
+    bool Montage_IsPlaying(const class UAnimMontage* Montage);
+    bool Montage_IsActive(const class UAnimMontage* Montage);
+    float Montage_GetPosition(const class UAnimMontage* Montage);
+    float Montage_GetPlayRate(const class UAnimMontage* Montage);
+    bool Montage_GetIsStopped(const class UAnimMontage* Montage);
+    FName Montage_GetCurrentSection(const class UAnimMontage* Montage);
+    float Montage_GetBlendTime(const class UAnimMontage* Montage);
+    void LockAIResources(bool bLockMovement, bool LockAILogic);
+    void LinkAnimGraphByTag(FName InTag, TSubclassOf<class UAnimInstance> InClass);
+    void LinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
+    bool IsSyncGroupBetweenMarkers(FName InSyncGroupName, FName PreviousMarker, FName NextMarker, bool bRespectMarkerOrder);
+    bool IsPlayingSlotAnimation(const class UAnimSequenceBase* Asset, FName SlotNodeName);
+    bool IsAnyMontagePlaying();
+    bool HasMarkerBeenHitThisFrame(FName SyncGroup, FName MarkerName);
+    bool GetTimeToClosestMarker(FName SyncGroup, FName MarkerName, float& OutMarkerTime);
+    FMarkerSyncAnimPosition GetSyncGroupPosition(FName InSyncGroupName);
+    float GetRelevantAnimTimeRemainingFraction(int32 MachineIndex, int32 StateIndex);
+    float GetRelevantAnimTimeRemaining(int32 MachineIndex, int32 StateIndex);
+    float GetRelevantAnimTimeFraction(int32 MachineIndex, int32 StateIndex);
+    float GetRelevantAnimTime(int32 MachineIndex, int32 StateIndex);
+    float GetRelevantAnimLength(int32 MachineIndex, int32 StateIndex);
+    bool GetReceiveNotifiesFromLinkedInstances();
+    bool GetPropagateNotifiesToLinkedInstances();
+    class USkeletalMeshComponent* GetOwningComponent();
+    class AActor* GetOwningActor();
+    void GetLinkedAnimLayerInstancesByGroup(FName InGroup, TArray<class UAnimInstance*>& OutLinkedInstances);
+    class UAnimInstance* GetLinkedAnimLayerInstanceByGroupAndClass(FName InGroup, TSubclassOf<class UAnimInstance> InClass);
+    class UAnimInstance* GetLinkedAnimLayerInstanceByGroup(FName InGroup);
+    class UAnimInstance* GetLinkedAnimLayerInstanceByClass(TSubclassOf<class UAnimInstance> InClass);
+    void GetLinkedAnimGraphInstancesByTag(FName InTag, TArray<class UAnimInstance*>& OutLinkedInstances);
+    class UAnimInstance* GetLinkedAnimGraphInstanceByTag(FName InTag);
+    float GetInstanceTransitionTimeElapsedFraction(int32 MachineIndex, int32 TransitionIndex);
+    float GetInstanceTransitionTimeElapsed(int32 MachineIndex, int32 TransitionIndex);
+    float GetInstanceTransitionCrossfadeDuration(int32 MachineIndex, int32 TransitionIndex);
+    float GetInstanceStateWeight(int32 MachineIndex, int32 StateIndex);
+    float GetInstanceMachineWeight(int32 MachineIndex);
+    float GetInstanceCurrentStateElapsedTime(int32 MachineIndex);
+    float GetInstanceAssetPlayerTimeFromEndFraction(int32 AssetPlayerIndex);
+    float GetInstanceAssetPlayerTimeFromEnd(int32 AssetPlayerIndex);
+    float GetInstanceAssetPlayerTimeFraction(int32 AssetPlayerIndex);
+    float GetInstanceAssetPlayerTime(int32 AssetPlayerIndex);
+    float GetInstanceAssetPlayerLength(int32 AssetPlayerIndex);
+    float GetCurveValue(FName CurveName);
+    FName GetCurrentStateName(int32 MachineIndex);
+    class UAnimMontage* GetCurrentActiveMontage();
+    void GetAllCurveNames(TArray<FName>& OutNames);
+    void GetActiveCurveNames(EAnimCurveType CurveType, TArray<FName>& OutNames);
+    void ClearMorphTargets();
+    float CalculateDirection(const FVector& Velocity, const FRotator& BaseRotation);
+    void BlueprintUpdateAnimation(float DeltaTimeX);
+    void BlueprintPostEvaluateAnimation();
+    void BlueprintLinkedAnimationLayersInitialized();
+    void BlueprintInitializeAnimation();
+    void BlueprintBeginPlay();
+};
+
+class UAnimMetaData : public UObject
+{
+};
+
+class UAnimMontage : public UAnimCompositeBase
+{
+    FAlphaBlend BlendIn;
+    float BlendInTime;
+    FAlphaBlend BlendOut;
+    float BlendOutTime;
+    float BlendOutTriggerTime;
+    FName SyncGroup;
+    int32 SyncSlotIndex;
+    FMarkerSyncData MarkerData;
+    TArray<FCompositeSection> CompositeSections;
+    TArray<FSlotAnimationTrack> SlotAnimTracks;
+    TArray<FBranchingPoint> BranchingPoints;
+    bool bEnableRootMotionTranslation;
+    bool bEnableRootMotionRotation;
+    bool bEnableAutoBlendOut;
+    TEnumAsByte<ERootMotionRootLock::Type> RootMotionRootLock;
+    TArray<FBranchingPointMarker> BranchingPointMarkers;
+    TArray<int32> BranchingPointStateNotifyIndices;
+    FTimeStretchCurve TimeStretchCurve;
+    FName TimeStretchCurveName;
+
+    float GetDefaultBlendOutTime();
+};
+
+class UAnimNotify : public UObject
+{
+
+    bool Received_Notify(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation);
+    FString GetNotifyName();
+};
+
+class UAnimNotifyState : public UObject
+{
+
+    bool Received_NotifyTick(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation, float FrameDeltaTime);
+    bool Received_NotifyEnd(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation);
+    bool Received_NotifyBegin(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation, float TotalDuration);
+    FString GetNotifyName();
+};
+
+class UAnimNotifyState_DisableRootMotion : public UAnimNotifyState
+{
+};
+
+class UAnimNotifyState_TimedParticleEffect : public UAnimNotifyState
+{
+    class UParticleSystem* PSTemplate;
+    FName SocketName;
+    FVector LocationOffset;
+    FRotator RotationOffset;
+    bool bDestroyAtEnd;
+
+};
+
+class UAnimNotifyState_Trail : public UAnimNotifyState
+{
+    class UParticleSystem* PSTemplate;
+    FName FirstSocketName;
+    FName SecondSocketName;
+    TEnumAsByte<ETrailWidthMode> WidthScaleMode;
+    FName WidthScaleCurve;
+    uint8 bRecycleSpawnedSystems;
+
+    class UParticleSystem* OverridePSTemplate(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation);
+};
+
+class UAnimNotify_PauseClothingSimulation : public UAnimNotify
+{
+};
+
+class UAnimNotify_PlayParticleEffect : public UAnimNotify
+{
+    class UParticleSystem* PSTemplate;
+    FVector LocationOffset;
+    FRotator RotationOffset;
+    FVector Scale;
+    uint8 Attached;
+    FName SocketName;
+
+};
+
+class UAnimNotify_PlaySound : public UAnimNotify
+{
+    class USoundBase* Sound;
+    float VolumeMultiplier;
+    float PitchMultiplier;
+    uint8 bFollow;
+    FName AttachName;
+
+};
+
+class UAnimNotify_ResetClothingSimulation : public UAnimNotify
+{
+};
+
+class UAnimNotify_ResetDynamics : public UAnimNotify
+{
+};
+
+class UAnimNotify_ResumeClothingSimulation : public UAnimNotify
+{
+};
+
+class UAnimSequence : public UAnimSequenceBase
+{
+    int32 NumFrames;
+    TArray<FTrackToSkeletonMap> TrackToSkeletonMapTable;
+    class UAnimBoneCompressionSettings* BoneCompressionSettings;
+    class UAnimCurveCompressionSettings* CurveCompressionSettings;
+    TEnumAsByte<EAdditiveAnimationType> AdditiveAnimType;
+    TEnumAsByte<EAdditiveBasePoseType> RefPoseType;
+    class UAnimSequence* RefPoseSeq;
+    int32 RefFrameIndex;
+    FName RetargetSource;
+    TArray<FTransform> RetargetSourceAssetReferencePose;
+    EAnimInterpolationType Interpolation;
+    bool bEnableRootMotion;
+    TEnumAsByte<ERootMotionRootLock::Type> RootMotionRootLock;
+    bool bForceRootLock;
+    bool bUseNormalizedRootMotionScale;
+    bool bRootMotionSettingsCopiedFromMontage;
+    TArray<FAnimSyncMarker> AuthoredSyncMarkers;
+    TArray<FBakedCustomAttributePerBoneData> BakedPerBoneCustomAttributeData;
+
+};
+
+class UAnimSequenceBase : public UAnimationAsset
+{
+    TArray<FAnimNotifyEvent> Notifies;
+    float SequenceLength;
+    float RateScale;
+    FRawCurveTracks RawCurveData;
+
+    float GetPlayLength();
+};
+
+class UAnimSet : public UObject
+{
+    uint8 bAnimRotationOnly;
+    TArray<FName> TrackBoneNames;
+    TArray<FAnimSetMeshLinkup> LinkupCache;
+    TArray<uint8> BoneUseAnimTranslation;
+    TArray<uint8> ForceUseMeshTranslation;
+    TArray<FName> UseTranslationBoneNames;
+    TArray<FName> ForceMeshTranslationBoneNames;
+    FName PreviewSkelMeshName;
+    FName BestRatioSkelMeshName;
+
+};
+
+class UAnimSingleNodeInstance : public UAnimInstance
+{
+    class UAnimationAsset* CurrentAsset;
+    FAnimSingleNodeInstancePostEvaluateAnimEvent PostEvaluateAnimEvent;
+    void PostEvaluateAnimEvent();
+
+    void StopAnim();
+    void SetReverse(bool bInReverse);
+    void SetPreviewCurveOverride(const FName& PoseName, float Value, bool bRemoveIfZero);
+    void SetPositionWithPreviousTime(float InPosition, float InPreviousTime, bool bFireNotifies);
+    void SetPosition(float InPosition, bool bFireNotifies);
+    void SetPlayRate(float InPlayRate);
+    void SetPlaying(bool bIsPlaying);
+    void SetLooping(bool bIsLooping);
+    void SetBlendSpaceInput(const FVector& InBlendInput);
+    void SetAnimationAsset(class UAnimationAsset* NewAsset, bool bIsLooping, float InPlayRate);
+    void PlayAnim(bool bIsLooping, float InPlayRate, float InStartPosition);
+    float GetLength();
+    class UAnimationAsset* GetAnimationAsset();
+};
+
+class UAnimStateMachineTypes : public UObject
+{
+};
+
+class UAnimStreamable : public UAnimSequenceBase
+{
+    int32 NumFrames;
+    EAnimInterpolationType Interpolation;
+    FName RetargetSource;
+    class UAnimBoneCompressionSettings* BoneCompressionSettings;
+    class UAnimCurveCompressionSettings* CurveCompressionSettings;
+    bool bEnableRootMotion;
+    TEnumAsByte<ERootMotionRootLock::Type> RootMotionRootLock;
+    bool bForceRootLock;
+    bool bUseNormalizedRootMotionScale;
+
+};
+
+class UAnimationAsset : public UObject
+{
+    class USkeleton* Skeleton;
+    TArray<class UAnimMetaData*> MetaData;
+    TArray<class UAssetUserData*> AssetUserData;
+
+};
+
+class UAnimationSettings : public UDeveloperSettings
+{
+    int32 CompressCommandletVersion;
+    TArray<FString> KeyEndEffectorsMatchNameArray;
+    bool ForceRecompression;
+    bool bForceBelowThreshold;
+    bool bFirstRecompressUsingCurrentOrDefault;
+    bool bRaiseMaxErrorToExisting;
+    bool bEnablePerformanceLog;
+    bool bStripAnimationDataOnDedicatedServer;
+    bool bTickAnimationOnSkeletalMeshInit;
+    TArray<FCustomAttributeSetting> BoneCustomAttributesNames;
+    TArray<FString> BoneNamesWithCustomAttributes;
+    TMap<class FName, class ECustomAttributeBlendType> AttributeBlendModes;
+    ECustomAttributeBlendType DefaultAttributeBlendMode;
+
+};
+
+class UApplicationLifecycleComponent : public UActorComponent
+{
+    FApplicationLifecycleComponentApplicationWillDeactivateDelegate ApplicationWillDeactivateDelegate;
+    void ApplicationLifetimeDelegate();
+    FApplicationLifecycleComponentApplicationHasReactivatedDelegate ApplicationHasReactivatedDelegate;
+    void ApplicationLifetimeDelegate();
+    FApplicationLifecycleComponentApplicationWillEnterBackgroundDelegate ApplicationWillEnterBackgroundDelegate;
+    void ApplicationLifetimeDelegate();
+    FApplicationLifecycleComponentApplicationHasEnteredForegroundDelegate ApplicationHasEnteredForegroundDelegate;
+    void ApplicationLifetimeDelegate();
+    FApplicationLifecycleComponentApplicationWillTerminateDelegate ApplicationWillTerminateDelegate;
+    void ApplicationLifetimeDelegate();
+    FApplicationLifecycleComponentApplicationShouldUnloadResourcesDelegate ApplicationShouldUnloadResourcesDelegate;
+    void ApplicationLifetimeDelegate();
+    FApplicationLifecycleComponentApplicationReceivedStartupArgumentsDelegate ApplicationReceivedStartupArgumentsDelegate;
+    void ApplicationStartupArgumentsDelegate(const TArray<FString>& StartupArguments);
+    FApplicationLifecycleComponentOnTemperatureChangeDelegate OnTemperatureChangeDelegate;
+    void OnTemperatureChangeDelegate(ETemperatureSeverityType Severity);
+    FApplicationLifecycleComponentOnLowPowerModeDelegate OnLowPowerModeDelegate;
+    void OnLowPowerModeDelegate(bool bInLowPowerMode);
+
+};
+
+class UArrowComponent : public UPrimitiveComponent
+{
+    FColor ArrowColor;
+    float ArrowSize;
+    float ArrowLength;
+    float ScreenSize;
+    uint8 bIsScreenSizeScaled;
+    uint8 bTreatAsASprite;
+
+    void SetArrowColor(FLinearColor NewColor);
+};
+
+class UAssetExportTask : public UObject
+{
+    class UObject* Object;
+    class UExporter* Exporter;
+    FString Filename;
+    bool bSelected;
+    bool bReplaceIdentical;
+    bool bPrompt;
+    bool bAutomated;
+    bool bUseFileArchive;
+    bool bWriteEmptyFiles;
+    TArray<class UObject*> IgnoreObjectList;
+    class UObject* options;
+    TArray<FString> Errors;
+
+};
+
+class UAssetImportData : public UObject
+{
+};
+
+class UAssetManager : public UObject
+{
+    TArray<class UObject*> ObjectReferenceList;
+    bool bIsGlobalAsyncScanEnvironment;
+    bool bShouldGuessTypeAndName;
+    bool bShouldUseSynchronousLoad;
+    bool bIsLoadingFromPakFiles;
+    bool bShouldAcquireMissingChunksOnLoad;
+    bool bOnlyCookProductionAssets;
+    bool bIsBulkScanning;
+    bool bIsPrimaryAssetDirectoryCurrent;
+    bool bIsManagementDatabaseCurrent;
+    bool bUpdateManagementDatabaseAfterScan;
+    bool bIncludeOnlyOnDiskAssets;
+    bool bHasCompletedInitialScan;
+    int32 NumberOfSpawnedNotifications;
+
+};
+
+class UAssetManagerSettings : public UDeveloperSettings
+{
+    TArray<FPrimaryAssetTypeInfo> PrimaryAssetTypesToScan;
+    TArray<FDirectoryPath> DirectoriesToExclude;
+    TArray<FPrimaryAssetRulesOverride> PrimaryAssetRules;
+    TArray<FPrimaryAssetRulesCustomOverride> CustomPrimaryAssetRules;
+    bool bOnlyCookProductionAssets;
+    bool bShouldManagerDetermineTypeAndName;
+    bool bShouldGuessTypeAndNameInEditor;
+    bool bShouldAcquireMissingChunksOnLoad;
+    TArray<FAssetManagerRedirect> PrimaryAssetIdRedirects;
+    TArray<FAssetManagerRedirect> PrimaryAssetTypeRedirects;
+    TArray<FAssetManagerRedirect> AssetPathRedirects;
+    TSet<FName> MetaDataTagsForAssetRegistry;
+
+};
+
+class UAssetMappingTable : public UObject
+{
+    TArray<FAssetMapping> MappedAssets;
+
+};
+
+class UAssetUserData : public UObject
+{
+};
+
+class UAsyncActionChangePrimaryAssetBundles : public UAsyncActionLoadPrimaryAssetBase
+{
+    FAsyncActionChangePrimaryAssetBundlesCompleted Completed;
+    void OnPrimaryAssetBundlesChanged();
+
+    class UAsyncActionChangePrimaryAssetBundles* AsyncChangeBundleStateForPrimaryAssetList(class UObject* WorldContextObject, const TArray<FPrimaryAssetId>& PrimaryAssetList, const TArray<FName>& AddBundles, const TArray<FName>& RemoveBundles);
+    class UAsyncActionChangePrimaryAssetBundles* AsyncChangeBundleStateForMatchingPrimaryAssets(class UObject* WorldContextObject, const TArray<FName>& NewBundles, const TArray<FName>& OldBundles);
+};
+
+class UAsyncActionHandleSaveGame : public UBlueprintAsyncActionBase
+{
+    FAsyncActionHandleSaveGameCompleted Completed;
+    void OnAsyncHandleSaveGame(class USaveGame* SaveGame, bool bSuccess);
+    class USaveGame* SaveGameObject;
+
+    class UAsyncActionHandleSaveGame* AsyncSaveGameToSlot(class UObject* WorldContextObject, class USaveGame* SaveGameObject, FString slotName, const int32 UserIndex);
+    class UAsyncActionHandleSaveGame* AsyncLoadGameFromSlot(class UObject* WorldContextObject, FString slotName, const int32 UserIndex);
+};
+
+class UAsyncActionLoadPrimaryAsset : public UAsyncActionLoadPrimaryAssetBase
+{
+    FAsyncActionLoadPrimaryAssetCompleted Completed;
+    void OnPrimaryAssetLoaded(class UObject* Loaded);
+
+    class UAsyncActionLoadPrimaryAsset* AsyncLoadPrimaryAsset(class UObject* WorldContextObject, FPrimaryAssetId PrimaryAsset, const TArray<FName>& LoadBundles);
+};
+
+class UAsyncActionLoadPrimaryAssetBase : public UBlueprintAsyncActionBase
+{
+};
+
+class UAsyncActionLoadPrimaryAssetClass : public UAsyncActionLoadPrimaryAssetBase
+{
+    FAsyncActionLoadPrimaryAssetClassCompleted Completed;
+    void OnPrimaryAssetClassLoaded(UClass* Loaded);
+
+    class UAsyncActionLoadPrimaryAssetClass* AsyncLoadPrimaryAssetClass(class UObject* WorldContextObject, FPrimaryAssetId PrimaryAsset, const TArray<FName>& LoadBundles);
+};
+
+class UAsyncActionLoadPrimaryAssetClassList : public UAsyncActionLoadPrimaryAssetBase
+{
+    FAsyncActionLoadPrimaryAssetClassListCompleted Completed;
+    void OnPrimaryAssetClassListLoaded(const TArray<class UClass*>& Loaded);
+
+    class UAsyncActionLoadPrimaryAssetClassList* AsyncLoadPrimaryAssetClassList(class UObject* WorldContextObject, const TArray<FPrimaryAssetId>& PrimaryAssetList, const TArray<FName>& LoadBundles);
+};
+
+class UAsyncActionLoadPrimaryAssetList : public UAsyncActionLoadPrimaryAssetBase
+{
+    FAsyncActionLoadPrimaryAssetListCompleted Completed;
+    void OnPrimaryAssetListLoaded(const TArray<class UObject*>& Loaded);
+
+    class UAsyncActionLoadPrimaryAssetList* AsyncLoadPrimaryAssetList(class UObject* WorldContextObject, const TArray<FPrimaryAssetId>& PrimaryAssetList, const TArray<FName>& LoadBundles);
+};
+
+class UAtmosphericFogComponent : public USceneComponent
+{
+    float SunMultiplier;
+    float FogMultiplier;
+    float DensityMultiplier;
+    float DensityOffset;
+    float DistanceScale;
+    float AltitudeScale;
+    float DistanceOffset;
+    float GroundOffset;
+    float StartDistance;
+    float SunDiscScale;
+    float DefaultBrightness;
+    FColor DefaultLightColor;
+    uint8 bDisableSunDisk;
+    uint8 bAtmosphereAffectsSunIlluminance;
+    uint8 bDisableGroundScattering;
+    FAtmospherePrecomputeParameters PrecomputeParams;
+    class UTexture2D* TransmittanceTexture;
+    class UTexture2D* IrradianceTexture;
+
+    void StartPrecompute();
+    void SetSunMultiplier(float NewSunMultiplier);
+    void SetStartDistance(float NewStartDistance);
+    void SetPrecomputeParams(float DensityHeight, int32 MaxScatteringOrder, int32 InscatterAltitudeSampleNum);
+    void SetFogMultiplier(float NewFogMultiplier);
+    void SetDistanceScale(float NewDistanceScale);
+    void SetDistanceOffset(float NewDistanceOffset);
+    void SetDensityOffset(float NewDensityOffset);
+    void SetDensityMultiplier(float NewDensityMultiplier);
+    void SetDefaultLightColor(FLinearColor NewLightColor);
+    void SetDefaultBrightness(float NewBrightness);
+    void SetAltitudeScale(float NewAltitudeScale);
+    void DisableSunDisk(bool NewSunDisk);
+    void DisableGroundScattering(bool NewGroundScattering);
+};
+
+class UAudioBus : public UObject
+{
+    EAudioBusChannels AudioBusChannels;
+
+};
+
+class UAudioComponent : public USceneComponent
+{
+    class USoundBase* Sound;
+    TArray<FAudioComponentParam> InstanceParameters;
+    class USoundClass* SoundClassOverride;
+    uint8 bAutoDestroy;
+    uint8 bStopWhenOwnerDestroyed;
+    uint8 bShouldRemainActiveIfDropped;
+    uint8 bAllowSpatialization;
+    uint8 bOverrideAttenuation;
+    uint8 bOverrideSubtitlePriority;
+    uint8 bIsUISound;
+    uint8 bEnableLowPassFilter;
+    uint8 bOverridePriority;
+    uint8 bSuppressSubtitles;
+    uint8 bAutoManageAttachment;
+    FName AudioComponentUserID;
+    float PitchModulationMin;
+    float PitchModulationMax;
+    float VolumeModulationMin;
+    float VolumeModulationMax;
+    float VolumeMultiplier;
+    int32 EnvelopeFollowerAttackTime;
+    int32 EnvelopeFollowerReleaseTime;
+    float Priority;
+    float SubtitlePriority;
+    class USoundEffectSourcePresetChain* SourceEffectChain;
+    float PitchMultiplier;
+    float LowPassFilterFrequency;
+    class USoundAttenuation* AttenuationSettings;
+    FSoundAttenuationSettings AttenuationOverrides;
+    class USoundConcurrency* ConcurrencySettings;
+    TSet<USoundConcurrency*> ConcurrencySet;
+    EAttachmentRule AutoAttachLocationRule;
+    EAttachmentRule AutoAttachRotationRule;
+    EAttachmentRule AutoAttachScaleRule;
+    FSoundModulationDefaultRoutingSettings ModulationRouting;
+    FAudioComponentOnAudioPlayStateChanged OnAudioPlayStateChanged;
+    void OnAudioPlayStateChanged(EAudioComponentPlayState PlayState);
+    FAudioComponentOnAudioVirtualizationChanged OnAudioVirtualizationChanged;
+    void OnAudioVirtualizationChanged(bool bIsVirtualized);
+    FAudioComponentOnAudioFinished OnAudioFinished;
+    void OnAudioFinished();
+    FAudioComponentOnAudioPlaybackPercent OnAudioPlaybackPercent;
+    void OnAudioPlaybackPercent(const class USoundWave* PlayingSoundWave, const float PlaybackPercent);
+    FAudioComponentOnAudioSingleEnvelopeValue OnAudioSingleEnvelopeValue;
+    void OnAudioSingleEnvelopeValue(const class USoundWave* PlayingSoundWave, const float EnvelopeValue);
+    FAudioComponentOnAudioMultiEnvelopeValue OnAudioMultiEnvelopeValue;
+    void OnAudioMultiEnvelopeValue(const float AverageEnvelopeValue, const float MaxEnvelope, const int32 NumWaveInstances);
+    FAudioComponentOnQueueSubtitles OnQueueSubtitles;
+    void OnQueueSubtitles(const TArray<FSubtitleCue>& Subtitles, float CueDuration);
+    TWeakObjectPtr<class USceneComponent> AutoAttachParent;
+    FName AutoAttachSocketName;
+
+    void StopDelayed(float DelayTime);
+    void Stop();
+    void SetWaveParameter(FName InName, class USoundWave* InWave);
+    void SetVolumeMultiplier(float NewVolumeMultiplier);
+    void SetUISound(bool bInUISound);
+    void SetSubmixSend(class USoundSubmixBase* Submix, float SendLevel);
+    void SetSourceBusSendPreEffect(class USoundSourceBus* SoundSourceBus, float SourceBusSendLevel);
+    void SetSourceBusSendPostEffect(class USoundSourceBus* SoundSourceBus, float SourceBusSendLevel);
+    void SetSound(class USoundBase* NewSound);
+    void SetPitchMultiplier(float NewPitchMultiplier);
+    void SetPaused(bool bPause);
+    void SetOutputToBusOnly(bool bInOutputToBusOnly);
+    void SetLowPassFilterFrequency(float InLowPassFilterFrequency);
+    void SetLowPassFilterEnabled(bool InLowPassFilterEnabled);
+    void SetIntParameter(FName InName, int32 inInt);
+    void SetFloatParameter(FName InName, float InFloat);
+    void SetBoolParameter(FName InName, bool InBool);
+    void SetAudioBusSendPreEffect(class UAudioBus* AudioBus, float AudioBusSendLevel);
+    void SetAudioBusSendPostEffect(class UAudioBus* AudioBus, float AudioBusSendLevel);
+    void PlayQuantized(const class UObject* WorldContextObject, class UQuartzClockHandle*& InClockHandle, FQuartzQuantizationBoundary& InQuantizationBoundary, const FPlayQuantizedInDelegate& InDelegate, float InStartTime, float InFadeInDuration, float InFadeVolumeLevel, EAudioFaderCurve InFadeCurve);
+    void Play(float StartTime);
+    bool IsVirtualized();
+    bool IsPlaying();
+    bool HasCookedFFTData();
+    bool HasCookedAmplitudeEnvelopeData();
+    EAudioComponentPlayState GetPlayState();
+    bool GetCookedFFTDataForAllPlayingSounds(TArray<FSoundWaveSpectralDataPerSound>& OutSoundWaveSpectralData);
+    bool GetCookedFFTData(const TArray<float>& FrequenciesToGet, TArray<FSoundWaveSpectralData>& OutSoundWaveSpectralData);
+    bool GetCookedEnvelopeDataForAllPlayingSounds(TArray<FSoundWaveEnvelopeDataPerSound>& OutEnvelopeData);
+    bool GetCookedEnvelopeData(float& OutEnvelopeData);
+    void FadeOut(float FadeoutDuration, float FadeVolumeLevel, const EAudioFaderCurve FadeCurve);
+    void FadeIn(float FadeInDuration, float FadeVolumeLevel, float StartTime, const EAudioFaderCurve FadeCurve);
+    bool BP_GetAttenuationSettingsToApply(FSoundAttenuationSettings& OutAttenuationSettings);
+    void AdjustVolume(float AdjustVolumeDuration, float AdjustVolumeLevel, const EAudioFaderCurve FadeCurve);
+    void AdjustAttenuation(const FSoundAttenuationSettings& InAttenuationSettings);
+};
+
+class UAudioSettings : public UDeveloperSettings
+{
+    FSoftObjectPath DefaultSoundClassName;
+    FSoftObjectPath DefaultMediaSoundClassName;
+    FSoftObjectPath DefaultSoundConcurrencyName;
+    FSoftObjectPath DefaultBaseSoundMix;
+    FSoftObjectPath VoiPSoundClass;
+    FSoftObjectPath MasterSubmix;
+    FSoftObjectPath BaseDefaultSubmix;
+    FSoftObjectPath ReverbSubmix;
+    FSoftObjectPath EQSubmix;
+    EVoiceSampleRate VoiPSampleRate;
+    float DefaultReverbSendLevel;
+    int32 MaximumConcurrentStreams;
+    float GlobalMinPitchScale;
+    float GlobalMaxPitchScale;
+    TArray<FAudioQualitySettings> QualityLevels;
+    uint8 bAllowPlayWhenSilent;
+    uint8 bDisableMasterEQ;
+    uint8 bAllowCenterChannel3DPanning;
+    uint32 NumStoppingSources;
+    EPanningMethod PanningMethod;
+    EMonoChannelUpmixMethod MonoChannelUpmixMethod;
+    FString DialogueFilenameFormat;
+    TArray<FSoundDebugEntry> DebugSounds;
+    TArray<FDefaultAudioBusSettings> DefaultAudioBuses;
+    class USoundClass* DefaultSoundClass;
+    class USoundClass* DefaultMediaSoundClass;
+    class USoundConcurrency* DefaultSoundConcurrency;
+
+};
+
+class UAutoDestroySubsystem : public UTickableWorldSubsystem
+{
+    TArray<class AActor*> ActorsToPoll;
+
+    void OnActorEndPlay(class AActor* Actor, TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
+};
+
+class UAutomationTestSettings : public UObject
+{
+    TArray<FString> EngineTestModules;
+    TArray<FString> EditorTestModules;
+    FSoftObjectPath AutomationTestmap;
+    TArray<FEditorMapPerformanceTestDefinition> EditorPerformanceTestMaps;
+    TArray<FSoftObjectPath> AssetsToOpen;
+    TArray<FString> MapsToPIETest;
+    FBuildPromotionTestSettings BuildPromotionTest;
+    FMaterialEditorPromotionSettings MaterialEditorPromotionTest;
+    FParticleEditorPromotionSettings ParticleEditorPromotionTest;
+    FBlueprintEditorPromotionSettings BlueprintEditorPromotionTest;
+    TArray<FString> TestLevelFolders;
+    TArray<FExternalToolDefinition> ExternalTools;
+    TArray<FEditorImportExportTestDefinition> ImportExportTestDefinitions;
+    TArray<FLaunchOnTestSettings> LaunchOnSettings;
+    FIntPoint DefaultScreenshotResolution;
+    float PIETestDuration;
+
+};
+
+class UAvoidanceManager : public UObject
+{
+    float DefaultTimeToLive;
+    float LockTimeAfterAvoid;
+    float LockTimeAfterClean;
+    float DeltaTimeToPredict;
+    float ArtificialRadiusExpansion;
+    float TestHeightDifference;
+    float HeightCheckMargin;
+
+    bool RegisterMovementComponent(class UMovementComponent* MovementComp, float AvoidanceWeight);
+    int32 GetObjectCount();
+    int32 GetNewAvoidanceUID();
+    FVector GetAvoidanceVelocityForComponent(class UMovementComponent* MovementComp);
+};
+
+class UBillboardComponent : public UPrimitiveComponent
+{
+    class UTexture2D* Sprite;
+    uint8 bIsScreenSizeScaled;
+    float ScreenSize;
+    float U;
+    float UL;
+    float V;
+    float VL;
+
+    void SetUV(int32 NewU, int32 NewUL, int32 NewV, int32 NewVL);
+    void SetSpriteAndUV(class UTexture2D* NewSprite, int32 NewU, int32 NewUL, int32 NewV, int32 NewVL);
+    void SetSprite(class UTexture2D* NewSprite);
+};
+
+class UBlendProfile : public UObject
+{
+    class USkeleton* OwningSkeleton;
+    TArray<FBlendProfileBoneEntry> ProfileEntries;
+
+};
+
+class UBlendSpace : public UBlendSpaceBase
+{
+    TEnumAsByte<EBlendSpaceAxis> AxisToScaleAnimation;
+
+};
+
+class UBlendSpace1D : public UBlendSpaceBase
+{
+    bool bScaleAnimation;
+
+};
+
+class UBlendSpaceBase : public UAnimationAsset
+{
+    bool bRotationBlendInMeshSpace;
+    float AnimLength;
+    FInterpolationParameter InterpolationParam;
+    float TargetWeightInterpolationSpeedPerSec;
+    TEnumAsByte<ENotifyTriggerMode::Type> NotifyTriggerMode;
+    TArray<FPerBoneInterpolation> PerBoneBlend;
+    int32 SampleIndexWithMarkers;
+    TArray<FBlendSample> SampleData;
+    TArray<FEditorElement> GridSamples;
+    FBlendParameter BlendParameters;
+
+};
+
+class UBlueprint : public UBlueprintCore
+{
+    UClass* ParentClass;
+    TEnumAsByte<EBlueprintType> BlueprintType;
+    uint8 bRecompileOnLoad;
+    uint8 bHasBeenRegenerated;
+    uint8 bIsRegeneratingOnLoad;
+    int32 BlueprintSystemVersion;
+    class USimpleConstructionScript* SimpleConstructionScript;
+    TArray<class UActorComponent*> ComponentTemplates;
+    TArray<class UTimelineTemplate*> Timelines;
+    TArray<FBPComponentClassOverride> ComponentClassOverrides;
+    class UInheritableComponentHandler* InheritableComponentHandler;
+
+};
+
+class UBlueprintAsyncActionBase : public UObject
+{
+
+    void Activate();
+};
+
+class UBlueprintCore : public UObject
+{
+    UClass* SkeletonGeneratedClass;
+    UClass* GeneratedClass;
+    bool bLegacyNeedToPurgeSkelRefs;
+    FGuid BlueprintGuid;
+
+};
+
+class UBlueprintExtension : public UObject
+{
+};
+
+class UBlueprintFunctionLibrary : public UObject
+{
+};
+
+class UBlueprintGeneratedClass : public UClass
+{
+    int32 NumReplicatedProperties;
+    uint8 bHasNativizedParent;
+    uint8 bHasCookedComponentInstancingData;
+    TArray<class UDynamicBlueprintBinding*> DynamicBindingObjects;
+    TArray<class UActorComponent*> ComponentTemplates;
+    TArray<class UTimelineTemplate*> Timelines;
+    TArray<FBPComponentClassOverride> ComponentClassOverrides;
+    class USimpleConstructionScript* SimpleConstructionScript;
+    class UInheritableComponentHandler* InheritableComponentHandler;
+    class UStructProperty* UberGraphFramePointerProperty;
+    class UFunction* UberGraphFunction;
+    TMap<class FName, class FBlueprintCookedComponentInstancingData> CookedComponentInstancingData;
+
+};
+
+class UBlueprintMapLibrary : public UBlueprintFunctionLibrary
+{
+
+    void SetMapPropertyByName(class UObject* Object, FName PropertyName, const TMap<int32, int32>& Value);
+    void Map_Values(const TMap<int32, int32>& TargetMap, TArray<int32>& Values);
+    bool Map_Remove(const TMap<int32, int32>& TargetMap, const int32& Key);
+    int32 Map_Length(const TMap<int32, int32>& TargetMap);
+    void Map_Keys(const TMap<int32, int32>& TargetMap, TArray<int32>& Keys);
+    bool Map_Find(const TMap<int32, int32>& TargetMap, const int32& Key, int32& Value);
+    bool Map_Contains(const TMap<int32, int32>& TargetMap, const int32& Key);
+    void Map_Clear(const TMap<int32, int32>& TargetMap);
+    void Map_Add(const TMap<int32, int32>& TargetMap, const int32& Key, const int32& Value);
+};
+
+class UBlueprintPathsLibrary : public UBlueprintFunctionLibrary
+{
+
+    FString VideoCaptureDir();
+    void ValidatePath(FString InPath, bool& bDidSucceed, FText& OutReason);
+    void Split(FString InPath, FString& PathPart, FString& FilenamePart, FString& ExtensionPart);
+    FString SourceConfigDir();
+    bool ShouldSaveToUserDir();
+    FString ShaderWorkingDir();
+    void SetProjectFilePath(FString NewGameProjectFilePath);
+    FString SetExtension(FString InPath, FString InNewExtension);
+    FString ScreenShotDir();
+    FString SandboxesDir();
+    FString RootDir();
+    void RemoveDuplicateSlashes(FString InPath, FString& outPath);
+    FString ProjectUserDir();
+    FString ProjectSavedDir();
+    FString ProjectPluginsDir();
+    FString ProjectPersistentDownloadDir();
+    FString ProjectModsDir();
+    FString ProjectLogDir();
+    FString ProjectIntermediateDir();
+    FString ProjectDir();
+    FString ProjectContentDir();
+    FString ProjectConfigDir();
+    FString ProfilingDir();
+    void NormalizeFilename(FString InPath, FString& outPath);
+    void NormalizeDirectoryName(FString InPath, FString& outPath);
+    FString MakeValidFileName(FString inString, FString InReplacementChar);
+    void MakeStandardFilename(FString InPath, FString& outPath);
+    void MakePlatformFilename(FString InPath, FString& outPath);
+    bool MakePathRelativeTo(FString InPath, FString InRelativeTo, FString& outPath);
+    FString LaunchDir();
+    bool IsSamePath(FString PathA, FString PathB);
+    bool IsRestrictedPath(FString InPath);
+    bool IsRelative(FString InPath);
+    bool IsProjectFilePathSet();
+    bool IsDrive(FString InPath);
+    bool HasProjectPersistentDownloadDir();
+    TArray<FString> GetToolTipLocalizationPaths();
+    TArray<FString> GetRestrictedFolderNames();
+    FString GetRelativePathToRoot();
+    TArray<FString> GetPropertyNameLocalizationPaths();
+    FString GetProjectFilePath();
+    FString GetPath(FString InPath);
+    FString GetInvalidFileSystemChars();
+    TArray<FString> GetGameLocalizationPaths();
+    FString GetExtension(FString InPath, bool bIncludeDot);
+    TArray<FString> GetEngineLocalizationPaths();
+    TArray<FString> GetEditorLocalizationPaths();
+    FString GetCleanFilename(FString InPath);
+    FString GetBaseFilename(FString InPath, bool bRemovePath);
+    FString GeneratedConfigDir();
+    FString GameUserDeveloperDir();
+    FString GameSourceDir();
+    FString GameDevelopersDir();
+    FString GameAgnosticSavedDir();
+    bool FileExists(FString InPath);
+    FString FeaturePackDir();
+    FString EnterprisePluginsDir();
+    FString EnterpriseFeaturePackDir();
+    FString EnterpriseDir();
+    FString EngineVersionAgnosticUserDir();
+    FString EngineUserDir();
+    FString EngineSourceDir();
+    FString EngineSavedDir();
+    FString EnginePluginsDir();
+    FString EngineIntermediateDir();
+    FString EngineDir();
+    FString EngineContentDir();
+    FString EngineConfigDir();
+    bool DirectoryExists(FString InPath);
+    FString DiffDir();
+    FString CreateTempFilename(FString Path, FString Prefix, FString Extension);
+    FString ConvertToSandboxPath(FString InPath, FString InSandboxName);
+    FString ConvertRelativePathToFull(FString InPath, FString InBasePath);
+    FString ConvertFromSandboxPath(FString InPath, FString InSandboxName);
+    FString Combine(const TArray<FString>& InPaths);
+    bool CollapseRelativeDirectories(FString InPath, FString& outPath);
+    FString CloudDir();
+    FString ChangeExtension(FString InPath, FString InNewExtension);
+    FString BugItDir();
+    FString AutomationTransientDir();
+    FString AutomationLogDir();
+    FString AutomationDir();
+};
+
+class UBlueprintPlatformLibrary : public UBlueprintFunctionLibrary
+{
+
+    int32 ScheduleLocalNotificationFromNow(int32 inSecondsFromNow, const FText& Title, const FText& Body, const FText& Action, FString ActivationEvent);
+    void ScheduleLocalNotificationBadgeFromNow(int32 inSecondsFromNow, FString ActivationEvent);
+    int32 ScheduleLocalNotificationBadgeAtTime(const FDateTime& FireDateTime, bool LocalTime, FString ActivationEvent);
+    int32 ScheduleLocalNotificationAtTime(const FDateTime& FireDateTime, bool LocalTime, const FText& Title, const FText& Body, const FText& Action, FString ActivationEvent);
+    void GetLaunchNotification(bool& NotificationLaunchedApp, FString& ActivationEvent, int32& FireDate);
+    TEnumAsByte<EScreenOrientation::Type> GetDeviceOrientation();
+    void ClearAllLocalNotifications();
+    void CancelLocalNotificationById(int32 NotificationId);
+    void CancelLocalNotification(FString ActivationEvent);
+};
+
+class UBlueprintSetLibrary : public UBlueprintFunctionLibrary
+{
+
+    void SetSetPropertyByName(class UObject* Object, FName PropertyName, const TSet<int32>& Value);
+    void Set_Union(const TSet<int32>& A, const TSet<int32>& B, TSet<int32>& Result);
+    void Set_ToArray(const TSet<int32>& A, TArray<int32>& Result);
+    void Set_RemoveItems(const TSet<int32>& TargetSet, const TArray<int32>& Items);
+    bool Set_Remove(const TSet<int32>& TargetSet, const int32& Item);
+    int32 Set_Length(const TSet<int32>& TargetSet);
+    void Set_Intersection(const TSet<int32>& A, const TSet<int32>& B, TSet<int32>& Result);
+    void Set_Difference(const TSet<int32>& A, const TSet<int32>& B, TSet<int32>& Result);
+    bool Set_Contains(const TSet<int32>& TargetSet, const int32& ItemToFind);
+    void Set_Clear(const TSet<int32>& TargetSet);
+    void Set_AddItems(const TSet<int32>& TargetSet, const TArray<int32>& NewItems);
+    void Set_Add(const TSet<int32>& TargetSet, const int32& NewItem);
+};
+
+class UBodySetup : public UBodySetupCore
+{
+    FKAggregateGeom AggGeom;
+    uint8 bAlwaysFullAnimWeight;
+    uint8 bConsiderForBounds;
+    uint8 bMeshCollideAll;
+    uint8 bDoubleSidedGeometry;
+    uint8 bGenerateNonMirroredCollision;
+    uint8 bSharedCookedData;
+    uint8 bGenerateMirroredCollision;
+    uint8 bSupportUVsAndFaceRemap;
+    class UPhysicalMaterial* PhysMaterial;
+    FWalkableSlopeOverride WalkableSlopeOverride;
+    FBodyInstance DefaultInstance;
+    FVector BuildScale3D;
+
+};
+
+class UBoneMaskFilter : public UObject
+{
+    TArray<FInputBlendPose> BlendPoses;
+
+};
+
+class UBookMark : public UBookmarkBase
+{
+    FVector Location;
     FRotator Rotation;
-    bool bServerHasBaseComponent;
-    bool bRelativeRotation;
-    bool bServerHasVelocity;
+    TArray<FString> HiddenLevels;
 
 };
 
-struct FRootMotionSourceSettings
+class UBookMark2D : public UBookmarkBase
 {
-    uint8 Flags;
+    float Zoom2D;
+    FIntPoint Location;
 
 };
 
-struct FVector_NetQuantize10 : public FVector
+class UBookmarkBase : public UObject
 {
 };
 
-struct FRootMotionSourceGroup
+class UBoundsCopyComponent : public UActorComponent
 {
-    uint8 bHasAdditiveSources;
-    uint8 bHasOverrideSources;
-    uint8 bHasOverrideSourcesWithIgnoreZAccumulate;
-    uint8 bIsAdditiveVelocityApplied;
-    FRootMotionSourceSettings LastAccumulatedSettings;
-    FVector_NetQuantize10 LastPreAdditiveVelocity;
+    TSoftObjectPtr<AActor> BoundsSourceActor;
+    bool bUseCollidingComponentsForSourceBounds;
+    bool bKeepOwnBoundsScale;
+    bool bUseCollidingComponentsForOwnBounds;
+    FTransform PostTransform;
+    bool bCopyXBounds;
+    bool bCopyYBounds;
+    bool bCopyZBounds;
 
 };
 
-struct FRootMotionMovementParams
+class UBoxComponent : public UShapeComponent
 {
-    bool bHasRootMotion;
-    float BlendWeight;
-    FTransform RootMotionTransform;
+    FVector BoxExtent;
+    float LineThickness;
+
+    void SetBoxExtent(FVector InBoxExtent, bool bUpdateOverlaps);
+    FVector GetUnscaledBoxExtent();
+    FVector GetScaledBoxExtent();
+};
+
+class UBoxReflectionCaptureComponent : public UReflectionCaptureComponent
+{
+    float BoxTransitionDistance;
+    class UBoxComponent* PreviewInfluenceBox;
+    class UBoxComponent* PreviewCaptureBox;
 
 };
 
-struct FRepRootMotionMontage
+class UBreakpoint : public UObject
 {
-    bool bIsActive;
-    class UAnimMontage* AnimMontage;
-    float Position;
-    FVector_NetQuantize100 Location;
-    FRotator Rotation;
-    class UPrimitiveComponent* MovementBase;
-    FName MovementBaseBoneName;
-    bool bRelativePosition;
-    bool bRelativeRotation;
-    FRootMotionSourceGroup AuthoritativeRootMotion;
-    FVector_NetQuantize10 Acceleration;
-    FVector_NetQuantize10 LinearVelocity;
+    uint8 bEnabled;
+    class UEdGraphNode* Node;
+    uint8 bStepOnce;
+    uint8 bStepOnce_WasPreviouslyDisabled;
+    uint8 bStepOnce_RemoveAfterHit;
 
 };
 
-struct FSimulatedRootMotionReplicatedMove
+class UBrushBuilder : public UObject
 {
-    float Time;
-    FRepRootMotionMontage RootMotion;
+    FString BitmapFilename;
+    FString ToolTip;
+    uint8 NotifyBadParams;
+    TArray<FVector> Vertices;
+    TArray<FBuilderPoly> Polys;
+    FName Layer;
+    uint8 MergeCoplanars;
 
 };
 
-struct FCharacterNetworkSerializationPackedBits
+class UBrushComponent : public UPrimitiveComponent
 {
-};
-
-struct FCharacterServerMovePackedBits : public FCharacterNetworkSerializationPackedBits
-{
-};
-
-struct FCharacterMoveResponsePackedBits : public FCharacterNetworkSerializationPackedBits
-{
-};
-
-class ACharacter : public APawn
-{
-    class USkeletalMeshComponent* Mesh;
-    class UCharacterMovementComponent* CharacterMovement;
-    class UCapsuleComponent* CapsuleComponent;
-    FBasedMovementInfo BasedMovement;
-    FBasedMovementInfo ReplicatedBasedMovement;
-    float AnimRootMotionTranslationScale;
-    FVector BaseTranslationOffset;
-    FQuat BaseRotationOffset;
-    float ReplicatedServerLastTransformUpdateTimeStamp;
-    float ReplayLastTransformUpdateTimeStamp;
-    uint8 ReplicatedMovementMode;
-    bool bInBaseReplication;
-    float CrouchedEyeHeight;
-    uint8 bIsCrouched;
-    uint8 bProxyIsJumpForceApplied;
-    uint8 bPressedJump;
-    uint8 bClientUpdating;
-    uint8 bClientWasFalling;
-    uint8 bClientResimulateRootMotion;
-    uint8 bClientResimulateRootMotionSources;
-    uint8 bSimGravityDisabled;
-    uint8 bClientCheckEncroachmentOnNetUpdate;
-    uint8 bServerMoveIgnoreRootMotion;
-    uint8 bWasJumping;
-    float JumpKeyHoldTime;
-    float JumpForceTimeRemaining;
-    float ProxyJumpForceStartedTime;
-    float JumpMaxHoldTime;
-    int32 JumpMaxCount;
-    int32 JumpCurrentCount;
-    int32 JumpCurrentCountPreJump;
-    FCharacterOnReachedJumpApex OnReachedJumpApex;
-    void CharacterReachedApexSignature();
-    FCharacterMovementModeChangedDelegate MovementModeChangedDelegate;
-    void MovementModeChangedSignature(class ACharacter* Character, TEnumAsByte<EMovementMode> PrevMovementMode, uint8 PreviousCustomMode);
-    FCharacterOnCharacterMovementUpdated OnCharacterMovementUpdated;
-    void CharacterMovementUpdatedSignature(float DeltaSeconds, FVector OldLocation, FVector OldVelocity);
-    FRootMotionSourceGroup SavedRootMotion;
-    FRootMotionMovementParams ClientRootMotionParams;
-    TArray<FSimulatedRootMotionReplicatedMove> RootMotionRepMoves;
-    FRepRootMotionMontage RepRootMotion;
-
-    void UnCrouch(bool bClientSimulation);
-    void StopJumping();
-    void StopAnimMontage(class UAnimMontage* AnimMontage);
-    void ServerMovePacked(const FCharacterServerMovePackedBits& PackedBits);
-    void ServerMoveOld(float OldTimeStamp, FVector_NetQuantize10 OldAccel, uint8 OldMoveFlags);
-    void ServerMoveNoBase(float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 CompressedMoveFlags, uint8 ClientRoll, uint32 View, uint8 ClientMovementMode);
-    void ServerMoveDualNoBase(float TimeStamp0, FVector_NetQuantize10 InAccel0, uint8 PendingFlags, uint32 View0, float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 NewFlags, uint8 ClientRoll, uint32 View, uint8 ClientMovementMode);
-    void ServerMoveDualHybridRootMotion(float TimeStamp0, FVector_NetQuantize10 InAccel0, uint8 PendingFlags, uint32 View0, float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 NewFlags, uint8 ClientRoll, uint32 View, class UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode);
-    void ServerMoveDual(float TimeStamp0, FVector_NetQuantize10 InAccel0, uint8 PendingFlags, uint32 View0, float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 NewFlags, uint8 ClientRoll, uint32 View, class UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode);
-    void ServerMove(float Timestamp, FVector_NetQuantize10 InAccel, FVector_NetQuantize100 ClientLoc, uint8 CompressedMoveFlags, uint8 ClientRoll, uint32 View, class UPrimitiveComponent* ClientMovementBase, FName ClientBaseBoneName, uint8 ClientMovementMode);
-    void RootMotionDebugClientPrintOnScreen(FString inString);
-    float PlayAnimMontage(class UAnimMontage* AnimMontage, float InPlayRate, FName StartSectionName);
-    void OnWalkingOffLedge(const FVector& PreviousFloorImpactNormal, const FVector& PreviousFloorContactNormal, const FVector& PreviousLocation, float TimeDelta);
-    void OnRep_RootMotion();
-    void OnRep_ReplicatedBasedMovement();
-    void OnRep_ReplayLastTransformUpdateTimeStamp();
-    void OnRep_IsCrouched();
-    void OnLaunched(FVector LaunchVelocity, bool bXYOverride, bool bZOverride);
-    void OnLanded(const FHitResult& Hit);
-    void OnJumped();
-    void LaunchCharacter(FVector LaunchVelocity, bool bXYOverride, bool bZOverride);
-    void K2_UpdateCustomMovement(float DeltaTime);
-    void K2_OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust);
-    void K2_OnMovementModeChanged(TEnumAsByte<EMovementMode> PrevMovementMode, TEnumAsByte<EMovementMode> NewMovementMode, uint8 PrevCustomMode, uint8 NewCustomMode);
-    void K2_OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust);
-    void Jump();
-    bool IsPlayingRootMotion();
-    bool IsPlayingNetworkedRootMotionMontage();
-    bool IsJumpProvidingForce();
-    bool HasAnyRootMotion();
-    class UAnimMontage* GetCurrentMontage();
-    FVector GetBaseTranslationOffset();
-    FRotator GetBaseRotationOffsetRotator();
-    float GetAnimRootMotionTranslationScale();
-    void Crouch(bool bClientSimulation);
-    void ClientVeryShortAdjustPosition(float Timestamp, FVector NewLoc, class UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
-    void ClientMoveResponsePacked(const FCharacterMoveResponsePackedBits& PackedBits);
-    void ClientCheatWalk();
-    void ClientCheatGhost();
-    void ClientCheatFly();
-    void ClientAdjustRootMotionSourcePosition(float Timestamp, FRootMotionSourceGroup ServerRootMotion, bool bHasAnimRootMotion, float ServerMontageTrackPosition, FVector ServerLoc, FVector_NetQuantizeNormal ServerRotation, float ServerVelZ, class UPrimitiveComponent* ServerBase, FName ServerBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
-    void ClientAdjustRootMotionPosition(float Timestamp, float ServerMontageTrackPosition, FVector ServerLoc, FVector_NetQuantizeNormal ServerRotation, float ServerVelZ, class UPrimitiveComponent* ServerBase, FName ServerBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
-    void ClientAdjustPosition(float Timestamp, FVector NewLoc, FVector NewVel, class UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode);
-    void ClientAckGoodMove(float Timestamp);
-    bool CanJumpInternal();
-    bool CanJump();
-    bool CanCrouch();
-    void CacheInitialMeshOffset(FVector MeshRelativeLocation, FRotator MeshRelativeRotation);
-};
-
-struct FFindFloorResult
-{
-    uint8 bBlockingHit;
-    uint8 bWalkableFloor;
-    uint8 bLineTrace;
-    float FloorDist;
-    float LineDist;
-    FHitResult HitResult;
+    class UModel* Brush;
+    class UBodySetup* BrushBodySetup;
 
 };
 
-struct FNavAvoidanceMask
+class UButtonStyleAsset : public UObject
 {
-    uint8 bGroup0;
-    uint8 bGroup1;
-    uint8 bGroup2;
-    uint8 bGroup3;
-    uint8 bGroup4;
-    uint8 bGroup5;
-    uint8 bGroup6;
-    uint8 bGroup7;
-    uint8 bGroup8;
-    uint8 bGroup9;
-    uint8 bGroup10;
-    uint8 bGroup11;
-    uint8 bGroup12;
-    uint8 bGroup13;
-    uint8 bGroup14;
-    uint8 bGroup15;
-    uint8 bGroup16;
-    uint8 bGroup17;
-    uint8 bGroup18;
-    uint8 bGroup19;
-    uint8 bGroup20;
-    uint8 bGroup21;
-    uint8 bGroup22;
-    uint8 bGroup23;
-    uint8 bGroup24;
-    uint8 bGroup25;
-    uint8 bGroup26;
-    uint8 bGroup27;
-    uint8 bGroup28;
-    uint8 bGroup29;
-    uint8 bGroup30;
-    uint8 bGroup31;
+    FButtonStyle ButtonStyle;
 
 };
 
-struct FCharacterMovementComponentPostPhysicsTickFunction : public FTickFunction
+class UCameraAnim : public UObject
 {
+    class UInterpGroup* CameraInterpGroup;
+    float AnimLength;
+    FBox BoundingBox;
+    uint8 bRelativeToInitialTransform;
+    uint8 bRelativeToInitialFOV;
+    float BaseFOV;
+    FPostProcessSettings BasePostProcessSettings;
+    float BasePostProcessBlendWeight;
+
+};
+
+class UCameraAnimInst : public UObject
+{
+    class UCameraAnim* CamAnim;
+    class UInterpGroupInst* InterpGroupInst;
+    float PlayRate;
+    class UInterpTrackMove* MoveTrack;
+    class UInterpTrackInstMove* MoveInst;
+    ECameraShakePlaySpace PlaySpace;
+
+    void Stop(bool bImmediate);
+    void SetScale(float NewDuration);
+    void SetDuration(float NewDuration);
+};
+
+class UCameraComponent : public USceneComponent
+{
+    float FieldOfView;
+    float OrthoWidth;
+    float OrthoNearClipPlane;
+    float OrthoFarClipPlane;
+    float AspectRatio;
+    uint8 bConstrainAspectRatio;
+    uint8 bUseFieldOfViewForLOD;
+    uint8 bLockToHmd;
+    uint8 bUsePawnControlRotation;
+    TEnumAsByte<ECameraProjectionMode::Type> ProjectionMode;
+    float PostProcessBlendWeight;
+    FPostProcessSettings PostProcessSettings;
+
+    void SetUseFieldOfViewForLOD(bool bInUseFieldOfViewForLOD);
+    void SetProjectionMode(TEnumAsByte<ECameraProjectionMode::Type> InProjectionMode);
+    void SetPostProcessBlendWeight(float InPostProcessBlendWeight);
+    void SetOrthoWidth(float InOrthoWidth);
+    void SetOrthoNearClipPlane(float InOrthoNearClipPlane);
+    void SetOrthoFarClipPlane(float InOrthoFarClipPlane);
+    void SetFieldOfView(float InFieldOfView);
+    void SetConstraintAspectRatio(bool bInConstrainAspectRatio);
+    void SetAspectRatio(float InAspectRatio);
+    void RemoveBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject);
+    void OnCameraMeshHiddenChanged();
+    void GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView);
+    void AddOrUpdateBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight);
+};
+
+class UCameraModifier : public UObject
+{
+    uint8 bDebug;
+    uint8 bExclusive;
+    uint8 Priority;
+    class APlayerCameraManager* CameraOwner;
+    float AlphaInTime;
+    float AlphaOutTime;
+    float alpha;
+
+    bool IsDisabled();
+    class AActor* GetViewTarget();
+    void EnableModifier();
+    void DisableModifier(bool bImmediate);
+    void BlueprintModifyPostProcess(float DeltaTime, float& PostProcessBlendWeight, FPostProcessSettings& PostProcessSettings);
+    void BlueprintModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV);
+};
+
+class UCameraModifier_CameraShake : public UCameraModifier
+{
+    TArray<FActiveCameraShakeInfo> ActiveShakes;
+    TMap<class TSubclassOf<UCameraShakeBase>, class FPooledCameraShakes> ExpiredPooledShakesMap;
+    float SplitScreenShakeScale;
+
+};
+
+class UCameraShakeBase : public UObject
+{
+    bool bSingleInstance;
+    float ShakeScale;
+    class UCameraShakePattern* RootShakePattern;
+    class APlayerCameraManager* CameraManager;
+
+    void SetRootShakePattern(class UCameraShakePattern* InPattern);
+    class UCameraShakePattern* GetRootShakePattern();
+};
+
+class UCameraShakePattern : public UObject
+{
+};
+
+class UCameraShakeSourceComponent : public USceneComponent
+{
+    ECameraShakeAttenuation Attenuation;
+    float InnerAttenuationRadius;
+    float OuterAttenuationRadius;
+    TSubclassOf<class UCameraShakeBase> CameraShake;
+    bool bAutoStart;
+
+    void StopAllCameraShakesOfType(TSubclassOf<class UCameraShakeBase> InCameraShake, bool bImmediately);
+    void StopAllCameraShakes(bool bImmediately);
+    void StartCameraShake(TSubclassOf<class UCameraShakeBase> InCameraShake, float Scale, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
+    void Start();
+    float GetAttenuationFactor(const FVector& Location);
+};
+
+class UCanvas : public UObject
+{
+    float OrgX;
+    float OrgY;
+    float ClipX;
+    float ClipY;
+    FColor DrawColor;
+    uint8 bCenterX;
+    uint8 bCenterY;
+    uint8 bNoSmooth;
+    int32 SizeX;
+    int32 SizeY;
+    FPlane ColorModulate;
+    class UTexture2D* DefaultTexture;
+    class UTexture2D* GradientTexture0;
+    class UReporterGraph* ReporterGraph;
+
+    FVector2D K2_TextSize(class UFont* RenderFont, FString RenderText, FVector2D Scale);
+    FVector2D K2_StrLen(class UFont* RenderFont, FString RenderText);
+    FVector K2_Project(FVector WorldLocation);
+    void K2_DrawTriangle(class UTexture* RenderTexture, TArray<FCanvasUVTri> Triangles);
+    void K2_DrawTexture(class UTexture* RenderTexture, FVector2D ScreenPosition, FVector2D ScreenSize, FVector2D CoordinatePosition, FVector2D CoordinateSize, FLinearColor RenderColor, TEnumAsByte<EBlendMode> BlendMode, float Rotation, FVector2D PivotPoint);
+    void K2_DrawText(class UFont* RenderFont, FString RenderText, FVector2D ScreenPosition, FVector2D Scale, FLinearColor RenderColor, float Kerning, FLinearColor ShadowColor, FVector2D ShadowOffset, bool bCentreX, bool bCentreY, bool bOutlined, FLinearColor OutlineColor);
+    void K2_DrawPolygon(class UTexture* RenderTexture, FVector2D ScreenPosition, FVector2D Radius, int32 NumberOfSides, FLinearColor RenderColor);
+    void K2_DrawMaterialTriangle(class UMaterialInterface* RenderMaterial, TArray<FCanvasUVTri> Triangles);
+    void K2_DrawMaterial(class UMaterialInterface* RenderMaterial, FVector2D ScreenPosition, FVector2D ScreenSize, FVector2D CoordinatePosition, FVector2D CoordinateSize, float Rotation, FVector2D PivotPoint);
+    void K2_DrawLine(FVector2D ScreenPositionA, FVector2D ScreenPositionB, float Thickness, FLinearColor RenderColor);
+    void K2_DrawBox(FVector2D ScreenPosition, FVector2D ScreenSize, float Thickness, FLinearColor RenderColor);
+    void K2_DrawBorder(class UTexture* BorderTexture, class UTexture* BackgroundTexture, class UTexture* LeftBorderTexture, class UTexture* RightBorderTexture, class UTexture* TopBorderTexture, class UTexture* BottomBorderTexture, FVector2D ScreenPosition, FVector2D ScreenSize, FVector2D CoordinatePosition, FVector2D CoordinateSize, FLinearColor RenderColor, FVector2D BorderScale, FVector2D BackgroundScale, float Rotation, FVector2D PivotPoint, FVector2D CornerSize);
+    void K2_Deproject(FVector2D ScreenPosition, FVector& WorldOrigin, FVector& WorldDirection);
+};
+
+class UCanvasRenderTarget2D : public UTextureRenderTarget2D
+{
+    FCanvasRenderTarget2DOnCanvasRenderTargetUpdate OnCanvasRenderTargetUpdate;
+    void OnCanvasRenderTargetUpdate(class UCanvas* Canvas, int32 Width, int32 Height);
+    TWeakObjectPtr<class UWorld> World;
+    bool bShouldClearRenderTargetOnReceiveUpdate;
+
+    void UpdateResource();
+    void ReceiveUpdate(class UCanvas* Canvas, int32 Width, int32 Height);
+    void GetSize(int32& Width, int32& Height);
+    class UCanvasRenderTarget2D* CreateCanvasRenderTarget2D(class UObject* WorldContextObject, TSubclassOf<class UCanvasRenderTarget2D> CanvasRenderTarget2DClass, int32 Width, int32 Height);
+};
+
+class UCapsuleComponent : public UShapeComponent
+{
+    float CapsuleHalfHeight;
+    float CapsuleRadius;
+
+    void SetCapsuleSize(float InRadius, float InHalfHeight, bool bUpdateOverlaps);
+    void SetCapsuleRadius(float Radius, bool bUpdateOverlaps);
+    void SetCapsuleHalfHeight(float HalfHeight, bool bUpdateOverlaps);
+    void GetUnscaledCapsuleSize_WithoutHemisphere(float& OutRadius, float& OutHalfHeightWithoutHemisphere);
+    void GetUnscaledCapsuleSize(float& OutRadius, float& OutHalfHeight);
+    float GetUnscaledCapsuleRadius();
+    float GetUnscaledCapsuleHalfHeight_WithoutHemisphere();
+    float GetUnscaledCapsuleHalfHeight();
+    float GetShapeScale();
+    void GetScaledCapsuleSize_WithoutHemisphere(float& OutRadius, float& OutHalfHeightWithoutHemisphere);
+    void GetScaledCapsuleSize(float& OutRadius, float& OutHalfHeight);
+    float GetScaledCapsuleRadius();
+    float GetScaledCapsuleHalfHeight_WithoutHemisphere();
+    float GetScaledCapsuleHalfHeight();
+};
+
+class UChannel : public UObject
+{
+    class UNetConnection* Connection;
+
 };
 
 class UCharacterMovementComponent : public UPawnMovementComponent
@@ -4388,2612 +10100,67 @@ class UCharacterMovementComponent : public UPawnMovementComponent
     void AddForce(FVector force);
 };
 
-struct FOverlapResult
-{
-    TWeakObjectPtr<class AActor> Actor;
-    TWeakObjectPtr<class UPrimitiveComponent> Component;
-    uint8 bBlockingHit;
-
-};
-
-struct FEngineShowFlagsSetting
-{
-    FString ShowFlagName;
-    bool Enabled;
-
-};
-
-class USceneCaptureComponent : public USceneComponent
-{
-    ESceneCapturePrimitiveRenderMode PrimitiveRenderMode;
-    TEnumAsByte<ESceneCaptureSource> CaptureSource;
-    uint8 bCaptureEveryFrame;
-    uint8 bCaptureOnMovement;
-    bool bAlwaysPersistRenderingState;
-    TArray<TWeakObjectPtr<UPrimitiveComponent>> HiddenComponents;
-    TArray<class AActor*> HiddenActors;
-    TArray<TWeakObjectPtr<UPrimitiveComponent>> ShowOnlyComponents;
-    TArray<class AActor*> ShowOnlyActors;
-    float LODDistanceFactor;
-    float MaxViewDistanceOverride;
-    int32 CaptureSortPriority;
-    bool bUseRayTracingIfEnabled;
-    TArray<FEngineShowFlagsSetting> ShowFlagSettings;
-    FString ProfilingEventName;
-
-    void ShowOnlyComponent(class UPrimitiveComponent* InComponent);
-    void ShowOnlyActorComponents(class AActor* InActor, const bool bIncludeFromChildActors);
-    void SetCaptureSortPriority(int32 NewCaptureSortPriority);
-    void RemoveShowOnlyComponent(class UPrimitiveComponent* InComponent);
-    void RemoveShowOnlyActorComponents(class AActor* InActor, const bool bIncludeFromChildActors);
-    void HideComponent(class UPrimitiveComponent* InComponent);
-    void HideActorComponents(class AActor* InActor, const bool bIncludeFromChildActors);
-    void ClearShowOnlyComponents();
-    void ClearHiddenComponents();
-};
-
-class USceneCaptureComponent2D : public USceneCaptureComponent
-{
-    TEnumAsByte<ECameraProjectionMode::Type> ProjectionType;
-    float FOVAngle;
-    float OrthoWidth;
-    class UTextureRenderTarget2D* TextureTarget;
-    TEnumAsByte<ESceneCaptureCompositeMode> CompositeMode;
-    FPostProcessSettings PostProcessSettings;
-    float PostProcessBlendWeight;
-    uint8 bOverride_CustomNearClippingPlane;
-    float CustomNearClippingPlane;
-    bool bUseCustomProjectionMatrix;
-    FMatrix CustomProjectionMatrix;
-    bool bEnableClipPlane;
-    FVector ClipPlaneBase;
-    FVector ClipPlaneNormal;
-    uint8 bCameraCutThisFrame;
-    uint8 bConsiderUnrenderedOpaquePixelAsFullyTranslucent;
-    bool bDisableFlipCopyGLES;
-
-    void RemoveBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject);
-    void CaptureScene();
-    void AddOrUpdateBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight);
-};
-
-class UBoxComponent : public UShapeComponent
-{
-    FVector BoxExtent;
-    float LineThickness;
-
-    void SetBoxExtent(FVector InBoxExtent, bool bUpdateOverlaps);
-    FVector GetUnscaledBoxExtent();
-    FVector GetScaledBoxExtent();
-};
-
-struct FSplineMeshParams
-{
-    FVector StartPos;
-    FVector StartTangent;
-    FVector2D StartScale;
-    float StartRoll;
-    FVector2D StartOffset;
-    FVector EndPos;
-    FVector2D EndScale;
-    FVector EndTangent;
-    float EndRoll;
-    FVector2D EndOffset;
-
-};
-
-class USplineMeshComponent : public UStaticMeshComponent
-{
-    FSplineMeshParams SplineParams;
-    FVector SplineUpDir;
-    float SplineBoundaryMin;
-    FGuid CachedMeshBodySetupGuid;
-    class UBodySetup* BodySetup;
-    float SplineBoundaryMax;
-    uint8 bAllowSplineEditingPerInstance;
-    uint8 bSmoothInterpRollScale;
-    uint8 bMeshDirty;
-    TEnumAsByte<ESplineMeshAxis::Type> ForwardAxis;
-    float VirtualTextureMainPassMaxDrawDistance;
-
-    void UpdateMesh();
-    void SetStartTangent(FVector StartTangent, bool bUpdateMesh);
-    void SetStartScale(FVector2D StartScale, bool bUpdateMesh);
-    void SetStartRoll(float StartRoll, bool bUpdateMesh);
-    void SetStartPosition(FVector StartPos, bool bUpdateMesh);
-    void SetStartOffset(FVector2D StartOffset, bool bUpdateMesh);
-    void SetStartAndEnd(FVector StartPos, FVector StartTangent, FVector EndPos, FVector EndTangent, bool bUpdateMesh);
-    void SetSplineUpDir(const FVector& InSplineUpDir, bool bUpdateMesh);
-    void SetForwardAxis(TEnumAsByte<ESplineMeshAxis::Type> InForwardAxis, bool bUpdateMesh);
-    void SetEndTangent(FVector EndTangent, bool bUpdateMesh);
-    void SetEndScale(FVector2D EndScale, bool bUpdateMesh);
-    void SetEndRoll(float EndRoll, bool bUpdateMesh);
-    void SetEndPosition(FVector EndPos, bool bUpdateMesh);
-    void SetEndOffset(FVector2D EndOffset, bool bUpdateMesh);
-    void SetBoundaryMin(float InBoundaryMin, bool bUpdateMesh);
-    void SetBoundaryMax(float InBoundaryMax, bool bUpdateMesh);
-    FVector GetStartTangent();
-    FVector2D GetStartScale();
-    float GetStartRoll();
-    FVector GetStartPosition();
-    FVector2D GetStartOffset();
-    FVector GetSplineUpDir();
-    TEnumAsByte<ESplineMeshAxis::Type> GetForwardAxis();
-    FVector GetEndTangent();
-    FVector2D GetEndScale();
-    float GetEndRoll();
-    FVector GetEndPosition();
-    FVector2D GetEndOffset();
-    float GetBoundaryMin();
-    float GetBoundaryMax();
-};
-
-class ASkyLight : public AInfo
-{
-    class USkyLightComponent* LightComponent;
-    uint8 bEnabled;
-
-    void OnRep_bEnabled();
-};
-
-class UStreamableRenderAsset : public UObject
-{
-    double ForceMipLevelsToBeResidentTimestamp;
-    int32 NumCinematicMipLevels;
-    int32 StreamingIndex;
-    int32 CachedCombinedLODBias;
-    uint8 NeverStream;
-    uint8 bGlobalForceMipLevelsToBeResident;
-    uint8 bHasStreamingUpdatePending;
-    uint8 bForceMiplevelsToBeResident;
-    uint8 bIgnoreStreamingMipBias;
-    uint8 bUseCinematicMipLevels;
-
-};
-
-class UTexture : public UStreamableRenderAsset
-{
-    FGuid LightingGuid;
-    int32 LODBias;
-    TEnumAsByte<TextureCompressionSettings> CompressionSettings;
-    TEnumAsByte<TextureFilter> Filter;
-    ETextureMipLoadOptions MipLoadOptions;
-    TEnumAsByte<TextureGroup> LODGroup;
-    FPerPlatformFloat Downscale;
-    ETextureDownscaleOptions DownscaleOptions;
-    uint8 sRGB;
-    uint8 bNoTiling;
-    uint8 VirtualTextureStreaming;
-    uint8 CompressionYCoCg;
-    uint8 bNotOfflineProcessed;
-    uint8 bAsyncResourceReleaseHasBeenStarted;
-    TArray<class UAssetUserData*> AssetUserData;
-
-};
-
-class UTextureCube : public UTexture
-{
-};
-
-class AStaticMeshActor : public AActor
-{
-    class UStaticMeshComponent* StaticMeshComponent;
-    bool bStaticMeshReplicateMovement;
-    ENavDataGatheringMode NavigationGeometryGatheringMode;
-
-    void SetMobility(TEnumAsByte<EComponentMobility::Type> InMobility);
-};
-
-struct FGeomSelection
-{
-    int32 Type;
-    int32 Index;
-    int32 SelectionIndex;
-
-};
-
-class ABrush : public AActor
-{
-    TEnumAsByte<EBrushType> BrushType;
-    FColor BrushColor;
-    int32 PolyFlags;
-    uint8 bColored;
-    uint8 bSolidWhenSelected;
-    uint8 bPlaceableFromClassBrowser;
-    uint8 bNotForClientOrServer;
-    class UModel* Brush;
-    class UBrushComponent* BrushComponent;
-    uint8 bInManipulation;
-    TArray<FGeomSelection> SavedSelections;
-
-};
-
-class AVolume : public ABrush
-{
-};
-
-struct FLightmassMaterialInterfaceSettings
-{
-    float EmissiveBoost;
-    float DiffuseBoost;
-    float ExportResolutionScale;
-    uint8 bCastShadowAsMasked;
-    uint8 bOverrideCastShadowAsMasked;
-    uint8 bOverrideEmissiveBoost;
-    uint8 bOverrideDiffuseBoost;
-    uint8 bOverrideExportResolutionScale;
-
-};
-
-struct FMaterialTextureInfo
-{
-    float SamplingScale;
-    int32 UVChannelIndex;
-    FName TextureName;
-
-};
-
-struct FMaterialParameterInfo
-{
-    FName Name;
-    TEnumAsByte<EMaterialParameterAssociation> Association;
-    int32 Index;
-
-};
-
-class UMaterialInterface : public UObject
-{
-    class USubsurfaceProfile* SubsurfaceProfile;
-    FLightmassMaterialInterfaceSettings LightmassSettings;
-    TArray<FMaterialTextureInfo> TextureStreamingData;
-    TArray<class UAssetUserData*> AssetUserData;
-
-    void SetForceMipLevelsToBeResident(bool OverrideForceMiplevelsToBeResident, bool bForceMiplevelsToBeResidentValue, float ForceDuration, int32 CinematicTextureGroups, bool bFastResponse);
-    class UPhysicalMaterialMask* GetPhysicalMaterialMask();
-    class UPhysicalMaterial* GetPhysicalMaterialFromMap(int32 Index);
-    class UPhysicalMaterial* GetPhysicalMaterial();
-    FMaterialParameterInfo GetParameterInfo(TEnumAsByte<EMaterialParameterAssociation> Association, FName ParameterName, class UMaterialFunctionInterface* LayerFunction);
-    class UMaterial* GetBaseMaterial();
-};
-
-struct FScalarParameterValue
-{
-    FMaterialParameterInfo ParameterInfo;
-    float ParameterValue;
-    FGuid ExpressionGUID;
-
-};
-
-struct FVectorParameterValue
-{
-    FMaterialParameterInfo ParameterInfo;
-    FLinearColor ParameterValue;
-    FGuid ExpressionGUID;
-
-};
-
-struct FTextureParameterValue
-{
-    FMaterialParameterInfo ParameterInfo;
-    class UTexture* ParameterValue;
-    FGuid ExpressionGUID;
-
-};
-
-struct FRuntimeVirtualTextureParameterValue
-{
-    FMaterialParameterInfo ParameterInfo;
-    class URuntimeVirtualTexture* ParameterValue;
-    FGuid ExpressionGUID;
-
-};
-
-struct FFontParameterValue
-{
-    FMaterialParameterInfo ParameterInfo;
-    class UFont* FontValue;
-    int32 FontPage;
-    FGuid ExpressionGUID;
-
-};
-
-struct FMaterialInstanceBasePropertyOverrides
-{
-    uint8 bOverride_OpacityMaskClipValue;
-    uint8 bOverride_BlendMode;
-    uint8 bOverride_ShadingModel;
-    uint8 bOverride_DitheredLODTransition;
-    uint8 bOverride_CastDynamicShadowAsMasked;
-    uint8 bOverride_TwoSided;
-    uint8 TwoSided;
-    uint8 DitheredLODTransition;
-    uint8 bCastDynamicShadowAsMasked;
-    TEnumAsByte<EBlendMode> BlendMode;
-    TEnumAsByte<EMaterialShadingModel> ShadingModel;
-    float OpacityMaskClipValue;
-
-};
-
-struct FStaticParameterBase
-{
-    FMaterialParameterInfo ParameterInfo;
-    bool bOverride;
-    FGuid ExpressionGUID;
-
-};
-
-struct FStaticSwitchParameter : public FStaticParameterBase
-{
-    bool Value;
-
-};
-
-struct FStaticComponentMaskParameter : public FStaticParameterBase
-{
-    bool R;
-    bool G;
-    bool B;
-    bool A;
-
-};
-
-struct FStaticTerrainLayerWeightParameter : public FStaticParameterBase
-{
-    int32 WeightmapIndex;
-    bool bWeightBasedBlend;
-
-};
-
-struct FMaterialLayersFunctions
-{
-    TArray<class UMaterialFunctionInterface*> Layers;
-    TArray<class UMaterialFunctionInterface*> Blends;
-    TArray<bool> LayerStates;
-    FString KeyString;
-
-};
-
-struct FStaticMaterialLayersParameter : public FStaticParameterBase
-{
-    FMaterialLayersFunctions Value;
-
-};
-
-struct FStaticParameterSet
-{
-    TArray<FStaticSwitchParameter> StaticSwitchParameters;
-    TArray<FStaticComponentMaskParameter> StaticComponentMaskParameters;
-    TArray<FStaticTerrainLayerWeightParameter> TerrainLayerWeightParameters;
-    TArray<FStaticMaterialLayersParameter> MaterialLayersParameters;
-
-};
-
-struct FMaterialCachedParameterEntry
-{
-    TArray<uint64> NameHashes;
-    TArray<FMaterialParameterInfo> ParameterInfos;
-    TArray<FGuid> ExpressionGuids;
-
-};
-
-struct FMaterialCachedParameters
-{
-    FMaterialCachedParameterEntry RuntimeEntries;
-    TArray<float> ScalarValues;
-    TArray<FLinearColor> VectorValues;
-    TArray<class UTexture*> TextureValues;
-    TArray<class UFont*> FontValues;
-    TArray<int32> FontPageValues;
-    TArray<class URuntimeVirtualTexture*> RuntimeVirtualTextureValues;
-
-};
-
-class UMaterialInstance : public UMaterialInterface
-{
-    class UPhysicalMaterial* PhysMaterial;
-    class UPhysicalMaterial* PhysicalMaterialMap;
-    class UMaterialInterface* Parent;
-    uint8 bHasStaticPermutationResource;
-    uint8 bOverrideSubsurfaceProfile;
-    TArray<FScalarParameterValue> ScalarParameterValues;
-    TArray<FVectorParameterValue> VectorParameterValues;
-    TArray<FTextureParameterValue> TextureParameterValues;
-    TArray<FRuntimeVirtualTextureParameterValue> RuntimeVirtualTextureParameterValues;
-    TArray<FFontParameterValue> FontParameterValues;
-    FMaterialInstanceBasePropertyOverrides BasePropertyOverrides;
-    FStaticParameterSet StaticParameters;
-    FMaterialCachedParameters CachedLayerParameters;
-    TArray<class UObject*> CachedReferencedTextures;
-
-};
-
-class UMaterialInstanceConstant : public UMaterialInstance
-{
-    class UPhysicalMaterialMask* PhysMaterialMask;
-
-    FLinearColor K2_GetVectorParameterValue(FName ParameterName);
-    class UTexture* K2_GetTextureParameterValue(FName ParameterName);
-    float K2_GetScalarParameterValue(FName ParameterName);
-};
-
-class UTickableWorldSubsystem : public UWorldSubsystem
-{
-};
-
-class UMaterialExpression : public UObject
-{
-    class UMaterial* Material;
-    class UMaterialFunction* Function;
-    uint8 bIsParameterExpression;
-
-};
-
-class UMaterialExpressionCustomOutput : public UMaterialExpression
-{
-};
-
-struct FExpressionInput
-{
-    int32 OutputIndex;
-    FName InputName;
-    FName ExpressionName;
-
-};
-
-class UEngineCustomTimeStep : public UObject
-{
-};
-
-class UTimecodeProvider : public UObject
-{
-    float FrameDelay;
-
-    FTimecode GetTimecode();
-    ETimecodeProviderSynchronizationState GetSynchronizationState();
-    FQualifiedFrameTime GetQualifiedFrameTime();
-    FFrameRate GetFrameRate();
-    FTimecode GetDelayedTimecode();
-    FQualifiedFrameTime GetDelayedQualifiedFrameTime();
-    bool FetchTimecode(FQualifiedFrameTime& OutFrameTime);
-    void FetchAndUpdate();
-};
-
-struct FBranchingPointNotifyPayload
-{
-};
-
-struct FIntegralKey
-{
-    float Time;
-    int32 Value;
-
-};
-
-struct FIntegralCurve : public FIndexedCurve
-{
-    TArray<FIntegralKey> Keys;
-    int32 DefaultValue;
-    bool bUseDefaultValueBeforeFirstKey;
-
-};
-
-struct FNameCurveKey
-{
-    float Time;
-    FName Value;
-
-};
-
-struct FNameCurve : public FIndexedCurve
-{
-    TArray<FNameCurveKey> Keys;
-
-};
-
-class UDynamicBlueprintBinding : public UObject
-{
-};
-
-class ACameraActor : public AActor
-{
-    TEnumAsByte<EAutoReceiveInput::Type> AutoActivateForPlayer;
-    class UCameraComponent* CameraComponent;
-    class USceneComponent* SceneComponent;
-    uint8 bConstrainAspectRatio;
-    float AspectRatio;
-    float FOVAngle;
-    float PostProcessBlendWeight;
-    FPostProcessSettings PostProcessSettings;
-
-    int32 GetAutoActivatePlayerIndex();
-};
-
-class UCameraComponent : public USceneComponent
-{
-    float FieldOfView;
-    float OrthoWidth;
-    float OrthoNearClipPlane;
-    float OrthoFarClipPlane;
-    float AspectRatio;
-    uint8 bConstrainAspectRatio;
-    uint8 bUseFieldOfViewForLOD;
-    uint8 bLockToHmd;
-    uint8 bUsePawnControlRotation;
-    TEnumAsByte<ECameraProjectionMode::Type> ProjectionMode;
-    float PostProcessBlendWeight;
-    FPostProcessSettings PostProcessSettings;
-
-    void SetUseFieldOfViewForLOD(bool bInUseFieldOfViewForLOD);
-    void SetProjectionMode(TEnumAsByte<ECameraProjectionMode::Type> InProjectionMode);
-    void SetPostProcessBlendWeight(float InPostProcessBlendWeight);
-    void SetOrthoWidth(float InOrthoWidth);
-    void SetOrthoNearClipPlane(float InOrthoNearClipPlane);
-    void SetOrthoFarClipPlane(float InOrthoFarClipPlane);
-    void SetFieldOfView(float InFieldOfView);
-    void SetConstraintAspectRatio(bool bInConstrainAspectRatio);
-    void SetAspectRatio(float InAspectRatio);
-    void RemoveBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject);
-    void OnCameraMeshHiddenChanged();
-    void GetCameraView(float DeltaTime, FMinimalViewInfo& DesiredView);
-    void AddOrUpdateBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight);
-};
-
-struct FSoundSubmixSpectralAnalysisBandSettings
-{
-    float BandFrequency;
-    int32 AttackTimeMsec;
-    int32 ReleaseTimeMsec;
-    float QFactor;
-
-};
-
-struct FSourceEffectChainEntry
-{
-    class USoundEffectSourcePreset* Preset;
-    uint8 bBypass;
-
-};
-
-struct FQuartzTransportTimeStamp
-{
-    int32 Bars;
-    int32 Beat;
-    float BeatFraction;
-    float Seconds;
-
-};
-
-struct FQuartzPulseOverrideStep
-{
-    int32 NumberOfPulses;
-    EQuartzCommandQuantization PulseDuration;
-
-};
-
-struct FQuartzTimeSignature
-{
-    int32 NumBeats;
-    EQuartzTimeSignatureQuantization BeatType;
-    TArray<FQuartzPulseOverrideStep> OptionalPulseOverride;
-
-};
-
-struct FQuartzClockSettings
-{
-    FQuartzTimeSignature TimeSignature;
-    bool bIgnoreLevelChange;
-
-};
-
-struct FSoundConcurrencySettings
-{
-    int32 MaxCount;
-    uint8 bLimitToOwner;
-    TEnumAsByte<EMaxConcurrentResolutionRule::Type> ResolutionRule;
-    float RetriggerTime;
-    float VolumeScale;
-    EConcurrencyVolumeScaleMode VolumeScaleMode;
-    float VolumeScaleAttackTime;
-    uint8 bVolumeScaleCanRelease;
-    float VolumeScaleReleaseTime;
-    float VoiceStealReleaseTime;
-
-};
-
-class USoundBase : public UObject
-{
-    class USoundClass* SoundClassObject;
-    uint8 bDebug;
-    uint8 bOverrideConcurrency;
-    uint8 bEnableBusSends;
-    uint8 bEnableBaseSubmix;
-    uint8 bEnableSubmixSends;
-    uint8 bHasDelayNode;
-    uint8 bHasConcatenatorNode;
-    uint8 bBypassVolumeScaleForPriority;
-    EVirtualizationMode VirtualizationMode;
-    TSet<USoundConcurrency*> ConcurrencySet;
-    FSoundConcurrencySettings ConcurrencyOverrides;
-    float Duration;
-    float MaxDistance;
-    float TotalSamples;
-    float Priority;
-    class USoundAttenuation* AttenuationSettings;
-    class USoundSubmixBase* SoundSubmixObject;
-    TArray<FSoundSubmixSendInfo> SoundSubmixSends;
-    class USoundEffectSourcePresetChain* SourceEffectChain;
-    TArray<FSoundSourceBusSendInfo> BusSends;
-    TArray<FSoundSourceBusSendInfo> PreEffectBusSends;
-    TArray<class UAssetUserData*> AssetUserData;
-
-};
-
-struct FSoundWaveSpectralDataEntry
-{
-    float Magnitude;
-    float NormalizedMagnitude;
-
-};
-
-struct FSoundWaveSpectralTimeData
-{
-    TArray<FSoundWaveSpectralDataEntry> Data;
-    float TimeSec;
-
-};
-
-struct FSoundWaveEnvelopeTimeData
-{
-    float Amplitude;
-    float TimeSec;
-
-};
-
-class USoundWave : public USoundBase
-{
-    int32 CompressionQuality;
-    int32 StreamingPriority;
-    ESoundwaveSampleRateSettings SampleRateQuality;
-    TEnumAsByte<ESoundGroup> SoundGroup;
-    uint8 bLooping;
-    uint8 bStreaming;
-    uint8 bSeekableStreaming;
-    ESoundWaveLoadingBehavior LoadingBehavior;
-    uint8 bMature;
-    uint8 bManualWordWrap;
-    uint8 bSingleLine;
-    uint8 bIsAmbisonics;
-    FSoundModulationDefaultRoutingSettings ModulationSettings;
-    TArray<float> FrequenciesToAnalyze;
-    TArray<FSoundWaveSpectralTimeData> CookedSpectralTimeData;
-    TArray<FSoundWaveEnvelopeTimeData> CookedEnvelopeTimeData;
-    int32 InitialChunkSize;
-    FString SpokenText;
-    float SubtitlePriority;
-    float Volume;
-    float Pitch;
-    int32 NumChannels;
-    int32 SampleRate;
-    TArray<FSubtitleCue> Subtitles;
-    class UCurveTable* Curves;
-    class UCurveTable* InternalCurves;
-
-};
-
-class USoundWaveProcedural : public USoundWave
-{
-};
-
-class UModel : public UObject
-{
-};
-
-class UChannel : public UObject
-{
-    class UNetConnection* Connection;
-
-};
-
-class UActorChannel : public UChannel
-{
-    class AActor* Actor;
-    TArray<class UObject*> CreateSubObjects;
-
-};
-
-class UAnimationAsset : public UObject
-{
-    class USkeleton* Skeleton;
-    TArray<class UAnimMetaData*> MetaData;
-    TArray<class UAssetUserData*> AssetUserData;
-
-};
-
-struct FInterpolationParameter
-{
-    float InterpolationTime;
-    TEnumAsByte<EFilterInterpolationType> InterpolationType;
-
-};
-
-struct FBoneReference
-{
-    FName BoneName;
-
-};
-
-struct FPerBoneInterpolation
-{
-    FBoneReference BoneReference;
-    float InterpolationSpeedPerSec;
-
-};
-
-struct FBlendSample
-{
-    class UAnimSequence* Animation;
-    FVector SampleValue;
-    float RateScale;
-
-};
-
-struct FEditorElement
-{
-    int32 Indices;
-    float Weights;
-
-};
-
-struct FBlendParameter
-{
-    FString DisplayName;
-    float Min;
-    float Max;
-    int32 GridNum;
-
-};
-
-class UBlendSpaceBase : public UAnimationAsset
-{
-    bool bRotationBlendInMeshSpace;
-    float AnimLength;
-    FInterpolationParameter InterpolationParam;
-    float TargetWeightInterpolationSpeedPerSec;
-    TEnumAsByte<ENotifyTriggerMode::Type> NotifyTriggerMode;
-    TArray<FPerBoneInterpolation> PerBoneBlend;
-    int32 SampleIndexWithMarkers;
-    TArray<FBlendSample> SampleData;
-    TArray<FEditorElement> GridSamples;
-    FBlendParameter BlendParameters;
-
-};
-
-class UBlendSpace : public UBlendSpaceBase
-{
-    TEnumAsByte<EBlendSpaceAxis> AxisToScaleAnimation;
-
-};
-
-class UAimOffsetBlendSpace : public UBlendSpace
-{
-};
-
-class UBlendSpace1D : public UBlendSpaceBase
-{
-    bool bScaleAnimation;
-
-};
-
-class UAimOffsetBlendSpace1D : public UBlendSpace1D
-{
-};
-
-class UAISystemBase : public UObject
-{
-    FSoftClassPath AISystemClassName;
-    FName AISystemModuleName;
-    bool bInstantiateAISystemOnClient;
-
-};
-
-class AAmbientSound : public AActor
-{
-    class UAudioComponent* AudioComponent;
-
-    void Stop();
-    void Play(float StartTime);
-    void FadeOut(float FadeoutDuration, float FadeVolumeLevel);
-    void FadeIn(float FadeInDuration, float FadeVolumeLevel);
-    void AdjustVolume(float AdjustVolumeDuration, float AdjustVolumeLevel);
-};
-
-struct FCustomAttributeSetting
-{
-    FString Name;
-    FString Meaning;
-
-};
-
-class UAnimationSettings : public UDeveloperSettings
-{
-    int32 CompressCommandletVersion;
-    TArray<FString> KeyEndEffectorsMatchNameArray;
-    bool ForceRecompression;
-    bool bForceBelowThreshold;
-    bool bFirstRecompressUsingCurrentOrDefault;
-    bool bRaiseMaxErrorToExisting;
-    bool bEnablePerformanceLog;
-    bool bStripAnimationDataOnDedicatedServer;
-    bool bTickAnimationOnSkeletalMeshInit;
-    TArray<FCustomAttributeSetting> BoneCustomAttributesNames;
-    TArray<FString> BoneNamesWithCustomAttributes;
-    TMap<class FName, class ECustomAttributeBlendType> AttributeBlendModes;
-    ECustomAttributeBlendType DefaultAttributeBlendMode;
-
-};
-
-struct FAnimGroupInfo
-{
-    FName Name;
-    FLinearColor Color;
-
-};
-
-class UAnimBlueprint : public UBlueprint
-{
-    class USkeleton* TargetSkeleton;
-    TArray<FAnimGroupInfo> Groups;
-    bool bUseMultiThreadedAnimationUpdate;
-    bool bWarnAboutBlueprintUsage;
-
-};
-
-struct FBakedStateExitTransition
-{
-    int32 CanTakeDelegateIndex;
-    int32 CustomResultNodeIndex;
-    int32 TransitionIndex;
-    bool bDesiredTransitionReturnValue;
-    bool bAutomaticRemainingTimeRule;
-    TArray<int32> PoseEvaluatorLinks;
-
-};
-
-struct FBakedAnimationState
-{
-    FName StateName;
-    TArray<FBakedStateExitTransition> Transitions;
-    int32 StateRootNodeIndex;
-    int32 StartNotify;
-    int32 EndNotify;
-    int32 FullyBlendedNotify;
-    bool bIsAConduit;
-    int32 EntryRuleNodeIndex;
-    TArray<int32> PlayerNodeIndices;
-    TArray<int32> LayerNodeIndices;
-    bool bAlwaysResetOnEntry;
-
-};
-
-struct FAnimationStateBase
-{
-    FName StateName;
-
-};
-
-struct FAnimationTransitionBetweenStates : public FAnimationStateBase
-{
-    int32 previousState;
-    int32 NextState;
-    float CrossfadeDuration;
-    int32 StartNotify;
-    int32 EndNotify;
-    int32 InterruptNotify;
-    EAlphaBlendOption BlendMode;
-    class UCurveFloat* CustomCurve;
-    class UBlendProfile* BlendProfile;
-    TEnumAsByte<ETransitionLogicType::Type> LogicType;
-
-};
-
-struct FBakedAnimationStateMachine
-{
-    FName MachineName;
-    int32 InitialState;
-    TArray<FBakedAnimationState> States;
-    TArray<FAnimationTransitionBetweenStates> Transitions;
-
-};
-
-struct FCachedPoseIndices
-{
-    TArray<int32> OrderedSavedPoseNodeIndices;
-
-};
-
-struct FExposedValueCopyRecord
-{
-    int32 CopyIndex;
-    EPostCopyOperation PostCopyOperation;
-
-};
-
-struct FExposedValueHandler
-{
-    FName BoundFunction;
-    TArray<FExposedValueCopyRecord> CopyRecords;
-    class UFunction* Function;
-    TFieldPath<FStructProperty> ValueHandlerNodeProperty;
-
-};
-
-struct FGraphAssetPlayerInformation
-{
-    TArray<int32> PlayerNodeIndices;
-
-};
-
-struct FAnimGraphBlendOptions
-{
-    float BlendInTime;
-    float BlendOutTime;
-
-};
-
-class UAnimBlueprintGeneratedClass : public UBlueprintGeneratedClass
-{
-    TArray<FBakedAnimationStateMachine> BakedStateMachines;
-    class USkeleton* TargetSkeleton;
-    TArray<FAnimNotifyEvent> AnimNotifies;
-    TMap<class FName, class FCachedPoseIndices> OrderedSavedPoseIndicesMap;
-    TArray<FName> SyncGroupNames;
-    TArray<FExposedValueHandler> EvaluateGraphExposedInputs;
-    TMap<class FName, class FGraphAssetPlayerInformation> GraphAssetPlayerInformation;
-    TMap<class FName, class FAnimGraphBlendOptions> GraphBlendOptions;
-    FPropertyAccessLibrary PropertyAccessLibrary;
-
-};
-
-class UAnimBoneCompressionCodec : public UObject
-{
-    FString Description;
-
-};
-
-class UAnimBoneCompressionSettings : public UObject
-{
-    TArray<class UAnimBoneCompressionCodec*> Codecs;
-
-};
-
-struct FAnimBlueprintFunction
-{
-    FName Name;
-    FName Group;
-    int32 OutputPoseNodeIndex;
-    TArray<FName> InputPoseNames;
-    TArray<int32> InputPoseNodeIndices;
-    bool bImplemented;
-
-};
-
-struct FAnimBlueprintFunctionData
-{
-    TFieldPath<FStructProperty> OutputPoseNodeProperty;
-    TArray<TFieldPath<FStructProperty>> InputPoseNodeProperties;
-    TArray<TFieldPath<FProperty>> InputProperties;
-
-};
-
-class UAnimClassData : public UObject
-{
-    TArray<FBakedAnimationStateMachine> BakedStateMachines;
-    class USkeleton* TargetSkeleton;
-    TArray<FAnimNotifyEvent> AnimNotifies;
-    TMap<class FName, class FCachedPoseIndices> OrderedSavedPoseIndicesMap;
-    TArray<FAnimBlueprintFunction> AnimBlueprintFunctions;
-    TArray<FAnimBlueprintFunctionData> AnimBlueprintFunctionData;
-    TArray<TFieldPath<FStructProperty>> AnimNodeProperties;
-    TArray<TFieldPath<FStructProperty>> LinkedAnimGraphNodeProperties;
-    TArray<TFieldPath<FStructProperty>> LinkedAnimLayerNodeProperties;
-    TArray<TFieldPath<FStructProperty>> PreUpdateNodeProperties;
-    TArray<TFieldPath<FStructProperty>> DynamicResetNodeProperties;
-    TArray<TFieldPath<FStructProperty>> StateMachineNodeProperties;
-    TArray<TFieldPath<FStructProperty>> InitializationNodeProperties;
-    TMap<class FName, class FGraphAssetPlayerInformation> GraphNameAssetPlayers;
-    TArray<FName> SyncGroupNames;
-    TArray<FExposedValueHandler> EvaluateGraphExposedInputs;
-    TMap<class FName, class FAnimGraphBlendOptions> GraphBlendOptions;
-    FPropertyAccessLibrary PropertyAccessLibrary;
-
-};
-
-class IAnimClassInterface : public IInterface
-{
-};
-
-struct FSmartName
-{
-    FName DisplayName;
-
-};
-
-struct FAnimCurveBase
-{
-    FName LastObservedName;
-    FSmartName Name;
-    int32 CurveTypeFlags;
-
-};
-
-struct FFloatCurve : public FAnimCurveBase
-{
-    FRichCurve FloatCurve;
-
-};
-
-struct FRawCurveTracks
-{
-    TArray<FFloatCurve> FloatCurves;
-
-};
-
-class UAnimSequenceBase : public UAnimationAsset
-{
-    TArray<FAnimNotifyEvent> Notifies;
-    float SequenceLength;
-    float RateScale;
-    FRawCurveTracks RawCurveData;
-
-    float GetPlayLength();
-};
-
-class UAnimCompositeBase : public UAnimSequenceBase
-{
-};
-
-struct FAnimSegment
-{
-    class UAnimSequenceBase* AnimReference;
-    float StartPos;
-    float AnimStartTime;
-    float AnimEndTime;
-    float AnimPlayRate;
-    int32 LoopingCount;
-
-};
-
-struct FAnimTrack
-{
-    TArray<FAnimSegment> AnimSegments;
-
-};
-
-class UAnimComposite : public UAnimCompositeBase
-{
-    FAnimTrack AnimationTrack;
-
-};
-
-class UAnimCompress : public UAnimBoneCompressionCodec
-{
-    uint8 bNeedsSkeleton;
-    TEnumAsByte<AnimationCompressionFormat> TranslationCompressionFormat;
-    TEnumAsByte<AnimationCompressionFormat> RotationCompressionFormat;
-    TEnumAsByte<AnimationCompressionFormat> ScaleCompressionFormat;
-
-};
-
-class UAnimCompress_BitwiseCompressOnly : public UAnimCompress
-{
-};
-
-class UAnimCompress_LeastDestructive : public UAnimCompress_BitwiseCompressOnly
-{
-};
-
-class UAnimCompress_RemoveLinearKeys : public UAnimCompress
-{
-    float MaxPosDiff;
-    float MaxAngleDiff;
-    float MaxScaleDiff;
-    float MaxEffectorDiff;
-    float MinEffectorDiff;
-    float EffectorDiffSocket;
-    float ParentKeyScale;
-    uint8 bRetarget;
-    uint8 bActuallyFilterLinearKeys;
-
-};
-
-class UAnimCompress_PerTrackCompression : public UAnimCompress_RemoveLinearKeys
-{
-    float MaxZeroingThreshold;
-    float MaxPosDiffBitwise;
-    float MaxAngleDiffBitwise;
-    float MaxScaleDiffBitwise;
-    TArray<TEnumAsByte<AnimationCompressionFormat>> AllowedRotationFormats;
-    TArray<TEnumAsByte<AnimationCompressionFormat>> AllowedTranslationFormats;
-    TArray<TEnumAsByte<AnimationCompressionFormat>> AllowedScaleFormats;
-    uint8 bResampleAnimation;
-    float ResampledFramerate;
-    int32 MinKeysForResampling;
-    uint8 bUseAdaptiveError;
-    uint8 bUseOverrideForEndEffectors;
-    int32 TrackHeightBias;
-    float ParentingDivisor;
-    float ParentingDivisorExponent;
-    uint8 bUseAdaptiveError2;
-    float RotationErrorSourceRatio;
-    float TranslationErrorSourceRatio;
-    float ScaleErrorSourceRatio;
-    float MaxErrorPerTrackRatio;
-    float PerturbationProbeSize;
-
-};
-
-class UAnimCompress_RemoveEverySecondKey : public UAnimCompress
-{
-    int32 MinKeys;
-    uint8 bStartAtSecondKey;
-
-};
-
-class UAnimCompress_RemoveTrivialKeys : public UAnimCompress
-{
-    float MaxPosDiff;
-    float MaxAngleDiff;
-    float MaxScaleDiff;
-
-};
-
-class UAnimCurveCompressionCodec : public UObject
-{
-};
-
-class UAnimCurveCompressionCodec_CompressedRichCurve : public UAnimCurveCompressionCodec
-{
-};
-
-class UAnimCurveCompressionCodec_UniformIndexable : public UAnimCurveCompressionCodec
-{
-};
-
-class UAnimCurveCompressionCodec_UniformlySampled : public UAnimCurveCompressionCodec
-{
-};
-
-class UAnimCurveCompressionSettings : public UObject
-{
-    class UAnimCurveCompressionCodec* Codec;
-
-};
-
-class IAnimLayerInterface : public IInterface
-{
-};
-
-class UAnimMetaData : public UObject
-{
-};
-
-struct FAlphaBlend
-{
-    class UCurveFloat* CustomCurve;
-    float BlendTime;
-    EAlphaBlendOption BlendOption;
-
-};
-
-struct FAnimSyncMarker
-{
-    FName MarkerName;
-    float Time;
-
-};
-
-struct FMarkerSyncData
-{
-    TArray<FAnimSyncMarker> AuthoredSyncMarkers;
-
-};
-
-struct FCompositeSection : public FAnimLinkableElement
-{
-    FName SectionName;
-    float StartTime;
-    FName NextSectionName;
-    TArray<class UAnimMetaData*> MetaData;
-
-};
-
-struct FSlotAnimationTrack
-{
-    FName slotName;
-    FAnimTrack AnimTrack;
-
-};
-
-struct FBranchingPoint : public FAnimLinkableElement
-{
-    FName EventName;
-    float DisplayTime;
-    float TriggerTimeOffset;
-
-};
-
-struct FBranchingPointMarker
-{
-    int32 NotifyIndex;
-    float TriggerTime;
-    TEnumAsByte<EAnimNotifyEventType::Type> NotifyEventType;
-
-};
-
-struct FTimeStretchCurveMarker
-{
-    float Time;
-    float alpha;
-
-};
-
-struct FTimeStretchCurve
-{
-    float SamplingRate;
-    float CurveValueMinPrecision;
-    TArray<FTimeStretchCurveMarker> Markers;
-    float Sum_dT_i_by_C_i;
-
-};
-
-class UAnimMontage : public UAnimCompositeBase
-{
-    FAlphaBlend BlendIn;
-    float BlendInTime;
-    FAlphaBlend BlendOut;
-    float BlendOutTime;
-    float BlendOutTriggerTime;
-    FName SyncGroup;
-    int32 SyncSlotIndex;
-    FMarkerSyncData MarkerData;
-    TArray<FCompositeSection> CompositeSections;
-    TArray<FSlotAnimationTrack> SlotAnimTracks;
-    TArray<FBranchingPoint> BranchingPoints;
-    bool bEnableRootMotionTranslation;
-    bool bEnableRootMotionRotation;
-    bool bEnableAutoBlendOut;
-    TEnumAsByte<ERootMotionRootLock::Type> RootMotionRootLock;
-    TArray<FBranchingPointMarker> BranchingPointMarkers;
-    TArray<int32> BranchingPointStateNotifyIndices;
-    FTimeStretchCurve TimeStretchCurve;
-    FName TimeStretchCurveName;
-
-    float GetDefaultBlendOutTime();
-};
-
-class UAnimNotify_PauseClothingSimulation : public UAnimNotify
-{
-};
-
-class UAnimNotify_PlayParticleEffect : public UAnimNotify
-{
-    class UParticleSystem* PSTemplate;
-    FVector LocationOffset;
-    FRotator RotationOffset;
-    FVector Scale;
-    uint8 Attached;
-    FName SocketName;
-
-};
-
-class UAnimNotify_ResetClothingSimulation : public UAnimNotify
-{
-};
-
-class UAnimNotify_ResetDynamics : public UAnimNotify
-{
-};
-
-class UAnimNotify_ResumeClothingSimulation : public UAnimNotify
-{
-};
-
-class UAnimNotifyState_DisableRootMotion : public UAnimNotifyState
-{
-};
-
-class UAnimNotifyState_Trail : public UAnimNotifyState
-{
-    class UParticleSystem* PSTemplate;
-    FName FirstSocketName;
-    FName SecondSocketName;
-    TEnumAsByte<ETrailWidthMode> WidthScaleMode;
-    FName WidthScaleCurve;
-    uint8 bRecycleSpawnedSystems;
-
-    class UParticleSystem* OverridePSTemplate(class USkeletalMeshComponent* MeshComp, class UAnimSequenceBase* Animation);
-};
-
-struct FTrackToSkeletonMap
-{
-    int32 BoneTreeIndex;
-
-};
-
-struct FStringCurveKey
-{
-    float Time;
-    FString Value;
-
-};
-
-struct FStringCurve : public FIndexedCurve
-{
-    FString DefaultValue;
-    TArray<FStringCurveKey> Keys;
-
-};
-
-struct FBakedStringCustomAttribute
-{
-    FName AttributeName;
-    FStringCurve StringCurve;
-
-};
-
-struct FBakedIntegerCustomAttribute
-{
-    FName AttributeName;
-    FIntegralCurve IntCurve;
-
-};
-
-struct FSimpleCurveKey
-{
-    float Time;
-    float Value;
-
-};
-
-struct FSimpleCurve : public FRealCurve
-{
-    TEnumAsByte<ERichCurveInterpMode> InterpMode;
-    TArray<FSimpleCurveKey> Keys;
-
-};
-
-struct FBakedFloatCustomAttribute
-{
-    FName AttributeName;
-    FSimpleCurve FloatCurve;
-
-};
-
-struct FBakedCustomAttributePerBoneData
-{
-    int32 BoneTreeIndex;
-    TArray<FBakedStringCustomAttribute> StringAttributes;
-    TArray<FBakedIntegerCustomAttribute> IntAttributes;
-    TArray<FBakedFloatCustomAttribute> FloatAttributes;
-
-};
-
-class UAnimSequence : public UAnimSequenceBase
-{
-    int32 NumFrames;
-    TArray<FTrackToSkeletonMap> TrackToSkeletonMapTable;
-    class UAnimBoneCompressionSettings* BoneCompressionSettings;
-    class UAnimCurveCompressionSettings* CurveCompressionSettings;
-    TEnumAsByte<EAdditiveAnimationType> AdditiveAnimType;
-    TEnumAsByte<EAdditiveBasePoseType> RefPoseType;
-    class UAnimSequence* RefPoseSeq;
-    int32 RefFrameIndex;
-    FName RetargetSource;
-    TArray<FTransform> RetargetSourceAssetReferencePose;
-    EAnimInterpolationType Interpolation;
-    bool bEnableRootMotion;
-    TEnumAsByte<ERootMotionRootLock::Type> RootMotionRootLock;
-    bool bForceRootLock;
-    bool bUseNormalizedRootMotionScale;
-    bool bRootMotionSettingsCopiedFromMontage;
-    TArray<FAnimSyncMarker> AuthoredSyncMarkers;
-    TArray<FBakedCustomAttributePerBoneData> BakedPerBoneCustomAttributeData;
-
-};
-
-struct FAnimSetMeshLinkup
-{
-    TArray<int32> BoneToTrackTable;
-
-};
-
-class UAnimSet : public UObject
-{
-    uint8 bAnimRotationOnly;
-    TArray<FName> TrackBoneNames;
-    TArray<FAnimSetMeshLinkup> LinkupCache;
-    TArray<uint8> BoneUseAnimTranslation;
-    TArray<uint8> ForceUseMeshTranslation;
-    TArray<FName> UseTranslationBoneNames;
-    TArray<FName> ForceMeshTranslationBoneNames;
-    FName PreviewSkelMeshName;
-    FName BestRatioSkelMeshName;
-
-};
-
-class UAnimSingleNodeInstance : public UAnimInstance
-{
-    class UAnimationAsset* CurrentAsset;
-    FAnimSingleNodeInstancePostEvaluateAnimEvent PostEvaluateAnimEvent;
-    void PostEvaluateAnimEvent();
-
-    void StopAnim();
-    void SetReverse(bool bInReverse);
-    void SetPreviewCurveOverride(const FName& PoseName, float Value, bool bRemoveIfZero);
-    void SetPositionWithPreviousTime(float InPosition, float InPreviousTime, bool bFireNotifies);
-    void SetPosition(float InPosition, bool bFireNotifies);
-    void SetPlayRate(float InPlayRate);
-    void SetPlaying(bool bIsPlaying);
-    void SetLooping(bool bIsLooping);
-    void SetBlendSpaceInput(const FVector& InBlendInput);
-    void SetAnimationAsset(class UAnimationAsset* NewAsset, bool bIsLooping, float InPlayRate);
-    void PlayAnim(bool bIsLooping, float InPlayRate, float InStartPosition);
-    float GetLength();
-    class UAnimationAsset* GetAnimationAsset();
-};
-
-class UAnimStateMachineTypes : public UObject
-{
-};
-
-class UAnimStreamable : public UAnimSequenceBase
-{
-    int32 NumFrames;
-    EAnimInterpolationType Interpolation;
-    FName RetargetSource;
-    class UAnimBoneCompressionSettings* BoneCompressionSettings;
-    class UAnimCurveCompressionSettings* CurveCompressionSettings;
-    bool bEnableRootMotion;
-    TEnumAsByte<ERootMotionRootLock::Type> RootMotionRootLock;
-    bool bForceRootLock;
-    bool bUseNormalizedRootMotionScale;
-
-};
-
-class UApplicationLifecycleComponent : public UActorComponent
-{
-    FApplicationLifecycleComponentApplicationWillDeactivateDelegate ApplicationWillDeactivateDelegate;
-    void ApplicationLifetimeDelegate();
-    FApplicationLifecycleComponentApplicationHasReactivatedDelegate ApplicationHasReactivatedDelegate;
-    void ApplicationLifetimeDelegate();
-    FApplicationLifecycleComponentApplicationWillEnterBackgroundDelegate ApplicationWillEnterBackgroundDelegate;
-    void ApplicationLifetimeDelegate();
-    FApplicationLifecycleComponentApplicationHasEnteredForegroundDelegate ApplicationHasEnteredForegroundDelegate;
-    void ApplicationLifetimeDelegate();
-    FApplicationLifecycleComponentApplicationWillTerminateDelegate ApplicationWillTerminateDelegate;
-    void ApplicationLifetimeDelegate();
-    FApplicationLifecycleComponentApplicationShouldUnloadResourcesDelegate ApplicationShouldUnloadResourcesDelegate;
-    void ApplicationLifetimeDelegate();
-    FApplicationLifecycleComponentApplicationReceivedStartupArgumentsDelegate ApplicationReceivedStartupArgumentsDelegate;
-    void ApplicationStartupArgumentsDelegate(const TArray<FString>& StartupArguments);
-    FApplicationLifecycleComponentOnTemperatureChangeDelegate OnTemperatureChangeDelegate;
-    void OnTemperatureChangeDelegate(ETemperatureSeverityType Severity);
-    FApplicationLifecycleComponentOnLowPowerModeDelegate OnLowPowerModeDelegate;
-    void OnLowPowerModeDelegate(bool bInLowPowerMode);
-
-};
-
-class UArrowComponent : public UPrimitiveComponent
-{
-    FColor ArrowColor;
-    float ArrowSize;
-    float ArrowLength;
-    float ScreenSize;
-    uint8 bIsScreenSizeScaled;
-    uint8 bTreatAsASprite;
-
-    void SetArrowColor(FLinearColor NewColor);
-};
-
-class UAssetExportTask : public UObject
-{
-    class UObject* Object;
-    class UExporter* Exporter;
-    FString Filename;
-    bool bSelected;
-    bool bReplaceIdentical;
-    bool bPrompt;
-    bool bAutomated;
-    bool bUseFileArchive;
-    bool bWriteEmptyFiles;
-    TArray<class UObject*> IgnoreObjectList;
-    class UObject* options;
-    TArray<FString> Errors;
-
-};
-
-struct FPrimaryAssetRules
-{
-    int32 Priority;
-    int32 ChunkId;
-    bool bApplyRecursively;
-    EPrimaryAssetCookRule CookRule;
-
-};
-
-struct FPrimaryAssetTypeInfo
-{
-    FName PrimaryAssetType;
-    TSoftClassPtr<UObject> AssetBaseClass;
-    UClass* AssetBaseClassLoaded;
-    bool bHasBlueprintClasses;
-    bool bIsEditorOnly;
-    TArray<FDirectoryPath> Directories;
-    TArray<FSoftObjectPath> SpecificAssets;
-    FPrimaryAssetRules Rules;
-    TArray<FString> AssetScanPaths;
-    bool bIsDynamicAsset;
-    int32 NumberOfAssets;
-
-};
-
-struct FPrimaryAssetRulesOverride
-{
-    FPrimaryAssetId PrimaryAssetId;
-    FPrimaryAssetRules Rules;
-
-};
-
-struct FPrimaryAssetRulesCustomOverride
-{
-    FPrimaryAssetType PrimaryAssetType;
-    FDirectoryPath FilterDirectory;
-    FString FilterString;
-    FPrimaryAssetRules Rules;
-
-};
-
-struct FAssetManagerRedirect
-{
-    FString Old;
-    FString New;
-
-};
-
-class UAssetManagerSettings : public UDeveloperSettings
-{
-    TArray<FPrimaryAssetTypeInfo> PrimaryAssetTypesToScan;
-    TArray<FDirectoryPath> DirectoriesToExclude;
-    TArray<FPrimaryAssetRulesOverride> PrimaryAssetRules;
-    TArray<FPrimaryAssetRulesCustomOverride> CustomPrimaryAssetRules;
-    bool bOnlyCookProductionAssets;
-    bool bShouldManagerDetermineTypeAndName;
-    bool bShouldGuessTypeAndNameInEditor;
-    bool bShouldAcquireMissingChunksOnLoad;
-    TArray<FAssetManagerRedirect> PrimaryAssetIdRedirects;
-    TArray<FAssetManagerRedirect> PrimaryAssetTypeRedirects;
-    TArray<FAssetManagerRedirect> AssetPathRedirects;
-    TSet<FName> MetaDataTagsForAssetRegistry;
-
-};
-
-struct FAssetMapping
-{
-    class UAnimationAsset* SourceAsset;
-    class UAnimationAsset* TargetAsset;
-
-};
-
-class UAssetMappingTable : public UObject
-{
-    TArray<FAssetMapping> MappedAssets;
-
-};
-
-class UAsyncActionHandleSaveGame : public UBlueprintAsyncActionBase
-{
-    FAsyncActionHandleSaveGameCompleted Completed;
-    void OnAsyncHandleSaveGame(class USaveGame* SaveGame, bool bSuccess);
-    class USaveGame* SaveGameObject;
-
-    class UAsyncActionHandleSaveGame* AsyncSaveGameToSlot(class UObject* WorldContextObject, class USaveGame* SaveGameObject, FString slotName, const int32 UserIndex);
-    class UAsyncActionHandleSaveGame* AsyncLoadGameFromSlot(class UObject* WorldContextObject, FString slotName, const int32 UserIndex);
-};
-
-class UAsyncActionLoadPrimaryAssetBase : public UBlueprintAsyncActionBase
-{
-};
-
-class UAsyncActionLoadPrimaryAsset : public UAsyncActionLoadPrimaryAssetBase
-{
-    FAsyncActionLoadPrimaryAssetCompleted Completed;
-    void OnPrimaryAssetLoaded(class UObject* Loaded);
-
-    class UAsyncActionLoadPrimaryAsset* AsyncLoadPrimaryAsset(class UObject* WorldContextObject, FPrimaryAssetId PrimaryAsset, const TArray<FName>& LoadBundles);
-};
-
-class UAsyncActionLoadPrimaryAssetClass : public UAsyncActionLoadPrimaryAssetBase
-{
-    FAsyncActionLoadPrimaryAssetClassCompleted Completed;
-    void OnPrimaryAssetClassLoaded(UClass* Loaded);
-
-    class UAsyncActionLoadPrimaryAssetClass* AsyncLoadPrimaryAssetClass(class UObject* WorldContextObject, FPrimaryAssetId PrimaryAsset, const TArray<FName>& LoadBundles);
-};
-
-class UAsyncActionLoadPrimaryAssetList : public UAsyncActionLoadPrimaryAssetBase
-{
-    FAsyncActionLoadPrimaryAssetListCompleted Completed;
-    void OnPrimaryAssetListLoaded(const TArray<class UObject*>& Loaded);
-
-    class UAsyncActionLoadPrimaryAssetList* AsyncLoadPrimaryAssetList(class UObject* WorldContextObject, const TArray<FPrimaryAssetId>& PrimaryAssetList, const TArray<FName>& LoadBundles);
-};
-
-class UAsyncActionLoadPrimaryAssetClassList : public UAsyncActionLoadPrimaryAssetBase
-{
-    FAsyncActionLoadPrimaryAssetClassListCompleted Completed;
-    void OnPrimaryAssetClassListLoaded(const TArray<class UClass*>& Loaded);
-
-    class UAsyncActionLoadPrimaryAssetClassList* AsyncLoadPrimaryAssetClassList(class UObject* WorldContextObject, const TArray<FPrimaryAssetId>& PrimaryAssetList, const TArray<FName>& LoadBundles);
-};
-
-class UAsyncActionChangePrimaryAssetBundles : public UAsyncActionLoadPrimaryAssetBase
-{
-    FAsyncActionChangePrimaryAssetBundlesCompleted Completed;
-    void OnPrimaryAssetBundlesChanged();
-
-    class UAsyncActionChangePrimaryAssetBundles* AsyncChangeBundleStateForPrimaryAssetList(class UObject* WorldContextObject, const TArray<FPrimaryAssetId>& PrimaryAssetList, const TArray<FName>& AddBundles, const TArray<FName>& RemoveBundles);
-    class UAsyncActionChangePrimaryAssetBundles* AsyncChangeBundleStateForMatchingPrimaryAssets(class UObject* WorldContextObject, const TArray<FName>& NewBundles, const TArray<FName>& OldBundles);
-};
-
-class AAtmosphericFog : public AInfo
-{
-    class UAtmosphericFogComponent* AtmosphericFogComponent;
-
-};
-
-struct FAtmospherePrecomputeParameters
-{
-    float DensityHeight;
-    float DecayHeight;
-    int32 MaxScatteringOrder;
-    int32 TransmittanceTexWidth;
-    int32 TransmittanceTexHeight;
-    int32 IrradianceTexWidth;
-    int32 IrradianceTexHeight;
-    int32 InscatterAltitudeSampleNum;
-    int32 InscatterMuNum;
-    int32 InscatterMuSNum;
-    int32 InscatterNuNum;
-
-};
-
-class UAtmosphericFogComponent : public USceneComponent
-{
-    float SunMultiplier;
-    float FogMultiplier;
-    float DensityMultiplier;
-    float DensityOffset;
-    float DistanceScale;
-    float AltitudeScale;
-    float DistanceOffset;
-    float GroundOffset;
-    float StartDistance;
-    float SunDiscScale;
-    float DefaultBrightness;
-    FColor DefaultLightColor;
-    uint8 bDisableSunDisk;
-    uint8 bAtmosphereAffectsSunIlluminance;
-    uint8 bDisableGroundScattering;
-    FAtmospherePrecomputeParameters PrecomputeParams;
-    class UTexture2D* TransmittanceTexture;
-    class UTexture2D* IrradianceTexture;
-
-    void StartPrecompute();
-    void SetSunMultiplier(float NewSunMultiplier);
-    void SetStartDistance(float NewStartDistance);
-    void SetPrecomputeParams(float DensityHeight, int32 MaxScatteringOrder, int32 InscatterAltitudeSampleNum);
-    void SetFogMultiplier(float NewFogMultiplier);
-    void SetDistanceScale(float NewDistanceScale);
-    void SetDistanceOffset(float NewDistanceOffset);
-    void SetDensityOffset(float NewDensityOffset);
-    void SetDensityMultiplier(float NewDensityMultiplier);
-    void SetDefaultLightColor(FLinearColor NewLightColor);
-    void SetDefaultBrightness(float NewBrightness);
-    void SetAltitudeScale(float NewAltitudeScale);
-    void DisableSunDisk(bool NewSunDisk);
-    void DisableGroundScattering(bool NewGroundScattering);
-};
-
-class UAudioBus : public UObject
-{
-    EAudioBusChannels AudioBusChannels;
-
-};
-
-struct FAudioQualitySettings
-{
-    FText DisplayName;
-    int32 MaxChannels;
-
-};
-
-struct FSoundDebugEntry
-{
-    FName DebugName;
-    FSoftObjectPath Sound;
-
-};
-
-struct FDefaultAudioBusSettings
-{
-    FSoftObjectPath AudioBus;
-
-};
-
-class UAudioSettings : public UDeveloperSettings
-{
-    FSoftObjectPath DefaultSoundClassName;
-    FSoftObjectPath DefaultMediaSoundClassName;
-    FSoftObjectPath DefaultSoundConcurrencyName;
-    FSoftObjectPath DefaultBaseSoundMix;
-    FSoftObjectPath VoiPSoundClass;
-    FSoftObjectPath MasterSubmix;
-    FSoftObjectPath BaseDefaultSubmix;
-    FSoftObjectPath ReverbSubmix;
-    FSoftObjectPath EQSubmix;
-    EVoiceSampleRate VoiPSampleRate;
-    float DefaultReverbSendLevel;
-    int32 MaximumConcurrentStreams;
-    float GlobalMinPitchScale;
-    float GlobalMaxPitchScale;
-    TArray<FAudioQualitySettings> QualityLevels;
-    uint8 bAllowPlayWhenSilent;
-    uint8 bDisableMasterEQ;
-    uint8 bAllowCenterChannel3DPanning;
-    uint32 NumStoppingSources;
-    EPanningMethod PanningMethod;
-    EMonoChannelUpmixMethod MonoChannelUpmixMethod;
-    FString DialogueFilenameFormat;
-    TArray<FSoundDebugEntry> DebugSounds;
-    TArray<FDefaultAudioBusSettings> DefaultAudioBuses;
-    class USoundClass* DefaultSoundClass;
-    class USoundClass* DefaultMediaSoundClass;
-    class USoundConcurrency* DefaultSoundConcurrency;
-
-};
-
-struct FAudioVolumeSubmixSendSettings
-{
-    EAudioVolumeLocationState ListenerLocationState;
-    EAudioVolumeLocationState SourceLocationState;
-    TArray<FSoundSubmixSendInfo> SubmixSends;
-
-};
-
-struct FAudioVolumeSubmixOverrideSettings
-{
-    class USoundSubmix* Submix;
-    TArray<class USoundEffectSubmixPreset*> SubmixEffectChain;
-    float CrossfadeTime;
-
-};
-
-class AAudioVolume : public AVolume
-{
-    float Priority;
-    uint8 bEnabled;
-    FReverbSettings Settings;
-    FInteriorSettings AmbientZoneSettings;
-    TArray<FAudioVolumeSubmixSendSettings> SubmixSendSettings;
-    TArray<FAudioVolumeSubmixOverrideSettings> SubmixOverrideSettings;
-
-    void SetSubmixSendSettings(const TArray<FAudioVolumeSubmixSendSettings>& NewSubmixSendSettings);
-    void SetSubmixOverrideSettings(const TArray<FAudioVolumeSubmixOverrideSettings>& NewSubmixOverrideSettings);
-    void SetReverbSettings(const FReverbSettings& NewReverbSettings);
-    void SetPriority(float NewPriority);
-    void SetInteriorSettings(const FInteriorSettings& NewInteriorSettings);
-    void SetEnabled(bool bNewEnabled);
-    void OnRep_bEnabled();
-};
-
-class UAutoDestroySubsystem : public UTickableWorldSubsystem
-{
-    TArray<class AActor*> ActorsToPoll;
-
-    void OnActorEndPlay(class AActor* Actor, TEnumAsByte<EEndPlayReason::Type> EndPlayReason);
-};
-
-struct FEditorMapPerformanceTestDefinition
-{
-    FSoftObjectPath PerformanceTestmap;
-    int32 TestTimer;
-
-};
-
-struct FFilePath
-{
-    FString FilePath;
-
-};
-
-struct FImportFactorySettingValues
-{
-    FString SettingName;
-    FString Value;
-
-};
-
-struct FEditorImportWorkflowDefinition
-{
-    FFilePath ImportFilePath;
-    TArray<FImportFactorySettingValues> FactorySettings;
-
-};
-
-struct FBuildPromotionImportWorkflowSettings
-{
-    FEditorImportWorkflowDefinition Diffuse;
-    FEditorImportWorkflowDefinition Normal;
-    FEditorImportWorkflowDefinition StaticMesh;
-    FEditorImportWorkflowDefinition ReimportStaticMesh;
-    FEditorImportWorkflowDefinition BlendShapeMesh;
-    FEditorImportWorkflowDefinition MorphMesh;
-    FEditorImportWorkflowDefinition SkeletalMesh;
-    FEditorImportWorkflowDefinition Animation;
-    FEditorImportWorkflowDefinition Sound;
-    FEditorImportWorkflowDefinition SurroundSound;
-    TArray<FEditorImportWorkflowDefinition> OtherAssetsToImport;
-
-};
-
-struct FBuildPromotionOpenAssetSettings
-{
-    FFilePath BlueprintAsset;
-    FFilePath MaterialAsset;
-    FFilePath ParticleSystemAsset;
-    FFilePath SkeletalMeshAsset;
-    FFilePath StaticMeshAsset;
-    FFilePath TextureAsset;
-
-};
-
-struct FBuildPromotionNewProjectSettings
-{
-    FDirectoryPath NewProjectFolderOverride;
-    FString NewProjectNameOverride;
-
-};
-
-struct FBuildPromotionTestSettings
-{
-    FFilePath DefaultStaticMeshAsset;
-    FBuildPromotionImportWorkflowSettings ImportWorkflow;
-    FBuildPromotionOpenAssetSettings OpenAssets;
-    FBuildPromotionNewProjectSettings NewProjectSettings;
-    FFilePath SourceControlMaterial;
-
-};
-
-struct FMaterialEditorPromotionSettings
-{
-    FFilePath DefaultMaterialAsset;
-    FFilePath DefaultDiffuseTexture;
-    FFilePath DefaultNormalTexture;
-
-};
-
-struct FParticleEditorPromotionSettings
-{
-    FFilePath DefaultParticleAsset;
-
-};
-
-struct FBlueprintEditorPromotionSettings
-{
-    FFilePath FirstMeshPath;
-    FFilePath SecondMeshPath;
-    FFilePath DefaultParticleAsset;
-
-};
-
-struct FExternalToolDefinition
-{
-    FString ToolName;
-    FFilePath ExecutablePath;
-    FString CommandLineOptions;
-    FDirectoryPath WorkingDirectory;
-    FString ScriptExtension;
-    FDirectoryPath ScriptDirectory;
-
-};
-
-struct FEditorImportExportTestDefinition
-{
-    FFilePath ImportFilePath;
-    FString ExportFileExtension;
-    bool bSkipExport;
-    TArray<FImportFactorySettingValues> FactorySettings;
-
-};
-
-struct FLaunchOnTestSettings
-{
-    FFilePath LaunchOnTestmap;
-    FString DeviceID;
-
-};
-
-class UAutomationTestSettings : public UObject
-{
-    TArray<FString> EngineTestModules;
-    TArray<FString> EditorTestModules;
-    FSoftObjectPath AutomationTestmap;
-    TArray<FEditorMapPerformanceTestDefinition> EditorPerformanceTestMaps;
-    TArray<FSoftObjectPath> AssetsToOpen;
-    TArray<FString> MapsToPIETest;
-    FBuildPromotionTestSettings BuildPromotionTest;
-    FMaterialEditorPromotionSettings MaterialEditorPromotionTest;
-    FParticleEditorPromotionSettings ParticleEditorPromotionTest;
-    FBlueprintEditorPromotionSettings BlueprintEditorPromotionTest;
-    TArray<FString> TestLevelFolders;
-    TArray<FExternalToolDefinition> ExternalTools;
-    TArray<FEditorImportExportTestDefinition> ImportExportTestDefinitions;
-    TArray<FLaunchOnTestSettings> LaunchOnSettings;
-    FIntPoint DefaultScreenshotResolution;
-    float PIETestDuration;
-
-};
-
-class UAvoidanceManager : public UObject
-{
-    float DefaultTimeToLive;
-    float LockTimeAfterAvoid;
-    float LockTimeAfterClean;
-    float DeltaTimeToPredict;
-    float ArtificialRadiusExpansion;
-    float TestHeightDifference;
-    float HeightCheckMargin;
-
-    bool RegisterMovementComponent(class UMovementComponent* MovementComp, float AvoidanceWeight);
-    int32 GetObjectCount();
-    int32 GetNewAvoidanceUID();
-    FVector GetAvoidanceVelocityForComponent(class UMovementComponent* MovementComp);
-};
-
-struct FBandwidthTestItem
-{
-    TArray<uint8> Kilobyte;
-
-};
-
-struct FBandwidthTestGenerator
-{
-    TArray<FBandwidthTestItem> ReplicatedBuffers;
-
-};
-
-class ABandwidthTestActor : public AActor
-{
-    FBandwidthTestGenerator BandwidthGenerator;
-
-};
-
-class UBillboardComponent : public UPrimitiveComponent
-{
-    class UTexture2D* Sprite;
-    uint8 bIsScreenSizeScaled;
-    float ScreenSize;
-    float U;
-    float UL;
-    float V;
-    float VL;
-
-    void SetUV(int32 NewU, int32 NewUL, int32 NewV, int32 NewVL);
-    void SetSpriteAndUV(class UTexture2D* NewSprite, int32 NewU, int32 NewUL, int32 NewV, int32 NewVL);
-    void SetSprite(class UTexture2D* NewSprite);
-};
-
-class IBlendableInterface : public IInterface
-{
-};
-
-struct FBoneNode
-{
-    FName Name;
-    int32 ParentIndex;
-    TEnumAsByte<EBoneTranslationRetargetingMode::Type> TranslationRetargetingMode;
-
-};
-
-struct FVirtualBone
-{
-    FName SourceBoneName;
-    FName TargetBoneName;
-    FName VirtualBoneName;
-
-};
-
-struct FSmartNameContainer
-{
-};
-
-struct FAnimSlotGroup
-{
-    FName GroupName;
-    TArray<FName> SlotNames;
-
-};
-
-class USkeleton : public UObject
-{
-    TArray<FBoneNode> BoneTree;
-    TArray<FTransform> RefLocalPoses;
-    FGuid VirtualBoneGuid;
-    TArray<FVirtualBone> VirtualBones;
-    TArray<class USkeletalMeshSocket*> Sockets;
-    FSmartNameContainer SmartNames;
-    TArray<class UBlendProfile*> BlendProfiles;
-    TArray<FAnimSlotGroup> SlotGroups;
-    TArray<class UAssetUserData*> AssetUserData;
-
-};
-
-struct FBlendProfileBoneEntry
-{
-    FBoneReference BoneReference;
-    float BlendScale;
-
-};
-
-class UBlendProfile : public UObject
-{
-    class USkeleton* OwningSkeleton;
-    TArray<FBlendProfileBoneEntry> ProfileEntries;
-
-};
-
-class ABlockingVolume : public AVolume
-{
-};
-
-class UBlueprintExtension : public UObject
-{
-};
-
-class UBlueprintMapLibrary : public UBlueprintFunctionLibrary
-{
-
-    void SetMapPropertyByName(class UObject* Object, FName PropertyName, const TMap<int32, int32>& Value);
-    void Map_Values(const TMap<int32, int32>& TargetMap, TArray<int32>& Values);
-    bool Map_Remove(const TMap<int32, int32>& TargetMap, const int32& Key);
-    int32 Map_Length(const TMap<int32, int32>& TargetMap);
-    void Map_Keys(const TMap<int32, int32>& TargetMap, TArray<int32>& Keys);
-    bool Map_Find(const TMap<int32, int32>& TargetMap, const int32& Key, int32& Value);
-    bool Map_Contains(const TMap<int32, int32>& TargetMap, const int32& Key);
-    void Map_Clear(const TMap<int32, int32>& TargetMap);
-    void Map_Add(const TMap<int32, int32>& TargetMap, const int32& Key, const int32& Value);
-};
-
-class UBlueprintPathsLibrary : public UBlueprintFunctionLibrary
-{
-
-    FString VideoCaptureDir();
-    void ValidatePath(FString InPath, bool& bDidSucceed, FText& OutReason);
-    void Split(FString InPath, FString& PathPart, FString& FilenamePart, FString& ExtensionPart);
-    FString SourceConfigDir();
-    bool ShouldSaveToUserDir();
-    FString ShaderWorkingDir();
-    void SetProjectFilePath(FString NewGameProjectFilePath);
-    FString SetExtension(FString InPath, FString InNewExtension);
-    FString ScreenShotDir();
-    FString SandboxesDir();
-    FString RootDir();
-    void RemoveDuplicateSlashes(FString InPath, FString& outPath);
-    FString ProjectUserDir();
-    FString ProjectSavedDir();
-    FString ProjectPluginsDir();
-    FString ProjectPersistentDownloadDir();
-    FString ProjectModsDir();
-    FString ProjectLogDir();
-    FString ProjectIntermediateDir();
-    FString ProjectDir();
-    FString ProjectContentDir();
-    FString ProjectConfigDir();
-    FString ProfilingDir();
-    void NormalizeFilename(FString InPath, FString& outPath);
-    void NormalizeDirectoryName(FString InPath, FString& outPath);
-    FString MakeValidFileName(FString inString, FString InReplacementChar);
-    void MakeStandardFilename(FString InPath, FString& outPath);
-    void MakePlatformFilename(FString InPath, FString& outPath);
-    bool MakePathRelativeTo(FString InPath, FString InRelativeTo, FString& outPath);
-    FString LaunchDir();
-    bool IsSamePath(FString PathA, FString PathB);
-    bool IsRestrictedPath(FString InPath);
-    bool IsRelative(FString InPath);
-    bool IsProjectFilePathSet();
-    bool IsDrive(FString InPath);
-    bool HasProjectPersistentDownloadDir();
-    TArray<FString> GetToolTipLocalizationPaths();
-    TArray<FString> GetRestrictedFolderNames();
-    FString GetRelativePathToRoot();
-    TArray<FString> GetPropertyNameLocalizationPaths();
-    FString GetProjectFilePath();
-    FString GetPath(FString InPath);
-    FString GetInvalidFileSystemChars();
-    TArray<FString> GetGameLocalizationPaths();
-    FString GetExtension(FString InPath, bool bIncludeDot);
-    TArray<FString> GetEngineLocalizationPaths();
-    TArray<FString> GetEditorLocalizationPaths();
-    FString GetCleanFilename(FString InPath);
-    FString GetBaseFilename(FString InPath, bool bRemovePath);
-    FString GeneratedConfigDir();
-    FString GameUserDeveloperDir();
-    FString GameSourceDir();
-    FString GameDevelopersDir();
-    FString GameAgnosticSavedDir();
-    bool FileExists(FString InPath);
-    FString FeaturePackDir();
-    FString EnterprisePluginsDir();
-    FString EnterpriseFeaturePackDir();
-    FString EnterpriseDir();
-    FString EngineVersionAgnosticUserDir();
-    FString EngineUserDir();
-    FString EngineSourceDir();
-    FString EngineSavedDir();
-    FString EnginePluginsDir();
-    FString EngineIntermediateDir();
-    FString EngineDir();
-    FString EngineContentDir();
-    FString EngineConfigDir();
-    bool DirectoryExists(FString InPath);
-    FString DiffDir();
-    FString CreateTempFilename(FString Path, FString Prefix, FString Extension);
-    FString ConvertToSandboxPath(FString InPath, FString InSandboxName);
-    FString ConvertRelativePathToFull(FString InPath, FString InBasePath);
-    FString ConvertFromSandboxPath(FString InPath, FString InSandboxName);
-    FString Combine(const TArray<FString>& InPaths);
-    bool CollapseRelativeDirectories(FString InPath, FString& outPath);
-    FString CloudDir();
-    FString ChangeExtension(FString InPath, FString InNewExtension);
-    FString BugItDir();
-    FString AutomationTransientDir();
-    FString AutomationLogDir();
-    FString AutomationDir();
-};
-
-class UPlatformGameInstance : public UGameInstance
-{
-    FPlatformGameInstanceApplicationWillDeactivateDelegate ApplicationWillDeactivateDelegate;
-    void PlatformDelegate();
-    FPlatformGameInstanceApplicationHasReactivatedDelegate ApplicationHasReactivatedDelegate;
-    void PlatformDelegate();
-    FPlatformGameInstanceApplicationWillEnterBackgroundDelegate ApplicationWillEnterBackgroundDelegate;
-    void PlatformDelegate();
-    FPlatformGameInstanceApplicationHasEnteredForegroundDelegate ApplicationHasEnteredForegroundDelegate;
-    void PlatformDelegate();
-    FPlatformGameInstanceApplicationWillTerminateDelegate ApplicationWillTerminateDelegate;
-    void PlatformDelegate();
-    FPlatformGameInstanceApplicationShouldUnloadResourcesDelegate ApplicationShouldUnloadResourcesDelegate;
-    void PlatformDelegate();
-    FPlatformGameInstanceApplicationReceivedStartupArgumentsDelegate ApplicationReceivedStartupArgumentsDelegate;
-    void PlatformStartupArgumentsDelegate(const TArray<FString>& StartupArguments);
-    FPlatformGameInstanceApplicationRegisteredForRemoteNotificationsDelegate ApplicationRegisteredForRemoteNotificationsDelegate;
-    void PlatformRegisteredForRemoteNotificationsDelegate(const TArray<uint8>& inArray);
-    FPlatformGameInstanceApplicationRegisteredForUserNotificationsDelegate ApplicationRegisteredForUserNotificationsDelegate;
-    void PlatformRegisteredForUserNotificationsDelegate(int32 inInt);
-    FPlatformGameInstanceApplicationFailedToRegisterForRemoteNotificationsDelegate ApplicationFailedToRegisterForRemoteNotificationsDelegate;
-    void PlatformFailedToRegisterForRemoteNotificationsDelegate(FString inString);
-    FPlatformGameInstanceApplicationReceivedRemoteNotificationDelegate ApplicationReceivedRemoteNotificationDelegate;
-    void PlatformReceivedRemoteNotificationDelegate(FString inString, TEnumAsByte<EApplicationState::Type> inAppState);
-    FPlatformGameInstanceApplicationReceivedLocalNotificationDelegate ApplicationReceivedLocalNotificationDelegate;
-    void PlatformReceivedLocalNotificationDelegate(FString inString, int32 inInt, TEnumAsByte<EApplicationState::Type> inAppState);
-    FPlatformGameInstanceApplicationReceivedScreenOrientationChangedNotificationDelegate ApplicationReceivedScreenOrientationChangedNotificationDelegate;
-    void PlatformScreenOrientationChangedDelegate(TEnumAsByte<EScreenOrientation::Type> inScreenOrientation);
-
-};
-
-class UBlueprintPlatformLibrary : public UBlueprintFunctionLibrary
-{
-
-    int32 ScheduleLocalNotificationFromNow(int32 inSecondsFromNow, const FText& Title, const FText& Body, const FText& Action, FString ActivationEvent);
-    void ScheduleLocalNotificationBadgeFromNow(int32 inSecondsFromNow, FString ActivationEvent);
-    int32 ScheduleLocalNotificationBadgeAtTime(const FDateTime& FireDateTime, bool LocalTime, FString ActivationEvent);
-    int32 ScheduleLocalNotificationAtTime(const FDateTime& FireDateTime, bool LocalTime, const FText& Title, const FText& Body, const FText& Action, FString ActivationEvent);
-    void GetLaunchNotification(bool& NotificationLaunchedApp, FString& ActivationEvent, int32& FireDate);
-    TEnumAsByte<EScreenOrientation::Type> GetDeviceOrientation();
-    void ClearAllLocalNotifications();
-    void CancelLocalNotificationById(int32 NotificationId);
-    void CancelLocalNotification(FString ActivationEvent);
-};
-
-class UBlueprintSetLibrary : public UBlueprintFunctionLibrary
-{
-
-    void SetSetPropertyByName(class UObject* Object, FName PropertyName, const TSet<int32>& Value);
-    void Set_Union(const TSet<int32>& A, const TSet<int32>& B, TSet<int32>& Result);
-    void Set_ToArray(const TSet<int32>& A, TArray<int32>& Result);
-    void Set_RemoveItems(const TSet<int32>& TargetSet, const TArray<int32>& Items);
-    bool Set_Remove(const TSet<int32>& TargetSet, const int32& Item);
-    int32 Set_Length(const TSet<int32>& TargetSet);
-    void Set_Intersection(const TSet<int32>& A, const TSet<int32>& B, TSet<int32>& Result);
-    void Set_Difference(const TSet<int32>& A, const TSet<int32>& B, TSet<int32>& Result);
-    bool Set_Contains(const TSet<int32>& TargetSet, const int32& ItemToFind);
-    void Set_Clear(const TSet<int32>& TargetSet);
-    void Set_AddItems(const TSet<int32>& TargetSet, const TArray<int32>& NewItems);
-    void Set_Add(const TSet<int32>& TargetSet, const int32& NewItem);
-};
-
-struct FKSphereElem : public FKShapeElem
-{
-    FVector Center;
-    float Radius;
-
-};
-
-struct FKBoxElem : public FKShapeElem
-{
-    FVector Center;
-    FRotator Rotation;
-    float X;
-    float Y;
-    float Z;
-
-};
-
-struct FKSphylElem : public FKShapeElem
-{
-    FVector Center;
-    FRotator Rotation;
-    float Radius;
-    float Length;
-
-};
-
-struct FKTaperedCapsuleElem : public FKShapeElem
-{
-    FVector Center;
-    FRotator Rotation;
-    float Radius0;
-    float Radius1;
-    float Length;
-
-};
-
-struct FKAggregateGeom
-{
-    TArray<FKSphereElem> SphereElems;
-    TArray<FKBoxElem> BoxElems;
-    TArray<FKSphylElem> SphylElems;
-    TArray<FKConvexElem> ConvexElems;
-    TArray<FKTaperedCapsuleElem> TaperedCapsuleElems;
-
-};
-
-class UBodySetup : public UBodySetupCore
-{
-    FKAggregateGeom AggGeom;
-    uint8 bAlwaysFullAnimWeight;
-    uint8 bConsiderForBounds;
-    uint8 bMeshCollideAll;
-    uint8 bDoubleSidedGeometry;
-    uint8 bGenerateNonMirroredCollision;
-    uint8 bSharedCookedData;
-    uint8 bGenerateMirroredCollision;
-    uint8 bSupportUVsAndFaceRemap;
-    class UPhysicalMaterial* PhysMaterial;
-    FWalkableSlopeOverride WalkableSlopeOverride;
-    FBodyInstance DefaultInstance;
-    FVector BuildScale3D;
-
-};
-
-struct FBranchFilter
-{
-    FName BoneName;
-    int32 BlendDepth;
-
-};
-
-struct FInputBlendPose
-{
-    TArray<FBranchFilter> BranchFilters;
-
-};
-
-class UBoneMaskFilter : public UObject
-{
-    TArray<FInputBlendPose> BlendPoses;
-
-};
-
-class UBookmarkBase : public UObject
-{
-};
-
-class UBookMark : public UBookmarkBase
-{
-    FVector Location;
-    FRotator Rotation;
-    TArray<FString> HiddenLevels;
-
-};
-
-class UBookMark2D : public UBookmarkBase
-{
-    float Zoom2D;
-    FIntPoint Location;
-
-};
-
-class UBoundsCopyComponent : public UActorComponent
-{
-    TSoftObjectPtr<AActor> BoundsSourceActor;
-    bool bUseCollidingComponentsForSourceBounds;
-    bool bKeepOwnBoundsScale;
-    bool bUseCollidingComponentsForOwnBounds;
-    FTransform PostTransform;
-    bool bCopyXBounds;
-    bool bCopyYBounds;
-    bool bCopyZBounds;
-
-};
-
-class AReflectionCapture : public AActor
-{
-    class UReflectionCaptureComponent* CaptureComponent;
-
-};
-
-class ABoxReflectionCapture : public AReflectionCapture
-{
-};
-
-class UReflectionCaptureComponent : public USceneComponent
-{
-    class UBillboardComponent* CaptureOffsetComponent;
-    EReflectionSourceType ReflectionSourceType;
-    EMobileReflectionCompression MobileReflectionCompression;
-    class UTextureCube* Cubemap;
-    float SourceCubemapAngle;
-    float Brightness;
-    bool bModifyMaxValueRGBM;
-    float MaxValueRGBM;
-    FVector CaptureOffset;
-    FGuid MapBuildDataId;
-    class UTextureCube* CachedEncodedHDRCubemap;
-
-};
-
-class UBoxReflectionCaptureComponent : public UReflectionCaptureComponent
-{
-    float BoxTransitionDistance;
-    class UBoxComponent* PreviewInfluenceBox;
-    class UBoxComponent* PreviewCaptureBox;
-
-};
-
-class UBreakpoint : public UObject
-{
-    uint8 bEnabled;
-    class UEdGraphNode* Node;
-    uint8 bStepOnce;
-    uint8 bStepOnce_WasPreviouslyDisabled;
-    uint8 bStepOnce_RemoveAfterHit;
-
-};
-
-struct FBuilderPoly
-{
-    TArray<int32> VertexIndices;
-    int32 Direction;
-    FName ItemName;
-    int32 PolyFlags;
-
-};
-
-class UBrushBuilder : public UObject
-{
-    FString BitmapFilename;
-    FString ToolTip;
-    uint8 NotifyBadParams;
-    TArray<FVector> Vertices;
-    TArray<FBuilderPoly> Polys;
-    FName Layer;
-    uint8 MergeCoplanars;
-
-};
-
-class UBrushComponent : public UPrimitiveComponent
-{
-    class UModel* Brush;
-    class UBodySetup* BrushBodySetup;
-
-};
-
-class ABrushShape : public ABrush
-{
-};
-
-class UButtonStyleAsset : public UObject
-{
-    FButtonStyle ButtonStyle;
-
-};
-
-class UCameraAnim : public UObject
-{
-    class UInterpGroup* CameraInterpGroup;
-    float AnimLength;
-    FBox BoundingBox;
-    uint8 bRelativeToInitialTransform;
-    uint8 bRelativeToInitialFOV;
-    float BaseFOV;
-    FPostProcessSettings BasePostProcessSettings;
-    float BasePostProcessBlendWeight;
-
-};
-
-class UCameraAnimInst : public UObject
-{
-    class UCameraAnim* CamAnim;
-    class UInterpGroupInst* InterpGroupInst;
-    float PlayRate;
-    class UInterpTrackMove* MoveTrack;
-    class UInterpTrackInstMove* MoveInst;
-    ECameraShakePlaySpace PlaySpace;
-
-    void Stop(bool bImmediate);
-    void SetScale(float NewDuration);
-    void SetDuration(float NewDuration);
-};
-
-class ACameraBlockingVolume : public AVolume
-{
-};
-
-class UCameraModifier : public UObject
-{
-    uint8 bDebug;
-    uint8 bExclusive;
-    uint8 Priority;
-    class APlayerCameraManager* CameraOwner;
-    float AlphaInTime;
-    float AlphaOutTime;
-    float alpha;
-
-    bool IsDisabled();
-    class AActor* GetViewTarget();
-    void EnableModifier();
-    void DisableModifier(bool bImmediate);
-    void BlueprintModifyPostProcess(float DeltaTime, float& PostProcessBlendWeight, FPostProcessSettings& PostProcessSettings);
-    void BlueprintModifyCamera(float DeltaTime, FVector ViewLocation, FRotator ViewRotation, float FOV, FVector& NewViewLocation, FRotator& NewViewRotation, float& NewFOV);
-};
-
-struct FActiveCameraShakeInfo
-{
-    class UCameraShakeBase* ShakeInstance;
-    TWeakObjectPtr<class UCameraShakeSourceComponent> ShakeSource;
-    bool bIsCustomInitialized;
-
-};
-
-struct FPooledCameraShakes
-{
-    TArray<class UCameraShakeBase*> PooledShakes;
-
-};
-
-class UCameraModifier_CameraShake : public UCameraModifier
-{
-    TArray<FActiveCameraShakeInfo> ActiveShakes;
-    TMap<class TSubclassOf<UCameraShakeBase>, class FPooledCameraShakes> ExpiredPooledShakesMap;
-    float SplitScreenShakeScale;
-
-};
-
-class ACameraShakeSourceActor : public AActor
-{
-    class UCameraShakeSourceComponent* CameraShakeSourceComponent;
-
-};
-
-class UCameraShakeSourceComponent : public USceneComponent
-{
-    ECameraShakeAttenuation Attenuation;
-    float InnerAttenuationRadius;
-    float OuterAttenuationRadius;
-    TSubclassOf<class UCameraShakeBase> CameraShake;
-    bool bAutoStart;
-
-    void StopAllCameraShakesOfType(TSubclassOf<class UCameraShakeBase> InCameraShake, bool bImmediately);
-    void StopAllCameraShakes(bool bImmediately);
-    void StartCameraShake(TSubclassOf<class UCameraShakeBase> InCameraShake, float Scale, ECameraShakePlaySpace PlaySpace, FRotator UserPlaySpaceRot);
-    void Start();
-    float GetAttenuationFactor(const FVector& Location);
-};
-
-struct FCanvasUVTri
-{
-    FVector2D V0_Pos;
-    FVector2D V0_UV;
-    FLinearColor V0_Color;
-    FVector2D V1_Pos;
-    FVector2D V1_UV;
-    FLinearColor V1_Color;
-    FVector2D V2_Pos;
-    FVector2D V2_UV;
-    FLinearColor V2_Color;
-
-};
-
-class UCanvas : public UObject
-{
-    float OrgX;
-    float OrgY;
-    float ClipX;
-    float ClipY;
-    FColor DrawColor;
-    uint8 bCenterX;
-    uint8 bCenterY;
-    uint8 bNoSmooth;
-    int32 SizeX;
-    int32 SizeY;
-    FPlane ColorModulate;
-    class UTexture2D* DefaultTexture;
-    class UTexture2D* GradientTexture0;
-    class UReporterGraph* ReporterGraph;
-
-    FVector2D K2_TextSize(class UFont* RenderFont, FString RenderText, FVector2D Scale);
-    FVector2D K2_StrLen(class UFont* RenderFont, FString RenderText);
-    FVector K2_Project(FVector WorldLocation);
-    void K2_DrawTriangle(class UTexture* RenderTexture, TArray<FCanvasUVTri> Triangles);
-    void K2_DrawTexture(class UTexture* RenderTexture, FVector2D ScreenPosition, FVector2D ScreenSize, FVector2D CoordinatePosition, FVector2D CoordinateSize, FLinearColor RenderColor, TEnumAsByte<EBlendMode> BlendMode, float Rotation, FVector2D PivotPoint);
-    void K2_DrawText(class UFont* RenderFont, FString RenderText, FVector2D ScreenPosition, FVector2D Scale, FLinearColor RenderColor, float Kerning, FLinearColor ShadowColor, FVector2D ShadowOffset, bool bCentreX, bool bCentreY, bool bOutlined, FLinearColor OutlineColor);
-    void K2_DrawPolygon(class UTexture* RenderTexture, FVector2D ScreenPosition, FVector2D Radius, int32 NumberOfSides, FLinearColor RenderColor);
-    void K2_DrawMaterialTriangle(class UMaterialInterface* RenderMaterial, TArray<FCanvasUVTri> Triangles);
-    void K2_DrawMaterial(class UMaterialInterface* RenderMaterial, FVector2D ScreenPosition, FVector2D ScreenSize, FVector2D CoordinatePosition, FVector2D CoordinateSize, float Rotation, FVector2D PivotPoint);
-    void K2_DrawLine(FVector2D ScreenPositionA, FVector2D ScreenPositionB, float Thickness, FLinearColor RenderColor);
-    void K2_DrawBox(FVector2D ScreenPosition, FVector2D ScreenSize, float Thickness, FLinearColor RenderColor);
-    void K2_DrawBorder(class UTexture* BorderTexture, class UTexture* BackgroundTexture, class UTexture* LeftBorderTexture, class UTexture* RightBorderTexture, class UTexture* TopBorderTexture, class UTexture* BottomBorderTexture, FVector2D ScreenPosition, FVector2D ScreenSize, FVector2D CoordinatePosition, FVector2D CoordinateSize, FLinearColor RenderColor, FVector2D BorderScale, FVector2D BackgroundScale, float Rotation, FVector2D PivotPoint, FVector2D CornerSize);
-    void K2_Deproject(FVector2D ScreenPosition, FVector& WorldOrigin, FVector& WorldDirection);
-};
-
-class UTextureRenderTarget : public UTexture
-{
-    float TargetGamma;
-
-};
-
-class UTextureRenderTarget2D : public UTextureRenderTarget
-{
-    int32 SizeX;
-    int32 SizeY;
-    FLinearColor ClearColor;
-    TEnumAsByte<TextureAddress> AddressX;
-    TEnumAsByte<TextureAddress> AddressY;
-    uint8 bForceLinearGamma;
-    uint8 bHDR;
-    uint8 bGPUSharedFlag;
-    TEnumAsByte<ETextureRenderTargetFormat> RenderTargetFormat;
-    uint8 bAutoGenerateMips;
-    TEnumAsByte<TextureFilter> MipsSamplerFilter;
-    TEnumAsByte<TextureAddress> MipsAddressU;
-    TEnumAsByte<TextureAddress> MipsAddressV;
-    TEnumAsByte<EPixelFormat> OverrideFormat;
-
-};
-
-class UCanvasRenderTarget2D : public UTextureRenderTarget2D
-{
-    FCanvasRenderTarget2DOnCanvasRenderTargetUpdate OnCanvasRenderTargetUpdate;
-    void OnCanvasRenderTargetUpdate(class UCanvas* Canvas, int32 Width, int32 Height);
-    TWeakObjectPtr<class UWorld> World;
-    bool bShouldClearRenderTargetOnReceiveUpdate;
-
-    void UpdateResource();
-    void ReceiveUpdate(class UCanvas* Canvas, int32 Width, int32 Height);
-    void GetSize(int32& Width, int32& Height);
-    class UCanvasRenderTarget2D* CreateCanvasRenderTarget2D(class UObject* WorldContextObject, TSubclassOf<class UCanvasRenderTarget2D> CanvasRenderTarget2DClass, int32 Width, int32 Height);
+class UCheatManager : public UObject
+{
+    class ADebugCameraController* DebugCameraControllerRef;
+    TSubclassOf<class ADebugCameraController> DebugCameraControllerClass;
+    TArray<class UCheatManagerExtension*> CheatManagerExtensions;
+
+    void Walk();
+    void ViewSelf();
+    void ViewPlayer(FString S);
+    void ViewClass(TSubclassOf<class AActor> DesiredClass);
+    void ViewActor(FName ActorName);
+    void UpdateSafeArea();
+    void ToggleServerStatReplicatorUpdateStatNet();
+    void ToggleServerStatReplicatorClientOverwrite();
+    void ToggleDebugCamera();
+    void ToggleAILogging();
+    void TestCollisionDistance();
+    void Teleport();
+    void Summon(FString ClassName);
+    void StreamLevelOut(FName PackageName);
+    void StreamLevelIn(FName PackageName);
+    void SpawnServerStatReplicator();
+    void Slomo(float NewTimeDilation);
+    void SetWorldOrigin();
+    void SetMouseSensitivityToDefault();
+    void ServerToggleAILogging();
+    void ReceiveInitCheatManager();
+    void ReceiveEndPlay();
+    void PlayersOnly();
+    void OnlyLoadLevel(FName PackageName);
+    void LogLoc();
+    void InvertMouse();
+    void God();
+    void Ghost();
+    void FreezeFrame(float Delay);
+    void Fly();
+    void FlushLog();
+    void EnableDebugCamera();
+    void DumpVoiceMutingState();
+    void DumpPartyState();
+    void DumpOnlineSessionState();
+    void DumpChatState();
+    void DisableDebugCamera();
+    void DestroyTarget();
+    void DestroyServerStatReplicator();
+    void DestroyPawns(TSubclassOf<class APawn> aClass);
+    void DestroyAllPawnsExceptTarget();
+    void DestroyAll(TSubclassOf<class AActor> aClass);
+    void DebugCapsuleSweepSize(float HalfHeight, float Radius);
+    void DebugCapsuleSweepPawn();
+    void DebugCapsuleSweepComplex(bool bTraceComplex);
+    void DebugCapsuleSweepClear();
+    void DebugCapsuleSweepChannel(TEnumAsByte<ECollisionChannel> Channel);
+    void DebugCapsuleSweepCapture();
+    void DebugCapsuleSweep();
+    void DamageTarget(float damageAmount);
+    void CheatScript(FString ScriptName);
+    void ChangeSize(float F);
+    void BugItStringCreator(FVector ViewLocation, FRotator ViewRotation, FString& GoString, FString& LocString);
+    void BugItGo(float X, float Y, float Z, float Pitch, float Yaw, float Roll);
+    void BugIt(FString ScreenShotDescription);
 };
 
 class UCheatManagerExtension : public UObject
@@ -7021,56 +10188,10 @@ class UChildConnection : public UNetConnection
 
 };
 
-struct FDelegateArray
-{
-    TArray<FDelegateArrayDelegates> Delegates;
-
-};
-
-class UPlatformInterfaceBase : public UObject
-{
-    TArray<FDelegateArray> AllDelegates;
-
-};
-
 class UCloudStorageBase : public UPlatformInterfaceBase
 {
     TArray<FString> LocalCloudFiles;
     uint8 bSuppressDelegateCalls;
-
-};
-
-struct FCollisionResponseTemplate
-{
-    FName Name;
-    TEnumAsByte<ECollisionEnabled::Type> CollisionEnabled;
-    bool bCanModify;
-    FName ObjectTypeName;
-    TArray<FResponseChannel> CustomResponses;
-
-};
-
-struct FCustomChannelSetup
-{
-    TEnumAsByte<ECollisionChannel> Channel;
-    TEnumAsByte<ECollisionResponse> DefaultResponse;
-    bool bTraceType;
-    bool bStaticObject;
-    FName Name;
-
-};
-
-struct FCustomProfile
-{
-    FName Name;
-    TArray<FResponseChannel> CustomResponses;
-
-};
-
-struct FRedirector
-{
-    FName OldName;
-    FName NewName;
 
 };
 
@@ -7084,11 +10205,19 @@ class UCollisionProfile : public UDeveloperSettings
 
 };
 
-struct FBlueprintComponentDelegateBinding
+class UCommandlet : public UObject
 {
-    FName ComponentPropertyName;
-    FName DelegatePropertyName;
-    FName FunctionNameToBind;
+    FString HelpDescription;
+    FString HelpUsage;
+    FString HelpWebLink;
+    TArray<FString> HelpParamNames;
+    TArray<FString> HelpParamDescriptions;
+    uint8 IsServer;
+    uint8 IsClient;
+    uint8 IsEditor;
+    uint8 LogToConsole;
+    uint8 ShowErrorCount;
+    uint8 ShowProgress;
 
 };
 
@@ -7098,18 +10227,121 @@ class UComponentDelegateBinding : public UDynamicBlueprintBinding
 
 };
 
-class UActorComponentInstanceDataTransientOuter : public UObject
+class UCompositeCurveTable : public UCurveTable
 {
+    TArray<class UCurveTable*> ParentTables;
+    TArray<class UCurveTable*> OldParentTables;
+
+};
+
+class UCompositeDataTable : public UDataTable
+{
+    TArray<class UDataTable*> ParentTables;
+    TArray<class UDataTable*> OldParentTables;
+
+};
+
+class UConsole : public UObject
+{
+    class ULocalPlayer* ConsoleTargetPlayer;
+    class UTexture2D* DefaultTexture_Black;
+    class UTexture2D* DefaultTexture_White;
+    TArray<FString> HistoryBuffer;
+
+};
+
+class UControlChannel : public UChannel
+{
+};
+
+class UCurveBase : public UObject
+{
+
+    void GetValueRange(float& MinValue, float& MaxValue);
+    void GetTimeRange(float& MinTime, float& MaxTime);
+};
+
+class UCurveFloat : public UCurveBase
+{
+    FRichCurve FloatCurve;
+    bool bIsEventCurve;
+
+    float GetFloatValue(float InTime);
+};
+
+class UCurveLinearColor : public UCurveBase
+{
+    FRichCurve FloatCurves;
+    float AdjustHue;
+    float AdjustSaturation;
+    float AdjustBrightness;
+    float AdjustBrightnessCurve;
+    float AdjustVibrance;
+    float AdjustMinAlpha;
+    float AdjustMaxAlpha;
+
+    FLinearColor GetUnadjustedLinearColorValue(float InTime);
+    FLinearColor GetLinearColorValue(float InTime);
+    FLinearColor GetClampedLinearColorValue(float InTime);
+};
+
+class UCurveLinearColorAtlas : public UTexture2D
+{
+    uint32 TextureSize;
+    uint8 bSquareResolution;
+    uint32 TextureHeight;
+    TArray<class UCurveLinearColor*> GradientCurves;
+
+    bool GetCurvePosition(class UCurveLinearColor* InCurve, float& Position);
 };
 
 class UCurveTable : public UObject
 {
 };
 
-class UCompositeCurveTable : public UCurveTable
+class UCurveVector : public UCurveBase
 {
-    TArray<class UCurveTable*> ParentTables;
-    TArray<class UCurveTable*> OldParentTables;
+    FRichCurve FloatCurves;
+
+    FVector GetVectorValue(float InTime);
+};
+
+class UDEPRECATED_CurveEdPresetCurve : public UObject
+{
+};
+
+class UDPICustomScalingRule : public UObject
+{
+};
+
+class UDamageType : public UObject
+{
+    uint8 bCausedByWorld;
+    uint8 bScaleMomentumByMass;
+    uint8 bRadialDamageVelChange;
+    float DamageImpulse;
+    float DestructibleImpulse;
+    float DestructibleDamageSpreadScale;
+    float DamageFalloff;
+
+};
+
+class UDataAsset : public UObject
+{
+    TSubclassOf<class UDataAsset> NativeClass;
+
+};
+
+class UDataDrivenCVarEngineSubsystem : public UEngineSubsystem
+{
+    FDataDrivenCVarEngineSubsystemOnDataDrivenCVarDelegate OnDataDrivenCVarDelegate;
+    void OnDataDrivenCVarChanged(FString CVarName);
+
+};
+
+class UDataDrivenConsoleVariableSettings : public UDeveloperSettings
+{
+    TArray<FDataDrivenConsoleVariable> CVarsArray;
 
 };
 
@@ -7123,75 +10355,373 @@ class UDataTable : public UObject
 
 };
 
-class UCompositeDataTable : public UDataTable
+class UDataTableFunctionLibrary : public UBlueprintFunctionLibrary
 {
-    TArray<class UDataTable*> ParentTables;
-    TArray<class UDataTable*> OldParentTables;
+
+    void GetDataTableRowNames(class UDataTable* Table, TArray<FName>& OutRowNames);
+    bool GetDataTableRowFromName(class UDataTable* Table, FName RowName, FTableRowBase& OutRow);
+    TArray<FString> GetDataTableColumnAsString(const class UDataTable* DataTable, FName PropertyName);
+    void EvaluateCurveTableRow(class UCurveTable* CurveTable, FName RowName, float InXY, TEnumAsByte<EEvaluateCurveTableResult::Type>& OutResult, float& OutXY, FString ContextString);
+    bool DoesDataTableRowExist(class UDataTable* Table, FName RowName);
+};
+
+class UDebugCameraControllerSettings : public UDeveloperSettings
+{
+    TArray<FDebugCameraControllerSettingsViewModeIndex> CycleViewModes;
 
 };
 
-struct FStatColorMapEntry
+class UDebugDrawService : public UBlueprintFunctionLibrary
 {
-    float In;
-    FColor Out;
+};
+
+class UDecalComponent : public USceneComponent
+{
+    class UMaterialInterface* DecalMaterial;
+    int32 SortOrder;
+    float FadeScreenSize;
+    float FadeStartDelay;
+    float FadeDuration;
+    float FadeInDuration;
+    float FadeInStartDelay;
+    uint8 bDestroyOwnerAfterFade;
+    FVector DecalSize;
+
+    void SetSortOrder(int32 Value);
+    void SetFadeScreenSize(float NewFadeScreenSize);
+    void SetFadeOut(float StartDelay, float Duration, bool DestroyOwnerAfterFade);
+    void SetFadeIn(float StartDelay, float Duaration);
+    void SetDecalMaterial(class UMaterialInterface* NewDecalMaterial);
+    float GetFadeStartDelay();
+    float GetFadeInStartDelay();
+    float GetFadeInDuration();
+    float GetFadeDuration();
+    class UMaterialInterface* GetDecalMaterial();
+    class UMaterialInstanceDynamic* CreateDynamicMaterialInstance();
+};
+
+class UDefault__AnimBlueprintGeneratedClass
+{
+};
+
+class UDefault__BlueprintGeneratedClass
+{
+};
+
+class UDemoNetConnection : public UNetConnection
+{
+};
+
+class UDemoNetDriver : public UNetDriver
+{
+    TMap<class FString, class FRollbackNetStartupActorInfo> RollbackNetStartupActors;
+    float CheckpointSaveMaxMSPerFrame;
+    TArray<FMulticastRecordOptions> MulticastRecordOptions;
+    bool bIsLocalReplay;
+    TArray<class APlayerController*> SpectatorControllers;
 
 };
 
-struct FStatColorMapping
+class UDemoPendingNetGame : public UPendingNetGame
 {
-    FString StatName;
-    TArray<FStatColorMapEntry> ColorMap;
-    uint8 DisableBlend;
+};
+
+class UDeviceProfile : public UTextureLODSettings
+{
+    FString DeviceType;
+    FString BaseProfileName;
+    class UObject* Parent;
+    TArray<FString> CVars;
 
 };
 
-struct FGameNameRedirect
+class UDeviceProfileFragment : public UObject
 {
-    FName OldGameName;
-    FName NewGameName;
+};
+
+class UDeviceProfileManager : public UObject
+{
+    TArray<class UObject*> Profiles;
 
 };
 
-struct FClassRedirect
+class UDialogueSoundWaveProxy : public USoundBase
 {
-    FName ObjectName;
-    FName OldClassName;
-    FName NewClassName;
-    FName OldSubobjName;
-    FName NewSubobjName;
-    FName NewClassClass;
-    FName NewClassPackage;
-    bool InstanceOnly;
+};
+
+class UDialogueVoice : public UObject
+{
+    TEnumAsByte<EGrammaticalGender::Type> Gender;
+    TEnumAsByte<EGrammaticalNumber::Type> Plurality;
+    FGuid LocalizationGUID;
 
 };
 
-struct FPluginRedirect
+class UDialogueWave : public UObject
 {
-    FString OldPluginName;
-    FString NewPluginName;
+    uint8 bMature;
+    uint8 bOverride_SubtitleOverride;
+    FString SpokenText;
+    FString SubtitleOverride;
+    TArray<FDialogueContextMapping> ContextMappings;
+    FGuid LocalizationGUID;
 
 };
 
-struct FStructRedirect
+class UDirectionalLightComponent : public ULightComponent
 {
-    FName OldStructName;
-    FName NewStructName;
+    float ShadowCascadeBiasDistribution;
+    uint8 bEnableLightShaftOcclusion;
+    float OcclusionMaskDarkness;
+    float OcclusionDepthRange;
+    FVector LightShaftOverrideDirection;
+    float WholeSceneDynamicShadowRadius;
+    float DynamicShadowDistanceMovableLight;
+    float DynamicShadowDistanceStationaryLight;
+    int32 DynamicShadowCascades;
+    float CascadeDistributionExponent;
+    float CascadeTransitionFraction;
+    float ShadowDistanceFadeoutFraction;
+    uint8 bUseInsetShadowsForMovableObjects;
+    int32 FarShadowCascadeCount;
+    float FarShadowDistance;
+    float DistanceFieldShadowDistance;
+    float LightSourceAngle;
+    float LightSourceSoftAngle;
+    float ShadowSourceAngleFactor;
+    float TraceDistance;
+    uint8 bUsedAsAtmosphereSunLight;
+    int32 AtmosphereSunLightIndex;
+    FLinearColor AtmosphereSunDiskColorScale;
+    uint8 bPerPixelAtmosphereTransmittance;
+    uint8 bCastShadowsOnClouds;
+    uint8 bCastShadowsOnAtmosphere;
+    uint8 bCastCloudShadows;
+    float CloudShadowStrength;
+    float CloudShadowOnAtmosphereStrength;
+    float CloudShadowOnSurfaceStrength;
+    float CloudShadowDepthBias;
+    float CloudShadowExtent;
+    float CloudShadowMapResolutionScale;
+    float CloudShadowRaySampleCountScale;
+    FLinearColor CloudScatteredLuminanceScale;
+    FLightmassDirectionalLightSettings LightmassSettings;
+    uint8 bCastModulatedShadows;
+    FColor ModulatedShadowColor;
+    float ShadowAmount;
+
+    void SetShadowDistanceFadeoutFraction(float NewValue);
+    void SetShadowAmount(float NewValue);
+    void SetOcclusionMaskDarkness(float NewValue);
+    void SetLightShaftOverrideDirection(FVector NewValue);
+    void SetEnableLightShaftOcclusion(bool bNewValue);
+    void SetDynamicShadowDistanceStationaryLight(float NewValue);
+    void SetDynamicShadowDistanceMovableLight(float NewValue);
+    void SetDynamicShadowCascades(int32 NewValue);
+    void SetCascadeTransitionFraction(float NewValue);
+    void SetCascadeDistributionExponent(float NewValue);
+    void SetAtmosphereSunLightIndex(int32 NewValue);
+    void SetAtmosphereSunLight(bool bNewValue);
+};
+
+class UDistribution : public UObject
+{
+};
+
+class UDistributionFloat : public UDistribution
+{
+    uint8 bCanBeBaked;
+    uint8 bBakedDataSuccesfully;
 
 };
 
-struct FDropNoteInfo
+class UDistributionFloatConstant : public UDistributionFloat
 {
-    FVector Location;
-    FRotator Rotation;
-    FString Comment;
+    float Constant;
 
 };
 
-struct FNetDriverDefinition
+class UDistributionFloatConstantCurve : public UDistributionFloat
 {
-    FName DefName;
-    FName DriverClassName;
-    FName DriverClassNameFallback;
+    FInterpCurveFloat ConstantCurve;
+
+};
+
+class UDistributionFloatParameterBase : public UDistributionFloatConstant
+{
+    FName ParameterName;
+    float MinInput;
+    float MaxInput;
+    float MinOutput;
+    float MaxOutput;
+    TEnumAsByte<DistributionParamMode> ParamMode;
+
+};
+
+class UDistributionFloatParticleParameter : public UDistributionFloatParameterBase
+{
+};
+
+class UDistributionFloatUniform : public UDistributionFloat
+{
+    float Min;
+    float Max;
+
+};
+
+class UDistributionFloatUniformCurve : public UDistributionFloat
+{
+    FInterpCurveVector2D ConstantCurve;
+
+};
+
+class UDistributionVector : public UDistribution
+{
+    uint8 bCanBeBaked;
+    uint8 bIsDirty;
+    uint8 bBakedDataSuccesfully;
+
+};
+
+class UDistributionVectorConstant : public UDistributionVector
+{
+    FVector Constant;
+    uint8 bLockAxes;
+    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
+
+};
+
+class UDistributionVectorConstantCurve : public UDistributionVector
+{
+    FInterpCurveVector ConstantCurve;
+    uint8 bLockAxes;
+    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
+
+};
+
+class UDistributionVectorParameterBase : public UDistributionVectorConstant
+{
+    FName ParameterName;
+    FVector MinInput;
+    FVector MaxInput;
+    FVector MinOutput;
+    FVector MaxOutput;
+    TEnumAsByte<DistributionParamMode> ParamModes;
+
+};
+
+class UDistributionVectorParticleParameter : public UDistributionVectorParameterBase
+{
+};
+
+class UDistributionVectorUniform : public UDistributionVector
+{
+    FVector Max;
+    FVector Min;
+    uint8 bLockAxes;
+    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
+    TEnumAsByte<EDistributionVectorMirrorFlags> MirrorFlags;
+    uint8 bUseExtremes;
+
+};
+
+class UDistributionVectorUniformCurve : public UDistributionVector
+{
+    FInterpCurveTwoVectors ConstantCurve;
+    uint8 bLockAxes1;
+    uint8 bLockAxes2;
+    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
+    TEnumAsByte<EDistributionVectorMirrorFlags> MirrorFlags;
+    uint8 bUseExtremes;
+
+};
+
+class UDrawFrustumComponent : public UPrimitiveComponent
+{
+    FColor FrustumColor;
+    float FrustumAngle;
+    float FrustumAspectRatio;
+    float FrustumStartDist;
+    float FrustumEndDist;
+    class UTexture* Texture;
+
+};
+
+class UDrawSphereComponent : public USphereComponent
+{
+};
+
+class UDynamicBlueprintBinding : public UObject
+{
+};
+
+class UDynamicSubsystem : public USubsystem
+{
+};
+
+class UEdGraph : public UObject
+{
+    TSubclassOf<class UEdGraphSchema> Schema;
+    TArray<class UEdGraphNode*> Nodes;
+    uint8 bEditable;
+    uint8 bAllowDeletion;
+    uint8 bAllowRenaming;
+
+};
+
+class UEdGraphNode : public UObject
+{
+    TArray<class UEdGraphPin_Deprecated*> DeprecatedPins;
+    int32 NodePosX;
+    int32 NodePosY;
+    int32 NodeWidth;
+    int32 NodeHeight;
+    TEnumAsByte<ENodeAdvancedPins::Type> AdvancedPinDisplay;
+    ENodeEnabledState EnabledState;
+    uint8 bDisplayAsDisabled;
+    uint8 bUserSetEnabledState;
+    uint8 bIsNodeEnabled;
+    uint8 bHasCompilerMessage;
+    FString NodeComment;
+    int32 ErrorType;
+    FString ErrorMsg;
+    FGuid NodeGuid;
+
+};
+
+class UEdGraphNode_Documentation : public UEdGraphNode
+{
+    FString Link;
+    FString Excerpt;
+
+};
+
+class UEdGraphPin_Deprecated : public UObject
+{
+    FString PinName;
+    FString PinToolTip;
+    TEnumAsByte<EEdGraphPinDirection> Direction;
+    FEdGraphPinType PinType;
+    FString DefaultValue;
+    FString AutogeneratedDefaultValue;
+    class UObject* DefaultObject;
+    FText DefaultTextValue;
+    TArray<class UEdGraphPin_Deprecated*> LinkedTo;
+    TArray<class UEdGraphPin_Deprecated*> SubPins;
+    class UEdGraphPin_Deprecated* ParentPin;
+    class UEdGraphPin_Deprecated* ReferencePassThroughConnection;
+
+};
+
+class UEdGraphSchema : public UObject
+{
+};
+
+class UEndpointSubmix : public USoundSubmixBase
+{
+    FName EndpointType;
+    TSubclassOf<class UAudioEndpointSettingsBase> EndpointSettingsClass;
+    class UAudioEndpointSettingsBase* EndpointSettings;
 
 };
 
@@ -7409,842 +10939,15 @@ class UEngine : public UObject
 
 };
 
-class UScriptViewportClient : public UObject
-{
-};
-
-struct FDebugDisplayProperty
-{
-    class UObject* obj;
-    UClass* WithinClass;
-
-};
-
-class UGameViewportClient : public UScriptViewportClient
-{
-    class UConsole* ViewportConsole;
-    TArray<FDebugDisplayProperty> DebugProperties;
-    int32 MaxSplitscreenPlayers;
-    class UWorld* World;
-    class UGameInstance* GameInstance;
-
-    void SSSwapControllers();
-    void ShowTitleSafeArea();
-    void SetConsoleTarget(int32 PlayerIndex);
-};
-
-class UConsole : public UObject
-{
-    class ULocalPlayer* ConsoleTargetPlayer;
-    class UTexture2D* DefaultTexture_Black;
-    class UTexture2D* DefaultTexture_White;
-    TArray<FString> HistoryBuffer;
-
-};
-
-class UControlChannel : public UChannel
-{
-};
-
-class UStreamingSettings : public UDeveloperSettings
-{
-    uint8 AsyncLoadingThreadEnabled;
-    uint8 WarnIfTimeLimitExceeded;
-    float TimeLimitExceededMultiplier;
-    float TimeLimitExceededMinTime;
-    int32 MinBulkDataSizeForAsyncLoading;
-    uint8 UseBackgroundLevelStreaming;
-    uint8 AsyncLoadingUseFullTimeLimit;
-    float AsyncLoadingTimeLimit;
-    float PriorityAsyncLoadingExtraTime;
-    float LevelStreamingActorsUpdateTimeLimit;
-    float PriorityLevelStreamingActorsUpdateExtraTime;
-    int32 LevelStreamingComponentsRegistrationGranularity;
-    float LevelStreamingUnregisterComponentsTimeLimit;
-    int32 LevelStreamingComponentsUnregistrationGranularity;
-    uint8 FlushStreamingOnExit;
-    uint8 EventDrivenLoaderEnabled;
-
-};
-
-class UGarbageCollectionSettings : public UDeveloperSettings
-{
-    float TimeBetweenPurgingPendingKillObjects;
-    uint8 FlushStreamingOnGC;
-    uint8 AllowParallelGC;
-    uint8 IncrementalBeginDestroyEnabled;
-    uint8 MultithreadedDestructionEnabled;
-    uint8 CreateGCClusters;
-    uint8 AssetClusteringEnabled;
-    uint8 ActorClusteringEnabled;
-    uint8 BlueprintClusteringEnabled;
-    uint8 UseDisregardForGCOnDedicatedServers;
-    int32 MinGCClusterSize;
-    int32 NumRetriesBeforeForcingGC;
-    int32 MaxObjectsNotConsideredByGC;
-    int32 SizeOfPermanentObjectPool;
-    int32 MaxObjectsInGame;
-    int32 MaxObjectsInEditor;
-
-};
-
-struct FCullDistanceSizePair
-{
-    float Size;
-    float CullDistance;
-
-};
-
-class ACullDistanceVolume : public AVolume
-{
-    TArray<FCullDistanceSizePair> CullDistances;
-    uint8 bEnabled;
-
-};
-
-class UCurveBase : public UObject
-{
-
-    void GetValueRange(float& MinValue, float& MaxValue);
-    void GetTimeRange(float& MinTime, float& MaxTime);
-};
-
-class UDEPRECATED_CurveEdPresetCurve : public UObject
-{
-};
-
-class UCurveFloat : public UCurveBase
-{
-    FRichCurve FloatCurve;
-    bool bIsEventCurve;
-
-    float GetFloatValue(float InTime);
-};
-
-class UCurveLinearColor : public UCurveBase
-{
-    FRichCurve FloatCurves;
-    float AdjustHue;
-    float AdjustSaturation;
-    float AdjustBrightness;
-    float AdjustBrightnessCurve;
-    float AdjustVibrance;
-    float AdjustMinAlpha;
-    float AdjustMaxAlpha;
-
-    FLinearColor GetUnadjustedLinearColorValue(float InTime);
-    FLinearColor GetLinearColorValue(float InTime);
-    FLinearColor GetClampedLinearColorValue(float InTime);
-};
-
-class UTexture2D : public UTexture
-{
-    int32 LevelIndex;
-    int32 FirstResourceMemMip;
-    uint8 bTemporarilyDisableStreaming;
-    TEnumAsByte<TextureAddress> AddressX;
-    TEnumAsByte<TextureAddress> AddressY;
-    FIntPoint ImportedSize;
-
-    int32 Blueprint_GetSizeY();
-    int32 Blueprint_GetSizeX();
-};
-
-class UCurveLinearColorAtlas : public UTexture2D
-{
-    uint32 TextureSize;
-    uint8 bSquareResolution;
-    uint32 TextureHeight;
-    TArray<class UCurveLinearColor*> GradientCurves;
-
-    bool GetCurvePosition(class UCurveLinearColor* InCurve, float& Position);
-};
-
-struct FNamedCurveValue
-{
-    FName Name;
-    float Value;
-
-};
-
-class ICurveSourceInterface : public IInterface
-{
-
-    float GetCurveValue(FName CurveName);
-    void GetCurves(TArray<FNamedCurveValue>& OutValues);
-    FName GetBindingName();
-};
-
-class UCurveVector : public UCurveBase
-{
-    FRichCurve FloatCurves;
-
-    FVector GetVectorValue(float InTime);
-};
-
-class UDamageType : public UObject
-{
-    uint8 bCausedByWorld;
-    uint8 bScaleMomentumByMass;
-    uint8 bRadialDamageVelChange;
-    float DamageImpulse;
-    float DestructibleImpulse;
-    float DestructibleDamageSpreadScale;
-    float DamageFalloff;
-
-};
-
-class UDataDrivenCVarEngineSubsystem : public UEngineSubsystem
-{
-    FDataDrivenCVarEngineSubsystemOnDataDrivenCVarDelegate OnDataDrivenCVarDelegate;
-    void OnDataDrivenCVarChanged(FString CVarName);
-
-};
-
-struct FDataDrivenConsoleVariable
-{
-    FDataDrivenCVarType Type;
-    FString Name;
-    FString ToolTip;
-    float DefaultValueFloat;
-    int32 DefaultValueInt;
-    bool DefaultValueBool;
-
-};
-
-class UDataDrivenConsoleVariableSettings : public UDeveloperSettings
-{
-    TArray<FDataDrivenConsoleVariable> CVarsArray;
-
-};
-
-class UDataTableFunctionLibrary : public UBlueprintFunctionLibrary
-{
-
-    void GetDataTableRowNames(class UDataTable* Table, TArray<FName>& OutRowNames);
-    bool GetDataTableRowFromName(class UDataTable* Table, FName RowName, FTableRowBase& OutRow);
-    TArray<FString> GetDataTableColumnAsString(const class UDataTable* DataTable, FName PropertyName);
-    void EvaluateCurveTableRow(class UCurveTable* CurveTable, FName RowName, float InXY, TEnumAsByte<EEvaluateCurveTableResult::Type>& OutResult, float& OutXY, FString ContextString);
-    bool DoesDataTableRowExist(class UDataTable* Table, FName RowName);
-};
-
-class ADebugCameraController : public APlayerController
-{
-    uint8 bShowSelectedInfo;
-    uint8 bIsFrozenRendering;
-    uint8 bIsOrbitingSelectedActor;
-    uint8 bOrbitPivotUseCenter;
-    uint8 bEnableBufferVisualization;
-    uint8 bEnableBufferVisualizationFullMode;
-    uint8 bIsBufferVisualizationInputSetup;
-    uint8 bLastDisplayEnabled;
-    class UDrawFrustumComponent* DrawFrustum;
-    class AActor* SelectedActor;
-    class UPrimitiveComponent* SelectedComponent;
-    FHitResult SelectedHitPoint;
-    class APlayerController* OriginalControllerRef;
-    class UPlayer* OriginalPlayer;
-    float SpeedScale;
-    float InitialMaxSpeed;
-    float InitialAccel;
-    float InitialDecel;
-
-    void ToggleDisplay();
-    void ShowDebugSelectedInfo();
-    void SetPawnMovementSpeedScale(float NewSpeedScale);
-    void ReceiveOnDeactivate(class APlayerController* RestoredPC);
-    void ReceiveOnActorSelected(class AActor* NewSelectedActor, const FVector& SelectHitLocation, const FVector& SelectHitNormal, const FHitResult& Hit);
-    void ReceiveOnActivate(class APlayerController* OriginalPC);
-    class AActor* GetSelectedActor();
-};
-
-struct FDebugCameraControllerSettingsViewModeIndex
-{
-    TEnumAsByte<EViewModeIndex> ViewModeIndex;
-
-};
-
-class UDebugCameraControllerSettings : public UDeveloperSettings
-{
-    TArray<FDebugCameraControllerSettingsViewModeIndex> CycleViewModes;
-
-};
-
-class ADebugCameraHUD : public AHUD
-{
-};
-
-class UDebugDrawService : public UBlueprintFunctionLibrary
-{
-};
-
-class ADecalActor : public AActor
-{
-    class UDecalComponent* Decal;
-
-    void SetDecalMaterial(class UMaterialInterface* NewDecalMaterial);
-    class UMaterialInterface* GetDecalMaterial();
-    class UMaterialInstanceDynamic* CreateDynamicMaterialInstance();
-};
-
-class UDecalComponent : public USceneComponent
-{
-    class UMaterialInterface* DecalMaterial;
-    int32 SortOrder;
-    float FadeScreenSize;
-    float FadeStartDelay;
-    float FadeDuration;
-    float FadeInDuration;
-    float FadeInStartDelay;
-    uint8 bDestroyOwnerAfterFade;
-    FVector DecalSize;
-
-    void SetSortOrder(int32 Value);
-    void SetFadeScreenSize(float NewFadeScreenSize);
-    void SetFadeOut(float StartDelay, float Duration, bool DestroyOwnerAfterFade);
-    void SetFadeIn(float StartDelay, float Duaration);
-    void SetDecalMaterial(class UMaterialInterface* NewDecalMaterial);
-    float GetFadeStartDelay();
-    float GetFadeInStartDelay();
-    float GetFadeInDuration();
-    float GetFadeDuration();
-    class UMaterialInterface* GetDecalMaterial();
-    class UMaterialInstanceDynamic* CreateDynamicMaterialInstance();
-};
-
-class ADefaultPawn : public APawn
-{
-    float BaseTurnRate;
-    float BaseLookUpRate;
-    class UPawnMovementComponent* MovementComponent;
-    class USphereComponent* CollisionComponent;
-    class UStaticMeshComponent* MeshComponent;
-    uint8 bAddDefaultMovementBindings;
-
-    void TurnAtRate(float Rate);
-    void MoveUp_World(float Val);
-    void MoveRight(float Val);
-    void MoveForward(float Val);
-    void LookUpAtRate(float Rate);
-};
-
-class APhysicsVolume : public AVolume
-{
-    float TerminalVelocity;
-    int32 Priority;
-    float FluidFriction;
-    uint8 bWaterVolume;
-    uint8 bPhysicsOnContact;
-
-};
-
-class ADefaultPhysicsVolume : public APhysicsVolume
-{
-};
-
-class UDemoNetConnection : public UNetConnection
-{
-};
-
-struct FRollbackNetStartupActorInfo
-{
-    class UObject* Archetype;
-    class ULevel* Level;
-    TArray<class UObject*> ObjReferences;
-
-};
-
-struct FMulticastRecordOptions
-{
-    FString FuncPathName;
-    bool bServerSkip;
-    bool bClientSkip;
-
-};
-
-class UDemoNetDriver : public UNetDriver
-{
-    TMap<class FString, class FRollbackNetStartupActorInfo> RollbackNetStartupActors;
-    float CheckpointSaveMaxMSPerFrame;
-    TArray<FMulticastRecordOptions> MulticastRecordOptions;
-    bool bIsLocalReplay;
-    TArray<class APlayerController*> SpectatorControllers;
-
-};
-
-class UPendingNetGame : public UObject
-{
-    class UNetDriver* NetDriver;
-    class UDemoNetDriver* DemoNetDriver;
-
-};
-
-class UDemoPendingNetGame : public UPendingNetGame
-{
-};
-
-class IDestructibleInterface : public IInterface
-{
-};
-
-struct FTextureLODGroup
-{
-    TEnumAsByte<TextureGroup> Group;
-    int32 LODBias;
-    int32 LODBias_Smaller;
-    int32 LODBias_Smallest;
-    int32 NumStreamedMips;
-    TEnumAsByte<TextureMipGenSettings> MipGenSettings;
-    int32 MinLODSize;
-    int32 MaxLODSize;
-    int32 MaxLODSize_Smaller;
-    int32 MaxLODSize_Smallest;
-    int32 OptionalLODBias;
-    int32 OptionalMaxLODSize;
-    FName MinMagFilter;
-    FName MipFilter;
-    ETextureMipLoadOptions MipLoadOptions;
-    bool HighPriorityLoad;
-    bool DuplicateNonOptionalMips;
-    float Downscale;
-    ETextureDownscaleOptions DownscaleOptions;
-    int32 VirtualTextureTileCountBias;
-    int32 VirtualTextureTileSizeBias;
-    TEnumAsByte<ETextureLossyCompressionAmount> LossyCompressionAmount;
-
-};
-
-class UTextureLODSettings : public UObject
-{
-    TArray<FTextureLODGroup> TextureLODGroups;
-
-};
-
-class UDeviceProfile : public UTextureLODSettings
-{
-    FString DeviceType;
-    FString BaseProfileName;
-    class UObject* Parent;
-    TArray<FString> CVars;
-
-};
-
-class UDeviceProfileFragment : public UObject
-{
-};
-
-class UDeviceProfileManager : public UObject
-{
-    TArray<class UObject*> Profiles;
-
-};
-
-class UDialogueSoundWaveProxy : public USoundBase
-{
-};
-
-class UDialogueVoice : public UObject
-{
-    TEnumAsByte<EGrammaticalGender::Type> Gender;
-    TEnumAsByte<EGrammaticalNumber::Type> Plurality;
-    FGuid LocalizationGUID;
-
-};
-
-struct FDialogueContext
-{
-    class UDialogueVoice* Speaker;
-    TArray<class UDialogueVoice*> Targets;
-
-};
-
-struct FDialogueContextMapping
-{
-    FDialogueContext Context;
-    class USoundWave* SoundWave;
-    FString LocalizationKeyFormat;
-    class UDialogueSoundWaveProxy* Proxy;
-
-};
-
-class UDialogueWave : public UObject
-{
-    uint8 bMature;
-    uint8 bOverride_SubtitleOverride;
-    FString SpokenText;
-    FString SubtitleOverride;
-    TArray<FDialogueContextMapping> ContextMappings;
-    FGuid LocalizationGUID;
-
-};
-
-class ALight : public AActor
-{
-    class ULightComponent* LightComponent;
-    uint8 bEnabled;
-
-    void ToggleEnabled();
-    void SetLightFunctionScale(FVector NewLightFunctionScale);
-    void SetLightFunctionMaterial(class UMaterialInterface* NewLightFunctionMaterial);
-    void SetLightFunctionFadeDistance(float NewLightFunctionFadeDistance);
-    void SetLightColor(FLinearColor NewLightColor);
-    void SetEnabled(bool bSetEnabled);
-    void SetCastShadows(bool bNewValue);
-    void SetBrightness(float NewBrightness);
-    void SetAffectTranslucentLighting(bool bNewValue);
-    void OnRep_bEnabled();
-    bool IsEnabled();
-    FLinearColor GetLightColor();
-    float GetBrightness();
-};
-
-class ADirectionalLight : public ALight
-{
-};
-
-struct FLightmassDirectionalLightSettings : public FLightmassLightSettings
-{
-    float LightSourceAngle;
-
-};
-
-class UDirectionalLightComponent : public ULightComponent
-{
-    float ShadowCascadeBiasDistribution;
-    uint8 bEnableLightShaftOcclusion;
-    float OcclusionMaskDarkness;
-    float OcclusionDepthRange;
-    FVector LightShaftOverrideDirection;
-    float WholeSceneDynamicShadowRadius;
-    float DynamicShadowDistanceMovableLight;
-    float DynamicShadowDistanceStationaryLight;
-    int32 DynamicShadowCascades;
-    float CascadeDistributionExponent;
-    float CascadeTransitionFraction;
-    float ShadowDistanceFadeoutFraction;
-    uint8 bUseInsetShadowsForMovableObjects;
-    int32 FarShadowCascadeCount;
-    float FarShadowDistance;
-    float DistanceFieldShadowDistance;
-    float LightSourceAngle;
-    float LightSourceSoftAngle;
-    float ShadowSourceAngleFactor;
-    float TraceDistance;
-    uint8 bUsedAsAtmosphereSunLight;
-    int32 AtmosphereSunLightIndex;
-    FLinearColor AtmosphereSunDiskColorScale;
-    uint8 bPerPixelAtmosphereTransmittance;
-    uint8 bCastShadowsOnClouds;
-    uint8 bCastShadowsOnAtmosphere;
-    uint8 bCastCloudShadows;
-    float CloudShadowStrength;
-    float CloudShadowOnAtmosphereStrength;
-    float CloudShadowOnSurfaceStrength;
-    float CloudShadowDepthBias;
-    float CloudShadowExtent;
-    float CloudShadowMapResolutionScale;
-    float CloudShadowRaySampleCountScale;
-    FLinearColor CloudScatteredLuminanceScale;
-    FLightmassDirectionalLightSettings LightmassSettings;
-    uint8 bCastModulatedShadows;
-    FColor ModulatedShadowColor;
-    float ShadowAmount;
-
-    void SetShadowDistanceFadeoutFraction(float NewValue);
-    void SetShadowAmount(float NewValue);
-    void SetOcclusionMaskDarkness(float NewValue);
-    void SetLightShaftOverrideDirection(FVector NewValue);
-    void SetEnableLightShaftOcclusion(bool bNewValue);
-    void SetDynamicShadowDistanceStationaryLight(float NewValue);
-    void SetDynamicShadowDistanceMovableLight(float NewValue);
-    void SetDynamicShadowCascades(int32 NewValue);
-    void SetCascadeTransitionFraction(float NewValue);
-    void SetCascadeDistributionExponent(float NewValue);
-    void SetAtmosphereSunLightIndex(int32 NewValue);
-    void SetAtmosphereSunLight(bool bNewValue);
-};
-
-class UDistribution : public UObject
-{
-};
-
-class UDistributionFloat : public UDistribution
-{
-    uint8 bCanBeBaked;
-    uint8 bBakedDataSuccesfully;
-
-};
-
-class UDistributionFloatConstant : public UDistributionFloat
-{
-    float Constant;
-
-};
-
-class UDistributionFloatConstantCurve : public UDistributionFloat
-{
-    FInterpCurveFloat ConstantCurve;
-
-};
-
-class UDistributionFloatParameterBase : public UDistributionFloatConstant
-{
-    FName ParameterName;
-    float MinInput;
-    float MaxInput;
-    float MinOutput;
-    float MaxOutput;
-    TEnumAsByte<DistributionParamMode> ParamMode;
-
-};
-
-class UDistributionFloatParticleParameter : public UDistributionFloatParameterBase
-{
-};
-
-class UDistributionFloatUniform : public UDistributionFloat
-{
-    float Min;
-    float Max;
-
-};
-
-class UDistributionFloatUniformCurve : public UDistributionFloat
-{
-    FInterpCurveVector2D ConstantCurve;
-
-};
-
-class UDistributionVector : public UDistribution
-{
-    uint8 bCanBeBaked;
-    uint8 bIsDirty;
-    uint8 bBakedDataSuccesfully;
-
-};
-
-class UDistributionVectorConstant : public UDistributionVector
-{
-    FVector Constant;
-    uint8 bLockAxes;
-    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
-
-};
-
-class UDistributionVectorConstantCurve : public UDistributionVector
-{
-    FInterpCurveVector ConstantCurve;
-    uint8 bLockAxes;
-    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
-
-};
-
-class UDistributionVectorParameterBase : public UDistributionVectorConstant
-{
-    FName ParameterName;
-    FVector MinInput;
-    FVector MaxInput;
-    FVector MinOutput;
-    FVector MaxOutput;
-    TEnumAsByte<DistributionParamMode> ParamModes;
-
-};
-
-class UDistributionVectorParticleParameter : public UDistributionVectorParameterBase
-{
-};
-
-class UDistributionVectorUniform : public UDistributionVector
-{
-    FVector Max;
-    FVector Min;
-    uint8 bLockAxes;
-    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
-    TEnumAsByte<EDistributionVectorMirrorFlags> MirrorFlags;
-    uint8 bUseExtremes;
-
-};
-
-class UDistributionVectorUniformCurve : public UDistributionVector
-{
-    FInterpCurveTwoVectors ConstantCurve;
-    uint8 bLockAxes1;
-    uint8 bLockAxes2;
-    TEnumAsByte<EDistributionVectorLockFlags> LockedAxes;
-    TEnumAsByte<EDistributionVectorMirrorFlags> MirrorFlags;
-    uint8 bUseExtremes;
-
-};
-
-class ADocumentationActor : public AActor
-{
-};
-
-class UDrawFrustumComponent : public UPrimitiveComponent
-{
-    FColor FrustumColor;
-    float FrustumAngle;
-    float FrustumAspectRatio;
-    float FrustumStartDist;
-    float FrustumEndDist;
-    class UTexture* Texture;
-
-};
-
-class UDrawSphereComponent : public USphereComponent
-{
-};
-
-class UEdGraph : public UObject
-{
-    TSubclassOf<class UEdGraphSchema> Schema;
-    TArray<class UEdGraphNode*> Nodes;
-    uint8 bEditable;
-    uint8 bAllowDeletion;
-    uint8 bAllowRenaming;
-
-};
-
-class UGraphNodeContextMenuContext : public UObject
-{
-    class UBlueprint* Blueprint;
-    class UEdGraph* Graph;
-    class UEdGraphNode* Node;
-    bool bIsDebugging;
-
-};
-
-class UEdGraphNode : public UObject
-{
-    TArray<class UEdGraphPin_Deprecated*> DeprecatedPins;
-    int32 NodePosX;
-    int32 NodePosY;
-    int32 NodeWidth;
-    int32 NodeHeight;
-    TEnumAsByte<ENodeAdvancedPins::Type> AdvancedPinDisplay;
-    ENodeEnabledState EnabledState;
-    uint8 bDisplayAsDisabled;
-    uint8 bUserSetEnabledState;
-    uint8 bIsNodeEnabled;
-    uint8 bHasCompilerMessage;
-    FString NodeComment;
-    int32 ErrorType;
-    FString ErrorMsg;
-    FGuid NodeGuid;
-
-};
-
-class UEdGraphNode_Documentation : public UEdGraphNode
-{
-    FString Link;
-    FString Excerpt;
-
-};
-
-struct FEdGraphTerminalType
-{
-    FName TerminalCategory;
-    FName TerminalSubCategory;
-    TWeakObjectPtr<class UObject> TerminalSubCategoryObject;
-    bool bTerminalIsConst;
-    bool bTerminalIsWeakPointer;
-    bool bTerminalIsUObjectWrapper;
-
-};
-
-struct FEdGraphPinType
-{
-    FName PinCategory;
-    FName PinSubCategory;
-    TWeakObjectPtr<class UObject> PinSubCategoryObject;
-    FSimpleMemberReference PinSubCategoryMemberReference;
-    FEdGraphTerminalType PinValueType;
-    EPinContainerType ContainerType;
-    uint8 bIsArray;
-    uint8 bIsReference;
-    uint8 bIsConst;
-    uint8 bIsWeakPointer;
-    uint8 bIsUObjectWrapper;
-
-};
-
-class UEdGraphPin_Deprecated : public UObject
-{
-    FString PinName;
-    FString PinToolTip;
-    TEnumAsByte<EEdGraphPinDirection> Direction;
-    FEdGraphPinType PinType;
-    FString DefaultValue;
-    FString AutogeneratedDefaultValue;
-    class UObject* DefaultObject;
-    FText DefaultTextValue;
-    TArray<class UEdGraphPin_Deprecated*> LinkedTo;
-    TArray<class UEdGraphPin_Deprecated*> SubPins;
-    class UEdGraphPin_Deprecated* ParentPin;
-    class UEdGraphPin_Deprecated* ReferencePassThroughConnection;
-
-};
-
-class UEdGraphSchema : public UObject
-{
-};
-
-class AEmitter : public AActor
-{
-    class UParticleSystemComponent* ParticleSystemComponent;
-    uint8 bDestroyOnSystemFinish;
-    uint8 bPostUpdateTickGroup;
-    uint8 bCurrentlyActive;
-    FEmitterOnParticleSpawn OnParticleSpawn;
-    void ParticleSpawnSignature(FName EventName, float EmitterTime, FVector Location, FVector Velocity);
-    FEmitterOnParticleBurst OnParticleBurst;
-    void ParticleBurstSignature(FName EventName, float EmitterTime, int32 ParticleCount);
-    FEmitterOnParticleDeath OnParticleDeath;
-    void ParticleDeathSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction);
-    FEmitterOnParticleCollide OnParticleCollide;
-    void ParticleCollisionSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction, FVector Normal, FName BoneName, class UPhysicalMaterial* PhysMat);
-
-    void ToggleActive();
-    void SetVectorParameter(FName ParameterName, FVector Param);
-    void SetTemplate(class UParticleSystem* NewTemplate);
-    void SetMaterialParameter(FName ParameterName, class UMaterialInterface* Param);
-    void SetFloatParameter(FName ParameterName, float Param);
-    void SetColorParameter(FName ParameterName, FLinearColor Param);
-    void SetActorParameter(FName ParameterName, class AActor* Param);
-    void OnRep_bCurrentlyActive();
-    void OnParticleSystemFinished(class UParticleSystemComponent* FinishedComponent);
-    bool IsActive();
-    void Deactivate();
-    void Activate();
-};
-
-class AEmitterCameraLensEffectBase : public AEmitter
-{
-    class UParticleSystem* PS_CameraEffect;
-    class UParticleSystem* PS_CameraEffectNonExtremeContent;
-    class APlayerCameraManager* BaseCamera;
-    FTransform RelativeTransform;
-    float BaseFOV;
-    uint8 bAllowMultipleInstances;
-    uint8 bResetWhenRetriggered;
-    TArray<class TSubclassOf<AEmitterCameraLensEffectBase>> EmittersToTreatAsSame;
-    float DistFromCamera;
-
-};
-
-class UViewModeUtils : public UObject
-{
-};
-
 class UEngineBaseTypes : public UObject
 {
 };
 
-class UEngineHandlerComponentFactory : public UHandlerComponentFactory
+class UEngineCustomTimeStep : public UObject
 {
 };
 
-class ULocalMessage : public UObject
+class UEngineHandlerComponentFactory : public UHandlerComponentFactory
 {
 };
 
@@ -8261,24 +10964,12 @@ class UEngineMessage : public ULocalMessage
 
 };
 
+class UEngineSubsystem : public UDynamicSubsystem
+{
+};
+
 class UEngineTypes : public UObject
 {
-};
-
-class AExponentialHeightFog : public AInfo
-{
-    class UExponentialHeightFogComponent* Component;
-    uint8 bEnabled;
-
-    void OnRep_bEnabled();
-};
-
-struct FExponentialHeightFogData
-{
-    float FogDensity;
-    float FogHeightFalloff;
-    float FogHeightOffset;
-
 };
 
 class UExponentialHeightFogComponent : public USceneComponent
@@ -8347,6 +11038,29 @@ class UExporter : public UObject
     bool RunAssetExportTask(class UAssetExportTask* Task);
 };
 
+class UFXSystemAsset : public UObject
+{
+    uint32 MaxPoolSize;
+    uint32 PoolPrimeSize;
+
+};
+
+class UFXSystemComponent : public UPrimitiveComponent
+{
+
+    void SetVectorParameter(FName ParameterName, FVector Param);
+    void SetUseAutoManageAttachment(bool bAutoManage);
+    void SetIntParameter(FName ParameterName, int32 Param);
+    void SetFloatParameter(FName ParameterName, float Param);
+    void SetEmitterEnable(FName EmitterName, bool bNewEnableState);
+    void SetColorParameter(FName ParameterName, FLinearColor Param);
+    void SetBoolParameter(FName ParameterName, bool Param);
+    void SetAutoAttachmentParameters(class USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule);
+    void SetActorParameter(FName ParameterName, class AActor* Param);
+    void ReleaseToPool();
+    class UFXSystemAsset* GetFXSystemAsset();
+};
+
 class UFloatingPawnMovement : public UPawnMovementComponent
 {
     float MaxSpeed;
@@ -8354,51 +11068,6 @@ class UFloatingPawnMovement : public UPawnMovementComponent
     float Deceleration;
     float TurningBoost;
     uint8 bPositionCorrected;
-
-};
-
-struct FFontCharacter
-{
-    int32 StartU;
-    int32 StartV;
-    int32 USize;
-    int32 VSize;
-    uint8 TextureIndex;
-    int32 VerticalOffset;
-
-};
-
-struct FFontImportOptionsData
-{
-    FString FontName;
-    float Height;
-    uint8 bEnableAntialiasing;
-    uint8 bEnableBold;
-    uint8 bEnableItalic;
-    uint8 bEnableUnderline;
-    uint8 bAlphaOnly;
-    TEnumAsByte<EFontImportCharacterSet> CharacterSet;
-    FString Chars;
-    FString UnicodeRange;
-    FString CharsFilePath;
-    FString CharsFileWildcard;
-    uint8 bCreatePrintableOnly;
-    uint8 bIncludeASCIIRange;
-    FLinearColor ForegroundColor;
-    uint8 bEnableDropShadow;
-    int32 TexturePageWidth;
-    int32 TexturePageMaxHeight;
-    int32 XPadding;
-    int32 YPadding;
-    int32 ExtendBoxTop;
-    int32 ExtendBoxBottom;
-    int32 ExtendBoxRight;
-    int32 ExtendBoxLeft;
-    uint8 bEnableLegacyMode;
-    int32 Kerning;
-    uint8 bUseDistanceFieldAlpha;
-    int32 DistanceFieldScaleFactor;
-    float DistanceFieldScanRadiusScale;
 
 };
 
@@ -8438,10 +11107,6 @@ class UFontImportOptions : public UObject
 
 };
 
-struct FForceFeedbackAttenuationSettings : public FBaseAttenuationSettings
-{
-};
-
 class UForceFeedbackAttenuation : public UObject
 {
     FForceFeedbackAttenuationSettings Attenuation;
@@ -8470,16 +11135,6 @@ class UForceFeedbackComponent : public USceneComponent
     void AdjustAttenuation(const FForceFeedbackAttenuationSettings& InAttenuationSettings);
 };
 
-struct FForceFeedbackChannelDetails
-{
-    uint8 bAffectsLeftLarge;
-    uint8 bAffectsLeftSmall;
-    uint8 bAffectsRightLarge;
-    uint8 bAffectsRightSmall;
-    FRuntimeFloatCurve Curve;
-
-};
-
 class UForceFeedbackEffect : public UObject
 {
     TArray<FForceFeedbackChannelDetails> ChannelDetails;
@@ -8495,88 +11150,143 @@ class UGameEngine : public UEngine
 
 };
 
-class AGameNetworkManager : public AInfo
+class UGameInstance : public UObject
 {
-    float BadPacketLossThreshold;
-    float SeverePacketLossThreshold;
-    int32 BadPingThreshold;
-    int32 SeverePingThreshold;
-    int32 AdjustedNetSpeed;
-    float LastNetSpeedUpdateTime;
-    int32 TotalNetBandwidth;
-    int32 MinDynamicBandwidth;
-    int32 MaxDynamicBandwidth;
-    uint8 bIsStandbyCheckingEnabled;
-    uint8 bHasStandbyCheatTriggered;
-    float StandbyRxCheatTime;
-    float StandbyTxCheatTime;
-    float PercentMissingForRxStandby;
-    float PercentMissingForTxStandby;
-    float PercentForBadPing;
-    float JoinInProgressStandbyWaitTime;
-    float MoveRepSize;
-    float MAXPOSITIONERRORSQUARED;
-    float MAXNEARZEROVELOCITYSQUARED;
-    float CLIENTADJUSTUPDATECOST;
-    float MAXCLIENTUPDATEINTERVAL;
-    float MaxClientForcedUpdateDuration;
-    float ServerForcedUpdateHitchThreshold;
-    float ServerForcedUpdateHitchCooldown;
-    float MaxMoveDeltaTime;
-    float MaxClientSmoothingDeltaTime;
-    float ClientNetSendMoveDeltaTime;
-    float ClientNetSendMoveDeltaTimeThrottled;
-    float ClientNetSendMoveDeltaTimeStationary;
-    int32 ClientNetSendMoveThrottleAtNetSpeed;
-    int32 ClientNetSendMoveThrottleOverPlayerCount;
-    bool ClientAuthorativePosition;
-    float ClientErrorUpdateRateLimit;
-    float ClientNetCamUpdateDeltaTime;
-    float ClientNetCamUpdatePositionLimit;
-    bool bMovementTimeDiscrepancyDetection;
-    bool bMovementTimeDiscrepancyResolution;
-    float MovementTimeDiscrepancyMaxTimeMargin;
-    float MovementTimeDiscrepancyMinTimeMargin;
-    float MovementTimeDiscrepancyResolutionRate;
-    float MovementTimeDiscrepancyDriftAllowance;
-    bool bMovementTimeDiscrepancyForceCorrectionsDuringResolution;
-    bool bUseDistanceBasedRelevancy;
+    TArray<class ULocalPlayer*> LocalPlayers;
+    class UOnlineSession* OnlineSession;
+    TArray<class UObject*> ReferencedObjects;
+    FGameInstanceOnPawnControllerChangedDelegates OnPawnControllerChangedDelegates;
+    void OnPawnControllerChanged(class APawn* Pawn, class AController* Controller);
 
+    void ReceiveShutdown();
+    void ReceiveInit();
+    void HandleTravelError(TEnumAsByte<ETravelFailure::Type> FailureType);
+    void HandleNetworkError(TEnumAsByte<ENetworkFailure::Type> FailureType, bool bIsServer);
+    void DebugRemovePlayer(int32 ControllerId);
+    void DebugCreatePlayer(int32 ControllerId);
 };
 
-struct FPredictProjectilePathParams
+class UGameInstanceSubsystem : public USubsystem
 {
-    FVector StartLocation;
-    FVector LaunchVelocity;
-    bool bTraceWithCollision;
-    float ProjectileRadius;
-    float MaxSimTime;
-    bool bTraceWithChannel;
-    TEnumAsByte<ECollisionChannel> TraceChannel;
-    TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
-    TArray<class AActor*> ActorsToIgnore;
-    float SimFrequency;
-    float OverrideGravityZ;
-    TEnumAsByte<EDrawDebugTrace::Type> DrawDebugType;
-    float DrawDebugTime;
-    bool bTraceComplex;
-
 };
 
-struct FPredictProjectilePathPointData
+class UGameUserSettings : public UObject
 {
-    FVector Location;
-    FVector Velocity;
-    float Time;
+    bool bUseVSync;
+    bool bUseDynamicResolution;
+    uint32 ResolutionSizeX;
+    uint32 ResolutionSizeY;
+    uint32 LastUserConfirmedResolutionSizeX;
+    uint32 LastUserConfirmedResolutionSizeY;
+    int32 WindowPosX;
+    int32 WindowPosY;
+    int32 FullscreenMode;
+    int32 LastConfirmedFullscreenMode;
+    int32 PreferredFullscreenMode;
+    uint32 Version;
+    int32 AudioQualityLevel;
+    int32 LastConfirmedAudioQualityLevel;
+    float FrameRateLimit;
+    int32 DesiredScreenWidth;
+    bool bUseDesiredScreenHeight;
+    int32 DesiredScreenHeight;
+    int32 LastUserConfirmedDesiredScreenWidth;
+    int32 LastUserConfirmedDesiredScreenHeight;
+    float LastRecommendedScreenWidth;
+    float LastRecommendedScreenHeight;
+    float LastCPUBenchmarkResult;
+    float LastGPUBenchmarkResult;
+    TArray<float> LastCPUBenchmarkSteps;
+    TArray<float> LastGPUBenchmarkSteps;
+    float LastGPUBenchmarkMultiplier;
+    bool bUseHDRDisplayOutput;
+    int32 HDRDisplayOutputNits;
+    FGameUserSettingsOnGameUserSettingsUINeedsUpdate OnGameUserSettingsUINeedsUpdate;
+    void OnGameUserSettingsUINeedsUpdate();
 
+    void ValidateSettings();
+    bool SupportsHDRDisplayOutput();
+    void SetVSyncEnabled(bool bEnable);
+    void SetVisualEffectQuality(int32 Value);
+    void SetViewDistanceQuality(int32 Value);
+    void SetToDefaults();
+    void SetTextureQuality(int32 Value);
+    void SetShadowQuality(int32 Value);
+    void SetShadingQuality(int32 Value);
+    void SetScreenResolution(FIntPoint Resolution);
+    void SetResolutionScaleValueEx(float NewScaleValue);
+    void SetResolutionScaleValue(int32 NewScaleValue);
+    void SetResolutionScaleNormalized(float NewScaleNormalized);
+    void SetPostProcessingQuality(int32 Value);
+    void SetOverallScalabilityLevel(int32 Value);
+    void SetFullscreenMode(TEnumAsByte<EWindowMode::Type> InFullscreenMode);
+    void SetFrameRateLimit(float NewLimit);
+    void SetFoliageQuality(int32 Value);
+    void SetDynamicResolutionEnabled(bool bEnable);
+    void SetBenchmarkFallbackValues();
+    void SetAudioQualityLevel(int32 QualityLevel);
+    void SetAntiAliasingQuality(int32 Value);
+    void SaveSettings();
+    void RunHardwareBenchmark(int32 WorkScale, float CPUMultiplier, float GPUMultiplier);
+    void RevertVideoMode();
+    void ResetToCurrentSettings();
+    void LoadSettings(bool bForceReload);
+    bool IsVSyncEnabled();
+    bool IsVSyncDirty();
+    bool IsScreenResolutionDirty();
+    bool IsHDREnabled();
+    bool IsFullscreenModeDirty();
+    bool IsDynamicResolutionEnabled();
+    bool IsDynamicResolutionDirty();
+    bool IsDirty();
+    int32 GetVisualEffectQuality();
+    int32 GetViewDistanceQuality();
+    int32 GetTextureQuality();
+    int32 GetSyncInterval();
+    int32 GetShadowQuality();
+    int32 GetShadingQuality();
+    FIntPoint GetScreenResolution();
+    float GetResolutionScaleNormalized();
+    void GetResolutionScaleInformationEx(float& CurrentScaleNormalized, float& CurrentScaleValue, float& MinScaleValue, float& MaxScaleValue);
+    void GetResolutionScaleInformation(float& CurrentScaleNormalized, int32& CurrentScaleValue, int32& MinScaleValue, int32& MaxScaleValue);
+    float GetRecommendedResolutionScale();
+    TEnumAsByte<EWindowMode::Type> GetPreferredFullscreenMode();
+    int32 GetPostProcessingQuality();
+    int32 GetOverallScalabilityLevel();
+    FIntPoint GetLastConfirmedScreenResolution();
+    TEnumAsByte<EWindowMode::Type> GetLastConfirmedFullscreenMode();
+    class UGameUserSettings* GetGameUserSettings();
+    TEnumAsByte<EWindowMode::Type> GetFullscreenMode();
+    float GetFrameRateLimit();
+    int32 GetFramePace();
+    int32 GetFoliageQuality();
+    FIntPoint GetDesktopResolution();
+    FIntPoint GetDefaultWindowPosition();
+    TEnumAsByte<EWindowMode::Type> GetDefaultWindowMode();
+    float GetDefaultResolutionScale();
+    FIntPoint GetDefaultResolution();
+    int32 GetCurrentHDRDisplayNits();
+    int32 GetAudioQualityLevel();
+    int32 GetAntiAliasingQuality();
+    void EnableHDRDisplayOutput(bool bEnable, int32 DisplayNits);
+    void ConfirmVideoMode();
+    void ApplySettings(bool bCheckForCommandLineOverrides);
+    void ApplyResolutionSettings(bool bCheckForCommandLineOverrides);
+    void ApplyNonResolutionSettings();
+    void ApplyHardwareBenchmarkResults();
 };
 
-struct FPredictProjectilePathResult
+class UGameViewportClient : public UScriptViewportClient
 {
-    TArray<FPredictProjectilePathPointData> PathData;
-    FPredictProjectilePathPointData LastTraceDestination;
-    FHitResult HitResult;
+    class UConsole* ViewportConsole;
+    TArray<FDebugDisplayProperty> DebugProperties;
+    int32 MaxSplitscreenPlayers;
+    class UWorld* World;
+    class UGameInstance* GameInstance;
 
+    void SSSwapControllers();
+    void ShowTitleSafeArea();
+    void SetConsoleTarget(int32 PlayerIndex);
 };
 
 class UGameplayStatics : public UBlueprintFunctionLibrary
@@ -8709,15 +11419,48 @@ class UGameplayStatics : public UBlueprintFunctionLibrary
     void ActivateReverbEffect(const class UObject* WorldContextObject, class UReverbEffect* ReverbEffect, FName TagName, float Priority, float Volume, float FadeTime);
 };
 
-class ASpotLight : public ALight
+class UGarbageCollectionSettings : public UDeveloperSettings
 {
-    class USpotLightComponent* SpotLightComponent;
+    float TimeBetweenPurgingPendingKillObjects;
+    uint8 FlushStreamingOnGC;
+    uint8 AllowParallelGC;
+    uint8 IncrementalBeginDestroyEnabled;
+    uint8 MultithreadedDestructionEnabled;
+    uint8 CreateGCClusters;
+    uint8 AssetClusteringEnabled;
+    uint8 ActorClusteringEnabled;
+    uint8 BlueprintClusteringEnabled;
+    uint8 UseDisregardForGCOnDedicatedServers;
+    int32 MinGCClusterSize;
+    int32 NumRetriesBeforeForcingGC;
+    int32 MaxObjectsNotConsideredByGC;
+    int32 SizeOfPermanentObjectPool;
+    int32 MaxObjectsInGame;
+    int32 MaxObjectsInEditor;
 
-    void SetOuterConeAngle(float NewOuterConeAngle);
-    void SetInnerConeAngle(float NewInnerConeAngle);
 };
 
-class AGeneratedMeshAreaLight : public ASpotLight
+class UGraphNodeContextMenuContext : public UObject
+{
+    class UBlueprint* Blueprint;
+    class UEdGraph* Graph;
+    class UEdGraphNode* Node;
+    bool bIsDebugging;
+
+};
+
+class UHLODEngineSubsystem : public UEngineSubsystem
+{
+};
+
+class UHLODProxy : public UObject
+{
+    TArray<FHLODProxyMesh> ProxyMeshes;
+    TMap<class UHLODProxyDesc*, class FHLODProxyMesh> HLODActors;
+
+};
+
+class UHLODProxyDesc : public UObject
 {
 };
 
@@ -8729,13 +11472,6 @@ class UHapticFeedbackEffect_Buffer : public UHapticFeedbackEffect_Base
 {
     TArray<uint8> Amplitudes;
     int32 SampleRate;
-
-};
-
-struct FHapticFeedbackDetails_Curve
-{
-    FRuntimeFloatCurve Frequency;
-    FRuntimeFloatCurve Amplitude;
 
 };
 
@@ -8759,38 +11495,26 @@ class UHealthSnapshotBlueprintLibrary : public UBlueprintFunctionLibrary
     void LogPerformanceSnapshot(const FString SnapshotTitle, bool bResetStats);
 };
 
-class UHLODEngineSubsystem : public UEngineSubsystem
+class UHierarchicalInstancedStaticMeshComponent : public UInstancedStaticMeshComponent
 {
+    TArray<int32> SortedInstances;
+    int32 NumBuiltInstances;
+    FBox BuiltInstanceBounds;
+    FBox UnbuiltInstanceBounds;
+    TArray<FBox> UnbuiltInstanceBoundsList;
+    uint8 bEnableDensityScaling;
+    int32 OcclusionLayerNumNodes;
+    FBoxSphereBounds CacheMeshExtendedBounds;
+    bool bDisableCollision;
+    int32 InstanceCountToRender;
+
+    bool RemoveInstances(const TArray<int32>& InstancesToRemove);
 };
 
-struct FHLODProxyMesh
+class UHierarchicalLODSetup : public UObject
 {
-    TLazyObjectPtr<class ALODActor> LODActor;
-    class UStaticMesh* StaticMesh;
-    FName Key;
-
-};
-
-class UHLODProxy : public UObject
-{
-    TArray<FHLODProxyMesh> ProxyMeshes;
-    TMap<class UHLODProxyDesc*, class FHLODProxyMesh> HLODActors;
-
-};
-
-class UHLODProxyDesc : public UObject
-{
-};
-
-struct FImportanceTexture
-{
-    FIntPoint Size;
-    int32 NumMips;
-    TArray<float> MarginalCDF;
-    TArray<float> ConditionalCDF;
-    TArray<FColor> TextureData;
-    TWeakObjectPtr<class UTexture2D> Texture;
-    TEnumAsByte<EImportanceWeight::Type> Weighting;
+    TArray<FHierarchicalSimplification> HierarchicalLODSetup;
+    TSoftObjectPtr<UMaterialInterface> OverrideBaseMaterial;
 
 };
 
@@ -8808,32 +11532,11 @@ class UImportanceSamplingLibrary : public UBlueprintFunctionLibrary
     void BreakImportanceTexture(const FImportanceTexture& ImportanceTexture, class UTexture2D*& Texture, TEnumAsByte<EImportanceWeight::Type>& WeightingFunc);
 };
 
-class IImportantToggleSettingInterface : public IInterface
-{
-};
-
 class UInGameAdManager : public UPlatformInterfaceBase
 {
     uint8 bShouldPauseWhileAdOpen;
     TArray<FInGameAdManagerClickedBannerDelegates> ClickedBannerDelegates;
     TArray<FInGameAdManagerClosedAdDelegates> ClosedAdDelegates;
-
-};
-
-struct FComponentKey
-{
-    UClass* OwnerClass;
-    FName SCSVariableName;
-    FGuid AssociatedGuid;
-
-};
-
-struct FComponentOverrideRecord
-{
-    UClass* ComponentClass;
-    class UActorComponent* ComponentTemplate;
-    FComponentKey ComponentKey;
-    FBlueprintCookedComponentInstancingData CookedComponentInstancingData;
 
 };
 
@@ -8844,36 +11547,9 @@ class UInheritableComponentHandler : public UObject
 
 };
 
-class UInputDelegateBinding : public UDynamicBlueprintBinding
-{
-};
-
-struct FBlueprintInputDelegateBinding
-{
-    uint8 bConsumeInput;
-    uint8 bExecuteWhenPaused;
-    uint8 bOverrideParentBinding;
-
-};
-
-struct FBlueprintInputActionDelegateBinding : public FBlueprintInputDelegateBinding
-{
-    FName InputActionName;
-    TEnumAsByte<EInputEvent> InputKeyEvent;
-    FName FunctionNameToBind;
-
-};
-
 class UInputActionDelegateBinding : public UInputDelegateBinding
 {
     TArray<FBlueprintInputActionDelegateBinding> InputActionDelegateBindings;
-
-};
-
-struct FBlueprintInputAxisDelegateBinding : public FBlueprintInputDelegateBinding
-{
-    FName InputAxisName;
-    FName FunctionNameToBind;
 
 };
 
@@ -8883,22 +11559,9 @@ class UInputAxisDelegateBinding : public UInputDelegateBinding
 
 };
 
-struct FBlueprintInputAxisKeyDelegateBinding : public FBlueprintInputDelegateBinding
-{
-    FKey AxisKey;
-    FName FunctionNameToBind;
-
-};
-
 class UInputAxisKeyDelegateBinding : public UInputDelegateBinding
 {
     TArray<FBlueprintInputAxisKeyDelegateBinding> InputAxisKeyDelegateBindings;
-
-};
-
-struct FCachedKeyToActionInfo
-{
-    class UPlayerInput* PlayerInput;
 
 };
 
@@ -8917,40 +11580,13 @@ class UInputComponent : public UActorComponent
     float GetControllerAnalogKeyState(FKey Key);
 };
 
-struct FBlueprintInputKeyDelegateBinding : public FBlueprintInputDelegateBinding
+class UInputDelegateBinding : public UDynamicBlueprintBinding
 {
-    FInputChord InputChord;
-    TEnumAsByte<EInputEvent> InputKeyEvent;
-    FName FunctionNameToBind;
-
 };
 
 class UInputKeyDelegateBinding : public UInputDelegateBinding
 {
     TArray<FBlueprintInputKeyDelegateBinding> InputKeyDelegateBindings;
-
-};
-
-struct FInputAxisProperties
-{
-    float DeadZone;
-    float Sensitivity;
-    float Exponent;
-    uint8 bInvert;
-
-};
-
-struct FInputAxisConfigEntry
-{
-    FName AxisKeyName;
-    FInputAxisProperties AxisProperties;
-
-};
-
-struct FInputActionSpeechMapping
-{
-    FName ActionName;
-    FName SpeechKeyword;
 
 };
 
@@ -8997,13 +11633,6 @@ class UInputSettings : public UObject
     void AddActionMapping(const FInputActionKeyMapping& KeyMapping, bool bForceRebuildKeymaps);
 };
 
-struct FBlueprintInputTouchDelegateBinding : public FBlueprintInputDelegateBinding
-{
-    TEnumAsByte<EInputEvent> InputKeyEvent;
-    FName FunctionNameToBind;
-
-};
-
 class UInputTouchDelegateBinding : public UInputDelegateBinding
 {
     TArray<FBlueprintInputTouchDelegateBinding> InputTouchDelegateBindings;
@@ -9014,52 +11643,44 @@ class UInputVectorAxisDelegateBinding : public UInputAxisKeyDelegateBinding
 {
 };
 
-class IInterface_ActorSubobject : public IInterface
+class UInstancedStaticMeshComponent : public UStaticMeshComponent
 {
+    TArray<FInstancedStaticMeshInstanceData> PerInstanceSMData;
+    int32 NumCustomDataFloats;
+    TArray<float> PerInstanceSMCustomData;
+    int32 InstancingRandomSeed;
+    int32 InstanceStartCullDistance;
+    int32 InstanceEndCullDistance;
+    TArray<int32> InstanceReorderTable;
+    int32 NumPendingLightmaps;
+    TArray<FInstancedStaticMeshMappingInfo> CachedMappings;
+
+    bool UpdateInstanceTransform(int32 InstanceIndex, const FTransform& NewInstanceTransform, bool bWorldSpace, bool bMarkRenderStateDirty, bool bTeleport);
+    bool SetCustomDataValue(int32 InstanceIndex, int32 CustomDataIndex, float CustomDataValue, bool bMarkRenderStateDirty);
+    void SetCullDistances(int32 StartCullDistance, int32 EndCullDistance);
+    bool RemoveInstance(int32 InstanceIndex);
+    bool GetInstanceTransform(int32 InstanceIndex, FTransform& OutInstanceTransform, bool bWorldSpace);
+    TArray<int32> GetInstancesOverlappingSphere(const FVector& Center, float Radius, bool bSphereInWorldSpace);
+    TArray<int32> GetInstancesOverlappingBox(const FBox& Box, bool bBoxInWorldSpace);
+    int32 GetInstanceCount();
+    void ClearInstances();
+    bool BatchUpdateInstancesTransforms(int32 StartInstanceIndex, const TArray<FTransform>& NewInstancesTransforms, bool bWorldSpace, bool bMarkRenderStateDirty, bool bTeleport);
+    bool BatchUpdateInstancesTransform(int32 StartInstanceIndex, int32 NumInstances, const FTransform& NewInstancesTransform, bool bWorldSpace, bool bMarkRenderStateDirty, bool bTeleport);
+    int32 AddInstanceWorldSpace(const FTransform& WorldTransform);
+    TArray<int32> AddInstances(const TArray<FTransform>& InstanceTransforms, bool bShouldReturnIndices);
+    int32 AddInstance(const FTransform& InstanceTransform);
 };
 
-class IInterface_AssetUserData : public IInterface
+class UIntSerialization : public UObject
 {
-};
-
-class IBoneReferenceSkeletonProvider : public IInterface
-{
-};
-
-class IInterface_CollisionDataProvider : public IInterface
-{
-};
-
-class IInterface_PostProcessVolume : public IInterface
-{
-};
-
-class IInterface_PreviewMeshProvider : public IInterface
-{
-};
-
-struct FCurveEdEntry
-{
-    class UObject* CurveObject;
-    FColor CurveColor;
-    FString CurveName;
-    int32 bHideCurve;
-    int32 bColorCurve;
-    int32 bFloatingPointColorCurve;
-    int32 bClamp;
-    float ClampLow;
-    float ClampHigh;
-
-};
-
-struct FCurveEdTab
-{
-    FString TabName;
-    TArray<FCurveEdEntry> Curves;
-    float ViewStartInput;
-    float ViewEndInput;
-    float ViewStartOutput;
-    float ViewEndOutput;
+    uint16 UnsignedInt16Variable;
+    uint32 UnsignedInt32Variable;
+    uint64 UnsignedInt64Variable;
+    int8 SignedInt8Variable;
+    int16 SignedInt16Variable;
+    int64 SignedInt64Variable;
+    uint8 UnsignedInt8Variable;
+    int32 SignedInt32Variable;
 
 };
 
@@ -9138,13 +11759,6 @@ class UInterpGroupInstDirector : public UInterpGroupInst
 {
 };
 
-struct FInterpControlPoint
-{
-    FVector PositionControlPoint;
-    bool bPositionIsRelative;
-
-};
-
 class UInterpToMovementComponent : public UMovementComponent
 {
     float Duration;
@@ -9197,25 +11811,6 @@ class UInterpTrack : public UObject
 
 };
 
-class UInterpTrackFloatBase : public UInterpTrack
-{
-    FInterpCurveFloat FloatTrack;
-    float CurveTension;
-
-};
-
-struct FAnimControlTrackKey
-{
-    float StartTime;
-    class UAnimSequence* AnimSeq;
-    float AnimStartOffset;
-    float AnimEndOffset;
-    float AnimPlayRate;
-    uint8 bLooping;
-    uint8 bReverse;
-
-};
-
 class UInterpTrackAnimControl : public UInterpTrackFloatBase
 {
     FName slotName;
@@ -9224,22 +11819,8 @@ class UInterpTrackAnimControl : public UInterpTrackFloatBase
 
 };
 
-class UInterpTrackVectorBase : public UInterpTrack
-{
-    FInterpCurveVector VectorTrack;
-    float CurveTension;
-
-};
-
 class UInterpTrackAudioMaster : public UInterpTrackVectorBase
 {
-};
-
-struct FBoolTrackKey
-{
-    float Time;
-    uint8 Value;
-
 };
 
 class UInterpTrackBoolProp : public UInterpTrack
@@ -9259,26 +11840,10 @@ class UInterpTrackColorScale : public UInterpTrackVectorBase
 {
 };
 
-struct FDirectorTrackCut
-{
-    float Time;
-    float TransitionTime;
-    FName TargetCamGroup;
-    int32 ShotNumber;
-
-};
-
 class UInterpTrackDirector : public UInterpTrack
 {
     TArray<FDirectorTrackCut> CutTrack;
     uint8 bSimulateCameraCutsOnClients;
-
-};
-
-struct FEventTrackKey
-{
-    float Time;
-    FName EventName;
 
 };
 
@@ -9305,6 +11870,13 @@ class UInterpTrackFloatAnimBPParam : public UInterpTrackFloatBase
     UClass* AnimBlueprintClass;
     TSubclassOf<class UAnimInstance> AnimClass;
     FName ParamName;
+
+};
+
+class UInterpTrackFloatBase : public UInterpTrack
+{
+    FInterpCurveFloat FloatTrack;
+    float CurveTension;
 
 };
 
@@ -9339,13 +11911,6 @@ class UInterpTrackInstAnimControl : public UInterpTrackInst
 
 class UInterpTrackInstAudioMaster : public UInterpTrackInst
 {
-};
-
-class UInterpTrackInstProperty : public UInterpTrackInst
-{
-    TFieldPath<FProperty> InterpProperty;
-    class UObject* PropertyOuterObjectInst;
-
 };
 
 class UInterpTrackInstBoolProp : public UInterpTrackInstProperty
@@ -9387,14 +11952,6 @@ class UInterpTrackInstFloatAnimBPParam : public UInterpTrackInst
 
 };
 
-struct FPrimitiveMaterialRef
-{
-    class UPrimitiveComponent* Primitive;
-    class UDecalComponent* Decal;
-    int32 ElementIndex;
-
-};
-
 class UInterpTrackInstFloatMaterialParam : public UInterpTrackInst
 {
     TArray<class UMaterialInstanceDynamic*> MaterialInstances;
@@ -9432,6 +11989,13 @@ class UInterpTrackInstMove : public UInterpTrackInst
 class UInterpTrackInstParticleReplay : public UInterpTrackInst
 {
     float LastUpdatePosition;
+
+};
+
+class UInterpTrackInstProperty : public UInterpTrackInst
+{
+    TFieldPath<FProperty> InterpProperty;
+    class UObject* PropertyOuterObjectInst;
 
 };
 
@@ -9491,19 +12055,6 @@ class UInterpTrackLinearColorProp : public UInterpTrackLinearColorBase
 
 };
 
-struct FInterpLookupPoint
-{
-    FName GroupName;
-    float Time;
-
-};
-
-struct FInterpLookupTrack
-{
-    TArray<FInterpLookupPoint> Points;
-
-};
-
 class UInterpTrackMove : public UInterpTrack
 {
     FInterpCurveVector PosTrack;
@@ -9529,14 +12080,6 @@ class UInterpTrackMoveAxis : public UInterpTrackFloatBase
 
 };
 
-struct FParticleReplayTrackKey
-{
-    float Time;
-    float Duration;
-    int32 ClipIDNumber;
-
-};
-
 class UInterpTrackParticleReplay : public UInterpTrack
 {
     TArray<FParticleReplayTrackKey> TrackKeys;
@@ -9545,15 +12088,6 @@ class UInterpTrackParticleReplay : public UInterpTrack
 
 class UInterpTrackSlomo : public UInterpTrackFloatBase
 {
-};
-
-struct FSoundTrackKey
-{
-    float Time;
-    float Volume;
-    float Pitch;
-    class USoundBase* Sound;
-
 };
 
 class UInterpTrackSound : public UInterpTrackVectorBase
@@ -9567,13 +12101,6 @@ class UInterpTrackSound : public UInterpTrackVectorBase
 
 };
 
-struct FToggleTrackKey
-{
-    float Time;
-    TEnumAsByte<ETrackToggleAction> ToggleAction;
-
-};
-
 class UInterpTrackToggle : public UInterpTrack
 {
     TArray<FToggleTrackKey> ToggleTrack;
@@ -9582,6 +12109,13 @@ class UInterpTrackToggle : public UInterpTrack
     uint8 bFireEventsWhenForwards;
     uint8 bFireEventsWhenBackwards;
     uint8 bFireEventsWhenJumpingForwards;
+
+};
+
+class UInterpTrackVectorBase : public UInterpTrack
+{
+    FInterpCurveVector VectorTrack;
+    float CurveTension;
 
 };
 
@@ -9598,14 +12132,6 @@ class UInterpTrackVectorProp : public UInterpTrackVectorBase
 
 };
 
-struct FVisibilityTrackKey
-{
-    float Time;
-    TEnumAsByte<EVisibilityTrackAction> Action;
-    TEnumAsByte<EVisibilityTrackCondition> ActiveCondition;
-
-};
-
 class UInterpTrackVisibility : public UInterpTrack
 {
     TArray<FVisibilityTrackKey> VisibilityTrack;
@@ -9615,21 +12141,32 @@ class UInterpTrackVisibility : public UInterpTrack
 
 };
 
-class UIntSerialization : public UObject
+class UKismetArrayLibrary : public UBlueprintFunctionLibrary
 {
-    uint16 UnsignedInt16Variable;
-    uint32 UnsignedInt32Variable;
-    uint64 UnsignedInt64Variable;
-    int8 SignedInt8Variable;
-    int16 SignedInt16Variable;
-    int64 SignedInt64Variable;
-    uint8 UnsignedInt8Variable;
-    int32 SignedInt32Variable;
 
-};
-
-class AKillZVolume : public APhysicsVolume
-{
+    void SetArrayPropertyByName(class UObject* Object, FName PropertyName, const TArray<int32>& Value);
+    void FilterArray(const TArray<class AActor*>& TargetArray, TSubclassOf<class AActor> FilterClass, TArray<class AActor*>& FilteredArray);
+    void Array_Swap(const TArray<int32>& TargetArray, int32 FirstIndex, int32 SecondIndex);
+    void Array_Shuffle(const TArray<int32>& TargetArray);
+    void Array_Set(const TArray<int32>& TargetArray, int32 Index, const int32& Item, bool bSizeToFit);
+    void Array_Reverse(const TArray<int32>& TargetArray);
+    void Array_Resize(const TArray<int32>& TargetArray, int32 Size);
+    bool Array_RemoveItem(const TArray<int32>& TargetArray, const int32& Item);
+    void Array_Remove(const TArray<int32>& TargetArray, int32 IndexToRemove);
+    void Array_RandomFromStream(const TArray<int32>& TargetArray, FRandomStream& RandomStream, int32& OutItem, int32& OutIndex);
+    void Array_Random(const TArray<int32>& TargetArray, int32& OutItem, int32& OutIndex);
+    int32 Array_Length(const TArray<int32>& TargetArray);
+    int32 Array_LastIndex(const TArray<int32>& TargetArray);
+    bool Array_IsValidIndex(const TArray<int32>& TargetArray, int32 IndexToTest);
+    void Array_Insert(const TArray<int32>& TargetArray, const int32& NewItem, int32 Index);
+    bool Array_Identical(const TArray<int32>& ArrayA, const TArray<int32>& ArrayB);
+    void Array_Get(const TArray<int32>& TargetArray, int32 Index, int32& Item);
+    int32 Array_Find(const TArray<int32>& TargetArray, const int32& ItemToFind);
+    bool Array_Contains(const TArray<int32>& TargetArray, const int32& ItemToFind);
+    void Array_Clear(const TArray<int32>& TargetArray);
+    void Array_Append(const TArray<int32>& TargetArray, const TArray<int32>& SourceArray);
+    int32 Array_AddUnique(const TArray<int32>& TargetArray, const int32& NewItem);
+    int32 Array_Add(const TArray<int32>& TargetArray, const int32& NewItem);
 };
 
 class UKismetGuidLibrary : public UBlueprintFunctionLibrary
@@ -9725,14 +12262,6 @@ class UKismetMaterialLibrary : public UBlueprintFunctionLibrary
     FLinearColor GetVectorParameterValue(class UObject* WorldContextObject, class UMaterialParameterCollection* Collection, FName ParameterName);
     float GetScalarParameterValue(class UObject* WorldContextObject, class UMaterialParameterCollection* Collection, FName ParameterName);
     class UMaterialInstanceDynamic* CreateDynamicMaterialInstance(class UObject* WorldContextObject, class UMaterialInterface* Parent, FName OptionalName, EMIDCreationFlags CreationFlags);
-};
-
-struct FVectorSpringState
-{
-};
-
-struct FFloatSpringState
-{
 };
 
 class UKismetMathLibrary : public UBlueprintFunctionLibrary
@@ -10430,12 +12959,6 @@ class UKismetNodeHelperLibrary : public UBlueprintFunctionLibrary
     bool BitIsMarked(int32 Data, int32 Index);
 };
 
-struct FDrawToRenderTargetContext
-{
-    class UTextureRenderTarget2D* RenderTarget;
-
-};
-
 class UKismetRenderingLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -10544,34 +13067,6 @@ class UKismetStringTableLibrary : public UBlueprintFunctionLibrary
     TArray<FName> GetRegisteredStringTables();
     TArray<FName> GetMetaDataIdsFromStringTableEntry(const FName TableId, FString Key);
     TArray<FString> GetKeysFromStringTable(const FName TableId);
-};
-
-struct FUserActivity
-{
-    FString ActionName;
-
-};
-
-struct FGenericStruct
-{
-    int32 Data;
-
-};
-
-struct FCollisionProfileName
-{
-    FName Name;
-
-};
-
-struct FDebugFloatHistory
-{
-    TArray<float> Samples;
-    float MaxSamples;
-    float MinValue;
-    float MaxValue;
-    bool bAutoAdjustMinMax;
-
 };
 
 class UKismetSystemLibrary : public UBlueprintFunctionLibrary
@@ -10829,17 +13324,6 @@ class UKismetSystemLibrary : public UBlueprintFunctionLibrary
     FDebugFloatHistory AddFloatHistorySample(float Value, const FDebugFloatHistory& FloatHistory);
 };
 
-struct FFormatArgumentData
-{
-    FString ArgumentName;
-    TEnumAsByte<EFormatArgumentType::Type> ArgumentValueType;
-    FText ArgumentValue;
-    int32 ArgumentValueInt;
-    float ArgumentValueFloat;
-    ETextGender ArgumentValueGender;
-
-};
-
 class UKismetTextLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -10890,11 +13374,18 @@ class UKismetTextLibrary : public UBlueprintFunctionLibrary
     FText AsCurrency_Float(float Value, TEnumAsByte<ERoundingMode> RoundingMode, bool bAlwaysSign, bool bUseGrouping, int32 MinimumIntegralDigits, int32 MaximumIntegralDigits, int32 MinimumFractionalDigits, int32 MaximumFractionalDigits, FString CurrencyCode);
 };
 
-struct FLayerActorStats
+class ULODSyncComponent : public UActorComponent
 {
-    UClass* Type;
-    int32 Total;
+    int32 NumLODs;
+    int32 ForcedLOD;
+    TArray<FComponentSync> ComponentsToSync;
+    TMap<class FName, class FLODMappingData> CustomLODMapping;
+    int32 CurrentLOD;
+    int32 CurrentNumLODs;
+    TArray<class UPrimitiveComponent*> DriveComponents;
+    TArray<class UPrimitiveComponent*> SubComponents;
 
+    FString GetLODSyncDebugText();
 };
 
 class ULayer : public UObject
@@ -10902,16 +13393,6 @@ class ULayer : public UObject
     FName LayerName;
     uint8 bIsVisible;
     TArray<FLayerActorStats> ActorStats;
-
-};
-
-class ILevelPartitionInterface : public IInterface
-{
-};
-
-struct FReplicatedStaticActorDestructionInfo
-{
-    UClass* ObjClass;
 
 };
 
@@ -10950,101 +13431,8 @@ class ULevelActorContainer : public UObject
 
 };
 
-class ALevelBounds : public AActor
-{
-    class UBoxComponent* BoxComponent;
-    bool bAutoUpdateBounds;
-
-};
-
-class ALevelScriptActor : public AActor
-{
-    uint8 bInputEnabled;
-
-    void WorldOriginLocationChanged(FIntVector OldOriginLocation, FIntVector NewOriginLocation);
-    void SetCinematicMode(bool bCinematicMode, bool bHidePlayer, bool bAffectsHUD, bool bAffectsMovement, bool bAffectsTurning);
-    bool RemoteEvent(FName EventName);
-    void LevelReset();
-};
-
 class ULevelScriptBlueprint : public UBlueprint
 {
-};
-
-struct FStreamingLevelsToConsider
-{
-    TArray<class ULevelStreaming*> StreamingLevels;
-
-};
-
-struct FLevelCollection
-{
-    class AGameStateBase* GameState;
-    class UNetDriver* NetDriver;
-    class UDemoNetDriver* DemoNetDriver;
-    class ULevel* PersistentLevel;
-    TSet<ULevel*> Levels;
-
-};
-
-struct FPSCPoolElem
-{
-    class UParticleSystemComponent* PSC;
-
-};
-
-struct FPSCPool
-{
-    TArray<FPSCPoolElem> FreeElements;
-
-};
-
-struct FWorldPSCPool
-{
-    TMap<class UParticleSystem*, class FPSCPool> WorldParticleSystemPools;
-
-};
-
-class UWorld : public UObject
-{
-    class ULevel* PersistentLevel;
-    class UNetDriver* NetDriver;
-    class ULineBatchComponent* LineBatcher;
-    class ULineBatchComponent* PersistentLineBatcher;
-    class ULineBatchComponent* ForegroundLineBatcher;
-    class AGameNetworkManager* NetworkManager;
-    class UPhysicsCollisionHandler* PhysicsCollisionHandler;
-    TArray<class UObject*> ExtraReferencedObjects;
-    TArray<class UObject*> PerModuleDataObjects;
-    TArray<class ULevelStreaming*> StreamingLevels;
-    FStreamingLevelsToConsider StreamingLevelsToConsider;
-    FString StreamingLevelsPrefix;
-    class ULevel* CurrentLevelPendingVisibility;
-    class ULevel* CurrentLevelPendingInvisibility;
-    class UDemoNetDriver* DemoNetDriver;
-    class AParticleEventManager* MyParticleEventManager;
-    class APhysicsVolume* DefaultPhysicsVolume;
-    uint8 bAreConstraintsDirty;
-    class UNavigationSystemBase* NavigationSystem;
-    class AGameModeBase* AuthorityGameMode;
-    class AGameStateBase* GameState;
-    class UAISystemBase* AISystem;
-    class UAvoidanceManager* AvoidanceManager;
-    TArray<class ULevel*> Levels;
-    TArray<FLevelCollection> LevelCollections;
-    class UGameInstance* OwningGameInstance;
-    TArray<class UMaterialParameterCollectionInstance*> ParameterCollectionInstances;
-    class UCanvas* CanvasForRenderingToTarget;
-    class UCanvas* CanvasForDrawMaterialToRenderTarget;
-    class UPhysicsFieldComponent* PhysicsField;
-    TSet<UActorComponent*> ComponentsThatNeedPreEndOfFrameSync;
-    TArray<class UActorComponent*> ComponentsThatNeedEndOfFrameUpdate;
-    TArray<class UActorComponent*> ComponentsThatNeedEndOfFrameUpdate_OnGameThread;
-    class UWorldComposition* WorldComposition;
-    FWorldPSCPool PSCPool;
-
-    class AWorldSettings* K2_GetWorldSettings();
-    void HandleTimelineScrubbed();
 };
 
 class ULevelStreaming : public UObject
@@ -11110,23 +13498,107 @@ class ULevelStreamingPersistent : public ULevelStreaming
 {
 };
 
-class ALevelStreamingVolume : public AVolume
+class ULightComponent : public ULightComponentBase
 {
-    TArray<FName> StreamingLevelNames;
-    uint8 bEditorPreVisOnly;
-    uint8 bDisabled;
-    TEnumAsByte<EStreamingVolumeUsage> StreamingUsage;
+    float Temperature;
+    float MaxDrawDistance;
+    float MaxDistanceFadeRange;
+    uint8 bUseTemperature;
+    int32 ShadowMapChannel;
+    float MinRoughness;
+    float SpecularScale;
+    float ShadowResolutionScale;
+    float ShadowBias;
+    float ShadowSlopeBias;
+    float ShadowSharpen;
+    float ContactShadowLength;
+    uint8 ContactShadowLengthInWS;
+    uint8 InverseSquaredFalloff;
+    uint8 CastTranslucentShadows;
+    uint8 bCastShadowsFromCinematicObjectsOnly;
+    uint8 bAffectDynamicIndirectLighting;
+    uint8 bForceCachedShadowsForMovablePrimitives;
+    FLightingChannels LightingChannels;
+    class UMaterialInterface* LightFunctionMaterial;
+    FVector LightFunctionScale;
+    class UTextureLightProfile* IESTexture;
+    uint8 bUseIESBrightness;
+    float IESBrightnessScale;
+    float LightFunctionFadeDistance;
+    float DisabledBrightness;
+    uint8 bEnableLightShaftBloom;
+    float BloomScale;
+    float BloomThreshold;
+    float BloomMaxBrightness;
+    FColor BloomTint;
+    bool bUseRayTracedDistanceFieldShadows;
+    float RayStartOffsetDepthScale;
 
+    void SetVolumetricScatteringIntensity(float NewIntensity);
+    void SetUseTemperature(bool bNewValue);
+    void SetUseIESBrightness(bool bNewValue);
+    void SetTransmission(bool bNewValue);
+    void SetTemperature(float NewTemperature);
+    void SetSpecularScale(float NewValue);
+    void SetShadowSlopeBias(float NewValue);
+    void SetShadowBias(float NewValue);
+    void SetLightingChannels(bool bChannel0, bool bChannel1, bool bChannel2);
+    void SetLightFunctionScale(FVector NewLightFunctionScale);
+    void SetLightFunctionMaterial(class UMaterialInterface* NewLightFunctionMaterial);
+    void SetLightFunctionFadeDistance(float NewLightFunctionFadeDistance);
+    void SetLightFunctionDisabledBrightness(float NewValue);
+    void SetLightColor(FLinearColor NewLightColor, bool bSRGB);
+    void SetIntensity(float NewIntensity);
+    void SetIndirectLightingIntensity(float NewIntensity);
+    void SetIESTexture(class UTextureLightProfile* NewValue);
+    void SetIESBrightnessScale(float NewValue);
+    void SetForceCachedShadowsForMovablePrimitives(bool bNewValue);
+    void SetEnableLightShaftBloom(bool bNewValue);
+    void SetBloomTint(FColor NewValue);
+    void SetBloomThreshold(float NewValue);
+    void SetBloomScale(float NewValue);
+    void SetBloomMaxBrightness(float NewValue);
+    void SetAffectTranslucentLighting(bool bNewValue);
+    void SetAffectDynamicIndirectLighting(bool bNewValue);
 };
 
-class ULightmappedSurfaceCollection : public UObject
+class ULightComponentBase : public USceneComponent
 {
-    class UModel* SourceModel;
-    TArray<int32> Surfaces;
+    FGuid LightGuid;
+    float Brightness;
+    float Intensity;
+    FColor LightColor;
+    uint8 bAffectsWorld;
+    uint8 CastShadows;
+    uint8 CastStaticShadows;
+    uint8 CastDynamicShadows;
+    uint8 bAffectTranslucentLighting;
+    uint8 bTransmission;
+    uint8 bCastVolumetricShadow;
+    uint8 bCastDeepShadow;
+    uint8 bCastRaytracedShadow;
+    uint8 bAffectReflection;
+    uint8 bAffectGlobalIllumination;
+    float DeepShadowLayerDistribution;
+    float IndirectLightingIntensity;
+    float VolumetricScatteringIntensity;
+    int32 SamplesPerPixel;
 
+    void SetSamplesPerPixel(int32 NewValue);
+    void SetCastVolumetricShadow(bool bNewValue);
+    void SetCastShadows(bool bNewValue);
+    void SetCastRaytracedShadow(bool bNewValue);
+    void SetCastDeepShadow(bool bNewValue);
+    void SetAffectReflection(bool bNewValue);
+    void SetAffectGlobalIllumination(bool bNewValue);
+    FLinearColor GetLightColor();
 };
 
 class ULightMapTexture2D : public UTexture2D
+{
+};
+
+class ULightMapVirtualTexture : public UVirtualTexture
 {
 };
 
@@ -11136,17 +13608,10 @@ class ULightMapVirtualTexture2D : public UTexture2D
 
 };
 
-class ALightmassCharacterIndirectDetailVolume : public AVolume
+class ULightmappedSurfaceCollection : public UObject
 {
-};
-
-class ALightmassImportanceVolume : public AVolume
-{
-};
-
-class ALightmassPortal : public AActor
-{
-    class ULightmassPortalComponent* PortalComponent;
+    class UModel* SourceModel;
+    TArray<int32> Surfaces;
 
 };
 
@@ -11166,6 +13631,22 @@ class ULineBatchComponent : public UPrimitiveComponent
 {
 };
 
+class ULocalLightComponent : public ULightComponent
+{
+    ELightUnits IntensityUnits;
+    float Radius;
+    float AttenuationRadius;
+    FLightmassPointLightSettings LightmassSettings;
+
+    void SetIntensityUnits(ELightUnits NewIntensityUnits);
+    void SetAttenuationRadius(float NewRadius);
+    float GetUnitsConversionFactor(ELightUnits SrcUnits, ELightUnits TargetUnits, float CosHalfConeAngle);
+};
+
+class ULocalMessage : public UObject
+{
+};
+
 class ULocalPlayer : public UPlayer
 {
     class UGameViewportClient* ViewportClient;
@@ -11180,127 +13661,9 @@ class ULocalPlayerSubsystem : public USubsystem
 {
 };
 
-struct FHLODInstancingKey
-{
-    class UStaticMesh* StaticMesh;
-    class UMaterialInterface* Material;
-
-};
-
-class ALODActor : public AActor
-{
-    class UStaticMeshComponent* StaticMeshComponent;
-    TMap<class FHLODInstancingKey, class UInstancedStaticMeshComponent*> InstancedStaticMeshComponents;
-    class UHLODProxy* Proxy;
-    FName Key;
-    float LODDrawDistance;
-    int32 LODLevel;
-    TArray<class AActor*> SubActors;
-    uint8 CachedNumHLODLevels;
-
-};
-
-struct FComponentSync
-{
-    FName Name;
-    ESyncOption SyncOption;
-
-};
-
-struct FLODMappingData
-{
-    TArray<int32> Mapping;
-    TArray<int32> InverseMapping;
-
-};
-
-class ULODSyncComponent : public UActorComponent
-{
-    int32 NumLODs;
-    int32 ForcedLOD;
-    TArray<FComponentSync> ComponentsToSync;
-    TMap<class FName, class FLODMappingData> CustomLODMapping;
-    int32 CurrentLOD;
-    int32 CurrentNumLODs;
-    TArray<class UPrimitiveComponent*> DriveComponents;
-    TArray<class UPrimitiveComponent*> SubComponents;
-
-    FString GetLODSyncDebugText();
-};
-
-class ILODSyncInterface : public IInterface
-{
-};
-
 class UMapBuildDataRegistry : public UObject
 {
     TEnumAsByte<ELightingBuildQuality> LevelLightingQuality;
-
-};
-
-struct FMaterialInput
-{
-    int32 OutputIndex;
-    FName InputName;
-    FName ExpressionName;
-
-};
-
-struct FScalarMaterialInput : public FMaterialInput
-{
-};
-
-struct FVectorMaterialInput : public FMaterialInput
-{
-};
-
-struct FColorMaterialInput : public FMaterialInput
-{
-};
-
-struct FMaterialShadingModelField
-{
-    uint16 ShadingModelField;
-
-};
-
-struct FMaterialAttributesInput : public FExpressionInput
-{
-    int32 PropertyConnectedBitmask;
-
-};
-
-struct FShadingModelMaterialInput : public FMaterialInput
-{
-};
-
-struct FMaterialFunctionInfo
-{
-    FGuid StateId;
-    class UMaterialFunctionInterface* Function;
-
-};
-
-struct FMaterialParameterCollectionInfo
-{
-    FGuid StateId;
-    class UMaterialParameterCollection* ParameterCollection;
-
-};
-
-struct FMaterialCachedExpressionData
-{
-    FMaterialCachedParameters Parameters;
-    TArray<class UObject*> ReferencedTextures;
-    TArray<FMaterialFunctionInfo> FunctionInfos;
-    TArray<FMaterialParameterCollectionInfo> ParameterCollectionInfos;
-    TArray<class UMaterialFunctionInterface*> DefaultLayers;
-    TArray<class UMaterialFunctionInterface*> DefaultLayerBlends;
-    TArray<class ULandscapeGrassType*> GrassTypes;
-    TArray<FName> DynamicParameterNames;
-    TArray<bool> QualityLevelsUsed;
-    uint8 bHasRuntimeVirtualTextureOutput;
-    uint8 bHasSceneColor;
 
 };
 
@@ -11421,23 +13784,20 @@ class UMaterial : public UMaterialInterface
 
 };
 
-struct FMaterialSpriteElement
-{
-    class UMaterialInterface* Material;
-    class UCurveFloat* DistanceToOpacityCurve;
-    uint8 bSizeIsInScreenSpace;
-    float BaseSizeX;
-    float BaseSizeY;
-    class UCurveFloat* DistanceToSizeCurve;
-
-};
-
 class UMaterialBillboardComponent : public UPrimitiveComponent
 {
     TArray<FMaterialSpriteElement> Elements;
 
     void SetElements(const TArray<FMaterialSpriteElement>& NewElements);
     void AddElement(class UMaterialInterface* Material, class UCurveFloat* DistanceToOpacityCurve, bool bSizeIsInScreenSpace, float BaseSizeX, float BaseSizeY, class UCurveFloat* DistanceToSizeCurve);
+};
+
+class UMaterialExpression : public UObject
+{
+    class UMaterial* Material;
+    class UMaterialFunction* Function;
+    uint8 bIsParameterExpression;
+
 };
 
 class UMaterialExpressionAbs : public UMaterialExpression
@@ -11457,30 +13817,6 @@ class UMaterialExpressionAdd : public UMaterialExpression
     float ConstA;
     float ConstB;
 
-};
-
-class UMaterialExpressionTextureBase : public UMaterialExpression
-{
-    class UTexture* Texture;
-
-};
-
-class UMaterialExpressionTextureSample : public UMaterialExpressionTextureBase
-{
-    FExpressionInput Coordinates;
-
-};
-
-class UMaterialExpressionTextureSampleParameter : public UMaterialExpressionTextureSample
-{
-    FName ParameterName;
-    FGuid ExpressionGUID;
-    FName Group;
-
-};
-
-class UMaterialExpressionTextureSampleParameter2D : public UMaterialExpressionTextureSampleParameter
-{
 };
 
 class UMaterialExpressionAntialiasedTextureMask : public UMaterialExpressionTextureSampleParameter2D
@@ -11614,21 +13950,6 @@ class UMaterialExpressionCeil : public UMaterialExpression
 
 };
 
-class UMaterialExpressionParameter : public UMaterialExpression
-{
-    FName ParameterName;
-    FGuid ExpressionGUID;
-
-};
-
-class UMaterialExpressionVectorParameter : public UMaterialExpressionParameter
-{
-    FLinearColor DefaultValue;
-    bool bUseCustomPrimitiveData;
-    uint8 PrimitiveDataIndex;
-
-};
-
 class UMaterialExpressionChannelMaskParameter : public UMaterialExpressionVectorParameter
 {
     TEnumAsByte<EChannelMaskParameterColor::Type> MaskChannel;
@@ -11731,40 +14052,11 @@ class UMaterialExpressionCrossProduct : public UMaterialExpression
 
 };
 
-class UMaterialExpressionScalarParameter : public UMaterialExpressionParameter
-{
-    float DefaultValue;
-    bool bUseCustomPrimitiveData;
-    uint8 PrimitiveDataIndex;
-
-};
-
 class UMaterialExpressionCurveAtlasRowParameter : public UMaterialExpressionScalarParameter
 {
     class UCurveLinearColor* Curve;
     class UCurveLinearColorAtlas* Atlas;
     FExpressionInput InputTime;
-
-};
-
-struct FCustomInput
-{
-    FName InputName;
-    FExpressionInput Input;
-
-};
-
-struct FCustomOutput
-{
-    FName OutputName;
-    TEnumAsByte<ECustomMaterialOutputType> OutputType;
-
-};
-
-struct FCustomDefine
-{
-    FString DefineName;
-    FString DefineValue;
 
 };
 
@@ -11778,6 +14070,10 @@ class UMaterialExpressionCustom : public UMaterialExpression
     TArray<FCustomDefine> AdditionalDefines;
     TArray<FString> IncludeFilePaths;
 
+};
+
+class UMaterialExpressionCustomOutput : public UMaterialExpression
+{
 };
 
 class UMaterialExpressionDDX : public UMaterialExpression
@@ -11975,18 +14271,18 @@ class UMaterialExpressionFunctionOutput : public UMaterialExpression
 
 };
 
-class UMaterialExpressionGetMaterialAttributes : public UMaterialExpression
-{
-    FMaterialAttributesInput MaterialAttributes;
-    TArray<FGuid> AttributeGetTypes;
-
-};
-
 class UMaterialExpressionGIReplace : public UMaterialExpression
 {
     FExpressionInput Default;
     FExpressionInput StaticIndirect;
     FExpressionInput DynamicIndirect;
+
+};
+
+class UMaterialExpressionGetMaterialAttributes : public UMaterialExpression
+{
+    FMaterialAttributesInput MaterialAttributes;
+    TArray<FGuid> AttributeGetTypes;
 
 };
 
@@ -12029,6 +14325,10 @@ class UMaterialExpressionInverseLinearInterpolate : public UMaterialExpression
 
 };
 
+class UMaterialExpressionLightVector : public UMaterialExpression
+{
+};
+
 class UMaterialExpressionLightmapUVs : public UMaterialExpression
 {
 };
@@ -12038,10 +14338,6 @@ class UMaterialExpressionLightmassReplace : public UMaterialExpression
     FExpressionInput Realtime;
     FExpressionInput Lightmass;
 
-};
-
-class UMaterialExpressionLightVector : public UMaterialExpression
-{
 };
 
 class UMaterialExpressionLinearInterpolate : public UMaterialExpression
@@ -12158,10 +14454,6 @@ class UMaterialExpressionMultiply : public UMaterialExpression
 
 };
 
-class UMaterialExpressionRerouteBase : public UMaterialExpression
-{
-};
-
 class UMaterialExpressionNamedRerouteBase : public UMaterialExpressionRerouteBase
 {
 };
@@ -12235,6 +14527,13 @@ class UMaterialExpressionPanner : public UMaterialExpression
     float SpeedY;
     uint32 ConstCoordinate;
     bool bFractionalPart;
+
+};
+
+class UMaterialExpressionParameter : public UMaterialExpression
+{
+    FName ParameterName;
+    FGuid ExpressionGUID;
 
 };
 
@@ -12320,10 +14619,6 @@ class UMaterialExpressionPower : public UMaterialExpression
 
 };
 
-class UMaterialExpressionPrecomputedAOMask : public UMaterialExpression
-{
-};
-
 class UMaterialExpressionPreSkinnedLocalBounds : public UMaterialExpression
 {
 };
@@ -12333,6 +14628,10 @@ class UMaterialExpressionPreSkinnedNormal : public UMaterialExpression
 };
 
 class UMaterialExpressionPreSkinnedPosition : public UMaterialExpression
+{
+};
+
+class UMaterialExpressionPrecomputedAOMask : public UMaterialExpression
 {
 };
 
@@ -12375,6 +14674,10 @@ class UMaterialExpressionReroute : public UMaterialExpressionRerouteBase
 {
     FExpressionInput Input;
 
+};
+
+class UMaterialExpressionRerouteBase : public UMaterialExpression
+{
 };
 
 class UMaterialExpressionRotateAboutAxis : public UMaterialExpression
@@ -12445,10 +14748,10 @@ class UMaterialExpressionRuntimeVirtualTextureSampleParameter : public UMaterial
 
 };
 
-class UMaterialExpressionSamplePhysicsVectorField : public UMaterialExpression
+class UMaterialExpressionSamplePhysicsIntegerField : public UMaterialExpression
 {
     FExpressionInput WorldPosition;
-    TEnumAsByte<EFieldVectorType> FieldTarget;
+    TEnumAsByte<EFieldIntegerType> FieldTarget;
 
 };
 
@@ -12459,16 +14762,24 @@ class UMaterialExpressionSamplePhysicsScalarField : public UMaterialExpression
 
 };
 
-class UMaterialExpressionSamplePhysicsIntegerField : public UMaterialExpression
+class UMaterialExpressionSamplePhysicsVectorField : public UMaterialExpression
 {
     FExpressionInput WorldPosition;
-    TEnumAsByte<EFieldIntegerType> FieldTarget;
+    TEnumAsByte<EFieldVectorType> FieldTarget;
 
 };
 
 class UMaterialExpressionSaturate : public UMaterialExpression
 {
     FExpressionInput Input;
+
+};
+
+class UMaterialExpressionScalarParameter : public UMaterialExpressionParameter
+{
+    float DefaultValue;
+    bool bUseCustomPrimitiveData;
+    uint8 PrimitiveDataIndex;
 
 };
 
@@ -12575,7 +14886,23 @@ class UMaterialExpressionSkinningVertexOffsets : public UMaterialExpression
 {
 };
 
+class UMaterialExpressionSkyAtmosphereAerialPerspective : public UMaterialExpression
+{
+    FExpressionInput WorldPosition;
+
+};
+
+class UMaterialExpressionSkyAtmosphereDistantLightScatteredLuminance : public UMaterialExpression
+{
+};
+
 class UMaterialExpressionSkyAtmosphereLightDirection : public UMaterialExpression
+{
+    int32 LightIndex;
+
+};
+
+class UMaterialExpressionSkyAtmosphereLightDiskLuminance : public UMaterialExpression
 {
     int32 LightIndex;
 
@@ -12586,22 +14913,6 @@ class UMaterialExpressionSkyAtmosphereLightIlluminance : public UMaterialExpress
     int32 LightIndex;
     FExpressionInput WorldPosition;
 
-};
-
-class UMaterialExpressionSkyAtmosphereLightDiskLuminance : public UMaterialExpression
-{
-    int32 LightIndex;
-
-};
-
-class UMaterialExpressionSkyAtmosphereAerialPerspective : public UMaterialExpression
-{
-    FExpressionInput WorldPosition;
-
-};
-
-class UMaterialExpressionSkyAtmosphereDistantLightScatteredLuminance : public UMaterialExpression
-{
 };
 
 class UMaterialExpressionSkyAtmosphereViewLuminance : public UMaterialExpression
@@ -12741,6 +15052,12 @@ class UMaterialExpressionTemporalSobol : public UMaterialExpression
 
 };
 
+class UMaterialExpressionTextureBase : public UMaterialExpression
+{
+    class UTexture* Texture;
+
+};
+
 class UMaterialExpressionTextureCoordinate : public UMaterialExpression
 {
     int32 CoordinateIndex;
@@ -12764,6 +15081,24 @@ class UMaterialExpressionTextureProperty : public UMaterialExpression
     FExpressionInput TextureObject;
     TEnumAsByte<EMaterialExposedTextureProperty> Property;
 
+};
+
+class UMaterialExpressionTextureSample : public UMaterialExpressionTextureBase
+{
+    FExpressionInput Coordinates;
+
+};
+
+class UMaterialExpressionTextureSampleParameter : public UMaterialExpressionTextureSample
+{
+    FName ParameterName;
+    FGuid ExpressionGUID;
+    FName Group;
+
+};
+
+class UMaterialExpressionTextureSampleParameter2D : public UMaterialExpressionTextureSampleParameter
+{
 };
 
 class UMaterialExpressionTextureSampleParameter2DArray : public UMaterialExpressionTextureSampleParameter
@@ -12831,6 +15166,14 @@ class UMaterialExpressionVectorNoise : public UMaterialExpression
     int32 Quality;
     uint8 bTiling;
     uint32 TileSize;
+
+};
+
+class UMaterialExpressionVectorParameter : public UMaterialExpressionParameter
+{
+    FLinearColor DefaultValue;
+    bool bUseCustomPrimitiveData;
+    uint8 PrimitiveDataIndex;
 
 };
 
@@ -12902,13 +15245,6 @@ class UMaterialExpressionWorldPosition : public UMaterialExpression
 
 };
 
-class UMaterialFunctionInterface : public UObject
-{
-    FGuid StateId;
-    EMaterialFunctionUsage MaterialFunctionUsage;
-
-};
-
 class UMaterialFunction : public UMaterialFunctionInterface
 {
     FString Description;
@@ -12931,11 +15267,14 @@ class UMaterialFunctionInstance : public UMaterialFunctionInterface
 
 };
 
-class UMaterialFunctionMaterialLayer : public UMaterialFunction
+class UMaterialFunctionInterface : public UObject
 {
+    FGuid StateId;
+    EMaterialFunctionUsage MaterialFunctionUsage;
+
 };
 
-class UMaterialFunctionMaterialLayerInstance : public UMaterialFunctionInstance
+class UMaterialFunctionMaterialLayer : public UMaterialFunction
 {
 };
 
@@ -12947,10 +15286,36 @@ class UMaterialFunctionMaterialLayerBlendInstance : public UMaterialFunctionInst
 {
 };
 
-class AMaterialInstanceActor : public AActor
+class UMaterialFunctionMaterialLayerInstance : public UMaterialFunctionInstance
 {
-    TArray<class AActor*> TargetActors;
+};
 
+class UMaterialInstance : public UMaterialInterface
+{
+    class UPhysicalMaterial* PhysMaterial;
+    class UPhysicalMaterial* PhysicalMaterialMap;
+    class UMaterialInterface* Parent;
+    uint8 bHasStaticPermutationResource;
+    uint8 bOverrideSubsurfaceProfile;
+    TArray<FScalarParameterValue> ScalarParameterValues;
+    TArray<FVectorParameterValue> VectorParameterValues;
+    TArray<FTextureParameterValue> TextureParameterValues;
+    TArray<FRuntimeVirtualTextureParameterValue> RuntimeVirtualTextureParameterValues;
+    TArray<FFontParameterValue> FontParameterValues;
+    FMaterialInstanceBasePropertyOverrides BasePropertyOverrides;
+    FStaticParameterSet StaticParameters;
+    FMaterialCachedParameters CachedLayerParameters;
+    TArray<class UObject*> CachedReferencedTextures;
+
+};
+
+class UMaterialInstanceConstant : public UMaterialInstance
+{
+    class UPhysicalMaterialMask* PhysMaterialMask;
+
+    FLinearColor K2_GetVectorParameterValue(FName ParameterName);
+    class UTexture* K2_GetTextureParameterValue(FName ParameterName);
+    float K2_GetScalarParameterValue(FName ParameterName);
 };
 
 class UMaterialInstanceDynamic : public UMaterialInstance
@@ -12974,23 +15339,19 @@ class UMaterialInstanceDynamic : public UMaterialInstance
     void CopyInterpParameters(class UMaterialInstance* Source);
 };
 
-struct FCollectionParameterBase
+class UMaterialInterface : public UObject
 {
-    FName ParameterName;
-    FGuid ID;
+    class USubsurfaceProfile* SubsurfaceProfile;
+    FLightmassMaterialInterfaceSettings LightmassSettings;
+    TArray<FMaterialTextureInfo> TextureStreamingData;
+    TArray<class UAssetUserData*> AssetUserData;
 
-};
-
-struct FCollectionScalarParameter : public FCollectionParameterBase
-{
-    float DefaultValue;
-
-};
-
-struct FCollectionVectorParameter : public FCollectionParameterBase
-{
-    FLinearColor DefaultValue;
-
+    void SetForceMipLevelsToBeResident(bool OverrideForceMiplevelsToBeResident, bool bForceMiplevelsToBeResidentValue, float ForceDuration, int32 CinematicTextureGroups, bool bFastResponse);
+    class UPhysicalMaterialMask* GetPhysicalMaterialMask();
+    class UPhysicalMaterial* GetPhysicalMaterialFromMap(int32 Index);
+    class UPhysicalMaterial* GetPhysicalMaterial();
+    FMaterialParameterInfo GetParameterInfo(TEnumAsByte<EMaterialParameterAssociation> Association, FName ParameterName, class UMaterialFunctionInterface* LayerFunction);
+    class UMaterial* GetBaseMaterial();
 };
 
 class UMaterialParameterCollection : public UObject
@@ -13007,84 +15368,18 @@ class UMaterialParameterCollectionInstance : public UObject
 
 };
 
-struct FInterpGroupActorInfo
+class UMeshComponent : public UPrimitiveComponent
 {
-    FName ObjectName;
-    TArray<class AActor*> Actors;
+    TArray<class UMaterialInterface*> OverrideMaterials;
+    uint8 bEnableMaterialParameterCaching;
 
-};
-
-struct FCameraCutInfo
-{
-    FVector Location;
-    float Timestamp;
-
-};
-
-class AMatineeActor : public AActor
-{
-    class UInterpData* MatineeData;
-    FName MatineeControllerName;
-    float PlayRate;
-    uint8 bPlayOnLevelLoad;
-    uint8 bForceStartPos;
-    float ForceStartPosition;
-    uint8 bLooping;
-    uint8 bRewindOnPlay;
-    uint8 bNoResetOnRewind;
-    uint8 bRewindIfAlreadyPlaying;
-    uint8 bDisableRadioFilter;
-    uint8 bClientSideOnly;
-    uint8 bSkipUpdateIfNotVisible;
-    uint8 bIsSkippable;
-    int32 PreferredSplitScreenNum;
-    uint8 bDisableMovementInput;
-    uint8 bDisableLookAtInput;
-    uint8 bHidePlayer;
-    uint8 bHideHud;
-    TArray<FInterpGroupActorInfo> GroupActorInfos;
-    uint8 bShouldShowGore;
-    TArray<class UInterpGroupInst*> GroupInst;
-    TArray<FCameraCutInfo> CameraCuts;
-    uint8 bIsPlaying;
-    uint8 bReversePlayback;
-    uint8 bPaused;
-    uint8 bPendingStop;
-    float InterpPosition;
-    uint8 ReplicationForceIsPlaying;
-    FMatineeActorOnPlay OnPlay;
-    void OnMatineeEvent();
-    FMatineeActorOnStop OnStop;
-    void OnMatineeEvent();
-    FMatineeActorOnPause OnPause;
-    void OnMatineeEvent();
-
-    void Stop();
-    void SetPosition(float NewPosition, bool bJump);
-    void SetLoopingState(bool bNewLooping);
-    void Reverse();
-    void Play();
-    void Pause();
-    void EnableGroupByName(FString GroupName, bool bEnable);
-    void ChangePlaybackDirection();
-};
-
-class AMatineeActorCameraAnim : public AMatineeActor
-{
-    class UCameraAnim* CameraAnim;
-
-};
-
-class IMatineeAnimInterface : public IInterface
-{
-};
-
-class IMatineeInterface : public IInterface
-{
-};
-
-class AMeshMergeCullingVolume : public AVolume
-{
+    void SetVectorParameterValueOnMaterials(const FName ParameterName, const FVector ParameterValue);
+    void SetScalarParameterValueOnMaterials(const FName ParameterName, const float ParameterValue);
+    void PrestreamTextures(float Seconds, bool bPrioritizeCharacterTextures, int32 CinematicTextureGroups);
+    bool IsMaterialSlotNameValid(FName MaterialSlotName);
+    TArray<FName> GetMaterialSlotNames();
+    TArray<class UMaterialInterface*> GetMaterials();
+    int32 GetMaterialIndex(FName MaterialSlotName);
 };
 
 class UMeshSimplificationSettings : public UDeveloperSettings
@@ -13101,21 +15396,16 @@ class UMeshVertexPainterKismetLibrary : public UBlueprintFunctionLibrary
     void PaintVerticesLerpAlongAxis(class UStaticMeshComponent* StaticMeshComponent, const FLinearColor& StartColor, const FLinearColor& EndColor, EVertexPaintAxis Axis, bool bConvertToSRGB);
 };
 
-struct FPurchaseInfo
-{
-    FString Identifier;
-    FString DisplayName;
-    FString DisplayDescription;
-    FString DisplayPrice;
-
-};
-
 class UMicroTransactionBase : public UPlatformInterfaceBase
 {
     TArray<FPurchaseInfo> AvailableProducts;
     FString LastError;
     FString LastErrorSolution;
 
+};
+
+class UModel : public UObject
+{
 };
 
 class UModelComponent : public UPrimitiveComponent
@@ -13130,8 +15420,45 @@ class UMorphTarget : public UObject
 
 };
 
-class INavAgentInterface : public IInterface
+class UMovementComponent : public UActorComponent
 {
+    class USceneComponent* UpdatedComponent;
+    class UPrimitiveComponent* UpdatedPrimitive;
+    FVector Velocity;
+    FVector PlaneConstraintNormal;
+    FVector PlaneConstraintOrigin;
+    uint8 bUpdateOnlyIfRendered;
+    uint8 bAutoUpdateTickRegistration;
+    uint8 bTickBeforeOwner;
+    uint8 bAutoRegisterUpdatedComponent;
+    uint8 bConstrainToPlane;
+    uint8 bSnapToPlaneAtStart;
+    uint8 bAutoRegisterPhysicsVolumeUpdates;
+    uint8 bComponentShouldUpdatePhysicsVolume;
+    EPlaneConstraintAxisSetting PlaneConstraintAxisSetting;
+
+    void StopMovementImmediately();
+    void SnapUpdatedComponentToPlane();
+    void SetUpdatedComponent(class USceneComponent* NewUpdatedComponent);
+    void SetPlaneConstraintOrigin(FVector PlaneOrigin);
+    void SetPlaneConstraintNormal(FVector PlaneNormal);
+    void SetPlaneConstraintFromVectors(FVector Forward, FVector Up);
+    void SetPlaneConstraintEnabled(bool bEnabled);
+    void SetPlaneConstraintAxisSetting(EPlaneConstraintAxisSetting NewAxisSetting);
+    void PhysicsVolumeChanged(class APhysicsVolume* NewVolume);
+    bool K2_MoveUpdatedComponent(FVector Delta, FRotator NewRotation, FHitResult& OutHit, bool bSweep, bool bTeleport);
+    float K2_GetModifiedMaxSpeed();
+    float K2_GetMaxSpeedModifier();
+    bool IsExceedingMaxSpeed(float MaxSpeed);
+    FVector GetPlaneConstraintOrigin();
+    FVector GetPlaneConstraintNormal();
+    EPlaneConstraintAxisSetting GetPlaneConstraintAxisSetting();
+    class APhysicsVolume* GetPhysicsVolume();
+    float GetMaxSpeed();
+    float GetGravityZ();
+    FVector ConstrainNormalToPlane(FVector Normal);
+    FVector ConstrainLocationToPlane(FVector Location);
+    FVector ConstrainDirectionToPlane(FVector Direction);
 };
 
 class UNavAreaBase : public UObject
@@ -13144,8 +15471,30 @@ class UNavCollisionBase : public UObject
 
 };
 
-class INavEdgeProviderInterface : public IInterface
+class UNavLinkDefinition : public UObject
 {
+    TArray<FNavigationLink> Links;
+    TArray<FNavigationSegmentLink> SegmentLinks;
+
+};
+
+class UNavMovementComponent : public UMovementComponent
+{
+    FNavAgentProperties NavAgentProps;
+    float FixedPathBrakingDistance;
+    uint8 bUpdateNavAgentWithOwnersCollision;
+    uint8 bUseAccelerationForPaths;
+    uint8 bUseFixedBrakingDistanceForPaths;
+    FMovementProperties MovementState;
+    class UObject* PathFollowingComp;
+
+    void StopMovementKeepPathing();
+    void StopActiveMovement();
+    bool IsSwimming();
+    bool IsMovingOnGround();
+    bool IsFlying();
+    bool IsFalling();
+    bool IsCrouching();
 };
 
 class UNavigationDataChunk : public UObject
@@ -13154,33 +15503,8 @@ class UNavigationDataChunk : public UObject
 
 };
 
-class INavigationDataInterface : public IInterface
-{
-};
-
 class UNavigationSystemBase : public UObject
 {
-};
-
-struct FNavAgentSelector
-{
-    uint8 bSupportsAgent0;
-    uint8 bSupportsAgent1;
-    uint8 bSupportsAgent2;
-    uint8 bSupportsAgent3;
-    uint8 bSupportsAgent4;
-    uint8 bSupportsAgent5;
-    uint8 bSupportsAgent6;
-    uint8 bSupportsAgent7;
-    uint8 bSupportsAgent8;
-    uint8 bSupportsAgent9;
-    uint8 bSupportsAgent10;
-    uint8 bSupportsAgent11;
-    uint8 bSupportsAgent12;
-    uint8 bSupportsAgent13;
-    uint8 bSupportsAgent14;
-    uint8 bSupportsAgent15;
-
 };
 
 class UNavigationSystemConfig : public UObject
@@ -13192,81 +15516,57 @@ class UNavigationSystemConfig : public UObject
 
 };
 
-class UNullNavSysConfig : public UNavigationSystemConfig
+class UNetConnection : public UPlayer
 {
-};
-
-struct FNavigationLinkBase
-{
-    float LeftProjectHeight;
-    float MaxFallDownLength;
-    float SnapRadius;
-    float SnapHeight;
-    FNavAgentSelector SupportedAgents;
-    uint8 bSupportsAgent0;
-    uint8 bSupportsAgent1;
-    uint8 bSupportsAgent2;
-    uint8 bSupportsAgent3;
-    uint8 bSupportsAgent4;
-    uint8 bSupportsAgent5;
-    uint8 bSupportsAgent6;
-    uint8 bSupportsAgent7;
-    uint8 bSupportsAgent8;
-    uint8 bSupportsAgent9;
-    uint8 bSupportsAgent10;
-    uint8 bSupportsAgent11;
-    uint8 bSupportsAgent12;
-    uint8 bSupportsAgent13;
-    uint8 bSupportsAgent14;
-    uint8 bSupportsAgent15;
-    TEnumAsByte<ENavLinkDirection::Type> Direction;
-    uint8 bUseSnapHeight;
-    uint8 bSnapToCheapestArea;
-    uint8 bCustomFlag0;
-    uint8 bCustomFlag1;
-    uint8 bCustomFlag2;
-    uint8 bCustomFlag3;
-    uint8 bCustomFlag4;
-    uint8 bCustomFlag5;
-    uint8 bCustomFlag6;
-    uint8 bCustomFlag7;
-    TSubclassOf<class UNavAreaBase> AreaClass;
+    TArray<class UChildConnection*> Children;
+    class UNetDriver* Driver;
+    TSubclassOf<class UPackageMap> PackageMapClass;
+    class UPackageMap* PackageMap;
+    TArray<class UChannel*> OpenChannels;
+    TArray<class AActor*> SentTemporaries;
+    class AActor* ViewTarget;
+    class AActor* owningActor;
+    int32 MaxPacket;
+    uint8 InternalAck;
+    FUniqueNetIdRepl PlayerId;
+    double LastReceiveTime;
+    TArray<class UChannel*> ChannelsToTick;
 
 };
 
-struct FNavigationLink : public FNavigationLinkBase
+class UNetDriver : public UObject
 {
-    FVector Left;
-    FVector Right;
+    FString NetConnectionClassName;
+    FString ReplicationDriverClassName;
+    int32 MaxDownloadSize;
+    uint8 bClampListenServerTickRate;
+    int32 NetServerMaxTickRate;
+    int32 MaxNetTickRate;
+    int32 MaxInternetClientRate;
+    int32 MaxClientRate;
+    float ServerTravelPause;
+    float SpawnPrioritySeconds;
+    float RelevantTimeout;
+    float KeepAliveTime;
+    float InitialConnectTimeout;
+    float ConnectionTimeout;
+    float TimeoutMultiplierForUnoptimizedBuilds;
+    bool bNoTimeouts;
+    bool bNeverApplyNetworkEmulationSettings;
+    class UNetConnection* ServerConnection;
+    TArray<class UNetConnection*> ClientConnections;
+    int32 RecentlyDisconnectedTrackingTime;
+    class UWorld* World;
+    class UPackage* WorldPackage;
+    UClass* NetConnectionClass;
+    UClass* ReplicationDriverClass;
+    FName NetDriverName;
+    TArray<FChannelDefinition> ChannelDefinitions;
+    TMap<class FName, class FChannelDefinition> ChannelDefinitionMap;
+    TArray<class UChannel*> ActorChannelPool;
+    float Time;
+    class UReplicationDriver* ReplicationDriver;
 
-};
-
-struct FNavigationSegmentLink : public FNavigationLinkBase
-{
-    FVector LeftStart;
-    FVector LeftEnd;
-    FVector RightStart;
-    FVector RightEnd;
-
-};
-
-class UNavLinkDefinition : public UObject
-{
-    TArray<FNavigationLink> Links;
-    TArray<FNavigationSegmentLink> SegmentLinks;
-
-};
-
-class INavPathObserverInterface : public IInterface
-{
-};
-
-class INavRelevantInterface : public IInterface
-{
-};
-
-class USimulatedClientNetConnection : public UNetConnection
-{
 };
 
 class UNetPushModelHelpers : public UBlueprintFunctionLibrary
@@ -13276,17 +15576,6 @@ class UNetPushModelHelpers : public UBlueprintFunctionLibrary
     void MarkPropertyDirty(class UObject* Object, FName PropertyName);
 };
 
-class INetworkPredictionInterface : public IInterface
-{
-};
-
-struct FNetworkEmulationProfileDescription
-{
-    FString ProfileName;
-    FString ToolTip;
-
-};
-
 class UNetworkSettings : public UDeveloperSettings
 {
     uint8 bVerifyPeer;
@@ -13294,13 +15583,6 @@ class UNetworkSettings : public UDeveloperSettings
     int32 MaxRepArraySize;
     int32 MaxRepArrayMemory;
     TArray<FNetworkEmulationProfileDescription> NetworkEmulationProfiles;
-
-};
-
-struct FNodeItem
-{
-    FName ParentName;
-    FTransform Transform;
 
 };
 
@@ -13314,11 +15596,7 @@ class UNodeMappingContainer : public UObject
 
 };
 
-class INodeMappingProviderInterface : public IInterface
-{
-};
-
-class ANote : public AActor
+class UNullNavSysConfig : public UNavigationSystemConfig
 {
 };
 
@@ -13343,20 +15621,20 @@ class UObjectTraceWorldSubsystem : public UWorldSubsystem
 {
 };
 
-class UPackageMapClient : public UPackageMap
+class UOnlineBlueprintCallProxyBase : public UBlueprintAsyncActionBase
 {
 };
 
-class APainCausingVolume : public APhysicsVolume
+class UOnlineEngineInterface : public UObject
 {
-    uint8 bPainCausing;
-    float DamagePerSec;
-    TSubclassOf<class UDamageType> DamageType;
-    float PainInterval;
-    uint8 bEntryPain;
-    uint8 BACKUP_bPainCausing;
-    class AController* DamageInstigator;
+};
 
+class UOnlineSession : public UObject
+{
+};
+
+class UPackageMapClient : public UPackageMap
+{
 };
 
 class UParticleEmitter : public UObject
@@ -13379,10 +15657,6 @@ class UParticleEmitter : public UObject
 
 };
 
-class AParticleEventManager : public AActor
-{
-};
-
 class UParticleLODLevel : public UObject
 {
     int32 Level;
@@ -13400,65 +15674,6 @@ class UParticleLODLevel : public UObject
     uint8 ConvertedModules;
     int32 PeakActiveParticles;
 
-};
-
-struct FParticleSystemLOD
-{
-};
-
-struct FLODSoloTrack
-{
-    TArray<uint8> SoloEnableSetting;
-
-};
-
-struct FNamedEmitterMaterial
-{
-    FName Name;
-    class UMaterialInterface* Material;
-
-};
-
-class UParticleSystem : public UFXSystemAsset
-{
-    float UpdateTime_FPS;
-    float UpdateTime_Delta;
-    float WarmupTime;
-    float WarmupTickRate;
-    TArray<class UParticleEmitter*> Emitters;
-    class UParticleSystemComponent* PreviewComponent;
-    class UInterpCurveEdSetup* CurveEdSetup;
-    float LODDistanceCheckTime;
-    float MacroUVRadius;
-    TArray<float> LODDistances;
-    TArray<FParticleSystemLOD> LODSettings;
-    FBox FixedRelativeBoundingBox;
-    float SecondsBeforeInactive;
-    float Delay;
-    float DelayLow;
-    uint8 bOrientZAxisTowardCamera;
-    uint8 bUseFixedRelativeBoundingBox;
-    uint8 bShouldResetPeakCounts;
-    uint8 bHasPhysics;
-    uint8 bUseRealtimeThumbnail;
-    uint8 ThumbnailImageOutOfDate;
-    uint8 bUseDelayRange;
-    uint8 bAllowManagedTicking;
-    uint8 bAutoDeactivate;
-    uint8 bRegenerateLODDuplicate;
-    TEnumAsByte<EParticleSystemUpdateMode> SystemUpdateMode;
-    TEnumAsByte<ParticleSystemLODMethod> LODMethod;
-    EParticleSystemInsignificanceReaction InsignificantReaction;
-    TEnumAsByte<EParticleSystemOcclusionBoundsMethod> OcclusionBoundsMethod;
-    EParticleSignificanceLevel MaxSignificanceLevel;
-    uint32 MinTimeBetweenTicks;
-    float InsignificanceDelay;
-    FVector MacroUVPosition;
-    FBox CustomOcclusionBounds;
-    TArray<FLODSoloTrack> SoloTracking;
-    TArray<FNamedEmitterMaterial> NamedMaterialSlots;
-
-    bool ContainsEmitterType(UClass* TypeData);
 };
 
 class UParticleModule : public UObject
@@ -13479,41 +15694,6 @@ class UParticleModule : public UObject
 
 };
 
-class UParticleModuleAccelerationBase : public UParticleModule
-{
-    uint8 bAlwaysInWorldSpace;
-
-};
-
-struct FDistributionLookupTable
-{
-    float TimeScale;
-    float TimeBias;
-    TArray<float> Values;
-    uint8 Op;
-    uint8 EntryCount;
-    uint8 EntryStride;
-    uint8 SubEntryStride;
-    uint8 LockFlag;
-
-};
-
-struct FRawDistribution
-{
-    FDistributionLookupTable Table;
-
-};
-
-struct FRawDistributionVector : public FRawDistribution
-{
-    float MinValue;
-    float MaxValue;
-    FVector MinValueVec;
-    FVector MaxValueVec;
-    class UDistributionVector* Distribution;
-
-};
-
 class UParticleModuleAcceleration : public UParticleModuleAccelerationBase
 {
     FRawDistributionVector Acceleration;
@@ -13521,17 +15701,15 @@ class UParticleModuleAcceleration : public UParticleModuleAccelerationBase
 
 };
 
-class UParticleModuleAccelerationConstant : public UParticleModuleAccelerationBase
+class UParticleModuleAccelerationBase : public UParticleModule
 {
-    FVector Acceleration;
+    uint8 bAlwaysInWorldSpace;
 
 };
 
-struct FRawDistributionFloat : public FRawDistribution
+class UParticleModuleAccelerationConstant : public UParticleModuleAccelerationBase
 {
-    float MinValue;
-    float MaxValue;
-    class UDistributionFloat* Distribution;
+    FVector Acceleration;
 
 };
 
@@ -13611,14 +15789,6 @@ class UParticleModuleAttractorPointGravity : public UParticleModuleAttractorBase
 
 class UParticleModuleBeamBase : public UParticleModule
 {
-};
-
-struct FBeamModifierOptions
-{
-    uint8 bModify;
-    uint8 bScale;
-    uint8 bLock;
-
 };
 
 class UParticleModuleBeamModifier : public UParticleModuleBeamBase
@@ -13702,10 +15872,6 @@ class UParticleModuleCameraOffset : public UParticleModuleCameraBase
 
 };
 
-class UParticleModuleCollisionBase : public UParticleModule
-{
-};
-
 class UParticleModuleCollision : public UParticleModuleCollisionBase
 {
     FRawDistributionVector DampingFactor;
@@ -13728,6 +15894,10 @@ class UParticleModuleCollision : public UParticleModuleCollisionBase
 
 };
 
+class UParticleModuleCollisionBase : public UParticleModule
+{
+};
+
 class UParticleModuleCollisionGPU : public UParticleModuleCollisionBase
 {
     FRawDistributionFloat Resilience;
@@ -13742,10 +15912,6 @@ class UParticleModuleCollisionGPU : public UParticleModuleCollisionBase
 
 };
 
-class UParticleModuleColorBase : public UParticleModule
-{
-};
-
 class UParticleModuleColor : public UParticleModuleColorBase
 {
     FRawDistributionVector StartColor;
@@ -13754,21 +15920,8 @@ class UParticleModuleColor : public UParticleModuleColorBase
 
 };
 
-struct FParticleRandomSeedInfo
+class UParticleModuleColorBase : public UParticleModule
 {
-    FName ParameterName;
-    uint8 bGetSeedFromInstance;
-    uint8 bInstanceSeedIsIndex;
-    uint8 bResetSeedOnEmitterLooping;
-    uint8 bRandomlySelectSeedArray;
-    TArray<int32> RandomSeeds;
-
-};
-
-class UParticleModuleColor_Seeded : public UParticleModuleColor
-{
-    FParticleRandomSeedInfo RandomSeedInfo;
-
 };
 
 class UParticleModuleColorOverLife : public UParticleModuleColorBase
@@ -13787,22 +15940,14 @@ class UParticleModuleColorScaleOverLife : public UParticleModuleColorBase
 
 };
 
-class UParticleModuleEventBase : public UParticleModule
+class UParticleModuleColor_Seeded : public UParticleModuleColor
 {
+    FParticleRandomSeedInfo RandomSeedInfo;
+
 };
 
-struct FParticleEvent_GenerateInfo
+class UParticleModuleEventBase : public UParticleModule
 {
-    TEnumAsByte<EParticleEventType> Type;
-    int32 Frequency;
-    int32 ParticleFrequency;
-    uint8 FirstTimeOnly;
-    uint8 LastTimeOnly;
-    uint8 UseReflectedImpactVector;
-    uint8 bUseOrbitOffset;
-    FName CustomName;
-    TArray<class UParticleModuleEventSendToGame*> ParticleModuleEventsToSendToGame;
-
 };
 
 class UParticleModuleEventGenerator : public UParticleModuleEventBase
@@ -13863,24 +16008,20 @@ class UParticleModuleKillHeight : public UParticleModuleKillBase
 
 };
 
-class UParticleModuleLifetimeBase : public UParticleModule
-{
-};
-
 class UParticleModuleLifetime : public UParticleModuleLifetimeBase
 {
     FRawDistributionFloat LifeTime;
 
 };
 
+class UParticleModuleLifetimeBase : public UParticleModule
+{
+};
+
 class UParticleModuleLifetime_Seeded : public UParticleModuleLifetime
 {
     FParticleRandomSeedInfo RandomSeedInfo;
 
-};
-
-class UParticleModuleLightBase : public UParticleModule
-{
 };
 
 class UParticleModuleLight : public UParticleModuleLightBase
@@ -13900,14 +16041,14 @@ class UParticleModuleLight : public UParticleModuleLightBase
 
 };
 
+class UParticleModuleLightBase : public UParticleModule
+{
+};
+
 class UParticleModuleLight_Seeded : public UParticleModuleLight
 {
     FParticleRandomSeedInfo RandomSeedInfo;
 
-};
-
-class UParticleModuleLocationBase : public UParticleModule
-{
 };
 
 class UParticleModuleLocation : public UParticleModuleLocationBase
@@ -13918,17 +16059,8 @@ class UParticleModuleLocation : public UParticleModuleLocationBase
 
 };
 
-class UParticleModuleLocation_Seeded : public UParticleModuleLocation
+class UParticleModuleLocationBase : public UParticleModule
 {
-    FParticleRandomSeedInfo RandomSeedInfo;
-
-};
-
-struct FLocationBoneSocketInfo
-{
-    FName BoneSocketName;
-    FVector Offset;
-
 };
 
 class UParticleModuleLocationBoneSocket : public UParticleModuleLocationBase
@@ -14054,6 +16186,12 @@ class UParticleModuleLocationWorldOffset_Seeded : public UParticleModuleLocation
 
 };
 
+class UParticleModuleLocation_Seeded : public UParticleModuleLocation
+{
+    FParticleRandomSeedInfo RandomSeedInfo;
+
+};
+
 class UParticleModuleMaterialBase : public UParticleModule
 {
 };
@@ -14064,10 +16202,6 @@ class UParticleModuleMeshMaterial : public UParticleModuleMaterialBase
 
 };
 
-class UParticleModuleRotationBase : public UParticleModule
-{
-};
-
 class UParticleModuleMeshRotation : public UParticleModuleRotationBase
 {
     FRawDistributionVector StartRotation;
@@ -14075,25 +16209,9 @@ class UParticleModuleMeshRotation : public UParticleModuleRotationBase
 
 };
 
-class UParticleModuleMeshRotation_Seeded : public UParticleModuleMeshRotation
-{
-    FParticleRandomSeedInfo RandomSeedInfo;
-
-};
-
-class UParticleModuleRotationRateBase : public UParticleModule
-{
-};
-
 class UParticleModuleMeshRotationRate : public UParticleModuleRotationRateBase
 {
     FRawDistributionVector StartRotationRate;
-
-};
-
-class UParticleModuleMeshRotationRate_Seeded : public UParticleModuleMeshRotationRate
-{
-    FParticleRandomSeedInfo RandomSeedInfo;
 
 };
 
@@ -14110,17 +16228,15 @@ class UParticleModuleMeshRotationRateOverLife : public UParticleModuleRotationRa
 
 };
 
-class UParticleModuleOrbitBase : public UParticleModule
+class UParticleModuleMeshRotationRate_Seeded : public UParticleModuleMeshRotationRate
 {
-    uint8 bUseEmitterTime;
+    FParticleRandomSeedInfo RandomSeedInfo;
 
 };
 
-struct FOrbitOptions
+class UParticleModuleMeshRotation_Seeded : public UParticleModuleMeshRotation
 {
-    uint8 bProcessDuringSpawn;
-    uint8 bProcessDuringUpdate;
-    uint8 bUseEmitterTime;
+    FParticleRandomSeedInfo RandomSeedInfo;
 
 };
 
@@ -14136,8 +16252,10 @@ class UParticleModuleOrbit : public UParticleModuleOrbitBase
 
 };
 
-class UParticleModuleOrientationBase : public UParticleModule
+class UParticleModuleOrbitBase : public UParticleModule
 {
+    uint8 bUseEmitterTime;
+
 };
 
 class UParticleModuleOrientationAxisLock : public UParticleModuleOrientationBase
@@ -14146,19 +16264,12 @@ class UParticleModuleOrientationAxisLock : public UParticleModuleOrientationBase
 
 };
 
-class UParticleModuleParameterBase : public UParticleModule
+class UParticleModuleOrientationBase : public UParticleModule
 {
 };
 
-struct FEmitterDynamicParameter
+class UParticleModuleParameterBase : public UParticleModule
 {
-    FName ParamName;
-    uint8 bUseEmitterTime;
-    uint8 bSpawnTimeOnly;
-    TEnumAsByte<EEmitterDynamicParameterValue> ValueMethod;
-    uint8 bScaleVelocityByParamValue;
-    FRawDistributionFloat ParamValue;
-
 };
 
 class UParticleModuleParameterDynamic : public UParticleModuleParameterBase
@@ -14178,14 +16289,6 @@ class UParticleModuleParameterDynamic_Seeded : public UParticleModuleParameterDy
 class UParticleModulePivotOffset : public UParticleModuleLocationBase
 {
     FVector2D PivotOffset;
-
-};
-
-struct FParticleBurst
-{
-    int32 Count;
-    int32 CountLow;
-    float Time;
 
 };
 
@@ -14245,10 +16348,8 @@ class UParticleModuleRotation : public UParticleModuleRotationBase
 
 };
 
-class UParticleModuleRotation_Seeded : public UParticleModuleRotation
+class UParticleModuleRotationBase : public UParticleModule
 {
-    FParticleRandomSeedInfo RandomSeedInfo;
-
 };
 
 class UParticleModuleRotationOverLifetime : public UParticleModuleRotationBase
@@ -14264,10 +16365,8 @@ class UParticleModuleRotationRate : public UParticleModuleRotationRateBase
 
 };
 
-class UParticleModuleRotationRate_Seeded : public UParticleModuleRotationRate
+class UParticleModuleRotationRateBase : public UParticleModule
 {
-    FParticleRandomSeedInfo RandomSeedInfo;
-
 };
 
 class UParticleModuleRotationRateMultiplyLife : public UParticleModuleRotationRateBase
@@ -14276,8 +16375,16 @@ class UParticleModuleRotationRateMultiplyLife : public UParticleModuleRotationRa
 
 };
 
-class UParticleModuleSizeBase : public UParticleModule
+class UParticleModuleRotationRate_Seeded : public UParticleModuleRotationRate
 {
+    FParticleRandomSeedInfo RandomSeedInfo;
+
+};
+
+class UParticleModuleRotation_Seeded : public UParticleModuleRotation
+{
+    FParticleRandomSeedInfo RandomSeedInfo;
+
 };
 
 class UParticleModuleSize : public UParticleModuleSizeBase
@@ -14286,10 +16393,8 @@ class UParticleModuleSize : public UParticleModuleSizeBase
 
 };
 
-class UParticleModuleSize_Seeded : public UParticleModuleSize
+class UParticleModuleSizeBase : public UParticleModule
 {
-    FParticleRandomSeedInfo RandomSeedInfo;
-
 };
 
 class UParticleModuleSizeMultiplyLife : public UParticleModuleSizeBase
@@ -14317,16 +16422,15 @@ class UParticleModuleSizeScaleBySpeed : public UParticleModuleSizeBase
 
 };
 
-class UParticleModuleSourceMovement : public UParticleModuleLocationBase
+class UParticleModuleSize_Seeded : public UParticleModuleSize
 {
-    FRawDistributionVector SourceMovementScale;
+    FParticleRandomSeedInfo RandomSeedInfo;
 
 };
 
-class UParticleModuleSpawnBase : public UParticleModule
+class UParticleModuleSourceMovement : public UParticleModuleLocationBase
 {
-    uint8 bProcessSpawnRate;
-    uint8 bProcessBurstList;
+    FRawDistributionVector SourceMovementScale;
 
 };
 
@@ -14338,6 +16442,13 @@ class UParticleModuleSpawn : public UParticleModuleSpawnBase
     TArray<FParticleBurst> BurstList;
     FRawDistributionFloat BurstScale;
     uint8 bApplyGlobalSpawnRateScale;
+
+};
+
+class UParticleModuleSpawnBase : public UParticleModule
+{
+    uint8 bProcessSpawnRate;
+    uint8 bProcessBurstList;
 
 };
 
@@ -14354,16 +16465,16 @@ class UParticleModuleSpawnPerUnit : public UParticleModuleSpawnBase
 
 };
 
-class UParticleModuleSubUVBase : public UParticleModule
-{
-};
-
 class UParticleModuleSubUV : public UParticleModuleSubUVBase
 {
     class USubUVAnimation* Animation;
     FRawDistributionFloat SubImageIndex;
     uint8 bUseRealTime;
 
+};
+
+class UParticleModuleSubUVBase : public UParticleModule
+{
 };
 
 class UParticleModuleSubUVMovie : public UParticleModuleSubUV
@@ -14391,10 +16502,6 @@ class UParticleModuleTrailSource : public UParticleModuleTrailBase
 
 };
 
-class UParticleModuleTypeDataBase : public UParticleModule
-{
-};
-
 class UParticleModuleTypeDataAnimTrail : public UParticleModuleTypeDataBase
 {
     uint8 bDeadTrailsOnDeactivate;
@@ -14405,6 +16512,10 @@ class UParticleModuleTypeDataAnimTrail : public UParticleModuleTypeDataBase
     float TangentTessellationStepSize;
     float WidthTessellationStepSize;
 
+};
+
+class UParticleModuleTypeDataBase : public UParticleModule
+{
 };
 
 class UParticleModuleTypeDataBeam2 : public UParticleModuleTypeDataBase
@@ -14427,108 +16538,6 @@ class UParticleModuleTypeDataBeam2 : public UParticleModuleTypeDataBase
     uint8 RenderDirectLine;
     uint8 RenderLines;
     uint8 RenderTessellation;
-
-};
-
-struct FGPUSpriteLocalVectorFieldInfo
-{
-    class UVectorField* Field;
-    FTransform Transform;
-    FRotator MinInitialRotation;
-    FRotator MaxInitialRotation;
-    FRotator RotationRate;
-    float Intensity;
-    float Tightness;
-    uint8 bIgnoreComponentTransform;
-    uint8 bTileX;
-    uint8 bTileY;
-    uint8 bTileZ;
-    uint8 bUseFixDT;
-
-};
-
-struct FFloatDistribution
-{
-    FDistributionLookupTable Table;
-
-};
-
-struct FGPUSpriteEmitterInfo
-{
-    class UParticleModuleRequired* RequiredModule;
-    class UParticleModuleSpawn* SpawnModule;
-    class UParticleModuleSpawnPerUnit* SpawnPerUnitModule;
-    TArray<class UParticleModule*> SpawnModules;
-    FGPUSpriteLocalVectorFieldInfo LocalVectorField;
-    FFloatDistribution VectorFieldScale;
-    FFloatDistribution DragCoefficient;
-    FFloatDistribution PointAttractorStrength;
-    FFloatDistribution Resilience;
-    FVector ConstantAcceleration;
-    FVector PointAttractorPosition;
-    float PointAttractorRadiusSq;
-    FVector OrbitOffsetBase;
-    FVector OrbitOffsetRange;
-    FVector2D InvMaxSize;
-    float InvRotationRateScale;
-    float MaxLifetime;
-    int32 MaxParticleCount;
-    TEnumAsByte<EParticleScreenAlignment> ScreenAlignment;
-    TEnumAsByte<EParticleAxisLock> LockAxisFlag;
-    uint8 bEnableCollision;
-    TEnumAsByte<EParticleCollisionMode::Type> CollisionMode;
-    uint8 bRemoveHMDRoll;
-    float MinFacingCameraBlendDistance;
-    float MaxFacingCameraBlendDistance;
-    FRawDistributionVector DynamicColor;
-    FRawDistributionFloat DynamicAlpha;
-    FRawDistributionVector DynamicColorScale;
-    FRawDistributionFloat DynamicAlphaScale;
-
-};
-
-struct FGPUSpriteResourceData
-{
-    TArray<FColor> QuantizedColorSamples;
-    TArray<FColor> QuantizedMiscSamples;
-    TArray<FColor> QuantizedSimulationAttrSamples;
-    FVector4 ColorScale;
-    FVector4 ColorBias;
-    FVector4 MiscScale;
-    FVector4 MiscBias;
-    FVector4 SimulationAttrCurveScale;
-    FVector4 SimulationAttrCurveBias;
-    FVector4 SubImageSize;
-    FVector4 SizeBySpeed;
-    FVector ConstantAcceleration;
-    FVector OrbitOffsetBase;
-    FVector OrbitOffsetRange;
-    FVector OrbitFrequencyBase;
-    FVector OrbitFrequencyRange;
-    FVector OrbitPhaseBase;
-    FVector OrbitPhaseRange;
-    float GlobalVectorFieldScale;
-    float GlobalVectorFieldTightness;
-    float PerParticleVectorFieldScale;
-    float PerParticleVectorFieldBias;
-    float DragCoefficientScale;
-    float DragCoefficientBias;
-    float ResilienceScale;
-    float ResilienceBias;
-    float CollisionRadiusScale;
-    float CollisionRadiusBias;
-    float CollisionTimeBias;
-    float CollisionRandomSpread;
-    float CollisionRandomDistribution;
-    float OneMinusFriction;
-    float RotationRateScale;
-    float CameraMotionBlurAmount;
-    TEnumAsByte<EParticleScreenAlignment> ScreenAlignment;
-    TEnumAsByte<EParticleAxisLock> LockAxisFlag;
-    FVector2D PivotOffset;
-    uint8 bRemoveHMDRoll;
-    float MinFacingCameraBlendDistance;
-    float MaxFacingCameraBlendDistance;
 
 };
 
@@ -14643,13 +16652,6 @@ class UParticleModuleVectorFieldScaleOverLife : public UParticleModuleVectorFiel
 
 };
 
-class UParticleModuleVelocityBase : public UParticleModule
-{
-    uint8 bInWorldSpace;
-    uint8 bApplyOwnerScale;
-
-};
-
 class UParticleModuleVelocity : public UParticleModuleVelocityBase
 {
     FRawDistributionVector StartVelocity;
@@ -14657,9 +16659,10 @@ class UParticleModuleVelocity : public UParticleModuleVelocityBase
 
 };
 
-class UParticleModuleVelocity_Seeded : public UParticleModuleVelocity
+class UParticleModuleVelocityBase : public UParticleModule
 {
-    FParticleRandomSeedInfo RandomSeedInfo;
+    uint8 bInWorldSpace;
+    uint8 bApplyOwnerScale;
 
 };
 
@@ -14684,8 +16687,123 @@ class UParticleModuleVelocityOverLifetime : public UParticleModuleVelocityBase
 
 };
 
+class UParticleModuleVelocity_Seeded : public UParticleModuleVelocity
+{
+    FParticleRandomSeedInfo RandomSeedInfo;
+
+};
+
 class UParticleSpriteEmitter : public UParticleEmitter
 {
+};
+
+class UParticleSystem : public UFXSystemAsset
+{
+    float UpdateTime_FPS;
+    float UpdateTime_Delta;
+    float WarmupTime;
+    float WarmupTickRate;
+    TArray<class UParticleEmitter*> Emitters;
+    class UParticleSystemComponent* PreviewComponent;
+    class UInterpCurveEdSetup* CurveEdSetup;
+    float LODDistanceCheckTime;
+    float MacroUVRadius;
+    TArray<float> LODDistances;
+    TArray<FParticleSystemLOD> LODSettings;
+    FBox FixedRelativeBoundingBox;
+    float SecondsBeforeInactive;
+    float Delay;
+    float DelayLow;
+    uint8 bOrientZAxisTowardCamera;
+    uint8 bUseFixedRelativeBoundingBox;
+    uint8 bShouldResetPeakCounts;
+    uint8 bHasPhysics;
+    uint8 bUseRealtimeThumbnail;
+    uint8 ThumbnailImageOutOfDate;
+    uint8 bUseDelayRange;
+    uint8 bAllowManagedTicking;
+    uint8 bAutoDeactivate;
+    uint8 bRegenerateLODDuplicate;
+    TEnumAsByte<EParticleSystemUpdateMode> SystemUpdateMode;
+    TEnumAsByte<ParticleSystemLODMethod> LODMethod;
+    EParticleSystemInsignificanceReaction InsignificantReaction;
+    TEnumAsByte<EParticleSystemOcclusionBoundsMethod> OcclusionBoundsMethod;
+    EParticleSignificanceLevel MaxSignificanceLevel;
+    uint32 MinTimeBetweenTicks;
+    float InsignificanceDelay;
+    FVector MacroUVPosition;
+    FBox CustomOcclusionBounds;
+    TArray<FLODSoloTrack> SoloTracking;
+    TArray<FNamedEmitterMaterial> NamedMaterialSlots;
+
+    bool ContainsEmitterType(UClass* TypeData);
+};
+
+class UParticleSystemComponent : public UFXSystemComponent
+{
+    class UParticleSystem* Template;
+    TArray<class UMaterialInterface*> EmitterMaterials;
+    TArray<class USkeletalMeshComponent*> SkelMeshComponents;
+    uint8 bResetOnDetach;
+    uint8 bUpdateOnDedicatedServer;
+    uint8 bAllowRecycling;
+    uint8 bAutoManageAttachment;
+    uint8 bAutoAttachWeldSimulatedBodies;
+    uint8 bWarmingUp;
+    uint8 bOverrideLODMethod;
+    uint8 bSkipUpdateDynamicDataDuringTick;
+    TEnumAsByte<ParticleSystemLODMethod> LODMethod;
+    EParticleSignificanceLevel RequiredSignificance;
+    TArray<FParticleSysParam> InstanceParameters;
+    FParticleSystemComponentOnParticleSpawn OnParticleSpawn;
+    void ParticleSpawnSignature(FName EventName, float EmitterTime, FVector Location, FVector Velocity);
+    FParticleSystemComponentOnParticleBurst OnParticleBurst;
+    void ParticleBurstSignature(FName EventName, float EmitterTime, int32 ParticleCount);
+    FParticleSystemComponentOnParticleDeath OnParticleDeath;
+    void ParticleDeathSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction);
+    FParticleSystemComponentOnParticleCollide OnParticleCollide;
+    void ParticleCollisionSignature(FName EventName, float EmitterTime, int32 ParticleTime, FVector Location, FVector Velocity, FVector Direction, FVector Normal, FName BoneName, class UPhysicalMaterial* PhysMat);
+    bool bOldPositionValid;
+    FVector OldPosition;
+    FVector PartSysVelocity;
+    float WarmupTime;
+    float WarmupTickRate;
+    float SecondsBeforeInactive;
+    float MaxTimeBeforeForceUpdateTransform;
+    TArray<class UParticleSystemReplay*> ReplayClips;
+    float CustomTimeDilation;
+    TWeakObjectPtr<class USceneComponent> AutoAttachParent;
+    FName AutoAttachSocketName;
+    EAttachmentRule AutoAttachLocationRule;
+    EAttachmentRule AutoAttachRotationRule;
+    EAttachmentRule AutoAttachScaleRule;
+    FParticleSystemComponentOnSystemFinished OnSystemFinished;
+    void OnSystemFinished(class UParticleSystemComponent* PSystem);
+
+    void SetTrailSourceData(FName InFirstSocketName, FName InSecondSocketName, TEnumAsByte<ETrailWidthMode> InWidthMode, float InWidth);
+    void SetTemplate(class UParticleSystem* NewTemplate);
+    void SetMaterialParameter(FName ParameterName, class UMaterialInterface* Param);
+    void SetBeamTargetTangent(int32 EmitterIndex, FVector NewTangentPoint, int32 TargetIndex);
+    void SetBeamTargetStrength(int32 EmitterIndex, float NewTargetStrength, int32 TargetIndex);
+    void SetBeamTargetPoint(int32 EmitterIndex, FVector NewTargetPoint, int32 TargetIndex);
+    void SetBeamSourceTangent(int32 EmitterIndex, FVector NewTangentPoint, int32 SourceIndex);
+    void SetBeamSourceStrength(int32 EmitterIndex, float NewSourceStrength, int32 SourceIndex);
+    void SetBeamSourcePoint(int32 EmitterIndex, FVector NewSourcePoint, int32 SourceIndex);
+    void SetBeamEndPoint(int32 EmitterIndex, FVector NewEndPoint);
+    void SetAutoAttachParams(class USceneComponent* Parent, FName SocketName, TEnumAsByte<EAttachLocation::Type> LocationType);
+    int32 GetNumActiveParticles();
+    class UMaterialInterface* GetNamedMaterial(FName InName);
+    bool GetBeamTargetTangent(int32 EmitterIndex, int32 TargetIndex, FVector& OutTangentPoint);
+    bool GetBeamTargetStrength(int32 EmitterIndex, int32 TargetIndex, float& OutTargetStrength);
+    bool GetBeamTargetPoint(int32 EmitterIndex, int32 TargetIndex, FVector& OutTargetPoint);
+    bool GetBeamSourceTangent(int32 EmitterIndex, int32 SourceIndex, FVector& OutTangentPoint);
+    bool GetBeamSourceStrength(int32 EmitterIndex, int32 SourceIndex, float& OutSourceStrength);
+    bool GetBeamSourcePoint(int32 EmitterIndex, int32 SourceIndex, FVector& OutSourcePoint);
+    bool GetBeamEndPoint(int32 EmitterIndex, FVector& OutEndPoint);
+    void GenerateParticleEvent(const FName InEventName, const float InEmitterTime, const FVector InLocation, const FVector InDirection, const FVector InVelocity);
+    void EndTrails();
+    class UMaterialInstanceDynamic* CreateNamedDynamicMaterialInstance(FName InName, class UMaterialInterface* SourceMaterial);
+    void BeginTrails(FName InFirstSocketName, FName InSecondSocketName, TEnumAsByte<ETrailWidthMode> InWidthMode, float InWidth);
 };
 
 class UParticleSystemReplay : public UObject
@@ -14694,8 +16812,17 @@ class UParticleSystemReplay : public UObject
 
 };
 
-class IPathFollowingAgentInterface : public IInterface
+class UPawnMovementComponent : public UNavMovementComponent
 {
+    class APawn* PawnOwner;
+
+    FVector K2_GetInputVector();
+    bool IsMoveInputIgnored();
+    FVector GetPendingInputVector();
+    class APawn* GetPawnOwner();
+    FVector GetLastInputVector();
+    FVector ConsumeInputVector();
+    void AddInputVector(FVector WorldVector, bool bForce);
 };
 
 class UPawnNoiseEmitterComponent : public UActorComponent
@@ -14711,16 +16838,10 @@ class UPawnNoiseEmitterComponent : public UActorComponent
     void MakeNoise(class AActor* NoiseMaker, float Loudness, const FVector& NoiseLocation);
 };
 
-struct FPhysicalAnimationData
+class UPendingNetGame : public UObject
 {
-    FName BodyName;
-    uint8 bIsLocalSimulation;
-    float OrientationStrength;
-    float AngularVelocityStrength;
-    float PositionStrength;
-    float VelocityStrength;
-    float MaxLinearForce;
-    float MaxAngularForce;
+    class UNetDriver* NetDriver;
+    class UDemoNetDriver* DemoNetDriver;
 
 };
 
@@ -14745,18 +16866,6 @@ class UPhysicalMaterialMask : public UObject
 
 };
 
-struct FSolverIterations
-{
-    float FixedTimeStep;
-    int32 SolverIterations;
-    int32 JointIterations;
-    int32 CollisionIterations;
-    int32 SolverPushOutIterations;
-    int32 JointPushOutIterations;
-    int32 CollisionPushOutIterations;
-
-};
-
 class UPhysicsAsset : public UObject
 {
     TArray<int32> BoundsBodies;
@@ -14770,159 +16879,12 @@ class UPhysicsAsset : public UObject
 
 };
 
-struct FPhysicalAnimationProfile
-{
-    FName ProfileName;
-    FPhysicalAnimationData PhysicalAnimationData;
-
-};
-
-class USkeletalBodySetup : public UBodySetup
-{
-    bool bSkipScaleFromAnimation;
-    TArray<FPhysicalAnimationProfile> PhysicalAnimationData;
-
-};
-
 class UPhysicsCollisionHandler : public UObject
 {
     float ImpactThreshold;
     float ImpactReFireDelay;
     class USoundBase* DefaultImpactSound;
     float LastImpactSoundTime;
-
-};
-
-class ARigidBodyBase : public AActor
-{
-};
-
-class APhysicsConstraintActor : public ARigidBodyBase
-{
-    class UPhysicsConstraintComponent* ConstraintComp;
-    class AActor* ConstraintActor1;
-    class AActor* ConstraintActor2;
-    uint8 bDisableCollision;
-
-};
-
-struct FConstrainComponentPropName
-{
-    FName ComponentName;
-
-};
-
-struct FConstraintInstanceBase
-{
-};
-
-struct FConstraintBaseParams
-{
-    float Stiffness;
-    float Damping;
-    float Restitution;
-    float ContactDistance;
-    uint8 bSoftConstraint;
-
-};
-
-struct FLinearConstraint : public FConstraintBaseParams
-{
-    float Limit;
-    TEnumAsByte<ELinearConstraintMotion> XMotion;
-    TEnumAsByte<ELinearConstraintMotion> YMotion;
-    TEnumAsByte<ELinearConstraintMotion> ZMotion;
-
-};
-
-struct FConeConstraint : public FConstraintBaseParams
-{
-    float Swing1LimitDegrees;
-    float Swing2LimitDegrees;
-    TEnumAsByte<EAngularConstraintMotion> Swing1Motion;
-    TEnumAsByte<EAngularConstraintMotion> Swing2Motion;
-
-};
-
-struct FTwistConstraint : public FConstraintBaseParams
-{
-    float TwistLimitDegrees;
-    TEnumAsByte<EAngularConstraintMotion> TwistMotion;
-
-};
-
-struct FConstraintDrive
-{
-    float Stiffness;
-    float Damping;
-    float MaxForce;
-    uint8 bEnablePositionDrive;
-    uint8 bEnableVelocityDrive;
-
-};
-
-struct FLinearDriveConstraint
-{
-    FVector PositionTarget;
-    FVector VelocityTarget;
-    FConstraintDrive XDrive;
-    FConstraintDrive YDrive;
-    FConstraintDrive ZDrive;
-    uint8 bEnablePositionDrive;
-
-};
-
-struct FAngularDriveConstraint
-{
-    FConstraintDrive TwistDrive;
-    FConstraintDrive SwingDrive;
-    FConstraintDrive SlerpDrive;
-    FRotator OrientationTarget;
-    FVector AngularVelocityTarget;
-    TEnumAsByte<EAngularDriveMode::Type> AngularDriveMode;
-
-};
-
-struct FConstraintProfileProperties
-{
-    float ProjectionLinearTolerance;
-    float ProjectionAngularTolerance;
-    float ProjectionLinearAlpha;
-    float ProjectionAngularAlpha;
-    float LinearBreakThreshold;
-    float LinearPlasticityThreshold;
-    float AngularBreakThreshold;
-    float AngularPlasticityThreshold;
-    FLinearConstraint LinearLimit;
-    FConeConstraint ConeLimit;
-    FTwistConstraint TwistLimit;
-    FLinearDriveConstraint LinearDrive;
-    FAngularDriveConstraint AngularDrive;
-    uint8 bDisableCollision;
-    uint8 bParentDominates;
-    uint8 bEnableProjection;
-    uint8 bEnableSoftProjection;
-    uint8 bAngularBreakable;
-    uint8 bAngularPlasticity;
-    uint8 bLinearBreakable;
-    uint8 bLinearPlasticity;
-
-};
-
-struct FConstraintInstance : public FConstraintInstanceBase
-{
-    FName JointName;
-    FName ConstraintBone1;
-    FName ConstraintBone2;
-    FVector Pos1;
-    FVector PriAxis1;
-    FVector SecAxis1;
-    FVector Pos2;
-    FVector PriAxis2;
-    FVector SecAxis2;
-    FRotator AngularRotationOffset;
-    uint8 bScaleLinearLimits;
-    FConstraintProfileProperties ProfileInstance;
 
 };
 
@@ -14975,13 +16937,6 @@ class UPhysicsConstraintComponent : public USceneComponent
     void BreakConstraint();
 };
 
-struct FPhysicsConstraintProfileHandle
-{
-    FConstraintProfileProperties ProfileProperties;
-    FName ProfileName;
-
-};
-
 class UPhysicsConstraintTemplate : public UObject
 {
     FConstraintInstance DefaultInstance;
@@ -15020,39 +16975,6 @@ class UPhysicsHandleComponent : public UActorComponent
     void GrabComponent(class UPrimitiveComponent* Component, FName InBoneName, FVector GrabLocation, bool bConstrainRotation);
     void GetTargetLocationAndRotation(FVector& TargetLocation, FRotator& TargetRotation);
     class UPrimitiveComponent* GetGrabbedComponent();
-};
-
-struct FRigidBodyErrorCorrection
-{
-    float PingExtrapolation;
-    float PingLimit;
-    float ErrorPerLinearDifference;
-    float ErrorPerAngularDifference;
-    float MaxRestoredStateError;
-    float MaxLinearHardSnapDistance;
-    float PositionLerp;
-    float AngleLerp;
-    float LinearVelocityCoefficient;
-    float AngularVelocityCoefficient;
-    float ErrorAccumulationSeconds;
-    float ErrorAccumulationDistanceSq;
-    float ErrorAccumulationSimilarity;
-
-};
-
-struct FPhysicalSurfaceName
-{
-    TEnumAsByte<EPhysicalSurface> Type;
-    FName Name;
-
-};
-
-struct FChaosPhysicsSettings
-{
-    EChaosThreadingMode DefaultThreadingModel;
-    EChaosSolverTickMode DedicatedThreadTickMode;
-    EChaosBufferMode DedicatedThreadBufferMode;
-
 };
 
 class UPhysicsSettings : public UPhysicsSettingsCore
@@ -15100,24 +17022,10 @@ class UPhysicsSpringComponent : public USceneComponent
     float GetNormalizedCompressionScalar();
 };
 
-class APhysicsThruster : public ARigidBodyBase
-{
-    class UPhysicsThrusterComponent* ThrusterComponent;
-
-};
-
 class UPhysicsThrusterComponent : public USceneComponent
 {
     float ThrustStrength;
 
-};
-
-class APlanarReflection : public ASceneCapture
-{
-    class UPlanarReflectionComponent* PlanarReflectionComponent;
-    bool bShowPreviewPlane;
-
-    void OnInterpToggle(bool bEnable);
 };
 
 class UPlanarReflectionComponent : public USceneCaptureComponent
@@ -15137,10 +17045,6 @@ class UPlanarReflectionComponent : public USceneCaptureComponent
     bool bShowPreviewPlane;
     bool bRenderSceneTwoSided;
 
-};
-
-class APlaneReflectionCapture : public AReflectionCapture
-{
 };
 
 class UPlaneReflectionCaptureComponent : public UReflectionCaptureComponent
@@ -15164,6 +17068,43 @@ class UPlatformEventsComponent : public UActorComponent
     bool IsInLaptopMode();
 };
 
+class UPlatformGameInstance : public UGameInstance
+{
+    FPlatformGameInstanceApplicationWillDeactivateDelegate ApplicationWillDeactivateDelegate;
+    void PlatformDelegate();
+    FPlatformGameInstanceApplicationHasReactivatedDelegate ApplicationHasReactivatedDelegate;
+    void PlatformDelegate();
+    FPlatformGameInstanceApplicationWillEnterBackgroundDelegate ApplicationWillEnterBackgroundDelegate;
+    void PlatformDelegate();
+    FPlatformGameInstanceApplicationHasEnteredForegroundDelegate ApplicationHasEnteredForegroundDelegate;
+    void PlatformDelegate();
+    FPlatformGameInstanceApplicationWillTerminateDelegate ApplicationWillTerminateDelegate;
+    void PlatformDelegate();
+    FPlatformGameInstanceApplicationShouldUnloadResourcesDelegate ApplicationShouldUnloadResourcesDelegate;
+    void PlatformDelegate();
+    FPlatformGameInstanceApplicationReceivedStartupArgumentsDelegate ApplicationReceivedStartupArgumentsDelegate;
+    void PlatformStartupArgumentsDelegate(const TArray<FString>& StartupArguments);
+    FPlatformGameInstanceApplicationRegisteredForRemoteNotificationsDelegate ApplicationRegisteredForRemoteNotificationsDelegate;
+    void PlatformRegisteredForRemoteNotificationsDelegate(const TArray<uint8>& inArray);
+    FPlatformGameInstanceApplicationRegisteredForUserNotificationsDelegate ApplicationRegisteredForUserNotificationsDelegate;
+    void PlatformRegisteredForUserNotificationsDelegate(int32 inInt);
+    FPlatformGameInstanceApplicationFailedToRegisterForRemoteNotificationsDelegate ApplicationFailedToRegisterForRemoteNotificationsDelegate;
+    void PlatformFailedToRegisterForRemoteNotificationsDelegate(FString inString);
+    FPlatformGameInstanceApplicationReceivedRemoteNotificationDelegate ApplicationReceivedRemoteNotificationDelegate;
+    void PlatformReceivedRemoteNotificationDelegate(FString inString, TEnumAsByte<EApplicationState::Type> inAppState);
+    FPlatformGameInstanceApplicationReceivedLocalNotificationDelegate ApplicationReceivedLocalNotificationDelegate;
+    void PlatformReceivedLocalNotificationDelegate(FString inString, int32 inInt, TEnumAsByte<EApplicationState::Type> inAppState);
+    FPlatformGameInstanceApplicationReceivedScreenOrientationChangedNotificationDelegate ApplicationReceivedScreenOrientationChangedNotificationDelegate;
+    void PlatformScreenOrientationChangedDelegate(TEnumAsByte<EScreenOrientation::Type> inScreenOrientation);
+
+};
+
+class UPlatformInterfaceBase : public UObject
+{
+    TArray<FDelegateArray> AllDelegates;
+
+};
+
 class UPlatformInterfaceWebResponse : public UObject
 {
     FString OriginalURL;
@@ -15177,19 +17118,12 @@ class UPlatformInterfaceWebResponse : public UObject
     void GetHeader(int32 HeaderIndex, FString& Header, FString& Value);
 };
 
-struct FKeyBind
+class UPlayer : public UObject
 {
-    FKey Key;
-    FString Command;
-    uint8 Control;
-    uint8 Shift;
-    uint8 Alt;
-    uint8 Cmd;
-    uint8 bIgnoreCtrl;
-    uint8 bIgnoreShift;
-    uint8 bIgnoreAlt;
-    uint8 bIgnoreCmd;
-    uint8 bDisabled;
+    class APlayerController* PlayerController;
+    int32 CurrentNetSpeed;
+    int32 ConfiguredInternetSpeed;
+    int32 ConfiguredLanSpeed;
 
 };
 
@@ -15205,42 +17139,26 @@ class UPlayerInput : public UObject
     void ClearSmoothing();
 };
 
-class APlayerStartPIE : public APlayerStart
-{
-};
-
 class UPluginCommandlet : public UCommandlet
 {
 };
 
-class APointLight : public ALight
+class UPointLightComponent : public ULocalLightComponent
 {
-    class UPointLightComponent* PointLightComponent;
+    uint8 bUseInverseSquaredFalloff;
+    float LightFalloffExponent;
+    float SourceRadius;
+    float SoftSourceRadius;
+    float SourceLength;
 
-    void SetRadius(float NewRadius);
+    void SetSourceRadius(float bNewValue);
+    void SetSourceLength(float NewValue);
+    void SetSoftSourceRadius(float bNewValue);
     void SetLightFalloffExponent(float NewLightFalloffExponent);
 };
 
 class UPolys : public UObject
 {
-};
-
-struct FPoseData
-{
-    TArray<FTransform> LocalSpacePose;
-    TMap<int32, int32> TrackToBufferIndex;
-    TArray<float> CurveData;
-
-};
-
-struct FPoseDataContainer
-{
-    TArray<FSmartName> PoseNames;
-    TArray<FName> Tracks;
-    TMap<FName, int32> TrackMap;
-    TArray<FPoseData> Poses;
-    TArray<FAnimCurveBase> Curves;
-
 };
 
 class UPoseAsset : public UAnimationAsset
@@ -15260,6 +17178,21 @@ class UPoseWatch : public UObject
 
 };
 
+class UPoseableMeshComponent : public USkinnedMeshComponent
+{
+
+    void SetBoneTransformByName(FName BoneName, const FTransform& InTransform, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    void SetBoneScaleByName(FName BoneName, FVector InScale3D, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    void SetBoneRotationByName(FName BoneName, FRotator InRotation, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    void SetBoneLocationByName(FName BoneName, FVector InLocation, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    void ResetBoneTransformByName(FName BoneName);
+    FTransform GetBoneTransformByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    FVector GetBoneScaleByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    FRotator GetBoneRotationByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    FVector GetBoneLocationByName(FName BoneName, TEnumAsByte<EBoneSpaces::Type> BoneSpace);
+    void CopyPoseFromSkeletalComponent(class USkeletalMeshComponent* InComponentToCopy);
+};
+
 class UPostProcessComponent : public USceneComponent
 {
     FPostProcessSettings Settings;
@@ -15272,50 +17205,10 @@ class UPostProcessComponent : public USceneComponent
     void AddOrUpdateBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight);
 };
 
-class APostProcessVolume : public AVolume
-{
-    FPostProcessSettings Settings;
-    float Priority;
-    float BlendRadius;
-    float BlendWeight;
-    uint8 bEnabled;
-    uint8 bUnbound;
-
-    void AddOrUpdateBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight);
-};
-
-class APrecomputedVisibilityOverrideVolume : public AVolume
-{
-    TArray<class AActor*> OverrideVisibleActors;
-    TArray<class AActor*> OverrideInvisibleActors;
-    TArray<FName> OverrideInvisibleLevels;
-
-};
-
-class APrecomputedVisibilityVolume : public AVolume
-{
-};
-
-class IPreviewCollectionInterface : public IInterface
-{
-};
-
-struct FPreviewMeshCollectionEntry
-{
-    TSoftObjectPtr<USkeletalMesh> SkeletalMesh;
-
-};
-
 class UPreviewMeshCollection : public UDataAsset
 {
     class USkeleton* Skeleton;
     TArray<FPreviewMeshCollectionEntry> SkeletalMeshes;
-
-};
-
-struct FCollectionReference
-{
-    FName CollectionName;
 
 };
 
@@ -15330,20 +17223,298 @@ class UPrimaryAssetLabel : public UPrimaryDataAsset
 
 };
 
+class UPrimaryDataAsset : public UDataAsset
+{
+};
+
+class UPrimitiveComponent : public USceneComponent
+{
+    float MinDrawDistance;
+    float LDMaxDrawDistance;
+    float CachedMaxDrawDistance;
+    TEnumAsByte<ESceneDepthPriorityGroup> DepthPriorityGroup;
+    TEnumAsByte<ESceneDepthPriorityGroup> ViewOwnerDepthPriorityGroup;
+    TEnumAsByte<EIndirectLightingCacheQuality> IndirectLightingCacheQuality;
+    ELightmapType LightmapType;
+    uint8 bUseMaxLODAsImposter;
+    uint8 bBatchImpostersAsInstances;
+    uint8 bNeverDistanceCull;
+    uint8 bAlwaysCreatePhysicsState;
+    uint8 bGenerateOverlapEvents;
+    uint8 bMultiBodyOverlap;
+    uint8 bTraceComplexOnMove;
+    uint8 bReturnMaterialOnMove;
+    uint8 bUseViewOwnerDepthPriorityGroup;
+    uint8 bAllowCullDistanceVolume;
+    uint8 bHasMotionBlurVelocityMeshes;
+    uint8 bVisibleInReflectionCaptures;
+    uint8 bVisibleInRealTimeSkyCaptures;
+    uint8 bVisibleInRayTracing;
+    uint8 bRenderInMainPass;
+    uint8 bRenderInDepthPass;
+    uint8 bReceivesDecals;
+    uint8 bOwnerNoSee;
+    uint8 bOnlyOwnerSee;
+    uint8 bTreatAsBackgroundForOcclusion;
+    uint8 bUseAsOccluder;
+    uint8 bSelectable;
+    uint8 bForceMipStreaming;
+    uint8 bHasPerInstanceHitProxies;
+    uint8 CastShadow;
+    uint8 bAffectDynamicIndirectLighting;
+    uint8 bAffectDistanceFieldLighting;
+    uint8 bCastDynamicShadow;
+    uint8 bCastStaticShadow;
+    uint8 bCastVolumetricTranslucentShadow;
+    uint8 bCastContactShadow;
+    uint8 bSelfShadowOnly;
+    uint8 bCastFarShadow;
+    uint8 bCastInsetShadow;
+    uint8 bCastCinematicShadow;
+    uint8 bCastHiddenShadow;
+    uint8 bCastShadowAsTwoSided;
+    uint8 bLightAsIfStatic;
+    uint8 bLightAttachmentsAsGroup;
+    uint8 bExcludeFromLightAttachmentGroup;
+    uint8 bReceiveMobileCSMShadows;
+    uint8 bSingleSampleShadowFromStationaryLights;
+    uint8 bIgnoreRadialImpulse;
+    uint8 bIgnoreRadialForce;
+    uint8 bApplyImpulseOnDamage;
+    uint8 bReplicatePhysicsToAutonomousProxy;
+    uint8 bFillCollisionUnderneathForNavmesh;
+    uint8 AlwaysLoadOnClient;
+    uint8 AlwaysLoadOnServer;
+    uint8 bUseEditorCompositing;
+    uint8 bRenderCustomDepth;
+    uint8 bVisibleInSceneCaptureOnly;
+    uint8 bHiddenInSceneCapture;
+    TEnumAsByte<EHasCustomNavigableGeometry::Type> bHasCustomNavigableGeometry;
+    TEnumAsByte<ECanBeCharacterBase> CanCharacterStepUpOn;
+    FLightingChannels LightingChannels;
+    ERendererStencilMask CustomDepthStencilWriteMask;
+    int32 CustomDepthStencilValue;
+    FCustomPrimitiveData CustomPrimitiveData;
+    FCustomPrimitiveData CustomPrimitiveDataInternal;
+    int32 TranslucencySortPriority;
+    float TranslucencySortDistanceOffset;
+    int32 VisibilityId;
+    TArray<class URuntimeVirtualTexture*> RuntimeVirtualTextures;
+    int8 VirtualTextureLodBias;
+    int8 VirtualTextureCullMips;
+    int8 VirtualTextureMinCoverage;
+    ERuntimeVirtualTextureMainPassType VirtualTextureRenderPassType;
+    float LpvBiasMultiplier;
+    float BoundsScale;
+    TArray<class AActor*> MoveIgnoreActors;
+    TArray<class UPrimitiveComponent*> MoveIgnoreComponents;
+    FBodyInstance BodyInstance;
+    FPrimitiveComponentOnComponentHit OnComponentHit;
+    void ComponentHitSignature(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+    FPrimitiveComponentOnComponentBeginOverlap OnComponentBeginOverlap;
+    void ComponentBeginOverlapSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+    FPrimitiveComponentOnComponentEndOverlap OnComponentEndOverlap;
+    void ComponentEndOverlapSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+    FPrimitiveComponentOnComponentWake OnComponentWake;
+    void ComponentWakeSignature(class UPrimitiveComponent* WakingComponent, FName BoneName);
+    FPrimitiveComponentOnComponentSleep OnComponentSleep;
+    void ComponentSleepSignature(class UPrimitiveComponent* SleepingComponent, FName BoneName);
+    FPrimitiveComponentOnBeginCursorOver OnBeginCursorOver;
+    void ComponentBeginCursorOverSignature(class UPrimitiveComponent* TouchedComponent);
+    FPrimitiveComponentOnEndCursorOver OnEndCursorOver;
+    void ComponentEndCursorOverSignature(class UPrimitiveComponent* TouchedComponent);
+    FPrimitiveComponentOnClicked OnClicked;
+    void ComponentOnClickedSignature(class UPrimitiveComponent* TouchedComponent, FKey ButtonPressed);
+    FPrimitiveComponentOnReleased OnReleased;
+    void ComponentOnReleasedSignature(class UPrimitiveComponent* TouchedComponent, FKey ButtonReleased);
+    FPrimitiveComponentOnInputTouchBegin OnInputTouchBegin;
+    void ComponentOnInputTouchBeginSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
+    FPrimitiveComponentOnInputTouchEnd OnInputTouchEnd;
+    void ComponentOnInputTouchEndSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
+    FPrimitiveComponentOnInputTouchEnter OnInputTouchEnter;
+    void ComponentBeginTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
+    FPrimitiveComponentOnInputTouchLeave OnInputTouchLeave;
+    void ComponentEndTouchOverSignature(TEnumAsByte<ETouchIndex::Type> FingerIndex, class UPrimitiveComponent* TouchedComponent);
+    class UPrimitiveComponent* LODParentPrimitive;
+
+    bool WasRecentlyRendered(float Tolerance);
+    void WakeRigidBody(FName BoneName);
+    void WakeAllRigidBodies();
+    void SetWalkableSlopeOverride(const FWalkableSlopeOverride& NewOverride);
+    void SetVisibleInSceneCaptureOnly(bool bValue);
+    void SetUseCCD(bool InUseCCD, FName BoneName);
+    void SetTranslucentSortPriority(int32 NewTranslucentSortPriority);
+    void SetTranslucencySortDistanceOffset(float NewTranslucencySortDistanceOffset);
+    void SetSingleSampleShadowFromStationaryLights(bool bNewSingleSampleShadowFromStationaryLights);
+    void SetSimulatePhysics(bool bSimulate);
+    void SetRenderInMainPass(bool bValue);
+    void SetRenderCustomDepth(bool bValue);
+    void SetReceivesDecals(bool bNewReceivesDecals);
+    void SetPhysMaterialOverride(class UPhysicalMaterial* NewPhysMaterial);
+    void SetPhysicsMaxAngularVelocityInRadians(float NewMaxAngVel, bool bAddToCurrent, FName BoneName);
+    void SetPhysicsMaxAngularVelocityInDegrees(float NewMaxAngVel, bool bAddToCurrent, FName BoneName);
+    void SetPhysicsMaxAngularVelocity(float NewMaxAngVel, bool bAddToCurrent, FName BoneName);
+    void SetPhysicsLinearVelocity(FVector NewVel, bool bAddToCurrent, FName BoneName);
+    void SetPhysicsAngularVelocityInRadians(FVector NewAngVel, bool bAddToCurrent, FName BoneName);
+    void SetPhysicsAngularVelocityInDegrees(FVector NewAngVel, bool bAddToCurrent, FName BoneName);
+    void SetPhysicsAngularVelocity(FVector NewAngVel, bool bAddToCurrent, FName BoneName);
+    void SetOwnerNoSee(bool bNewOwnerNoSee);
+    void SetOnlyOwnerSee(bool bNewOnlyOwnerSee);
+    void SetNotifyRigidBodyCollision(bool bNewNotifyRigidBodyCollision);
+    void SetMaterialByName(FName MaterialSlotName, class UMaterialInterface* Material);
+    void SetMaterial(int32 ElementIndex, class UMaterialInterface* Material);
+    void SetMassScale(FName BoneName, float InMassScale);
+    void SetMassOverrideInKg(FName BoneName, float MassInKg, bool bOverrideMass);
+    void SetLinearDamping(float InDamping);
+    void SetLightingChannels(bool bChannel0, bool bChannel1, bool bChannel2);
+    void SetLightAttachmentsAsGroup(bool bInLightAttachmentsAsGroup);
+    void SetHiddenInSceneCapture(bool bValue);
+    void SetGenerateOverlapEvents(bool bInGenerateOverlapEvents);
+    void SetExcludeFromLightAttachmentGroup(bool bInExcludeFromLightAttachmentGroup);
+    void SetEnableGravity(bool bGravityEnabled);
+    void SetDefaultCustomPrimitiveDataVector4(int32 DataIndex, FVector4 Value);
+    void SetDefaultCustomPrimitiveDataVector3(int32 DataIndex, FVector Value);
+    void SetDefaultCustomPrimitiveDataVector2(int32 DataIndex, FVector2D Value);
+    void SetDefaultCustomPrimitiveDataFloat(int32 DataIndex, float Value);
+    void SetCustomPrimitiveDataVector4(int32 DataIndex, FVector4 Value);
+    void SetCustomPrimitiveDataVector3(int32 DataIndex, FVector Value);
+    void SetCustomPrimitiveDataVector2(int32 DataIndex, FVector2D Value);
+    void SetCustomPrimitiveDataFloat(int32 DataIndex, float Value);
+    void SetCustomDepthStencilWriteMask(ERendererStencilMask WriteMaskBit);
+    void SetCustomDepthStencilValue(int32 Value);
+    void SetCullDistance(float NewCullDistance);
+    void SetConstraintMode(TEnumAsByte<EDOFMode::Type> ConstraintMode);
+    void SetCollisionResponseToChannel(TEnumAsByte<ECollisionChannel> Channel, TEnumAsByte<ECollisionResponse> NewResponse);
+    void SetCollisionResponseToAllChannels(TEnumAsByte<ECollisionResponse> NewResponse);
+    void SetCollisionProfileName(FName InCollisionProfileName, bool bUpdateOverlaps);
+    void SetCollisionObjectType(TEnumAsByte<ECollisionChannel> Channel);
+    void SetCollisionEnabled(TEnumAsByte<ECollisionEnabled::Type> NewType);
+    void SetCenterOfMass(FVector CenterOfMassOffset, FName BoneName);
+    void SetCastShadow(bool NewCastShadow);
+    void SetCastInsetShadow(bool bInCastInsetShadow);
+    void SetCastHiddenShadow(bool NewCastHiddenShadow);
+    void SetBoundsScale(float NewBoundsScale);
+    void SetAngularDamping(float InDamping);
+    void SetAllUseCCD(bool InUseCCD);
+    void SetAllPhysicsLinearVelocity(FVector NewVel, bool bAddToCurrent);
+    void SetAllPhysicsAngularVelocityInRadians(const FVector& NewAngVel, bool bAddToCurrent);
+    void SetAllPhysicsAngularVelocityInDegrees(const FVector& NewAngVel, bool bAddToCurrent);
+    void SetAllMassScale(float InMassScale);
+    FVector ScaleByMomentOfInertia(FVector InputVector, FName BoneName);
+    void PutRigidBodyToSleep(FName BoneName);
+    bool K2_SphereTraceComponent(FVector TraceStart, FVector TraceEnd, float SphereRadius, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
+    bool K2_SphereOverlapComponent(FVector InSphereCentre, float InSphereRadius, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
+    bool K2_LineTraceComponent(FVector TraceStart, FVector TraceEnd, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
+    bool K2_IsQueryCollisionEnabled();
+    bool K2_IsPhysicsCollisionEnabled();
+    bool K2_IsCollisionEnabled();
+    bool K2_BoxOverlapComponent(FVector InBoxCentre, const FBox InBox, bool bTraceComplex, bool bShowTrace, bool bPersistentShowTrace, FVector& HitLocation, FVector& HitNormal, FName& BoneName, FHitResult& OutHit);
+    bool IsOverlappingComponent(const class UPrimitiveComponent* OtherComp);
+    bool IsOverlappingActor(const class AActor* Other);
+    bool IsGravityEnabled();
+    bool IsAnyRigidBodyAwake();
+    void IgnoreComponentWhenMoving(class UPrimitiveComponent* Component, bool bShouldIgnore);
+    void IgnoreActorWhenMoving(class AActor* Actor, bool bShouldIgnore);
+    FWalkableSlopeOverride GetWalkableSlopeOverride();
+    FVector GetPhysicsLinearVelocityAtPoint(FVector Point, FName BoneName);
+    FVector GetPhysicsLinearVelocity(FName BoneName);
+    FVector GetPhysicsAngularVelocityInRadians(FName BoneName);
+    FVector GetPhysicsAngularVelocityInDegrees(FName BoneName);
+    FVector GetPhysicsAngularVelocity(FName BoneName);
+    void GetOverlappingComponents(TArray<class UPrimitiveComponent*>& OutOverlappingComponents);
+    void GetOverlappingActors(TArray<class AActor*>& OverlappingActors, TSubclassOf<class AActor> ClassFilter);
+    int32 GetNumMaterials();
+    class UMaterialInterface* GetMaterialFromCollisionFaceIndex(int32 FaceIndex, int32& SectionIndex);
+    class UMaterialInterface* GetMaterial(int32 ElementIndex);
+    float GetMassScale(FName BoneName);
+    float GetMass();
+    float GetLinearDamping();
+    FVector GetInertiaTensor(FName BoneName);
+    bool GetGenerateOverlapEvents();
+    TEnumAsByte<ECollisionResponse> GetCollisionResponseToChannel(TEnumAsByte<ECollisionChannel> Channel);
+    FName GetCollisionProfileName();
+    TEnumAsByte<ECollisionChannel> GetCollisionObjectType();
+    TEnumAsByte<ECollisionEnabled::Type> GetCollisionEnabled();
+    float GetClosestPointOnCollision(const FVector& Point, FVector& OutPointOnBody, FName BoneName);
+    FVector GetCenterOfMass(FName BoneName);
+    float GetAngularDamping();
+    class UMaterialInstanceDynamic* CreateDynamicMaterialInstance(int32 ElementIndex, class UMaterialInterface* SourceMaterial, FName OptionalName);
+    class UMaterialInstanceDynamic* CreateAndSetMaterialInstanceDynamicFromMaterial(int32 ElementIndex, class UMaterialInterface* Parent);
+    class UMaterialInstanceDynamic* CreateAndSetMaterialInstanceDynamic(int32 ElementIndex);
+    TArray<class UPrimitiveComponent*> CopyArrayOfMoveIgnoreComponents();
+    TArray<class AActor*> CopyArrayOfMoveIgnoreActors();
+    void ClearMoveIgnoreComponents();
+    void ClearMoveIgnoreActors();
+    bool CanCharacterStepUp(class APawn* Pawn);
+    void AddTorqueInRadians(FVector Torque, FName BoneName, bool bAccelChange);
+    void AddTorqueInDegrees(FVector Torque, FName BoneName, bool bAccelChange);
+    void AddTorque(FVector Torque, FName BoneName, bool bAccelChange);
+    void AddRadialImpulse(FVector Origin, float Radius, float Strength, TEnumAsByte<ERadialImpulseFalloff> Falloff, bool bVelChange);
+    void AddRadialForce(FVector Origin, float Radius, float Strength, TEnumAsByte<ERadialImpulseFalloff> Falloff, bool bAccelChange);
+    void AddImpulseAtLocation(FVector Impulse, FVector Location, FName BoneName);
+    void AddImpulse(FVector Impulse, FName BoneName, bool bVelChange);
+    void AddForceAtLocationLocal(FVector force, FVector Location, FName BoneName);
+    void AddForceAtLocation(FVector force, FVector Location, FName BoneName);
+    void AddForce(FVector force, FName BoneName, bool bAccelChange);
+    void AddAngularImpulseInRadians(FVector Impulse, FName BoneName, bool bVelChange);
+    void AddAngularImpulseInDegrees(FVector Impulse, FName BoneName, bool bVelChange);
+    void AddAngularImpulse(FVector Impulse, FName BoneName, bool bVelChange);
+};
+
+class UProjectileMovementComponent : public UMovementComponent
+{
+    float InitialSpeed;
+    float MaxSpeed;
+    uint8 bRotationFollowsVelocity;
+    uint8 bRotationRemainsVertical;
+    uint8 bShouldBounce;
+    uint8 bInitialVelocityInLocalSpace;
+    uint8 bForceSubStepping;
+    uint8 bSimulationEnabled;
+    uint8 bSweepCollision;
+    uint8 bIsHomingProjectile;
+    uint8 bBounceAngleAffectsFriction;
+    uint8 bIsSliding;
+    uint8 bInterpMovement;
+    uint8 bInterpRotation;
+    float PreviousHitTime;
+    FVector PreviousHitNormal;
+    float ProjectileGravityScale;
+    float Buoyancy;
+    float Bounciness;
+    float Friction;
+    float BounceVelocityStopSimulatingThreshold;
+    float MinFrictionFraction;
+    FProjectileMovementComponentOnProjectileBounce OnProjectileBounce;
+    void OnProjectileBounceDelegate(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
+    FProjectileMovementComponentOnProjectileStop OnProjectileStop;
+    void OnProjectileStopDelegate(const FHitResult& ImpactResult);
+    float HomingAccelerationMagnitude;
+    TWeakObjectPtr<class USceneComponent> HomingTargetComponent;
+    float MaxSimulationTimeStep;
+    int32 MaxSimulationIterations;
+    int32 BounceAdditionalIterations;
+    float InterpLocationTime;
+    float InterpRotationTime;
+    float InterpLocationMaxLagDistance;
+    float InterpLocationSnapToTargetDistance;
+
+    void StopSimulating(const FHitResult& HitResult);
+    void SetVelocityInLocalSpace(FVector NewVelocity);
+    void SetInterpolatedComponent(class USceneComponent* Component);
+    void ResetInterpolation();
+    void OnProjectileStopDelegate__DelegateSignature(const FHitResult& ImpactResult);
+    void OnProjectileBounceDelegate__DelegateSignature(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
+    void MoveInterpolationTarget(const FVector& NewLocation, const FRotator& NewRotation);
+    FVector LimitVelocity(FVector NewVelocity);
+    bool IsVelocityUnderSimulationThreshold();
+    bool IsInterpolationComplete();
+};
+
 class UProxyLODMeshSimplificationSettings : public UDeveloperSettings
 {
     FName ProxyLODMeshReductionModuleName;
 
-};
-
-class ARadialForceActor : public ARigidBodyBase
-{
-    class URadialForceComponent* ForceComponent;
-
-    void ToggleForce();
-    void FireImpulse();
-    void EnableForce();
-    void DisableForce();
 };
 
 class URadialForceComponent : public USceneComponent
@@ -15362,12 +17533,6 @@ class URadialForceComponent : public USceneComponent
     void AddObjectTypeToAffect(TEnumAsByte<EObjectTypeQuery> ObjectType);
 };
 
-class ARectLight : public ALight
-{
-    class URectLightComponent* RectLightComponent;
-
-};
-
 class URectLightComponent : public ULocalLightComponent
 {
     float SourceWidth;
@@ -15381,6 +17546,29 @@ class URectLightComponent : public ULocalLightComponent
     void SetSourceHeight(float NewValue);
     void SetBarnDoorLength(float NewValue);
     void SetBarnDoorAngle(float NewValue);
+};
+
+class UReflectionCaptureComponent : public USceneComponent
+{
+    class UBillboardComponent* CaptureOffsetComponent;
+    EReflectionSourceType ReflectionSourceType;
+    EMobileReflectionCompression MobileReflectionCompression;
+    class UTextureCube* Cubemap;
+    float SourceCubemapAngle;
+    float Brightness;
+    bool bModifyMaxValueRGBM;
+    float MaxValueRGBM;
+    FVector CaptureOffset;
+    FGuid MapBuildDataId;
+    class UTextureCube* CachedEncodedHDRCubemap;
+
+};
+
+class URendererOverrideSettings : public UDeveloperSettings
+{
+    uint8 bSupportAllShaderPermutations;
+    uint8 bForceRecomputeTangents;
+
 };
 
 class URendererSettings : public UDeveloperSettings
@@ -15505,13 +17693,6 @@ class URendererSettings : public UDeveloperSettings
 
 };
 
-class URendererOverrideSettings : public UDeveloperSettings
-{
-    uint8 bSupportAllShaderPermutations;
-    uint8 bForceRecomputeTangents;
-
-};
-
 class UReplayNetConnection : public UNetConnection
 {
 };
@@ -15522,11 +17703,11 @@ class UReplaySubsystem : public UGameInstanceSubsystem
 
 };
 
-class UReplicationDriver : public UObject
+class UReplicationConnectionDriver : public UObject
 {
 };
 
-class UReplicationConnectionDriver : public UObject
+class UReplicationDriver : public UObject
 {
 };
 
@@ -15554,37 +17735,6 @@ class UReverbEffect : public UObject
     float LateGain;
     float Gain;
     float RoomRolloffFactor;
-
-};
-
-struct FRigTransformConstraint
-{
-    TEnumAsByte<EConstraintTransform::Type> TranformType;
-    FName ParentSpace;
-    float Weight;
-
-};
-
-struct FTransformBaseConstraint
-{
-    TArray<FRigTransformConstraint> TransformConstraints;
-
-};
-
-struct FTransformBase
-{
-    FName Node;
-    FTransformBaseConstraint Constraints;
-
-};
-
-struct FNode
-{
-    FName Name;
-    FName ParentName;
-    FTransform Transform;
-    FString DisplayName;
-    bool bAdvanced;
 
 };
 
@@ -15650,44 +17800,8 @@ class URuntimeVirtualTextureComponent : public USceneComponent
     void Invalidate(const FBoxSphereBounds& WorldBounds);
 };
 
-class ARuntimeVirtualTextureVolume : public AActor
+class URuntimeVirtualTextureStreamingProxy : public UTexture2D
 {
-    class URuntimeVirtualTextureComponent* VirtualTextureComponent;
-
-};
-
-class IRVOAvoidanceInterface : public IInterface
-{
-};
-
-class UScene : public UObject
-{
-};
-
-class USceneCaptureComponentCube : public USceneCaptureComponent
-{
-    class UTextureRenderTargetCube* TextureTarget;
-    bool bCaptureRotation;
-    class UTextureRenderTargetCube* TextureTargetLeft;
-    class UTextureRenderTargetCube* TextureTargetRight;
-    class UTextureRenderTarget2D* TextureTargetODS;
-    float IPD;
-
-    void CaptureScene();
-};
-
-class ASceneCaptureCube : public ASceneCapture
-{
-    class USceneCaptureComponentCube* CaptureComponentCube;
-
-    void OnInterpToggle(bool bEnable);
-};
-
-struct FBPVariableMetaDataEntry
-{
-    FName DataKey;
-    FString DataValue;
-
 };
 
 class USCS_Node : public UObject
@@ -15706,67 +17820,194 @@ class USCS_Node : public UObject
 
 };
 
-class USelection : public UObject
+class USaveGame : public UObject
 {
 };
 
-class AServerStatReplicator : public AInfo
+class UScene : public UObject
 {
-    bool bUpdateStatNet;
-    bool bOverwriteClientStats;
-    uint32 Channels;
-    uint32 InRate;
-    uint32 OutRate;
-    uint32 MaxPacketOverhead;
-    uint32 InRateClientMax;
-    uint32 InRateClientMin;
-    uint32 InRateClientAvg;
-    uint32 InPacketsClientMax;
-    uint32 InPacketsClientMin;
-    uint32 InPacketsClientAvg;
-    uint32 OutRateClientMax;
-    uint32 OutRateClientMin;
-    uint32 OutRateClientAvg;
-    uint32 OutPacketsClientMax;
-    uint32 OutPacketsClientMin;
-    uint32 OutPacketsClientAvg;
-    uint32 NetNumClients;
-    uint32 InPackets;
-    uint32 OutPackets;
-    uint32 InBunches;
-    uint32 OutBunches;
-    uint32 OutLoss;
-    uint32 InLoss;
-    uint32 VoiceBytesSent;
-    uint32 VoiceBytesRecv;
-    uint32 VoicePacketsSent;
-    uint32 VoicePacketsRecv;
-    uint32 PercentInVoice;
-    uint32 PercentOutVoice;
-    uint32 NumActorChannels;
-    uint32 NumConsideredActors;
-    uint32 PrioritizedActors;
-    uint32 NumRelevantActors;
-    uint32 NumRelevantDeletedActors;
-    uint32 NumReplicatedActorAttempts;
-    uint32 NumReplicatedActors;
-    uint32 NumActors;
-    uint32 NumNetActors;
-    uint32 NumDormantActors;
-    uint32 NumInitiallyDormantActors;
-    uint32 NumNetGUIDsAckd;
-    uint32 NumNetGUIDsPending;
-    uint32 NumNetGUIDsUnAckd;
-    uint32 ObjPathBytes;
-    uint32 NetGUIDOutRate;
-    uint32 NetGUIDInRate;
-    uint32 NetSaturated;
+};
 
+class USceneCaptureComponent : public USceneComponent
+{
+    ESceneCapturePrimitiveRenderMode PrimitiveRenderMode;
+    TEnumAsByte<ESceneCaptureSource> CaptureSource;
+    uint8 bCaptureEveryFrame;
+    uint8 bCaptureOnMovement;
+    bool bAlwaysPersistRenderingState;
+    TArray<TWeakObjectPtr<UPrimitiveComponent>> HiddenComponents;
+    TArray<class AActor*> HiddenActors;
+    TArray<TWeakObjectPtr<UPrimitiveComponent>> ShowOnlyComponents;
+    TArray<class AActor*> ShowOnlyActors;
+    float LODDistanceFactor;
+    float MaxViewDistanceOverride;
+    int32 CaptureSortPriority;
+    bool bUseRayTracingIfEnabled;
+    TArray<FEngineShowFlagsSetting> ShowFlagSettings;
+    FString ProfilingEventName;
+
+    void ShowOnlyComponent(class UPrimitiveComponent* InComponent);
+    void ShowOnlyActorComponents(class AActor* InActor, const bool bIncludeFromChildActors);
+    void SetCaptureSortPriority(int32 NewCaptureSortPriority);
+    void RemoveShowOnlyComponent(class UPrimitiveComponent* InComponent);
+    void RemoveShowOnlyActorComponents(class AActor* InActor, const bool bIncludeFromChildActors);
+    void HideComponent(class UPrimitiveComponent* InComponent);
+    void HideActorComponents(class AActor* InActor, const bool bIncludeFromChildActors);
+    void ClearShowOnlyComponents();
+    void ClearHiddenComponents();
+};
+
+class USceneCaptureComponent2D : public USceneCaptureComponent
+{
+    TEnumAsByte<ECameraProjectionMode::Type> ProjectionType;
+    float FOVAngle;
+    float OrthoWidth;
+    class UTextureRenderTarget2D* TextureTarget;
+    TEnumAsByte<ESceneCaptureCompositeMode> CompositeMode;
+    FPostProcessSettings PostProcessSettings;
+    float PostProcessBlendWeight;
+    uint8 bOverride_CustomNearClippingPlane;
+    float CustomNearClippingPlane;
+    bool bUseCustomProjectionMatrix;
+    FMatrix CustomProjectionMatrix;
+    bool bEnableClipPlane;
+    FVector ClipPlaneBase;
+    FVector ClipPlaneNormal;
+    uint8 bCameraCutThisFrame;
+    uint8 bConsiderUnrenderedOpaquePixelAsFullyTranslucent;
+    bool bDisableFlipCopyGLES;
+
+    void RemoveBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject);
+    void CaptureScene();
+    void AddOrUpdateBlendable(TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight);
+};
+
+class USceneCaptureComponentCube : public USceneCaptureComponent
+{
+    class UTextureRenderTargetCube* TextureTarget;
+    bool bCaptureRotation;
+    class UTextureRenderTargetCube* TextureTargetLeft;
+    class UTextureRenderTargetCube* TextureTargetRight;
+    class UTextureRenderTarget2D* TextureTargetODS;
+    float IPD;
+
+    void CaptureScene();
+};
+
+class USceneComponent : public UActorComponent
+{
+    TWeakObjectPtr<class APhysicsVolume> PhysicsVolume;
+    class USceneComponent* AttachParent;
+    FName AttachSocketName;
+    TArray<class USceneComponent*> AttachChildren;
+    TArray<class USceneComponent*> ClientAttachedChildren;
+    FVector RelativeLocation;
+    FRotator RelativeRotation;
+    FVector RelativeScale3D;
+    FVector ComponentVelocity;
+    uint8 bComponentToWorldUpdated;
+    uint8 bAbsoluteLocation;
+    uint8 bAbsoluteRotation;
+    uint8 bAbsoluteScale;
+    uint8 bVisible;
+    uint8 bShouldBeAttached;
+    uint8 bShouldSnapLocationWhenAttached;
+    uint8 bShouldSnapRotationWhenAttached;
+    uint8 bShouldUpdatePhysicsVolume;
+    uint8 bHiddenInGame;
+    uint8 bBoundsChangeTriggersStreamingDataRebuild;
+    uint8 bUseAttachParentBound;
+    TEnumAsByte<EComponentMobility::Type> Mobility;
+    TEnumAsByte<EDetailMode> DetailMode;
+    FSceneComponentPhysicsVolumeChangedDelegate PhysicsVolumeChangedDelegate;
+    void PhysicsVolumeChanged(class APhysicsVolume* NewVolume);
+
+    void ToggleVisibility(bool bPropagateToChildren);
+    bool SnapTo(class USceneComponent* InParent, FName InSocketName);
+    void SetWorldScale3D(FVector NewScale);
+    void SetVisibility(bool bNewVisibility, bool bPropagateToChildren);
+    void SetShouldUpdatePhysicsVolume(bool bInShouldUpdatePhysicsVolume);
+    void SetRelativeScale3D(FVector NewScale3D);
+    void SetMobility(TEnumAsByte<EComponentMobility::Type> NewMobility);
+    void SetHiddenInGame(bool NewHidden, bool bPropagateToChildren);
+    void SetAbsolute(bool bNewAbsoluteLocation, bool bNewAbsoluteRotation, bool bNewAbsoluteScale);
+    void ResetRelativeTransform();
+    void OnRep_Visibility(bool OldValue);
+    void OnRep_Transform();
+    void OnRep_AttachSocketName();
+    void OnRep_AttachParent();
+    void OnRep_AttachChildren();
+    void K2_SetWorldTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetWorldRotation(FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetWorldLocationAndRotation(FVector NewLocation, FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetWorldLocation(FVector NewLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetRelativeTransform(const FTransform& NewTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetRelativeRotation(FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetRelativeLocationAndRotation(FVector NewLocation, FRotator NewRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_SetRelativeLocation(FVector NewLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    FTransform K2_GetComponentToWorld();
+    FVector K2_GetComponentScale();
+    FRotator K2_GetComponentRotation();
+    FVector K2_GetComponentLocation();
+    void K2_DetachFromComponent(EDetachmentRule LocationRule, EDetachmentRule RotationRule, EDetachmentRule ScaleRule, bool bCallModify);
+    bool K2_AttachToComponent(class USceneComponent* Parent, FName SocketName, EAttachmentRule LocationRule, EAttachmentRule RotationRule, EAttachmentRule ScaleRule, bool bWeldSimulatedBodies);
+    bool K2_AttachTo(class USceneComponent* InParent, FName InSocketName, TEnumAsByte<EAttachLocation::Type> AttachType, bool bWeldSimulatedBodies);
+    void K2_AddWorldTransformKeepScale(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddWorldTransform(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddWorldRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddWorldOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddRelativeRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddRelativeLocation(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddLocalTransform(const FTransform& DeltaTransform, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddLocalRotation(FRotator DeltaRotation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    void K2_AddLocalOffset(FVector DeltaLocation, bool bSweep, FHitResult& SweepHitResult, bool bTeleport);
+    bool IsVisible();
+    bool IsSimulatingPhysics(FName BoneName);
+    bool IsAnySimulatingPhysics();
+    FVector GetUpVector();
+    FTransform GetSocketTransform(FName InSocketName, TEnumAsByte<ERelativeTransformSpace> TransformSpace);
+    FRotator GetSocketRotation(FName InSocketName);
+    FQuat GetSocketQuaternion(FName InSocketName);
+    FVector GetSocketLocation(FName InSocketName);
+    bool GetShouldUpdatePhysicsVolume();
+    FVector GetRightVector();
+    FTransform GetRelativeTransform();
+    class APhysicsVolume* GetPhysicsVolume();
+    void GetParentComponents(TArray<class USceneComponent*>& Parents);
+    int32 GetNumChildrenComponents();
+    FVector GetForwardVector();
+    FVector GetComponentVelocity();
+    void GetChildrenComponents(bool bIncludeAllDescendants, TArray<class USceneComponent*>& Children);
+    class USceneComponent* GetChildComponent(int32 ChildIndex);
+    FName GetAttachSocketName();
+    class USceneComponent* GetAttachParent();
+    TArray<FName> GetAllSocketNames();
+    bool DoesSocketExist(FName InSocketName);
+    void DetachFromParent(bool bMaintainWorldPosition, bool bCallModify);
+};
+
+class UScriptViewportClient : public UObject
+{
+};
+
+class USelection : public UObject
+{
 };
 
 class UShadowMapTexture2D : public UTexture2D
 {
     TEnumAsByte<EShadowMapFlags> ShadowmapFlags;
+
+};
+
+class UShapeComponent : public UPrimitiveComponent
+{
+    class UBodySetup* ShapeBodySetup;
+    TSubclassOf<class UNavAreaBase> AreaClass;
+    FColor ShapeColor;
+    uint8 bDrawOnlyIfSelected;
+    uint8 bShouldCollideWhenPlacing;
+    uint8 bDynamicObstacle;
 
 };
 
@@ -15778,144 +18019,14 @@ class USimpleConstructionScript : public UObject
 
 };
 
-struct FMeshUVChannelInfo
-{
-    bool bInitialized;
-    bool bOverrideDensities;
-    float LocalUVDensities;
-
-};
-
-struct FSkeletalMaterial
-{
-    class UMaterialInterface* MaterialInterface;
-    FName MaterialSlotName;
-    FMeshUVChannelInfo UVChannelData;
-
-};
-
-struct FBoneMirrorInfo
-{
-    int32 SourceIndex;
-    TEnumAsByte<EAxis::Type> BoneFlipAxis;
-
-};
-
-struct FSkeletalMeshBuildSettings
-{
-    uint8 bRecomputeNormals;
-    uint8 bRecomputeTangents;
-    uint8 bUseMikkTSpace;
-    uint8 bComputeWeightedNormals;
-    uint8 bRemoveDegenerates;
-    uint8 bUseHighPrecisionTangentBasis;
-    uint8 bUseFullPrecisionUVs;
-    uint8 bBuildAdjacencyBuffer;
-    float ThresholdPosition;
-    float ThresholdTangentNormal;
-    float ThresholdUV;
-    float MorphThresholdPosition;
-
-};
-
-struct FSkeletalMeshOptimizationSettings
-{
-    TEnumAsByte<SkeletalMeshTerminationCriterion> TerminationCriterion;
-    float NumOfTrianglesPercentage;
-    float NumOfVertPercentage;
-    uint32 MaxNumOfTriangles;
-    uint32 MaxNumOfVerts;
-    float MaxDeviationPercentage;
-    TEnumAsByte<SkeletalMeshOptimizationType> ReductionMethod;
-    TEnumAsByte<SkeletalMeshOptimizationImportance> SilhouetteImportance;
-    TEnumAsByte<SkeletalMeshOptimizationImportance> TextureImportance;
-    TEnumAsByte<SkeletalMeshOptimizationImportance> ShadingImportance;
-    TEnumAsByte<SkeletalMeshOptimizationImportance> SkinningImportance;
-    uint8 bRemapMorphTargets;
-    uint8 bRecalcNormals;
-    float WeldingThreshold;
-    float NormalsThreshold;
-    int32 MaxBonesPerVertex;
-    uint8 bEnforceBoneBoundaries;
-    float VolumeImportance;
-    uint8 bLockEdges;
-    uint8 bLockColorBounaries;
-    int32 BaseLOD;
-
-};
-
-struct FSkeletalMeshLODInfo
-{
-    FPerPlatformFloat ScreenSize;
-    float LODHysteresis;
-    TArray<int32> LODMaterialMap;
-    FSkeletalMeshBuildSettings BuildSettings;
-    FSkeletalMeshOptimizationSettings ReductionSettings;
-    TArray<FBoneReference> BonesToRemove;
-    TArray<FBoneReference> BonesToPrioritize;
-    float WeightOfPrioritization;
-    class UAnimSequence* BakePose;
-    class UAnimSequence* BakePoseOverride;
-    FString SourceImportFilename;
-    ESkinCacheUsage SkinCacheUsage;
-    uint8 bHasBeenSimplified;
-    uint8 bHasPerLODVertexColors;
-    uint8 bAllowCPUAccess;
-    uint8 bSupportUniformlyDistributedSampling;
-
-};
-
-struct FSkeletalMeshSamplingRegionMaterialFilter
-{
-    FName MaterialName;
-
-};
-
-struct FSkeletalMeshSamplingRegionBoneFilter
-{
-    FName BoneName;
-    uint8 bIncludeOrExclude;
-    uint8 bApplyToChildren;
-
-};
-
-struct FSkeletalMeshSamplingRegion
-{
-    FName Name;
-    int32 LODIndex;
-    uint8 bSupportUniformlyDistributedSampling;
-    TArray<FSkeletalMeshSamplingRegionMaterialFilter> MaterialFilters;
-    TArray<FSkeletalMeshSamplingRegionBoneFilter> BoneFilters;
-
-};
-
-struct FSkeletalMeshSamplingLODBuiltData
+class USimulatedClientNetConnection : public UNetConnection
 {
 };
 
-struct FSkeletalMeshSamplingRegionBuiltData
+class USkeletalBodySetup : public UBodySetup
 {
-};
-
-struct FSkeletalMeshSamplingBuiltData
-{
-    TArray<FSkeletalMeshSamplingLODBuiltData> WholeMeshBuiltData;
-    TArray<FSkeletalMeshSamplingRegionBuiltData> RegionBuiltData;
-
-};
-
-struct FSkeletalMeshSamplingInfo
-{
-    TArray<FSkeletalMeshSamplingRegion> Regions;
-    FSkeletalMeshSamplingBuiltData BuiltData;
-
-};
-
-struct FSkinWeightProfileInfo
-{
-    FName Name;
-    FPerPlatformBool DefaultProfile;
-    FPerPlatformInt DefaultProfileFromLODIndex;
+    bool bSkipScaleFromAnimation;
+    TArray<FPhysicalAnimationProfile> PhysicalAnimationData;
 
 };
 
@@ -15977,44 +18088,165 @@ class USkeletalMesh : public UStreamableRenderAsset
     class USkeletalMeshSocket* FindSocket(FName InSocketName);
 };
 
-class ASkeletalMeshActor : public AActor
+class USkeletalMeshComponent : public USkinnedMeshComponent
 {
-    uint8 bShouldDoAnimNotifies;
-    uint8 bWakeOnLevelStart;
-    class USkeletalMeshComponent* SkeletalMeshComponent;
-    class USkeletalMesh* ReplicatedMesh;
-    class UPhysicsAsset* ReplicatedPhysAsset;
-    class UMaterialInterface* ReplicatedMaterial0;
-    class UMaterialInterface* ReplicatedMaterial1;
+    UClass* AnimBlueprintGeneratedClass;
+    TSubclassOf<class UAnimInstance> AnimClass;
+    class UAnimInstance* AnimScriptInstance;
+    class UAnimInstance* PostProcessAnimInstance;
+    FSingleAnimationPlayData AnimationData;
+    FVector RootBoneTranslation;
+    FVector LineCheckBoundsScale;
+    TArray<class UAnimInstance*> LinkedInstances;
+    TArray<FTransform> CachedBoneSpaceTransforms;
+    TArray<FTransform> CachedComponentSpaceTransforms;
+    float GlobalAnimRateScale;
+    TEnumAsByte<EKinematicBonesUpdateToPhysics::Type> KinematicBonesUpdateType;
+    TEnumAsByte<EPhysicsTransformUpdateMode::Type> PhysicsTransformUpdateMode;
+    TEnumAsByte<EAnimationMode::Type> AnimationMode;
+    uint8 bDisablePostProcessBlueprint;
+    uint8 bUpdateOverlapsOnAnimationFinalize;
+    uint8 bHasValidBodies;
+    uint8 bBlendPhysics;
+    uint8 bEnablePhysicsOnDedicatedServer;
+    uint8 bUpdateJointsFromAnimation;
+    uint8 bDisableClothSimulation;
+    uint8 bDisableRigidBodyAnimNode;
+    uint8 bAllowAnimCurveEvaluation;
+    uint8 bDisableAnimCurves;
+    uint8 bCollideWithEnvironment;
+    uint8 bCollideWithAttachedChildren;
+    uint8 bLocalSpaceSimulation;
+    uint8 bResetAfterTeleport;
+    uint8 bDeferKinematicBoneUpdate;
+    uint8 bNoSkeletonUpdate;
+    uint8 bPauseAnims;
+    uint8 bUseRefPoseOnInitAnim;
+    uint8 bEnablePerPolyCollision;
+    uint8 bForceRefpose;
+    uint8 bOnlyAllowAutonomousTickPose;
+    uint8 bIsAutonomousTickPose;
+    uint8 bOldForceRefPose;
+    uint8 bShowPrePhysBones;
+    uint8 bRequiredBonesUpToDate;
+    uint8 bAnimTreeInitialised;
+    uint8 bIncludeComponentLocationIntoBounds;
+    uint8 bEnableLineCheckWithBounds;
+    uint8 bPropagateCurvesToSlaves;
+    uint8 bSkipKinematicUpdateWhenInterpolating;
+    uint8 bSkipBoundsUpdateWhenInterpolating;
+    uint8 bNeedsQueuedAnimEventsDispatched;
+    uint16 CachedAnimCurveUidVersion;
+    float ClothBlendWeight;
+    bool bWaitForParallelClothTask;
+    TArray<FName> DisallowedAnimCurves;
+    class UBodySetup* BodySetup;
+    FSkeletalMeshComponentOnConstraintBroken OnConstraintBroken;
+    void ConstraintBrokenSignature(int32 ConstraintIndex);
+    TSubclassOf<class UClothingSimulationFactory> ClothingSimulationFactory;
+    float TeleportDistanceThreshold;
+    float TeleportRotationThreshold;
+    uint32 LastPoseTickFrame;
+    class UClothingSimulationInteractor* ClothingInteractor;
+    FSkeletalMeshComponentOnAnimInitialized OnAnimInitialized;
+    void OnAnimInitialized();
 
-    void OnRep_ReplicatedPhysAsset();
-    void OnRep_ReplicatedMesh();
-    void OnRep_ReplicatedMaterial1();
-    void OnRep_ReplicatedMaterial0();
+    void UnlinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
+    void UnbindClothFromMasterPoseComponent(bool bRestoreSimulationSpace);
+    void ToggleDisablePostProcessBlueprint();
+    void TermBodiesBelow(FName ParentBoneName);
+    void SuspendClothingSimulation();
+    void Stop();
+    void SnapshotPose(FPoseSnapshot& Snapshot);
+    void SetUpdateClothInEditor(const bool NewUpdateState);
+    void SetUpdateAnimationInEditor(const bool NewUpdateState);
+    void SetTeleportRotationThreshold(float Threshold);
+    void SetTeleportDistanceThreshold(float Threshold);
+    void SetPosition(float InPos, bool bFireNotifies);
+    void SetPlayRate(float Rate);
+    void SetPhysicsBlendWeight(float PhysicsBlendWeight);
+    void SetNotifyRigidBodyCollisionBelow(bool bNewNotifyRigidBodyCollision, FName BoneName, bool bIncludeSelf);
+    void SetMorphTarget(FName MorphTargetName, float Value, bool bRemoveZeroWeight);
+    void SetEnablePhysicsBlending(bool bNewBlendPhysics);
+    void SetEnableGravityOnAllBodiesBelow(bool bEnableGravity, FName BoneName, bool bIncludeSelf);
+    void SetEnableBodyGravity(bool bEnableGravity, FName BoneName);
+    void SetDisablePostProcessBlueprint(bool bInDisablePostProcess);
+    void SetDisableAnimCurves(bool bInDisableAnimCurves);
+    void SetConstraintProfileForAll(FName ProfileName, bool bDefaultIfNotFound);
+    void SetConstraintProfile(FName JointName, FName ProfileName, bool bDefaultIfNotFound);
+    void SetClothMaxDistanceScale(float Scale);
+    void SetBodyNotifyRigidBodyCollision(bool bNewNotifyRigidBodyCollision, FName BoneName);
+    void SetAnimClass(UClass* NewClass);
+    void SetAnimationMode(TEnumAsByte<EAnimationMode::Type> InAnimationMode);
+    void SetAnimation(class UAnimationAsset* NewAnimToPlay);
+    void SetAngularLimits(FName InBoneName, float Swing1LimitAngle, float TwistLimitAngle, float Swing2LimitAngle);
+    void SetAllowRigidBodyAnimNode(bool bInAllow, bool bReinitAnim);
+    void SetAllowedAnimCurvesEvaluation(const TArray<FName>& List, bool bAllow);
+    void SetAllowAnimCurveEvaluation(bool bInAllow);
+    void SetAllMotorsAngularVelocityDrive(bool bEnableSwingDrive, bool bEnableTwistDrive, bool bSkipCustomPhysicsType);
+    void SetAllMotorsAngularPositionDrive(bool bEnableSwingDrive, bool bEnableTwistDrive, bool bSkipCustomPhysicsType);
+    void SetAllMotorsAngularDriveParams(float InSpring, float InDamping, float InForceLimit, bool bSkipCustomPhysicsType);
+    void SetAllBodiesSimulatePhysics(bool bNewSimulate);
+    void SetAllBodiesPhysicsBlendWeight(float PhysicsBlendWeight, bool bSkipCustomPhysicsType);
+    void SetAllBodiesBelowSimulatePhysics(const FName& InBoneName, bool bNewSimulate, bool bIncludeSelf);
+    void SetAllBodiesBelowPhysicsBlendWeight(const FName& InBoneName, float PhysicsBlendWeight, bool bSkipCustomPhysicsType, bool bIncludeSelf);
+    void ResumeClothingSimulation();
+    void ResetClothTeleportMode();
+    void ResetAnimInstanceDynamics(ETeleportType InTeleportType);
+    void ResetAllowedAnimCurveEvaluation();
+    void ResetAllBodiesSimulatePhysics();
+    void PlayAnimation(class UAnimationAsset* NewAnimToPlay, bool bLooping);
+    void Play(bool bLooping);
+    void OverrideAnimationData(class UAnimationAsset* InAnimToPlay, bool bIsLooping, bool bIsPlaying, float Position, float PlayRate);
+    void LinkAnimGraphByTag(FName InTag, TSubclassOf<class UAnimInstance> InClass);
+    void LinkAnimClassLayers(TSubclassOf<class UAnimInstance> InClass);
+    bool K2_GetClosestPointOnPhysicsAsset(const FVector& WorldPosition, FVector& ClosestWorldPosition, FVector& Normal, FName& BoneName, float& Distance);
+    bool IsPlaying();
+    bool IsClothingSimulationSuspended();
+    bool IsBodyGravityEnabled(FName BoneName);
+    bool HasValidAnimationInstance();
+    float GetTeleportRotationThreshold();
+    float GetTeleportDistanceThreshold();
+    bool GetStringAttribute_Ref(const FName& BoneName, const FName& AttributeName, FString& OutValue, ECustomBoneAttributeLookup LookupType);
+    bool GetStringAttribute(const FName& BoneName, const FName& AttributeName, FString DefaultValue, FString& OutValue, ECustomBoneAttributeLookup LookupType);
+    FVector GetSkeletalCenterOfMass();
+    class UAnimInstance* GetPostProcessInstance();
+    float GetPosition();
+    float GetPlayRate();
+    float GetMorphTarget(FName MorphTargetName);
+    class UAnimInstance* GetLinkedAnimLayerInstanceByGroup(FName InGroup);
+    class UAnimInstance* GetLinkedAnimLayerInstanceByClass(TSubclassOf<class UAnimInstance> InClass);
+    void GetLinkedAnimGraphInstancesByTag(FName InTag, TArray<class UAnimInstance*>& OutLinkedInstances);
+    class UAnimInstance* GetLinkedAnimGraphInstanceByTag(FName InTag);
+    bool GetIntegerAttribute_Ref(const FName& BoneName, const FName& AttributeName, int32& OutValue, ECustomBoneAttributeLookup LookupType);
+    bool GetIntegerAttribute(const FName& BoneName, const FName& AttributeName, int32 DefaultValue, int32& OutValue, ECustomBoneAttributeLookup LookupType);
+    bool GetFloatAttribute_Ref(const FName& BoneName, const FName& AttributeName, float& OutValue, ECustomBoneAttributeLookup LookupType);
+    bool GetFloatAttribute(const FName& BoneName, const FName& AttributeName, float DefaultValue, float& OutValue, ECustomBoneAttributeLookup LookupType);
+    bool GetDisablePostProcessBlueprint();
+    bool GetDisableAnimCurves();
+    void GetCurrentJointAngles(FName InBoneName, float& Swing1Angle, float& TwistAngle, float& Swing2Angle);
+    float GetClothMaxDistanceScale();
+    class UClothingSimulationInteractor* GetClothingSimulationInteractor();
+    float GetBoneMass(FName BoneName, bool bScaleMass);
+    class UAnimInstance* GetAnimInstance();
+    UClass* GetAnimClass();
+    TEnumAsByte<EAnimationMode::Type> GetAnimationMode();
+    bool GetAllowRigidBodyAnimNode();
+    bool GetAllowedAnimCurveEvaluate();
+    void ForceClothNextUpdateTeleportAndReset();
+    void ForceClothNextUpdateTeleport();
+    FName FindConstraintBoneName(int32 ConstraintIndex);
+    void ClearMorphTargets();
+    void BreakConstraint(FVector Impulse, FVector HitLocation, FName InBoneName);
+    void BindClothToMasterPoseComponent();
+    void AllowAnimCurveEvaluation(FName NameOfCurve, bool bAllow);
+    void AddImpulseToAllBodiesBelow(FVector Impulse, FName BoneName, bool bVelChange, bool bIncludeSelf);
+    void AddForceToAllBodiesBelow(FVector force, FName BoneName, bool bAccelChange, bool bIncludeSelf);
+    void AccumulateAllBodiesBelowPhysicsBlendWeight(const FName& InBoneName, float AddPhysicsBlendWeight, bool bSkipCustomPhysicsType);
 };
 
 class USkeletalMeshEditorData : public UObject
 {
-};
-
-struct FBoneFilter
-{
-    bool bExcludeSelf;
-    FName BoneName;
-
-};
-
-struct FSkeletalMeshLODGroupSettings
-{
-    FPerPlatformFloat ScreenSize;
-    float LODHysteresis;
-    EBoneFilterActionOption BoneFilterActionOption;
-    TArray<FBoneFilter> BoneList;
-    TArray<FName> BonesToPrioritize;
-    float WeightOfPrioritization;
-    class UAnimSequence* BakePose;
-    FSkeletalMeshOptimizationSettings ReductionSettings;
-
 };
 
 class USkeletalMeshLODSettings : public UDataAsset
@@ -16048,12 +18280,99 @@ class USkeletalMeshSocket : public UObject
     FVector GetSocketLocation(const class USkeletalMeshComponent* SkelComp);
 };
 
-struct FTentDistribution
+class USkeleton : public UObject
 {
-    float TipAltitude;
-    float TipValue;
-    float Width;
+    TArray<FBoneNode> BoneTree;
+    TArray<FTransform> RefLocalPoses;
+    FGuid VirtualBoneGuid;
+    TArray<FVirtualBone> VirtualBones;
+    TArray<class USkeletalMeshSocket*> Sockets;
+    FSmartNameContainer SmartNames;
+    TArray<class UBlendProfile*> BlendProfiles;
+    TArray<FAnimSlotGroup> SlotGroups;
+    TArray<class UAssetUserData*> AssetUserData;
 
+};
+
+class USkinnedMeshComponent : public UMeshComponent
+{
+    class USkeletalMesh* SkeletalMesh;
+    TWeakObjectPtr<class USkinnedMeshComponent> MasterPoseComponent;
+    TArray<ESkinCacheUsage> SkinCacheUsage;
+    TArray<FVertexOffsetUsage> VertexOffsetUsage;
+    class UPhysicsAsset* PhysicsAssetOverride;
+    int32 ForcedLodModel;
+    int32 MinLodModel;
+    float StreamingDistanceMultiplier;
+    TArray<FSkelMeshComponentLODInfo> LODInfo;
+    EVisibilityBasedAnimTickOption VisibilityBasedAnimTickOption;
+    uint8 bOverrideMinLod;
+    uint8 bUseBoundsFromMasterPoseComponent;
+    uint8 bForceWireframe;
+    uint8 bDisplayBones;
+    uint8 bDisableMorphTarget;
+    uint8 bHideSkin;
+    uint8 bPerBoneMotionBlur;
+    uint8 bComponentUseFixedSkelBounds;
+    uint8 bConsiderAllBodiesForBounds;
+    uint8 bSyncAttachParentLOD;
+    uint8 bCanHighlightSelectedSections;
+    uint8 bRecentlyRendered;
+    uint8 bCastCapsuleDirectShadow;
+    uint8 bCastCapsuleIndirectShadow;
+    uint8 bCPUSkinning;
+    uint8 bEnableUpdateRateOptimizations;
+    uint8 bDisplayDebugUpdateRateOptimizations;
+    uint8 bRenderStatic;
+    uint8 bIgnoreMasterPoseComponentLOD;
+    uint8 bCachedLocalBoundsUpToDate;
+    uint8 bForceMeshObjectUpdate;
+    float CapsuleIndirectShadowMinVisibility;
+    FBoxSphereBounds CachedWorldSpaceBounds;
+    FMatrix CachedWorldToLocalTransform;
+
+    void UnloadSkinWeightProfile(FName InProfileName);
+    void UnHideBoneByName(FName BoneName);
+    void TransformToBoneSpace(FName BoneName, FVector InPosition, FRotator InRotation, FVector& OutPosition, FRotator& OutRotation);
+    void TransformFromBoneSpace(FName BoneName, FVector InPosition, FRotator InRotation, FVector& OutPosition, FRotator& OutRotation);
+    void ShowMaterialSection(int32 MaterialID, int32 SectionIndex, bool bShow, int32 LODIndex);
+    void ShowAllMaterialSections(int32 LODIndex);
+    void SetVertexOffsetUsage(int32 LODIndex, int32 Usage);
+    void SetVertexColorOverride_LinearColor(int32 LODIndex, const TArray<FLinearColor>& VertexColors);
+    bool SetSkinWeightProfile(FName InProfileName);
+    void SetSkinWeightOverride(int32 LODIndex, const TArray<FSkelMeshSkinWeightInfo>& SkinWeights);
+    void SetSkeletalMesh(class USkeletalMesh* NewMesh, bool bReinitPose);
+    void SetRenderStatic(bool bNewValue);
+    void SetPreSkinningOffsets(int32 LODIndex, TArray<FVector> Offsets);
+    void SetPostSkinningOffsets(int32 LODIndex, TArray<FVector> Offsets);
+    void SetPhysicsAsset(class UPhysicsAsset* NewPhysicsAsset, bool bForceReInit);
+    void SetMinLOD(int32 InNewMinLOD);
+    void SetMasterPoseComponent(class USkinnedMeshComponent* NewMasterBoneComponent, bool bForceUpdate);
+    void SetForcedLOD(int32 InNewForcedLOD);
+    void SetCastCapsuleIndirectShadow(bool bNewValue);
+    void SetCastCapsuleDirectShadow(bool bNewValue);
+    void SetCapsuleIndirectShadowMinVisibility(float NewValue);
+    bool IsUsingSkinWeightProfile();
+    bool IsMaterialSectionShown(int32 MaterialID, int32 LODIndex);
+    bool IsBoneHiddenByName(FName BoneName);
+    void HideBoneByName(FName BoneName, TEnumAsByte<EPhysBodyOp> PhysBodyOption);
+    int32 GetVertexOffsetUsage(int32 LODIndex);
+    bool GetTwistAndSwingAngleOfDeltaRotationFromRefPose(FName BoneName, float& OutTwistAngle, float& OutSwingAngle);
+    FName GetSocketBoneName(FName InSocketName);
+    FVector GetRefPosePosition(int32 BoneIndex);
+    FName GetParentBone(FName BoneName);
+    int32 GetNumLODs();
+    int32 GetNumBones();
+    int32 GetForcedLOD();
+    FTransform GetDeltaTransformFromRefPose(FName BoneName, FName BaseName);
+    FName GetCurrentSkinWeightProfileName();
+    FName GetBoneName(int32 BoneIndex);
+    int32 GetBoneIndex(FName BoneName);
+    FName FindClosestBone_K2(FVector TestLocation, FVector& BoneLocation, float IgnoreScale, bool bRequirePhysicsAsset);
+    void ClearVertexColorOverride(int32 LODIndex);
+    void ClearSkinWeightProfile();
+    void ClearSkinWeightOverride(int32 LODIndex);
+    bool BoneIsChildOf(FName BoneName, FName ParentBoneName);
 };
 
 class USkyAtmosphereComponent : public USceneComponent
@@ -16103,12 +18422,6 @@ class USkyAtmosphereComponent : public USceneComponent
     FLinearColor GetAtmosphereTransmitanceOnGroundAtPlanetTop(class UDirectionalLightComponent* DirectionalLight);
 };
 
-class ASkyAtmosphere : public AInfo
-{
-    class USkyAtmosphereComponent* SkyAtmosphereComponent;
-
-};
-
 class USkyLightComponent : public ULightComponentBase
 {
     bool bRealTimeCapture;
@@ -16153,10 +18466,6 @@ class USlateBrushAsset : public UObject
 
 };
 
-class ISlateTextureAtlasInterface : public IInterface
-{
-};
-
 class USmokeTestCommandlet : public UCommandlet
 {
 };
@@ -16167,36 +18476,31 @@ class USoundAttenuation : public UObject
 
 };
 
-struct FSoundClassProperties
+class USoundBase : public UObject
 {
-    float Volume;
-    float Pitch;
-    float LowPassFilterFrequency;
-    float AttenuationDistanceScale;
-    float LFEBleed;
-    float VoiceCenterChannelVolume;
-    float RadioFilterVolume;
-    float RadioFilterVolumeThreshold;
-    uint8 bApplyEffects;
-    uint8 bAlwaysPlay;
-    uint8 bIsUISound;
-    uint8 bIsMusic;
-    uint8 bCenterChannelOnly;
-    uint8 bApplyAmbientVolumes;
-    uint8 bReverb;
-    float Default2DReverbSendAmount;
-    FSoundModulationDefaultSettings ModulationSettings;
-    TEnumAsByte<EAudioOutputTarget::Type> OutputTarget;
-    ESoundWaveLoadingBehavior LoadingBehavior;
-    class USoundSubmix* DefaultSubmix;
-
-};
-
-struct FPassiveSoundMixModifier
-{
-    class USoundMix* SoundMix;
-    float MinVolumeThreshold;
-    float MaxVolumeThreshold;
+    class USoundClass* SoundClassObject;
+    uint8 bDebug;
+    uint8 bOverrideConcurrency;
+    uint8 bEnableBusSends;
+    uint8 bEnableBaseSubmix;
+    uint8 bEnableSubmixSends;
+    uint8 bHasDelayNode;
+    uint8 bHasConcatenatorNode;
+    uint8 bBypassVolumeScaleForPriority;
+    EVirtualizationMode VirtualizationMode;
+    TSet<USoundConcurrency*> ConcurrencySet;
+    FSoundConcurrencySettings ConcurrencyOverrides;
+    float Duration;
+    float MaxDistance;
+    float TotalSamples;
+    float Priority;
+    class USoundAttenuation* AttenuationSettings;
+    class USoundSubmixBase* SoundSubmixObject;
+    TArray<FSoundSubmixSendInfo> SoundSubmixSends;
+    class USoundEffectSourcePresetChain* SourceEffectChain;
+    TArray<FSoundSourceBusSendInfo> BusSends;
+    TArray<FSoundSourceBusSendInfo> PreEffectBusSends;
+    TArray<class UAssetUserData*> AssetUserData;
 
 };
 
@@ -16230,6 +18534,14 @@ class USoundCue : public USoundBase
 
 };
 
+class USoundEffectPreset : public UObject
+{
+};
+
+class USoundEffectSourcePreset : public USoundEffectPreset
+{
+};
+
 class USoundEffectSourcePresetChain : public UObject
 {
     TArray<FSourceEffectChainEntry> Chain;
@@ -16237,50 +18549,13 @@ class USoundEffectSourcePresetChain : public UObject
 
 };
 
-struct FSoundGroup
+class USoundEffectSubmixPreset : public USoundEffectPreset
 {
-    TEnumAsByte<ESoundGroup> SoundGroup;
-    FString DisplayName;
-    uint8 bAlwaysDecompressOnLoad;
-    float DecompressedDuration;
-
 };
 
 class USoundGroups : public UObject
 {
     TArray<FSoundGroup> SoundGroupProfiles;
-
-};
-
-struct FAudioEffectParameters
-{
-};
-
-struct FAudioEQEffect : public FAudioEffectParameters
-{
-    float FrequencyCenter0;
-    float Gain0;
-    float Bandwidth0;
-    float FrequencyCenter1;
-    float Gain1;
-    float Bandwidth1;
-    float FrequencyCenter2;
-    float Gain2;
-    float Bandwidth2;
-    float FrequencyCenter3;
-    float Gain3;
-    float Bandwidth3;
-
-};
-
-struct FSoundClassAdjuster
-{
-    class USoundClass* SoundClassObject;
-    float VolumeAdjuster;
-    float PitchAdjuster;
-    float LowPassFilterFrequency;
-    uint8 bApplyToChildren;
-    float VoiceCenterChannelVolumeAdjuster;
 
 };
 
@@ -16334,27 +18609,10 @@ class USoundNodeDelay : public USoundNode
 
 };
 
-struct FDialogueWaveParameter
-{
-    class UDialogueWave* DialogueWave;
-    FDialogueContext Context;
-
-};
-
 class USoundNodeDialoguePlayer : public USoundNode
 {
     FDialogueWaveParameter DialogueWaveParameter;
     uint8 bLooping;
-
-};
-
-struct FDistanceDatum
-{
-    float FadeInDistanceStart;
-    float FadeInDistanceEnd;
-    float FadeOutDistanceStart;
-    float FadeOutDistanceEnd;
-    float Volume;
 
 };
 
@@ -16420,18 +18678,6 @@ class USoundNodeModulator : public USoundNode
     float PitchMax;
     float VolumeMin;
     float VolumeMax;
-
-};
-
-struct FModulatorContinuousParams
-{
-    FName ParameterName;
-    float Default;
-    float MinInput;
-    float MaxInput;
-    float MinOutput;
-    float MaxOutput;
-    TEnumAsByte<ModulationParamMode> ParamMode;
 
 };
 
@@ -16516,18 +18762,6 @@ class USoundSourceBus : public USoundWave
 
 };
 
-class USoundSubmixBase : public UObject
-{
-    TArray<class USoundSubmixBase*> ChildSubmixes;
-
-};
-
-class USoundSubmixWithParentBase : public USoundSubmixBase
-{
-    class USoundSubmixBase* ParentSubmix;
-
-};
-
 class USoundSubmix : public USoundSubmixWithParentBase
 {
     uint8 bMuteWhenBackgrounded;
@@ -16557,21 +18791,51 @@ class USoundSubmix : public USoundSubmixWithParentBase
     void AddEnvelopeFollowerDelegate(const class UObject* WorldContextObject, const FAddEnvelopeFollowerDelegateOnSubmixEnvelopeBP& OnSubmixEnvelopeBP);
 };
 
-class USoundfieldSubmix : public USoundSubmixWithParentBase
+class USoundSubmixBase : public UObject
 {
-    FName SoundfieldEncodingFormat;
-    class USoundfieldEncodingSettingsBase* EncodingSettings;
-    TArray<class USoundfieldEffectBase*> SoundfieldEffectChain;
-    TSubclassOf<class USoundfieldEncodingSettingsBase> EncodingSettingsClass;
+    TArray<class USoundSubmixBase*> ChildSubmixes;
 
 };
 
-class UEndpointSubmix : public USoundSubmixBase
+class USoundSubmixWithParentBase : public USoundSubmixBase
 {
-    FName EndpointType;
-    TSubclassOf<class UAudioEndpointSettingsBase> EndpointSettingsClass;
-    class UAudioEndpointSettingsBase* EndpointSettings;
+    class USoundSubmixBase* ParentSubmix;
 
+};
+
+class USoundWave : public USoundBase
+{
+    int32 CompressionQuality;
+    int32 StreamingPriority;
+    ESoundwaveSampleRateSettings SampleRateQuality;
+    TEnumAsByte<ESoundGroup> SoundGroup;
+    uint8 bLooping;
+    uint8 bStreaming;
+    uint8 bSeekableStreaming;
+    ESoundWaveLoadingBehavior LoadingBehavior;
+    uint8 bMature;
+    uint8 bManualWordWrap;
+    uint8 bSingleLine;
+    uint8 bIsAmbisonics;
+    FSoundModulationDefaultRoutingSettings ModulationSettings;
+    TArray<float> FrequenciesToAnalyze;
+    TArray<FSoundWaveSpectralTimeData> CookedSpectralTimeData;
+    TArray<FSoundWaveEnvelopeTimeData> CookedEnvelopeTimeData;
+    int32 InitialChunkSize;
+    FString SpokenText;
+    float SubtitlePriority;
+    float Volume;
+    float Pitch;
+    int32 NumChannels;
+    int32 SampleRate;
+    TArray<FSubtitleCue> Subtitles;
+    class UCurveTable* Curves;
+    class UCurveTable* InternalCurves;
+
+};
+
+class USoundWaveProcedural : public USoundWave
+{
 };
 
 class USoundfieldEndpointSubmix : public USoundSubmixBase
@@ -16585,8 +18849,13 @@ class USoundfieldEndpointSubmix : public USoundSubmixBase
 
 };
 
-class ASpectatorPawn : public ADefaultPawn
+class USoundfieldSubmix : public USoundSubmixWithParentBase
 {
+    FName SoundfieldEncodingFormat;
+    class USoundfieldEncodingSettingsBase* EncodingSettings;
+    TArray<class USoundfieldEffectBase*> SoundfieldEffectChain;
+    TSubclassOf<class USoundfieldEncodingSettingsBase> EncodingSettingsClass;
+
 };
 
 class USpectatorPawnMovement : public UFloatingPawnMovement
@@ -16595,10 +18864,14 @@ class USpectatorPawnMovement : public UFloatingPawnMovement
 
 };
 
-class ASphereReflectionCapture : public AReflectionCapture
+class USphereComponent : public UShapeComponent
 {
-    class UDrawSphereComponent* DrawCaptureRadius;
+    float SphereRadius;
 
+    void SetSphereRadius(float InSphereRadius, bool bUpdateOverlaps);
+    float GetUnscaledSphereRadius();
+    float GetShapeScale();
+    float GetScaledSphereRadius();
 };
 
 class USphereReflectionCaptureComponent : public UReflectionCaptureComponent
@@ -16606,33 +18879,6 @@ class USphereReflectionCaptureComponent : public UReflectionCaptureComponent
     float InfluenceRadius;
     float CaptureDistanceScale;
     class UDrawSphereComponent* PreviewInfluenceRadius;
-
-};
-
-class USplineMetadata : public UObject
-{
-};
-
-struct FSplineCurves
-{
-    FInterpCurveVector Position;
-    FInterpCurveQuat Rotation;
-    FInterpCurveVector Scale;
-    FInterpCurveFloat ReparamTable;
-    class USplineMetadata* MetaData;
-    uint32 Version;
-
-};
-
-struct FSplinePoint
-{
-    float InputKey;
-    FVector Position;
-    FVector ArriveTangent;
-    FVector LeaveTangent;
-    FRotator Rotation;
-    FVector Scale;
-    TEnumAsByte<ESplinePointType::Type> Type;
 
 };
 
@@ -16756,10 +19002,54 @@ class USplineComponent : public UPrimitiveComponent
     void AddPoint(const FSplinePoint& Point, bool bUpdateSpline);
 };
 
-class ASplineMeshActor : public AActor
+class USplineMeshComponent : public UStaticMeshComponent
 {
-    class USplineMeshComponent* SplineMeshComponent;
+    FSplineMeshParams SplineParams;
+    FVector SplineUpDir;
+    float SplineBoundaryMin;
+    FGuid CachedMeshBodySetupGuid;
+    class UBodySetup* BodySetup;
+    float SplineBoundaryMax;
+    uint8 bAllowSplineEditingPerInstance;
+    uint8 bSmoothInterpRollScale;
+    uint8 bMeshDirty;
+    TEnumAsByte<ESplineMeshAxis::Type> ForwardAxis;
+    float VirtualTextureMainPassMaxDrawDistance;
 
+    void UpdateMesh();
+    void SetStartTangent(FVector StartTangent, bool bUpdateMesh);
+    void SetStartScale(FVector2D StartScale, bool bUpdateMesh);
+    void SetStartRoll(float StartRoll, bool bUpdateMesh);
+    void SetStartPosition(FVector StartPos, bool bUpdateMesh);
+    void SetStartOffset(FVector2D StartOffset, bool bUpdateMesh);
+    void SetStartAndEnd(FVector StartPos, FVector StartTangent, FVector EndPos, FVector EndTangent, bool bUpdateMesh);
+    void SetSplineUpDir(const FVector& InSplineUpDir, bool bUpdateMesh);
+    void SetForwardAxis(TEnumAsByte<ESplineMeshAxis::Type> InForwardAxis, bool bUpdateMesh);
+    void SetEndTangent(FVector EndTangent, bool bUpdateMesh);
+    void SetEndScale(FVector2D EndScale, bool bUpdateMesh);
+    void SetEndRoll(float EndRoll, bool bUpdateMesh);
+    void SetEndPosition(FVector EndPos, bool bUpdateMesh);
+    void SetEndOffset(FVector2D EndOffset, bool bUpdateMesh);
+    void SetBoundaryMin(float InBoundaryMin, bool bUpdateMesh);
+    void SetBoundaryMax(float InBoundaryMax, bool bUpdateMesh);
+    FVector GetStartTangent();
+    FVector2D GetStartScale();
+    float GetStartRoll();
+    FVector GetStartPosition();
+    FVector2D GetStartOffset();
+    FVector GetSplineUpDir();
+    TEnumAsByte<ESplineMeshAxis::Type> GetForwardAxis();
+    FVector GetEndTangent();
+    FVector2D GetEndScale();
+    float GetEndRoll();
+    FVector GetEndPosition();
+    FVector2D GetEndOffset();
+    float GetBoundaryMin();
+    float GetBoundaryMax();
+};
+
+class USplineMetadata : public UObject
+{
 };
 
 class USpotLightComponent : public UPointLightComponent
@@ -16795,15 +19085,6 @@ class USpringArmComponent : public USceneComponent
     bool IsCollisionFixApplied();
     FVector GetUnfixedCameraPosition();
     FRotator GetTargetRotation();
-};
-
-struct FStaticMaterial
-{
-    class UMaterialInterface* MaterialInterface;
-    FName MaterialSlotName;
-    FName ImportedMaterialSlotName;
-    FMeshUVChannelInfo UVChannelData;
-
 };
 
 class UStaticMesh : public UStreamableRenderAsset
@@ -16853,6 +19134,44 @@ class UStaticMesh : public UStreamableRenderAsset
     FName AddMaterial(class UMaterialInterface* Material);
 };
 
+class UStaticMeshComponent : public UMeshComponent
+{
+    int32 ForcedLodModel;
+    int32 PreviousLODLevel;
+    int32 MinLOD;
+    int32 SubDivisionStepSize;
+    class UStaticMesh* StaticMesh;
+    FColor WireframeColorOverride;
+    uint8 bEvaluateWorldPositionOffset;
+    uint8 bOverrideWireframeColor;
+    uint8 bOverrideMinLod;
+    uint8 bOverrideNavigationExport;
+    uint8 bForceNavigationObstacle;
+    uint8 bDisallowMeshPaintPerInstance;
+    uint8 bIgnoreInstanceForTextureStreaming;
+    uint8 bOverrideLightMapRes;
+    uint8 bCastDistanceFieldIndirectShadow;
+    uint8 bOverrideDistanceFieldSelfShadowBias;
+    uint8 bUseSubDivisions;
+    uint8 bUseDefaultCollision;
+    uint8 bReverseCulling;
+    int32 OverriddenLightMapRes;
+    float DistanceFieldIndirectShadowMinVisibility;
+    float DistanceFieldSelfShadowBias;
+    float StreamingDistanceMultiplier;
+    TArray<FStaticMeshComponentLODInfo> LODData;
+    TArray<FStreamingTextureBuildInfo> StreamingTextureData;
+    FLightmassPrimitiveSettings LightmassSettings;
+
+    bool SetStaticMesh(class UStaticMesh* NewMesh);
+    void SetReverseCulling(bool ReverseCulling);
+    void SetForcedLodModel(int32 NewForcedLodModel);
+    void SetEvaluateWorldPositionOffsetInRayTracing(bool NewValue);
+    void SetDistanceFieldSelfShadowBias(float NewValue);
+    void OnRep_StaticMesh(class UStaticMesh* OldStaticMesh);
+    void GetLocalBounds(FVector& Min, FVector& Max);
+};
+
 class UStaticMeshSocket : public UObject
 {
     FName SocketName;
@@ -16861,44 +19180,6 @@ class UStaticMeshSocket : public UObject
     FVector RelativeScale;
     FString Tag;
 
-};
-
-class UStereoLayerShapeCylinder : public UStereoLayerShape
-{
-    float Radius;
-    float OverlayArc;
-    int32 Height;
-
-    void SetRadius(float InRadius);
-    void SetOverlayArc(float InOverlayArc);
-    void SetHeight(int32 InHeight);
-};
-
-class UStereoLayerShapeCubemap : public UStereoLayerShape
-{
-};
-
-struct FEquirectProps
-{
-    FBox2D LeftUVRect;
-    FBox2D RightUVRect;
-    FVector2D LeftScale;
-    FVector2D RightScale;
-    FVector2D LeftBias;
-    FVector2D RightBias;
-
-};
-
-class UStereoLayerShapeEquirect : public UStereoLayerShape
-{
-    FBox2D LeftUVRect;
-    FBox2D RightUVRect;
-    FVector2D LeftScale;
-    FVector2D RightScale;
-    FVector2D LeftBias;
-    FVector2D RightBias;
-
-    void SetEquirectProps(FEquirectProps InScaleBiases);
 };
 
 class UStereoLayerComponent : public USceneComponent
@@ -16943,46 +19224,79 @@ class UStereoLayerFunctionLibrary : public UBlueprintFunctionLibrary
     void EnableAutoLoadingSplashScreen(bool InAutoShowEnabled);
 };
 
+class UStereoLayerShape : public UObject
+{
+};
+
+class UStereoLayerShapeCubemap : public UStereoLayerShape
+{
+};
+
+class UStereoLayerShapeCylinder : public UStereoLayerShape
+{
+    float Radius;
+    float OverlayArc;
+    int32 Height;
+
+    void SetRadius(float InRadius);
+    void SetOverlayArc(float InOverlayArc);
+    void SetHeight(int32 InHeight);
+};
+
+class UStereoLayerShapeEquirect : public UStereoLayerShape
+{
+    FBox2D LeftUVRect;
+    FBox2D RightUVRect;
+    FVector2D LeftScale;
+    FVector2D RightScale;
+    FVector2D LeftBias;
+    FVector2D RightBias;
+
+    void SetEquirectProps(FEquirectProps InScaleBiases);
+};
+
+class UStereoLayerShapeQuad : public UStereoLayerShape
+{
+};
+
+class UStreamableRenderAsset : public UObject
+{
+    double ForceMipLevelsToBeResidentTimestamp;
+    int32 NumCinematicMipLevels;
+    int32 StreamingIndex;
+    int32 CachedCombinedLODBias;
+    uint8 NeverStream;
+    uint8 bGlobalForceMipLevelsToBeResident;
+    uint8 bHasStreamingUpdatePending;
+    uint8 bForceMiplevelsToBeResident;
+    uint8 bIgnoreStreamingMipBias;
+    uint8 bUseCinematicMipLevels;
+
+};
+
+class UStreamingSettings : public UDeveloperSettings
+{
+    uint8 AsyncLoadingThreadEnabled;
+    uint8 WarnIfTimeLimitExceeded;
+    float TimeLimitExceededMultiplier;
+    float TimeLimitExceededMinTime;
+    int32 MinBulkDataSizeForAsyncLoading;
+    uint8 UseBackgroundLevelStreaming;
+    uint8 AsyncLoadingUseFullTimeLimit;
+    float AsyncLoadingTimeLimit;
+    float PriorityAsyncLoadingExtraTime;
+    float LevelStreamingActorsUpdateTimeLimit;
+    float PriorityLevelStreamingActorsUpdateExtraTime;
+    int32 LevelStreamingComponentsRegistrationGranularity;
+    float LevelStreamingUnregisterComponentsTimeLimit;
+    int32 LevelStreamingComponentsUnregistrationGranularity;
+    uint8 FlushStreamingOnExit;
+    uint8 EventDrivenLoaderEnabled;
+
+};
+
 class UStringTable : public UObject
 {
-};
-
-struct FSubsurfaceProfileStruct
-{
-    FLinearColor SurfaceAlbedo;
-    FLinearColor MeanFreePathColor;
-    float MeanFreePathDistance;
-    float WorldUnitScale;
-    bool bEnableBurley;
-    float ScatterRadius;
-    FLinearColor SubsurfaceColor;
-    FLinearColor FalloffColor;
-    FLinearColor BoundaryColorBleed;
-    float ExtinctionScale;
-    float NormalScale;
-    float ScatteringDistribution;
-    float IOR;
-    float Roughness0;
-    float Roughness1;
-    float LobeMix;
-    FLinearColor TransmissionTintColor;
-
-};
-
-class USubsurfaceProfile : public UObject
-{
-    FSubsurfaceProfileStruct Settings;
-
-};
-
-class USubsystemBlueprintLibrary : public UBlueprintFunctionLibrary
-{
-
-    class UWorldSubsystem* GetWorldSubsystem(class UObject* contextObject, TSubclassOf<class UWorldSubsystem> Class);
-    class ULocalPlayerSubsystem* GetLocalPlayerSubSystemFromPlayerController(class APlayerController* PlayerController, TSubclassOf<class ULocalPlayerSubsystem> Class);
-    class ULocalPlayerSubsystem* GetLocalPlayerSubsystem(class UObject* contextObject, TSubclassOf<class ULocalPlayerSubsystem> Class);
-    class UGameInstanceSubsystem* GetGameInstanceSubsystem(class UObject* contextObject, TSubclassOf<class UGameInstanceSubsystem> Class);
-    class UEngineSubsystem* GetEngineSubsystem(TSubclassOf<class UEngineSubsystem> Class);
 };
 
 class USubUVAnimation : public UObject
@@ -16996,6 +19310,26 @@ class USubUVAnimation : public UObject
 
 };
 
+class USubsurfaceProfile : public UObject
+{
+    FSubsurfaceProfileStruct Settings;
+
+};
+
+class USubsystem : public UObject
+{
+};
+
+class USubsystemBlueprintLibrary : public UBlueprintFunctionLibrary
+{
+
+    class UWorldSubsystem* GetWorldSubsystem(class UObject* contextObject, TSubclassOf<class UWorldSubsystem> Class);
+    class ULocalPlayerSubsystem* GetLocalPlayerSubSystemFromPlayerController(class APlayerController* PlayerController, TSubclassOf<class ULocalPlayerSubsystem> Class);
+    class ULocalPlayerSubsystem* GetLocalPlayerSubsystem(class UObject* contextObject, TSubclassOf<class ULocalPlayerSubsystem> Class);
+    class UGameInstanceSubsystem* GetGameInstanceSubsystem(class UObject* contextObject, TSubclassOf<class UGameInstanceSubsystem> Class);
+    class UEngineSubsystem* GetEngineSubsystem(TSubclassOf<class UEngineSubsystem> Class);
+};
+
 class USystemTimeTimecodeProvider : public UTimecodeProvider
 {
     FFrameRate FrameRate;
@@ -17004,21 +19338,11 @@ class USystemTimeTimecodeProvider : public UTimecodeProvider
 
 };
 
-class ATargetPoint : public AActor
-{
-};
-
 class UTextPropertyTestObject : public UObject
 {
     FText DefaultedText;
     FText UndefaultedText;
     FText TransientText;
-
-};
-
-class ATextRenderActor : public AActor
-{
-    class UTextRenderComponent* TextRender;
 
 };
 
@@ -17054,6 +19378,39 @@ class UTextRenderComponent : public UPrimitiveComponent
     FVector GetTextLocalSize();
 };
 
+class UTexture : public UStreamableRenderAsset
+{
+    FGuid LightingGuid;
+    int32 LODBias;
+    TEnumAsByte<TextureCompressionSettings> CompressionSettings;
+    TEnumAsByte<TextureFilter> Filter;
+    ETextureMipLoadOptions MipLoadOptions;
+    TEnumAsByte<TextureGroup> LODGroup;
+    FPerPlatformFloat Downscale;
+    ETextureDownscaleOptions DownscaleOptions;
+    uint8 sRGB;
+    uint8 bNoTiling;
+    uint8 VirtualTextureStreaming;
+    uint8 CompressionYCoCg;
+    uint8 bNotOfflineProcessed;
+    uint8 bAsyncResourceReleaseHasBeenStarted;
+    TArray<class UAssetUserData*> AssetUserData;
+
+};
+
+class UTexture2D : public UTexture
+{
+    int32 LevelIndex;
+    int32 FirstResourceMemMip;
+    uint8 bTemporarilyDisableStreaming;
+    TEnumAsByte<TextureAddress> AddressX;
+    TEnumAsByte<TextureAddress> AddressY;
+    FIntPoint ImportedSize;
+
+    int32 Blueprint_GetSizeY();
+    int32 Blueprint_GetSizeX();
+};
+
 class UTexture2DArray : public UTexture
 {
     TEnumAsByte<TextureAddress> AddressX;
@@ -17068,6 +19425,16 @@ class UTexture2DDynamic : public UTexture
 
 };
 
+class UTextureCube : public UTexture
+{
+};
+
+class UTextureLODSettings : public UObject
+{
+    TArray<FTextureLODGroup> TextureLODGroups;
+
+};
+
 class UTextureLightProfile : public UTexture2D
 {
     float Brightness;
@@ -17077,6 +19444,31 @@ class UTextureLightProfile : public UTexture2D
 
 class UTextureMipDataProviderFactory : public UAssetUserData
 {
+};
+
+class UTextureRenderTarget : public UTexture
+{
+    float TargetGamma;
+
+};
+
+class UTextureRenderTarget2D : public UTextureRenderTarget
+{
+    int32 SizeX;
+    int32 SizeY;
+    FLinearColor ClearColor;
+    TEnumAsByte<TextureAddress> AddressX;
+    TEnumAsByte<TextureAddress> AddressY;
+    uint8 bForceLinearGamma;
+    uint8 bHDR;
+    uint8 bGPUSharedFlag;
+    TEnumAsByte<ETextureRenderTargetFormat> RenderTargetFormat;
+    uint8 bAutoGenerateMips;
+    TEnumAsByte<TextureFilter> MipsSamplerFilter;
+    TEnumAsByte<TextureAddress> MipsAddressU;
+    TEnumAsByte<TextureAddress> MipsAddressV;
+    TEnumAsByte<EPixelFormat> OverrideFormat;
+
 };
 
 class UTextureRenderTarget2DArray : public UTextureRenderTarget
@@ -17117,64 +19509,22 @@ class UThumbnailInfo : public UObject
 {
 };
 
-struct FTimelineEventEntry
+class UTickableWorldSubsystem : public UWorldSubsystem
 {
-    float Time;
-    FTimelineEventEntryEventFunc EventFunc;
-    void OnTimelineEvent();
-
 };
 
-struct FTimelineVectorTrack
+class UTimecodeProvider : public UObject
 {
-    class UCurveVector* VectorCurve;
-    FTimelineVectorTrackInterpFunc InterpFunc;
-    void OnTimelineVector(FVector Output);
-    FName TrackName;
-    FName VectorPropertyName;
+    float FrameDelay;
 
-};
-
-struct FTimelineFloatTrack
-{
-    class UCurveFloat* FloatCurve;
-    FTimelineFloatTrackInterpFunc InterpFunc;
-    void OnTimelineFloat(float Output);
-    FName TrackName;
-    FName FloatPropertyName;
-
-};
-
-struct FTimelineLinearColorTrack
-{
-    class UCurveLinearColor* LinearColorCurve;
-    FTimelineLinearColorTrackInterpFunc InterpFunc;
-    void OnTimelineLinearColor(FLinearColor Output);
-    FName TrackName;
-    FName LinearColorPropertyName;
-
-};
-
-struct FTimeline
-{
-    TEnumAsByte<ETimelineLengthMode> LengthMode;
-    uint8 bLooping;
-    uint8 bReversePlayback;
-    uint8 bPlaying;
-    float Length;
-    float PlayRate;
-    float Position;
-    TArray<FTimelineEventEntry> Events;
-    TArray<FTimelineVectorTrack> InterpVectors;
-    TArray<FTimelineFloatTrack> InterpFloats;
-    TArray<FTimelineLinearColorTrack> InterpLinearColors;
-    FTimelineTimelinePostUpdateFunc TimelinePostUpdateFunc;
-    void OnTimelineEvent();
-    FTimelineTimelineFinishedFunc TimelineFinishedFunc;
-    void OnTimelineEvent();
-    TWeakObjectPtr<class UObject> PropertySetObject;
-    FName DirectionPropertyName;
-
+    FTimecode GetTimecode();
+    ETimecodeProviderSynchronizationState GetSynchronizationState();
+    FQualifiedFrameTime GetQualifiedFrameTime();
+    FFrameRate GetFrameRate();
+    FTimecode GetDelayedTimecode();
+    FQualifiedFrameTime GetDelayedQualifiedFrameTime();
+    bool FetchTimecode(FQualifiedFrameTime& OutFrameTime);
+    void FetchAndUpdate();
 };
 
 class UTimelineComponent : public UActorComponent
@@ -17207,44 +19557,6 @@ class UTimelineComponent : public UActorComponent
     bool GetIgnoreTimeDilation();
 };
 
-struct FTTTrackBase
-{
-    FName TrackName;
-    bool bIsExternalCurve;
-
-};
-
-struct FTTEventTrack : public FTTTrackBase
-{
-    FName FunctionName;
-    class UCurveFloat* CurveKeys;
-
-};
-
-struct FTTPropertyTrack : public FTTTrackBase
-{
-    FName PropertyName;
-
-};
-
-struct FTTFloatTrack : public FTTPropertyTrack
-{
-    class UCurveFloat* CurveFloat;
-
-};
-
-struct FTTVectorTrack : public FTTPropertyTrack
-{
-    class UCurveVector* CurveVector;
-
-};
-
-struct FTTLinearColorTrack : public FTTPropertyTrack
-{
-    class UCurveLinearColor* CurveLinearColor;
-
-};
-
 class UTimelineTemplate : public UObject
 {
     float TimelineLength;
@@ -17273,20 +19585,6 @@ class UTireType : public UDataAsset
 
 };
 
-struct FTouchInputControl
-{
-    class UTexture2D* Image1;
-    class UTexture2D* Image2;
-    FVector2D Center;
-    FVector2D VisualSize;
-    FVector2D ThumbSize;
-    FVector2D InteractionSize;
-    FVector2D InputScale;
-    FKey MainInputKey;
-    FKey AltInputKey;
-
-};
-
 class UTouchInterface : public UObject
 {
     TArray<FTouchInputControl> Controls;
@@ -17298,28 +19596,6 @@ class UTouchInterface : public UObject
     bool bPreventRecenter;
     float StartupDelay;
 
-};
-
-class ATriggerBase : public AActor
-{
-    class UShapeComponent* CollisionComponent;
-
-};
-
-class ATriggerBox : public ATriggerBase
-{
-};
-
-class ATriggerCapsule : public ATriggerBase
-{
-};
-
-class ATriggerSphere : public ATriggerBase
-{
-};
-
-class ATriggerVolume : public AVolume
-{
 };
 
 class UTwitterIntegrationBase : public UPlatformInterfaceBase
@@ -17347,13 +19623,6 @@ class UUserDefinedStruct : public UScriptStruct
 
 };
 
-struct FHardwareCursorReference
-{
-    FName CursorPath;
-    FVector2D HotSpot;
-
-};
-
 class UUserInterfaceSettings : public UDeveloperSettings
 {
     ERenderFocusRule RenderFocusRule;
@@ -17377,6 +19646,23 @@ class UUserInterfaceSettings : public UDeveloperSettings
     UClass* CustomScalingRuleClassInstance;
     class UDPICustomScalingRule* CustomScalingRule;
 
+};
+
+class UVOIPStatics : public UBlueprintFunctionLibrary
+{
+
+    void SetMicThreshold(float InThreshold);
+};
+
+class UVOIPTalker : public UActorComponent
+{
+    FVoiceSettings Settings;
+
+    void RegisterWithPlayerState(class APlayerState* OwningState);
+    float GetVoiceLevel();
+    class UVOIPTalker* CreateTalkerForPlayer(class APlayerState* OwningState);
+    void BPOnTalkingEnd();
+    void BPOnTalkingBegin(class UAudioComponent* AudioComponent);
 };
 
 class UVectorField : public UObject
@@ -17423,10 +19709,8 @@ class UVectorFieldStatic : public UVectorField
 
 };
 
-class AVectorFieldVolume : public AActor
+class UViewModeUtils : public UObject
 {
-    class UVectorFieldComponent* VectorFieldComponent;
-
 };
 
 class UViewportStatsSubsystem : public UWorldSubsystem
@@ -17439,23 +19723,6 @@ class UViewportStatsSubsystem : public UWorldSubsystem
 
 class UVirtualTexture : public UObject
 {
-};
-
-class ULightMapVirtualTexture : public UVirtualTexture
-{
-};
-
-class URuntimeVirtualTextureStreamingProxy : public UTexture2D
-{
-};
-
-struct FVirtualTextureBuildSettings
-{
-    int32 TileSize;
-    int32 TileBorderSize;
-    bool bEnableCompressCrunch;
-    bool bEnableCompressZlib;
-
 };
 
 class UVirtualTexture2D : public UTexture2D
@@ -17473,17 +19740,6 @@ class UVirtualTextureBuilder : public UObject
 
 };
 
-struct FVirtualTextureSpacePoolConfig
-{
-    int32 MinTileSize;
-    int32 MaxTileSize;
-    TArray<TEnumAsByte<EPixelFormat>> Formats;
-    int32 SizeInMegabyte;
-    bool bAllowSizeScale;
-    uint32 ScalabilityGroup;
-
-};
-
 class UVirtualTexturePoolConfig : public UObject
 {
     int32 DefaultSizeInMegabyte;
@@ -17492,10 +19748,6 @@ class UVirtualTexturePoolConfig : public UObject
 };
 
 class UVisualLoggerAutomationTests : public UObject
-{
-};
-
-class IVisualLoggerDebugSnapshotInterface : public IInterface
 {
 };
 
@@ -17512,31 +19764,6 @@ class UVisualLoggerKismetLibrary : public UBlueprintFunctionLibrary
 
 class UVoiceChannel : public UChannel
 {
-};
-
-struct FVoiceSettings
-{
-    class USceneComponent* ComponentToAttachTo;
-    class USoundAttenuation* AttenuationSettings;
-    class USoundEffectSourcePresetChain* SourceEffectChain;
-
-};
-
-class UVOIPTalker : public UActorComponent
-{
-    FVoiceSettings Settings;
-
-    void RegisterWithPlayerState(class APlayerState* OwningState);
-    float GetVoiceLevel();
-    class UVOIPTalker* CreateTalkerForPlayer(class APlayerState* OwningState);
-    void BPOnTalkingEnd();
-    void BPOnTalkingBegin(class UAudioComponent* AudioComponent);
-};
-
-class UVOIPStatics : public UBlueprintFunctionLibrary
-{
-
-    void SetMicThreshold(float InThreshold);
 };
 
 class UVolumeTexture : public UTexture
@@ -17578,24 +19805,6 @@ class UVolumetricCloudComponent : public USceneComponent
     void SetbUsePerSampleAtmosphericLightTransmittance(bool NewValue);
 };
 
-class AVolumetricCloud : public AInfo
-{
-    class UVolumetricCloudComponent* VolumetricCloudComponent;
-
-};
-
-class AVolumetricLightmapDensityVolume : public AVolume
-{
-    FInt32Interval AllowedMipLevelRange;
-
-};
-
-class AWindDirectionalSource : public AInfo
-{
-    class UWindDirectionalSourceComponent* Component;
-
-};
-
 class UWindDirectionalSourceComponent : public USceneComponent
 {
     float Strength;
@@ -17613,6 +19822,48 @@ class UWindDirectionalSourceComponent : public USceneComponent
     void SetMaximumGustAmount(float InNewMaxGust);
 };
 
+class UWorld : public UObject
+{
+    class ULevel* PersistentLevel;
+    class UNetDriver* NetDriver;
+    class ULineBatchComponent* LineBatcher;
+    class ULineBatchComponent* PersistentLineBatcher;
+    class ULineBatchComponent* ForegroundLineBatcher;
+    class AGameNetworkManager* NetworkManager;
+    class UPhysicsCollisionHandler* PhysicsCollisionHandler;
+    TArray<class UObject*> ExtraReferencedObjects;
+    TArray<class UObject*> PerModuleDataObjects;
+    TArray<class ULevelStreaming*> StreamingLevels;
+    FStreamingLevelsToConsider StreamingLevelsToConsider;
+    FString StreamingLevelsPrefix;
+    class ULevel* CurrentLevelPendingVisibility;
+    class ULevel* CurrentLevelPendingInvisibility;
+    class UDemoNetDriver* DemoNetDriver;
+    class AParticleEventManager* MyParticleEventManager;
+    class APhysicsVolume* DefaultPhysicsVolume;
+    uint8 bAreConstraintsDirty;
+    class UNavigationSystemBase* NavigationSystem;
+    class AGameModeBase* AuthorityGameMode;
+    class AGameStateBase* GameState;
+    class UAISystemBase* AISystem;
+    class UAvoidanceManager* AvoidanceManager;
+    TArray<class ULevel*> Levels;
+    TArray<FLevelCollection> LevelCollections;
+    class UGameInstance* OwningGameInstance;
+    TArray<class UMaterialParameterCollectionInstance*> ParameterCollectionInstances;
+    class UCanvas* CanvasForRenderingToTarget;
+    class UCanvas* CanvasForDrawMaterialToRenderTarget;
+    class UPhysicsFieldComponent* PhysicsField;
+    TSet<UActorComponent*> ComponentsThatNeedPreEndOfFrameSync;
+    TArray<class UActorComponent*> ComponentsThatNeedEndOfFrameUpdate;
+    TArray<class UActorComponent*> ComponentsThatNeedEndOfFrameUpdate_OnGameThread;
+    class UWorldComposition* WorldComposition;
+    FWorldPSCPool PSCPool;
+
+    class AWorldSettings* K2_GetWorldSettings();
+    void HandleTimelineScrubbed();
+};
+
 class UWorldComposition : public UObject
 {
     TArray<class ULevelStreaming*> TilesStreaming;
@@ -17623,2258 +19874,7 @@ class UWorldComposition : public UObject
 
 };
 
-struct FMaterialProxySettings
-{
-    FIntPoint TextureSize;
-    float GutterSpace;
-    float MetallicConstant;
-    float RoughnessConstant;
-    float AnisotropyConstant;
-    float SpecularConstant;
-    float OpacityConstant;
-    float OpacityMaskConstant;
-    float AmbientOcclusionConstant;
-    TEnumAsByte<ETextureSizingType> TextureSizingType;
-    TEnumAsByte<EMaterialMergeType> MaterialMergeType;
-    TEnumAsByte<EBlendMode> BlendMode;
-    uint8 bAllowTwoSidedMaterial;
-    uint8 bNormalMap;
-    uint8 bTangentMap;
-    uint8 bMetallicMap;
-    uint8 bRoughnessMap;
-    uint8 bAnisotropyMap;
-    uint8 bSpecularMap;
-    uint8 bEmissiveMap;
-    uint8 bOpacityMap;
-    uint8 bOpacityMaskMap;
-    uint8 bAmbientOcclusionMap;
-    FIntPoint DiffuseTextureSize;
-    FIntPoint NormalTextureSize;
-    FIntPoint TangentTextureSize;
-    FIntPoint MetallicTextureSize;
-    FIntPoint RoughnessTextureSize;
-    FIntPoint AnisotropyTextureSize;
-    FIntPoint SpecularTextureSize;
-    FIntPoint EmissiveTextureSize;
-    FIntPoint OpacityTextureSize;
-    FIntPoint OpacityMaskTextureSize;
-    FIntPoint AmbientOcclusionTextureSize;
-
-};
-
-struct FMeshProxySettings
-{
-    int32 ScreenSize;
-    float VoxelSize;
-    FMaterialProxySettings MaterialSettings;
-    float MergeDistance;
-    FColor UnresolvedGeometryColor;
-    float MaxRayCastDist;
-    float HardAngleThreshold;
-    int32 LightMapResolution;
-    TEnumAsByte<EProxyNormalComputationMethod::Type> NormalCalculationMethod;
-    TEnumAsByte<ELandscapeCullingPrecision::Type> LandscapeCullingPrecision;
-    uint8 bCalculateCorrectLODModel;
-    uint8 bOverrideVoxelSize;
-    uint8 bOverrideTransferDistance;
-    uint8 bUseHardAngleThreshold;
-    uint8 bComputeLightMapResolution;
-    uint8 bRecalculateNormals;
-    uint8 bUseLandscapeCulling;
-    uint8 bAllowAdjacency;
-    uint8 bAllowDistanceField;
-    uint8 bReuseMeshLightmapUVs;
-    uint8 bCreateCollision;
-    uint8 bAllowVertexColors;
-    uint8 bGenerateLightmapUVs;
-
-};
-
-struct FMeshMergingSettings
-{
-    int32 TargetLightMapResolution;
-    EUVOutput OutputUVs;
-    FMaterialProxySettings MaterialSettings;
-    int32 GutterSize;
-    int32 SpecificLOD;
-    EMeshLODSelectionType LODSelectionType;
-    uint8 bGenerateLightMapUV;
-    uint8 bComputedLightMapResolution;
-    uint8 bPivotPointAtZero;
-    uint8 bMergePhysicsData;
-    uint8 bMergeMaterials;
-    uint8 bCreateMergedMaterial;
-    uint8 bBakeVertexDataToMesh;
-    uint8 bUseVertexDataForBakingMaterial;
-    uint8 bUseTextureBinning;
-    uint8 bReuseMeshLightmapUVs;
-    uint8 bMergeEquivalentMaterials;
-    uint8 bUseLandscapeCulling;
-    uint8 bIncludeImposters;
-    uint8 bAllowDistanceField;
-
-};
-
-struct FHierarchicalSimplification
-{
-    float TransitionScreenSize;
-    float OverrideDrawDistance;
-    uint8 bUseOverrideDrawDistance;
-    uint8 bAllowSpecificExclusion;
-    uint8 bSimplifyMesh;
-    uint8 bOnlyGenerateClustersForVolumes;
-    uint8 bReusePreviousLevelClusters;
-    FMeshProxySettings ProxySetting;
-    FMeshMergingSettings MergeSetting;
-    float DesiredBoundRadius;
-    float DesiredFillingPercentage;
-    int32 MinNumberOfActorsToBuild;
-
-};
-
-class UHierarchicalLODSetup : public UObject
-{
-    TArray<FHierarchicalSimplification> HierarchicalLODSetup;
-    TSoftObjectPtr<UMaterialInterface> OverrideBaseMaterial;
-
-};
-
-struct FNavDataConfig : public FNavAgentProperties
-{
-    FName Name;
-    FColor Color;
-    FVector DefaultQueryExtent;
-    TSubclassOf<class AActor> NavigationDataClass;
-    TSoftClassPtr<AActor> NavDataClass;
-
-};
-
-struct FVectorDistribution
-{
-    FDistributionLookupTable Table;
-
-};
-
-struct FVector4Distribution
-{
-    FDistributionLookupTable Table;
-
-};
-
-struct FFloatRK4SpringInterpolator
-{
-    float StiffnessConstant;
-    float DampeningRatio;
-
-};
-
-struct FVectorRK4SpringInterpolator
-{
-    float StiffnessConstant;
-    float DampeningRatio;
-
-};
-
-struct FExpressionOutput
-{
-    FName OutputName;
-
-};
-
-struct FVector2MaterialInput : public FMaterialInput
-{
-};
-
-struct FPlatformInterfaceData
-{
-    FName DataName;
-    TEnumAsByte<EPlatformInterfaceDataType> Type;
-    int32 IntValue;
-    float FloatValue;
-    FString StringValue;
-    class UObject* ObjectValue;
-
-};
-
-struct FPlatformInterfaceDelegateResult
-{
-    bool bSuccessful;
-    FPlatformInterfaceData Data;
-
-};
-
-struct FAnimNode_Base
-{
-};
-
-struct FPoseLinkBase
-{
-    int32 LinkID;
-
-};
-
-struct FPoseLink : public FPoseLinkBase
-{
-};
-
-struct FComponentSpacePoseLink : public FPoseLinkBase
-{
-};
-
-struct FInputScaleBias
-{
-    float Scale;
-    float Bias;
-
-};
-
-struct FInputAlphaBoolBlend
-{
-    float BlendInTime;
-    float BlendOutTime;
-    EAlphaBlendOption BlendOption;
-    bool bInitialized;
-    class UCurveFloat* CustomCurve;
-    FAlphaBlend AlphaBlend;
-
-};
-
-struct FInputRange
-{
-    float Min;
-    float Max;
-
-};
-
-struct FInputScaleBiasClamp
-{
-    bool bMapRange;
-    bool bClampResult;
-    bool bInterpResult;
-    FInputRange InRange;
-    FInputRange OutRange;
-    float Scale;
-    float Bias;
-    float ClampMin;
-    float ClampMax;
-    float InterpSpeedIncreasing;
-    float InterpSpeedDecreasing;
-
-};
-
-struct FAnimNode_AssetPlayerBase : public FAnimNode_Base
-{
-    FName GroupName;
-    TEnumAsByte<EAnimGroupRole::Type> GroupRole;
-    EAnimSyncGroupScope GroupScope;
-    bool bIgnoreForRelevancyTest;
-    float BlendWeight;
-    float InternalTimeAccumulator;
-
-};
-
-struct FPerBoneBlendWeight
-{
-    int32 SourceIndex;
-    float BlendWeight;
-
-};
-
-struct FAnimNode_Root : public FAnimNode_Base
-{
-    FPoseLink Result;
-    FName Name;
-    FName Group;
-
-};
-
-struct FAnimCurveParam
-{
-    FName Name;
-
-};
-
-struct FActorComponentDuplicatedObjectData
-{
-};
-
-struct FActorComponentInstanceData
-{
-    class UObject* SourceComponentTemplate;
-    EComponentCreationMethod SourceComponentCreationMethod;
-    int32 SourceComponentTypeSerializedIndex;
-    TArray<uint8> SavedProperties;
-    FActorComponentDuplicatedObjectData UniqueTransientPackage;
-    TArray<FActorComponentDuplicatedObjectData> DuplicatedObjects;
-    TArray<class UObject*> ReferencedObjects;
-    TArray<FName> ReferencedNames;
-
-};
-
-struct FSceneComponentInstanceData : public FActorComponentInstanceData
-{
-    TMap<class USceneComponent*, class FTransform> AttachedInstanceComponents;
-
-};
-
-struct FAnimationGroupReference
-{
-    FName GroupName;
-    TEnumAsByte<EAnimGroupRole::Type> GroupRole;
-    EAnimSyncGroupScope GroupScope;
-
-};
-
-struct FAnimGroupInstance
-{
-};
-
-struct FAnimTickRecord
-{
-    class UAnimationAsset* SourceAsset;
-
-};
-
-struct FBlendFilter
-{
-};
-
-struct FBlendSampleData
-{
-    int32 SampleDataIndex;
-    class UAnimSequence* Animation;
-    float TotalWeight;
-    float Time;
-    float PreviousTime;
-    float SamplePlayRate;
-
-};
-
-struct FAnimationRecordingSettings
-{
-    bool bRecordInWorldSpace;
-    bool bRemoveRootAnimation;
-    bool bAutoSaveAsset;
-    float SampleRate;
-    float Length;
-    TEnumAsByte<ERichCurveInterpMode> InterpMode;
-    TEnumAsByte<ERichCurveTangentMode> TangentMode;
-    bool bRecordTransforms;
-    bool bRecordCurves;
-
-};
-
-struct FComponentSpacePose
-{
-    TArray<FTransform> Transforms;
-    TArray<FName> Names;
-
-};
-
-struct FLocalSpacePose
-{
-    TArray<FTransform> Transforms;
-    TArray<FName> Names;
-
-};
-
-struct FNamedTransform
-{
-    FTransform Value;
-    FName Name;
-
-};
-
-struct FNamedColor
-{
-    FColor Value;
-    FName Name;
-
-};
-
-struct FNamedVector
-{
-    FVector Value;
-    FName Name;
-
-};
-
-struct FNamedFloat
-{
-    float Value;
-    FName Name;
-
-};
-
-struct FAnimParentNodeAssetOverride
-{
-    class UAnimationAsset* NewAsset;
-    FGuid ParentNodeGuid;
-
-};
-
-struct FAnimBlueprintDebugData
-{
-};
-
-struct FAnimationFrameSnapshot
-{
-};
-
-struct FStateMachineDebugData
-{
-};
-
-struct FStateMachineStateDebugData
-{
-};
-
-struct FRootMotionExtractionStep
-{
-    class UAnimSequence* AnimSequence;
-    float StartPosition;
-    float EndPosition;
-
-};
-
-struct FAnimationErrorStats
-{
-};
-
-struct FVectorCurve : public FAnimCurveBase
-{
-    FRichCurve FloatCurves;
-
-};
-
-struct FTransformCurve : public FAnimCurveBase
-{
-    FVectorCurve TranslationCurve;
-    FVectorCurve RotationCurve;
-    FVectorCurve ScaleCurve;
-
-};
-
-struct FSlotEvaluationPose
-{
-    TEnumAsByte<EAdditiveAnimationType> AdditiveType;
-    float Weight;
-
-};
-
-struct FA2Pose
-{
-    TArray<FTransform> Bones;
-
-};
-
-struct FA2CSPose : public FA2Pose
-{
-    TArray<uint8> ComponentSpaceFlags;
-
-};
-
-struct FQueuedDrawDebugItem
-{
-    TEnumAsByte<EDrawDebugItemType::Type> ItemType;
-    FVector StartLoc;
-    FVector EndLoc;
-    FVector Center;
-    FRotator Rotation;
-    float Radius;
-    float Size;
-    int32 Segments;
-    FColor Color;
-    bool bPersistentLines;
-    float LifeTime;
-    float Thickness;
-    FString Message;
-    FVector2D TextScale;
-
-};
-
-struct FAnimInstanceSubsystemData
-{
-};
-
-struct FAnimMontageInstance
-{
-    class UAnimMontage* Montage;
-    bool bPlaying;
-    float DefaultBlendTimeMultiplier;
-    TArray<int32> NextSections;
-    TArray<int32> PrevSections;
-    TArray<FAnimNotifyEvent> ActiveStateBranchingPoints;
-    float Position;
-    float PlayRate;
-    FAlphaBlend Blend;
-    int32 DisableRootMotionCount;
-
-};
-
-struct FAnimNode_ApplyMeshSpaceAdditive : public FAnimNode_Base
-{
-    FPoseLink Base;
-    FPoseLink Additive;
-    EAnimAlphaInputType AlphaInputType;
-    float alpha;
-    uint8 bAlphaBoolEnabled;
-    FInputAlphaBoolBlend AlphaBoolBlend;
-    FName AlphaCurveName;
-    FInputScaleBias AlphaScaleBias;
-    FInputScaleBiasClamp AlphaScaleBiasClamp;
-    int32 LODThreshold;
-
-};
-
-struct FAnimNode_CustomProperty : public FAnimNode_Base
-{
-    TArray<FName> SourcePropertyNames;
-    TArray<FName> DestPropertyNames;
-    class UObject* TargetInstance;
-
-};
-
-struct FAnimNode_Inertialization : public FAnimNode_Base
-{
-    FPoseLink Source;
-
-};
-
-struct FInertializationPoseDiff
-{
-};
-
-struct FInertializationCurveDiff
-{
-};
-
-struct FInertializationBoneDiff
-{
-};
-
-struct FInertializationPose
-{
-};
-
-struct FAnimNode_LinkedAnimGraph : public FAnimNode_CustomProperty
-{
-    TArray<FPoseLink> InputPoses;
-    TArray<FName> InputPoseNames;
-    TSubclassOf<class UAnimInstance> InstanceClass;
-    FName Tag;
-    uint8 bReceiveNotifiesFromLinkedInstances;
-    uint8 bPropagateNotifiesToLinkedInstances;
-
-};
-
-struct FAnimNode_LinkedAnimLayer : public FAnimNode_LinkedAnimGraph
-{
-    TSubclassOf<class UAnimLayerInterface> Interface;
-    FName Layer;
-
-};
-
-struct FAnimNode_LinkedInputPose : public FAnimNode_Base
-{
-    FName Name;
-    FName Graph;
-    FPoseLink InputPose;
-
-};
-
-struct FAnimNode_SaveCachedPose : public FAnimNode_Base
-{
-    FPoseLink pose;
-    FName CachePoseName;
-
-};
-
-struct FAnimNode_SequencePlayer : public FAnimNode_AssetPlayerBase
-{
-    class UAnimSequenceBase* Sequence;
-    float PlayRateBasis;
-    float PlayRate;
-    FInputScaleBiasClamp PlayRateScaleBiasClamp;
-    float StartPosition;
-    bool bLoopAnimation;
-
-};
-
-struct FAnimNode_StateMachine : public FAnimNode_Base
-{
-    int32 StateMachineIndexInClass;
-    int32 MaxTransitionsPerFrame;
-    bool bSkipFirstUpdateTransition;
-    bool bReinitializeOnBecomingRelevant;
-
-};
-
-struct FAnimationPotentialTransition
-{
-};
-
-struct FAnimationActiveTransitionEntry
-{
-    class UBlendProfile* BlendProfile;
-
-};
-
-struct FAnimNode_TransitionPoseEvaluator : public FAnimNode_Base
-{
-    int32 FramesToCachePose;
-    TEnumAsByte<EEvaluatorDataSource::Type> DataSource;
-    TEnumAsByte<EEvaluatorMode::Type> EvaluatorMode;
-
-};
-
-struct FAnimNode_TransitionResult : public FAnimNode_Base
-{
-    bool bCanEnterTransition;
-
-};
-
-struct FAnimNode_UseCachedPose : public FAnimNode_Base
-{
-    FPoseLink LinkToCachingNode;
-    FName CachePoseName;
-
-};
-
-struct FAnimNode_ConvertLocalToComponentSpace : public FAnimNode_Base
-{
-    FPoseLink LocalPose;
-
-};
-
-struct FAnimNode_ConvertComponentToLocalSpace : public FAnimNode_Base
-{
-    FComponentSpacePoseLink ComponentPose;
-
-};
-
-struct FCompressedTrack
-{
-    TArray<uint8> ByteStream;
-    TArray<float> Times;
-    float Mins;
-    float Ranges;
-
-};
-
-struct FCurveTrack
-{
-    FName CurveName;
-    TArray<float> CurveWeights;
-
-};
-
-struct FScaleTrack
-{
-    TArray<FVector> ScaleKeys;
-    TArray<float> Times;
-
-};
-
-struct FRotationTrack
-{
-    TArray<FQuat> RotKeys;
-    TArray<float> Times;
-
-};
-
-struct FTranslationTrack
-{
-    TArray<FVector> PosKeys;
-    TArray<float> Times;
-
-};
-
-struct FRawAnimSequenceTrack
-{
-    TArray<FVector> PosKeys;
-    TArray<FQuat> RotKeys;
-    TArray<FVector> ScaleKeys;
-
-};
-
-struct FAnimSequenceTrackContainer
-{
-    TArray<FRawAnimSequenceTrack> AnimationTracks;
-    TArray<FName> TrackNames;
-
-};
-
-struct FAnimSingleNodeInstanceProxy : public FAnimInstanceProxy
-{
-};
-
-struct FAnimNode_SingleNode : public FAnimNode_Base
-{
-    FPoseLink SourcePose;
-
-};
-
-struct FAnimationTransitionRule
-{
-    FName RuleToExecute;
-    bool TransitionReturnVal;
-    int32 TransitionIndex;
-
-};
-
-struct FAnimationState : public FAnimationStateBase
-{
-    TArray<FAnimationTransitionRule> Transitions;
-    int32 StateRootNodeIndex;
-    int32 StartNotify;
-    int32 EndNotify;
-    int32 FullyBlendedNotify;
-
-};
-
-struct FAnimNotifyTrack
-{
-    FName TrackName;
-    FLinearColor TrackColor;
-
-};
-
-struct FPerBoneBlendWeights
-{
-    TArray<FPerBoneBlendWeight> BoneBlendWeights;
-
-};
-
-struct FAssetImportInfo
-{
-};
-
-struct FAssetManagerSearchRules
-{
-    TArray<FString> AssetScanPaths;
-    TArray<FString> IncludePatterns;
-    TArray<FString> ExcludePatterns;
-    UClass* AssetBaseClass;
-    bool bHasBlueprintClasses;
-    bool bForceSynchronousScan;
-    bool bSkipVirtualPathExpansion;
-    bool bSkipManagerIncludeCheck;
-
-};
-
-struct FAtmospherePrecomputeInstanceData : public FSceneComponentInstanceData
-{
-};
-
-struct FAudioReverbEffect : public FAudioEffectParameters
-{
-};
-
-struct FNavAvoidanceData
-{
-};
-
-struct FGridBlendSample
-{
-    FEditorElement GridElement;
-    float BlendWeight;
-
-};
-
-struct FBPEditorBookmarkNode
-{
-    FGuid NodeGuid;
-    FGuid ParentGuid;
-    FText DisplayName;
-
-};
-
-struct FEditedDocumentInfo
-{
-    FSoftObjectPath EditedObjectPath;
-    FVector2D SavedViewOffset;
-    float SavedZoomAmount;
-    class UObject* EditedObject;
-
-};
-
-struct FBPInterfaceDescription
-{
-    TSubclassOf<class UInterface> Interface;
-    TArray<class UEdGraph*> Graphs;
-
-};
-
-struct FBPVariableDescription
-{
-    FName VarName;
-    FGuid VarGuid;
-    FEdGraphPinType VarType;
-    FString FriendlyName;
-    FText Category;
-    uint64 PropertyFlags;
-    FName RepNotifyFunc;
-    TEnumAsByte<ELifetimeCondition> ReplicationCondition;
-    TArray<FBPVariableMetaDataEntry> MetaDataArray;
-    FString DefaultValue;
-
-};
-
-struct FBlueprintMacroCosmeticInfo
-{
-};
-
-struct FCompilerNativizationOptions
-{
-    FName PlatformName;
-    bool ServerOnlyPlatform;
-    bool ClientOnlyPlatform;
-    bool bExcludeMonolithicHeaders;
-    TArray<FName> ExcludedModules;
-    TSet<FSoftObjectPath> ExcludedAssets;
-    TArray<FString> ExcludedFolderPaths;
-
-};
-
-struct FEventGraphFastCallPair
-{
-    class UFunction* FunctionToPatch;
-    int32 EventGraphCallOffset;
-
-};
-
-struct FBlueprintDebugData
-{
-};
-
-struct FPointerToUberGraphFrame
-{
-};
-
-struct FDebuggingInfoForSingleFunction
-{
-};
-
-struct FNodeToCodeAssociation
-{
-};
-
-struct FAnimCurveType
-{
-};
-
-struct FBookmarkBaseJumpToSettings
-{
-};
-
-struct FBookmarkJumpToSettings : public FBookmarkBaseJumpToSettings
-{
-};
-
-struct FBookmark2DJumpToSettings
-{
-};
-
-struct FCachedAnimTransitionData
-{
-    FName StateMachineName;
-    FName FromStateName;
-    FName ToStateName;
-
-};
-
-struct FCachedAnimRelevancyData
-{
-    FName StateMachineName;
-    FName StateName;
-
-};
-
-struct FCachedAnimAssetPlayerData
-{
-    FName StateMachineName;
-    FName StateName;
-
-};
-
-struct FCachedAnimStateData
-{
-    FName StateMachineName;
-    FName StateName;
-
-};
-
-struct FCachedAnimStateArray
-{
-    TArray<FCachedAnimStateData> States;
-
-};
-
-struct FCameraShakeDuration
-{
-    float Duration;
-    ECameraShakeDurationType Type;
-
-};
-
-struct FCameraShakeInfo
-{
-    FCameraShakeDuration Duration;
-    float BlendIn;
-    float BlendOut;
-
-};
-
-struct FCameraShakeStopParams
-{
-    bool bImmediately;
-
-};
-
-struct FCameraShakeUpdateResult
-{
-};
-
-struct FCameraShakeScrubParams
-{
-    float AbsoluteTime;
-    float ShakeScale;
-    float DynamicScale;
-    float BlendingWeight;
-    FMinimalViewInfo POV;
-
-};
-
-struct FCameraShakeUpdateParams
-{
-    float DeltaTime;
-    float ShakeScale;
-    float DynamicScale;
-    float BlendingWeight;
-    FMinimalViewInfo POV;
-
-};
-
-struct FCameraShakeStartParams
-{
-    bool bIsRestarting;
-
-};
-
-struct FDummySpacerCameraTypes
-{
-};
-
-struct FCanvasIcon
-{
-    class UTexture* Texture;
-    float U;
-    float V;
-    float UL;
-    float VL;
-
-};
-
-struct FWrappedStringElement
-{
-    FString Value;
-    FVector2D LineExtent;
-
-};
-
-struct FTextSizingParameters
-{
-    float DrawX;
-    float DrawY;
-    float DrawXL;
-    float DrawYL;
-    FVector2D Scaling;
-    class UFont* DrawFont;
-    FVector2D SpacingAdjust;
-
-};
-
-struct FChildActorAttachedActorInfo
-{
-    TWeakObjectPtr<class AActor> Actor;
-    FName SocketName;
-    FTransform RelativeTransform;
-
-};
-
-struct FChildActorComponentInstanceData : public FSceneComponentInstanceData
-{
-    TSubclassOf<class AActor> ChildActorClass;
-    FName ChildActorName;
-    TArray<FChildActorAttachedActorInfo> AttachedActors;
-
-};
-
-struct FAutoCompleteNode
-{
-    int32 IndexChar;
-    TArray<int32> AutoCompleteListIndices;
-
-};
-
-struct FRuntimeCurveLinearColor
-{
-    FRichCurve ColorCurves;
-    class UCurveLinearColor* ExternalCurve;
-
-};
-
-struct FCurveAtlasColorAdjustments
-{
-    uint8 bChromaKeyTexture;
-    float AdjustBrightness;
-    float AdjustBrightnessCurve;
-    float AdjustVibrance;
-    float AdjustSaturation;
-    float AdjustRGBCurve;
-    float AdjustHue;
-    float AdjustMinAlpha;
-    float AdjustMaxAlpha;
-
-};
-
-struct FCurveTableRowHandle
-{
-    class UCurveTable* CurveTable;
-    FName RowName;
-
-};
-
-struct FCustomAttribute
-{
-    FName Name;
-    int32 VariantType;
-    TArray<float> Times;
-
-};
-
-struct FCustomAttributePerBoneData
-{
-    int32 BoneTreeIndex;
-    TArray<FCustomAttribute> Attributes;
-
-};
-
-struct FDataTableCategoryHandle
-{
-    class UDataTable* DataTable;
-    FName ColumnName;
-    FName RowContents;
-
-};
-
-struct FDataTableRowHandle
-{
-    class UDataTable* DataTable;
-    FName RowName;
-
-};
-
-struct FGraphReference
-{
-    class UEdGraph* MacroGraph;
-    class UBlueprint* GraphBlueprint;
-    FGuid GraphGuid;
-
-};
-
-struct FEdGraphPinReference
-{
-    TWeakObjectPtr<class UEdGraphNode> OwningNode;
-    FGuid PinId;
-
-};
-
-struct FEdGraphSchemaAction
-{
-    FText MenuDescription;
-    FText TooltipDescription;
-    FText Category;
-    FText Keywords;
-    int32 Grouping;
-    int32 SectionID;
-    TArray<FString> MenuDescriptionArray;
-    TArray<FString> FullSearchTitlesArray;
-    TArray<FString> FullSearchKeywordsArray;
-    TArray<FString> FullSearchCategoryArray;
-    TArray<FString> LocalizedMenuDescriptionArray;
-    TArray<FString> LocalizedFullSearchTitlesArray;
-    TArray<FString> LocalizedFullSearchKeywordsArray;
-    TArray<FString> LocalizedFullSearchCategoryArray;
-    FString SearchText;
-
-};
-
-struct FEdGraphSchemaAction_NewNode : public FEdGraphSchemaAction
-{
-    class UEdGraphNode* NodeTemplate;
-
-};
-
-struct FScreenMessageString
-{
-    uint64 Key;
-    FString ScreenMessage;
-    FColor DisplayColor;
-    float TimeToDisplay;
-    float CurrentTimeDisplayed;
-    FVector2D TextScale;
-
-};
-
-struct FURL
-{
-    FString Protocol;
-    FString Host;
-    int32 Port;
-    int32 Valid;
-    FString Map;
-    FString RedirectURL;
-    TArray<FString> Op;
-    FString Portal;
-
-};
-
-struct FFullyLoadedPackagesInfo
-{
-    TEnumAsByte<EFullyLoadPackageType> FullyLoadType;
-    FString Tag;
-    TArray<FName> PackagesToLoad;
-    TArray<class UObject*> LoadedObjects;
-
-};
-
-struct FLevelStreamingStatus
-{
-    FName PackageName;
-    uint8 bShouldBeLoaded;
-    uint8 bShouldBeVisible;
-    uint32 LODIndex;
-
-};
-
-struct FNamedNetDriver
-{
-    class UNetDriver* NetDriver;
-
-};
-
-struct FWorldContext
-{
-    FURL LastURL;
-    FURL LastRemoteURL;
-    class UPendingNetGame* PendingNetGame;
-    TArray<FFullyLoadedPackagesInfo> PackagesToFullyLoad;
-    TArray<class ULevel*> LoadedLevelsForPendingMapChange;
-    TArray<class UObjectReferencer*> ObjectReferencers;
-    TArray<FLevelStreamingStatus> PendingLevelStreamingStatusUpdates;
-    class UGameViewportClient* GameViewport;
-    class UGameInstance* OwningGameInstance;
-    TArray<FNamedNetDriver> ActiveNetDrivers;
-
-};
-
-struct FExposureSettings
-{
-    float FixedEV100;
-    bool bFixed;
-
-};
-
-struct FTickPrerequisite
-{
-};
-
-struct FDepthFieldGlowInfo
-{
-    uint8 bEnableGlow;
-    FLinearColor GlowColor;
-    FVector2D GlowOuterRadius;
-    FVector2D GlowInnerRadius;
-
-};
-
-struct FFontRenderInfo
-{
-    uint8 bClipText;
-    uint8 bEnableShadow;
-    FDepthFieldGlowInfo GlowInfo;
-
-};
-
-struct FDamageEvent
-{
-    TSubclassOf<class UDamageType> DamageTypeClass;
-
-};
-
-struct FRadialDamageParams
-{
-    float BaseDamage;
-    float MinimumDamage;
-    float InnerRadius;
-    float OuterRadius;
-    float DamageFalloff;
-
-};
-
-struct FRadialDamageEvent : public FDamageEvent
-{
-    FRadialDamageParams Params;
-    FVector Origin;
-    TArray<FHitResult> ComponentHits;
-
-};
-
-struct FPointDamageEvent : public FDamageEvent
-{
-    float Damage;
-    FVector_NetQuantizeNormal ShotDirection;
-    FHitResult HitInfo;
-
-};
-
-struct FMeshBuildSettings
-{
-    uint8 bUseMikkTSpace;
-    uint8 bRecomputeNormals;
-    uint8 bRecomputeTangents;
-    uint8 bComputeWeightedNormals;
-    uint8 bRemoveDegenerates;
-    uint8 bBuildAdjacencyBuffer;
-    uint8 bBuildReversedIndexBuffer;
-    uint8 bUseHighPrecisionTangentBasis;
-    uint8 bUseFullPrecisionUVs;
-    uint8 bGenerateLightmapUVs;
-    uint8 bGenerateDistanceFieldAsIfTwoSided;
-    uint8 bSupportFaceRemap;
-    int32 MinLightmapResolution;
-    int32 SrcLightmapIndex;
-    int32 DstLightmapIndex;
-    float BuildScale;
-    FVector BuildScale3D;
-    float DistanceFieldResolutionScale;
-    class UStaticMesh* DistanceFieldReplacementMesh;
-
-};
-
-struct FPOV
-{
-    FVector Location;
-    FRotator Rotation;
-    float FOV;
-
-};
-
-struct FAnimUpdateRateParameters
-{
-    EUpdateRateShiftBucket ShiftBucket;
-    uint8 bInterpolateSkippedFrames;
-    uint8 bShouldUseLodMap;
-    uint8 bShouldUseMinLod;
-    uint8 bSkipUpdate;
-    uint8 bSkipEvaluation;
-    int32 UpdateRate;
-    int32 EvaluationRate;
-    float TickedPoseOffestTime;
-    float AdditionalTime;
-    int32 BaseNonRenderedUpdateRate;
-    int32 MaxEvalRateForInterpolation;
-    TArray<float> BaseVisibleDistanceFactorThesholds;
-    TMap<int32, int32> LODToFrameSkipMap;
-    int32 SkippedUpdateFrames;
-    int32 SkippedEvalFrames;
-
-};
-
-struct FAnimSlotDesc
-{
-    FName slotName;
-    int32 NumChannels;
-
-};
-
-struct FAnimSlotInfo
-{
-    FName slotName;
-    TArray<float> ChannelWeights;
-
-};
-
-struct FMTDResult
-{
-    FVector Direction;
-    float Distance;
-
-};
-
-struct FSwarmDebugOptions
-{
-    uint8 bDistributionEnabled;
-    uint8 bForceContentExport;
-    uint8 bInitialized;
-
-};
-
-struct FLightmassDebugOptions
-{
-    uint8 bDebugMode;
-    uint8 bStatsEnabled;
-    uint8 bGatherBSPSurfacesAcrossComponents;
-    float CoplanarTolerance;
-    uint8 bUseImmediateImport;
-    uint8 bImmediateProcessMappings;
-    uint8 bSortMappings;
-    uint8 bDumpBinaryFiles;
-    uint8 bDebugMaterials;
-    uint8 bPadMappings;
-    uint8 bDebugPaddings;
-    uint8 bOnlyCalcDebugTexelMappings;
-    uint8 bUseRandomColors;
-    uint8 bColorBordersGreen;
-    uint8 bColorByExecutionTime;
-    float ExecutionTimeDivisor;
-
-};
-
-struct FBasedPosition
-{
-    class AActor* Base;
-    FVector Position;
-    FVector CachedBaseLocation;
-    FRotator CachedBaseRotation;
-    FVector CachedTransPosition;
-
-};
-
-struct FFractureEffect
-{
-    class UParticleSystem* ParticleSystem;
-    class USoundBase* Sound;
-
-};
-
-struct FRigidBodyContactInfo
-{
-    FVector ContactPosition;
-    FVector ContactNormal;
-    float ContactPenetration;
-    class UPhysicalMaterial* PhysMaterial;
-
-};
-
-struct FCollisionImpactData
-{
-    TArray<FRigidBodyContactInfo> ContactInfos;
-    FVector TotalNormalImpulse;
-    FVector TotalFrictionImpulse;
-    bool bIsVelocityDeltaUnderThreshold;
-
-};
-
-struct FRigidBodyState
-{
-    FVector_NetQuantize100 Position;
-    FQuat Quaternion;
-    FVector_NetQuantize100 LinVel;
-    FVector_NetQuantize100 AngVel;
-    uint8 Flags;
-
-};
-
-struct FActiveHapticFeedbackEffect
-{
-    class UHapticFeedbackEffect_Base* HapticEffect;
-
-};
-
-struct FClusterNode
-{
-    FVector BoundMin;
-    int32 FirstChild;
-    FVector BoundMax;
-    int32 LastChild;
-    int32 FirstInstance;
-    int32 LastInstance;
-    FVector MinInstanceScale;
-    FVector MaxInstanceScale;
-
-};
-
-struct FClusterNode_DEPRECATED
-{
-    FVector BoundMin;
-    int32 FirstChild;
-    FVector BoundMax;
-    int32 LastChild;
-    int32 FirstInstance;
-    int32 LastInstance;
-
-};
-
-struct FHLODISMComponentDesc
-{
-    class UStaticMesh* StaticMesh;
-    class UMaterialInterface* Material;
-    TArray<FTransform> Instances;
-
-};
-
-struct FInstancedStaticMeshLightMapInstanceData
-{
-    FTransform Transform;
-    TArray<FGuid> MapBuildDataIds;
-
-};
-
-struct FInstancedStaticMeshComponentInstanceData : public FSceneComponentInstanceData
-{
-    class UStaticMesh* StaticMesh;
-    FInstancedStaticMeshLightMapInstanceData CachedStaticLighting;
-    TArray<FInstancedStaticMeshInstanceData> PerInstanceSMData;
-    TArray<float> PerInstanceSMCustomData;
-    int32 InstancingRandomSeed;
-
-};
-
-struct FInterpEdSelKey
-{
-    class UInterpGroup* Group;
-    class UInterpTrack* Track;
-    int32 KeyIndex;
-    float UnsnappedPosition;
-
-};
-
-struct FCameraPreviewInfo
-{
-    TSubclassOf<class APawn> PawnClass;
-    class UAnimSequence* AnimSeq;
-    FVector Location;
-    FRotator Rotation;
-    class APawn* PawnInst;
-
-};
-
-struct FSubTrackGroup
-{
-    FString GroupName;
-    TArray<int32> TrackIndices;
-    uint8 bIsCollapsed;
-    uint8 bIsSelected;
-
-};
-
-struct FSupportedSubTrackInfo
-{
-    TSubclassOf<class UInterpTrack> SupportedClass;
-    FString SubTrackName;
-    int32 GroupIndex;
-
-};
-
-struct FLatentActionManager
-{
-};
-
-struct FLevelSimplificationDetails
-{
-    bool bCreatePackagePerAsset;
-    float DetailsPercentage;
-    FMaterialProxySettings StaticMeshMaterialSettings;
-    bool bOverrideLandscapeExportLOD;
-    int32 LandscapeExportLOD;
-    FMaterialProxySettings LandscapeMaterialSettings;
-    bool bBakeFoliageToLandscape;
-    bool bBakeGrassToLandscape;
-    bool bGenerateMeshNormalMap;
-    bool bGenerateMeshMetallicMap;
-    bool bGenerateMeshRoughnessMap;
-    bool bGenerateMeshSpecularMap;
-    bool bGenerateLandscapeNormalMap;
-    bool bGenerateLandscapeMetallicMap;
-    bool bGenerateLandscapeRoughnessMap;
-    bool bGenerateLandscapeSpecularMap;
-
-};
-
-struct FStreamableTextureInstance
-{
-};
-
-struct FDynamicTextureInstance : public FStreamableTextureInstance
-{
-    class UTexture2D* Texture;
-    bool bAttached;
-    float OriginalRadius;
-
-};
-
-struct FPrecomputedLightInstanceData : public FSceneComponentInstanceData
-{
-    FTransform Transform;
-    FGuid LightGuid;
-    int32 PreviewShadowMapChannel;
-
-};
-
-struct FBatchedPoint
-{
-    FVector Position;
-    FLinearColor Color;
-    float PointSize;
-    float RemainingLifeTime;
-    uint8 DepthPriority;
-
-};
-
-struct FBatchedLine
-{
-    FVector Start;
-    FVector End;
-    FLinearColor Color;
-    float Thickness;
-    float RemainingLifeTime;
-    uint8 DepthPriority;
-
-};
-
-struct FClientReceiveData
-{
-    class APlayerController* LocalPC;
-    FName MessageType;
-    int32 MessageIndex;
-    FString MessageString;
-    class APlayerState* RelatedPlayerState_1;
-    class APlayerState* RelatedPlayerState_2;
-    class UObject* OptionalObject;
-
-};
-
-struct FParameterGroupData
-{
-    FString GroupName;
-    int32 GroupSortPriority;
-
-};
-
-struct FStaticComponentMaskValue
-{
-    bool R;
-    bool G;
-    bool B;
-    bool A;
-
-};
-
-struct FParameterChannelNames
-{
-    FText R;
-    FText G;
-    FText B;
-    FText A;
-
-};
-
-struct FFunctionExpressionOutput
-{
-    class UMaterialExpressionFunctionOutput* ExpressionOutput;
-    FGuid ExpressionOutputId;
-    FExpressionOutput Output;
-
-};
-
-struct FFunctionExpressionInput
-{
-    class UMaterialExpressionFunctionInput* ExpressionInput;
-    FGuid ExpressionInputId;
-    FExpressionInput Input;
-
-};
-
-struct FScalarParameterAtlasInstanceData
-{
-    bool bIsUsedAsAtlasPosition;
-    TSoftObjectPtr<UCurveLinearColor> Curve;
-    TSoftObjectPtr<UCurveLinearColorAtlas> Atlas;
-
-};
-
-struct FMemberReference
-{
-    class UObject* MemberParent;
-    FString MemberScope;
-    FName MemberName;
-    FGuid MemberGuid;
-    bool bSelfContext;
-    bool bWasDeprecated;
-
-};
-
-struct FMeshInstancingSettings
-{
-    TSubclassOf<class AActor> ActorClassToUse;
-    int32 InstanceReplacementThreshold;
-    EMeshInstancingReplacementMethod MeshReplacementMethod;
-    bool bSkipMeshesWithVertexColors;
-    bool bUseHLODVolumes;
-    TSubclassOf<class UInstancedStaticMeshComponent> ISMComponentToUse;
-
-};
-
-struct FMeshReductionSettings
-{
-    float PercentTriangles;
-    float PercentVertices;
-    float MaxDeviation;
-    float PixelError;
-    float WeldingThreshold;
-    float HardAngleThreshold;
-    int32 BaseLODModel;
-    TEnumAsByte<EMeshFeatureImportance::Type> SilhouetteImportance;
-    TEnumAsByte<EMeshFeatureImportance::Type> TextureImportance;
-    TEnumAsByte<EMeshFeatureImportance::Type> ShadingImportance;
-    uint8 bRecalculateNormals;
-    uint8 bGenerateUniqueLightmapUVs;
-    uint8 bKeepSymmetry;
-    uint8 bVisibilityAided;
-    uint8 bCullOccluded;
-    EStaticMeshReductionTerimationCriterion TerminationCriterion;
-    TEnumAsByte<EMeshFeatureImportance::Type> VisibilityAggressiveness;
-    TEnumAsByte<EMeshFeatureImportance::Type> VertexColorImportance;
-
-};
-
-struct FPacketSimulationSettings
-{
-    int32 PktLoss;
-    int32 PktLossMaxSize;
-    int32 PktLossMinSize;
-    int32 PktOrder;
-    int32 PktDup;
-    int32 PktLag;
-    int32 PktLagVariance;
-    int32 PktLagMin;
-    int32 PktLagMax;
-    int32 PktIncomingLagMin;
-    int32 PktIncomingLagMax;
-    int32 PktIncomingLoss;
-    int32 PktJitter;
-
-};
-
-struct FParticleCurvePair
-{
-    FString CurveName;
-    class UObject* CurveObject;
-
-};
-
-struct FBeamTargetData
-{
-    FName TargetName;
-    float TargetPercentage;
-
-};
-
-struct FParticleSystemWorldManagerTickFunction : public FTickFunction
-{
-};
-
-struct FParticleSystemReplayFrame
-{
-};
-
-struct FParticleEmitterReplayFrame
-{
-};
-
-struct FFreezablePerPlatformInt
-{
-};
-
-struct FPlayerMuteList
-{
-    bool bHasVoiceHandshakeCompleted;
-    int32 VoiceChannelIdx;
-
-};
-
-struct FPreviewAttachedObjectPair
-{
-    TSoftObjectPtr<UObject> AttachedObject;
-    class UObject* Object;
-    FName AttachedTo;
-
-};
-
-struct FPreviewAssetAttachContainer
-{
-    TArray<FPreviewAttachedObjectPair> AttachedObjects;
-
-};
-
-struct FPrimitiveComponentInstanceData : public FSceneComponentInstanceData
-{
-    FTransform ComponentTransform;
-    int32 VisibilityId;
-    class UPrimitiveComponent* LODParent;
-
-};
-
-struct FSpriteCategoryInfo
-{
-    FName Category;
-    FText DisplayName;
-    FText Description;
-
-};
-
-struct FLevelNameAndTime
-{
-    FString LevelName;
-    uint32 LevelChangeTimeInMS;
-
-};
-
-struct FCompressedRichCurve
-{
-};
-
-struct FRootMotionSourceStatus
-{
-    uint8 Flags;
-
-};
-
-struct FRootMotionFinishVelocitySettings
-{
-    ERootMotionFinishVelocityMode Mode;
-    FVector SetVelocity;
-    float ClampVelocity;
-
-};
-
-struct FRootMotionSource
-{
-    uint16 Priority;
-    uint16 LocalID;
-    ERootMotionAccumulateMode AccumulateMode;
-    FName InstanceName;
-    float StartTime;
-    float CurrentTime;
-    float PreviousTime;
-    float Duration;
-    FRootMotionSourceStatus Status;
-    FRootMotionSourceSettings Settings;
-    bool bInLocalSpace;
-    FRootMotionMovementParams RootMotionParams;
-    FRootMotionFinishVelocitySettings FinishVelocityParams;
-
-};
-
-struct FRootMotionSource_JumpForce : public FRootMotionSource
-{
-    FRotator Rotation;
-    float Distance;
-    float Height;
-    bool bDisableTimeout;
-    class UCurveVector* PathOffsetCurve;
-    class UCurveFloat* TimeMappingCurve;
-
-};
-
-struct FRootMotionSource_MoveToDynamicForce : public FRootMotionSource
-{
-    FVector StartLocation;
-    FVector InitialTargetLocation;
-    FVector TargetLocation;
-    bool bRestrictSpeedToExpected;
-    class UCurveVector* PathOffsetCurve;
-    class UCurveFloat* TimeMappingCurve;
-
-};
-
-struct FRootMotionSource_MoveToForce : public FRootMotionSource
-{
-    FVector StartLocation;
-    FVector TargetLocation;
-    bool bRestrictSpeedToExpected;
-    class UCurveVector* PathOffsetCurve;
-
-};
-
-struct FRootMotionSource_RadialForce : public FRootMotionSource
-{
-    FVector Location;
-    class AActor* LocationActor;
-    float Radius;
-    float Strength;
-    bool bIsPush;
-    bool bNoZForce;
-    class UCurveFloat* StrengthDistanceFalloff;
-    class UCurveFloat* StrengthOverTime;
-    bool bUseFixedWorldDirection;
-    FRotator FixedWorldDirection;
-
-};
-
-struct FRootMotionSource_ConstantForce : public FRootMotionSource
-{
-    FVector force;
-    class UCurveFloat* StrengthOverTime;
-
-};
-
-struct FCameraExposureSettings
-{
-    TEnumAsByte<EAutoExposureMethod> Method;
-    float LowPercent;
-    float HighPercent;
-    float MinBrightness;
-    float MaxBrightness;
-    float SpeedUp;
-    float SpeedDown;
-    float Bias;
-    class UCurveFloat* BiasCurve;
-    class UTexture* MeterMask;
-    float HistogramLogMin;
-    float HistogramLogMax;
-    float CalibrationConstant;
-    uint8 ApplyPhysicalCameraExposure;
-
-};
-
-struct FGaussianSumBloomSettings
-{
-    float Intensity;
-    float Threshold;
-    float SizeScale;
-    float Filter1Size;
-    float Filter2Size;
-    float Filter3Size;
-    float Filter4Size;
-    float Filter5Size;
-    float Filter6Size;
-    FLinearColor Filter1Tint;
-    FLinearColor Filter2Tint;
-    FLinearColor Filter3Tint;
-    FLinearColor Filter4Tint;
-    FLinearColor Filter5Tint;
-    FLinearColor Filter6Tint;
-
-};
-
-struct FConvolutionBloomSettings
-{
-    class UTexture2D* Texture;
-    float Size;
-    FVector2D CenterUV;
-    float PreFilterMin;
-    float PreFilterMax;
-    float PreFilterMult;
-    float BufferScale;
-
-};
-
-struct FLensBloomSettings
-{
-    FGaussianSumBloomSettings GaussianSum;
-    FConvolutionBloomSettings Convolution;
-    TEnumAsByte<EBloomMethod> Method;
-
-};
-
-struct FLensImperfectionSettings
-{
-    class UTexture* DirtMask;
-    float DirtMaskIntensity;
-    FLinearColor DirtMaskTint;
-
-};
-
-struct FLensSettings
-{
-    FLensBloomSettings Bloom;
-    FLensImperfectionSettings Imperfections;
-    float ChromaticAberration;
-
-};
-
-struct FFilmStockSettings
-{
-    float Slope;
-    float Toe;
-    float Shoulder;
-    float BlackClip;
-    float WhiteClip;
-
-};
-
-struct FColorGradePerRangeSettings
-{
-    FVector4 Saturation;
-    FVector4 Contrast;
-    FVector4 Gamma;
-    FVector4 Gain;
-    FVector4 Offset;
-
-};
-
-struct FColorGradingSettings
-{
-    FColorGradePerRangeSettings Global;
-    FColorGradePerRangeSettings Shadows;
-    FColorGradePerRangeSettings Midtones;
-    FColorGradePerRangeSettings Highlights;
-    float ShadowsMax;
-    float HighlightsMin;
-
-};
-
-struct FSceneViewExtensionIsActiveFunctor
-{
-};
-
-struct FClothPhysicsProperties_Legacy
-{
-    float VerticalResistance;
-    float HorizontalResistance;
-    float BendResistance;
-    float ShearResistance;
-    float Friction;
-    float Damping;
-    float TetherStiffness;
-    float TetherLimit;
-    float Drag;
-    float StiffnessFrequency;
-    float GravityScale;
-    float MassScale;
-    float InertiaBlend;
-    float SelfCollisionThickness;
-    float SelfCollisionSquashScale;
-    float SelfCollisionStiffness;
-    float SolverFrequency;
-    float FiberCompression;
-    float FiberExpansion;
-    float FiberResistance;
-
-};
-
-struct FClothingAssetData_Legacy
-{
-    FName AssetName;
-    FString ApexFileName;
-    bool bClothPropertiesChanged;
-    FClothPhysicsProperties_Legacy PhysicsProperties;
-
-};
-
-struct FSkeletalMeshClothBuildParams
-{
-    TWeakObjectPtr<class UClothingAssetBase> TargetAsset;
-    int32 TargetLod;
-    bool bRemapParameters;
-    FString AssetName;
-    int32 LODIndex;
-    int32 SourceSection;
-    bool bRemoveFromMesh;
-    TSoftObjectPtr<UPhysicsAsset> PhysicsAsset;
-
-};
-
-struct FBoneMirrorExport
-{
-    FName BoneName;
-    FName SourceBoneName;
-    TEnumAsByte<EAxis::Type> BoneFlipAxis;
-
-};
-
-struct FSkeletalMeshComponentClothTickFunction : public FTickFunction
-{
-};
-
-struct FSkeletalMeshComponentEndPhysicsTickFunction : public FTickFunction
-{
-};
-
-struct FNameMapping
-{
-    FName NodeName;
-    FName BoneName;
-
-};
-
-struct FRigConfiguration
-{
-    class URig* Rig;
-    TArray<FNameMapping> BoneMappingTable;
-
-};
-
-struct FBoneReductionSetting
-{
-    TArray<FName> BonesToRemove;
-
-};
-
-struct FReferencePose
-{
-    FName PoseName;
-    TArray<FTransform> ReferencePose;
-
-};
-
-struct FSkeletonToMeshLinkup
-{
-    TArray<int32> SkeletonToMeshTable;
-    TArray<int32> MeshToSkeletonTable;
-
-};
-
-struct FSkinWeightProfileManagerTickFunction : public FTickFunction
-{
-};
-
-struct FPrecomputedSkyLightInstanceData : public FSceneComponentInstanceData
-{
-    FGuid LightGuid;
-    float AverageBrightness;
-
-};
-
-struct FSmartNameMapping
-{
-};
-
-struct FCurveMetaData
-{
-};
-
-struct FSoundClassEditorData
-{
-};
-
-struct FSoundNodeEditorData
-{
-};
-
-struct FStreamedAudioPlatformData
-{
-};
-
-struct FSplineInstanceData : public FSceneComponentInstanceData
-{
-    bool bSplineHasBeenEdited;
-    FSplineCurves SplineCurves;
-    FSplineCurves SplineCurvesPreUCS;
-
-};
-
-struct FSplineMeshInstanceData : public FSceneComponentInstanceData
-{
-    FVector StartPos;
-    FVector EndPos;
-    FVector StartTangent;
-    FVector EndTangent;
-
-};
-
-struct FMaterialRemapIndex
-{
-    uint32 ImportVersionKey;
-    TArray<int32> MaterialRemap;
-
-};
-
-struct FAssetEditorOrbitCameraPosition
-{
-    bool bIsSet;
-    FVector CamOrbitPoint;
-    FVector CamOrbitZoom;
-    FRotator CamOrbitRotation;
-
-};
-
-struct FMeshSectionInfo
-{
-    int32 MaterialIndex;
-    bool bEnableCollision;
-    bool bCastShadow;
-    bool bVisibleInRayTracing;
-    bool bForceOpaque;
-
-};
-
-struct FMeshSectionInfoMap
-{
-    TMap<uint32, FMeshSectionInfo> Map;
-
-};
-
-struct FStaticMeshSourceModel
-{
-    FMeshBuildSettings BuildSettings;
-    FMeshReductionSettings ReductionSettings;
-    float LODDistance;
-    FPerPlatformFloat ScreenSize;
-    FString SourceImportFilename;
-
-};
-
-struct FStaticMeshOptimizationSettings
-{
-    TEnumAsByte<EOptimizationType> ReductionMethod;
-    float NumOfTrianglesPercentage;
-    float MaxDeviationPercentage;
-    float WeldingThreshold;
-    bool bRecalcNormals;
-    float NormalsThreshold;
-    uint8 SilhouetteImportance;
-    uint8 TextureImportance;
-    uint8 ShadingImportance;
-
-};
-
-struct FPaintedVertex
-{
-    FVector Position;
-    FColor Color;
-    FVector4 Normal;
-
-};
-
-struct FStaticMeshVertexColorLODData
-{
-    TArray<FPaintedVertex> PaintedVertices;
-    TArray<FColor> VertexBufferColors;
-    uint32 LODIndex;
-
-};
-
-struct FStaticMeshComponentInstanceData : public FPrimitiveComponentInstanceData
-{
-    class UStaticMesh* StaticMesh;
-    TArray<FStaticMeshVertexColorLODData> VertexColorLODs;
-    TArray<FGuid> CachedStaticLighting;
-    TArray<FStreamingTextureBuildInfo> StreamingTextureData;
-
-};
-
-struct FTextureFormatSettings
-{
-    TEnumAsByte<TextureCompressionSettings> CompressionSettings;
-    uint8 CompressionNoAlpha;
-    uint8 CompressionNone;
-    uint8 CompressionYCoCg;
-    uint8 sRGB;
-
-};
-
-struct FTexturePlatformData
-{
-};
-
-struct FTextureSource
-{
-};
-
-struct FTextureSourceBlock
-{
-    int32 BlockX;
-    int32 BlockY;
-    int32 SizeX;
-    int32 SizeY;
-    int32 NumSlices;
-    int32 NumMips;
-
-};
-
-struct FStreamingRenderAssetPrimitiveInfo
-{
-    class UStreamableRenderAsset* RenderAsset;
-    FBoxSphereBounds Bounds;
-    float TexelFactor;
-    uint32 PackedRelativeBox;
-    uint8 bAllowInvalidTexelFactorWhenUnregistered;
-
-};
-
-struct FTTTrackId
-{
-    int32 TrackType;
-    int32 TrackIndex;
-
-};
-
-struct FTimeStretchCurveInstance
-{
-    bool bHasValidData;
-
-};
-
-struct FEndPhysicsTickFunction : public FTickFunction
-{
-};
-
-struct FStartPhysicsTickFunction : public FTickFunction
-{
-};
-
-struct FLevelViewportInfo
-{
-    FVector CamPosition;
-    FRotator CamRotation;
-    float CamOrthoZoom;
-    bool CamUpdated;
-
-};
-
-struct FLightmassWorldInfoSettings
-{
-    float StaticLightingLevelScale;
-    int32 NumIndirectLightingBounces;
-    int32 NumSkyLightingBounces;
-    float IndirectLightingQuality;
-    float IndirectLightingSmoothness;
-    FColor EnvironmentColor;
-    float EnvironmentIntensity;
-    float EmissiveBoost;
-    float DiffuseBoost;
-    TEnumAsByte<EVolumeLightingMethod> VolumeLightingMethod;
-    uint8 bUseAmbientOcclusion;
-    uint8 bGenerateAmbientOcclusionMaterialMask;
-    uint8 bVisualizeMaterialDiffuse;
-    uint8 bVisualizeAmbientOcclusion;
-    uint8 bCompressLightmaps;
-    float VolumetricLightmapDetailCellSize;
-    float VolumetricLightmapMaximumBrickMemoryMb;
-    float VolumetricLightmapSphericalHarmonicSmoothing;
-    float VolumeLightSamplePlacementScale;
-    float DirectIlluminationOcclusionFraction;
-    float IndirectIlluminationOcclusionFraction;
-    float OcclusionExponent;
-    float FullyOccludedSamplesFraction;
-    float MaxOcclusionDistance;
-
-};
-
-class UDefault__BlueprintGeneratedClass
-{
-};
-
-class UDefault__AnimBlueprintGeneratedClass
-{
-};
-
-struct FDefault__UserDefinedStruct
+class UWorldSubsystem : public USubsystem
 {
 };
 

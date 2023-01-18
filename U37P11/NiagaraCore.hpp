@@ -1,18 +1,18 @@
 #ifndef UE4SS_SDK_NiagaraCore_HPP
 #define UE4SS_SDK_NiagaraCore_HPP
 
-class UNiagaraMergeable : public UObject
+struct FNiagaraCompileHash
 {
+    TArray<uint8> DataHash;
+
 };
 
 class UNiagaraDataInterfaceBase : public UNiagaraMergeable
 {
 };
 
-struct FNiagaraCompileHash
+class UNiagaraMergeable : public UObject
 {
-    TArray<uint8> DataHash;
-
 };
 
 #endif

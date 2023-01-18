@@ -1,11 +1,3 @@
-enum class ERuntimeGenerationType {
-    Static = 0,
-    DynamicModifiersOnly = 1,
-    Dynamic = 2,
-    LegacyGeneration = 3,
-    ERuntimeGenerationType_MAX = 4,
-};
-
 namespace ENavCostDisplay {
     enum Type {
         TotalCost = 0,
@@ -30,4 +22,12 @@ namespace ERecastPartitioning {
         ERecastPartitioning_MAX = 3,
     };
 }
+
+enum class ERuntimeGenerationType {
+    Static = 0,
+    DynamicModifiersOnly = 1,
+    Dynamic = 2,
+    LegacyGeneration = 3,
+    ERuntimeGenerationType_MAX = 4,
+};
 

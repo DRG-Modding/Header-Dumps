@@ -26,13 +26,11 @@ enum class EChaosTrailingSortMethod {
     EChaosTrailingSortMethod_MAX = 5,
 };
 
-enum class EGeometryCollectionDebugDrawActorHideGeometry {
-    HideNone = 0,
-    HideWithCollision = 1,
-    HideSelected = 2,
-    HideWholeCollection = 3,
-    HideAll = 4,
-    EGeometryCollectionDebugDrawActorHideGeometry_MAX = 5,
+enum class ECollectionAttributeEnum {
+    Chaos_Active = 0,
+    Chaos_DynamicState = 1,
+    Chaos_CollisionGroup = 2,
+    Chaos_Max = 3,
 };
 
 enum class ECollectionGroupEnum {
@@ -40,10 +38,12 @@ enum class ECollectionGroupEnum {
     Chaos_Max = 1,
 };
 
-enum class ECollectionAttributeEnum {
-    Chaos_Active = 0,
-    Chaos_DynamicState = 1,
-    Chaos_CollisionGroup = 2,
-    Chaos_Max = 3,
+enum class EGeometryCollectionDebugDrawActorHideGeometry {
+    HideNone = 0,
+    HideWithCollision = 1,
+    HideSelected = 2,
+    HideWholeCollection = 3,
+    HideAll = 4,
+    EGeometryCollectionDebugDrawActorHideGeometry_MAX = 5,
 };
 

@@ -13,7 +13,7 @@ class UWND_MisSel_MissionDescription_C : public UUserWidget
     class UBasic_Menu_ColorBar_C* ColorBar_Bottom;
     class UTextBlock* DATADescription_Assignment;
     class UTextBlock* DATADescription_Assignment_Locked;
-    class UTextBlock* DATAMissionName;
+    class UTextBlock* DataMissionName;
     class UTextBlock* DATAMissionType;
     class UITM_MisSel_DotMarker_CaveDifficulty_C* DotMarker_Complexity;
     class UITM_MisSel_DotMarker_MissionLength_C* DotMarker_Length;

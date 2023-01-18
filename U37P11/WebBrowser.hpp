@@ -5,11 +5,11 @@ struct FWebJSCallbackBase
 {
 };
 
-struct FWebJSResponse : public FWebJSCallbackBase
+struct FWebJSFunction : public FWebJSCallbackBase
 {
 };
 
-struct FWebJSFunction : public FWebJSCallbackBase
+struct FWebJSResponse : public FWebJSCallbackBase
 {
 };
 

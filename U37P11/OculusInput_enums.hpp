@@ -1,15 +1,3 @@
-enum class ESystemGestureBehavior {
-    None = 0,
-    SwapMaterial = 1,
-    ESystemGestureBehavior_MAX = 2,
-};
-
-enum class EConfidenceBehavior {
-    None = 0,
-    HideActor = 1,
-    EConfidenceBehavior_MAX = 2,
-};
-
 enum class EBone {
     Wrist_Root = 0,
     Hand_Start = 0,
@@ -43,10 +31,10 @@ enum class EBone {
     EBone_MAX = 26,
 };
 
-enum class ETrackingConfidence {
-    Low = 0,
-    High = 1,
-    ETrackingConfidence_MAX = 2,
+enum class EConfidenceBehavior {
+    None = 0,
+    HideActor = 1,
+    EConfidenceBehavior_MAX = 2,
 };
 
 enum class EOculusHandType {
@@ -54,5 +42,17 @@ enum class EOculusHandType {
     HandLeft = 1,
     HandRight = 2,
     EOculusHandType_MAX = 3,
+};
+
+enum class ESystemGestureBehavior {
+    None = 0,
+    SwapMaterial = 1,
+    ESystemGestureBehavior_MAX = 2,
+};
+
+enum class ETrackingConfidence {
+    Low = 0,
+    High = 1,
+    ETrackingConfidence_MAX = 2,
 };
 

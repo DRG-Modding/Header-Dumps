@@ -1,6 +1,19 @@
 #ifndef UE4SS_SDK_ScriptPlugin_HPP
 #define UE4SS_SDK_ScriptPlugin_HPP
 
+class AScriptTestActor : public AActor
+{
+    FString TestString;
+    float TestValue;
+    bool TestBool;
+
+    float TestFunction(float InValue, float InFactor, bool bMultiply);
+};
+
+class UDefault__ScriptBlueprintGeneratedClass
+{
+};
+
 class UScriptBlueprint : public UBlueprint
 {
     TArray<uint8> ByteCode;
@@ -32,19 +45,6 @@ class UScriptPluginComponent : public UActorComponent
 {
 
     bool CallScriptFunction(FString FunctionName);
-};
-
-class AScriptTestActor : public AActor
-{
-    FString TestString;
-    float TestValue;
-    bool TestBool;
-
-    float TestFunction(float InValue, float InFactor, bool bMultiply);
-};
-
-class UDefault__ScriptBlueprintGeneratedClass
-{
 };
 
 #endif

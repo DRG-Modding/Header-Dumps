@@ -1,85 +1,6 @@
 enum Default__Enum {
 };
 
-enum EInterpCurveMode {
-    CIM_Linear = 0,
-    CIM_CurveAuto = 1,
-    CIM_Constant = 2,
-    CIM_CurveUser = 3,
-    CIM_CurveBreak = 4,
-    CIM_CurveAutoClamped = 5,
-    CIM_MAX = 6,
-};
-
-namespace ERangeBoundTypes {
-    enum Type {
-        Exclusive = 0,
-        Inclusive = 1,
-        Open = 2,
-        ERangeBoundTypes_MAX = 3,
-    };
-}
-
-enum class ELocalizedTextSourceCategory {
-    Game = 0,
-    Engine = 1,
-    Editor = 2,
-    ELocalizedTextSourceCategory_MAX = 3,
-};
-
-enum class EAutomationEventType {
-    Info = 0,
-    Warning = 1,
-    Error = 2,
-    EAutomationEventType_MAX = 3,
-};
-
-namespace EMouseCursor {
-    enum Type {
-        None = 0,
-        Default = 1,
-        TextEditBeam = 2,
-        ResizeLeftRight = 3,
-        ResizeUpDown = 4,
-        ResizeSouthEast = 5,
-        ResizeSouthWest = 6,
-        CardinalCross = 7,
-        Crosshairs = 8,
-        Hand = 9,
-        GrabHand = 10,
-        GrabHandClosed = 11,
-        SlashedCircle = 12,
-        EyeDropper = 13,
-        EMouseCursor_MAX = 14,
-    };
-}
-
-enum ELifetimeCondition {
-    COND_None = 0,
-    COND_InitialOnly = 1,
-    COND_OwnerOnly = 2,
-    COND_SkipOwner = 3,
-    COND_SimulatedOnly = 4,
-    COND_AutonomousOnly = 5,
-    COND_SimulatedOrPhysics = 6,
-    COND_InitialOrOwner = 7,
-    COND_Custom = 8,
-    COND_ReplayOrOwner = 9,
-    COND_ReplayOnly = 10,
-    COND_SimulatedOnlyNoReplay = 11,
-    COND_SimulatedOrPhysicsNoReplay = 12,
-    COND_SkipReplay = 13,
-    COND_Never = 15,
-    COND_Max = 16,
-};
-
-enum class EDataValidationResult {
-    Invalid = 0,
-    Valid = 1,
-    NotValidated = 2,
-    EDataValidationResult_MAX = 3,
-};
-
 namespace EAppMsgType {
     enum Type {
         Ok = 0,
@@ -108,66 +29,95 @@ namespace EAppReturnType {
     };
 }
 
-enum class EPropertyAccessChangeNotifyMode {
-    Default = 0,
-    Never = 1,
-    Always = 2,
-    EPropertyAccessChangeNotifyMode_MAX = 3,
+enum class EAutomationEventType {
+    Info = 0,
+    Warning = 1,
+    Error = 2,
+    EAutomationEventType_MAX = 3,
 };
 
-enum class EUnit {
-    Micrometers = 0,
-    Millimeters = 1,
-    Centimeters = 2,
-    Meters = 3,
-    Kilometers = 4,
-    Inches = 5,
-    Feet = 6,
-    Yards = 7,
-    Miles = 8,
-    Lightyears = 9,
-    Degrees = 10,
-    Radians = 11,
-    MetersPerSecond = 12,
-    KilometersPerHour = 13,
-    MilesPerHour = 14,
-    Celsius = 15,
-    Farenheit = 16,
-    Kelvin = 17,
-    Micrograms = 18,
-    Milligrams = 19,
-    Grams = 20,
-    Kilograms = 21,
-    MetricTons = 22,
-    Ounces = 23,
-    Pounds = 24,
-    Stones = 25,
-    Newtons = 26,
-    PoundsForce = 27,
-    KilogramsForce = 28,
-    Hertz = 29,
-    Kilohertz = 30,
-    Megahertz = 31,
-    Gigahertz = 32,
-    RevolutionsPerMinute = 33,
-    Bytes = 34,
-    Kilobytes = 35,
-    Megabytes = 36,
-    Gigabytes = 37,
-    Terabytes = 38,
-    Lumens = 39,
-    Milliseconds = 43,
-    Seconds = 44,
-    Minutes = 45,
-    Hours = 46,
-    Days = 47,
-    Months = 48,
-    Years = 49,
-    Multiplier = 52,
-    Percentage = 51,
-    Unspecified = 53,
-    EUnit_MAX = 54,
+namespace EAxis {
+    enum Type {
+        None = 0,
+        X = 1,
+        Y = 2,
+        Z = 3,
+        EAxis_MAX = 4,
+    };
+}
+
+enum class EDataValidationResult {
+    Invalid = 0,
+    Valid = 1,
+    NotValidated = 2,
+    EDataValidationResult_MAX = 3,
 };
+
+enum EInterpCurveMode {
+    CIM_Linear = 0,
+    CIM_CurveAuto = 1,
+    CIM_Constant = 2,
+    CIM_CurveUser = 3,
+    CIM_CurveBreak = 4,
+    CIM_CurveAutoClamped = 5,
+    CIM_MAX = 6,
+};
+
+enum ELifetimeCondition {
+    COND_None = 0,
+    COND_InitialOnly = 1,
+    COND_OwnerOnly = 2,
+    COND_SkipOwner = 3,
+    COND_SimulatedOnly = 4,
+    COND_AutonomousOnly = 5,
+    COND_SimulatedOrPhysics = 6,
+    COND_InitialOrOwner = 7,
+    COND_Custom = 8,
+    COND_ReplayOrOwner = 9,
+    COND_ReplayOnly = 10,
+    COND_SimulatedOnlyNoReplay = 11,
+    COND_SimulatedOrPhysicsNoReplay = 12,
+    COND_SkipReplay = 13,
+    COND_Never = 15,
+    COND_Max = 16,
+};
+
+enum class ELocalizedTextSourceCategory {
+    Game = 0,
+    Engine = 1,
+    Editor = 2,
+    ELocalizedTextSourceCategory_MAX = 3,
+};
+
+namespace ELogTimes {
+    enum Type {
+        None = 0,
+        UTC = 1,
+        SinceGStartTime = 2,
+        Local = 3,
+        ELogTimes_MAX = 4,
+    };
+}
+
+namespace EMouseCursor {
+    enum Type {
+        None = 0,
+        Default = 1,
+        TextEditBeam = 2,
+        ResizeLeftRight = 3,
+        ResizeUpDown = 4,
+        ResizeSouthEast = 5,
+        ResizeSouthWest = 6,
+        CardinalCross = 7,
+        Crosshairs = 8,
+        Hand = 9,
+        GrabHand = 10,
+        GrabHandClosed = 11,
+        SlashedCircle = 12,
+        EyeDropper = 13,
+        EMouseCursor_MAX = 14,
+    };
+}
 
 enum EPixelFormat {
     PF_Unknown = 0,
@@ -244,23 +194,27 @@ enum EPixelFormat {
     PF_MAX = 72,
 };
 
-namespace EAxis {
+enum class EPropertyAccessChangeNotifyMode {
+    Default = 0,
+    Never = 1,
+    Always = 2,
+    EPropertyAccessChangeNotifyMode_MAX = 3,
+};
+
+namespace ERangeBoundTypes {
     enum Type {
-        None = 0,
-        X = 1,
-        Y = 2,
-        Z = 3,
-        EAxis_MAX = 4,
+        Exclusive = 0,
+        Inclusive = 1,
+        Open = 2,
+        ERangeBoundTypes_MAX = 3,
     };
 }
 
-namespace ELogTimes {
+namespace ESearchCase {
     enum Type {
-        None = 0,
-        UTC = 1,
-        SinceGStartTime = 2,
-        Local = 3,
-        ELogTimes_MAX = 4,
+        CaseSensitive = 0,
+        IgnoreCase = 1,
+        ESearchCase_MAX = 2,
     };
 }
 
@@ -272,11 +226,57 @@ namespace ESearchDir {
     };
 }
 
-namespace ESearchCase {
-    enum Type {
-        CaseSensitive = 0,
-        IgnoreCase = 1,
-        ESearchCase_MAX = 2,
-    };
-}
+enum class EUnit {
+    Micrometers = 0,
+    Millimeters = 1,
+    Centimeters = 2,
+    Meters = 3,
+    Kilometers = 4,
+    Inches = 5,
+    Feet = 6,
+    Yards = 7,
+    Miles = 8,
+    Lightyears = 9,
+    Degrees = 10,
+    Radians = 11,
+    MetersPerSecond = 12,
+    KilometersPerHour = 13,
+    MilesPerHour = 14,
+    Celsius = 15,
+    Farenheit = 16,
+    Kelvin = 17,
+    Micrograms = 18,
+    Milligrams = 19,
+    Grams = 20,
+    Kilograms = 21,
+    MetricTons = 22,
+    Ounces = 23,
+    Pounds = 24,
+    Stones = 25,
+    Newtons = 26,
+    PoundsForce = 27,
+    KilogramsForce = 28,
+    Hertz = 29,
+    Kilohertz = 30,
+    Megahertz = 31,
+    Gigahertz = 32,
+    RevolutionsPerMinute = 33,
+    Bytes = 34,
+    Kilobytes = 35,
+    Megabytes = 36,
+    Gigabytes = 37,
+    Terabytes = 38,
+    Lumens = 39,
+    Milliseconds = 43,
+    Seconds = 44,
+    Minutes = 45,
+    Hours = 46,
+    Days = 47,
+    Months = 48,
+    Years = 49,
+    Multiplier = 52,
+    Percentage = 51,
+    Unspecified = 53,
+    EUnit_MAX = 54,
+};
 

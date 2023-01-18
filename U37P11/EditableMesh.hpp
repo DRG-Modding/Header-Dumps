@@ -3,47 +3,29 @@
 
 #include "EditableMesh_enums.hpp"
 
-class UEditableMeshAdapter : public UObject
+struct FAdaptorPolygon
 {
-};
-
-class UEditableGeometryCollectionAdapter : public UEditableMeshAdapter
-{
-    class UGeometryCollection* GeometryCollection;
-    class UGeometryCollection* OriginalGeometryCollection;
-    int32 GeometryCollectionLODIndex;
+    FPolygonGroupID PolygonGroupID;
+    TArray<FAdaptorTriangleID> TriangulatedPolygonTriangleIndices;
 
 };
 
-struct FVertexPair
+struct FAdaptorPolygon2Group
 {
-    FVertexID VertexID0;
-    FVertexID VertexID1;
+    uint32 RenderingSectionIndex;
+    int32 MaterialIndex;
+    int32 MaxTriangles;
 
 };
 
-struct FPolygonToSplit
-{
-    FPolygonID PolygonID;
-    TArray<FVertexPair> VertexPairsToSplitAt;
-
-};
-
-struct FMeshElementAttributeValue
+struct FAdaptorTriangleID : public FElementID
 {
 };
 
-struct FMeshElementAttributeData
+struct FAttributesForEdge
 {
-    FName AttributeName;
-    int32 AttributeIndex;
-    FMeshElementAttributeValue AttributeValue;
-
-};
-
-struct FMeshElementAttributeList
-{
-    TArray<FMeshElementAttributeData> Attributes;
+    FEdgeID EdgeID;
+    FMeshElementAttributeList EdgeAttributes;
 
 };
 
@@ -61,43 +43,83 @@ struct FAttributesForVertexInstance
 
 };
 
-struct FVertexAttributesForPolygonHole
-{
-    TArray<FMeshElementAttributeList> VertexAttributeList;
-
-};
-
-struct FVertexAttributesForPolygon
+struct FChangeVertexInstancesForPolygon
 {
     FPolygonID PolygonID;
-    TArray<FMeshElementAttributeList> PerimeterVertexAttributeLists;
-    TArray<FVertexAttributesForPolygonHole> VertexAttributeListsForEachHole;
+    TArray<FVertexIndexAndInstanceID> PerimeterVertexIndicesAndInstanceIDs;
+    TArray<FVertexInstancesForPolygonHole> VertexIndicesAndInstanceIDsForEachHole;
 
 };
 
-struct FAttributesForEdge
+struct FEdgeToCreate
 {
-    FEdgeID EdgeID;
+    FVertexID VertexID0;
+    FVertexID VertexID1;
     FMeshElementAttributeList EdgeAttributes;
+    FEdgeID OriginalEdgeID;
 
 };
 
-struct FVertexToMove
+struct FMeshElementAttributeData
 {
-    FVertexID VertexID;
-    FVector NewVertexPosition;
+    FName AttributeName;
+    int32 AttributeIndex;
+    FMeshElementAttributeValue AttributeValue;
 
 };
 
-struct FSubdividedQuadVertex
+struct FMeshElementAttributeList
 {
-    int32 VertexPositionIndex;
-    FVector2D TextureCoordinate0;
-    FVector2D TextureCoordinate1;
-    FColor VertexColor;
-    FVector VertexNormal;
-    FVector VertexTangent;
-    float VertexBinormalSign;
+    TArray<FMeshElementAttributeData> Attributes;
+
+};
+
+struct FMeshElementAttributeValue
+{
+};
+
+struct FPolygonGroupForPolygon
+{
+    FPolygonID PolygonID;
+    FPolygonGroupID PolygonGroupID;
+
+};
+
+struct FPolygonGroupToCreate
+{
+    FMeshElementAttributeList PolygonGroupAttributes;
+    FPolygonGroupID OriginalPolygonGroupID;
+
+};
+
+struct FPolygonToCreate
+{
+    FPolygonGroupID PolygonGroupID;
+    TArray<FVertexAndAttributes> PerimeterVertices;
+    FPolygonID OriginalPolygonID;
+    EPolygonEdgeHardness PolygonEdgeHardness;
+
+};
+
+struct FPolygonToSplit
+{
+    FPolygonID PolygonID;
+    TArray<FVertexPair> VertexPairsToSplitAt;
+
+};
+
+struct FRenderingPolygon
+{
+    FPolygonGroupID PolygonGroupID;
+    TArray<FTriangleID> TriangulatedPolygonTriangleIndices;
+
+};
+
+struct FRenderingPolygonGroup
+{
+    uint32 RenderingSectionIndex;
+    int32 MaterialIndex;
+    int32 MaxTriangles;
 
 };
 
@@ -110,9 +132,15 @@ struct FSubdividedQuad
 
 };
 
-struct FSubdivisionLimitSection
+struct FSubdividedQuadVertex
 {
-    TArray<FSubdividedQuad> SubdividedQuads;
+    int32 VertexPositionIndex;
+    FVector2D TextureCoordinate0;
+    FVector2D TextureCoordinate1;
+    FColor VertexColor;
+    FVector VertexNormal;
+    FVector VertexTangent;
+    float VertexBinormalSign;
 
 };
 
@@ -131,18 +159,9 @@ struct FSubdivisionLimitData
 
 };
 
-struct FVertexToCreate
+struct FSubdivisionLimitSection
 {
-    FMeshElementAttributeList VertexAttributes;
-    FVertexID OriginalVertexID;
-
-};
-
-struct FVertexInstanceToCreate
-{
-    FVertexID VertexID;
-    FMeshElementAttributeList VertexInstanceAttributes;
-    FVertexInstanceID OriginalVertexInstanceID;
+    TArray<FSubdividedQuad> SubdividedQuads;
 
 };
 
@@ -154,28 +173,17 @@ struct FVertexAndAttributes
 
 };
 
-struct FPolygonToCreate
+struct FVertexAttributesForPolygon
 {
-    FPolygonGroupID PolygonGroupID;
-    TArray<FVertexAndAttributes> PerimeterVertices;
-    FPolygonID OriginalPolygonID;
-    EPolygonEdgeHardness PolygonEdgeHardness;
+    FPolygonID PolygonID;
+    TArray<FMeshElementAttributeList> PerimeterVertexAttributeLists;
+    TArray<FVertexAttributesForPolygonHole> VertexAttributeListsForEachHole;
 
 };
 
-struct FPolygonGroupToCreate
+struct FVertexAttributesForPolygonHole
 {
-    FMeshElementAttributeList PolygonGroupAttributes;
-    FPolygonGroupID OriginalPolygonGroupID;
-
-};
-
-struct FEdgeToCreate
-{
-    FVertexID VertexID0;
-    FVertexID VertexID1;
-    FMeshElementAttributeList EdgeAttributes;
-    FEdgeID OriginalEdgeID;
+    TArray<FMeshElementAttributeList> VertexAttributeList;
 
 };
 
@@ -186,24 +194,46 @@ struct FVertexIndexAndInstanceID
 
 };
 
+struct FVertexInstanceToCreate
+{
+    FVertexID VertexID;
+    FMeshElementAttributeList VertexInstanceAttributes;
+    FVertexInstanceID OriginalVertexInstanceID;
+
+};
+
 struct FVertexInstancesForPolygonHole
 {
     TArray<FVertexIndexAndInstanceID> VertexIndicesAndInstanceIDs;
 
 };
 
-struct FChangeVertexInstancesForPolygon
+struct FVertexPair
 {
-    FPolygonID PolygonID;
-    TArray<FVertexIndexAndInstanceID> PerimeterVertexIndicesAndInstanceIDs;
-    TArray<FVertexInstancesForPolygonHole> VertexIndicesAndInstanceIDsForEachHole;
+    FVertexID VertexID0;
+    FVertexID VertexID1;
 
 };
 
-struct FPolygonGroupForPolygon
+struct FVertexToCreate
 {
-    FPolygonID PolygonID;
-    FPolygonGroupID PolygonGroupID;
+    FMeshElementAttributeList VertexAttributes;
+    FVertexID OriginalVertexID;
+
+};
+
+struct FVertexToMove
+{
+    FVertexID VertexID;
+    FVector NewVertexPosition;
+
+};
+
+class UEditableGeometryCollectionAdapter : public UEditableMeshAdapter
+{
+    class UGeometryCollection* GeometryCollection;
+    class UGeometryCollection* OriginalGeometryCollection;
+    int32 GeometryCollectionLODIndex;
 
 };
 
@@ -345,6 +375,10 @@ class UEditableMesh : public UObject
     bool AnyChangesToUndo();
 };
 
+class UEditableMeshAdapter : public UObject
+{
+};
+
 class UEditableMeshFactory : public UObject
 {
 
@@ -356,40 +390,6 @@ class UEditableStaticMeshAdapter : public UEditableMeshAdapter
     class UStaticMesh* StaticMesh;
     class UStaticMesh* OriginalStaticMesh;
     int32 StaticMeshLODIndex;
-
-};
-
-struct FAdaptorPolygon2Group
-{
-    uint32 RenderingSectionIndex;
-    int32 MaterialIndex;
-    int32 MaxTriangles;
-
-};
-
-struct FAdaptorTriangleID : public FElementID
-{
-};
-
-struct FAdaptorPolygon
-{
-    FPolygonGroupID PolygonGroupID;
-    TArray<FAdaptorTriangleID> TriangulatedPolygonTriangleIndices;
-
-};
-
-struct FRenderingPolygonGroup
-{
-    uint32 RenderingSectionIndex;
-    int32 MaterialIndex;
-    int32 MaxTriangles;
-
-};
-
-struct FRenderingPolygon
-{
-    FPolygonGroupID PolygonGroupID;
-    TArray<FTriangleID> TriangulatedPolygonTriangleIndices;
 
 };
 

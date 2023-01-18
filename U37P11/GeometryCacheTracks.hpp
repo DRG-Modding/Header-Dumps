@@ -15,15 +15,9 @@ struct FMovieSceneGeometryCacheParams
 
 };
 
-class UMovieSceneGeometryCacheSection : public UMovieSceneSection
+struct FMovieSceneGeometryCacheSectionTemplate : public FMovieSceneEvalTemplate
 {
-    FMovieSceneGeometryCacheParams Params;
-
-};
-
-class UMovieSceneGeometryCacheTrack : public UMovieSceneNameableTrack
-{
-    TArray<class UMovieSceneSection*> AnimationSections;
+    FMovieSceneGeometryCacheSectionTemplateParameters Params;
 
 };
 
@@ -34,9 +28,15 @@ struct FMovieSceneGeometryCacheSectionTemplateParameters : public FMovieSceneGeo
 
 };
 
-struct FMovieSceneGeometryCacheSectionTemplate : public FMovieSceneEvalTemplate
+class UMovieSceneGeometryCacheSection : public UMovieSceneSection
 {
-    FMovieSceneGeometryCacheSectionTemplateParameters Params;
+    FMovieSceneGeometryCacheParams Params;
+
+};
+
+class UMovieSceneGeometryCacheTrack : public UMovieSceneNameableTrack
+{
+    TArray<class UMovieSceneSection*> AnimationSections;
 
 };
 

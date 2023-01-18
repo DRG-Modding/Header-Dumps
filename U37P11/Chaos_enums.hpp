@@ -1,3 +1,28 @@
+enum class EChaosBufferMode {
+    Double = 0,
+    Triple = 1,
+    Num = 2,
+    Invalid = 3,
+    EChaosBufferMode_MAX = 4,
+};
+
+enum class EChaosSolverTickMode {
+    Fixed = 0,
+    Variable = 1,
+    VariableCapped = 2,
+    VariableCappedWithTarget = 3,
+    EChaosSolverTickMode_MAX = 4,
+};
+
+enum class EChaosThreadingMode {
+    DedicatedThread = 0,
+    TaskGraph = 1,
+    SingleThread = 2,
+    Num = 3,
+    Invalid = 4,
+    EChaosThreadingMode_MAX = 5,
+};
+
 enum class EClusterUnionMethod {
     PointImplicit = 0,
     DelaunayTriangulation = 1,
@@ -7,21 +32,40 @@ enum class EClusterUnionMethod {
     EClusterUnionMethod_MAX = 5,
 };
 
-enum EFieldPhysicsDefaultFields {
-    Field_RadialIntMask = 0,
-    Field_RadialFalloff = 1,
-    Field_UniformVector = 2,
-    Field_RadialVector = 3,
-    Field_RadialVectorFalloff = 4,
-    Field_EFieldPhysicsDefaultFields_Max = 5,
-    Field_MAX = 6,
+enum class ECollisionTypeEnum {
+    Chaos_Volumetric = 0,
+    Chaos_Surface_Volumetric = 1,
+    Chaos_Max = 2,
 };
 
-enum EFieldOutputType {
-    Field_Output_Vector = 0,
-    Field_Output_Scalar = 1,
-    Field_Output_Integer = 2,
-    Field_Output_Max = 3,
+enum class EEmissionPatternTypeEnum {
+    Chaos_Emission_Pattern_First_Frame = 0,
+    Chaos_Emission_Pattern_On_Demand = 1,
+    Chaos_Max = 2,
+};
+
+enum EFieldCullingOperationType {
+    Field_Culling_Inside = 0,
+    Field_Culling_Outside = 1,
+    Field_Culling_Operation_Max = 2,
+    Field_Culling_MAX = 3,
+};
+
+enum EFieldFalloffType {
+    Field_FallOff_None = 0,
+    Field_Falloff_Linear = 1,
+    Field_Falloff_Inverse = 2,
+    Field_Falloff_Squared = 3,
+    Field_Falloff_Logarithmic = 4,
+    Field_Falloff_Max = 5,
+};
+
+enum EFieldFilterType {
+    Field_Filter_Dynamic = 0,
+    Field_Filter_Kinematic = 1,
+    Field_Filter_Static = 2,
+    Field_Filter_All = 3,
+    Field_Filter_Max = 4,
 };
 
 enum EFieldIntegerType {
@@ -34,25 +78,29 @@ enum EFieldIntegerType {
     Integer_MAX = 6,
 };
 
-enum EFieldScalarType {
-    Scalar_ExternalClusterStrain = 0,
-    Scalar_Kill = 1,
-    Scalar_DisableThreshold = 2,
-    Scalar_SleepingThreshold = 3,
-    Scalar_InternalClusterStrain = 4,
-    Scalar_DynamicConstraint = 5,
-    Scalar_TargetMax = 6,
-    Scalar_MAX = 7,
+enum EFieldOperationType {
+    Field_Multiply = 0,
+    Field_Divide = 1,
+    Field_Add = 2,
+    Field_Substract = 3,
+    Field_Operation_Max = 4,
 };
 
-enum EFieldVectorType {
-    Vector_LinearForce = 0,
-    Vector_LinearVelocity = 1,
-    Vector_AngularVelocity = 2,
-    Vector_AngularTorque = 3,
-    Vector_PositionTarget = 4,
-    Vector_TargetMax = 5,
-    Vector_MAX = 6,
+enum EFieldOutputType {
+    Field_Output_Vector = 0,
+    Field_Output_Scalar = 1,
+    Field_Output_Integer = 2,
+    Field_Output_Max = 3,
+};
+
+enum EFieldPhysicsDefaultFields {
+    Field_RadialIntMask = 0,
+    Field_RadialFalloff = 1,
+    Field_UniformVector = 2,
+    Field_RadialVector = 3,
+    Field_RadialVectorFalloff = 4,
+    Field_EFieldPhysicsDefaultFields_Max = 5,
+    Field_MAX = 6,
 };
 
 enum EFieldPhysicsType {
@@ -76,23 +124,6 @@ enum EFieldPhysicsType {
     Field_PhysicsType_Max = 17,
 };
 
-enum EFieldFalloffType {
-    Field_FallOff_None = 0,
-    Field_Falloff_Linear = 1,
-    Field_Falloff_Inverse = 2,
-    Field_Falloff_Squared = 3,
-    Field_Falloff_Logarithmic = 4,
-    Field_Falloff_Max = 5,
-};
-
-enum EFieldFilterType {
-    Field_Filter_Dynamic = 0,
-    Field_Filter_Kinematic = 1,
-    Field_Filter_Static = 2,
-    Field_Filter_All = 3,
-    Field_Filter_Max = 4,
-};
-
 enum EFieldResolutionType {
     Field_Resolution_Minimal = 0,
     Field_Resolution_DisabledParents = 1,
@@ -100,46 +131,33 @@ enum EFieldResolutionType {
     Field_Resolution_Max = 3,
 };
 
-enum EFieldCullingOperationType {
-    Field_Culling_Inside = 0,
-    Field_Culling_Outside = 1,
-    Field_Culling_Operation_Max = 2,
-    Field_Culling_MAX = 3,
+enum EFieldScalarType {
+    Scalar_ExternalClusterStrain = 0,
+    Scalar_Kill = 1,
+    Scalar_DisableThreshold = 2,
+    Scalar_SleepingThreshold = 3,
+    Scalar_InternalClusterStrain = 4,
+    Scalar_DynamicConstraint = 5,
+    Scalar_TargetMax = 6,
+    Scalar_MAX = 7,
 };
 
-enum EFieldOperationType {
-    Field_Multiply = 0,
-    Field_Divide = 1,
-    Field_Add = 2,
-    Field_Substract = 3,
-    Field_Operation_Max = 4,
+enum EFieldVectorType {
+    Vector_LinearForce = 0,
+    Vector_LinearVelocity = 1,
+    Vector_AngularVelocity = 2,
+    Vector_AngularTorque = 3,
+    Vector_PositionTarget = 4,
+    Vector_TargetMax = 5,
+    Vector_MAX = 6,
 };
 
-enum EWaveFunctionType {
-    Field_Wave_Cosine = 0,
-    Field_Wave_Gaussian = 1,
-    Field_Wave_Falloff = 2,
-    Field_Wave_Decay = 3,
-    Field_Wave_Max = 4,
-};
-
-enum ESetMaskConditionType {
-    Field_Set_Always = 0,
-    Field_Set_IFF_NOT_Interior = 1,
-    Field_Set_IFF_NOT_Exterior = 2,
-    Field_MaskCondition_Max = 3,
-};
-
-enum class EEmissionPatternTypeEnum {
-    Chaos_Emission_Pattern_First_Frame = 0,
-    Chaos_Emission_Pattern_On_Demand = 1,
-    Chaos_Max = 2,
-};
-
-enum class EInitialVelocityTypeEnum {
-    Chaos_Initial_Velocity_User_Defined = 0,
-    Chaos_Initial_Velocity_None = 1,
-    Chaos_Max = 2,
+enum class EGeometryCollectionCacheType {
+    None = 0,
+    Record = 1,
+    Play = 2,
+    RecordAndPlay = 3,
+    EGeometryCollectionCacheType_MAX = 4,
 };
 
 enum class EGeometryCollectionPhysicsTypeEnum {
@@ -154,6 +172,21 @@ enum class EGeometryCollectionPhysicsTypeEnum {
     Chaos_Max = 8,
 };
 
+enum class EImplicitTypeEnum {
+    Chaos_Implicit_Box = 0,
+    Chaos_Implicit_Sphere = 1,
+    Chaos_Implicit_Capsule = 2,
+    Chaos_Implicit_LevelSet = 3,
+    Chaos_Implicit_None = 4,
+    Chaos_Max = 5,
+};
+
+enum class EInitialVelocityTypeEnum {
+    Chaos_Initial_Velocity_User_Defined = 0,
+    Chaos_Initial_Velocity_None = 1,
+    Chaos_Max = 2,
+};
+
 enum class EObjectStateTypeEnum {
     Chaos_NONE = 0,
     Chaos_Object_Sleeping = 1,
@@ -164,51 +197,18 @@ enum class EObjectStateTypeEnum {
     Chaos_Max = 101,
 };
 
-enum class EImplicitTypeEnum {
-    Chaos_Implicit_Box = 0,
-    Chaos_Implicit_Sphere = 1,
-    Chaos_Implicit_Capsule = 2,
-    Chaos_Implicit_LevelSet = 3,
-    Chaos_Implicit_None = 4,
-    Chaos_Max = 5,
+enum ESetMaskConditionType {
+    Field_Set_Always = 0,
+    Field_Set_IFF_NOT_Interior = 1,
+    Field_Set_IFF_NOT_Exterior = 2,
+    Field_MaskCondition_Max = 3,
 };
 
-enum class ECollisionTypeEnum {
-    Chaos_Volumetric = 0,
-    Chaos_Surface_Volumetric = 1,
-    Chaos_Max = 2,
-};
-
-enum class EChaosBufferMode {
-    Double = 0,
-    Triple = 1,
-    Num = 2,
-    Invalid = 3,
-    EChaosBufferMode_MAX = 4,
-};
-
-enum class EChaosThreadingMode {
-    DedicatedThread = 0,
-    TaskGraph = 1,
-    SingleThread = 2,
-    Num = 3,
-    Invalid = 4,
-    EChaosThreadingMode_MAX = 5,
-};
-
-enum class EChaosSolverTickMode {
-    Fixed = 0,
-    Variable = 1,
-    VariableCapped = 2,
-    VariableCappedWithTarget = 3,
-    EChaosSolverTickMode_MAX = 4,
-};
-
-enum class EGeometryCollectionCacheType {
-    None = 0,
-    Record = 1,
-    Play = 2,
-    RecordAndPlay = 3,
-    EGeometryCollectionCacheType_MAX = 4,
+enum EWaveFunctionType {
+    Field_Wave_Cosine = 0,
+    Field_Wave_Gaussian = 1,
+    Field_Wave_Falloff = 2,
+    Field_Wave_Decay = 3,
+    Field_Wave_Max = 4,
 };
 

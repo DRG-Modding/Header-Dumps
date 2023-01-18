@@ -1,12 +1,76 @@
 #ifndef UE4SS_SDK_ClothingSystemRuntimeInterface_HPP
 #define UE4SS_SDK_ClothingSystemRuntimeInterface_HPP
 
+struct FClothCollisionData
+{
+    TArray<FClothCollisionPrim_Sphere> Spheres;
+    TArray<FClothCollisionPrim_SphereConnection> SphereConnections;
+    TArray<FClothCollisionPrim_Convex> Convexes;
+    TArray<FClothCollisionPrim_Box> Boxes;
+
+};
+
+struct FClothCollisionPrim_Box
+{
+    FVector LocalPosition;
+    FQuat LocalRotation;
+    FVector HalfExtents;
+    int32 BoneIndex;
+
+};
+
+struct FClothCollisionPrim_Convex
+{
+    TArray<FClothCollisionPrim_ConvexFace> Faces;
+    TArray<FVector> SurfacePoints;
+    int32 BoneIndex;
+
+};
+
+struct FClothCollisionPrim_ConvexFace
+{
+    FPlane Plane;
+    TArray<int32> Indices;
+
+};
+
+struct FClothCollisionPrim_Sphere
+{
+    int32 BoneIndex;
+    float Radius;
+    FVector LocalPosition;
+
+};
+
+struct FClothCollisionPrim_SphereConnection
+{
+    int32 SphereIndices;
+
+};
+
+struct FClothVertBoneData
+{
+    int32 NumInfluences;
+    uint16 BoneIndices;
+    float BoneWeights;
+
+};
+
 class UClothConfigBase : public UObject
 {
 };
 
-class UDEPRECATED_ClothSharedSimConfigBase : public UObject
+class UClothPhysicalMeshDataBase_Legacy : public UObject
 {
+    TArray<FVector> Vertices;
+    TArray<FVector> Normals;
+    TArray<uint32> Indices;
+    TArray<float> InverseMasses;
+    TArray<FClothVertBoneData> BoneData;
+    int32 NumFixedVerts;
+    int32 MaxBoneWeights;
+    TArray<uint32> SelfCollisionIndices;
+
 };
 
 class UClothingAssetBase : public UObject
@@ -16,11 +80,11 @@ class UClothingAssetBase : public UObject
 
 };
 
-class UClothingSimulationFactory : public UObject
+class UClothingInteractor : public UObject
 {
 };
 
-class UClothingInteractor : public UObject
+class UClothingSimulationFactory : public UObject
 {
 };
 
@@ -44,72 +108,8 @@ class UClothingSimulationInteractor : public UObject
     void ClothConfigUpdated();
 };
 
-struct FClothVertBoneData
+class UDEPRECATED_ClothSharedSimConfigBase : public UObject
 {
-    int32 NumInfluences;
-    uint16 BoneIndices;
-    float BoneWeights;
-
-};
-
-class UClothPhysicalMeshDataBase_Legacy : public UObject
-{
-    TArray<FVector> Vertices;
-    TArray<FVector> Normals;
-    TArray<uint32> Indices;
-    TArray<float> InverseMasses;
-    TArray<FClothVertBoneData> BoneData;
-    int32 NumFixedVerts;
-    int32 MaxBoneWeights;
-    TArray<uint32> SelfCollisionIndices;
-
-};
-
-struct FClothCollisionPrim_Sphere
-{
-    int32 BoneIndex;
-    float Radius;
-    FVector LocalPosition;
-
-};
-
-struct FClothCollisionPrim_SphereConnection
-{
-    int32 SphereIndices;
-
-};
-
-struct FClothCollisionPrim_ConvexFace
-{
-    FPlane Plane;
-    TArray<int32> Indices;
-
-};
-
-struct FClothCollisionPrim_Convex
-{
-    TArray<FClothCollisionPrim_ConvexFace> Faces;
-    TArray<FVector> SurfacePoints;
-    int32 BoneIndex;
-
-};
-
-struct FClothCollisionPrim_Box
-{
-    FVector LocalPosition;
-    FQuat LocalRotation;
-    FVector HalfExtents;
-    int32 BoneIndex;
-
-};
-
-struct FClothCollisionData
-{
-    TArray<FClothCollisionPrim_Sphere> Spheres;
-    TArray<FClothCollisionPrim_SphereConnection> SphereConnections;
-    TArray<FClothCollisionPrim_Convex> Convexes;
-    TArray<FClothCollisionPrim_Box> Boxes;
-
 };
 
 #endif

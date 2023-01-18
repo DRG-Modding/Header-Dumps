@@ -17,7 +17,7 @@ class UUI_Forge_Rewards_SelectorItem_C : public UUserWidget
     FUI_Forge_Rewards_SelectorItem_COnHoverEnd OnHoverEnd;
     void OnHoverEnd();
 
-    void SetData(class UPlayerCharacterID* InCharacterID, class USchematic* InSchematic, bool& OutValidReward);
+    void SetData(class UPlayerCharacterID* inCharacterID, class USchematic* InSchematic, bool& OutValidReward);
     void BndEvt__UI_Forge_MasteryBar_SelectorItem_Item_Button_K2Node_ComponentBoundEvent_1_OnButtonHoverEvent__DelegateSignature();
     void BndEvt__UI_Forge_MasteryBar_SelectorItem_Item_Button_K2Node_ComponentBoundEvent_2_OnButtonHoverEvent__DelegateSignature();
     void BndEvt__UI_Forge_MasteryBar_SelectorItem_Item_Button_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();

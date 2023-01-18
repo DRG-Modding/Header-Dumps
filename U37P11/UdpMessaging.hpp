@@ -3,6 +3,12 @@
 
 #include "UdpMessaging_enums.hpp"
 
+struct FUdpMockMessage
+{
+    TArray<uint8> Data;
+
+};
+
 class UUdpMessagingSettings : public UObject
 {
     bool EnabledByDefault;
@@ -20,12 +26,6 @@ class UUdpMessagingSettings : public UObject
     FString TunnelUnicastEndpoint;
     FString TunnelMulticastEndpoint;
     TArray<FString> RemoteTunnelEndpoints;
-
-};
-
-struct FUdpMockMessage
-{
-    TArray<uint8> Data;
 
 };
 

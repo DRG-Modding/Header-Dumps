@@ -3,12 +3,16 @@
 
 #include "NiagaraShader_enums.hpp"
 
-class UNiagaraScriptBase : public UObject
+struct FNiagaraCompileEvent
 {
-};
+    FNiagaraCompileEventSeverity Severity;
+    FString Message;
+    FString ShortDescription;
+    bool bDismissable;
+    FGuid NodeGuid;
+    FGuid PinGuid;
+    TArray<FGuid> StackGuids;
 
-struct FNiagaraDataInterfaceGeneratedFunction
-{
 };
 
 struct FNiagaraDataInterfaceGPUParamInfo
@@ -17,6 +21,10 @@ struct FNiagaraDataInterfaceGPUParamInfo
     FString DIClassName;
     TArray<FNiagaraDataInterfaceGeneratedFunction> GeneratedFunctions;
 
+};
+
+struct FNiagaraDataInterfaceGeneratedFunction
+{
 };
 
 struct FSimulationStageMetaData
@@ -32,16 +40,8 @@ struct FSimulationStageMetaData
 
 };
 
-struct FNiagaraCompileEvent
+class UNiagaraScriptBase : public UObject
 {
-    FNiagaraCompileEventSeverity Severity;
-    FString Message;
-    FString ShortDescription;
-    bool bDismissable;
-    FGuid NodeGuid;
-    FGuid PinGuid;
-    TArray<FGuid> StackGuids;
-
 };
 
 #endif

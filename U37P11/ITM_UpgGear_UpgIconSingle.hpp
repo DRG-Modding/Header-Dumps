@@ -34,9 +34,9 @@ class UITM_UpgGear_UpgIconSingle_C : public UUserWidget
     class UTexture2D* GetUpgradeIcon();
     void GetGoogleAnalytics(class UItemUpgrade* Upgrade);
     bool IsInteractable();
-    void GetTierStatus(FUpgradeTier InTier, int32 InTierIndex, class UPlayerCharacterID* InCharacterID, TSubclassOf<class AActor> InItem, class AFSDPlayerState* InPlayer, EItemUpgradeStatus& DefaultStatus);
+    void GetTierStatus(FUpgradeTier InTier, int32 InTierIndex, class UPlayerCharacterID* inCharacterID, TSubclassOf<class AActor> InItem, class AFSDPlayerState* InPlayer, EItemUpgradeStatus& DefaultStatus);
     void IsTierIsAffordable(FUpgradeTier& TierUpgrades, TSubclassOf<class AActor> InItemClass, class AFSDPlayerState* InPlayer, TSubclassOf<class APlayerCharacter> InCharacter, bool& Is Affordable);
-    void ShowTier(TSubclassOf<class AActor> InItemClass, class UPlayerCharacterID* InCharacterID, int32 InTierIndex, FUpgradeTier InTier, class AFSDPlayerState* InPlayerState, bool InShowLockRequirement, bool ShowToolTip);
+    void ShowTier(TSubclassOf<class AActor> InItemClass, class UPlayerCharacterID* inCharacterID, int32 InTierIndex, FUpgradeTier InTier, class AFSDPlayerState* InPlayerState, bool InShowLockRequirement, bool ShowToolTip);
     void GetPlayerState(class AFSDPlayerState*& PlayerState);
     void GetItemClass(TSubclassOf<class AActor>& itemClass);
     void GetItemUpgrade(class UItemUpgrade*& Upgrade);

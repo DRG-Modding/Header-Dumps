@@ -1,52 +1,7 @@
-enum class ESlateAccessibleBehavior {
-    NotAccessible = 0,
-    Auto = 1,
-    Summary = 2,
-    Custom = 3,
-    ToolTip = 4,
-    ESlateAccessibleBehavior_MAX = 5,
-};
-
-enum class ESlateVisibility {
-    Visible = 0,
-    Collapsed = 1,
-    Hidden = 2,
-    HitTestInvisible = 3,
-    SelfHitTestInvisible = 4,
-    ESlateVisibility_MAX = 5,
-};
-
-namespace EVirtualKeyboardType {
-    enum Type {
-        Default = 0,
-        Number = 1,
-        Web = 2,
-        Email = 3,
-        Password = 4,
-        AlphaNumeric = 5,
-        EVirtualKeyboardType_MAX = 6,
-    };
-}
-
-enum class EWidgetAnimationEvent {
-    Started = 0,
-    Finished = 1,
-    EWidgetAnimationEvent_MAX = 2,
-};
-
-namespace EUMGSequencePlayMode {
-    enum Type {
-        Forward = 0,
-        Reverse = 1,
-        PingPong = 2,
-        EUMGSequencePlayMode_MAX = 3,
-    };
-}
-
-enum class EWidgetTickFrequency {
-    Never = 0,
-    Auto = 1,
-    EWidgetTickFrequency_MAX = 2,
+enum class EBindingKind {
+    Function = 0,
+    Property = 1,
+    EBindingKind_MAX = 2,
 };
 
 enum class EDragPivot {
@@ -73,6 +28,15 @@ enum class EDynamicBoxType {
     EDynamicBoxType_MAX = 6,
 };
 
+enum class ESlateAccessibleBehavior {
+    NotAccessible = 0,
+    Auto = 1,
+    Summary = 2,
+    Custom = 3,
+    ToolTip = 4,
+    ESlateAccessibleBehavior_MAX = 5,
+};
+
 namespace ESlateSizeRule {
     enum Type {
         Automatic = 0,
@@ -81,18 +45,13 @@ namespace ESlateSizeRule {
     };
 }
 
-enum class EWidgetDesignFlags {
-    None = 0,
-    Designing = 1,
-    ShowOutline = 2,
-    ExecutePreConstruct = 4,
-    EWidgetDesignFlags_MAX = 5,
-};
-
-enum class EBindingKind {
-    Function = 0,
-    Property = 1,
-    EBindingKind_MAX = 2,
+enum class ESlateVisibility {
+    Visible = 0,
+    Collapsed = 1,
+    Hidden = 2,
+    HitTestInvisible = 3,
+    SelfHitTestInvisible = 4,
+    ESlateVisibility_MAX = 5,
 };
 
 enum class ETickMode {
@@ -102,16 +61,31 @@ enum class ETickMode {
     ETickMode_MAX = 3,
 };
 
-enum class EWindowVisibility {
-    Visible = 0,
-    SelfHitTestInvisible = 1,
-    EWindowVisibility_MAX = 2,
-};
+namespace EUMGSequencePlayMode {
+    enum Type {
+        Forward = 0,
+        Reverse = 1,
+        PingPong = 2,
+        EUMGSequencePlayMode_MAX = 3,
+    };
+}
 
-enum class EWidgetGeometryMode {
-    Plane = 0,
-    Cylinder = 1,
-    EWidgetGeometryMode_MAX = 2,
+namespace EVirtualKeyboardType {
+    enum Type {
+        Default = 0,
+        Number = 1,
+        Web = 2,
+        Email = 3,
+        Password = 4,
+        AlphaNumeric = 5,
+        EVirtualKeyboardType_MAX = 6,
+    };
+}
+
+enum class EWidgetAnimationEvent {
+    Started = 0,
+    Finished = 1,
+    EWidgetAnimationEvent_MAX = 2,
 };
 
 enum class EWidgetBlendMode {
@@ -121,16 +95,18 @@ enum class EWidgetBlendMode {
     EWidgetBlendMode_MAX = 3,
 };
 
-enum class EWidgetTimingPolicy {
-    RealTime = 0,
-    GameTime = 1,
-    EWidgetTimingPolicy_MAX = 2,
+enum class EWidgetDesignFlags {
+    None = 0,
+    Designing = 1,
+    ShowOutline = 2,
+    ExecutePreConstruct = 4,
+    EWidgetDesignFlags_MAX = 5,
 };
 
-enum class EWidgetSpace {
-    World = 0,
-    Screen = 1,
-    EWidgetSpace_MAX = 2,
+enum class EWidgetGeometryMode {
+    Plane = 0,
+    Cylinder = 1,
+    EWidgetGeometryMode_MAX = 2,
 };
 
 enum class EWidgetInteractionSource {
@@ -139,5 +115,29 @@ enum class EWidgetInteractionSource {
     CenterScreen = 2,
     Custom = 3,
     EWidgetInteractionSource_MAX = 4,
+};
+
+enum class EWidgetSpace {
+    World = 0,
+    Screen = 1,
+    EWidgetSpace_MAX = 2,
+};
+
+enum class EWidgetTickFrequency {
+    Never = 0,
+    Auto = 1,
+    EWidgetTickFrequency_MAX = 2,
+};
+
+enum class EWidgetTimingPolicy {
+    RealTime = 0,
+    GameTime = 1,
+    EWidgetTimingPolicy_MAX = 2,
+};
+
+enum class EWindowVisibility {
+    Visible = 0,
+    SelfHitTestInvisible = 1,
+    EWindowVisibility_MAX = 2,
 };
 

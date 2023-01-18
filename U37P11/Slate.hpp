@@ -10,6 +10,50 @@ struct FAnchors
 
 };
 
+struct FCustomizedToolMenu
+{
+    FName Name;
+    TMap<class FName, class FCustomizedToolMenuEntry> Entries;
+    TMap<class FName, class FCustomizedToolMenuSection> Sections;
+    TMap<class FName, class FCustomizedToolMenuNameArray> EntryOrder;
+    TArray<FName> SectionOrder;
+
+};
+
+struct FCustomizedToolMenuEntry
+{
+    ECustomizedToolMenuVisibility Visibility;
+
+};
+
+struct FCustomizedToolMenuNameArray
+{
+    TArray<FName> Names;
+
+};
+
+struct FCustomizedToolMenuSection
+{
+    ECustomizedToolMenuVisibility Visibility;
+
+};
+
+struct FInputChord
+{
+    FKey Key;
+    uint8 bShift;
+    uint8 bCtrl;
+    uint8 bAlt;
+    uint8 bCmd;
+
+};
+
+struct FVirtualKeyboardOptions
+{
+    bool bEnableAutocorrect;
+
+};
+
 class UButtonWidgetStyle : public USlateWidgetStyleContainerBase
 {
     FButtonStyle ButtonStyle;
@@ -84,50 +128,6 @@ class UTextBlockWidgetStyle : public USlateWidgetStyleContainerBase
 
 class UToolMenuBase : public UObject
 {
-};
-
-struct FVirtualKeyboardOptions
-{
-    bool bEnableAutocorrect;
-
-};
-
-struct FInputChord
-{
-    FKey Key;
-    uint8 bShift;
-    uint8 bCtrl;
-    uint8 bAlt;
-    uint8 bCmd;
-
-};
-
-struct FCustomizedToolMenuEntry
-{
-    ECustomizedToolMenuVisibility Visibility;
-
-};
-
-struct FCustomizedToolMenuSection
-{
-    ECustomizedToolMenuVisibility Visibility;
-
-};
-
-struct FCustomizedToolMenuNameArray
-{
-    TArray<FName> Names;
-
-};
-
-struct FCustomizedToolMenu
-{
-    FName Name;
-    TMap<class FName, class FCustomizedToolMenuEntry> Entries;
-    TMap<class FName, class FCustomizedToolMenuSection> Sections;
-    TMap<class FName, class FCustomizedToolMenuNameArray> EntryOrder;
-    TArray<FName> SectionOrder;
-
 };
 
 #endif

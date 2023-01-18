@@ -1,0 +1,92 @@
+#ifndef UE4SS_SDK_SCREEN_MissionComplete_Regular_HPP
+#define UE4SS_SDK_SCREEN_MissionComplete_Regular_HPP
+
+class USCREEN_MissionComplete_Regular_C : public USCREEN_MissionComplete_Base_C
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UWidgetAnimation* SeasonAppear;
+    class UWidgetAnimation* BottomBarAppear;
+    class UBlurBackground_C* BlurBackground;
+    class UBorder* BonusBorder;
+    class UBasic_ButtonScalable2_C* BTN_Continue;
+    class UBasic_FlatGradientButton_C* BTN_GiveAllocade;
+    class UUI_MissionComplete_CharacterBox_C* Character1;
+    class UUI_MissionComplete_CharacterBox_C* Character2;
+    class UUI_MissionComplete_CharacterBox_C* Character3;
+    class UUI_MissionComplete_CharacterBox_C* Character4;
+    class UHorizontalBox* CharactersBar;
+    class UUI_MissionComplete_CombinedRewards_C* CreditsXpRewards;
+    class UTextBlock* Data_Complexity;
+    class UTextBlock* Data_HazardLevel_Bonus;
+    class UTextBlock* Data_Length;
+    class UITM_MisSel_MissionIconBasic_C* Data_MissionIcon;
+    class UTextBlock* DATA_MissionName;
+    class UTextBlock* DATA_MissionTime;
+    class UTextBlock* DATA_MissionType;
+    class UTextBlock* Data_TotalBonus;
+    class UTextBlock* DATA_Warning;
+    class UHorizontalBox* H_WarningBox;
+    class UHorizontalBox* H_WarningIcons;
+    class UHUD_Milestone_Manager_C* HUD_Milestone_Manager;
+    class UImage* IconWarning;
+    class UITM_MisSel_DotMarker_C* ITM_MisSel_DotMarker_Complexity;
+    class UITM_MisSel_DotMarker_MissionLength_C* ITM_MisSel_DotMarker_MissionLength;
+    class UITM_MisSel_DotMarker_WorkEnvironment_C* ITM_MisSel_DotMarker_WorkEnvironment;
+    class UITM_MissionComplete_DeepDiveHeader_C* ITM_MissionComplete_DeepDiveHeader;
+    class UVerticalBox* MainScreen;
+    class UHorizontalBox* MissionNameAndBonus;
+    class UHorizontalBox* MissionTime;
+    class UWidgetSwitcher* MissionTypeSwitcher;
+    class USCREEN_MissionComplete_Season_C* SCREEN_MissionComplete_Season;
+    class UTextBlock* TEXT_MissionTime;
+    class UTextBlock* TextBlock_2;
+    class UHorizontalBox* TotalBonusBox;
+    class UITM_MissionComplete_ResourceBox_C* UI_MissionCompleted_Minerals;
+    class AFSDGameState* GameState;
+    class AGameStats* GameStats;
+    TArray<class UUI_MissionComplete_CharacterBox_C*> ActiveCharacterWidgets;
+    int32 XPSum;
+    int32 Index;
+    TArray<FCharacterViewInfo> CharactersToView;
+    class UMissionStat* TrackedStat;
+    float BonusCountSpeed;
+    int32 Sum;
+    float WarningBonusTotal;
+    bool SeasonFlowSeen;
+    float ContinueToSeasonTime;
+    int32 ContinueStartTime;
+
+    void GetIsTutorialBiome(bool& IsTutorialBiome);
+    void SendHostAnalytics();
+    ESlateVisibility Get_Button_GiveAllocade_Visiblity();
+    void SetAnsel(bool Active);
+    FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
+    void ShowCursor();
+    void AddSpacerIf(bool Condition);
+    void SetupCharacterBar();
+    void GetMissionResultInfo(class UMissionResultInfo*& MissionResultInfo);
+    void GetMissionXP(int32& Output_Get);
+    FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
+    void GetTimeText(float Seconds, FText& Text);
+    void OnTick_C30CBAF14A22846A9888EF9778195507();
+    void Completed_C30CBAF14A22846A9888EF9778195507();
+    void Construct();
+    void BeginScreen();
+    void PreConstruct(bool IsDesignTime);
+    void BndEvt__BTN_Continue_K2Node_ComponentBoundEvent_0_OnClicked__DelegateSignature();
+    void Continue();
+    void OnClosed();
+    void SeasonFlowEnd();
+    void StartSeasonFlow();
+    void ShowPlayerReviewDialog();
+    void BndEvt__Basic_FlatGradientButton_K2Node_ComponentBoundEvent_1_OnClicked__DelegateSignature();
+    void InitializeScreen();
+    void OnContinueCountdownChanged();
+    void Finished_Event_0();
+    void OnCountingFinished_Event();
+    void OLastnMoveInFinished_Event(class UUI_MissionComplete_CharacterBox_C* Widget);
+    void OnXPCountingFinished();
+    void ExecuteUbergraph_SCREEN_MissionComplete_Regular(int32 EntryPoint);
+};
+
+#endif

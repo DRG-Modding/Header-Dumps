@@ -3,13 +3,34 @@
 
 #include "TemplateSequence_enums.hpp"
 
-class UTemplateSequence : public UMovieSceneSequence
+struct FTemplateSectionPropertyScale
 {
-    class UMovieScene* MovieScene;
-    TSoftClassPtr<AActor> BoundActorClass;
-    TSoftObjectPtr<AActor> BoundPreviewActor;
-    TMap<class FGuid, class FName> BoundActorComponents;
+    FGuid ObjectBinding;
+    FMovieScenePropertyBinding PropertyBinding;
+    ETemplateSectionPropertyScaleType PropertyScaleType;
+    FMovieSceneFloatChannel FloatChannel;
 
+};
+
+struct FTemplateSequenceBindingOverrideData
+{
+    TWeakObjectPtr<class UObject> Object;
+    bool bOverridesDefault;
+
+};
+
+class ATemplateSequenceActor : public AActor
+{
+    FMovieSceneSequencePlaybackSettings PlaybackSettings;
+    class UTemplateSequencePlayer* SequencePlayer;
+    FSoftObjectPath TemplateSequence;
+    FTemplateSequenceBindingOverrideData BindingOverride;
+
+    void SetSequence(class UTemplateSequence* InSequence);
+    void SetBinding(class AActor* Actor, bool bOverridesDefault);
+    class UTemplateSequence* LoadSequence();
+    class UTemplateSequencePlayer* GetSequencePlayer();
+    class UTemplateSequence* GetSequence();
 };
 
 class UCameraAnimationSequence : public UTemplateSequence
@@ -54,25 +75,13 @@ class USequenceCameraShakeSequencePlayer : public UObject
 
 };
 
-struct FTemplateSequenceBindingOverrideData
+class UTemplateSequence : public UMovieSceneSequence
 {
-    TWeakObjectPtr<class UObject> Object;
-    bool bOverridesDefault;
+    class UMovieScene* MovieScene;
+    TSoftClassPtr<AActor> BoundActorClass;
+    TSoftObjectPtr<AActor> BoundPreviewActor;
+    TMap<class FGuid, class FName> BoundActorComponents;
 
-};
-
-class ATemplateSequenceActor : public AActor
-{
-    FMovieSceneSequencePlaybackSettings PlaybackSettings;
-    class UTemplateSequencePlayer* SequencePlayer;
-    FSoftObjectPath TemplateSequence;
-    FTemplateSequenceBindingOverrideData BindingOverride;
-
-    void SetSequence(class UTemplateSequence* InSequence);
-    void SetBinding(class AActor* Actor, bool bOverridesDefault);
-    class UTemplateSequence* LoadSequence();
-    class UTemplateSequencePlayer* GetSequencePlayer();
-    class UTemplateSequence* GetSequence();
 };
 
 class UTemplateSequencePlayer : public UMovieSceneSequencePlayer
@@ -81,13 +90,12 @@ class UTemplateSequencePlayer : public UMovieSceneSequencePlayer
     class UTemplateSequencePlayer* CreateTemplateSequencePlayer(class UObject* WorldContextObject, class UTemplateSequence* TemplateSequence, FMovieSceneSequencePlaybackSettings Settings, class ATemplateSequenceActor*& OutActor);
 };
 
-struct FTemplateSectionPropertyScale
+class UTemplateSequencePropertyScalingEvaluatorSystem : public UMovieSceneEntitySystem
 {
-    FGuid ObjectBinding;
-    FMovieScenePropertyBinding PropertyBinding;
-    ETemplateSectionPropertyScaleType PropertyScaleType;
-    FMovieSceneFloatChannel FloatChannel;
+};
 
+class UTemplateSequencePropertyScalingInstantiatorSystem : public UMovieSceneEntitySystem
+{
 };
 
 class UTemplateSequenceSection : public UMovieSceneSubSection
@@ -97,14 +105,6 @@ class UTemplateSequenceSection : public UMovieSceneSubSection
 };
 
 class UTemplateSequenceSystem : public UMovieSceneEntitySystem
-{
-};
-
-class UTemplateSequencePropertyScalingInstantiatorSystem : public UMovieSceneEntitySystem
-{
-};
-
-class UTemplateSequencePropertyScalingEvaluatorSystem : public UMovieSceneEntitySystem
 {
 };
 

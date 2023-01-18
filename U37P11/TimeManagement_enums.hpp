@@ -7,17 +7,17 @@ enum class EFrameNumberDisplayFormats {
     EFrameNumberDisplayFormats_MAX = 5,
 };
 
-enum class ETimedDataInputState {
-    Connected = 0,
-    Unresponsive = 1,
-    Disconnected = 2,
-    ETimedDataInputState_MAX = 3,
-};
-
 enum class ETimedDataInputEvaluationType {
     None = 0,
     Timecode = 1,
     PlatformTime = 2,
     ETimedDataInputEvaluationType_MAX = 3,
+};
+
+enum class ETimedDataInputState {
+    Connected = 0,
+    Unresponsive = 1,
+    Disconnected = 2,
+    ETimedDataInputState_MAX = 3,
 };
 

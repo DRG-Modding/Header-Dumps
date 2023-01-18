@@ -3,17 +3,17 @@
 
 #include "MeshDescription_enums.hpp"
 
+struct FEdgeID : public FElementID
+{
+};
+
 struct FElementID
 {
     int32 IDValue;
 
 };
 
-struct FVertexID : public FElementID
-{
-};
-
-struct FEdgeID : public FElementID
+struct FPolygonGroupID : public FElementID
 {
 };
 
@@ -21,15 +21,15 @@ struct FPolygonID : public FElementID
 {
 };
 
-struct FVertexInstanceID : public FElementID
-{
-};
-
-struct FPolygonGroupID : public FElementID
-{
-};
-
 struct FTriangleID : public FElementID
+{
+};
+
+struct FVertexID : public FElementID
+{
+};
+
+struct FVertexInstanceID : public FElementID
 {
 };
 

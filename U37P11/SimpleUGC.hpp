@@ -3,24 +3,24 @@
 
 #include "SimpleUGC_enums.hpp"
 
+struct FModDefinition
+{
+    FString Name;
+    int32 Category;
+    FString Version;
+
+};
+
+struct FMods
+{
+    TArray<FModDefinition> Mods;
+
+};
+
 class UMakeReplaceableActorComponent : public UActorComponent
 {
     TSubclassOf<class AActor> CompatibleReplacement;
 
-};
-
-class UReplacementActorComponent : public UActorComponent
-{
-    TArray<class TSubclassOf<AActor>> ActorClassesToReplace;
-
-};
-
-class UUGCBlueprintLibrary : public UBlueprintFunctionLibrary
-{
-
-    class UUGCSettings* GetUGCSettings(class UObject* WorldContextObject);
-    class UUGCRegistry* GetUGCRegistry(class UObject* WorldContextObject);
-    class UUGCLatentActionManager* GetUGCLatentActionManager(class UObject* WorldContextObject);
 };
 
 class UModioModInfoWrapper : public UObject
@@ -47,6 +47,20 @@ class UModioTermsWrapper : public UObject
     FString TermsOfUseText;
 
     bool isEmpty();
+};
+
+class UReplacementActorComponent : public UActorComponent
+{
+    TArray<class TSubclassOf<AActor>> ActorClassesToReplace;
+
+};
+
+class UUGCBlueprintLibrary : public UBlueprintFunctionLibrary
+{
+
+    class UUGCSettings* GetUGCSettings(class UObject* WorldContextObject);
+    class UUGCRegistry* GetUGCRegistry(class UObject* WorldContextObject);
+    class UUGCLatentActionManager* GetUGCLatentActionManager(class UObject* WorldContextObject);
 };
 
 class UUGCLatentActionManager : public UObject
@@ -227,20 +241,6 @@ class UUGCSubsystem : public UEngineSubsystem
     void EnableModioModManagement();
     void DisableModioModManagement();
     void ApplyPendingMods(bool FromJoining);
-};
-
-struct FModDefinition
-{
-    FString Name;
-    int32 Category;
-    FString Version;
-
-};
-
-struct FMods
-{
-    TArray<FModDefinition> Mods;
-
 };
 
 #endif

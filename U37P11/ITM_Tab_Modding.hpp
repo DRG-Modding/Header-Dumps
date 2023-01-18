@@ -60,7 +60,7 @@ class UITM_Tab_Modding_C : public UUserWidget
     void SetInteractability();
     void GetOrCreatePendingInstallWidget(FString InModName, TEnumAsByte<ENUM_ModPendingStatus::Type> InPendingStatus, class UITM_PendingMod_C*& OutWidget);
     void OnDownloadExtractMods(FString Name, const TArray<FString>& ModsPendingDownload, bool Downloading, int32 Progress, int32 Total);
-    void JoinWithTitle(FText InTitle, TArray<FString>& Install, FString& OutResult);
+    void JoinWithTitle(FText inTitle, TArray<FString>& Install, FString& OutResult);
     void GetPendingModStatus(FText& ModStatus);
     void On Fetched Terms and Conditions(class UModioTermsWrapper* Terms);
     void OnTermsAndConditionAnswered(bool Agree);

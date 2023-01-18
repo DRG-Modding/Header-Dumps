@@ -3,14 +3,26 @@
 
 #include "VariantManagerContent_enums.hpp"
 
-class ULevelVariantSets : public UObject
+struct FCapturedPropSegment
 {
-    UClass* DirectorClass;
-    TArray<class UVariantSet*> VariantSets;
+    FString PropertyName;
+    int32 PropertyIndex;
+    FString ComponentName;
 
-    class UVariantSet* GetVariantSetByName(FString VariantSetName);
-    class UVariantSet* GetVariantSet(int32 VariantSetIndex);
-    int32 GetNumVariantSets();
+};
+
+struct FFunctionCaller
+{
+    FName FunctionName;
+
+};
+
+struct FVariantDependency
+{
+    TSoftObjectPtr<UVariantSet> VariantSet;
+    TSoftObjectPtr<UVariant> Variant;
+    bool bEnabled;
+
 };
 
 class ALevelVariantSetsActor : public AActor
@@ -24,16 +36,28 @@ class ALevelVariantSetsActor : public AActor
     class ULevelVariantSets* GetLevelVariantSets(bool bLoad);
 };
 
-class ULevelVariantSetsFunctionDirector : public UObject
+class ASwitchActor : public AActor
 {
+    class USceneComponent* SceneComponent;
+    int32 LastSelectedOption;
+
+    void SelectOption(int32 OptionIndex);
+    int32 GetSelectedOption();
+    TArray<class AActor*> GetOptions();
 };
 
-struct FCapturedPropSegment
+class ULevelVariantSets : public UObject
 {
-    FString PropertyName;
-    int32 PropertyIndex;
-    FString ComponentName;
+    UClass* DirectorClass;
+    TArray<class UVariantSet*> VariantSets;
 
+    class UVariantSet* GetVariantSetByName(FString VariantSetName);
+    class UVariantSet* GetVariantSet(int32 VariantSetIndex);
+    int32 GetNumVariantSets();
+};
+
+class ULevelVariantSetsFunctionDirector : public UObject
+{
 };
 
 class UPropertyValue : public UObject
@@ -54,14 +78,6 @@ class UPropertyValue : public UObject
     FString GetFullDisplayString();
 };
 
-class UPropertyValueTransform : public UPropertyValue
-{
-};
-
-class UPropertyValueVisibility : public UPropertyValue
-{
-};
-
 class UPropertyValueColor : public UPropertyValue
 {
 };
@@ -78,22 +94,12 @@ class UPropertyValueSoftObject : public UPropertyValue
 {
 };
 
-class ASwitchActor : public AActor
+class UPropertyValueTransform : public UPropertyValue
 {
-    class USceneComponent* SceneComponent;
-    int32 LastSelectedOption;
-
-    void SelectOption(int32 OptionIndex);
-    int32 GetSelectedOption();
-    TArray<class AActor*> GetOptions();
 };
 
-struct FVariantDependency
+class UPropertyValueVisibility : public UPropertyValue
 {
-    TSoftObjectPtr<UVariantSet> VariantSet;
-    TSoftObjectPtr<UVariant> Variant;
-    bool bEnabled;
-
 };
 
 class UVariant : public UObject
@@ -121,12 +127,6 @@ class UVariant : public UObject
     class AActor* GetActor(int32 ActorIndex);
     void DeleteDependency(int32 Index);
     int32 AddDependency(FVariantDependency& Dependency);
-};
-
-struct FFunctionCaller
-{
-    FName FunctionName;
-
 };
 
 class UVariantObjectBinding : public UObject

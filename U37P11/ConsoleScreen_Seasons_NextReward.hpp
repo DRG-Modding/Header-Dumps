@@ -4,7 +4,7 @@
 class UConsoleScreen_Seasons_NextReward_C : public UUserWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UWidgetAnimation* BgGlow;
+    class UWidgetAnimation* BGglow;
     class UBorder* Border_3;
     class UImage* I_Background;
     class UImage* I_Gradient;

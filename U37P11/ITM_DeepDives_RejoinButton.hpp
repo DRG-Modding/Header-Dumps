@@ -8,7 +8,7 @@ class UITM_DeepDives_RejoinButton_C : public UUserWidget
     class UWidgetAnimation* HoverStart;
     class UWidgetAnimation* Hover;
     class UWidgetAnimation* Idle;
-    class UImage* BgGlow;
+    class UImage* BGglow;
     class UBorder* Border_129;
     class UButton* Button_0;
     class UImage* Image_86;

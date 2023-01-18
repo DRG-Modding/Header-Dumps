@@ -3,6 +3,15 @@
 
 #include "FSDEngine_enums.hpp"
 
+struct FBakeEntry
+{
+    FDeepCSGFloatTreePacked Tree;
+    FBox AABB;
+    TArray<class UTerrainMaterialCore*> Materials;
+    TArray<FSmartTerrainMaterialVal> SmartMaterials;
+
+};
+
 struct FBakeSetting
 {
     FName Key;
@@ -18,220 +27,11 @@ struct FBakeSettings
 
 };
 
-struct FMatrixWithExactSync
+struct FBinaryMatPatterns
 {
-    float Values;
-
-};
-
-struct FCarveSplineSegment
-{
-    FVector SplineStart;
-    FVector SplineStartTangent;
-    FVector SplineEnd;
-    FVector SplineEndTangent;
-    float Radius;
-
-};
-
-struct FEncodedChunkId
-{
-    uint32 ID;
-
-};
-
-struct FDeepCSGNode
-{
-    uint32 Val;
-
-};
-
-struct FDeepCSGFloatPlane
-{
-    FVector4 Plane;
-    FDeepCSGNode Top;
-    FDeepCSGNode Bottom;
-
-};
-
-struct FDeepCSGFloatTree
-{
-    FDeepCSGNode Root;
-    TArray<FDeepCSGFloatPlane> planes;
-
-};
-
-class UTerrainMaterialBase : public UPrimaryDataAsset
-{
-};
-
-class UTerrainMaterialCore : public UTerrainMaterialBase
-{
-    class UTerrainMaterialCore* BurntMaterial;
-    class UTerrainMaterialCore* BulletBurntMaterial;
-    uint8 PathfinderDanger;
-    uint8 PathfinderPreventSpawning;
-    class UMaterialInterface* ScannerMaterial;
-    TSoftObjectPtr<UMaterialInterface> RenderMaterial;
-
-};
-
-struct FDeepCSGFloatTreePacked
-{
-    FDeepCSGNode Root;
-    TArray<int32> encplanes;
-
-};
-
-struct FSmartTerrainMaterialVal
-{
-    uint32 IfEmpty;
-    uint32 IfSolid;
-    TArray<uint32> OverrideKeys;
-    TArray<uint32> OverrideValues;
-
-};
-
-struct FBakeEntry
-{
-    FDeepCSGFloatTreePacked Tree;
-    FBox AABB;
-    TArray<class UTerrainMaterialCore*> Materials;
-    TArray<FSmartTerrainMaterialVal> SmartMaterials;
-
-};
-
-class UCSGBake : public UDataAsset
-{
-    FBakeSettings BakeSettings;
-    int32 NumVariations;
-    int32 InitialSeed;
-    TSoftClassPtr<ACSGBuilder> CSG;
-    FString Status;
-    FBox CombinedAABB;
-    TArray<FBakeEntry> Entries;
-    bool IsBaking;
-    TArray<class UBakeConfig*> CurrentBakeConfigs;
-    class ACSGBuilder* CDO;
-
-    void BakeCSG();
-};
-
-class UBuilderBase : public UObject
-{
-};
-
-struct FMeshBaseProperties
-{
-    bool Enabled;
-
-};
-
-class UCSGBase : public UBuilderBase
-{
-    FMeshBaseProperties BaseProperties;
-    FTransform RelativeTransform;
-
-};
-
-struct FCSGBakedChildInstanceProperties
-{
-    class UCSGBake* BakedCSG;
-    int32 VariantIndex;
-
-};
-
-class UCSGBakedChildInstance : public UCSGBase
-{
-    FCSGBakedChildInstanceProperties Properties;
-    FBox ChildLocalSpaceBoundingBox;
-    FBox WorldSpaceBoundingBox;
-    FMatrix TransformMatInv;
-    FDeepCSGFloatTree TempTree;
-
-};
-
-class UCSGBuilderBaseSceneComponent : public USceneComponent
-{
-};
-
-class UCSGBaseComponent : public UCSGBuilderBaseSceneComponent
-{
-    FMeshBaseProperties BaseProperties;
-
-};
-
-class UCSGBakedChildInstanceComponent : public UCSGBaseComponent
-{
-    FCSGBakedChildInstanceProperties Properties;
-
-};
-
-class UCSGSingleChildBase : public UCSGBase
-{
-    class UCSGBase* Child;
-
-};
-
-class UCSGDuplicateSingleChildBase : public UCSGBase
-{
-    TArray<class UCSGBase*> Children;
-
-};
-
-class ACSGBuilderBase : public AActor
-{
-    FBox BoundingBox;
-    int32 PreviewSeed;
-    FBakeSettings PreviewSettings;
-    class UTerrainMaterialCore* EmptyMat;
-    class UTerrainMaterialCore* ErrorMat;
-    class UTerrainMaterialCore* SolidMat;
-    class UTerrainMaterialCore* BurnedMat;
-    class UCSGPreviewComponent* PreviewComponent;
-
-    void PreGenerate(class UBakeConfig* builder);
-};
-
-class ACSGBuilder : public ACSGBuilderBase
-{
-    class UCSGGroupComponent* CSGRoot;
-    TArray<class UTerrainMaterialCore*> UsedMaterials;
-    class UCSGBase* CurrentRoot;
-    class UCSGBase* CurrentPreviewRoot;
-    class UBakeConfig* CurrentPreviewConfig;
-    class UCSGPreviewScene* PreviewScene;
-
-};
-
-class UBakeConfig : public UObject
-{
-    FBakeSettings Settings;
-    TMap<class FName, class UBuilderBase*> Objects;
-    TArray<FString> Warnings;
-
-    FVector GetVectorSetting(FName Name, FVector defaultVal);
-    FRandomStream GetRandomStream();
-    class UBuilderBase* GetObject(FName Name);
-    int32 GetIntSetting(FName Name, int32 defaultVal);
-    float GetFloatSetting(FName Name, float defaultVal);
-    bool GetBoolSetting(FName Name, bool defaultVal);
-};
-
-struct FMeshCellNoiseProperties
-{
-    FVector CellSize;
-    float CellOffsetFactor;
-    float InsideFraction;
-    float Distance;
-    int32 Seed;
-
-};
-
-struct FEmptyBinaryMatProperties
-{
-    EEmptyBinaryComb Result;
-    class UTerrainMaterialCore* Material;
+    EPattern PatternType;
+    class UTerrainMaterialCore* PatternMaterial;
+    FBinaryMatProperties ReplaceWith;
 
 };
 
@@ -239,14 +39,6 @@ struct FBinaryMatProperties
 {
     EBinaryComb Result;
     class UTerrainMaterialCore* Material;
-
-};
-
-struct FBinaryMatPatterns
-{
-    EPattern PatternType;
-    class UTerrainMaterialCore* PatternMaterial;
-    FBinaryMatProperties ReplaceWith;
 
 };
 
@@ -258,21 +50,17 @@ struct FBinaryTerrainMaterialCombiner
 
 };
 
-class UCSGCellNoise : public UCSGBase
+struct FCSGAddMaterialLayersProperties
 {
-    FMeshCellNoiseProperties Properties;
-    FBinaryTerrainMaterialCombiner Materials;
-    FVector ReciprocalCellSize;
-    FDeepCSGFloatTree ApplyTree;
-    TArray<FVector> CellPositions;
-    TArray<FDeepCSGNode> CellLeaves;
+    TArray<FCSGLayers> Layers;
+    FBinaryTerrainMaterialCombiner Inner;
 
 };
 
-class UCSGCellNoiseComponent : public UCSGBaseComponent
+struct FCSGBakedChildInstanceProperties
 {
-    FMeshCellNoiseProperties Properties;
-    FBinaryTerrainMaterialCombiner Materials;
+    class UCSGBake* BakedCSG;
+    int32 VariantIndex;
 
 };
 
@@ -284,81 +72,19 @@ struct FCSGChildInstanceProperties
 
 };
 
-struct FGeneralMatPropertiesEmpty
+struct FCSGCircleDuplicatorProperties
 {
-    EGeneralCombEmpty Result;
-    class UTerrainMaterialCore* Material;
+    int32 Num;
+    float Radius;
 
 };
 
-struct FGeneralMatProperties
+struct FCSGConeProperties
 {
-    EGeneralComb Result;
-    class UTerrainMaterialCore* Material;
-
-};
-
-struct FGeneralMatPatterns
-{
-    EGeneralPattern PatternType;
-    class UTerrainMaterialCore* PatternMaterial;
-    FGeneralMatProperties ReplaceWith;
-
-};
-
-struct FGeneralTerrainMaterialCombiner
-{
-    FGeneralMatPropertiesEmpty IfBothEmpty;
-    TArray<FGeneralMatPatterns> Patterns;
-    FGeneralMatProperties IfBothSolid;
-    FGeneralMatProperties IfSrcSolid;
-    FGeneralMatProperties IfDestSolid;
-
-};
-
-struct FDeepCSGTree
-{
-};
-
-class UCSGChildInstance : public UCSGBase
-{
-    FCSGChildInstanceProperties Properties;
-    FGeneralTerrainMaterialCombiner Materials;
-    class UCSGBase* CSGChildInstanceRoot;
-    class UBakeConfig* CurrentBakeConfig;
-    FBox ChildLocalSpaceBoundingBox;
-    FBox WorldSpaceBoundingBox;
-    FDeepCSGFloatTree BoundingTree;
-    FMatrix TransformMatInv;
-    FDeepCSGTree TempTree;
-
-};
-
-class UCSGChildInstanceComponent : public UCSGBaseComponent
-{
-    FCSGChildInstanceProperties Properties;
-    FGeneralTerrainMaterialCombiner Materials;
-
-};
-
-class USimpleMeshWithCachedTree : public UCSGBase
-{
-    FBinaryTerrainMaterialCombiner Materials;
-    bool InvertCSG;
-
-};
-
-struct FConvexNoiseProperties
-{
-    float Amplitude;
-    float GridSize;
-    int32 Seed;
-
-};
-
-class UConvexMeshWithCachedTree : public USimpleMeshWithCachedTree
-{
-    FConvexNoiseProperties Noise;
+    float Height;
+    float RadiusTop;
+    float RadiusBottom;
+    int32 Sides;
 
 };
 
@@ -368,63 +94,20 @@ struct FCSGConvexColliderProperties
 
 };
 
-class UCSGConvexCollider : public UConvexMeshWithCachedTree
+struct FCSGCylinderProperties
 {
-    FCSGConvexColliderProperties Properties;
+    float Height;
+    float Radius;
+    int32 Sides;
 
 };
 
-class USimpleMeshWithCachedTreeComponent : public UCSGBaseComponent
+struct FCSGGridDuplicatorProperties
 {
-    FBinaryTerrainMaterialCombiner Materials;
-    bool InvertCSG;
-
-};
-
-class UConvexMeshWithCachedTreeComponent : public USimpleMeshWithCachedTreeComponent
-{
-    FConvexNoiseProperties Noise;
-
-};
-
-class UCSGConvexColliderComponent : public UConvexMeshWithCachedTreeComponent
-{
-    FCSGConvexColliderProperties Properties;
-
-};
-
-class UCSGGroup : public UCSGBase
-{
-    TArray<class UCSGBase*> Children;
-
-};
-
-class UCSGGroupComponent : public UCSGBaseComponent
-{
-};
-
-struct FMeshLayerProperties
-{
-    class UTerrainMaterialCore* StartMaterial;
-    FBox BoundingBox;
-
-};
-
-class UCSGLayer : public UCSGGroup
-{
-    FMeshLayerProperties Properties;
-    FGeneralTerrainMaterialCombiner Materials;
-    FBox WorldSpaceBoundingBox;
-    FDeepCSGFloatTree BoundingTree;
-    FDeepCSGTree TempTree;
-    FMatrix TransformMatInv;
-
-};
-
-class UCSGLayerComponent : public UCSGGroupComponent
-{
-    FMeshLayerProperties Properties;
-    FGeneralTerrainMaterialCombiner Materials;
+    int32 NumA;
+    int32 NumB;
+    FVector DirectionA;
+    FVector DirectionB;
 
 };
 
@@ -435,22 +118,9 @@ struct FCSGLayers
 
 };
 
-struct FCSGAddMaterialLayersProperties
+struct FCSGRandomDisableProperties
 {
-    TArray<FCSGLayers> Layers;
-    FBinaryTerrainMaterialCombiner Inner;
-
-};
-
-class UCSGAddMaterialLayers : public UCSGSingleChildBase
-{
-    FCSGAddMaterialLayersProperties Properties;
-
-};
-
-class UCSGAddMaterialLayersComponent : public UCSGBaseComponent
-{
-    FCSGAddMaterialLayersProperties Properties;
+    float DisableProbability;
 
 };
 
@@ -471,169 +141,31 @@ struct FCSGRandomizeTransformProperties
 
 };
 
-class UCSGRandomizeTransform : public UCSGSingleChildBase
+struct FCSGSDFInstanceProperties
 {
-    FCSGRandomizeTransformProperties Properties;
-
-};
-
-class UCSGRandomizeTransformComponent : public UCSGBaseComponent
-{
-    FCSGRandomizeTransformProperties Properties;
-
-};
-
-struct FCSGRandomDisableProperties
-{
-    float DisableProbability;
-
-};
-
-class UCSGRandomDisable : public UCSGSingleChildBase
-{
-    FCSGRandomDisableProperties Properties;
-
-};
-
-class UCSGRandomDisableComponent : public UCSGBaseComponent
-{
-    FCSGRandomDisableProperties Properties;
-
-};
-
-struct FCSGGridDuplicatorProperties
-{
-    int32 NumA;
-    int32 NumB;
-    FVector DirectionA;
-    FVector DirectionB;
-
-};
-
-class UCSGGridDuplicator : public UCSGDuplicateSingleChildBase
-{
-    FCSGGridDuplicatorProperties Properties;
-
-};
-
-class UCSGGridDuplicatorComponent : public UCSGBaseComponent
-{
-    FCSGGridDuplicatorProperties Properties;
-
-};
-
-struct FCSGCircleDuplicatorProperties
-{
-    int32 Num;
-    float Radius;
-
-};
-
-class UCSGCircleDuplicator : public UCSGDuplicateSingleChildBase
-{
-    FCSGCircleDuplicatorProperties Properties;
-
-};
-
-class UCSGCircleDuplicatorComponent : public UCSGBaseComponent
-{
-    FCSGCircleDuplicatorProperties Properties;
-
-};
-
-struct FChunkId
-{
-    int16 X;
-    int16 Y;
-    int16 Z;
-
-};
-
-class UCSGPreviewComponent : public USceneComponent
-{
-    class ACSGBuilderBase* BaseBuilder;
-    class UBakeConfig* CurrentBakeConfig;
-    TMap<class FChunkId, class UDeepProceduralMeshComponent*> Meshes;
-    bool UsePreviewScene;
-    int32 ChangeCount;
-
-};
-
-class UCSGPreviewScene : public UDataAsset
-{
-    TSubclassOf<class ACSGBuilder> Mesh;
+    TSubclassOf<class ASDFBuilder> SDF;
+    EPreviewCellSize CellSize;
     FBakeSettings Settings;
     int32 Seed;
-    class UTerrainMaterialCore* TerrainMaterial;
 
 };
 
-class UCSGPlane : public UConvexMeshWithCachedTree
+struct FCSGSDFModulatedInstanceProperties
 {
-};
-
-class UCSGPlaneComponent : public UConvexMeshWithCachedTreeComponent
-{
-};
-
-struct FMeshBoxProperties
-{
-    FVector HalfSize;
-    int32 BevelSegments;
-    float BevelSize;
+    TSubclassOf<class ASDFBuilder> SDF;
+    TSubclassOf<class ASDFBuilder> ModulateSDF;
+    EPreviewCellSize CellSize;
+    FBakeSettings SDFSettings;
+    FBakeSettings ModulateSettings;
+    int32 Seed;
+    ESDFModulateMode ModulateMode;
+    TArray<FSDFModulateLayer> ModulateLayers;
 
 };
 
-class UCSGBox : public UConvexMeshWithCachedTree
+struct FCSGSTLProperties
 {
-    FMeshBoxProperties Properties;
-
-};
-
-class UCSGBoxComponent : public UConvexMeshWithCachedTreeComponent
-{
-    FMeshBoxProperties Properties;
-
-};
-
-struct FCSGCylinderProperties
-{
-    float Height;
-    float Radius;
-    int32 Sides;
-
-};
-
-class UCSGCylinder : public UConvexMeshWithCachedTree
-{
-    FCSGCylinderProperties Properties;
-
-};
-
-class UCSGCylinderComponent : public UConvexMeshWithCachedTreeComponent
-{
-    FCSGCylinderProperties Properties;
-
-};
-
-struct FCSGConeProperties
-{
-    float Height;
-    float RadiusTop;
-    float RadiusBottom;
-    int32 Sides;
-
-};
-
-class UCSGCone : public UConvexMeshWithCachedTree
-{
-    FCSGConeProperties Properties;
-
-};
-
-class UCSGConeComponent : public UConvexMeshWithCachedTreeComponent
-{
-    FCSGConeProperties Properties;
+    class UStaticMeshCarver* Mesh;
 
 };
 
@@ -647,15 +179,354 @@ struct FCSGSphereProperties
 
 };
 
-class UCSGSphere : public UConvexMeshWithCachedTree
+struct FCarveSplineSegment
 {
-    FCSGSphereProperties Properties;
+    FVector SplineStart;
+    FVector SplineStartTangent;
+    FVector SplineEnd;
+    FVector SplineEndTangent;
+    float Radius;
 
 };
 
-class UCSGSphereComponent : public UConvexMeshWithCachedTreeComponent
+struct FCellBox
 {
-    FCSGSphereProperties Properties;
+    FCellId Min;
+    FCellId Max;
+
+};
+
+struct FCellId
+{
+    int16 X;
+    int16 Y;
+    int16 Z;
+
+};
+
+struct FChunckIDAndOffset
+{
+    FChunkId ChunkId;
+    FChunkOffset Offset;
+
+};
+
+struct FChunckIDAndOffsetBox
+{
+    FChunkId ChunkId;
+    FChunkOffset minOffset;
+    FChunkOffset maxOffset;
+
+};
+
+struct FChunkId
+{
+    int16 X;
+    int16 Y;
+    int16 Z;
+
+};
+
+struct FChunkOffset
+{
+    int16 X;
+    int16 Y;
+    int16 Z;
+
+};
+
+struct FConvexNoiseProperties
+{
+    float Amplitude;
+    float GridSize;
+    int32 Seed;
+
+};
+
+struct FDeepCSGFloatPlane
+{
+    FVector4 Plane;
+    FDeepCSGNode Top;
+    FDeepCSGNode Bottom;
+
+};
+
+struct FDeepCSGFloatTree
+{
+    FDeepCSGNode Root;
+    TArray<FDeepCSGFloatPlane> planes;
+
+};
+
+struct FDeepCSGFloatTreePacked
+{
+    FDeepCSGNode Root;
+    TArray<int32> encplanes;
+
+};
+
+struct FDeepCSGNode
+{
+    uint32 Val;
+
+};
+
+struct FDeepCSGTree
+{
+};
+
+struct FDeepCSGTreeOperations
+{
+};
+
+struct FDeepCSGUtils
+{
+};
+
+struct FEmptyBinaryMatProperties
+{
+    EEmptyBinaryComb Result;
+    class UTerrainMaterialCore* Material;
+
+};
+
+struct FEncodedChunkCellId
+{
+    FEncodedChunkId ChunkId;
+    uint16 cellOffset;
+
+};
+
+struct FEncodedChunkId
+{
+    uint32 ID;
+
+};
+
+struct FFastNoiseProperties
+{
+    float Frequency;
+    EFNNoiseType NoiseType;
+    EFNRotationType3D RotationType3d;
+    EFNFractalType FractalType;
+    int32 Octaves;
+    float Lacunarity;
+    float Gain;
+    float WeightedStrength;
+    float PingPongStrength;
+    EFNCellularDistanceFunc CellularDistanceFunc;
+    EFNCellularReturnType CellularReturnYype;
+    float CellularJitterMod;
+    EFNDomainWarpType DomainWarpType;
+    float WarpAmplitude;
+
+};
+
+struct FGeneralMatPatterns
+{
+    EGeneralPattern PatternType;
+    class UTerrainMaterialCore* PatternMaterial;
+    FGeneralMatProperties ReplaceWith;
+
+};
+
+struct FGeneralMatProperties
+{
+    EGeneralComb Result;
+    class UTerrainMaterialCore* Material;
+
+};
+
+struct FGeneralMatPropertiesEmpty
+{
+    EGeneralCombEmpty Result;
+    class UTerrainMaterialCore* Material;
+
+};
+
+struct FGeneralTerrainMaterialCombiner
+{
+    FGeneralMatPropertiesEmpty IfBothEmpty;
+    TArray<FGeneralMatPatterns> Patterns;
+    FGeneralMatProperties IfBothSolid;
+    FGeneralMatProperties IfSrcSolid;
+    FGeneralMatProperties IfDestSolid;
+
+};
+
+struct FHMMinMaxLevel
+{
+    TArray<float> Entries;
+
+};
+
+struct FLinearCellId
+{
+    uint16 X;
+    uint16 Y;
+    uint16 Z;
+
+};
+
+struct FMatrixWithExactSync
+{
+    float Values;
+
+};
+
+struct FMeshBaseProperties
+{
+    bool Enabled;
+
+};
+
+struct FMeshBoxProperties
+{
+    FVector HalfSize;
+    int32 BevelSegments;
+    float BevelSize;
+
+};
+
+struct FMeshCellNoiseProperties
+{
+    FVector CellSize;
+    float CellOffsetFactor;
+    float InsideFraction;
+    float Distance;
+    int32 Seed;
+
+};
+
+struct FMeshLayerProperties
+{
+    class UTerrainMaterialCore* StartMaterial;
+    FBox BoundingBox;
+
+};
+
+struct FSDFBaseProperties
+{
+    bool Enabled;
+
+};
+
+struct FSDFBoxProperties
+{
+    FVector HalfSize;
+
+};
+
+struct FSDFCapsuleProperties
+{
+    float HalfLength;
+    float Radius;
+
+};
+
+struct FSDFCylinderProperties
+{
+    float HalfLength;
+    float Radius;
+
+};
+
+struct FSDFHeightMaproperties
+{
+    FVector Scale;
+
+};
+
+struct FSDFModifierProperties
+{
+    float Offset;
+    FFastNoiseProperties Noise;
+    float NoiseAmplitude;
+    int32 Seed;
+
+};
+
+struct FSDFModulateLayer
+{
+    float ModulateDistance;
+    float SDFOffset;
+
+};
+
+struct FSDFOnionProperties
+{
+    float Thickness;
+
+};
+
+struct FSDFRandomDisableProperties
+{
+    float DisableProbability;
+
+};
+
+struct FSDFRandomizeTransformProperties
+{
+    FBox Translation;
+    float RotationMinZ;
+    float RotationMaxZ;
+    float RotationMinY;
+    float RotationMaxY;
+    float RotationMinX;
+    float RotationMaxX;
+    FVector ScaleMin;
+    FVector ScaleMax;
+    bool ScaleAxesIndependent;
+    bool DisableRandomize;
+    int32 Seed;
+
+};
+
+struct FSDFSmoothingProperties
+{
+    float SmoothingDist;
+    bool SmoothingEnabled;
+
+};
+
+struct FSDFSphereProperties
+{
+    float Radius;
+    FName RadiusOverrideName;
+
+};
+
+struct FSDFTorusProperties
+{
+    float Radius;
+    float TubeRadius;
+    FName SizeOverrideName;
+
+};
+
+struct FSmartTerrainMaterialVal
+{
+    uint32 IfEmpty;
+    uint32 IfSolid;
+    TArray<uint32> OverrideKeys;
+    TArray<uint32> OverrideValues;
+
+};
+
+struct FSplineWarpProperties
+{
+    FBox ElementBox;
+    ESplineWarpType SplineWarpType;
+
+};
+
+struct FVoronoiProperties
+{
+    FVector HalfSize;
+    int32 NumPoints;
+    int32 Seed;
+    float Distance;
+    bool Inverted;
 
 };
 
@@ -681,88 +552,267 @@ struct FWarpedProperties
 
 };
 
-class UCSGWarped : public UCSGSingleChildBase
+class ACSGBuilder : public ACSGBuilderBase
 {
-    FWarpedProperties Properties;
+    class UCSGGroupComponent* CSGRoot;
+    TArray<class UTerrainMaterialCore*> UsedMaterials;
+    class UCSGBase* CurrentRoot;
+    class UCSGBase* CurrentPreviewRoot;
+    class UBakeConfig* CurrentPreviewConfig;
+    class UCSGPreviewScene* PreviewScene;
 
 };
 
-class UCSGWarpedComponent : public UCSGBaseComponent
+class ACSGBuilderBase : public AActor
 {
-    FWarpedProperties Properties;
+    FBox BoundingBox;
+    int32 PreviewSeed;
+    FBakeSettings PreviewSettings;
+    class UTerrainMaterialCore* EmptyMat;
+    class UTerrainMaterialCore* ErrorMat;
+    class UTerrainMaterialCore* SolidMat;
+    class UTerrainMaterialCore* BurnedMat;
+    class UCSGPreviewComponent* PreviewComponent;
+
+    void PreGenerate(class UBakeConfig* builder);
+};
+
+class ADeepCSGSection : public AActor
+{
+    class UDeepProceduralMeshComponent* DeepMesh;
 
 };
 
-struct FSplineWarpProperties
+class ASDFBuilder : public ACSGBuilderBase
 {
-    FBox ElementBox;
-    ESplineWarpType SplineWarpType;
+    EPreviewCellSize PreviewSize;
+    class UTerrainMaterialCore* PreviewMaterial;
+    class USDFBase* CurrentRoot;
+    class USDFUnionOpComponent* SDFRoot;
 
 };
 
-class UCSGSplineWarp : public UCSGWarped
+class UBakeConfig : public UObject
 {
-    FSplineWarpProperties SplineProperties;
-    FSplineCurves SplineCurves;
-    TArray<FBox> AABBs;
-    TArray<float> Keys;
-    TArray<FVector4> planes;
-    FBox TotalAABB;
-
-};
-
-class UCSGSplineWarpComponent : public UCSGWarpedComponent
-{
-    FSplineWarpProperties SplineProperties;
-
-};
-
-struct FCSGSDFInstanceProperties
-{
-    TSubclassOf<class ASDFBuilder> SDF;
-    EPreviewCellSize CellSize;
     FBakeSettings Settings;
-    int32 Seed;
+    TMap<class FName, class UBuilderBase*> Objects;
+    TArray<FString> Warnings;
+
+    FVector GetVectorSetting(FName Name, FVector defaultVal);
+    FRandomStream GetRandomStream();
+    class UBuilderBase* GetObject(FName Name);
+    int32 GetIntSetting(FName Name, int32 defaultVal);
+    float GetFloatSetting(FName Name, float defaultVal);
+    bool GetBoolSetting(FName Name, bool defaultVal);
+};
+
+class UBuilderBase : public UObject
+{
+};
+
+class UCSGAddMaterialLayers : public UCSGSingleChildBase
+{
+    FCSGAddMaterialLayersProperties Properties;
 
 };
 
-class UCSGSDFInstance : public UCSGBase
+class UCSGAddMaterialLayersComponent : public UCSGBaseComponent
 {
-    FCSGSDFInstanceProperties Properties;
+    FCSGAddMaterialLayersProperties Properties;
+
+};
+
+class UCSGBake : public UDataAsset
+{
+    FBakeSettings BakeSettings;
+    int32 NumVariations;
+    int32 InitialSeed;
+    TSoftClassPtr<ACSGBuilder> CSG;
+    FString Status;
+    FBox CombinedAABB;
+    TArray<FBakeEntry> Entries;
+    bool IsBaking;
+    TArray<class UBakeConfig*> CurrentBakeConfigs;
+    class ACSGBuilder* CDO;
+
+    void BakeCSG();
+};
+
+class UCSGBakedChildInstance : public UCSGBase
+{
+    FCSGBakedChildInstanceProperties Properties;
+    FBox ChildLocalSpaceBoundingBox;
+    FBox WorldSpaceBoundingBox;
+    FMatrix TransformMatInv;
+    FDeepCSGFloatTree TempTree;
+
+};
+
+class UCSGBakedChildInstanceComponent : public UCSGBaseComponent
+{
+    FCSGBakedChildInstanceProperties Properties;
+
+};
+
+class UCSGBase : public UBuilderBase
+{
+    FMeshBaseProperties BaseProperties;
+    FTransform RelativeTransform;
+
+};
+
+class UCSGBaseComponent : public UCSGBuilderBaseSceneComponent
+{
+    FMeshBaseProperties BaseProperties;
+
+};
+
+class UCSGBox : public UConvexMeshWithCachedTree
+{
+    FMeshBoxProperties Properties;
+
+};
+
+class UCSGBoxComponent : public UConvexMeshWithCachedTreeComponent
+{
+    FMeshBoxProperties Properties;
+
+};
+
+class UCSGBuilderBaseSceneComponent : public USceneComponent
+{
+};
+
+class UCSGCellNoise : public UCSGBase
+{
+    FMeshCellNoiseProperties Properties;
     FBinaryTerrainMaterialCombiner Materials;
-    class USDFBase* CSGSDFInstanceRoot;
+    FVector ReciprocalCellSize;
+    FDeepCSGFloatTree ApplyTree;
+    TArray<FVector> CellPositions;
+    TArray<FDeepCSGNode> CellLeaves;
+
+};
+
+class UCSGCellNoiseComponent : public UCSGBaseComponent
+{
+    FMeshCellNoiseProperties Properties;
+    FBinaryTerrainMaterialCombiner Materials;
+
+};
+
+class UCSGChildInstance : public UCSGBase
+{
+    FCSGChildInstanceProperties Properties;
+    FGeneralTerrainMaterialCombiner Materials;
+    class UCSGBase* CSGChildInstanceRoot;
     class UBakeConfig* CurrentBakeConfig;
     FBox ChildLocalSpaceBoundingBox;
     FBox WorldSpaceBoundingBox;
     FDeepCSGFloatTree BoundingTree;
     FMatrix TransformMatInv;
+    FDeepCSGTree TempTree;
 
 };
 
-class UCSGSDFInstanceComponent : public UCSGBaseComponent
+class UCSGChildInstanceComponent : public UCSGBaseComponent
 {
-    FCSGSDFInstanceProperties Properties;
-    FBinaryTerrainMaterialCombiner Materials;
+    FCSGChildInstanceProperties Properties;
+    FGeneralTerrainMaterialCombiner Materials;
 
 };
 
-struct FSDFModulateLayer
+class UCSGCircleDuplicator : public UCSGDuplicateSingleChildBase
 {
-    float ModulateDistance;
-    float SDFOffset;
+    FCSGCircleDuplicatorProperties Properties;
 
 };
 
-struct FCSGSDFModulatedInstanceProperties
+class UCSGCircleDuplicatorComponent : public UCSGBaseComponent
 {
-    TSubclassOf<class ASDFBuilder> SDF;
-    TSubclassOf<class ASDFBuilder> ModulateSDF;
-    EPreviewCellSize CellSize;
-    FBakeSettings SDFSettings;
-    FBakeSettings ModulateSettings;
-    int32 Seed;
-    ESDFModulateMode ModulateMode;
-    TArray<FSDFModulateLayer> ModulateLayers;
+    FCSGCircleDuplicatorProperties Properties;
+
+};
+
+class UCSGCone : public UConvexMeshWithCachedTree
+{
+    FCSGConeProperties Properties;
+
+};
+
+class UCSGConeComponent : public UConvexMeshWithCachedTreeComponent
+{
+    FCSGConeProperties Properties;
+
+};
+
+class UCSGConvexCollider : public UConvexMeshWithCachedTree
+{
+    FCSGConvexColliderProperties Properties;
+
+};
+
+class UCSGConvexColliderComponent : public UConvexMeshWithCachedTreeComponent
+{
+    FCSGConvexColliderProperties Properties;
+
+};
+
+class UCSGCylinder : public UConvexMeshWithCachedTree
+{
+    FCSGCylinderProperties Properties;
+
+};
+
+class UCSGCylinderComponent : public UConvexMeshWithCachedTreeComponent
+{
+    FCSGCylinderProperties Properties;
+
+};
+
+class UCSGDuplicateSingleChildBase : public UCSGBase
+{
+    TArray<class UCSGBase*> Children;
+
+};
+
+class UCSGGridDuplicator : public UCSGDuplicateSingleChildBase
+{
+    FCSGGridDuplicatorProperties Properties;
+
+};
+
+class UCSGGridDuplicatorComponent : public UCSGBaseComponent
+{
+    FCSGGridDuplicatorProperties Properties;
+
+};
+
+class UCSGGroup : public UCSGBase
+{
+    TArray<class UCSGBase*> Children;
+
+};
+
+class UCSGGroupComponent : public UCSGBaseComponent
+{
+};
+
+class UCSGLayer : public UCSGGroup
+{
+    FMeshLayerProperties Properties;
+    FGeneralTerrainMaterialCombiner Materials;
+    FBox WorldSpaceBoundingBox;
+    FDeepCSGFloatTree BoundingTree;
+    FDeepCSGTree TempTree;
+    FMatrix TransformMatInv;
+
+};
+
+class UCSGLayerComponent : public UCSGGroupComponent
+{
+    FMeshLayerProperties Properties;
+    FGeneralTerrainMaterialCombiner Materials;
 
 };
 
@@ -788,31 +838,74 @@ class UCSGModulatedSDFInstanceComponent : public UCSGBaseComponent
 
 };
 
-struct FVoronoiProperties
+class UCSGPlane : public UConvexMeshWithCachedTree
 {
-    FVector HalfSize;
-    int32 NumPoints;
+};
+
+class UCSGPlaneComponent : public UConvexMeshWithCachedTreeComponent
+{
+};
+
+class UCSGPreviewComponent : public USceneComponent
+{
+    class ACSGBuilderBase* BaseBuilder;
+    class UBakeConfig* CurrentBakeConfig;
+    TMap<class FChunkId, class UDeepProceduralMeshComponent*> Meshes;
+    bool UsePreviewScene;
+    int32 ChangeCount;
+
+};
+
+class UCSGPreviewScene : public UDataAsset
+{
+    TSubclassOf<class ACSGBuilder> Mesh;
+    FBakeSettings Settings;
     int32 Seed;
-    float Distance;
-    bool Inverted;
+    class UTerrainMaterialCore* TerrainMaterial;
 
 };
 
-class UCSGVoronoi : public USimpleMeshWithCachedTree
+class UCSGRandomDisable : public UCSGSingleChildBase
 {
-    FVoronoiProperties Properties;
+    FCSGRandomDisableProperties Properties;
 
 };
 
-class UCSGVoronoiComponent : public USimpleMeshWithCachedTreeComponent
+class UCSGRandomDisableComponent : public UCSGBaseComponent
 {
-    FVoronoiProperties Properties;
+    FCSGRandomDisableProperties Properties;
 
 };
 
-struct FCSGSTLProperties
+class UCSGRandomizeTransform : public UCSGSingleChildBase
 {
-    class UStaticMeshCarver* Mesh;
+    FCSGRandomizeTransformProperties Properties;
+
+};
+
+class UCSGRandomizeTransformComponent : public UCSGBaseComponent
+{
+    FCSGRandomizeTransformProperties Properties;
+
+};
+
+class UCSGSDFInstance : public UCSGBase
+{
+    FCSGSDFInstanceProperties Properties;
+    FBinaryTerrainMaterialCombiner Materials;
+    class USDFBase* CSGSDFInstanceRoot;
+    class UBakeConfig* CurrentBakeConfig;
+    FBox ChildLocalSpaceBoundingBox;
+    FBox WorldSpaceBoundingBox;
+    FDeepCSGFloatTree BoundingTree;
+    FMatrix TransformMatInv;
+
+};
+
+class UCSGSDFInstanceComponent : public UCSGBaseComponent
+{
+    FCSGSDFInstanceProperties Properties;
+    FBinaryTerrainMaterialCombiner Materials;
 
 };
 
@@ -828,9 +921,74 @@ class UCSGSTLComponent : public USimpleMeshWithCachedTreeComponent
 
 };
 
-class ADeepCSGSection : public AActor
+class UCSGSingleChildBase : public UCSGBase
 {
-    class UDeepProceduralMeshComponent* DeepMesh;
+    class UCSGBase* Child;
+
+};
+
+class UCSGSphere : public UConvexMeshWithCachedTree
+{
+    FCSGSphereProperties Properties;
+
+};
+
+class UCSGSphereComponent : public UConvexMeshWithCachedTreeComponent
+{
+    FCSGSphereProperties Properties;
+
+};
+
+class UCSGSplineWarp : public UCSGWarped
+{
+    FSplineWarpProperties SplineProperties;
+    FSplineCurves SplineCurves;
+    TArray<FBox> AABBs;
+    TArray<float> Keys;
+    TArray<FVector4> planes;
+    FBox TotalAABB;
+
+};
+
+class UCSGSplineWarpComponent : public UCSGWarpedComponent
+{
+    FSplineWarpProperties SplineProperties;
+
+};
+
+class UCSGVoronoi : public USimpleMeshWithCachedTree
+{
+    FVoronoiProperties Properties;
+
+};
+
+class UCSGVoronoiComponent : public USimpleMeshWithCachedTreeComponent
+{
+    FVoronoiProperties Properties;
+
+};
+
+class UCSGWarped : public UCSGSingleChildBase
+{
+    FWarpedProperties Properties;
+
+};
+
+class UCSGWarpedComponent : public UCSGBaseComponent
+{
+    FWarpedProperties Properties;
+
+};
+
+class UConvexMeshWithCachedTree : public USimpleMeshWithCachedTree
+{
+    FConvexNoiseProperties Noise;
+
+};
+
+class UConvexMeshWithCachedTreeComponent : public USimpleMeshWithCachedTreeComponent
+{
+    FConvexNoiseProperties Noise;
 
 };
 
@@ -839,21 +997,6 @@ class UDeepProceduralMeshComponent : public UMeshComponent
     class UBodySetup* ProcMeshBodySetup;
 
     class UTerrainMaterialCore* FindTerrainMaterialFromPhysicalMaterial(class UPhysicalMaterial* Material);
-};
-
-class ASDFBuilder : public ACSGBuilderBase
-{
-    EPreviewCellSize PreviewSize;
-    class UTerrainMaterialCore* PreviewMaterial;
-    class USDFBase* CurrentRoot;
-    class USDFUnionOpComponent* SDFRoot;
-
-};
-
-struct FHMMinMaxLevel
-{
-    TArray<float> Entries;
-
 };
 
 class UHeightMapWithMinMaxQuadTree : public UDataAsset
@@ -871,12 +1014,6 @@ class UHeightMapWithMinMaxQuadTree : public UDataAsset
     void Generate();
 };
 
-struct FSDFBaseProperties
-{
-    bool Enabled;
-
-};
-
 class USDFBase : public UBuilderBase
 {
     FSDFBaseProperties BaseProperties;
@@ -884,9 +1021,53 @@ class USDFBase : public UBuilderBase
 
 };
 
-struct FSDFHeightMaproperties
+class USDFBaseComponent : public UCSGBuilderBaseSceneComponent
 {
-    FVector Scale;
+    FSDFBaseProperties BaseProperties;
+
+};
+
+class USDFBaseWithTransform : public USDFBase
+{
+};
+
+class USDFBaseWithTransformComponent : public USDFBaseComponent
+{
+};
+
+class USDFBox : public USDFBaseWithTransform
+{
+    FSDFBoxProperties Properties;
+
+};
+
+class USDFBoxComponent : public USDFBaseWithTransformComponent
+{
+    FSDFBoxProperties Properties;
+
+};
+
+class USDFCapsule : public USDFBaseWithTransform
+{
+    FSDFCapsuleProperties Properties;
+
+};
+
+class USDFCapsuleComponent : public USDFBaseWithTransformComponent
+{
+    FSDFCapsuleProperties Properties;
+
+};
+
+class USDFCylinder : public USDFBaseWithTransform
+{
+    FSDFCylinderProperties Properties;
+
+};
+
+class USDFCylinderComponent : public USDFBaseWithTransformComponent
+{
+    FSDFCylinderProperties Properties;
 
 };
 
@@ -897,12 +1078,6 @@ class USDFHeightMap : public USDFBase
 
 };
 
-class USDFBaseComponent : public UCSGBuilderBaseSceneComponent
-{
-    FSDFBaseProperties BaseProperties;
-
-};
-
 class USDFHeightMapComponent : public USDFBaseComponent
 {
     FSDFHeightMaproperties Properties;
@@ -910,37 +1085,16 @@ class USDFHeightMapComponent : public USDFBaseComponent
 
 };
 
-class USDFSingleChildBase : public USDFBase
+class USDFIntersectOp : public USDFBase
 {
-    class USDFBase* Child;
+    FSDFSmoothingProperties Properties;
+    TArray<class USDFBase*> Arguments;
 
 };
 
-struct FFastNoiseProperties
+class USDFIntersectOpComponent : public USDFBaseComponent
 {
-    float Frequency;
-    EFNNoiseType NoiseType;
-    EFNRotationType3D RotationType3d;
-    EFNFractalType FractalType;
-    int32 Octaves;
-    float Lacunarity;
-    float Gain;
-    float WeightedStrength;
-    float PingPongStrength;
-    EFNCellularDistanceFunc CellularDistanceFunc;
-    EFNCellularReturnType CellularReturnYype;
-    float CellularJitterMod;
-    EFNDomainWarpType DomainWarpType;
-    float WarpAmplitude;
-
-};
-
-struct FSDFModifierProperties
-{
-    float Offset;
-    FFastNoiseProperties Noise;
-    float NoiseAmplitude;
-    int32 Seed;
+    FSDFSmoothingProperties Properties;
 
 };
 
@@ -956,36 +1110,66 @@ class USDFModifierComponent : public USDFBaseComponent
 
 };
 
-struct FSDFSmoothingProperties
+class USDFOnion : public USDFBase
 {
-    float SmoothingDist;
-    bool SmoothingEnabled;
+    FSDFOnionProperties Properties;
+    class USDFBase* Argument;
 
 };
 
-class USDFUnionOp : public USDFBase
+class USDFOnionComponent : public USDFBaseComponent
 {
-    FSDFSmoothingProperties Properties;
-    TArray<class USDFBase*> Arguments;
+    FSDFOnionProperties Properties;
 
 };
 
-class USDFUnionOpComponent : public USDFBaseComponent
+class USDFPlane : public USDFBaseWithTransform
 {
-    FSDFSmoothingProperties Properties;
+};
+
+class USDFPlaneComponent : public USDFBaseWithTransformComponent
+{
+};
+
+class USDFRandomDisable : public USDFSingleChildBase
+{
+    FSDFRandomDisableProperties Properties;
 
 };
 
-class USDFIntersectOp : public USDFBase
+class USDFRandomDisableComponent : public USDFBaseComponent
 {
-    FSDFSmoothingProperties Properties;
-    TArray<class USDFBase*> Arguments;
+    FSDFRandomDisableProperties Properties;
 
 };
 
-class USDFIntersectOpComponent : public USDFBaseComponent
+class USDFRandomizeTransform : public USDFSingleChildBase
 {
-    FSDFSmoothingProperties Properties;
+    FSDFRandomizeTransformProperties Properties;
+
+};
+
+class USDFRandomizeTransformComponent : public USDFBaseComponent
+{
+    FSDFRandomizeTransformProperties Properties;
+
+};
+
+class USDFSingleChildBase : public USDFBase
+{
+    class USDFBase* Child;
+
+};
+
+class USDFSphere : public USDFBaseWithTransform
+{
+    FSDFSphereProperties Properties;
+
+};
+
+class USDFSphereComponent : public USDFBaseWithTransformComponent
+{
+    FSDFSphereProperties Properties;
 
 };
 
@@ -1003,171 +1187,6 @@ class USDFSubOpComponent : public USDFBaseComponent
 
 };
 
-struct FSDFOnionProperties
-{
-    float Thickness;
-
-};
-
-class USDFOnion : public USDFBase
-{
-    FSDFOnionProperties Properties;
-    class USDFBase* Argument;
-
-};
-
-class USDFOnionComponent : public USDFBaseComponent
-{
-    FSDFOnionProperties Properties;
-
-};
-
-struct FSDFRandomizeTransformProperties
-{
-    FBox Translation;
-    float RotationMinZ;
-    float RotationMaxZ;
-    float RotationMinY;
-    float RotationMaxY;
-    float RotationMinX;
-    float RotationMaxX;
-    FVector ScaleMin;
-    FVector ScaleMax;
-    bool ScaleAxesIndependent;
-    bool DisableRandomize;
-    int32 Seed;
-
-};
-
-class USDFRandomizeTransform : public USDFSingleChildBase
-{
-    FSDFRandomizeTransformProperties Properties;
-
-};
-
-class USDFRandomizeTransformComponent : public USDFBaseComponent
-{
-    FSDFRandomizeTransformProperties Properties;
-
-};
-
-struct FSDFRandomDisableProperties
-{
-    float DisableProbability;
-
-};
-
-class USDFRandomDisable : public USDFSingleChildBase
-{
-    FSDFRandomDisableProperties Properties;
-
-};
-
-class USDFRandomDisableComponent : public USDFBaseComponent
-{
-    FSDFRandomDisableProperties Properties;
-
-};
-
-class USDFBaseWithTransform : public USDFBase
-{
-};
-
-class USDFBaseWithTransformComponent : public USDFBaseComponent
-{
-};
-
-struct FSDFSphereProperties
-{
-    float Radius;
-    FName RadiusOverrideName;
-
-};
-
-class USDFSphere : public USDFBaseWithTransform
-{
-    FSDFSphereProperties Properties;
-
-};
-
-class USDFSphereComponent : public USDFBaseWithTransformComponent
-{
-    FSDFSphereProperties Properties;
-
-};
-
-class USDFPlane : public USDFBaseWithTransform
-{
-};
-
-class USDFPlaneComponent : public USDFBaseWithTransformComponent
-{
-};
-
-struct FSDFBoxProperties
-{
-    FVector HalfSize;
-
-};
-
-class USDFBox : public USDFBaseWithTransform
-{
-    FSDFBoxProperties Properties;
-
-};
-
-class USDFBoxComponent : public USDFBaseWithTransformComponent
-{
-    FSDFBoxProperties Properties;
-
-};
-
-struct FSDFCylinderProperties
-{
-    float HalfLength;
-    float Radius;
-
-};
-
-class USDFCylinder : public USDFBaseWithTransform
-{
-    FSDFCylinderProperties Properties;
-
-};
-
-class USDFCylinderComponent : public USDFBaseWithTransformComponent
-{
-    FSDFCylinderProperties Properties;
-
-};
-
-struct FSDFCapsuleProperties
-{
-    float HalfLength;
-    float Radius;
-
-};
-
-class USDFCapsule : public USDFBaseWithTransform
-{
-    FSDFCapsuleProperties Properties;
-
-};
-
-class USDFCapsuleComponent : public USDFBaseWithTransformComponent
-{
-    FSDFCapsuleProperties Properties;
-
-};
-
-struct FSDFTorusProperties
-{
-    float Radius;
-    float TubeRadius;
-    FName SizeOverrideName;
-
-};
-
 class USDFTorus : public USDFBaseWithTransform
 {
     FSDFTorusProperties Properties;
@@ -1177,6 +1196,33 @@ class USDFTorus : public USDFBaseWithTransform
 class USDFTorusComponent : public USDFBaseWithTransformComponent
 {
     FSDFTorusProperties Properties;
+
+};
+
+class USDFUnionOp : public USDFBase
+{
+    FSDFSmoothingProperties Properties;
+    TArray<class USDFBase*> Arguments;
+
+};
+
+class USDFUnionOpComponent : public USDFBaseComponent
+{
+    FSDFSmoothingProperties Properties;
+
+};
+
+class USimpleMeshWithCachedTree : public UCSGBase
+{
+    FBinaryTerrainMaterialCombiner Materials;
+    bool InvertCSG;
+
+};
+
+class USimpleMeshWithCachedTreeComponent : public UCSGBaseComponent
+{
+    FBinaryTerrainMaterialCombiner Materials;
+    bool InvertCSG;
 
 };
 
@@ -1192,64 +1238,18 @@ class UStaticMeshCarver : public UDataAsset
     void ExportPreviewMesh();
 };
 
-struct FChunkOffset
-{
-    int16 X;
-    int16 Y;
-    int16 Z;
-
-};
-
-struct FCellId
-{
-    int16 X;
-    int16 Y;
-    int16 Z;
-
-};
-
-struct FDeepCSGTreeOperations
+class UTerrainMaterialBase : public UPrimaryDataAsset
 {
 };
 
-struct FDeepCSGUtils
+class UTerrainMaterialCore : public UTerrainMaterialBase
 {
-};
-
-struct FLinearCellId
-{
-    uint16 X;
-    uint16 Y;
-    uint16 Z;
-
-};
-
-struct FEncodedChunkCellId
-{
-    FEncodedChunkId ChunkId;
-    uint16 cellOffset;
-
-};
-
-struct FChunckIDAndOffsetBox
-{
-    FChunkId ChunkId;
-    FChunkOffset minOffset;
-    FChunkOffset maxOffset;
-
-};
-
-struct FChunckIDAndOffset
-{
-    FChunkId ChunkId;
-    FChunkOffset Offset;
-
-};
-
-struct FCellBox
-{
-    FCellId Min;
-    FCellId Max;
+    class UTerrainMaterialCore* BurntMaterial;
+    class UTerrainMaterialCore* BulletBurntMaterial;
+    uint8 PathfinderDanger;
+    uint8 PathfinderPreventSpawning;
+    class UMaterialInterface* ScannerMaterial;
+    TSoftObjectPtr<UMaterialInterface> RenderMaterial;
 
 };
 

@@ -3,12 +3,6 @@
 
 #include "MaterialShaderQualitySettings_enums.hpp"
 
-class UMaterialShaderQualitySettings : public UObject
-{
-    TMap<class FName, class UShaderPlatformQualitySettings*> ForwardSettingMap;
-
-};
-
 struct FMaterialQualityOverrides
 {
     bool bDiscardQualityDuringCook;
@@ -20,6 +14,12 @@ struct FMaterialQualityOverrides
     bool bForceDisablePreintegratedGF;
     bool bDisableMaterialNormalCalculation;
     EMobileShadowQuality MobileShadowQuality;
+
+};
+
+class UMaterialShaderQualitySettings : public UObject
+{
+    TMap<class FName, class UShaderPlatformQualitySettings*> ForwardSettingMap;
 
 };
 

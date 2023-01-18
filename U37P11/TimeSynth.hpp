@@ -3,9 +3,10 @@
 
 #include "TimeSynth_enums.hpp"
 
-class UTimeSynthVolumeGroup : public UObject
+struct FTimeSynthClipHandle
 {
-    float DefaultVolume;
+    FName ClipName;
+    int32 ClipId;
 
 };
 
@@ -14,6 +15,40 @@ struct FTimeSynthClipSound
     class USoundWave* SoundWave;
     float RandomWeight;
     FVector2D DistanceRange;
+
+};
+
+struct FTimeSynthEnvelopeFollowerSettings
+{
+    float AttackTime;
+    float ReleaseTime;
+    ETimeSynthEnvelopeFollowerPeakMode PeakMode;
+    bool bIsAnalogMode;
+
+};
+
+struct FTimeSynthFilterSettings
+{
+    ETimeSynthFilterType FilterType;
+    float CutoffFrequency;
+    float FilterQ;
+
+};
+
+struct FTimeSynthQuantizationSettings
+{
+    float BeatsPerMinute;
+    int32 BeatsPerBar;
+    ETimeSynthBeatDivision BeatDivision;
+    float EventDelaySeconds;
+    ETimeSynthEventQuantization GlobalQuantization;
+
+};
+
+struct FTimeSynthSpectralData
+{
+    float FrequencyHz;
+    float Magnitude;
 
 };
 
@@ -34,47 +69,6 @@ class UTimeSynthClip : public UObject
     FTimeSynthTimeDef FadeOutTime;
     FTimeSynthTimeDef ClipDuration;
     ETimeSynthEventClipQuantization ClipQuantization;
-
-};
-
-struct FTimeSynthQuantizationSettings
-{
-    float BeatsPerMinute;
-    int32 BeatsPerBar;
-    ETimeSynthBeatDivision BeatDivision;
-    float EventDelaySeconds;
-    ETimeSynthEventQuantization GlobalQuantization;
-
-};
-
-struct FTimeSynthFilterSettings
-{
-    ETimeSynthFilterType FilterType;
-    float CutoffFrequency;
-    float FilterQ;
-
-};
-
-struct FTimeSynthEnvelopeFollowerSettings
-{
-    float AttackTime;
-    float ReleaseTime;
-    ETimeSynthEnvelopeFollowerPeakMode PeakMode;
-    bool bIsAnalogMode;
-
-};
-
-struct FTimeSynthClipHandle
-{
-    FName ClipName;
-    int32 ClipId;
-
-};
-
-struct FTimeSynthSpectralData
-{
-    float FrequencyHz;
-    float Magnitude;
 
 };
 
@@ -115,6 +109,12 @@ class UTimeSynthComponent : public USynthComponent
     float GetEnvelopeFollowerValue();
     int32 GetBPM();
     void AddQuantizationEventDelegate(ETimeSynthEventQuantization QuantizationType, const FAddQuantizationEventDelegateOnQuantizationEvent& OnQuantizationEvent);
+};
+
+class UTimeSynthVolumeGroup : public UObject
+{
+    float DefaultVolume;
+
 };
 
 #endif

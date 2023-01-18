@@ -1,6 +1,48 @@
 #ifndef UE4SS_SDK_GeometryCache_HPP
 #define UE4SS_SDK_GeometryCache_HPP
 
+struct FGeometryCacheMeshBatchInfo
+{
+};
+
+struct FGeometryCacheMeshData
+{
+};
+
+struct FGeometryCacheVertexInfo
+{
+};
+
+struct FTrackRenderData
+{
+};
+
+class AGeometryCacheActor : public AActor
+{
+    class UGeometryCacheComponent* GeometryCacheComponent;
+
+    class UGeometryCacheComponent* GetGeometryCacheComponent();
+};
+
+class UDEPRECATED_GeometryCacheTrack_FlipbookAnimation : public UGeometryCacheTrack
+{
+    uint32 NumMeshSamples;
+
+    void AddMeshSample(const FGeometryCacheMeshData& MeshData, const float SampleTime);
+};
+
+class UDEPRECATED_GeometryCacheTrack_TransformAnimation : public UGeometryCacheTrack
+{
+
+    void SetMesh(const FGeometryCacheMeshData& NewMeshData);
+};
+
+class UDEPRECATED_GeometryCacheTrack_TransformGroupAnimation : public UGeometryCacheTrack
+{
+
+    void SetMesh(const FGeometryCacheMeshData& NewMeshData);
+};
+
 class UGeometryCache : public UObject
 {
     TArray<class UMaterialInterface*> Materials;
@@ -9,13 +51,6 @@ class UGeometryCache : public UObject
     int32 EndFrame;
     uint64 Hash;
 
-};
-
-class AGeometryCacheActor : public AActor
-{
-    class UGeometryCacheComponent* GeometryCacheComponent;
-
-    class UGeometryCacheComponent* GetGeometryCacheComponent();
 };
 
 class UGeometryCacheCodecBase : public UObject
@@ -80,46 +115,11 @@ class UGeometryCacheTrack : public UObject
 
 };
 
-struct FGeometryCacheMeshData
-{
-};
-
-class UDEPRECATED_GeometryCacheTrack_FlipbookAnimation : public UGeometryCacheTrack
-{
-    uint32 NumMeshSamples;
-
-    void AddMeshSample(const FGeometryCacheMeshData& MeshData, const float SampleTime);
-};
-
 class UGeometryCacheTrackStreamable : public UGeometryCacheTrack
 {
     class UGeometryCacheCodecBase* Codec;
     float StartSampleTime;
 
-};
-
-class UDEPRECATED_GeometryCacheTrack_TransformAnimation : public UGeometryCacheTrack
-{
-
-    void SetMesh(const FGeometryCacheMeshData& NewMeshData);
-};
-
-class UDEPRECATED_GeometryCacheTrack_TransformGroupAnimation : public UGeometryCacheTrack
-{
-
-    void SetMesh(const FGeometryCacheMeshData& NewMeshData);
-};
-
-struct FTrackRenderData
-{
-};
-
-struct FGeometryCacheVertexInfo
-{
-};
-
-struct FGeometryCacheMeshBatchInfo
-{
 };
 
 #endif

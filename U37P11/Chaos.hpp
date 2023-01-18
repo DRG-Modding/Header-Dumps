@@ -3,33 +3,6 @@
 
 #include "Chaos_enums.hpp"
 
-struct FSolverCollisionFilterSettings
-{
-    bool FilterEnabled;
-    float MinMass;
-    float MinSpeed;
-    float MinImpulse;
-
-};
-
-struct FSolverBreakingFilterSettings
-{
-    bool FilterEnabled;
-    float MinMass;
-    float MinSpeed;
-    float MinVolume;
-
-};
-
-struct FSolverTrailingFilterSettings
-{
-    bool FilterEnabled;
-    float MinMass;
-    float MinSpeed;
-    float MinVolume;
-
-};
-
 struct FChaosSolverConfiguration
 {
     int32 Iterations;
@@ -53,35 +26,6 @@ struct FChaosSolverConfiguration
 
 };
 
-struct FSolverCollisionData
-{
-    FVector Location;
-    FVector AccumulatedImpulse;
-    FVector Normal;
-    FVector Velocity1;
-    FVector Velocity2;
-    FVector AngularVelocity1;
-    FVector AngularVelocity2;
-    float Mass1;
-    float Mass2;
-    int32 ParticleIndex;
-    int32 LevelsetIndex;
-    int32 ParticleIndexMesh;
-    int32 LevelsetIndexMesh;
-
-};
-
-struct FSolverBreakingData
-{
-    FVector Location;
-    FVector Velocity;
-    FVector AngularVelocity;
-    float Mass;
-    int32 ParticleIndex;
-    int32 ParticleIndexMesh;
-
-};
-
 struct FRecordedFrame
 {
     TArray<FTransform> Transforms;
@@ -101,6 +45,53 @@ struct FRecordedTransformTrack
 
 };
 
+struct FSolverBreakingData
+{
+    FVector Location;
+    FVector Velocity;
+    FVector AngularVelocity;
+    float Mass;
+    int32 ParticleIndex;
+    int32 ParticleIndexMesh;
+
+};
+
+struct FSolverBreakingFilterSettings
+{
+    bool FilterEnabled;
+    float MinMass;
+    float MinSpeed;
+    float MinVolume;
+
+};
+
+struct FSolverCollisionData
+{
+    FVector Location;
+    FVector AccumulatedImpulse;
+    FVector Normal;
+    FVector Velocity1;
+    FVector Velocity2;
+    FVector AngularVelocity1;
+    FVector AngularVelocity2;
+    float Mass1;
+    float Mass2;
+    int32 ParticleIndex;
+    int32 LevelsetIndex;
+    int32 ParticleIndexMesh;
+    int32 LevelsetIndexMesh;
+
+};
+
+struct FSolverCollisionFilterSettings
+{
+    bool FilterEnabled;
+    float MinMass;
+    float MinSpeed;
+    float MinImpulse;
+
+};
+
 struct FSolverTrailingData
 {
     FVector Location;
@@ -109,6 +100,15 @@ struct FSolverTrailingData
     float Mass;
     int32 ParticleIndex;
     int32 ParticleIndexMesh;
+
+};
+
+struct FSolverTrailingFilterSettings
+{
+    bool FilterEnabled;
+    float MinMass;
+    float MinSpeed;
+    float MinVolume;
 
 };
 

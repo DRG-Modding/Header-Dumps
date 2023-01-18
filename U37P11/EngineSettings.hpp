@@ -10,6 +10,13 @@ struct FAutoCompleteCommand
 
 };
 
+struct FGameModeName
+{
+    FString Name;
+    FSoftClassPath GameMode;
+
+};
+
 class UConsoleSettings : public UObject
 {
     int32 MaxScrollbackSize;
@@ -23,13 +30,6 @@ class UConsoleSettings : public UObject
     FColor AutoCompleteCommandColor;
     FColor AutoCompleteCVarColor;
     FColor AutoCompleteFadedColor;
-
-};
-
-struct FGameModeName
-{
-    FString Name;
-    FSoftClassPath GameMode;
 
 };
 

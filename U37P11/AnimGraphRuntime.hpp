@@ -3,94 +3,28 @@
 
 #include "AnimGraphRuntime_enums.hpp"
 
-class UAnimNotify_PlayMontageNotify : public UAnimNotify
+struct FAngularRangeLimit
 {
-    FName NotifyName;
+    FVector LimitMin;
+    FVector LimitMax;
+    FBoneReference Bone;
 
 };
 
-class UAnimNotify_PlayMontageNotifyWindow : public UAnimNotifyState
-{
-    FName NotifyName;
-
-};
-
-class UAnimSequencerInstance : public UAnimInstance
+struct FAnimLegIKData
 {
 };
 
-struct FPositionHistory
+struct FAnimLegIKDefinition
 {
-    TArray<FVector> Positions;
-    float range;
-
-};
-
-class UKismetAnimationLibrary : public UBlueprintFunctionLibrary
-{
-
-    void K2_TwoBoneIK(const FVector& RootPos, const FVector& JointPos, const FVector& EndPos, const FVector& JointTarget, const FVector& Effector, FVector& OutJointPos, FVector& OutEndPos, bool bAllowStretching, float StartStretchRatio, float MaxStretchScale);
-    void K2_StartProfilingTimer();
-    FVector K2_MakePerlinNoiseVectorAndRemap(float X, float Y, float Z, float RangeOutMinX, float RangeOutMaxX, float RangeOutMinY, float RangeOutMaxY, float RangeOutMinZ, float RangeOutMaxZ);
-    float K2_MakePerlinNoiseAndRemap(float Value, float RangeOutMin, float RangeOutMax);
-    FTransform K2_LookAt(const FTransform& CurrentTransform, const FVector& TargetPosition, FVector LookAtVector, bool bUseUpVector, FVector upVector, float ClampConeInDegree);
-    float K2_EndProfilingTimer(bool bLog, FString LogPrefix);
-    float K2_DistanceBetweenTwoSocketsAndMapRange(const class USkeletalMeshComponent* Component, const FName SocketOrBoneNameA, TEnumAsByte<ERelativeTransformSpace> SocketSpaceA, const FName SocketOrBoneNameB, TEnumAsByte<ERelativeTransformSpace> SocketSpaceB, bool bRemapRange, float InRangeMin, float InRangeMax, float OutRangeMin, float OutRangeMax);
-    FVector K2_DirectionBetweenSockets(const class USkeletalMeshComponent* Component, const FName SocketOrBoneNameFrom, const FName SocketOrBoneNameTo);
-    float K2_CalculateVelocityFromSockets(float DeltaSeconds, class USkeletalMeshComponent* Component, const FName SocketOrBoneName, const FName ReferenceSocketOrBone, TEnumAsByte<ERelativeTransformSpace> SocketSpace, FVector OffsetInBoneSpace, FPositionHistory& History, int32 NumberOfSamples, float VelocityMin, float VelocityMax, EEasingFuncType EasingType, const FRuntimeFloatCurve& CustomCurve);
-    float K2_CalculateVelocityFromPositionHistory(float DeltaSeconds, FVector Position, FPositionHistory& History, int32 NumberOfSamples, float VelocityMin, float VelocityMax);
-};
-
-class UPlayMontageCallbackProxy : public UObject
-{
-    FPlayMontageCallbackProxyOnCompleted OnCompleted;
-    void OnMontagePlayDelegate(FName NotifyName);
-    FPlayMontageCallbackProxyOnBlendOut OnBlendOut;
-    void OnMontagePlayDelegate(FName NotifyName);
-    FPlayMontageCallbackProxyOnInterrupted OnInterrupted;
-    void OnMontagePlayDelegate(FName NotifyName);
-    FPlayMontageCallbackProxyOnNotifyBegin OnNotifyBegin;
-    void OnMontagePlayDelegate(FName NotifyName);
-    FPlayMontageCallbackProxyOnNotifyEnd OnNotifyEnd;
-    void OnMontagePlayDelegate(FName NotifyName);
-
-    void OnNotifyEndReceived(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointNotifyPayload);
-    void OnNotifyBeginReceived(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointNotifyPayload);
-    void OnMontageEnded(class UAnimMontage* Montage, bool bInterrupted);
-    void OnMontageBlendingOut(class UAnimMontage* Montage, bool bInterrupted);
-    class UPlayMontageCallbackProxy* CreateProxyObjectForPlayMontage(class USkeletalMeshComponent* InSkeletalMeshComponent, class UAnimMontage* MontageToPlay, float PlayRate, float StartingPosition, FName StartingSection);
-};
-
-class ISequencerAnimationSupport : public IInterface
-{
-};
-
-struct FAnimNode_SkeletalControlBase : public FAnimNode_Base
-{
-    FComponentSpacePoseLink ComponentPose;
-    int32 LODThreshold;
-    float ActualAlpha;
-    EAnimAlphaInputType AlphaInputType;
-    bool bAlphaBoolEnabled;
-    float alpha;
-    FInputScaleBias AlphaScaleBias;
-    FInputAlphaBoolBlend AlphaBoolBlend;
-    FName AlphaCurveName;
-    FInputScaleBiasClamp AlphaScaleBiasClamp;
-
-};
-
-struct FAnimNode_BlendSpacePlayer : public FAnimNode_AssetPlayerBase
-{
-    float X;
-    float Y;
-    float Z;
-    float PlayRate;
-    bool bLoop;
-    bool bResetPlayTimeWhenBlendSpaceChanges;
-    float StartPosition;
-    class UBlendSpaceBase* BlendSpace;
-    class UBlendSpaceBase* PreviousBlendSpace;
+    FBoneReference IKFootBone;
+    FBoneReference FKFootBone;
+    int32 NumBonesInLimb;
+    float MinRotationAngle;
+    TEnumAsByte<EAxis::Type> FootBoneForwardAxis;
+    TEnumAsByte<EAxis::Type> HingeRotationAxis;
+    bool bEnableRotationLimit;
+    bool bEnableKneeTwistCorrection;
 
 };
 
@@ -103,59 +37,6 @@ struct FAnimNode_AimOffsetLookAt : public FAnimNode_BlendSpacePlayer
     FVector LookAtLocation;
     FVector SocketAxis;
     float alpha;
-
-};
-
-struct FAnimPhysConstraintSetup
-{
-    AnimPhysLinearConstraintType LinearXLimitType;
-    AnimPhysLinearConstraintType LinearYLimitType;
-    AnimPhysLinearConstraintType LinearZLimitType;
-    FVector LinearAxesMin;
-    FVector LinearAxesMax;
-    AnimPhysAngularConstraintType AngularConstraintType;
-    AnimPhysTwistAxis TwistAxis;
-    AnimPhysTwistAxis AngularTargetAxis;
-    float ConeAngle;
-    FVector AngularLimitsMin;
-    FVector AngularLimitsMax;
-    FVector AngularTarget;
-
-};
-
-struct FAnimPhysSphericalLimit
-{
-    FBoneReference DrivingBone;
-    FVector SphereLocalOffset;
-    float LimitRadius;
-    ESphericalLimitType LimitType;
-
-};
-
-struct FAnimPhysPlanarLimit
-{
-    FBoneReference DrivingBone;
-    FTransform PlaneTransform;
-
-};
-
-struct FRotationRetargetingInfo
-{
-    bool bEnabled;
-    FTransform Source;
-    FTransform Target;
-    ERotationComponent RotationComponent;
-    FVector TwistAxis;
-    bool bUseAbsoluteAngle;
-    float SourceMinimum;
-    float SourceMaximum;
-    float TargetMinimum;
-    float TargetMaximum;
-    EEasingFuncType EasingType;
-    FRuntimeFloatCurve CustomCurve;
-    bool bFlipEasing;
-    float EasingWeight;
-    bool bClamp;
 
 };
 
@@ -217,28 +98,10 @@ struct FAnimNode_ApplyAdditive : public FAnimNode_Base
 
 };
 
-struct FAngularRangeLimit
-{
-    FVector LimitMin;
-    FVector LimitMax;
-    FBoneReference Bone;
-
-};
-
 struct FAnimNode_ApplyLimits : public FAnimNode_SkeletalControlBase
 {
     TArray<FAngularRangeLimit> AngularRangeLimits;
     TArray<FVector> AngularOffsets;
-
-};
-
-struct FBlendBoneByChannelEntry
-{
-    FBoneReference SourceBone;
-    FBoneReference TargetBone;
-    bool bBlendTranslation;
-    bool bBlendRotation;
-    bool bBlendScale;
 
 };
 
@@ -290,6 +153,20 @@ struct FAnimNode_BlendSpaceEvaluator : public FAnimNode_BlendSpacePlayer
 
 };
 
+struct FAnimNode_BlendSpacePlayer : public FAnimNode_AssetPlayerBase
+{
+    float X;
+    float Y;
+    float Z;
+    float PlayRate;
+    bool bLoop;
+    bool bResetPlayTimeWhenBlendSpaceChanges;
+    float StartPosition;
+    class UBlendSpaceBase* BlendSpace;
+    class UBlendSpaceBase* PreviousBlendSpace;
+
+};
+
 struct FAnimNode_BoneDrivenController : public FAnimNode_SkeletalControlBase
 {
     FBoneReference SourceBone;
@@ -317,20 +194,6 @@ struct FAnimNode_BoneDrivenController : public FAnimNode_SkeletalControlBase
 
 };
 
-struct FSocketReference
-{
-    FName SocketName;
-
-};
-
-struct FBoneSocketTarget
-{
-    bool bUseSocket;
-    FBoneReference BoneReference;
-    FSocketReference SocketReference;
-
-};
-
 struct FAnimNode_CCDIK : public FAnimNode_SkeletalControlBase
 {
     FVector EffectorLocation;
@@ -343,15 +206,6 @@ struct FAnimNode_CCDIK : public FAnimNode_SkeletalControlBase
     bool bStartFromTail;
     bool bEnableRotationLimit;
     TArray<float> RotationLimitPerJoints;
-
-};
-
-struct FConstraint
-{
-    FBoneReference TargetBone;
-    EConstraintOffsetOption OffsetOption;
-    ETransformConstraintType TransformType;
-    FFilterOptionPerAxis PerAxis;
 
 };
 
@@ -449,37 +303,12 @@ struct FAnimNode_LayeredBoneBlend : public FAnimNode_Base
 
 };
 
-struct FAnimLegIKDefinition
-{
-    FBoneReference IKFootBone;
-    FBoneReference FKFootBone;
-    int32 NumBonesInLimb;
-    float MinRotationAngle;
-    TEnumAsByte<EAxis::Type> FootBoneForwardAxis;
-    TEnumAsByte<EAxis::Type> HingeRotationAxis;
-    bool bEnableRotationLimit;
-    bool bEnableKneeTwistCorrection;
-
-};
-
 struct FAnimNode_LegIK : public FAnimNode_SkeletalControlBase
 {
     float ReachPrecision;
     int32 MaxIterations;
     TArray<FAnimLegIKDefinition> LegsDefinition;
 
-};
-
-struct FAnimLegIKData
-{
-};
-
-struct FIKChain
-{
-};
-
-struct FIKChainLink
-{
 };
 
 struct FAnimNode_LookAt : public FAnimNode_SkeletalControlBase
@@ -503,6 +332,10 @@ struct FAnimNode_MakeDynamicAdditive : public FAnimNode_Base
     FPoseLink Additive;
     bool bMeshSpaceAdditive;
 
+};
+
+struct FAnimNode_MeshSpaceRefPose : public FAnimNode_Base
+{
 };
 
 struct FAnimNode_ModifyBone : public FAnimNode_SkeletalControlBase
@@ -551,12 +384,6 @@ struct FAnimNode_ObserveBone : public FAnimNode_SkeletalControlBase
 
 };
 
-struct FAnimNode_PoseHandler : public FAnimNode_AssetPlayerBase
-{
-    class UPoseAsset* PoseAsset;
-
-};
-
 struct FAnimNode_PoseBlendNode : public FAnimNode_PoseHandler
 {
     FPoseLink SourcePose;
@@ -569,44 +396,6 @@ struct FAnimNode_PoseByName : public FAnimNode_PoseHandler
 {
     FName PoseName;
     float PoseWeight;
-
-};
-
-struct FPoseDriverTransform
-{
-    FVector TargetTranslation;
-    FRotator TargetRotation;
-
-};
-
-struct FPoseDriverTarget
-{
-    TArray<FPoseDriverTransform> BoneTransforms;
-    FRotator TargetRotation;
-    float TargetScale;
-    ERBFDistanceMethod DistanceMethod;
-    ERBFFunctionType FunctionType;
-    bool bApplyCustomCurve;
-    FRichCurve CustomCurve;
-    FName DrivenName;
-    bool bIsHidden;
-
-};
-
-struct FRBFParams
-{
-    int32 TargetDimensions;
-    ERBFSolverType SolverType;
-    float Radius;
-    bool bAutomaticRadius;
-    ERBFFunctionType Function;
-    ERBFDistanceMethod DistanceMethod;
-    TEnumAsByte<EBoneAxis> TwistAxis;
-    float WeightThreshold;
-    ERBFNormalizeMethod NormalizeMethod;
-    FVector MedianReference;
-    float MedianMin;
-    float MedianMax;
 
 };
 
@@ -625,23 +414,17 @@ struct FAnimNode_PoseDriver : public FAnimNode_PoseHandler
 
 };
 
+struct FAnimNode_PoseHandler : public FAnimNode_AssetPlayerBase
+{
+    class UPoseAsset* PoseAsset;
+
+};
+
 struct FAnimNode_PoseSnapshot : public FAnimNode_Base
 {
     FName SnapshotName;
     FPoseSnapshot Snapshot;
     ESnapshotSourceMode Mode;
-
-};
-
-struct FRandomPlayerSequenceEntry
-{
-    class UAnimSequence* Sequence;
-    float ChanceToPlay;
-    int32 MinLoopCount;
-    int32 MaxLoopCount;
-    float MinPlayRate;
-    float MaxPlayRate;
-    FAlphaBlend BlendIn;
 
 };
 
@@ -652,10 +435,6 @@ struct FAnimNode_RandomPlayer : public FAnimNode_Base
 
 };
 
-struct FAnimNode_MeshSpaceRefPose : public FAnimNode_Base
-{
-};
-
 struct FAnimNode_RefPose : public FAnimNode_Base
 {
     TEnumAsByte<ERefPoseType> RefPoseType;
@@ -664,21 +443,6 @@ struct FAnimNode_RefPose : public FAnimNode_Base
 
 struct FAnimNode_ResetRoot : public FAnimNode_SkeletalControlBase
 {
-};
-
-struct FSimSpaceSettings
-{
-    float MasterAlpha;
-    float VelocityScaleZ;
-    float MaxLinearVelocity;
-    float MaxAngularVelocity;
-    float MaxLinearAcceleration;
-    float MaxAngularAcceleration;
-    float ExternalLinearDrag;
-    FVector ExternalLinearDragV;
-    FVector ExternalLinearVelocity;
-    FVector ExternalAngularVelocity;
-
 };
 
 struct FAnimNode_RigidBody : public FAnimNode_SkeletalControlBase
@@ -764,6 +528,21 @@ struct FAnimNode_SequenceEvaluator : public FAnimNode_AssetPlayerBase
 
 };
 
+struct FAnimNode_SkeletalControlBase : public FAnimNode_Base
+{
+    FComponentSpacePoseLink ComponentPose;
+    int32 LODThreshold;
+    float ActualAlpha;
+    EAnimAlphaInputType AlphaInputType;
+    bool bAlphaBoolEnabled;
+    float alpha;
+    FInputScaleBias AlphaScaleBias;
+    FInputAlphaBoolBlend AlphaBoolBlend;
+    FName AlphaCurveName;
+    FInputScaleBiasClamp AlphaScaleBiasClamp;
+
+};
+
 struct FAnimNode_Slot : public FAnimNode_Base
 {
     FPoseLink Source;
@@ -789,13 +568,6 @@ struct FAnimNode_SplineIK : public FAnimNode_SkeletalControlBase
 
 };
 
-struct FSplineIKCachedBoneData
-{
-    FBoneReference Bone;
-    int32 RefSkeletonIndex;
-
-};
-
 struct FAnimNode_SpringBone : public FAnimNode_SkeletalControlBase
 {
     FBoneReference SpringBone;
@@ -815,13 +587,6 @@ struct FAnimNode_SpringBone : public FAnimNode_SkeletalControlBase
 
 struct FAnimNode_StateResult : public FAnimNode_Root
 {
-};
-
-struct FRotationLimit
-{
-    FVector LimitMin;
-    FVector LimitMax;
-
 };
 
 struct FAnimNode_Trail : public FAnimNode_SkeletalControlBase
@@ -846,13 +611,6 @@ struct FAnimNode_Trail : public FAnimNode_SkeletalControlBase
     FVector FakeVelocity;
     FBoneReference BaseJoint;
     float LastBoneRotationAnimAlphaBlend;
-
-};
-
-struct FReferenceBoneFrame
-{
-    FBoneReference Bone;
-    FAxis Axis;
 
 };
 
@@ -902,13 +660,126 @@ struct FAnimNode_TwoWayBlend : public FAnimNode_Base
 
 };
 
+struct FAnimPhysConstraintSetup
+{
+    AnimPhysLinearConstraintType LinearXLimitType;
+    AnimPhysLinearConstraintType LinearYLimitType;
+    AnimPhysLinearConstraintType LinearZLimitType;
+    FVector LinearAxesMin;
+    FVector LinearAxesMax;
+    AnimPhysAngularConstraintType AngularConstraintType;
+    AnimPhysTwistAxis TwistAxis;
+    AnimPhysTwistAxis AngularTargetAxis;
+    float ConeAngle;
+    FVector AngularLimitsMin;
+    FVector AngularLimitsMax;
+    FVector AngularTarget;
+
+};
+
+struct FAnimPhysPlanarLimit
+{
+    FBoneReference DrivingBone;
+    FTransform PlaneTransform;
+
+};
+
+struct FAnimPhysSphericalLimit
+{
+    FBoneReference DrivingBone;
+    FVector SphereLocalOffset;
+    float LimitRadius;
+    ESphericalLimitType LimitType;
+
+};
+
 struct FAnimSequencerInstanceProxy : public FAnimInstanceProxy
 {
+};
+
+struct FBlendBoneByChannelEntry
+{
+    FBoneReference SourceBone;
+    FBoneReference TargetBone;
+    bool bBlendTranslation;
+    bool bBlendRotation;
+    bool bBlendScale;
+
+};
+
+struct FBoneSocketTarget
+{
+    bool bUseSocket;
+    FBoneReference BoneReference;
+    FSocketReference SocketReference;
+
+};
+
+struct FConstraint
+{
+    FBoneReference TargetBone;
+    EConstraintOffsetOption OffsetOption;
+    ETransformConstraintType TransformType;
+    FFilterOptionPerAxis PerAxis;
+
+};
+
+struct FIKChain
+{
+};
+
+struct FIKChainLink
+{
+};
+
+struct FPoseDriverTarget
+{
+    TArray<FPoseDriverTransform> BoneTransforms;
+    FRotator TargetRotation;
+    float TargetScale;
+    ERBFDistanceMethod DistanceMethod;
+    ERBFFunctionType FunctionType;
+    bool bApplyCustomCurve;
+    FRichCurve CustomCurve;
+    FName DrivenName;
+    bool bIsHidden;
+
+};
+
+struct FPoseDriverTransform
+{
+    FVector TargetTranslation;
+    FRotator TargetRotation;
+
+};
+
+struct FPositionHistory
+{
+    TArray<FVector> Positions;
+    float range;
+
 };
 
 struct FRBFEntry
 {
     TArray<float> Values;
+
+};
+
+struct FRBFParams
+{
+    int32 TargetDimensions;
+    ERBFSolverType SolverType;
+    float Radius;
+    bool bAutomaticRadius;
+    ERBFFunctionType Function;
+    ERBFDistanceMethod DistanceMethod;
+    TEnumAsByte<EBoneAxis> TwistAxis;
+    float WeightThreshold;
+    ERBFNormalizeMethod NormalizeMethod;
+    FVector MedianReference;
+    float MedianMin;
+    float MedianMax;
 
 };
 
@@ -920,6 +791,135 @@ struct FRBFTarget : public FRBFEntry
     ERBFDistanceMethod DistanceMethod;
     ERBFFunctionType FunctionType;
 
+};
+
+struct FRandomPlayerSequenceEntry
+{
+    class UAnimSequence* Sequence;
+    float ChanceToPlay;
+    int32 MinLoopCount;
+    int32 MaxLoopCount;
+    float MinPlayRate;
+    float MaxPlayRate;
+    FAlphaBlend BlendIn;
+
+};
+
+struct FReferenceBoneFrame
+{
+    FBoneReference Bone;
+    FAxis Axis;
+
+};
+
+struct FRotationLimit
+{
+    FVector LimitMin;
+    FVector LimitMax;
+
+};
+
+struct FRotationRetargetingInfo
+{
+    bool bEnabled;
+    FTransform Source;
+    FTransform Target;
+    ERotationComponent RotationComponent;
+    FVector TwistAxis;
+    bool bUseAbsoluteAngle;
+    float SourceMinimum;
+    float SourceMaximum;
+    float TargetMinimum;
+    float TargetMaximum;
+    EEasingFuncType EasingType;
+    FRuntimeFloatCurve CustomCurve;
+    bool bFlipEasing;
+    float EasingWeight;
+    bool bClamp;
+
+};
+
+struct FSimSpaceSettings
+{
+    float MasterAlpha;
+    float VelocityScaleZ;
+    float MaxLinearVelocity;
+    float MaxAngularVelocity;
+    float MaxLinearAcceleration;
+    float MaxAngularAcceleration;
+    float ExternalLinearDrag;
+    FVector ExternalLinearDragV;
+    FVector ExternalLinearVelocity;
+    FVector ExternalAngularVelocity;
+
+};
+
+struct FSocketReference
+{
+    FName SocketName;
+
+};
+
+struct FSplineIKCachedBoneData
+{
+    FBoneReference Bone;
+    int32 RefSkeletonIndex;
+
+};
+
+class ISequencerAnimationSupport : public IInterface
+{
+};
+
+class UAnimNotify_PlayMontageNotify : public UAnimNotify
+{
+    FName NotifyName;
+
+};
+
+class UAnimNotify_PlayMontageNotifyWindow : public UAnimNotifyState
+{
+    FName NotifyName;
+
+};
+
+class UAnimSequencerInstance : public UAnimInstance
+{
+};
+
+class UKismetAnimationLibrary : public UBlueprintFunctionLibrary
+{
+
+    void K2_TwoBoneIK(const FVector& RootPos, const FVector& JointPos, const FVector& EndPos, const FVector& JointTarget, const FVector& Effector, FVector& OutJointPos, FVector& OutEndPos, bool bAllowStretching, float StartStretchRatio, float MaxStretchScale);
+    void K2_StartProfilingTimer();
+    FVector K2_MakePerlinNoiseVectorAndRemap(float X, float Y, float Z, float RangeOutMinX, float RangeOutMaxX, float RangeOutMinY, float RangeOutMaxY, float RangeOutMinZ, float RangeOutMaxZ);
+    float K2_MakePerlinNoiseAndRemap(float Value, float RangeOutMin, float RangeOutMax);
+    FTransform K2_LookAt(const FTransform& CurrentTransform, const FVector& TargetPosition, FVector LookAtVector, bool bUseUpVector, FVector upVector, float ClampConeInDegree);
+    float K2_EndProfilingTimer(bool bLog, FString LogPrefix);
+    float K2_DistanceBetweenTwoSocketsAndMapRange(const class USkeletalMeshComponent* Component, const FName SocketOrBoneNameA, TEnumAsByte<ERelativeTransformSpace> SocketSpaceA, const FName SocketOrBoneNameB, TEnumAsByte<ERelativeTransformSpace> SocketSpaceB, bool bRemapRange, float InRangeMin, float InRangeMax, float OutRangeMin, float OutRangeMax);
+    FVector K2_DirectionBetweenSockets(const class USkeletalMeshComponent* Component, const FName SocketOrBoneNameFrom, const FName SocketOrBoneNameTo);
+    float K2_CalculateVelocityFromSockets(float DeltaSeconds, class USkeletalMeshComponent* Component, const FName SocketOrBoneName, const FName ReferenceSocketOrBone, TEnumAsByte<ERelativeTransformSpace> SocketSpace, FVector OffsetInBoneSpace, FPositionHistory& History, int32 NumberOfSamples, float VelocityMin, float VelocityMax, EEasingFuncType EasingType, const FRuntimeFloatCurve& CustomCurve);
+    float K2_CalculateVelocityFromPositionHistory(float DeltaSeconds, FVector Position, FPositionHistory& History, int32 NumberOfSamples, float VelocityMin, float VelocityMax);
+};
+
+class UPlayMontageCallbackProxy : public UObject
+{
+    FPlayMontageCallbackProxyOnCompleted OnCompleted;
+    void OnMontagePlayDelegate(FName NotifyName);
+    FPlayMontageCallbackProxyOnBlendOut OnBlendOut;
+    void OnMontagePlayDelegate(FName NotifyName);
+    FPlayMontageCallbackProxyOnInterrupted OnInterrupted;
+    void OnMontagePlayDelegate(FName NotifyName);
+    FPlayMontageCallbackProxyOnNotifyBegin OnNotifyBegin;
+    void OnMontagePlayDelegate(FName NotifyName);
+    FPlayMontageCallbackProxyOnNotifyEnd OnNotifyEnd;
+    void OnMontagePlayDelegate(FName NotifyName);
+
+    void OnNotifyEndReceived(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointNotifyPayload);
+    void OnNotifyBeginReceived(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointNotifyPayload);
+    void OnMontageEnded(class UAnimMontage* Montage, bool bInterrupted);
+    void OnMontageBlendingOut(class UAnimMontage* Montage, bool bInterrupted);
+    class UPlayMontageCallbackProxy* CreateProxyObjectForPlayMontage(class USkeletalMeshComponent* InSkeletalMeshComponent, class UAnimMontage* MontageToPlay, float PlayRate, float StartingPosition, FName StartingSection);
 };
 
 #endif

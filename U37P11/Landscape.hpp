@@ -3,15 +3,131 @@
 
 #include "Landscape_enums.hpp"
 
-class AControlPointMeshActor : public AActor
+struct FForeignControlPointData
 {
-    class UControlPointMeshComponent* ControlPointMeshComponent;
+};
+
+struct FForeignSplineSegmentData
+{
+};
+
+struct FForeignWorldSplineData
+{
+};
+
+struct FGizmoSelectData
+{
+};
+
+struct FGrassInput
+{
+    FName Name;
+    class ULandscapeGrassType* GrassType;
+    FExpressionInput Input;
 
 };
 
-class UControlPointMeshComponent : public UStaticMeshComponent
+struct FGrassVariety
 {
-    float VirtualTextureMainPassMaxDrawDistance;
+    class UStaticMesh* GrassMesh;
+    TArray<class UMaterialInterface*> OverrideMaterials;
+    FPerPlatformFloat GrassDensity;
+    bool bUseGrid;
+    float PlacementJitter;
+    FPerPlatformInt StartCullDistance;
+    FPerPlatformInt EndCullDistance;
+    int32 MinLOD;
+    EGrassScaling Scaling;
+    FFloatInterval ScaleX;
+    FFloatInterval ScaleY;
+    FFloatInterval ScaleZ;
+    bool RandomRotation;
+    bool AlignToSurface;
+    bool bUseLandscapeLightmap;
+    FLightingChannels LightingChannels;
+    bool bReceivesDecals;
+    bool bCastDynamicShadow;
+    bool bKeepInstanceBufferCPUCopy;
+
+};
+
+struct FHeightmapData
+{
+    class UTexture2D* Texture;
+
+};
+
+struct FLandscapeComponentMaterialOverride
+{
+    FPerPlatformInt LODIndex;
+    class UMaterialInterface* Material;
+
+};
+
+struct FLandscapeEditToolRenderData
+{
+    class UMaterialInterface* ToolMaterial;
+    class UMaterialInterface* GizmoMaterial;
+    int32 SelectedType;
+    int32 DebugChannelR;
+    int32 DebugChannelG;
+    int32 DebugChannelB;
+    class UTexture2D* DataTexture;
+    class UTexture2D* LayerContributionTexture;
+    class UTexture2D* DirtyTexture;
+
+};
+
+struct FLandscapeEditorLayerSettings
+{
+};
+
+struct FLandscapeImportLayerInfo
+{
+};
+
+struct FLandscapeInfoLayerSettings
+{
+    class ULandscapeLayerInfoObject* LayerInfoObj;
+    FName LayerName;
+
+};
+
+struct FLandscapeLayer
+{
+    FGuid Guid;
+    FName Name;
+    bool bVisible;
+    bool bLocked;
+    float HeightmapAlpha;
+    float WeightmapAlpha;
+    TEnumAsByte<ELandscapeBlendMode> BlendMode;
+    TArray<FLandscapeLayerBrush> Brushes;
+    TMap<class ULandscapeLayerInfoObject*, class bool> WeightmapLayerAllocationBlend;
+
+};
+
+struct FLandscapeLayerBrush
+{
+};
+
+struct FLandscapeLayerComponentData
+{
+    FHeightmapData HeightmapData;
+    FWeightmapData WeightmapData;
+
+};
+
+struct FLandscapeLayerStruct
+{
+    class ULandscapeLayerInfoObject* LayerInfoObj;
+
+};
+
+struct FLandscapeMaterialTextureStreamingInfo
+{
+    FName TextureName;
+    float TexelFactor;
 
 };
 
@@ -19,6 +135,118 @@ struct FLandscapeProxyMaterialOverride
 {
     FPerPlatformInt LODIndex;
     class UMaterialInterface* Material;
+
+};
+
+struct FLandscapeSplineConnection
+{
+    class ULandscapeSplineSegment* Segment;
+    uint8 End;
+
+};
+
+struct FLandscapeSplineInterpPoint
+{
+    FVector Center;
+    FVector Left;
+    FVector Right;
+    FVector FalloffLeft;
+    FVector FalloffRight;
+    FVector LayerLeft;
+    FVector LayerRight;
+    FVector LayerFalloffLeft;
+    FVector LayerFalloffRight;
+    float StartEndFalloff;
+
+};
+
+struct FLandscapeSplineMeshEntry
+{
+    class UStaticMesh* Mesh;
+    TArray<class UMaterialInterface*> MaterialOverrides;
+    uint8 bCenterH;
+    FVector2D CenterAdjust;
+    uint8 bScaleToWidth;
+    FVector Scale;
+    TEnumAsByte<LandscapeSplineMeshOrientation> Orientation;
+    TEnumAsByte<ESplineMeshAxis::Type> ForwardAxis;
+    TEnumAsByte<ESplineMeshAxis::Type> UpAxis;
+
+};
+
+struct FLandscapeSplineSegmentConnection
+{
+    class ULandscapeSplineControlPoint* ControlPoint;
+    float TangentLen;
+    FName SocketName;
+
+};
+
+struct FLayerBlendInput
+{
+    FName LayerName;
+    TEnumAsByte<ELandscapeLayerBlendType> BlendType;
+    FExpressionInput LayerInput;
+    FExpressionInput HeightInput;
+    float PreviewWeight;
+    FVector ConstLayerInput;
+    float ConstHeightInput;
+
+};
+
+struct FPhysicalMaterialInput
+{
+    class UPhysicalMaterial* PhysicalMaterial;
+    FExpressionInput Input;
+
+};
+
+struct FWeightmapData
+{
+    TArray<class UTexture2D*> Textures;
+    TArray<FWeightmapLayerAllocationInfo> LayerAllocations;
+    TArray<class ULandscapeWeightmapUsage*> TextureUsages;
+
+};
+
+struct FWeightmapLayerAllocationInfo
+{
+    class ULandscapeLayerInfoObject* LayerInfo;
+    uint8 WeightmapTextureIndex;
+    uint8 WeightmapTextureChannel;
+
+};
+
+class AControlPointMeshActor : public AActor
+{
+    class UControlPointMeshComponent* ControlPointMeshComponent;
+
+};
+
+class ALandscape : public ALandscapeProxy
+{
+};
+
+class ALandscapeBlueprintBrushBase : public AActor
+{
+
+    void RequestLandscapeUpdate();
+    class UTextureRenderTarget2D* Render(bool InIsHeightmap, class UTextureRenderTarget2D* InCombinedResult, const FName& InWeightmapLayerName);
+    void Initialize(const FTransform& InLandscapeTransform, const FIntPoint& InLandscapeSize, const FIntPoint& InLandscapeRenderTargetSize);
+    void GetBlueprintRenderDependencies(TArray<class UObject*>& OutStreamableAssets);
+};
+
+class ALandscapeGizmoActiveActor : public ALandscapeGizmoActor
+{
+};
+
+class ALandscapeGizmoActor : public AActor
+{
+};
+
+class ALandscapeMeshProxyActor : public AActor
+{
+    class ULandscapeMeshProxyComponent* LandscapeMeshProxyComponent;
 
 };
 
@@ -101,35 +329,15 @@ class ALandscapeProxy : public AActor
     void ChangeComponentScreenSizeToUseSubSections(float InComponentScreenSizeToUseSubSections);
 };
 
-class ALandscape : public ALandscapeProxy
+class ALandscapeStreamingProxy : public ALandscapeProxy
 {
-};
-
-class ALandscapeBlueprintBrushBase : public AActor
-{
-
-    void RequestLandscapeUpdate();
-    class UTextureRenderTarget2D* Render(bool InIsHeightmap, class UTextureRenderTarget2D* InCombinedResult, const FName& InWeightmapLayerName);
-    void Initialize(const FTransform& InLandscapeTransform, const FIntPoint& InLandscapeSize, const FIntPoint& InLandscapeRenderTargetSize);
-    void GetBlueprintRenderDependencies(TArray<class UObject*>& OutStreamableAssets);
-};
-
-class ULandscapeLODStreamingProxy : public UStreamableRenderAsset
-{
-};
-
-struct FLandscapeComponentMaterialOverride
-{
-    FPerPlatformInt LODIndex;
-    class UMaterialInterface* Material;
+    TLazyObjectPtr<class ALandscape> LandscapeActor;
 
 };
 
-struct FWeightmapLayerAllocationInfo
+class UControlPointMeshComponent : public UStaticMeshComponent
 {
-    class ULandscapeLayerInfoObject* LayerInfo;
-    uint8 WeightmapTextureIndex;
-    uint8 WeightmapTextureChannel;
+    float VirtualTextureMainPassMaxDrawDistance;
 
 };
 
@@ -179,40 +387,8 @@ class ULandscapeComponent : public UPrimitiveComponent
     float EditorGetPaintLayerWeightAtLocation(const FVector& InLocation, class ULandscapeLayerInfoObject* PaintLayer);
 };
 
-class ALandscapeGizmoActor : public AActor
-{
-};
-
-class ALandscapeGizmoActiveActor : public ALandscapeGizmoActor
-{
-};
-
 class ULandscapeGizmoRenderComponent : public UPrimitiveComponent
 {
-};
-
-struct FGrassVariety
-{
-    class UStaticMesh* GrassMesh;
-    TArray<class UMaterialInterface*> OverrideMaterials;
-    FPerPlatformFloat GrassDensity;
-    bool bUseGrid;
-    float PlacementJitter;
-    FPerPlatformInt StartCullDistance;
-    FPerPlatformInt EndCullDistance;
-    int32 MinLOD;
-    EGrassScaling Scaling;
-    FFloatInterval ScaleX;
-    FFloatInterval ScaleY;
-    FFloatInterval ScaleZ;
-    bool RandomRotation;
-    bool AlignToSurface;
-    bool bUseLandscapeLightmap;
-    FLightingChannels LightingChannels;
-    bool bReceivesDecals;
-    bool bCastDynamicShadow;
-    bool bKeepInstanceBufferCPUCopy;
-
 };
 
 class ULandscapeGrassType : public UObject
@@ -262,19 +438,16 @@ class ULandscapeInfoMap : public UObject
 {
 };
 
+class ULandscapeLODStreamingProxy : public UStreamableRenderAsset
+{
+};
+
 class ULandscapeLayerInfoObject : public UObject
 {
     FName LayerName;
     class UPhysicalMaterial* PhysMaterial;
     float Hardness;
     FLinearColor LayerUsageDebugColor;
-
-};
-
-struct FLandscapeMaterialTextureStreamingInfo
-{
-    FName TextureName;
-    float TexelFactor;
 
 };
 
@@ -294,12 +467,6 @@ class ULandscapeMeshCollisionComponent : public ULandscapeHeightfieldCollisionCo
 
 };
 
-class ALandscapeMeshProxyActor : public AActor
-{
-    class ULandscapeMeshProxyComponent* LandscapeMeshProxyComponent;
-
-};
-
 class ULandscapeMeshProxyComponent : public UStaticMeshComponent
 {
     FGuid LandscapeGuid;
@@ -311,37 +478,6 @@ class ULandscapeMeshProxyComponent : public UStaticMeshComponent
 class ULandscapeSettings : public UDeveloperSettings
 {
     int32 MaxNumberOfLayers;
-
-};
-
-class ULandscapeSplinesComponent : public UPrimitiveComponent
-{
-    TArray<class ULandscapeSplineControlPoint*> ControlPoints;
-    TArray<class ULandscapeSplineSegment*> Segments;
-    TArray<class UMeshComponent*> CookedForeignMeshComponents;
-
-    TArray<class USplineMeshComponent*> GetSplineMeshComponents();
-};
-
-struct FLandscapeSplineConnection
-{
-    class ULandscapeSplineSegment* Segment;
-    uint8 End;
-
-};
-
-struct FLandscapeSplineInterpPoint
-{
-    FVector Center;
-    FVector Left;
-    FVector Right;
-    FVector FalloffLeft;
-    FVector FalloffRight;
-    FVector LayerLeft;
-    FVector LayerRight;
-    FVector LayerFalloffLeft;
-    FVector LayerFalloffRight;
-    float StartEndFalloff;
 
 };
 
@@ -364,14 +500,6 @@ class ULandscapeSplineControlPoint : public UObject
 
 };
 
-struct FLandscapeSplineSegmentConnection
-{
-    class ULandscapeSplineControlPoint* ControlPoint;
-    float TangentLen;
-    FName SocketName;
-
-};
-
 class ULandscapeSplineSegment : public UObject
 {
     FLandscapeSplineSegmentConnection Connections;
@@ -382,10 +510,13 @@ class ULandscapeSplineSegment : public UObject
 
 };
 
-class ALandscapeStreamingProxy : public ALandscapeProxy
+class ULandscapeSplinesComponent : public UPrimitiveComponent
 {
-    TLazyObjectPtr<class ALandscape> LandscapeActor;
+    TArray<class ULandscapeSplineControlPoint*> ControlPoints;
+    TArray<class ULandscapeSplineSegment*> Segments;
+    TArray<class UMeshComponent*> CookedForeignMeshComponents;
 
+    TArray<class USplineMeshComponent*> GetSplineMeshComponents();
 };
 
 class ULandscapeSubsystem : public UTickableWorldSubsystem
@@ -399,29 +530,9 @@ class ULandscapeWeightmapUsage : public UObject
 
 };
 
-struct FGrassInput
-{
-    FName Name;
-    class ULandscapeGrassType* GrassType;
-    FExpressionInput Input;
-
-};
-
 class UMaterialExpressionLandscapeGrassOutput : public UMaterialExpressionCustomOutput
 {
     TArray<FGrassInput> GrassTypes;
-
-};
-
-struct FLayerBlendInput
-{
-    FName LayerName;
-    TEnumAsByte<ELandscapeLayerBlendType> BlendType;
-    FExpressionInput LayerInput;
-    FExpressionInput HeightInput;
-    float PreviewWeight;
-    FVector ConstLayerInput;
-    float ConstHeightInput;
 
 };
 
@@ -472,13 +583,6 @@ class UMaterialExpressionLandscapeLayerWeight : public UMaterialExpression
 
 };
 
-struct FPhysicalMaterialInput
-{
-    class UPhysicalMaterial* PhysicalMaterial;
-    FExpressionInput Input;
-
-};
-
 class UMaterialExpressionLandscapePhysicalMaterialOutput : public UMaterialExpressionCustomOutput
 {
     TArray<FPhysicalMaterialInput> Inputs;
@@ -488,110 +592,6 @@ class UMaterialExpressionLandscapePhysicalMaterialOutput : public UMaterialExpre
 class UMaterialExpressionLandscapeVisibilityMask : public UMaterialExpression
 {
     FGuid ExpressionGUID;
-
-};
-
-struct FLandscapeLayerBrush
-{
-};
-
-struct FLandscapeLayer
-{
-    FGuid Guid;
-    FName Name;
-    bool bVisible;
-    bool bLocked;
-    float HeightmapAlpha;
-    float WeightmapAlpha;
-    TEnumAsByte<ELandscapeBlendMode> BlendMode;
-    TArray<FLandscapeLayerBrush> Brushes;
-    TMap<class ULandscapeLayerInfoObject*, class bool> WeightmapLayerAllocationBlend;
-
-};
-
-struct FHeightmapData
-{
-    class UTexture2D* Texture;
-
-};
-
-struct FWeightmapData
-{
-    TArray<class UTexture2D*> Textures;
-    TArray<FWeightmapLayerAllocationInfo> LayerAllocations;
-    TArray<class ULandscapeWeightmapUsage*> TextureUsages;
-
-};
-
-struct FLandscapeLayerComponentData
-{
-    FHeightmapData HeightmapData;
-    FWeightmapData WeightmapData;
-
-};
-
-struct FLandscapeEditToolRenderData
-{
-    class UMaterialInterface* ToolMaterial;
-    class UMaterialInterface* GizmoMaterial;
-    int32 SelectedType;
-    int32 DebugChannelR;
-    int32 DebugChannelG;
-    int32 DebugChannelB;
-    class UTexture2D* DataTexture;
-    class UTexture2D* LayerContributionTexture;
-    class UTexture2D* DirtyTexture;
-
-};
-
-struct FGizmoSelectData
-{
-};
-
-struct FLandscapeInfoLayerSettings
-{
-    class ULandscapeLayerInfoObject* LayerInfoObj;
-    FName LayerName;
-
-};
-
-struct FLandscapeImportLayerInfo
-{
-};
-
-struct FLandscapeLayerStruct
-{
-    class ULandscapeLayerInfoObject* LayerInfoObj;
-
-};
-
-struct FLandscapeEditorLayerSettings
-{
-};
-
-struct FForeignWorldSplineData
-{
-};
-
-struct FForeignSplineSegmentData
-{
-};
-
-struct FForeignControlPointData
-{
-};
-
-struct FLandscapeSplineMeshEntry
-{
-    class UStaticMesh* Mesh;
-    TArray<class UMaterialInterface*> MaterialOverrides;
-    uint8 bCenterH;
-    FVector2D CenterAdjust;
-    uint8 bScaleToWidth;
-    FVector Scale;
-    TEnumAsByte<LandscapeSplineMeshOrientation> Orientation;
-    TEnumAsByte<ESplineMeshAxis::Type> ForwardAxis;
-    TEnumAsByte<ESplineMeshAxis::Type> UpAxis;
 
 };
 

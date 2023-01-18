@@ -1,10 +1,3 @@
-enum class EDatasmithAreaLightActorType {
-    Point = 0,
-    Spot = 1,
-    Rect = 2,
-    EDatasmithAreaLightActorType_MAX = 3,
-};
-
 enum class EDatasmithAreaLightActorShape {
     Rectangle = 0,
     Disc = 1,
@@ -12,6 +5,13 @@ enum class EDatasmithAreaLightActorShape {
     Cylinder = 3,
     None = 4,
     EDatasmithAreaLightActorShape_MAX = 5,
+};
+
+enum class EDatasmithAreaLightActorType {
+    Point = 0,
+    Spot = 1,
+    Rect = 2,
+    EDatasmithAreaLightActorType_MAX = 3,
 };
 
 enum class EDatasmithCADRetessellationRule {
@@ -27,11 +27,19 @@ enum class EDatasmithCADStitchingTechnique {
     EDatasmithCADStitchingTechnique_MAX = 3,
 };
 
-enum class EDatasmithImportScene {
-    NewLevel = 0,
-    CurrentLevel = 1,
-    AssetsOnly = 2,
-    EDatasmithImportScene_MAX = 3,
+enum class EDatasmithImportActorPolicy {
+    Update = 0,
+    Full = 1,
+    Ignore = 2,
+    EDatasmithImportActorPolicy_MAX = 3,
+};
+
+enum class EDatasmithImportAssetConflictPolicy {
+    Replace = 0,
+    Update = 1,
+    Use = 2,
+    Ignore = 3,
+    EDatasmithImportAssetConflictPolicy_MAX = 4,
 };
 
 enum class EDatasmithImportLightmapMax {
@@ -62,19 +70,11 @@ enum class EDatasmithImportMaterialQuality {
     EDatasmithImportMaterialQuality_MAX = 3,
 };
 
-enum class EDatasmithImportActorPolicy {
-    Update = 0,
-    Full = 1,
-    Ignore = 2,
-    EDatasmithImportActorPolicy_MAX = 3,
-};
-
-enum class EDatasmithImportAssetConflictPolicy {
-    Replace = 0,
-    Update = 1,
-    Use = 2,
-    Ignore = 3,
-    EDatasmithImportAssetConflictPolicy_MAX = 4,
+enum class EDatasmithImportScene {
+    NewLevel = 0,
+    CurrentLevel = 1,
+    AssetsOnly = 2,
+    EDatasmithImportScene_MAX = 3,
 };
 
 enum class EDatasmithImportSearchPackagePolicy {

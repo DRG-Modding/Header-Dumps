@@ -3,6 +3,17 @@
 
 #include "TimeManagement_enums.hpp"
 
+struct FTimedDataChannelSampleTime
+{
+};
+
+struct FTimedDataInputEvaluationData
+{
+    float DistanceToNewestSampleSeconds;
+    float DistanceToOldestSampleSeconds;
+
+};
+
 class UFixedFrameRateCustomTimeStep : public UEngineCustomTimeStep
 {
 };
@@ -50,17 +61,6 @@ class UTimeSynchronizationSource : public UObject
     bool bUseForSynchronization;
     int32 FrameOffset;
 
-};
-
-struct FTimedDataInputEvaluationData
-{
-    float DistanceToNewestSampleSeconds;
-    float DistanceToOldestSampleSeconds;
-
-};
-
-struct FTimedDataChannelSampleTime
-{
 };
 
 #endif

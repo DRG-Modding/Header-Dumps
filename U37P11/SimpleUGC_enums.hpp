@@ -1,20 +1,3 @@
-enum class EUGCApprovalStatus {
-    Fully = 0,
-    Progression = 1,
-    Sandbox = 2,
-    All = 255,
-    EUGCApprovalStatus_MAX = 256,
-};
-
-enum class EPackageSortField {
-    None = 0,
-    Name = 1,
-    Status = 2,
-    Author = 3,
-    Mounted = 4,
-    EPackageSortField_MAX = 5,
-};
-
 enum class EModioRequestType {
     Authentication = 0,
     K2_Authentication = 1,
@@ -29,11 +12,28 @@ enum class EModioRequestType {
     EModioRequestType_MAX = 10,
 };
 
-enum class EUGCPackageError {
-    Exists = 0,
-    Invalid = 1,
+enum class EPackageSortField {
+    None = 0,
+    Name = 1,
+    Status = 2,
+    Author = 3,
+    Mounted = 4,
+    EPackageSortField_MAX = 5,
+};
+
+enum class EUGCApprovalStatus {
+    Fully = 0,
+    Progression = 1,
+    Sandbox = 2,
+    All = 255,
+    EUGCApprovalStatus_MAX = 256,
+};
+
+enum class EUGCBlueprintSpawning {
+    Spacerig = 0,
+    Cave = 1,
     Other = 2,
-    EUGCPackageError_MAX = 3,
+    EUGCBlueprintSpawning_MAX = 3,
 };
 
 enum class EUGCDownloadVersion {
@@ -43,10 +43,10 @@ enum class EUGCDownloadVersion {
     EUGCDownloadVersion_MAX = 256,
 };
 
-enum class EUGCBlueprintSpawning {
-    Spacerig = 0,
-    Cave = 1,
+enum class EUGCPackageError {
+    Exists = 0,
+    Invalid = 1,
     Other = 2,
-    EUGCBlueprintSpawning_MAX = 3,
+    EUGCPackageError_MAX = 3,
 };
 

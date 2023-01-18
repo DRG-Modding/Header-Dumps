@@ -3,6 +3,20 @@
 
 #include "ChaosNiagara_enums.hpp"
 
+struct FChaosDestructionEvent
+{
+    FVector Position;
+    FVector Normal;
+    FVector Velocity;
+    FVector AngularVelocity;
+    float ExtentMin;
+    float ExtentMax;
+    int32 ParticleID;
+    float Time;
+    int32 Type;
+
+};
+
 class UNiagaraDataInterfaceChaosDestruction : public UNiagaraDataInterface
 {
     TSet<AChaosSolverActor*> ChaosSolverActorSet;
@@ -57,20 +71,6 @@ class UNiagaraDataInterfaceChaosDestruction : public UNiagaraDataInterface
 
 class UNiagaraDataInterfacePhysicsField : public UNiagaraDataInterface
 {
-};
-
-struct FChaosDestructionEvent
-{
-    FVector Position;
-    FVector Normal;
-    FVector Velocity;
-    FVector AngularVelocity;
-    float ExtentMin;
-    float ExtentMax;
-    int32 ParticleID;
-    float Time;
-    int32 Type;
-
 };
 
 #endif

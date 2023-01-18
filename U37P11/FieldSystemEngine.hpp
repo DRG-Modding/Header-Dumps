@@ -1,22 +1,59 @@
 #ifndef UE4SS_SDK_FieldSystemEngine_HPP
 #define UE4SS_SDK_FieldSystemEngine_HPP
 
-class AFieldSystemActor : public AActor
-{
-    class UFieldSystemComponent* FieldSystemComponent;
-
-};
-
-class UFieldSystem : public UObject
-{
-};
-
 struct FFieldObjectCommands
 {
     TArray<FName> TargetNames;
     TArray<class UFieldNodeBase*> RootNodes;
     TArray<class UFieldSystemMetaData*> MetaDatas;
 
+};
+
+class AFieldSystemActor : public AActor
+{
+    class UFieldSystemComponent* FieldSystemComponent;
+
+};
+
+class UBoxFalloff : public UFieldNodeFloat
+{
+    float Magnitude;
+    float MinRange;
+    float MaxRange;
+    float Default;
+    FTransform Transform;
+    TEnumAsByte<EFieldFalloffType> Falloff;
+
+    class UBoxFalloff* SetBoxFalloff(float Magnitude, float MinRange, float MaxRange, float Default, FTransform Transform, TEnumAsByte<EFieldFalloffType> Falloff);
+};
+
+class UCullingField : public UFieldNodeBase
+{
+    class UFieldNodeBase* Culling;
+    class UFieldNodeBase* Field;
+    TEnumAsByte<EFieldCullingOperationType> Operation;
+
+    class UCullingField* SetCullingField(const class UFieldNodeBase* Culling, const class UFieldNodeBase* Field, TEnumAsByte<EFieldCullingOperationType> Operation);
+};
+
+class UFieldNodeBase : public UActorComponent
+{
+};
+
+class UFieldNodeFloat : public UFieldNodeBase
+{
+};
+
+class UFieldNodeInt : public UFieldNodeBase
+{
+};
+
+class UFieldNodeVector : public UFieldNodeBase
+{
+};
+
+class UFieldSystem : public UObject
+{
 };
 
 class UFieldSystemComponent : public UPrimitiveComponent
@@ -45,6 +82,13 @@ class UFieldSystemMetaData : public UActorComponent
 {
 };
 
+class UFieldSystemMetaDataFilter : public UFieldSystemMetaData
+{
+    TEnumAsByte<EFieldFilterType> FilterType;
+
+    class UFieldSystemMetaDataFilter* SetMetaDataFilterType(TEnumAsByte<EFieldFilterType> FilterType);
+};
+
 class UFieldSystemMetaDataIteration : public UFieldSystemMetaData
 {
     int32 Iterations;
@@ -59,77 +103,23 @@ class UFieldSystemMetaDataProcessingResolution : public UFieldSystemMetaData
     class UFieldSystemMetaDataProcessingResolution* SetMetaDataaProcessingResolutionType(TEnumAsByte<EFieldResolutionType> ResolutionType);
 };
 
-class UFieldSystemMetaDataFilter : public UFieldSystemMetaData
+class UNoiseField : public UFieldNodeFloat
 {
-    TEnumAsByte<EFieldFilterType> FilterType;
-
-    class UFieldSystemMetaDataFilter* SetMetaDataFilterType(TEnumAsByte<EFieldFilterType> FilterType);
-};
-
-class UFieldNodeBase : public UActorComponent
-{
-};
-
-class UFieldNodeInt : public UFieldNodeBase
-{
-};
-
-class UFieldNodeFloat : public UFieldNodeBase
-{
-};
-
-class UFieldNodeVector : public UFieldNodeBase
-{
-};
-
-class UUniformInteger : public UFieldNodeInt
-{
-    int32 Magnitude;
-
-    class UUniformInteger* SetUniformInteger(int32 Magnitude);
-};
-
-class URadialIntMask : public UFieldNodeInt
-{
-    float Radius;
-    FVector Position;
-    int32 InteriorValue;
-    int32 ExteriorValue;
-    TEnumAsByte<ESetMaskConditionType> SetMaskCondition;
-
-    class URadialIntMask* SetRadialIntMask(float Radius, FVector Position, int32 InteriorValue, int32 ExteriorValue, TEnumAsByte<ESetMaskConditionType> SetMaskConditionIn);
-};
-
-class UUniformScalar : public UFieldNodeFloat
-{
-    float Magnitude;
-
-    class UUniformScalar* SetUniformScalar(float Magnitude);
-};
-
-class UWaveScalar : public UFieldNodeFloat
-{
-    float Magnitude;
-    FVector Position;
-    float Wavelength;
-    float Period;
-    TEnumAsByte<EWaveFunctionType> Function;
-    TEnumAsByte<EFieldFalloffType> Falloff;
-
-    class UWaveScalar* SetWaveScalar(float Magnitude, FVector Position, float Wavelength, float Period, float Time, TEnumAsByte<EWaveFunctionType> Function, TEnumAsByte<EFieldFalloffType> Falloff);
-};
-
-class URadialFalloff : public UFieldNodeFloat
-{
-    float Magnitude;
     float MinRange;
     float MaxRange;
-    float Default;
-    float Radius;
-    FVector Position;
-    TEnumAsByte<EFieldFalloffType> Falloff;
+    FTransform Transform;
 
-    class URadialFalloff* SetRadialFalloff(float Magnitude, float MinRange, float MaxRange, float Default, float Radius, FVector Position, TEnumAsByte<EFieldFalloffType> Falloff);
+    class UNoiseField* SetNoiseField(float MinRange, float MaxRange, FTransform Transform);
+};
+
+class UOperatorField : public UFieldNodeBase
+{
+    float Magnitude;
+    class UFieldNodeBase* RightField;
+    class UFieldNodeBase* LeftField;
+    TEnumAsByte<EFieldOperationType> Operation;
+
+    class UOperatorField* SetOperatorField(float Magnitude, const class UFieldNodeBase* LeftField, const class UFieldNodeBase* RightField, TEnumAsByte<EFieldOperationType> Operation);
 };
 
 class UPlaneFalloff : public UFieldNodeFloat
@@ -146,33 +136,28 @@ class UPlaneFalloff : public UFieldNodeFloat
     class UPlaneFalloff* SetPlaneFalloff(float Magnitude, float MinRange, float MaxRange, float Default, float Distance, FVector Position, FVector Normal, TEnumAsByte<EFieldFalloffType> Falloff);
 };
 
-class UBoxFalloff : public UFieldNodeFloat
+class URadialFalloff : public UFieldNodeFloat
 {
     float Magnitude;
     float MinRange;
     float MaxRange;
     float Default;
-    FTransform Transform;
+    float Radius;
+    FVector Position;
     TEnumAsByte<EFieldFalloffType> Falloff;
 
-    class UBoxFalloff* SetBoxFalloff(float Magnitude, float MinRange, float MaxRange, float Default, FTransform Transform, TEnumAsByte<EFieldFalloffType> Falloff);
+    class URadialFalloff* SetRadialFalloff(float Magnitude, float MinRange, float MaxRange, float Default, float Radius, FVector Position, TEnumAsByte<EFieldFalloffType> Falloff);
 };
 
-class UNoiseField : public UFieldNodeFloat
+class URadialIntMask : public UFieldNodeInt
 {
-    float MinRange;
-    float MaxRange;
-    FTransform Transform;
+    float Radius;
+    FVector Position;
+    int32 InteriorValue;
+    int32 ExteriorValue;
+    TEnumAsByte<ESetMaskConditionType> SetMaskCondition;
 
-    class UNoiseField* SetNoiseField(float MinRange, float MaxRange, FTransform Transform);
-};
-
-class UUniformVector : public UFieldNodeVector
-{
-    float Magnitude;
-    FVector Direction;
-
-    class UUniformVector* SetUniformVector(float Magnitude, FVector Direction);
+    class URadialIntMask* SetRadialIntMask(float Radius, FVector Position, int32 InteriorValue, int32 ExteriorValue, TEnumAsByte<ESetMaskConditionType> SetMaskConditionIn);
 };
 
 class URadialVector : public UFieldNodeVector
@@ -190,21 +175,10 @@ class URandomVector : public UFieldNodeVector
     class URandomVector* SetRandomVector(float Magnitude);
 };
 
-class UOperatorField : public UFieldNodeBase
+class UReturnResultsTerminal : public UFieldNodeBase
 {
-    float Magnitude;
-    class UFieldNodeBase* RightField;
-    class UFieldNodeBase* LeftField;
-    TEnumAsByte<EFieldOperationType> Operation;
 
-    class UOperatorField* SetOperatorField(float Magnitude, const class UFieldNodeBase* LeftField, const class UFieldNodeBase* RightField, TEnumAsByte<EFieldOperationType> Operation);
-};
-
-class UToIntegerField : public UFieldNodeInt
-{
-    class UFieldNodeFloat* FloatField;
-
-    class UToIntegerField* SetToIntegerField(const class UFieldNodeFloat* FloatField);
+    class UReturnResultsTerminal* SetReturnResultsTerminal();
 };
 
 class UToFloatField : public UFieldNodeFloat
@@ -214,19 +188,45 @@ class UToFloatField : public UFieldNodeFloat
     class UToFloatField* SetToFloatField(const class UFieldNodeInt* IntegerField);
 };
 
-class UCullingField : public UFieldNodeBase
+class UToIntegerField : public UFieldNodeInt
 {
-    class UFieldNodeBase* Culling;
-    class UFieldNodeBase* Field;
-    TEnumAsByte<EFieldCullingOperationType> Operation;
+    class UFieldNodeFloat* FloatField;
 
-    class UCullingField* SetCullingField(const class UFieldNodeBase* Culling, const class UFieldNodeBase* Field, TEnumAsByte<EFieldCullingOperationType> Operation);
+    class UToIntegerField* SetToIntegerField(const class UFieldNodeFloat* FloatField);
 };
 
-class UReturnResultsTerminal : public UFieldNodeBase
+class UUniformInteger : public UFieldNodeInt
 {
+    int32 Magnitude;
 
-    class UReturnResultsTerminal* SetReturnResultsTerminal();
+    class UUniformInteger* SetUniformInteger(int32 Magnitude);
+};
+
+class UUniformScalar : public UFieldNodeFloat
+{
+    float Magnitude;
+
+    class UUniformScalar* SetUniformScalar(float Magnitude);
+};
+
+class UUniformVector : public UFieldNodeVector
+{
+    float Magnitude;
+    FVector Direction;
+
+    class UUniformVector* SetUniformVector(float Magnitude, FVector Direction);
+};
+
+class UWaveScalar : public UFieldNodeFloat
+{
+    float Magnitude;
+    FVector Position;
+    float Wavelength;
+    float Period;
+    TEnumAsByte<EWaveFunctionType> Function;
+    TEnumAsByte<EFieldFalloffType> Falloff;
+
+    class UWaveScalar* SetWaveScalar(float Magnitude, FVector Position, float Wavelength, float Period, float Time, TEnumAsByte<EWaveFunctionType> Function, TEnumAsByte<EFieldFalloffType> Falloff);
 };
 
 #endif

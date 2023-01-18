@@ -10,7 +10,7 @@ class UITEM_SpaceRig_TeamMember_C : public UUserWidget
     class UBorder* Border_PlayerRank;
     class UUI_MaskedImage_C* CharIcon;
     class UTextBlock* ClassLevel;
-    class UImage* ICON_CharacterLevel;
+    class UImage* Icon_CharacterLevel;
     class UImage* Icon_Host;
     class UImage* Icon_PlayerRank;
     class UImage* Icon_SonyTeamLeader;

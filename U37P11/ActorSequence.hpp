@@ -11,16 +11,16 @@ struct FActorSequenceObjectReference
 
 };
 
-struct FActorSequenceObjectReferences
-{
-    TArray<FActorSequenceObjectReference> Array;
-
-};
-
 struct FActorSequenceObjectReferenceMap
 {
     TArray<FGuid> BindingIds;
     TArray<FActorSequenceObjectReferences> References;
+
+};
+
+struct FActorSequenceObjectReferences
+{
+    TArray<FActorSequenceObjectReference> Array;
 
 };
 

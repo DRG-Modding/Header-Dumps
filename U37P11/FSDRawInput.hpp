@@ -1,29 +1,6 @@
 #ifndef UE4SS_SDK_FSDRawInput_HPP
 #define UE4SS_SDK_FSDRawInput_HPP
 
-struct FRegisteredDeviceInfo
-{
-    int32 Handle;
-    int32 VendorID;
-    int32 ProductID;
-    FString DeviceName;
-
-};
-
-class URawInputFunctionLibrary : public UBlueprintFunctionLibrary
-{
-
-    TArray<FRegisteredDeviceInfo> GetRegisteredDevices();
-};
-
-struct FRawInputDeviceAxisToButtonProperties
-{
-    float AxisValue;
-    float AxisThreshold;
-    FKey ButtonKey;
-
-};
-
 struct FRawInputDeviceAxisProperties
 {
     uint8 bEnabled;
@@ -33,6 +10,14 @@ struct FRawInputDeviceAxisProperties
     uint8 bGamepadStick;
     float Offset;
     TArray<FRawInputDeviceAxisToButtonProperties> AxisToButtonMapping;
+
+};
+
+struct FRawInputDeviceAxisToButtonProperties
+{
+    float AxisValue;
+    float AxisThreshold;
+    FKey ButtonKey;
 
 };
 
@@ -50,6 +35,21 @@ struct FRawInputDeviceConfiguration
     TArray<FRawInputDeviceAxisProperties> AxisProperties;
     TArray<FRawInputDeviceButtonProperties> ButtonProperties;
 
+};
+
+struct FRegisteredDeviceInfo
+{
+    int32 Handle;
+    int32 VendorID;
+    int32 ProductID;
+    FString DeviceName;
+
+};
+
+class URawInputFunctionLibrary : public UBlueprintFunctionLibrary
+{
+
+    TArray<FRegisteredDeviceInfo> GetRegisteredDevices();
 };
 
 class URawInputSettings : public UDeveloperSettings

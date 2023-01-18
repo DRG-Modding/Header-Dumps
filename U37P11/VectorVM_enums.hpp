@@ -1,3 +1,11 @@
+enum class EVectorVMBaseTypes {
+    Float = 0,
+    Int = 1,
+    Bool = 2,
+    Num = 3,
+    EVectorVMBaseTypes_MAX = 4,
+};
+
 enum class EVectorVMOp {
     done = 0,
     add = 1,
@@ -102,13 +110,5 @@ enum class EVectorVMOperandLocation {
     Constant = 1,
     Num = 2,
     EVectorVMOperandLocation_MAX = 3,
-};
-
-enum class EVectorVMBaseTypes {
-    Float = 0,
-    Int = 1,
-    Bool = 2,
-    Num = 3,
-    EVectorVMBaseTypes_MAX = 4,
 };
 

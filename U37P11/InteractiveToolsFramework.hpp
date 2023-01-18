@@ -3,26 +3,136 @@
 
 #include "InteractiveToolsFramework_enums.hpp"
 
-class UInputBehavior : public UObject
+struct FActiveGizmo
+{
+};
+
+struct FBehaviorInfo
+{
+    class UInputBehavior* Behavior;
+
+};
+
+struct FBrushStampData
+{
+};
+
+struct FGizmoFloatParameterChange
+{
+    float InitialValue;
+    float CurrentValue;
+
+};
+
+struct FGizmoVec2ParameterChange
+{
+    FVector2D InitialValue;
+    FVector2D CurrentValue;
+
+};
+
+struct FInputRayHit
+{
+};
+
+class AGizmoActor : public AInternalToolFrameworkActor
+{
+};
+
+class AInternalToolFrameworkActor : public AActor
+{
+};
+
+class AIntervalGizmoActor : public AGizmoActor
+{
+    class UGizmoLineHandleComponent* UpIntervalComponent;
+    class UGizmoLineHandleComponent* DownIntervalComponent;
+    class UGizmoLineHandleComponent* ForwardIntervalComponent;
+
+};
+
+class ATransformGizmoActor : public AGizmoActor
+{
+    class UPrimitiveComponent* TranslateX;
+    class UPrimitiveComponent* TranslateY;
+    class UPrimitiveComponent* TranslateZ;
+    class UPrimitiveComponent* TranslateYZ;
+    class UPrimitiveComponent* TranslateXZ;
+    class UPrimitiveComponent* TranslateXY;
+    class UPrimitiveComponent* RotateX;
+    class UPrimitiveComponent* RotateY;
+    class UPrimitiveComponent* RotateZ;
+    class UPrimitiveComponent* UniformScale;
+    class UPrimitiveComponent* AxisScaleX;
+    class UPrimitiveComponent* AxisScaleY;
+    class UPrimitiveComponent* AxisScaleZ;
+    class UPrimitiveComponent* PlaneScaleYZ;
+    class UPrimitiveComponent* PlaneScaleXZ;
+    class UPrimitiveComponent* PlaneScaleXY;
+
+};
+
+class IGizmoAxisSource : public IInterface
+{
+
+    bool HasTangentVectors();
+    void GetTangentVectors(FVector& TangentXOut, FVector& TangentYOut);
+    FVector GetOrigin();
+    FVector GetDirection();
+};
+
+class IGizmoClickTarget : public IInterface
+{
+
+    void UpdateHoverState(bool bHovering);
+};
+
+class IGizmoFloatParameterSource : public IInterface
+{
+
+    void SetParameter(float NewValue);
+    float GetParameter();
+    void EndModify();
+    void BeginModify();
+};
+
+class IGizmoStateTarget : public IInterface
+{
+
+    void EndUpdate();
+    void BeginUpdate();
+};
+
+class IGizmoTransformSource : public IInterface
+{
+
+    void SetTransform(const FTransform& NewTransform);
+    FTransform GetTransform();
+};
+
+class IGizmoVec2ParameterSource : public IInterface
+{
+
+    void SetParameter(const FVector2D& NewValue);
+    FVector2D GetParameter();
+    void EndModify();
+    void BeginModify();
+};
+
+class IInputBehaviorSource : public IInterface
+{
+};
+
+class IToolContextTransactionProvider : public IInterface
+{
+};
+
+class IToolFrameworkComponent : public IInterface
 {
 };
 
 class UAnyButtonInputBehavior : public UInputBehavior
 {
-};
-
-class UInteractiveGizmoBuilder : public UObject
-{
-};
-
-class UAxisAngleGizmoBuilder : public UInteractiveGizmoBuilder
-{
-};
-
-class UInteractiveGizmo : public UObject
-{
-    class UInputBehaviorSet* InputBehaviors;
-
 };
 
 class UAxisAngleGizmo : public UInteractiveGizmo
@@ -43,7 +153,7 @@ class UAxisAngleGizmo : public UInteractiveGizmo
 
 };
 
-class UAxisPositionGizmoBuilder : public UInteractiveGizmoBuilder
+class UAxisAngleGizmoBuilder : public UInteractiveGizmoBuilder
 {
 };
 
@@ -65,72 +175,7 @@ class UAxisPositionGizmo : public UInteractiveGizmo
 
 };
 
-class UGizmoConstantAxisSource : public UObject
-{
-    FVector Origin;
-    FVector Direction;
-
-};
-
-class UGizmoConstantFrameAxisSource : public UObject
-{
-    FVector Origin;
-    FVector Direction;
-    FVector TangentX;
-    FVector TangentY;
-
-};
-
-class UGizmoWorldAxisSource : public UObject
-{
-    FVector Origin;
-    int32 AxisIndex;
-
-};
-
-class UGizmoComponentAxisSource : public UObject
-{
-    class USceneComponent* Component;
-    int32 AxisIndex;
-    bool bLocalAxes;
-
-};
-
-class UInteractiveToolPropertySet : public UObject
-{
-    class UInteractiveToolPropertySet* CachedProperties;
-    bool bIsPropertySetEnabled;
-
-};
-
-class UBrushBaseProperties : public UInteractiveToolPropertySet
-{
-    float BrushSize;
-    bool bSpecifyRadius;
-    float BrushRadius;
-    float BrushStrength;
-    float BrushFalloffAmount;
-    bool bShowStrength;
-    bool bShowFalloff;
-
-};
-
-class UInteractiveTool : public UObject
-{
-    class UInputBehaviorSet* InputBehaviors;
-    TArray<class UObject*> ToolPropertyObjects;
-
-};
-
-class USingleSelectionTool : public UInteractiveTool
-{
-};
-
-class UMeshSurfacePointTool : public USingleSelectionTool
-{
-};
-
-struct FBrushStampData
+class UAxisPositionGizmoBuilder : public UInteractiveGizmoBuilder
 {
 };
 
@@ -145,8 +190,16 @@ class UBaseBrushTool : public UMeshSurfacePointTool
 
 };
 
-class UBrushStampIndicatorBuilder : public UInteractiveGizmoBuilder
+class UBrushBaseProperties : public UInteractiveToolPropertySet
 {
+    float BrushSize;
+    bool bSpecifyRadius;
+    float BrushRadius;
+    float BrushStrength;
+    float BrushFalloffAmount;
+    bool bShowStrength;
+    bool bShowFalloff;
+
 };
 
 class UBrushStampIndicator : public UInteractiveGizmo
@@ -168,17 +221,17 @@ class UBrushStampIndicator : public UInteractiveGizmo
 
 };
 
+class UBrushStampIndicatorBuilder : public UInteractiveGizmoBuilder
+{
+};
+
 class UClickDragInputBehavior : public UAnyButtonInputBehavior
 {
     bool bUpdateModifiersDuringDrag;
 
 };
 
-class ULocalClickDragInputBehavior : public UClickDragInputBehavior
-{
-};
-
-class UInteractiveToolBuilder : public UObject
+class UClickDragTool : public UInteractiveTool
 {
 };
 
@@ -186,16 +239,58 @@ class UClickDragToolBuilder : public UInteractiveToolBuilder
 {
 };
 
-class UClickDragTool : public UInteractiveTool
+class UGizmoArrowComponent : public UGizmoBaseComponent
 {
+    FVector Direction;
+    float Gap;
+    float Length;
+    float Thickness;
+
 };
 
-class AInternalToolFrameworkActor : public AActor
+class UGizmoAxisIntervalParameterSource : public UGizmoBaseFloatParameterSource
 {
+    TScriptInterface<class IGizmoFloatParameterSource> FloatParameterSource;
+    float MinParameter;
+    float MaxParameter;
+
 };
 
-class AGizmoActor : public AInternalToolFrameworkActor
+class UGizmoAxisRotationParameterSource : public UGizmoBaseFloatParameterSource
 {
+    TScriptInterface<class IGizmoAxisSource> AxisSource;
+    TScriptInterface<class IGizmoTransformSource> TransformSource;
+    float Angle;
+    FGizmoFloatParameterChange LastChange;
+    FVector CurRotationAxis;
+    FVector CurRotationOrigin;
+    FTransform InitialTransform;
+
+};
+
+class UGizmoAxisScaleParameterSource : public UGizmoBaseFloatParameterSource
+{
+    TScriptInterface<class IGizmoAxisSource> AxisSource;
+    TScriptInterface<class IGizmoTransformSource> TransformSource;
+    float ScaleMultiplier;
+    float Parameter;
+    FGizmoFloatParameterChange LastChange;
+    FVector CurScaleAxis;
+    FVector CurScaleOrigin;
+    FTransform InitialTransform;
+
+};
+
+class UGizmoAxisTranslationParameterSource : public UGizmoBaseFloatParameterSource
+{
+    TScriptInterface<class IGizmoAxisSource> AxisSource;
+    TScriptInterface<class IGizmoTransformSource> TransformSource;
+    float Parameter;
+    FGizmoFloatParameterChange LastChange;
+    FVector CurTranslationAxis;
+    FVector CurTranslationOrigin;
+    FTransform InitialTransform;
+
 };
 
 class UGizmoBaseComponent : public UPrimitiveComponent
@@ -208,13 +303,16 @@ class UGizmoBaseComponent : public UPrimitiveComponent
     void UpdateHoverState(bool bHoveringIn);
 };
 
-class UGizmoArrowComponent : public UGizmoBaseComponent
+class UGizmoBaseFloatParameterSource : public UObject
 {
-    FVector Direction;
-    float Gap;
-    float Length;
-    float Thickness;
+};
 
+class UGizmoBaseTransformSource : public UObject
+{
+};
+
+class UGizmoBaseVec2ParameterSource : public UObject
+{
 };
 
 class UGizmoBoxComponent : public UGizmoBaseComponent
@@ -239,51 +337,49 @@ class UGizmoCircleComponent : public UGizmoBaseComponent
 
 };
 
-class IGizmoTransformSource : public IInterface
+class UGizmoComponentAxisSource : public UObject
 {
+    class USceneComponent* Component;
+    int32 AxisIndex;
+    bool bLocalAxes;
 
-    void SetTransform(const FTransform& NewTransform);
-    FTransform GetTransform();
 };
 
-class IGizmoAxisSource : public IInterface
+class UGizmoComponentHitTarget : public UObject
 {
+    class UPrimitiveComponent* Component;
 
-    bool HasTangentVectors();
-    void GetTangentVectors(FVector& TangentXOut, FVector& TangentYOut);
-    FVector GetOrigin();
-    FVector GetDirection();
 };
 
-class IGizmoClickTarget : public IInterface
+class UGizmoComponentWorldTransformSource : public UGizmoBaseTransformSource
 {
+    class USceneComponent* Component;
+    bool bModifyComponentOnTransform;
 
-    void UpdateHoverState(bool bHovering);
 };
 
-class IGizmoStateTarget : public IInterface
+class UGizmoConstantAxisSource : public UObject
 {
+    FVector Origin;
+    FVector Direction;
 
-    void EndUpdate();
-    void BeginUpdate();
 };
 
-class IGizmoFloatParameterSource : public IInterface
+class UGizmoConstantFrameAxisSource : public UObject
 {
+    FVector Origin;
+    FVector Direction;
+    FVector TangentX;
+    FVector TangentY;
 
-    void SetParameter(float NewValue);
-    float GetParameter();
-    void EndModify();
-    void BeginModify();
 };
 
-class IGizmoVec2ParameterSource : public IInterface
+class UGizmoLambdaHitTarget : public UObject
 {
+};
 
-    void SetParameter(const FVector2D& NewValue);
-    FVector2D GetParameter();
-    void EndModify();
-    void BeginModify();
+class UGizmoLambdaStateTarget : public UObject
+{
 };
 
 class UGizmoLineHandleComponent : public UGizmoBaseComponent
@@ -297,170 +393,10 @@ class UGizmoLineHandleComponent : public UGizmoBaseComponent
 
 };
 
-class UGizmoRectangleComponent : public UGizmoBaseComponent
-{
-    FVector DirectionX;
-    FVector DirectionY;
-    float OffsetX;
-    float OffsetY;
-    float LengthX;
-    float LengthY;
-    float Thickness;
-    uint8 SegmentFlags;
-
-};
-
-class UGizmoLambdaHitTarget : public UObject
-{
-};
-
-class UGizmoComponentHitTarget : public UObject
-{
-    class UPrimitiveComponent* Component;
-
-};
-
-struct FBehaviorInfo
-{
-    class UInputBehavior* Behavior;
-
-};
-
-class UInputBehaviorSet : public UObject
-{
-    TArray<FBehaviorInfo> Behaviors;
-
-};
-
-class IInputBehaviorSource : public IInterface
-{
-};
-
-class UInputRouter : public UObject
-{
-    bool bAutoInvalidateOnHover;
-    bool bAutoInvalidateOnCapture;
-    class UInputBehaviorSet* ActiveInputBehaviors;
-
-};
-
-class UInteractionMechanic : public UObject
-{
-};
-
-struct FActiveGizmo
-{
-};
-
-class UInteractiveGizmoManager : public UObject
-{
-    TArray<FActiveGizmo> ActiveGizmos;
-    TMap<class FString, class UInteractiveGizmoBuilder*> GizmoBuilders;
-
-};
-
-class IToolContextTransactionProvider : public IInterface
-{
-};
-
-class UInteractiveToolManager : public UObject
-{
-    class UInteractiveTool* ActiveLeftTool;
-    class UInteractiveTool* ActiveRightTool;
-    TMap<class FString, class UInteractiveToolBuilder*> ToolBuilders;
-
-};
-
-class IToolFrameworkComponent : public IInterface
-{
-};
-
-class UInteractiveToolsContext : public UObject
-{
-    class UInputRouter* InputRouter;
-    class UInteractiveToolManager* ToolManager;
-    class UInteractiveGizmoManager* GizmoManager;
-    TSoftClassPtr<UInteractiveToolManager> ToolManagerClass;
-
-};
-
-class AIntervalGizmoActor : public AGizmoActor
-{
-    class UGizmoLineHandleComponent* UpIntervalComponent;
-    class UGizmoLineHandleComponent* DownIntervalComponent;
-    class UGizmoLineHandleComponent* ForwardIntervalComponent;
-
-};
-
-class UIntervalGizmoBuilder : public UInteractiveGizmoBuilder
-{
-};
-
-class UIntervalGizmo : public UInteractiveGizmo
-{
-    class UGizmoTransformChangeStateTarget* StateTarget;
-    class UTransformProxy* TransformProxy;
-    TArray<class UPrimitiveComponent*> ActiveComponents;
-    TArray<class UInteractiveGizmo*> ActiveGizmos;
-    class UGizmoComponentAxisSource* AxisYSource;
-    class UGizmoComponentAxisSource* AxisZSource;
-
-};
-
-class UGizmoBaseFloatParameterSource : public UObject
-{
-};
-
-class UGizmoAxisIntervalParameterSource : public UGizmoBaseFloatParameterSource
-{
-    TScriptInterface<class IGizmoFloatParameterSource> FloatParameterSource;
-    float MinParameter;
-    float MaxParameter;
-
-};
-
-class UKeyAsModifierInputBehavior : public UInputBehavior
-{
-};
-
-class UMeshSurfacePointToolBuilder : public UInteractiveToolBuilder
-{
-};
-
-class UMouseHoverBehavior : public UInputBehavior
-{
-};
-
-class UMultiClickSequenceInputBehavior : public UAnyButtonInputBehavior
-{
-};
-
-class UMultiSelectionTool : public UInteractiveTool
-{
-};
-
-struct FGizmoFloatParameterChange
-{
-    float InitialValue;
-    float CurrentValue;
-
-};
-
 class UGizmoLocalFloatParameterSource : public UGizmoBaseFloatParameterSource
 {
     float Value;
     FGizmoFloatParameterChange LastChange;
-
-};
-
-class UGizmoBaseVec2ParameterSource : public UObject
-{
-};
-
-struct FGizmoVec2ParameterChange
-{
-    FVector2D InitialValue;
-    FVector2D CurrentValue;
 
 };
 
@@ -471,14 +407,25 @@ class UGizmoLocalVec2ParameterSource : public UGizmoBaseVec2ParameterSource
 
 };
 
-class UGizmoAxisTranslationParameterSource : public UGizmoBaseFloatParameterSource
+class UGizmoNilStateTarget : public UObject
+{
+};
+
+class UGizmoObjectModifyStateTarget : public UObject
+{
+};
+
+class UGizmoPlaneScaleParameterSource : public UGizmoBaseVec2ParameterSource
 {
     TScriptInterface<class IGizmoAxisSource> AxisSource;
     TScriptInterface<class IGizmoTransformSource> TransformSource;
-    float Parameter;
-    FGizmoFloatParameterChange LastChange;
-    FVector CurTranslationAxis;
-    FVector CurTranslationOrigin;
+    float ScaleMultiplier;
+    FVector2D Parameter;
+    FGizmoVec2ParameterChange LastChange;
+    FVector CurScaleOrigin;
+    FVector CurScaleNormal;
+    FVector CurScaleAxisX;
+    FVector CurScaleAxisY;
     FTransform InitialTransform;
 
 };
@@ -497,15 +444,34 @@ class UGizmoPlaneTranslationParameterSource : public UGizmoBaseVec2ParameterSour
 
 };
 
-class UGizmoAxisRotationParameterSource : public UGizmoBaseFloatParameterSource
+class UGizmoRectangleComponent : public UGizmoBaseComponent
 {
-    TScriptInterface<class IGizmoAxisSource> AxisSource;
-    TScriptInterface<class IGizmoTransformSource> TransformSource;
-    float Angle;
-    FGizmoFloatParameterChange LastChange;
-    FVector CurRotationAxis;
-    FVector CurRotationOrigin;
-    FTransform InitialTransform;
+    FVector DirectionX;
+    FVector DirectionY;
+    float OffsetX;
+    float OffsetY;
+    float LengthX;
+    float LengthY;
+    float Thickness;
+    uint8 SegmentFlags;
+
+};
+
+class UGizmoScaledTransformSource : public UGizmoBaseTransformSource
+{
+    TScriptInterface<class IGizmoTransformSource> ChildTransformSource;
+
+};
+
+class UGizmoTransformChangeStateTarget : public UObject
+{
+    TScriptInterface<class IToolContextTransactionProvider> TransactionManager;
+
+};
+
+class UGizmoTransformProxyTransformSource : public UGizmoBaseTransformSource
+{
+    class UTransformProxy* Proxy;
 
 };
 
@@ -524,35 +490,136 @@ class UGizmoUniformScaleParameterSource : public UGizmoBaseVec2ParameterSource
 
 };
 
-class UGizmoAxisScaleParameterSource : public UGizmoBaseFloatParameterSource
+class UGizmoWorldAxisSource : public UObject
 {
-    TScriptInterface<class IGizmoAxisSource> AxisSource;
-    TScriptInterface<class IGizmoTransformSource> TransformSource;
-    float ScaleMultiplier;
-    float Parameter;
-    FGizmoFloatParameterChange LastChange;
-    FVector CurScaleAxis;
-    FVector CurScaleOrigin;
-    FTransform InitialTransform;
+    FVector Origin;
+    int32 AxisIndex;
 
 };
 
-class UGizmoPlaneScaleParameterSource : public UGizmoBaseVec2ParameterSource
+class UInputBehavior : public UObject
 {
-    TScriptInterface<class IGizmoAxisSource> AxisSource;
-    TScriptInterface<class IGizmoTransformSource> TransformSource;
-    float ScaleMultiplier;
-    FVector2D Parameter;
-    FGizmoVec2ParameterChange LastChange;
-    FVector CurScaleOrigin;
-    FVector CurScaleNormal;
-    FVector CurScaleAxisX;
-    FVector CurScaleAxisY;
-    FTransform InitialTransform;
+};
+
+class UInputBehaviorSet : public UObject
+{
+    TArray<FBehaviorInfo> Behaviors;
 
 };
 
-class UPlanePositionGizmoBuilder : public UInteractiveGizmoBuilder
+class UInputRouter : public UObject
+{
+    bool bAutoInvalidateOnHover;
+    bool bAutoInvalidateOnCapture;
+    class UInputBehaviorSet* ActiveInputBehaviors;
+
+};
+
+class UInteractionMechanic : public UObject
+{
+};
+
+class UInteractiveGizmo : public UObject
+{
+    class UInputBehaviorSet* InputBehaviors;
+
+};
+
+class UInteractiveGizmoBuilder : public UObject
+{
+};
+
+class UInteractiveGizmoManager : public UObject
+{
+    TArray<FActiveGizmo> ActiveGizmos;
+    TMap<class FString, class UInteractiveGizmoBuilder*> GizmoBuilders;
+
+};
+
+class UInteractiveTool : public UObject
+{
+    class UInputBehaviorSet* InputBehaviors;
+    TArray<class UObject*> ToolPropertyObjects;
+
+};
+
+class UInteractiveToolBuilder : public UObject
+{
+};
+
+class UInteractiveToolManager : public UObject
+{
+    class UInteractiveTool* ActiveLeftTool;
+    class UInteractiveTool* ActiveRightTool;
+    TMap<class FString, class UInteractiveToolBuilder*> ToolBuilders;
+
+};
+
+class UInteractiveToolPropertySet : public UObject
+{
+    class UInteractiveToolPropertySet* CachedProperties;
+    bool bIsPropertySetEnabled;
+
+};
+
+class UInteractiveToolsContext : public UObject
+{
+    class UInputRouter* InputRouter;
+    class UInteractiveToolManager* ToolManager;
+    class UInteractiveGizmoManager* GizmoManager;
+    TSoftClassPtr<UInteractiveToolManager> ToolManagerClass;
+
+};
+
+class UIntervalGizmo : public UInteractiveGizmo
+{
+    class UGizmoTransformChangeStateTarget* StateTarget;
+    class UTransformProxy* TransformProxy;
+    TArray<class UPrimitiveComponent*> ActiveComponents;
+    TArray<class UInteractiveGizmo*> ActiveGizmos;
+    class UGizmoComponentAxisSource* AxisYSource;
+    class UGizmoComponentAxisSource* AxisZSource;
+
+};
+
+class UIntervalGizmoBuilder : public UInteractiveGizmoBuilder
+{
+};
+
+class UKeyAsModifierInputBehavior : public UInputBehavior
+{
+};
+
+class ULocalClickDragInputBehavior : public UClickDragInputBehavior
+{
+};
+
+class UMeshSelectionSet : public USelectionSet
+{
+    TArray<int32> Vertices;
+    TArray<int32> Edges;
+    TArray<int32> Faces;
+    TArray<int32> Groups;
+
+};
+
+class UMeshSurfacePointTool : public USingleSelectionTool
+{
+};
+
+class UMeshSurfacePointToolBuilder : public UInteractiveToolBuilder
+{
+};
+
+class UMouseHoverBehavior : public UInputBehavior
+{
+};
+
+class UMultiClickSequenceInputBehavior : public UAnyButtonInputBehavior
+{
+};
+
+class UMultiSelectionTool : public UInteractiveTool
 {
 };
 
@@ -578,17 +645,12 @@ class UPlanePositionGizmo : public UInteractiveGizmo
 
 };
 
-class USelectionSet : public UObject
+class UPlanePositionGizmoBuilder : public UInteractiveGizmoBuilder
 {
 };
 
-class UMeshSelectionSet : public USelectionSet
+class USelectionSet : public UObject
 {
-    TArray<int32> Vertices;
-    TArray<int32> Edges;
-    TArray<int32> Faces;
-    TArray<int32> Groups;
-
 };
 
 class USingleClickInputBehavior : public UAnyButtonInputBehavior
@@ -597,54 +659,15 @@ class USingleClickInputBehavior : public UAnyButtonInputBehavior
 
 };
 
-class USingleClickToolBuilder : public UInteractiveToolBuilder
-{
-};
-
 class USingleClickTool : public UInteractiveTool
 {
 };
 
-class UGizmoNilStateTarget : public UObject
+class USingleClickToolBuilder : public UInteractiveToolBuilder
 {
 };
 
-class UGizmoLambdaStateTarget : public UObject
-{
-};
-
-class UGizmoObjectModifyStateTarget : public UObject
-{
-};
-
-class UGizmoTransformChangeStateTarget : public UObject
-{
-    TScriptInterface<class IToolContextTransactionProvider> TransactionManager;
-
-};
-
-class ATransformGizmoActor : public AGizmoActor
-{
-    class UPrimitiveComponent* TranslateX;
-    class UPrimitiveComponent* TranslateY;
-    class UPrimitiveComponent* TranslateZ;
-    class UPrimitiveComponent* TranslateYZ;
-    class UPrimitiveComponent* TranslateXZ;
-    class UPrimitiveComponent* TranslateXY;
-    class UPrimitiveComponent* RotateX;
-    class UPrimitiveComponent* RotateY;
-    class UPrimitiveComponent* RotateZ;
-    class UPrimitiveComponent* UniformScale;
-    class UPrimitiveComponent* AxisScaleX;
-    class UPrimitiveComponent* AxisScaleY;
-    class UPrimitiveComponent* AxisScaleZ;
-    class UPrimitiveComponent* PlaneScaleYZ;
-    class UPrimitiveComponent* PlaneScaleXZ;
-    class UPrimitiveComponent* PlaneScaleXY;
-
-};
-
-class UTransformGizmoBuilder : public UInteractiveGizmoBuilder
+class USingleSelectionTool : public UInteractiveTool
 {
 };
 
@@ -674,6 +697,10 @@ class UTransformGizmo : public UInteractiveGizmo
 
 };
 
+class UTransformGizmoBuilder : public UInteractiveGizmoBuilder
+{
+};
+
 class UTransformProxy : public UObject
 {
     bool bRotatePerObject;
@@ -681,33 +708,6 @@ class UTransformProxy : public UObject
     FTransform SharedTransform;
     FTransform InitialSharedTransform;
 
-};
-
-class UGizmoBaseTransformSource : public UObject
-{
-};
-
-class UGizmoComponentWorldTransformSource : public UGizmoBaseTransformSource
-{
-    class USceneComponent* Component;
-    bool bModifyComponentOnTransform;
-
-};
-
-class UGizmoScaledTransformSource : public UGizmoBaseTransformSource
-{
-    TScriptInterface<class IGizmoTransformSource> ChildTransformSource;
-
-};
-
-class UGizmoTransformProxyTransformSource : public UGizmoBaseTransformSource
-{
-    class UTransformProxy* Proxy;
-
-};
-
-struct FInputRayHit
-{
 };
 
 #endif

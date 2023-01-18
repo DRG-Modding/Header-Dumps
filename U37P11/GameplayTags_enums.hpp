@@ -1,16 +1,3 @@
-namespace EGameplayTagQueryExprType {
-    enum Type {
-        Undefined = 0,
-        AnyTagsMatch = 1,
-        AllTagsMatch = 2,
-        NoTagsMatch = 3,
-        AnyExprMatch = 4,
-        AllExprMatch = 5,
-        NoExprMatch = 6,
-        EGameplayTagQueryExprType_MAX = 7,
-    };
-}
-
 enum class EGameplayContainerMatchType {
     Any = 0,
     All = 1,
@@ -22,6 +9,19 @@ namespace EGameplayTagMatchType {
         Explicit = 0,
         IncludeParentTags = 1,
         EGameplayTagMatchType_MAX = 2,
+    };
+}
+
+namespace EGameplayTagQueryExprType {
+    enum Type {
+        Undefined = 0,
+        AnyTagsMatch = 1,
+        AllTagsMatch = 2,
+        NoTagsMatch = 3,
+        AnyExprMatch = 4,
+        AllExprMatch = 5,
+        NoExprMatch = 6,
+        EGameplayTagQueryExprType_MAX = 7,
     };
 }
 

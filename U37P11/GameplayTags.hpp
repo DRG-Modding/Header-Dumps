@@ -9,6 +9,28 @@ struct FGameplayTag
 
 };
 
+struct FGameplayTagCategoryRemap
+{
+    FString BaseCategory;
+    TArray<FString> RemapCategories;
+
+};
+
+struct FGameplayTagContainer
+{
+    TArray<FGameplayTag> GameplayTags;
+    TArray<FGameplayTag> ParentTags;
+
+};
+
+struct FGameplayTagCreationWidgetHelper
+{
+};
+
+struct FGameplayTagNode
+{
+};
+
 struct FGameplayTagQuery
 {
     int32 TokenStreamVersion;
@@ -19,11 +41,53 @@ struct FGameplayTagQuery
 
 };
 
-struct FGameplayTagContainer
+struct FGameplayTagRedirect
 {
-    TArray<FGameplayTag> GameplayTags;
-    TArray<FGameplayTag> ParentTags;
+    FName OldTagName;
+    FName NewTagName;
 
+};
+
+struct FGameplayTagReferenceHelper
+{
+};
+
+struct FGameplayTagSource
+{
+    FName SourceName;
+    EGameplayTagSourceType SourceType;
+    class UGameplayTagsList* SourceTagList;
+    class URestrictedGameplayTagsList* SourceRestrictedTagList;
+
+};
+
+struct FGameplayTagTableRow : public FTableRowBase
+{
+    FName Tag;
+    FString DevComment;
+
+};
+
+struct FRestrictedConfigInfo
+{
+    FString RestrictedConfigName;
+    TArray<FString> Owners;
+
+};
+
+struct FRestrictedGameplayTagTableRow : public FGameplayTagTableRow
+{
+    bool bAllowNonRestrictedChildren;
+
+};
+
+class IGameplayTagAssetInterface : public IInterface
+{
+
+    bool HasMatchingGameplayTag(FGameplayTag TagToCheck);
+    bool HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagContainer);
+    bool HasAllMatchingGameplayTags(const FGameplayTagContainer& TagContainer);
+    void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer);
 };
 
 class UBlueprintGameplayTagLibrary : public UBlueprintFunctionLibrary
@@ -61,15 +125,6 @@ class UBlueprintGameplayTagLibrary : public UBlueprintFunctionLibrary
     void AddGameplayTag(FGameplayTagContainer& TagContainer, FGameplayTag Tag);
 };
 
-class IGameplayTagAssetInterface : public IInterface
-{
-
-    bool HasMatchingGameplayTag(FGameplayTag TagToCheck);
-    bool HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagContainer);
-    bool HasAllMatchingGameplayTags(const FGameplayTagContainer& TagContainer);
-    void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer);
-};
-
 class UEditableGameplayTagQuery : public UObject
 {
     FString UserDescription;
@@ -82,19 +137,13 @@ class UEditableGameplayTagQueryExpression : public UObject
 {
 };
 
-class UEditableGameplayTagQueryExpression_AnyTagsMatch : public UEditableGameplayTagQueryExpression
+class UEditableGameplayTagQueryExpression_AllExprMatch : public UEditableGameplayTagQueryExpression
 {
-    FGameplayTagContainer Tags;
+    TArray<class UEditableGameplayTagQueryExpression*> Expressions;
 
 };
 
 class UEditableGameplayTagQueryExpression_AllTagsMatch : public UEditableGameplayTagQueryExpression
-{
-    FGameplayTagContainer Tags;
-
-};
-
-class UEditableGameplayTagQueryExpression_NoTagsMatch : public UEditableGameplayTagQueryExpression
 {
     FGameplayTagContainer Tags;
 
@@ -106,9 +155,9 @@ class UEditableGameplayTagQueryExpression_AnyExprMatch : public UEditableGamepla
 
 };
 
-class UEditableGameplayTagQueryExpression_AllExprMatch : public UEditableGameplayTagQueryExpression
+class UEditableGameplayTagQueryExpression_AnyTagsMatch : public UEditableGameplayTagQueryExpression
 {
-    TArray<class UEditableGameplayTagQueryExpression*> Expressions;
+    FGameplayTagContainer Tags;
 
 };
 
@@ -118,26 +167,16 @@ class UEditableGameplayTagQueryExpression_NoExprMatch : public UEditableGameplay
 
 };
 
-struct FGameplayTagSource
+class UEditableGameplayTagQueryExpression_NoTagsMatch : public UEditableGameplayTagQueryExpression
 {
-    FName SourceName;
-    EGameplayTagSourceType SourceType;
-    class UGameplayTagsList* SourceTagList;
-    class URestrictedGameplayTagsList* SourceRestrictedTagList;
+    FGameplayTagContainer Tags;
 
 };
 
-class UGameplayTagsManager : public UObject
+class UGameplayTagsDeveloperSettings : public UDeveloperSettings
 {
-    TMap<class FName, class FGameplayTagSource> TagSources;
-    TArray<class UDataTable*> GameplayTagTables;
-
-};
-
-struct FGameplayTagTableRow : public FTableRowBase
-{
-    FName Tag;
-    FString DevComment;
+    FString DeveloperConfigName;
+    FName FavoriteTagSource;
 
 };
 
@@ -148,37 +187,10 @@ class UGameplayTagsList : public UObject
 
 };
 
-struct FRestrictedGameplayTagTableRow : public FGameplayTagTableRow
+class UGameplayTagsManager : public UObject
 {
-    bool bAllowNonRestrictedChildren;
-
-};
-
-class URestrictedGameplayTagsList : public UObject
-{
-    FString ConfigFileName;
-    TArray<FRestrictedGameplayTagTableRow> RestrictedGameplayTagList;
-
-};
-
-struct FGameplayTagCategoryRemap
-{
-    FString BaseCategory;
-    TArray<FString> RemapCategories;
-
-};
-
-struct FGameplayTagRedirect
-{
-    FName OldTagName;
-    FName NewTagName;
-
-};
-
-struct FRestrictedConfigInfo
-{
-    FString RestrictedConfigName;
-    TArray<FString> Owners;
+    TMap<class FName, class FGameplayTagSource> TagSources;
+    TArray<class UDataTable*> GameplayTagTables;
 
 };
 
@@ -199,23 +211,11 @@ class UGameplayTagsSettings : public UGameplayTagsList
 
 };
 
-class UGameplayTagsDeveloperSettings : public UDeveloperSettings
+class URestrictedGameplayTagsList : public UObject
 {
-    FString DeveloperConfigName;
-    FName FavoriteTagSource;
+    FString ConfigFileName;
+    TArray<FRestrictedGameplayTagTableRow> RestrictedGameplayTagList;
 
-};
-
-struct FGameplayTagCreationWidgetHelper
-{
-};
-
-struct FGameplayTagReferenceHelper
-{
-};
-
-struct FGameplayTagNode
-{
 };
 
 #endif

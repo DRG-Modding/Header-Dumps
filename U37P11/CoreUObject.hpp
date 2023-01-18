@@ -3,531 +3,6 @@
 
 #include "CoreUObject_enums.hpp"
 
-class UObject
-{
-
-    void ExecuteUbergraph(int32 EntryPoint);
-};
-
-struct FUniqueNetIdWrapper
-{
-};
-
-class IInterface : public UObject
-{
-};
-
-struct FDateTime
-{
-};
-
-struct FVector
-{
-    float X;
-    float Y;
-    float Z;
-
-};
-
-struct FRotator
-{
-    float Pitch;
-    float Yaw;
-    float Roll;
-
-};
-
-struct FQuat
-{
-    float X;
-    float Y;
-    float Z;
-    float W;
-
-};
-
-struct FTransform
-{
-    FQuat Rotation;
-    FVector Translation;
-    FVector Scale3D;
-
-};
-
-struct FGuid
-{
-    int32 A;
-    int32 B;
-    int32 C;
-    int32 D;
-
-};
-
-struct FVector2D
-{
-    float X;
-    float Y;
-
-};
-
-struct FLinearColor
-{
-    float R;
-    float G;
-    float B;
-    float A;
-
-};
-
-struct FBox2D
-{
-    FVector2D Min;
-    FVector2D Max;
-    uint8 bIsValid;
-
-};
-
-struct FFrameNumber
-{
-    int32 Value;
-
-};
-
-struct FFrameNumberRangeBound
-{
-    TEnumAsByte<ERangeBoundTypes::Type> Type;
-    FFrameNumber Value;
-
-};
-
-struct FFrameNumberRange
-{
-    FFrameNumberRangeBound LowerBound;
-    FFrameNumberRangeBound UpperBound;
-
-};
-
-struct FIntPoint
-{
-    int32 X;
-    int32 Y;
-
-};
-
-struct FVector4
-{
-    float X;
-    float Y;
-    float Z;
-    float W;
-
-};
-
-struct FBox
-{
-    FVector Min;
-    FVector Max;
-    uint8 IsValid;
-
-};
-
-struct FIntVector
-{
-    int32 X;
-    int32 Y;
-    int32 Z;
-
-};
-
-struct FSoftObjectPath
-{
-    FName AssetPathName;
-    FString SubPathString;
-
-};
-
-class UPackage : public UObject
-{
-};
-
-class UField : public UObject
-{
-};
-
-class UStruct : public UField
-{
-};
-
-class UClass : public UStruct
-{
-};
-
-struct FColor
-{
-    uint8 B;
-    uint8 G;
-    uint8 R;
-    uint8 A;
-
-};
-
-struct FBoxSphereBounds
-{
-    FVector Origin;
-    FVector BoxExtent;
-    float SphereRadius;
-
-};
-
-struct FFrameTime
-{
-    FFrameNumber FrameNumber;
-    float SubFrame;
-
-};
-
-struct FFrameRate
-{
-    int32 Numerator;
-    int32 Denominator;
-
-};
-
-struct FQualifiedFrameTime
-{
-    FFrameTime Time;
-    FFrameRate Rate;
-
-};
-
-struct FPlane : public FVector
-{
-    float W;
-
-};
-
-struct FMatrix
-{
-    FPlane XPlane;
-    FPlane YPlane;
-    FPlane ZPlane;
-    FPlane WPlane;
-
-};
-
-struct FSoftClassPath : public FSoftObjectPath
-{
-};
-
-struct FAssetData
-{
-    FName ObjectPath;
-    FName PackageName;
-    FName PackagePath;
-    FName AssetName;
-    FName AssetClass;
-
-};
-
-struct FFloatInterval
-{
-    float Min;
-    float Max;
-
-};
-
-struct FTimespan
-{
-};
-
-struct FInt32Interval
-{
-    int32 Min;
-    int32 Max;
-
-};
-
-struct FRandomStream
-{
-    int32 InitialSeed;
-    int32 Seed;
-
-};
-
-struct FFloatRangeBound
-{
-    TEnumAsByte<ERangeBoundTypes::Type> Type;
-    float Value;
-
-};
-
-struct FFloatRange
-{
-    FFloatRangeBound LowerBound;
-    FFloatRangeBound UpperBound;
-
-};
-
-struct FInt32RangeBound
-{
-    TEnumAsByte<ERangeBoundTypes::Type> Type;
-    int32 Value;
-
-};
-
-struct FInt32Range
-{
-    FInt32RangeBound LowerBound;
-    FInt32RangeBound UpperBound;
-
-};
-
-struct FInterpCurvePointVector2D
-{
-    float InVal;
-    FVector2D OutVal;
-    FVector2D ArriveTangent;
-    FVector2D LeaveTangent;
-    TEnumAsByte<EInterpCurveMode> InterpMode;
-
-};
-
-struct FInterpCurveVector2D
-{
-    TArray<FInterpCurvePointVector2D> Points;
-    bool bIsLooped;
-    float LoopKeyOffset;
-
-};
-
-class UGCObjectReferencer : public UObject
-{
-};
-
-class UTextBuffer : public UObject
-{
-};
-
-class UScriptStruct : public UStruct
-{
-};
-
-class UFunction : public UStruct
-{
-};
-
-class UDelegateFunction : public UFunction
-{
-};
-
-class USparseDelegateFunction : public UDelegateFunction
-{
-};
-
-class UDynamicClass : public UClass
-{
-};
-
-class UPackageMap : public UObject
-{
-};
-
-class UEnum : public UField
-{
-};
-
-class ULinkerPlaceholderClass : public UClass
-{
-};
-
-class ULinkerPlaceholderExportObject : public UObject
-{
-};
-
-class ULinkerPlaceholderFunction : public UFunction
-{
-};
-
-class UMetaData : public UObject
-{
-};
-
-class UObjectRedirector : public UObject
-{
-};
-
-class UProperty : public UField
-{
-};
-
-class UEnumProperty : public UProperty
-{
-};
-
-class UArrayProperty : public UProperty
-{
-};
-
-class UObjectPropertyBase : public UProperty
-{
-};
-
-class UBoolProperty : public UProperty
-{
-};
-
-class UNumericProperty : public UProperty
-{
-};
-
-class UByteProperty : public UNumericProperty
-{
-};
-
-class UObjectProperty : public UObjectPropertyBase
-{
-};
-
-class UClassProperty : public UObjectProperty
-{
-};
-
-class UDelegateProperty : public UProperty
-{
-};
-
-class UDoubleProperty : public UNumericProperty
-{
-};
-
-class UFloatProperty : public UNumericProperty
-{
-};
-
-class UIntProperty : public UNumericProperty
-{
-};
-
-class UInt8Property : public UNumericProperty
-{
-};
-
-class UInt16Property : public UNumericProperty
-{
-};
-
-class UInt64Property : public UNumericProperty
-{
-};
-
-class UInterfaceProperty : public UProperty
-{
-};
-
-class ULazyObjectProperty : public UObjectPropertyBase
-{
-};
-
-class UMapProperty : public UProperty
-{
-};
-
-class UMulticastDelegateProperty : public UProperty
-{
-};
-
-class UMulticastInlineDelegateProperty : public UMulticastDelegateProperty
-{
-};
-
-class UMulticastSparseDelegateProperty : public UMulticastDelegateProperty
-{
-};
-
-class UNameProperty : public UProperty
-{
-};
-
-class USetProperty : public UProperty
-{
-};
-
-class USoftObjectProperty : public UObjectPropertyBase
-{
-};
-
-class USoftClassProperty : public USoftObjectProperty
-{
-};
-
-class UStrProperty : public UProperty
-{
-};
-
-class UStructProperty : public UProperty
-{
-};
-
-class UUInt16Property : public UNumericProperty
-{
-};
-
-class UUInt32Property : public UNumericProperty
-{
-};
-
-class UUInt64Property : public UNumericProperty
-{
-};
-
-class UWeakObjectProperty : public UObjectPropertyBase
-{
-};
-
-class UTextProperty : public UProperty
-{
-};
-
-class UPropertyWrapper : public UObject
-{
-};
-
-class UMulticastDelegatePropertyWrapper : public UPropertyWrapper
-{
-};
-
-class UMulticastInlineDelegatePropertyWrapper : public UMulticastDelegatePropertyWrapper
-{
-};
-
-struct FInterpCurvePointVector
-{
-    float InVal;
-    FVector OutVal;
-    FVector ArriveTangent;
-    FVector LeaveTangent;
-    TEnumAsByte<EInterpCurveMode> InterpMode;
-
-};
-
-struct FInterpCurveVector
-{
-    TArray<FInterpCurvePointVector> Points;
-    bool bIsLooped;
-    float LoopKeyOffset;
-
-};
-
-struct FTimecode
-{
-    int32 Hours;
-    int32 Minutes;
-    int32 Seconds;
-    int32 Frames;
-    bool bDropFrameFormat;
-
-};
-
 struct FARFilter
 {
     TArray<FName> PackageNames;
@@ -541,16 +16,205 @@ struct FARFilter
 
 };
 
-struct FPrimaryAssetType
+struct FAssetBundleData
 {
-    FName Name;
+    TArray<FAssetBundleEntry> Bundles;
 
 };
 
-struct FPrimaryAssetId
+struct FAssetBundleEntry
 {
-    FPrimaryAssetType PrimaryAssetType;
-    FName PrimaryAssetName;
+    FName BundleName;
+    TArray<FSoftObjectPath> BundleAssets;
+
+};
+
+struct FAssetData
+{
+    FName ObjectPath;
+    FName PackageName;
+    FName PackagePath;
+    FName AssetName;
+    FName AssetClass;
+
+};
+
+struct FAutomationEvent
+{
+    EAutomationEventType Type;
+    FString Message;
+    FString Context;
+    FGuid Artifact;
+
+};
+
+struct FAutomationExecutionEntry
+{
+    FAutomationEvent Event;
+    FString Filename;
+    int32 LineNumber;
+    FDateTime Timestamp;
+
+};
+
+struct FBox
+{
+    FVector Min;
+    FVector Max;
+    uint8 IsValid;
+
+};
+
+struct FBox2D
+{
+    FVector2D Min;
+    FVector2D Max;
+    uint8 bIsValid;
+
+};
+
+struct FBoxSphereBounds
+{
+    FVector Origin;
+    FVector BoxExtent;
+    float SphereRadius;
+
+};
+
+struct FColor
+{
+    uint8 B;
+    uint8 G;
+    uint8 R;
+    uint8 A;
+
+};
+
+struct FDateTime
+{
+};
+
+struct FDefault__ScriptStruct
+{
+};
+
+struct FFallbackStruct
+{
+};
+
+struct FFloatInterval
+{
+    float Min;
+    float Max;
+
+};
+
+struct FFloatRange
+{
+    FFloatRangeBound LowerBound;
+    FFloatRangeBound UpperBound;
+
+};
+
+struct FFloatRangeBound
+{
+    TEnumAsByte<ERangeBoundTypes::Type> Type;
+    float Value;
+
+};
+
+struct FFrameNumber
+{
+    int32 Value;
+
+};
+
+struct FFrameNumberRange
+{
+    FFrameNumberRangeBound LowerBound;
+    FFrameNumberRangeBound UpperBound;
+
+};
+
+struct FFrameNumberRangeBound
+{
+    TEnumAsByte<ERangeBoundTypes::Type> Type;
+    FFrameNumber Value;
+
+};
+
+struct FFrameRate
+{
+    int32 Numerator;
+    int32 Denominator;
+
+};
+
+struct FFrameTime
+{
+    FFrameNumber FrameNumber;
+    float SubFrame;
+
+};
+
+struct FGuid
+{
+    int32 A;
+    int32 B;
+    int32 C;
+    int32 D;
+
+};
+
+struct FInt32Interval
+{
+    int32 Min;
+    int32 Max;
+
+};
+
+struct FInt32Range
+{
+    FInt32RangeBound LowerBound;
+    FInt32RangeBound UpperBound;
+
+};
+
+struct FInt32RangeBound
+{
+    TEnumAsByte<ERangeBoundTypes::Type> Type;
+    int32 Value;
+
+};
+
+struct FIntPoint
+{
+    int32 X;
+    int32 Y;
+
+};
+
+struct FIntVector
+{
+    int32 X;
+    int32 Y;
+    int32 Z;
+
+};
+
+struct FInterpCurveFloat
+{
+    TArray<FInterpCurvePointFloat> Points;
+    bool bIsLooped;
+    float LoopKeyOffset;
+
+};
+
+struct FInterpCurveLinearColor
+{
+    TArray<FInterpCurvePointLinearColor> Points;
+    bool bIsLooped;
+    float LoopKeyOffset;
 
 };
 
@@ -564,39 +228,6 @@ struct FInterpCurvePointFloat
 
 };
 
-struct FInterpCurveFloat
-{
-    TArray<FInterpCurvePointFloat> Points;
-    bool bIsLooped;
-    float LoopKeyOffset;
-
-};
-
-struct FTwoVectors
-{
-    FVector v1;
-    FVector v2;
-
-};
-
-struct FInterpCurvePointTwoVectors
-{
-    float InVal;
-    FTwoVectors OutVal;
-    FTwoVectors ArriveTangent;
-    FTwoVectors LeaveTangent;
-    TEnumAsByte<EInterpCurveMode> InterpMode;
-
-};
-
-struct FInterpCurveTwoVectors
-{
-    TArray<FInterpCurvePointTwoVectors> Points;
-    bool bIsLooped;
-    float LoopKeyOffset;
-
-};
-
 struct FInterpCurvePointLinearColor
 {
     float InVal;
@@ -604,27 +235,6 @@ struct FInterpCurvePointLinearColor
     FLinearColor ArriveTangent;
     FLinearColor LeaveTangent;
     TEnumAsByte<EInterpCurveMode> InterpMode;
-
-};
-
-struct FInterpCurveLinearColor
-{
-    TArray<FInterpCurvePointLinearColor> Points;
-    bool bIsLooped;
-    float LoopKeyOffset;
-
-};
-
-struct FPolyglotTextData
-{
-    ELocalizedTextSourceCategory Category;
-    FString NativeCulture;
-    FString Namespace;
-    FString Key;
-    FString NativeString;
-    TMap<class FString, class FString> LocalizedStrings;
-    bool bIsMinimalPatch;
-    FText CachedText;
 
 };
 
@@ -638,6 +248,36 @@ struct FInterpCurvePointQuat
 
 };
 
+struct FInterpCurvePointTwoVectors
+{
+    float InVal;
+    FTwoVectors OutVal;
+    FTwoVectors ArriveTangent;
+    FTwoVectors LeaveTangent;
+    TEnumAsByte<EInterpCurveMode> InterpMode;
+
+};
+
+struct FInterpCurvePointVector
+{
+    float InVal;
+    FVector OutVal;
+    FVector ArriveTangent;
+    FVector LeaveTangent;
+    TEnumAsByte<EInterpCurveMode> InterpMode;
+
+};
+
+struct FInterpCurvePointVector2D
+{
+    float InVal;
+    FVector2D OutVal;
+    FVector2D ArriveTangent;
+    FVector2D LeaveTangent;
+    TEnumAsByte<EInterpCurveMode> InterpMode;
+
+};
+
 struct FInterpCurveQuat
 {
     TArray<FInterpCurvePointQuat> Points;
@@ -646,8 +286,28 @@ struct FInterpCurveQuat
 
 };
 
-struct FDefault__ScriptStruct
+struct FInterpCurveTwoVectors
 {
+    TArray<FInterpCurvePointTwoVectors> Points;
+    bool bIsLooped;
+    float LoopKeyOffset;
+
+};
+
+struct FInterpCurveVector
+{
+    TArray<FInterpCurvePointVector> Points;
+    bool bIsLooped;
+    float LoopKeyOffset;
+
+};
+
+struct FInterpCurveVector2D
+{
+    TArray<FInterpCurvePointVector2D> Points;
+    bool bIsLooped;
+    float LoopKeyOffset;
+
 };
 
 struct FJoinabilitySettings
@@ -659,6 +319,36 @@ struct FJoinabilitySettings
     bool bJoinViaPresenceFriendsOnly;
     int32 MaxPlayers;
     int32 MaxPartySize;
+
+};
+
+struct FLinearColor
+{
+    float R;
+    float G;
+    float B;
+    float A;
+
+};
+
+struct FMatrix
+{
+    FPlane XPlane;
+    FPlane YPlane;
+    FPlane ZPlane;
+    FPlane WPlane;
+
+};
+
+struct FOrientedBox
+{
+    FVector Center;
+    FVector AxisX;
+    FVector AxisY;
+    FVector AxisZ;
+    float ExtentX;
+    float ExtentY;
+    float ExtentZ;
 
 };
 
@@ -684,50 +374,77 @@ struct FPackedRGBA16N
 
 };
 
-struct FOrientedBox
+struct FPlane : public FVector
 {
-    FVector Center;
-    FVector AxisX;
-    FVector AxisY;
-    FVector AxisZ;
-    float ExtentX;
-    float ExtentY;
-    float ExtentZ;
+    float W;
 
 };
 
-struct FFallbackStruct
+struct FPolyglotTextData
 {
-};
-
-struct FAutomationEvent
-{
-    EAutomationEventType Type;
-    FString Message;
-    FString Context;
-    FGuid Artifact;
-
-};
-
-struct FAutomationExecutionEntry
-{
-    FAutomationEvent Event;
-    FString Filename;
-    int32 LineNumber;
-    FDateTime Timestamp;
+    ELocalizedTextSourceCategory Category;
+    FString NativeCulture;
+    FString Namespace;
+    FString Key;
+    FString NativeString;
+    TMap<class FString, class FString> LocalizedStrings;
+    bool bIsMinimalPatch;
+    FText CachedText;
 
 };
 
-struct FAssetBundleEntry
+struct FPrimaryAssetId
 {
-    FName BundleName;
-    TArray<FSoftObjectPath> BundleAssets;
+    FPrimaryAssetType PrimaryAssetType;
+    FName PrimaryAssetName;
 
 };
 
-struct FAssetBundleData
+struct FPrimaryAssetType
 {
-    TArray<FAssetBundleEntry> Bundles;
+    FName Name;
+
+};
+
+struct FQualifiedFrameTime
+{
+    FFrameTime Time;
+    FFrameRate Rate;
+
+};
+
+struct FQuat
+{
+    float X;
+    float Y;
+    float Z;
+    float W;
+
+};
+
+struct FRandomStream
+{
+    int32 InitialSeed;
+    int32 Seed;
+
+};
+
+struct FRotator
+{
+    float Pitch;
+    float Yaw;
+    float Roll;
+
+};
+
+struct FSoftClassPath : public FSoftObjectPath
+{
+};
+
+struct FSoftObjectPath
+{
+    FName AssetPathName;
+    FString SubPathString;
 
 };
 
@@ -739,6 +456,87 @@ struct FTestUninitializedScriptStructMembersTest
 
 };
 
+struct FTimecode
+{
+    int32 Hours;
+    int32 Minutes;
+    int32 Seconds;
+    int32 Frames;
+    bool bDropFrameFormat;
+
+};
+
+struct FTimespan
+{
+};
+
+struct FTransform
+{
+    FQuat Rotation;
+    FVector Translation;
+    FVector Scale3D;
+
+};
+
+struct FTwoVectors
+{
+    FVector v1;
+    FVector v2;
+
+};
+
+struct FUniqueNetIdWrapper
+{
+};
+
+struct FVector
+{
+    float X;
+    float Y;
+    float Z;
+
+};
+
+struct FVector2D
+{
+    float X;
+    float Y;
+
+};
+
+struct FVector4
+{
+    float X;
+    float Y;
+    float Z;
+    float W;
+
+};
+
+class IInterface : public UObject
+{
+};
+
+class UArrayProperty : public UProperty
+{
+};
+
+class UBoolProperty : public UProperty
+{
+};
+
+class UByteProperty : public UNumericProperty
+{
+};
+
+class UClass : public UStruct
+{
+};
+
+class UClassProperty : public UObjectProperty
+{
+};
+
 class UDefault__Class
 {
 };
@@ -748,6 +546,208 @@ class UDefault__DynamicClass
 };
 
 class UDefault__LinkerPlaceholderClass
+{
+};
+
+class UDelegateFunction : public UFunction
+{
+};
+
+class UDelegateProperty : public UProperty
+{
+};
+
+class UDoubleProperty : public UNumericProperty
+{
+};
+
+class UDynamicClass : public UClass
+{
+};
+
+class UEnum : public UField
+{
+};
+
+class UEnumProperty : public UProperty
+{
+};
+
+class UField : public UObject
+{
+};
+
+class UFloatProperty : public UNumericProperty
+{
+};
+
+class UFunction : public UStruct
+{
+};
+
+class UGCObjectReferencer : public UObject
+{
+};
+
+class UInt16Property : public UNumericProperty
+{
+};
+
+class UInt64Property : public UNumericProperty
+{
+};
+
+class UInt8Property : public UNumericProperty
+{
+};
+
+class UIntProperty : public UNumericProperty
+{
+};
+
+class UInterfaceProperty : public UProperty
+{
+};
+
+class ULazyObjectProperty : public UObjectPropertyBase
+{
+};
+
+class ULinkerPlaceholderClass : public UClass
+{
+};
+
+class ULinkerPlaceholderExportObject : public UObject
+{
+};
+
+class ULinkerPlaceholderFunction : public UFunction
+{
+};
+
+class UMapProperty : public UProperty
+{
+};
+
+class UMetaData : public UObject
+{
+};
+
+class UMulticastDelegateProperty : public UProperty
+{
+};
+
+class UMulticastDelegatePropertyWrapper : public UPropertyWrapper
+{
+};
+
+class UMulticastInlineDelegateProperty : public UMulticastDelegateProperty
+{
+};
+
+class UMulticastInlineDelegatePropertyWrapper : public UMulticastDelegatePropertyWrapper
+{
+};
+
+class UMulticastSparseDelegateProperty : public UMulticastDelegateProperty
+{
+};
+
+class UNameProperty : public UProperty
+{
+};
+
+class UNumericProperty : public UProperty
+{
+};
+
+class UObject
+{
+
+    void ExecuteUbergraph(int32 EntryPoint);
+};
+
+class UObjectProperty : public UObjectPropertyBase
+{
+};
+
+class UObjectPropertyBase : public UProperty
+{
+};
+
+class UObjectRedirector : public UObject
+{
+};
+
+class UPackage : public UObject
+{
+};
+
+class UPackageMap : public UObject
+{
+};
+
+class UProperty : public UField
+{
+};
+
+class UPropertyWrapper : public UObject
+{
+};
+
+class UScriptStruct : public UStruct
+{
+};
+
+class USetProperty : public UProperty
+{
+};
+
+class USoftClassProperty : public USoftObjectProperty
+{
+};
+
+class USoftObjectProperty : public UObjectPropertyBase
+{
+};
+
+class USparseDelegateFunction : public UDelegateFunction
+{
+};
+
+class UStrProperty : public UProperty
+{
+};
+
+class UStruct : public UField
+{
+};
+
+class UStructProperty : public UProperty
+{
+};
+
+class UTextBuffer : public UObject
+{
+};
+
+class UTextProperty : public UProperty
+{
+};
+
+class UUInt16Property : public UNumericProperty
+{
+};
+
+class UUInt32Property : public UNumericProperty
+{
+};
+
+class UUInt64Property : public UNumericProperty
+{
+};
+
+class UWeakObjectProperty : public UObjectPropertyBase
 {
 };
 

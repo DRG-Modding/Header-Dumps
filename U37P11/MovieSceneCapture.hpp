@@ -3,30 +3,21 @@
 
 #include "MovieSceneCapture_enums.hpp"
 
-class UMovieSceneCaptureProtocolBase : public UObject
+struct FCaptureResolution
 {
-    EMovieSceneCaptureProtocolState State;
-
-    bool IsCapturing();
-    EMovieSceneCaptureProtocolState GetState();
-};
-
-class UMovieSceneAudioCaptureProtocolBase : public UMovieSceneCaptureProtocolBase
-{
-};
-
-class UNullAudioCaptureProtocol : public UMovieSceneAudioCaptureProtocolBase
-{
-};
-
-class UMasterAudioSubmixCaptureProtocol : public UMovieSceneAudioCaptureProtocolBase
-{
-    FString Filename;
+    int32 ResX;
+    int32 ResY;
 
 };
 
-class UMovieSceneImageCaptureProtocolBase : public UMovieSceneCaptureProtocolBase
+struct FCapturedPixels
 {
+};
+
+struct FCapturedPixelsID
+{
+    TMap<class FName, class FName> Identifiers;
+
 };
 
 struct FCompositionGraphCapturePasses
@@ -35,59 +26,12 @@ struct FCompositionGraphCapturePasses
 
 };
 
-class UCompositionGraphCaptureProtocol : public UMovieSceneImageCaptureProtocolBase
+struct FFrameMetrics
 {
-    FCompositionGraphCapturePasses IncludeRenderPasses;
-    bool bCaptureFramesInHDR;
-    int32 HDRCompressionQuality;
-    TEnumAsByte<EHDRCaptureGamut> CaptureGamut;
-    FSoftObjectPath PostProcessingMaterial;
-    bool bDisableScreenPercentage;
-    class UMaterialInterface* PostProcessingMaterialPtr;
-
-};
-
-class UFrameGrabberProtocol : public UMovieSceneImageCaptureProtocolBase
-{
-};
-
-class UImageSequenceProtocol : public UFrameGrabberProtocol
-{
-};
-
-class UCompressedImageSequenceProtocol : public UImageSequenceProtocol
-{
-    int32 CompressionQuality;
-
-};
-
-class UImageSequenceProtocol_BMP : public UImageSequenceProtocol
-{
-};
-
-class UImageSequenceProtocol_PNG : public UCompressedImageSequenceProtocol
-{
-};
-
-class UImageSequenceProtocol_JPG : public UCompressedImageSequenceProtocol
-{
-};
-
-class UImageSequenceProtocol_EXR : public UImageSequenceProtocol
-{
-    bool bCompressed;
-    TEnumAsByte<EHDRCaptureGamut> CaptureGamut;
-
-};
-
-class IMovieSceneCaptureInterface : public IInterface
-{
-};
-
-struct FCaptureResolution
-{
-    int32 ResX;
-    int32 ResY;
+    float TotalElapsedTime;
+    float FrameDelta;
+    int32 FrameNumber;
+    int32 NumDroppedFrames;
 
 };
 
@@ -117,6 +61,72 @@ struct FMovieSceneCaptureSettings
 
 };
 
+class IMovieSceneCaptureInterface : public IInterface
+{
+};
+
+class UCompositionGraphCaptureProtocol : public UMovieSceneImageCaptureProtocolBase
+{
+    FCompositionGraphCapturePasses IncludeRenderPasses;
+    bool bCaptureFramesInHDR;
+    int32 HDRCompressionQuality;
+    TEnumAsByte<EHDRCaptureGamut> CaptureGamut;
+    FSoftObjectPath PostProcessingMaterial;
+    bool bDisableScreenPercentage;
+    class UMaterialInterface* PostProcessingMaterialPtr;
+
+};
+
+class UCompressedImageSequenceProtocol : public UImageSequenceProtocol
+{
+    int32 CompressionQuality;
+
+};
+
+class UFrameGrabberProtocol : public UMovieSceneImageCaptureProtocolBase
+{
+};
+
+class UImageSequenceProtocol : public UFrameGrabberProtocol
+{
+};
+
+class UImageSequenceProtocol_BMP : public UImageSequenceProtocol
+{
+};
+
+class UImageSequenceProtocol_EXR : public UImageSequenceProtocol
+{
+    bool bCompressed;
+    TEnumAsByte<EHDRCaptureGamut> CaptureGamut;
+
+};
+
+class UImageSequenceProtocol_JPG : public UCompressedImageSequenceProtocol
+{
+};
+
+class UImageSequenceProtocol_PNG : public UCompressedImageSequenceProtocol
+{
+};
+
+class ULevelCapture : public UMovieSceneCapture
+{
+    bool bAutoStartCapture;
+    FGuid PrerequisiteActorId;
+
+};
+
+class UMasterAudioSubmixCaptureProtocol : public UMovieSceneAudioCaptureProtocolBase
+{
+    FString Filename;
+
+};
+
+class UMovieSceneAudioCaptureProtocolBase : public UMovieSceneCaptureProtocolBase
+{
+};
+
 class UMovieSceneCapture : public UObject
 {
     FSoftClassPath ImageCaptureProtocolType;
@@ -135,13 +145,6 @@ class UMovieSceneCapture : public UObject
     class UMovieSceneCaptureProtocolBase* GetAudioCaptureProtocol();
 };
 
-class ULevelCapture : public UMovieSceneCapture
-{
-    bool bAutoStartCapture;
-    FGuid PrerequisiteActorId;
-
-};
-
 class UMovieSceneCaptureEnvironment : public UObject
 {
 
@@ -152,23 +155,20 @@ class UMovieSceneCaptureEnvironment : public UObject
     class UMovieSceneAudioCaptureProtocolBase* FindAudioCaptureProtocol();
 };
 
-struct FCapturedPixelsID
+class UMovieSceneCaptureProtocolBase : public UObject
 {
-    TMap<class FName, class FName> Identifiers;
+    EMovieSceneCaptureProtocolState State;
 
+    bool IsCapturing();
+    EMovieSceneCaptureProtocolState GetState();
 };
 
-struct FCapturedPixels
+class UMovieSceneImageCaptureProtocolBase : public UMovieSceneCaptureProtocolBase
 {
 };
 
-struct FFrameMetrics
+class UNullAudioCaptureProtocol : public UMovieSceneAudioCaptureProtocolBase
 {
-    float TotalElapsedTime;
-    float FrameDelta;
-    int32 FrameNumber;
-    int32 NumDroppedFrames;
-
 };
 
 class UUserDefinedCaptureProtocol : public UMovieSceneImageCaptureProtocolBase

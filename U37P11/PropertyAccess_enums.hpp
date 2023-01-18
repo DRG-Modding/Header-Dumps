@@ -28,14 +28,6 @@ enum class EPropertyAccessCopyType {
     EPropertyAccessCopyType_MAX = 17,
 };
 
-enum class EPropertyAccessObjectType {
-    None = 0,
-    Object = 1,
-    WeakObject = 2,
-    SoftObject = 3,
-    EPropertyAccessObjectType_MAX = 4,
-};
-
 enum class EPropertyAccessIndirectionType {
     Offset = 0,
     Object = 1,
@@ -43,5 +35,13 @@ enum class EPropertyAccessIndirectionType {
     ScriptFunction = 3,
     NativeFunction = 4,
     EPropertyAccessIndirectionType_MAX = 5,
+};
+
+enum class EPropertyAccessObjectType {
+    None = 0,
+    Object = 1,
+    WeakObject = 2,
+    SoftObject = 3,
+    EPropertyAccessObjectType_MAX = 4,
 };
 

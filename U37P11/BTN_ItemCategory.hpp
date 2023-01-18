@@ -18,7 +18,7 @@ class UBTN_ItemCategory_C : public UUserWidget
     class UTextBlock* TEXT_Acquired;
     class UOverlay* ToolTip;
     class UImage* TooltipArrow;
-    class UBorder* TooltipBox;
+    class UBorder* ToolTipBox;
     class UBorder* TooltipBracket;
     float IconSize;
     class UTexture2D* Texture;

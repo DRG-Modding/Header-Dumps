@@ -3,9 +3,327 @@
 
 #include "AIModule_enums.hpp"
 
+struct FAIDamageEvent
+{
+    float Amount;
+    FVector Location;
+    FVector HitLocation;
+    class AActor* DamagedActor;
+    class AActor* Instigator;
+    FName Tag;
+
+};
+
+struct FAIDataProviderBoolValue : public FAIDataProviderTypedValue
+{
+    bool DefaultValue;
+
+};
+
+struct FAIDataProviderFloatValue : public FAIDataProviderTypedValue
+{
+    float DefaultValue;
+
+};
+
+struct FAIDataProviderIntValue : public FAIDataProviderTypedValue
+{
+    int32 DefaultValue;
+
+};
+
+struct FAIDataProviderStructValue : public FAIDataProviderValue
+{
+};
+
+struct FAIDataProviderTypedValue : public FAIDataProviderValue
+{
+    UClass* PropertyType;
+
+};
+
+struct FAIDataProviderValue
+{
+    class UAIDataProvider* DataBinding;
+    FName DataField;
+
+};
+
+struct FAIDynamicParam
+{
+    FName ParamName;
+    EAIParamType ParamType;
+    float Value;
+    FBlackboardKeySelector BBKey;
+
+};
+
+struct FAIMoveRequest
+{
+    class AActor* GoalActor;
+
+};
+
+struct FAINoiseEvent
+{
+    FVector NoiseLocation;
+    float Loudness;
+    float MaxRange;
+    class AActor* Instigator;
+    FName Tag;
+
+};
+
+struct FAIPredictionEvent
+{
+    class AActor* Requestor;
+    class AActor* PredictedActor;
+
+};
+
 struct FAIRequestID
 {
     uint32 RequestID;
+
+};
+
+struct FAISenseAffiliationFilter
+{
+    uint8 bDetectEnemies;
+    uint8 bDetectNeutrals;
+    uint8 bDetectFriendlies;
+
+};
+
+struct FAISightEvent
+{
+    class AActor* SeenActor;
+    class AActor* Observer;
+
+};
+
+struct FAIStimulus
+{
+    float Age;
+    float ExpirationAge;
+    float Strength;
+    FVector StimulusLocation;
+    FVector ReceiverLocation;
+    FName Tag;
+    uint8 bSuccessfullySensed;
+
+};
+
+struct FAITeamStimulusEvent
+{
+    class AActor* Broadcaster;
+    class AActor* enemy;
+
+};
+
+struct FAITouchEvent
+{
+    class AActor* TouchReceiver;
+    class AActor* OtherActor;
+
+};
+
+struct FActorPerceptionBlueprintInfo
+{
+    class AActor* Target;
+    TArray<FAIStimulus> LastSensedStimuli;
+    uint8 bIsHostile;
+
+};
+
+struct FActorPerceptionUpdateInfo
+{
+    int32 TargetId;
+    TWeakObjectPtr<class AActor> Target;
+    FAIStimulus Stimulus;
+
+};
+
+struct FBTCompositeChild
+{
+    class UBTCompositeNode* ChildComposite;
+    class UBTTaskNode* ChildTask;
+    TArray<class UBTDecorator*> Decorators;
+    TArray<FBTDecoratorLogic> DecoratorOps;
+
+};
+
+struct FBTDecoratorLogic
+{
+    TEnumAsByte<EBTDecoratorLogic::Type> Operation;
+    uint16 Number;
+
+};
+
+struct FBehaviorTreeTemplateInfo
+{
+    class UBehaviorTree* Asset;
+    class UBTCompositeNode* Template;
+
+};
+
+struct FBlackboardEntry
+{
+    FName EntryName;
+    class UBlackboardKeyType* KeyType;
+    uint8 bInstanceSynced;
+
+};
+
+struct FBlackboardKeySelector
+{
+    TArray<class UBlackboardKeyType*> AllowedTypes;
+    FName SelectedKeyName;
+    TSubclassOf<class UBlackboardKeyType> SelectedKeyType;
+    uint8 SelectedKeyID;
+    uint8 bNoneIsAllowedValue;
+
+};
+
+struct FCrowdAvoidanceConfig
+{
+    float VelocityBias;
+    float DesiredVelocityWeight;
+    float CurrentVelocityWeight;
+    float SideBiasWeight;
+    float ImpactTimeWeight;
+    float ImpactTimeRange;
+    uint8 CustomPatternIdx;
+    uint8 AdaptiveDivisions;
+    uint8 AdaptiveRings;
+    uint8 AdaptiveDepth;
+
+};
+
+struct FCrowdAvoidanceSamplingPattern
+{
+    TArray<float> Angles;
+    TArray<float> Radii;
+
+};
+
+struct FDefault__AISenseBlueprintListener
+{
+};
+
+struct FEQSParametrizedQueryExecutionRequest
+{
+    class UEnvQuery* QueryTemplate;
+    TArray<FAIDynamicParam> QueryConfig;
+    FBlackboardKeySelector EQSQueryBlackboardKey;
+    TEnumAsByte<EEnvQueryRunMode::Type> RunMode;
+    uint8 bUseBBKeyForQueryTemplate;
+
+};
+
+struct FEnvDirection
+{
+    TSubclassOf<class UEnvQueryContext> LineFrom;
+    TSubclassOf<class UEnvQueryContext> LineTo;
+    TSubclassOf<class UEnvQueryContext> Rotation;
+    TEnumAsByte<EEnvDirection::Type> DirMode;
+
+};
+
+struct FEnvNamedValue
+{
+    FName ParamName;
+    EAIParamType ParamType;
+    float Value;
+
+};
+
+struct FEnvOverlapData
+{
+    float ExtentX;
+    float ExtentY;
+    float ExtentZ;
+    FVector ShapeOffset;
+    TEnumAsByte<ECollisionChannel> OverlapChannel;
+    TEnumAsByte<EEnvOverlapShape::Type> OverlapShape;
+    uint8 bOnlyBlockingHits;
+    uint8 bOverlapComplex;
+    uint8 bSkipOverlapQuerier;
+
+};
+
+struct FEnvQueryInstanceCache
+{
+    class UEnvQuery* Template;
+
+};
+
+struct FEnvQueryRequest
+{
+    class UEnvQuery* QueryTemplate;
+    class UObject* Owner;
+    class UWorld* World;
+
+};
+
+struct FEnvQueryResult
+{
+    TSubclassOf<class UEnvQueryItemType> ItemType;
+    int32 OptionIndex;
+    int32 QueryID;
+
+};
+
+struct FEnvTraceData
+{
+    int32 VersionNum;
+    TSubclassOf<class UNavigationQueryFilter> NavigationFilter;
+    float ProjectDown;
+    float ProjectUp;
+    float ExtentX;
+    float ExtentY;
+    float ExtentZ;
+    float PostProjectionVerticalOffset;
+    TEnumAsByte<ETraceTypeQuery> TraceChannel;
+    TEnumAsByte<ECollisionChannel> SerializedChannel;
+    TEnumAsByte<EEnvTraceShape::Type> TraceShape;
+    TEnumAsByte<EEnvQueryTrace::Type> TraceMode;
+    uint8 bTraceComplex;
+    uint8 bOnlyBlockingHits;
+    uint8 bCanTraceOnNavMesh;
+    uint8 bCanTraceOnGeometry;
+    uint8 bCanDisableTrace;
+    uint8 bCanProjectDown;
+
+};
+
+struct FGenericTeamId
+{
+    uint8 TeamID;
+
+};
+
+struct FIntervalCountdown
+{
+    float Interval;
+
+};
+
+struct FPawnActionEvent
+{
+    class UPawnAction* Action;
+
+};
+
+struct FPawnActionStack
+{
+    class UPawnAction* TopAction;
+
+};
+
+struct FRecastGraphWrapper
+{
+    class ARecastNavMesh* RecastNavMeshActor;
 
 };
 
@@ -51,95 +369,76 @@ class AAIController : public AController
     void ClaimTaskResource(TSubclassOf<class UGameplayTaskResource> ResourceClass);
 };
 
-class UBTNode : public UObject
-{
-    FString NodeName;
-    class UBehaviorTree* TreeAsset;
-    class UBTCompositeNode* ParentNode;
-
-};
-
-class UBTAuxiliaryNode : public UBTNode
+class ADetourCrowdAIController : public AAIController
 {
 };
 
-class UBTDecorator : public UBTAuxiliaryNode
+class AEQSTestingPawn : public ACharacter
 {
-    uint8 bInverseCondition;
-    TEnumAsByte<EBTFlowAbortMode::Type> FlowAbortMode;
+    class UEnvQuery* QueryTemplate;
+    TArray<FEnvNamedValue> QueryParams;
+    TArray<FAIDynamicParam> QueryConfig;
+    float TimeLimitPerStep;
+    int32 StepToDebugDraw;
+    EEnvQueryHightlightMode HighlightMode;
+    uint8 bDrawLabels;
+    uint8 bDrawFailedItems;
+    uint8 bReRunQueryOnlyOnFinishedMove;
+    uint8 bShouldBeVisibleInGame;
+    uint8 bTickDuringGame;
+    TEnumAsByte<EEnvQueryRunMode::Type> QueryingMode;
+    FNavAgentProperties NavAgentProperties;
 
 };
 
-struct FBlackboardKeySelector
+class AGridPathAIController : public AAIController
 {
-    TArray<class UBlackboardKeyType*> AllowedTypes;
-    FName SelectedKeyName;
-    TSubclassOf<class UBlackboardKeyType> SelectedKeyType;
-    uint8 SelectedKeyID;
-    uint8 bNoneIsAllowedValue;
-
 };
 
-class UBTDecorator_BlackboardBase : public UBTDecorator
+class ANavLinkProxy : public AActor
 {
-    FBlackboardKeySelector BlackboardKey;
+    TArray<FNavigationLink> PointLinks;
+    TArray<FNavigationSegmentLink> SegmentLinks;
+    class UNavLinkCustomComponent* SmartLinkComp;
+    bool bSmartLinkIsRelevant;
+    FNavLinkProxyOnSmartLinkReached OnSmartLinkReached;
+    void SmartLinkReachedSignature(class AActor* MovingActor, const FVector& DestinationPoint);
 
+    void SetSmartLinkEnabled(bool bEnabled);
+    void ResumePathFollowing(class AActor* Agent);
+    void ReceiveSmartLinkReached(class AActor* Agent, const FVector& Destination);
+    bool IsSmartLinkEnabled();
+    bool HasMovingAgents();
 };
 
-class UBTService : public UBTAuxiliaryNode
+class IAIPerceptionListenerInterface : public IInterface
 {
-    float Interval;
-    float RandomDeviation;
-    uint8 bCallTickOnSearchStart;
-    uint8 bRestartTimerOnEachActivation;
-
 };
 
-class UBTTaskNode : public UBTNode
+class IAIResourceInterface : public IInterface
 {
-    TArray<class UBTService*> Services;
-    uint8 bIgnoreRestartSelf;
-
 };
 
-class UBTTask_BlackboardBase : public UBTTaskNode
+class IAISightTargetInterface : public IInterface
 {
-    FBlackboardKeySelector BlackboardKey;
-
 };
 
-struct FAIStimulus
+class IBlackboardAssetProvider : public IInterface
 {
-    float Age;
-    float ExpirationAge;
-    float Strength;
-    FVector StimulusLocation;
-    FVector ReceiverLocation;
-    FName Tag;
-    uint8 bSuccessfullySensed;
 
+    class UBlackboardData* GetBlackboardAsset();
 };
 
-class UBrainComponent : public UActorComponent
+class ICrowdAgentInterface : public IInterface
 {
-    class UBlackboardComponent* BlackboardComp;
-    class AAIController* AIOwner;
-
-    void StopLogic(FString reason);
-    void StartLogic();
-    void RestartLogic();
-    bool IsRunning();
-    bool IsPaused();
 };
 
-class UBehaviorTreeComponent : public UBrainComponent
+class IEQSQueryResultSourceInterface : public IInterface
 {
-    TArray<class UBTNode*> NodeInstances;
-    class UBehaviorTree* DefaultBehaviorTreeAsset;
+};
 
-    void SetDynamicSubtree(FGameplayTag InjectTag, class UBehaviorTree* BehaviorAsset);
-    float GetTagCooldownEndTime(FGameplayTag CooldownTag);
-    void AddCooldownTagDuration(FGameplayTag CooldownTag, float CooldownDuration, bool bAddToExistingDuration);
+class IGenericTeamAgentInterface : public IInterface
+{
 };
 
 class UAIAsyncTaskBlueprintProxy : public UObject
@@ -198,22 +497,6 @@ class UAIHotSpotManager : public UObject
 {
 };
 
-struct FActorPerceptionBlueprintInfo
-{
-    class AActor* Target;
-    TArray<FAIStimulus> LastSensedStimuli;
-    uint8 bIsHostile;
-
-};
-
-struct FActorPerceptionUpdateInfo
-{
-    int32 TargetId;
-    TWeakObjectPtr<class AActor> Target;
-    FAIStimulus Stimulus;
-
-};
-
 class UAIPerceptionComponent : public UActorComponent
 {
     TArray<class UAISenseConfig*> SensesConfig;
@@ -238,10 +521,6 @@ class UAIPerceptionComponent : public UActorComponent
     void ForgetAll();
 };
 
-class IAIPerceptionListenerInterface : public IInterface
-{
-};
-
 class UAIPerceptionStimuliSourceComponent : public UActorComponent
 {
     uint8 bAutoRegisterAsSource;
@@ -251,12 +530,6 @@ class UAIPerceptionStimuliSourceComponent : public UActorComponent
     void UnregisterFromPerceptionSystem();
     void RegisterWithPerceptionSystem();
     void RegisterForSense(TSubclassOf<class UAISense> SenseClass);
-};
-
-class UAISubsystem : public UObject
-{
-    class UAISystem* AISystem;
-
 };
 
 class UAIPerceptionSystem : public UAISubsystem
@@ -271,15 +544,11 @@ class UAIPerceptionSystem : public UAISubsystem
     TSubclassOf<class UAISense> GetSenseClassForStimulus(class UObject* WorldContextObject, const FAIStimulus& Stimulus);
 };
 
-class IAIResourceInterface : public IInterface
+class UAIResource_Logic : public UGameplayTaskResource
 {
 };
 
 class UAIResource_Movement : public UGameplayTaskResource
-{
-};
-
-class UAIResource_Logic : public UGameplayTaskResource
 {
 };
 
@@ -290,109 +559,6 @@ class UAISense : public UObject
     uint8 bWantsNewPawnNotification;
     uint8 bAutoRegisterAllPawnsAsSources;
     class UAIPerceptionSystem* PerceptionSystemInstance;
-
-};
-
-class UAISense_Blueprint : public UAISense
-{
-    TSubclassOf<class UUserDefinedStruct> ListenerDataType;
-    TArray<class UAIPerceptionComponent*> ListenerContainer;
-    TArray<class UAISenseEvent*> UnprocessedEvents;
-
-    float OnUpdate(const TArray<class UAISenseEvent*>& EventsToProcess);
-    void OnListenerUpdated(class AActor* ActorListener, class UAIPerceptionComponent* PerceptionComponent);
-    void OnListenerUnregistered(class AActor* ActorListener, class UAIPerceptionComponent* PerceptionComponent);
-    void OnListenerRegistered(class AActor* ActorListener, class UAIPerceptionComponent* PerceptionComponent);
-    void K2_OnNewPawn(class APawn* NewPawn);
-    void GetAllListenerComponents(TArray<class UAIPerceptionComponent*>& ListenerComponents);
-    void GetAllListenerActors(TArray<class AActor*>& ListenerActors);
-};
-
-struct FAIDamageEvent
-{
-    float Amount;
-    FVector Location;
-    FVector HitLocation;
-    class AActor* DamagedActor;
-    class AActor* Instigator;
-    FName Tag;
-
-};
-
-class UAISense_Damage : public UAISense
-{
-    TArray<FAIDamageEvent> RegisteredEvents;
-
-    void ReportDamageEvent(class UObject* WorldContextObject, class AActor* DamagedActor, class AActor* Instigator, float damageAmount, FVector EventLocation, FVector HitLocation, FName Tag);
-};
-
-struct FAINoiseEvent
-{
-    FVector NoiseLocation;
-    float Loudness;
-    float MaxRange;
-    class AActor* Instigator;
-    FName Tag;
-
-};
-
-class UAISense_Hearing : public UAISense
-{
-    TArray<FAINoiseEvent> NoiseEvents;
-    float SpeedOfSoundSq;
-
-    void ReportNoiseEvent(class UObject* WorldContextObject, FVector NoiseLocation, float Loudness, class AActor* Instigator, float MaxRange, FName Tag);
-};
-
-struct FAIPredictionEvent
-{
-    class AActor* Requestor;
-    class AActor* PredictedActor;
-
-};
-
-class UAISense_Prediction : public UAISense
-{
-    TArray<FAIPredictionEvent> RegisteredEvents;
-
-    void RequestPawnPredictionEvent(class APawn* Requestor, class AActor* PredictedActor, float PredictionTime);
-    void RequestControllerPredictionEvent(class AAIController* Requestor, class AActor* PredictedActor, float PredictionTime);
-};
-
-class UAISense_Sight : public UAISense
-{
-    int32 MaxTracesPerTick;
-    int32 MinQueriesPerTimeSliceCheck;
-    double MaxTimeSlicePerTick;
-    float HighImportanceQueryDistanceThreshold;
-    float MaxQueryImportance;
-    float SightLimitQueryImportance;
-
-};
-
-struct FAITeamStimulusEvent
-{
-    class AActor* Broadcaster;
-    class AActor* enemy;
-
-};
-
-class UAISense_Team : public UAISense
-{
-    TArray<FAITeamStimulusEvent> RegisteredEvents;
-
-};
-
-struct FAITouchEvent
-{
-    class AActor* TouchReceiver;
-    class AActor* OtherActor;
-
-};
-
-class UAISense_Touch : public UAISense
-{
-    TArray<FAITouchEvent> RegisteredEvents;
 
 };
 
@@ -417,14 +583,6 @@ class UAISenseConfig_Blueprint : public UAISenseConfig
 class UAISenseConfig_Damage : public UAISenseConfig
 {
     TSubclassOf<class UAISense_Damage> Implementation;
-
-};
-
-struct FAISenseAffiliationFilter
-{
-    uint8 bDetectEnemies;
-    uint8 bDetectNeutrals;
-    uint8 bDetectFriendlies;
 
 };
 
@@ -479,8 +637,71 @@ class UAISenseEvent_Hearing : public UAISenseEvent
 
 };
 
-class IAISightTargetInterface : public IInterface
+class UAISense_Blueprint : public UAISense
 {
+    TSubclassOf<class UUserDefinedStruct> ListenerDataType;
+    TArray<class UAIPerceptionComponent*> ListenerContainer;
+    TArray<class UAISenseEvent*> UnprocessedEvents;
+
+    float OnUpdate(const TArray<class UAISenseEvent*>& EventsToProcess);
+    void OnListenerUpdated(class AActor* ActorListener, class UAIPerceptionComponent* PerceptionComponent);
+    void OnListenerUnregistered(class AActor* ActorListener, class UAIPerceptionComponent* PerceptionComponent);
+    void OnListenerRegistered(class AActor* ActorListener, class UAIPerceptionComponent* PerceptionComponent);
+    void K2_OnNewPawn(class APawn* NewPawn);
+    void GetAllListenerComponents(TArray<class UAIPerceptionComponent*>& ListenerComponents);
+    void GetAllListenerActors(TArray<class AActor*>& ListenerActors);
+};
+
+class UAISense_Damage : public UAISense
+{
+    TArray<FAIDamageEvent> RegisteredEvents;
+
+    void ReportDamageEvent(class UObject* WorldContextObject, class AActor* DamagedActor, class AActor* Instigator, float damageAmount, FVector EventLocation, FVector HitLocation, FName Tag);
+};
+
+class UAISense_Hearing : public UAISense
+{
+    TArray<FAINoiseEvent> NoiseEvents;
+    float SpeedOfSoundSq;
+
+    void ReportNoiseEvent(class UObject* WorldContextObject, FVector NoiseLocation, float Loudness, class AActor* Instigator, float MaxRange, FName Tag);
+};
+
+class UAISense_Prediction : public UAISense
+{
+    TArray<FAIPredictionEvent> RegisteredEvents;
+
+    void RequestPawnPredictionEvent(class APawn* Requestor, class AActor* PredictedActor, float PredictionTime);
+    void RequestControllerPredictionEvent(class AAIController* Requestor, class AActor* PredictedActor, float PredictionTime);
+};
+
+class UAISense_Sight : public UAISense
+{
+    int32 MaxTracesPerTick;
+    int32 MinQueriesPerTimeSliceCheck;
+    double MaxTimeSlicePerTick;
+    float HighImportanceQueryDistanceThreshold;
+    float MaxQueryImportance;
+    float SightLimitQueryImportance;
+
+};
+
+class UAISense_Team : public UAISense
+{
+    TArray<FAITeamStimulusEvent> RegisteredEvents;
+
+};
+
+class UAISense_Touch : public UAISense
+{
+    TArray<FAITouchEvent> RegisteredEvents;
+
+};
+
+class UAISubsystem : public UObject
+{
+    class UAISystem* AISystem;
+
 };
 
 class UAISystem : public UAISystemBase
@@ -520,12 +741,6 @@ class UAITask_LockLogic : public UAITask
 {
 };
 
-struct FAIMoveRequest
-{
-    class AActor* GoalActor;
-
-};
-
 class UAITask_MoveTo : public UAITask
 {
     FAITask_MoveToOnRequestFailed OnRequestFailed;
@@ -543,164 +758,8 @@ class UAITask_RunEQS : public UAITask
     class UAITask_RunEQS* RunEQS(class AAIController* Controller, class UEnvQuery* QueryTemplate);
 };
 
-struct FBTDecoratorLogic
+class UBTAuxiliaryNode : public UBTNode
 {
-    TEnumAsByte<EBTDecoratorLogic::Type> Operation;
-    uint16 Number;
-
-};
-
-class UBehaviorTree : public UObject
-{
-    class UBTCompositeNode* RootNode;
-    class UBlackboardData* BlackboardAsset;
-    TArray<class UBTDecorator*> RootDecorators;
-    TArray<FBTDecoratorLogic> RootDecoratorOps;
-
-};
-
-struct FBehaviorTreeTemplateInfo
-{
-    class UBehaviorTree* Asset;
-    class UBTCompositeNode* Template;
-
-};
-
-class UBehaviorTreeManager : public UObject
-{
-    int32 MaxDebuggerSteps;
-    TArray<FBehaviorTreeTemplateInfo> LoadedTemplates;
-    TArray<class UBehaviorTreeComponent*> ActiveComponents;
-
-};
-
-class UBehaviorTreeTypes : public UObject
-{
-};
-
-class IBlackboardAssetProvider : public IInterface
-{
-
-    class UBlackboardData* GetBlackboardAsset();
-};
-
-class UBlackboardComponent : public UActorComponent
-{
-    class UBrainComponent* BrainComp;
-    class UBlackboardData* DefaultBlackboardAsset;
-    class UBlackboardData* BlackboardAsset;
-    TArray<class UBlackboardKeyType*> KeyInstances;
-
-    void SetValueAsVector(const FName& KeyName, FVector VectorValue);
-    void SetValueAsString(const FName& KeyName, FString StringValue);
-    void SetValueAsRotator(const FName& KeyName, FRotator VectorValue);
-    void SetValueAsObject(const FName& KeyName, class UObject* ObjectValue);
-    void SetValueAsName(const FName& KeyName, FName nameValue);
-    void SetValueAsInt(const FName& KeyName, int32 IntValue);
-    void SetValueAsFloat(const FName& KeyName, float FloatValue);
-    void SetValueAsEnum(const FName& KeyName, uint8 EnumValue);
-    void SetValueAsClass(const FName& KeyName, UClass* ClassValue);
-    void SetValueAsBool(const FName& KeyName, bool boolValue);
-    bool IsVectorValueSet(const FName& KeyName);
-    FVector GetValueAsVector(const FName& KeyName);
-    FString GetValueAsString(const FName& KeyName);
-    FRotator GetValueAsRotator(const FName& KeyName);
-    class UObject* GetValueAsObject(const FName& KeyName);
-    FName GetValueAsName(const FName& KeyName);
-    int32 GetValueAsInt(const FName& KeyName);
-    float GetValueAsFloat(const FName& KeyName);
-    uint8 GetValueAsEnum(const FName& KeyName);
-    UClass* GetValueAsClass(const FName& KeyName);
-    bool GetValueAsBool(const FName& KeyName);
-    bool GetRotationFromEntry(const FName& KeyName, FRotator& ResultRotation);
-    bool GetLocationFromEntry(const FName& KeyName, FVector& ResultLocation);
-    void ClearValue(const FName& KeyName);
-};
-
-struct FBlackboardEntry
-{
-    FName EntryName;
-    class UBlackboardKeyType* KeyType;
-    uint8 bInstanceSynced;
-
-};
-
-class UBlackboardData : public UDataAsset
-{
-    class UBlackboardData* Parent;
-    TArray<FBlackboardEntry> Keys;
-    uint8 bHasSynchronizedKeys;
-
-};
-
-class UBlackboardKeyType : public UObject
-{
-};
-
-class UBlackboardKeyType_Bool : public UBlackboardKeyType
-{
-};
-
-class UBlackboardKeyType_Class : public UBlackboardKeyType
-{
-    UClass* BaseClass;
-
-};
-
-class UBlackboardKeyType_Enum : public UBlackboardKeyType
-{
-    class UEnum* EnumType;
-    FString EnumName;
-    uint8 bIsEnumNameValid;
-
-};
-
-class UBlackboardKeyType_Float : public UBlackboardKeyType
-{
-};
-
-class UBlackboardKeyType_Int : public UBlackboardKeyType
-{
-};
-
-class UBlackboardKeyType_Name : public UBlackboardKeyType
-{
-};
-
-class UBlackboardKeyType_NativeEnum : public UBlackboardKeyType
-{
-    FString EnumName;
-    class UEnum* EnumType;
-
-};
-
-class UBlackboardKeyType_Object : public UBlackboardKeyType
-{
-    UClass* BaseClass;
-
-};
-
-class UBlackboardKeyType_Rotator : public UBlackboardKeyType
-{
-};
-
-class UBlackboardKeyType_String : public UBlackboardKeyType
-{
-    FString StringValue;
-
-};
-
-class UBlackboardKeyType_Vector : public UBlackboardKeyType
-{
-};
-
-struct FBTCompositeChild
-{
-    class UBTCompositeNode* ChildComposite;
-    class UBTTaskNode* ChildTask;
-    TArray<class UBTDecorator*> Decorators;
-    TArray<FBTDecoratorLogic> DecoratorOps;
-
 };
 
 class UBTCompositeNode : public UBTNode
@@ -725,6 +784,13 @@ class UBTComposite_SimpleParallel : public UBTCompositeNode
 
 };
 
+class UBTDecorator : public UBTAuxiliaryNode
+{
+    uint8 bInverseCondition;
+    TEnumAsByte<EBTFlowAbortMode::Type> FlowAbortMode;
+
+};
+
 class UBTDecorator_Blackboard : public UBTDecorator_BlackboardBase
 {
     int32 IntValue;
@@ -733,6 +799,12 @@ class UBTDecorator_Blackboard : public UBTDecorator_BlackboardBase
     FString CachedDescription;
     uint8 OperationType;
     TEnumAsByte<EBTBlackboardRestart::Type> NotifyObserver;
+
+};
+
+class UBTDecorator_BlackboardBase : public UBTDecorator
+{
+    FBlackboardKeySelector BlackboardKey;
 
 };
 
@@ -809,25 +881,6 @@ class UBTDecorator_DoesPathExist : public UBTDecorator
 
 class UBTDecorator_ForceSuccess : public UBTDecorator
 {
-};
-
-struct FAIDataProviderValue
-{
-    class UAIDataProvider* DataBinding;
-    FName DataField;
-
-};
-
-struct FAIDataProviderTypedValue : public FAIDataProviderValue
-{
-    UClass* PropertyType;
-
-};
-
-struct FAIDataProviderFloatValue : public FAIDataProviderTypedValue
-{
-    float DefaultValue;
-
 };
 
 class UBTDecorator_IsAtLocation : public UBTDecorator_BlackboardBase
@@ -924,6 +977,23 @@ class UBTFunctionLibrary : public UBlueprintFunctionLibrary
     void ClearBlackboardValue(class UBTNode* NodeOwner, const FBlackboardKeySelector& Key);
 };
 
+class UBTNode : public UObject
+{
+    FString NodeName;
+    class UBehaviorTree* TreeAsset;
+    class UBTCompositeNode* ParentNode;
+
+};
+
+class UBTService : public UBTAuxiliaryNode
+{
+    float Interval;
+    float RandomDeviation;
+    uint8 bCallTickOnSearchStart;
+    uint8 bRestartTimerOnEachActivation;
+
+};
+
 class UBTService_BlackboardBase : public UBTService
 {
     FBlackboardKeySelector BlackboardKey;
@@ -954,34 +1024,22 @@ class UBTService_DefaultFocus : public UBTService_BlackboardBase
 
 };
 
-struct FAIDynamicParam
-{
-    FName ParamName;
-    EAIParamType ParamType;
-    float Value;
-    FBlackboardKeySelector BBKey;
-
-};
-
-struct FEQSParametrizedQueryExecutionRequest
-{
-    class UEnvQuery* QueryTemplate;
-    TArray<FAIDynamicParam> QueryConfig;
-    FBlackboardKeySelector EQSQueryBlackboardKey;
-    TEnumAsByte<EEnvQueryRunMode::Type> RunMode;
-    uint8 bUseBBKeyForQueryTemplate;
-
-};
-
 class UBTService_RunEQS : public UBTService_BlackboardBase
 {
     FEQSParametrizedQueryExecutionRequest EQSRequest;
 
 };
 
-struct FIntervalCountdown
+class UBTTaskNode : public UBTNode
 {
-    float Interval;
+    TArray<class UBTService*> Services;
+    uint8 bIgnoreRestartSelf;
+
+};
+
+class UBTTask_BlackboardBase : public UBTTaskNode
+{
+    FBlackboardKeySelector BlackboardKey;
 
 };
 
@@ -1024,6 +1082,14 @@ class UBTTask_MakeNoise : public UBTTaskNode
 
 };
 
+class UBTTask_MoveDirectlyToward : public UBTTask_MoveTo
+{
+    uint8 bDisablePathUpdateOnGoalLocationChange;
+    uint8 bProjectVectorGoalToNavigation;
+    uint8 bUpdatedDeprecatedProperties;
+
+};
+
 class UBTTask_MoveTo : public UBTTask_BlackboardBase
 {
     float AcceptableRadius;
@@ -1038,14 +1104,6 @@ class UBTTask_MoveTo : public UBTTask_BlackboardBase
     uint8 bReachTestIncludesGoalRadius;
     uint8 bStopOnOverlap;
     uint8 bStopOnOverlapNeedsUpdate;
-
-};
-
-class UBTTask_MoveDirectlyToward : public UBTTask_MoveTo
-{
-    uint8 bDisablePathUpdateOnGoalLocationChange;
-    uint8 bProjectVectorGoalToNavigation;
-    uint8 bUpdatedDeprecatedProperties;
 
 };
 
@@ -1095,14 +1153,6 @@ class UBTTask_RunBehaviorDynamic : public UBTTaskNode
 
 };
 
-struct FEnvNamedValue
-{
-    FName ParamName;
-    EAIParamType ParamType;
-    float Value;
-
-};
-
 class UBTTask_RunEQSQuery : public UBTTask_BlackboardBase
 {
     class UEnvQuery* QueryTemplate;
@@ -1136,19 +1186,149 @@ class UBTTask_WaitBlackboardTime : public UBTTask_Wait
 
 };
 
-class ICrowdAgentInterface : public IInterface
+class UBehaviorTree : public UObject
+{
+    class UBTCompositeNode* RootNode;
+    class UBlackboardData* BlackboardAsset;
+    TArray<class UBTDecorator*> RootDecorators;
+    TArray<FBTDecoratorLogic> RootDecoratorOps;
+
+};
+
+class UBehaviorTreeComponent : public UBrainComponent
+{
+    TArray<class UBTNode*> NodeInstances;
+    class UBehaviorTree* DefaultBehaviorTreeAsset;
+
+    void SetDynamicSubtree(FGameplayTag InjectTag, class UBehaviorTree* BehaviorAsset);
+    float GetTagCooldownEndTime(FGameplayTag CooldownTag);
+    void AddCooldownTagDuration(FGameplayTag CooldownTag, float CooldownDuration, bool bAddToExistingDuration);
+};
+
+class UBehaviorTreeManager : public UObject
+{
+    int32 MaxDebuggerSteps;
+    TArray<FBehaviorTreeTemplateInfo> LoadedTemplates;
+    TArray<class UBehaviorTreeComponent*> ActiveComponents;
+
+};
+
+class UBehaviorTreeTypes : public UObject
 {
 };
 
-class UPathFollowingComponent : public UActorComponent
+class UBlackboardComponent : public UActorComponent
 {
-    class UNavMovementComponent* MovementComp;
-    class ANavigationData* MyNavData;
+    class UBrainComponent* BrainComp;
+    class UBlackboardData* DefaultBlackboardAsset;
+    class UBlackboardData* BlackboardAsset;
+    TArray<class UBlackboardKeyType*> KeyInstances;
 
-    void OnNavDataRegistered(class ANavigationData* NavData);
-    void OnActorBump(class AActor* SelfActor, class AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
-    FVector GetPathDestination();
-    TEnumAsByte<EPathFollowingAction::Type> GetPathActionType();
+    void SetValueAsVector(const FName& KeyName, FVector VectorValue);
+    void SetValueAsString(const FName& KeyName, FString StringValue);
+    void SetValueAsRotator(const FName& KeyName, FRotator VectorValue);
+    void SetValueAsObject(const FName& KeyName, class UObject* ObjectValue);
+    void SetValueAsName(const FName& KeyName, FName nameValue);
+    void SetValueAsInt(const FName& KeyName, int32 IntValue);
+    void SetValueAsFloat(const FName& KeyName, float FloatValue);
+    void SetValueAsEnum(const FName& KeyName, uint8 EnumValue);
+    void SetValueAsClass(const FName& KeyName, UClass* ClassValue);
+    void SetValueAsBool(const FName& KeyName, bool boolValue);
+    bool IsVectorValueSet(const FName& KeyName);
+    FVector GetValueAsVector(const FName& KeyName);
+    FString GetValueAsString(const FName& KeyName);
+    FRotator GetValueAsRotator(const FName& KeyName);
+    class UObject* GetValueAsObject(const FName& KeyName);
+    FName GetValueAsName(const FName& KeyName);
+    int32 GetValueAsInt(const FName& KeyName);
+    float GetValueAsFloat(const FName& KeyName);
+    uint8 GetValueAsEnum(const FName& KeyName);
+    UClass* GetValueAsClass(const FName& KeyName);
+    bool GetValueAsBool(const FName& KeyName);
+    bool GetRotationFromEntry(const FName& KeyName, FRotator& ResultRotation);
+    bool GetLocationFromEntry(const FName& KeyName, FVector& ResultLocation);
+    void ClearValue(const FName& KeyName);
+};
+
+class UBlackboardData : public UDataAsset
+{
+    class UBlackboardData* Parent;
+    TArray<FBlackboardEntry> Keys;
+    uint8 bHasSynchronizedKeys;
+
+};
+
+class UBlackboardKeyType : public UObject
+{
+};
+
+class UBlackboardKeyType_Bool : public UBlackboardKeyType
+{
+};
+
+class UBlackboardKeyType_Class : public UBlackboardKeyType
+{
+    UClass* BaseClass;
+
+};
+
+class UBlackboardKeyType_Enum : public UBlackboardKeyType
+{
+    class UEnum* EnumType;
+    FString EnumName;
+    uint8 bIsEnumNameValid;
+
+};
+
+class UBlackboardKeyType_Float : public UBlackboardKeyType
+{
+};
+
+class UBlackboardKeyType_Int : public UBlackboardKeyType
+{
+};
+
+class UBlackboardKeyType_Name : public UBlackboardKeyType
+{
+};
+
+class UBlackboardKeyType_NativeEnum : public UBlackboardKeyType
+{
+    FString EnumName;
+    class UEnum* EnumType;
+
+};
+
+class UBlackboardKeyType_Object : public UBlackboardKeyType
+{
+    UClass* BaseClass;
+
+};
+
+class UBlackboardKeyType_Rotator : public UBlackboardKeyType
+{
+};
+
+class UBlackboardKeyType_String : public UBlackboardKeyType
+{
+    FString StringValue;
+
+};
+
+class UBlackboardKeyType_Vector : public UBlackboardKeyType
+{
+};
+
+class UBrainComponent : public UActorComponent
+{
+    class UBlackboardComponent* BlackboardComp;
+    class AAIController* AIOwner;
+
+    void StopLogic(FString reason);
+    void StartLogic();
+    void RestartLogic();
+    bool IsRunning();
+    bool IsPaused();
 };
 
 class UCrowdFollowingComponent : public UPathFollowingComponent
@@ -1156,28 +1336,6 @@ class UCrowdFollowingComponent : public UPathFollowingComponent
     FVector CrowdAgentMoveDirection;
 
     void SuspendCrowdSteering(bool bSuspend);
-};
-
-struct FCrowdAvoidanceConfig
-{
-    float VelocityBias;
-    float DesiredVelocityWeight;
-    float CurrentVelocityWeight;
-    float SideBiasWeight;
-    float ImpactTimeWeight;
-    float ImpactTimeRange;
-    uint8 CustomPatternIdx;
-    uint8 AdaptiveDivisions;
-    uint8 AdaptiveRings;
-    uint8 AdaptiveDepth;
-
-};
-
-struct FCrowdAvoidanceSamplingPattern
-{
-    TArray<float> Angles;
-    TArray<float> Radii;
-
 };
 
 class UCrowdManager : public UCrowdManagerBase
@@ -1197,7 +1355,7 @@ class UCrowdManager : public UCrowdManagerBase
 
 };
 
-class ADetourCrowdAIController : public AAIController
+class UEQSRenderingComponent : public UPrimitiveComponent
 {
 };
 
@@ -1233,23 +1391,11 @@ class UEnvQueryDebugHelpers : public UObject
 {
 };
 
-class UEnvQueryNode : public UObject
-{
-    int32 VerNum;
-
-};
-
 class UEnvQueryGenerator : public UEnvQueryNode
 {
     FString OptionName;
     TSubclassOf<class UEnvQueryItemType> ItemType;
     uint8 bAutoSortTests;
-
-};
-
-struct FAIDataProviderBoolValue : public FAIDataProviderTypedValue
-{
-    bool DefaultValue;
 
 };
 
@@ -1283,35 +1429,6 @@ class UEnvQueryGenerator_Composite : public UEnvQueryGenerator
 
 };
 
-struct FEnvTraceData
-{
-    int32 VersionNum;
-    TSubclassOf<class UNavigationQueryFilter> NavigationFilter;
-    float ProjectDown;
-    float ProjectUp;
-    float ExtentX;
-    float ExtentY;
-    float ExtentZ;
-    float PostProjectionVerticalOffset;
-    TEnumAsByte<ETraceTypeQuery> TraceChannel;
-    TEnumAsByte<ECollisionChannel> SerializedChannel;
-    TEnumAsByte<EEnvTraceShape::Type> TraceShape;
-    TEnumAsByte<EEnvQueryTrace::Type> TraceMode;
-    uint8 bTraceComplex;
-    uint8 bOnlyBlockingHits;
-    uint8 bCanTraceOnNavMesh;
-    uint8 bCanTraceOnGeometry;
-    uint8 bCanDisableTrace;
-    uint8 bCanProjectDown;
-
-};
-
-class UEnvQueryGenerator_ProjectedPoints : public UEnvQueryGenerator
-{
-    FEnvTraceData ProjectionData;
-
-};
-
 class UEnvQueryGenerator_Cone : public UEnvQueryGenerator_ProjectedPoints
 {
     FAIDataProviderFloatValue AlignedPointsDistance;
@@ -1326,21 +1443,6 @@ class UEnvQueryGenerator_Cone : public UEnvQueryGenerator_ProjectedPoints
 class UEnvQueryGenerator_CurrentLocation : public UEnvQueryGenerator
 {
     TSubclassOf<class UEnvQueryContext> QueryContext;
-
-};
-
-struct FAIDataProviderIntValue : public FAIDataProviderTypedValue
-{
-    int32 DefaultValue;
-
-};
-
-struct FEnvDirection
-{
-    TSubclassOf<class UEnvQueryContext> LineFrom;
-    TSubclassOf<class UEnvQueryContext> LineTo;
-    TSubclassOf<class UEnvQueryContext> Rotation;
-    TEnumAsByte<EEnvDirection::Type> DirMode;
 
 };
 
@@ -1375,19 +1477,25 @@ class UEnvQueryGenerator_OnCircle : public UEnvQueryGenerator_ProjectedPoints
 
 };
 
-class UEnvQueryGenerator_SimpleGrid : public UEnvQueryGenerator_ProjectedPoints
-{
-    FAIDataProviderFloatValue GridSize;
-    FAIDataProviderFloatValue SpaceBetween;
-    TSubclassOf<class UEnvQueryContext> GenerateAround;
-
-};
-
 class UEnvQueryGenerator_PathingGrid : public UEnvQueryGenerator_SimpleGrid
 {
     FAIDataProviderBoolValue PathToItem;
     TSubclassOf<class UNavigationQueryFilter> NavigationFilter;
     FAIDataProviderFloatValue ScanRangeMultiplier;
+
+};
+
+class UEnvQueryGenerator_ProjectedPoints : public UEnvQueryGenerator
+{
+    FEnvTraceData ProjectionData;
+
+};
+
+class UEnvQueryGenerator_SimpleGrid : public UEnvQueryGenerator_ProjectedPoints
+{
+    FAIDataProviderFloatValue GridSize;
+    FAIDataProviderFloatValue SpaceBetween;
+    TSubclassOf<class UEnvQueryContext> GenerateAround;
 
 };
 
@@ -1412,15 +1520,11 @@ class UEnvQueryItemType : public UObject
 {
 };
 
-class UEnvQueryItemType_VectorBase : public UEnvQueryItemType
+class UEnvQueryItemType_Actor : public UEnvQueryItemType_ActorBase
 {
 };
 
 class UEnvQueryItemType_ActorBase : public UEnvQueryItemType_VectorBase
-{
-};
-
-class UEnvQueryItemType_Actor : public UEnvQueryItemType_ActorBase
 {
 };
 
@@ -1432,10 +1536,8 @@ class UEnvQueryItemType_Point : public UEnvQueryItemType_VectorBase
 {
 };
 
-struct FEnvQueryInstanceCache
+class UEnvQueryItemType_VectorBase : public UEnvQueryItemType
 {
-    class UEnvQuery* Template;
-
 };
 
 class UEnvQueryManager : public UAISubsystem
@@ -1449,6 +1551,12 @@ class UEnvQueryManager : public UAISubsystem
     double QueryCountWarningInterval;
 
     class UEnvQueryInstanceBlueprintWrapper* RunEQSQuery(class UObject* WorldContextObject, class UEnvQuery* QueryTemplate, class UObject* Querier, TEnumAsByte<EEnvQueryRunMode::Type> RunMode, TSubclassOf<class UEnvQueryInstanceBlueprintWrapper> WrapperClass);
+};
+
+class UEnvQueryNode : public UObject
+{
+    int32 VerNum;
+
 };
 
 class UEnvQueryOption : public UObject
@@ -1507,20 +1615,6 @@ class UEnvQueryTest_GameplayTags : public UEnvQueryTest
 
 };
 
-struct FEnvOverlapData
-{
-    float ExtentX;
-    float ExtentY;
-    float ExtentZ;
-    FVector ShapeOffset;
-    TEnumAsByte<ECollisionChannel> OverlapChannel;
-    TEnumAsByte<EEnvOverlapShape::Type> OverlapShape;
-    uint8 bOnlyBlockingHits;
-    uint8 bOverlapComplex;
-    uint8 bSkipOverlapQuerier;
-
-};
-
 class UEnvQueryTest_Overlap : public UEnvQueryTest
 {
     FEnvOverlapData OverlapData;
@@ -1575,40 +1669,6 @@ class UEnvQueryTypes : public UObject
 {
 };
 
-class IEQSQueryResultSourceInterface : public IInterface
-{
-};
-
-class UEQSRenderingComponent : public UPrimitiveComponent
-{
-};
-
-class AEQSTestingPawn : public ACharacter
-{
-    class UEnvQuery* QueryTemplate;
-    TArray<FEnvNamedValue> QueryParams;
-    TArray<FAIDynamicParam> QueryConfig;
-    float TimeLimitPerStep;
-    int32 StepToDebugDraw;
-    EEnvQueryHightlightMode HighlightMode;
-    uint8 bDrawLabels;
-    uint8 bDrawFailedItems;
-    uint8 bReRunQueryOnlyOnFinishedMove;
-    uint8 bShouldBeVisibleInGame;
-    uint8 bTickDuringGame;
-    TEnumAsByte<EEnvQueryRunMode::Type> QueryingMode;
-    FNavAgentProperties NavAgentProperties;
-
-};
-
-class IGenericTeamAgentInterface : public IInterface
-{
-};
-
-class AGridPathAIController : public AAIController
-{
-};
-
 class UGridPathFollowingComponent : public UPathFollowingComponent
 {
     class UNavLocalGridManager* GridManager;
@@ -1617,22 +1677,6 @@ class UGridPathFollowingComponent : public UPathFollowingComponent
 
 class UNavFilter_AIControllerDefault : public UNavigationQueryFilter
 {
-};
-
-class ANavLinkProxy : public AActor
-{
-    TArray<FNavigationLink> PointLinks;
-    TArray<FNavigationSegmentLink> SegmentLinks;
-    class UNavLinkCustomComponent* SmartLinkComp;
-    bool bSmartLinkIsRelevant;
-    FNavLinkProxyOnSmartLinkReached OnSmartLinkReached;
-    void SmartLinkReachedSignature(class AActor* MovingActor, const FVector& DestinationPoint);
-
-    void SetSmartLinkEnabled(bool bEnabled);
-    void ResumePathFollowing(class AActor* Agent);
-    void ReceiveSmartLinkReached(class AActor* Agent, const FVector& Destination);
-    bool IsSmartLinkEnabled();
-    bool HasMovingAgents();
 };
 
 class UNavLocalGridManager : public UObject
@@ -1645,6 +1689,17 @@ class UNavLocalGridManager : public UObject
     int32 AddLocalNavigationGridForPoint(class UObject* WorldContextObject, const FVector& Location, const int32 Radius2D, const float Height, bool bRebuildGrids);
     int32 AddLocalNavigationGridForCapsule(class UObject* WorldContextObject, const FVector& Location, float CapsuleRadius, float CapsuleHalfHeight, const int32 Radius2D, const float Height, bool bRebuildGrids);
     int32 AddLocalNavigationGridForBox(class UObject* WorldContextObject, const FVector& Location, FVector Extent, FRotator Rotation, const int32 Radius2D, const float Height, bool bRebuildGrids);
+};
+
+class UPathFollowingComponent : public UActorComponent
+{
+    class UNavMovementComponent* MovementComp;
+    class ANavigationData* MyNavData;
+
+    void OnNavDataRegistered(class ANavigationData* NavData);
+    void OnActorBump(class AActor* SelfActor, class AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+    FVector GetPathDestination();
+    TEnumAsByte<EPathFollowingAction::Type> GetPathActionType();
 };
 
 class UPathFollowingManager : public UObject
@@ -1716,18 +1771,6 @@ class UPawnAction_Wait : public UPawnAction
 
 };
 
-struct FPawnActionStack
-{
-    class UPawnAction* TopAction;
-
-};
-
-struct FPawnActionEvent
-{
-    class UPawnAction* Action;
-
-};
-
 class UPawnActionsComponent : public UActorComponent
 {
     class APawn* ControlledPawn;
@@ -1769,49 +1812,6 @@ class UPawnSensingComponent : public UActorComponent
 };
 
 class UVisualLoggerExtension : public UObject
-{
-};
-
-struct FAIDataProviderStructValue : public FAIDataProviderValue
-{
-};
-
-struct FAISightEvent
-{
-    class AActor* SeenActor;
-    class AActor* Observer;
-
-};
-
-struct FEnvQueryRequest
-{
-    class UEnvQuery* QueryTemplate;
-    class UObject* Owner;
-    class UWorld* World;
-
-};
-
-struct FEnvQueryResult
-{
-    TSubclassOf<class UEnvQueryItemType> ItemType;
-    int32 OptionIndex;
-    int32 QueryID;
-
-};
-
-struct FGenericTeamId
-{
-    uint8 TeamID;
-
-};
-
-struct FRecastGraphWrapper
-{
-    class ARecastNavMesh* RecastNavMeshActor;
-
-};
-
-struct FDefault__AISenseBlueprintListener
 {
 };
 

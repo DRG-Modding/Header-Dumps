@@ -3,6 +3,32 @@
 
 #include "MRMesh_enums.hpp"
 
+struct FMRMeshConfiguration
+{
+};
+
+class UMRMeshComponent : public UPrimitiveComponent
+{
+    class UMaterialInterface* Material;
+    class UMaterialInterface* WireframeMaterial;
+    bool bCreateMeshProxySections;
+    bool bUpdateNavMeshOnMeshUpdate;
+    bool bNeverCreateCollisionMesh;
+    class UBodySetup* CachedBodySetup;
+    TArray<class UBodySetup*> BodySetups;
+
+    void SetWireframeMaterial(class UMaterialInterface* InMaterial);
+    void SetWireframeColor(const FLinearColor& InColor);
+    void SetUseWireframe(bool bUseWireframe);
+    void SetEnableMeshOcclusion(bool bEnable);
+    bool IsConnected();
+    FLinearColor GetWireframeColor();
+    bool GetUseWireframe();
+    bool GetEnableMeshOcclusion();
+    void ForceNavMeshUpdate();
+    void Clear();
+};
+
 class UMeshReconstructorBase : public UObject
 {
 
@@ -32,32 +58,6 @@ class UMockDataMeshTrackerComponent : public USceneComponent
     void OnMockDataMeshTrackerUpdated__DelegateSignature(int32 Index, const TArray<FVector>& Vertices, const TArray<int32>& Triangles, const TArray<FVector>& Normals, const TArray<float>& Confidence);
     void DisconnectMRMesh(class UMRMeshComponent* InMRMeshPtr);
     void ConnectMRMesh(class UMRMeshComponent* InMRMeshPtr);
-};
-
-class UMRMeshComponent : public UPrimitiveComponent
-{
-    class UMaterialInterface* Material;
-    class UMaterialInterface* WireframeMaterial;
-    bool bCreateMeshProxySections;
-    bool bUpdateNavMeshOnMeshUpdate;
-    bool bNeverCreateCollisionMesh;
-    class UBodySetup* CachedBodySetup;
-    TArray<class UBodySetup*> BodySetups;
-
-    void SetWireframeMaterial(class UMaterialInterface* InMaterial);
-    void SetWireframeColor(const FLinearColor& InColor);
-    void SetUseWireframe(bool bUseWireframe);
-    void SetEnableMeshOcclusion(bool bEnable);
-    bool IsConnected();
-    FLinearColor GetWireframeColor();
-    bool GetUseWireframe();
-    bool GetEnableMeshOcclusion();
-    void ForceNavMeshUpdate();
-    void Clear();
-};
-
-struct FMRMeshConfiguration
-{
 };
 
 #endif

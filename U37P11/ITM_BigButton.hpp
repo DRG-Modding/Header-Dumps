@@ -8,7 +8,7 @@ class UITM_BigButton_C : public UUserWidget
     class UWidgetAnimation* HoverStart;
     class UWidgetAnimation* Hover;
     class UWidgetAnimation* Idle;
-    class UImage* BgGlow;
+    class UImage* BGglow;
     class UBorder* Border_129;
     class USizeBox* Button_SizeBox;
     class UButton* ClickButton;

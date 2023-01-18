@@ -3,6 +3,25 @@
 
 #include "SteamVRInputDevice_enums.hpp"
 
+struct FAnimNode_SteamVRInputAnimPose : public FAnimNode_Base
+{
+    EMotionRange MotionRange;
+    EHand hand;
+    EHandSkeleton HandSkeleton;
+    bool Mirror;
+    FSteamVRSkeletonTransform SteamVRSkeletalTransform;
+    FUE4RetargettingRefs UE4RetargettingRefs;
+
+};
+
+struct FAnimNode_SteamVRSetWristTransform : public FAnimNode_Base
+{
+    FPoseLink ReferencePose;
+    EHandSkeleton HandSkeleton;
+    FPoseLink targetPose;
+
+};
+
 struct FSteamVRAction
 {
     FName Name;
@@ -16,11 +35,22 @@ struct FSteamVRActionSet
 
 };
 
-struct FSteamVRInputOriginInfo
+struct FSteamVRFingerCurls
 {
-    int32 TrackedDeviceIndex;
-    FString RenderModelComponentName;
-    FString TrackedDeviceModel;
+    float Thumb;
+    float Index;
+    float Middle;
+    float Ring;
+    float Pinky;
+
+};
+
+struct FSteamVRFingerSplays
+{
+    float Thumb_Index;
+    float Index_Middle;
+    float Middle_Ring;
+    float Ring_Pinky;
 
 };
 
@@ -30,6 +60,14 @@ struct FSteamVRInputBindingInfo
     FName InputPathName;
     FName ModeName;
     FName slotName;
+
+};
+
+struct FSteamVRInputOriginInfo
+{
+    int32 TrackedDeviceIndex;
+    FString RenderModelComponentName;
+    FString TrackedDeviceModel;
 
 };
 
@@ -69,22 +107,13 @@ struct FSteamVRSkeletonTransform
 
 };
 
-struct FSteamVRFingerCurls
+struct FUE4RetargettingRefs
 {
-    float Thumb;
-    float Index;
-    float Middle;
-    float Ring;
-    float Pinky;
-
-};
-
-struct FSteamVRFingerSplays
-{
-    float Thumb_Index;
-    float Index_Middle;
-    float Middle_Ring;
-    float Ring_Pinky;
+    bool bIsInitialized;
+    bool bIsRightHanded;
+    FVector KnuckleAverageMS_UE4;
+    FVector WristSideDirectionLS_UE4;
+    FVector WristForwardLS_UE4;
 
 };
 
@@ -132,35 +161,6 @@ class USteamVRTrackingReferences : public UActorComponent
 
     bool ShowTrackingReferences(class UStaticMesh* TrackingReferenceMesh);
     void HideTrackingReferences();
-};
-
-struct FUE4RetargettingRefs
-{
-    bool bIsInitialized;
-    bool bIsRightHanded;
-    FVector KnuckleAverageMS_UE4;
-    FVector WristSideDirectionLS_UE4;
-    FVector WristForwardLS_UE4;
-
-};
-
-struct FAnimNode_SteamVRInputAnimPose : public FAnimNode_Base
-{
-    EMotionRange MotionRange;
-    EHand hand;
-    EHandSkeleton HandSkeleton;
-    bool Mirror;
-    FSteamVRSkeletonTransform SteamVRSkeletalTransform;
-    FUE4RetargettingRefs UE4RetargettingRefs;
-
-};
-
-struct FAnimNode_SteamVRSetWristTransform : public FAnimNode_Base
-{
-    FPoseLink ReferencePose;
-    EHandSkeleton HandSkeleton;
-    FPoseLink targetPose;
-
 };
 
 #endif

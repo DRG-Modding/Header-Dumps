@@ -1,14 +1,6 @@
 #ifndef UE4SS_SDK_SessionMessages_HPP
 #define UE4SS_SDK_SessionMessages_HPP
 
-struct FSessionServiceLogUnsubscribe
-{
-};
-
-struct FSessionServiceLogSubscribe
-{
-};
-
 struct FSessionServiceLog
 {
     FName Category;
@@ -16,6 +8,20 @@ struct FSessionServiceLog
     FGuid InstanceId;
     double TimeSeconds;
     uint8 Verbosity;
+
+};
+
+struct FSessionServiceLogSubscribe
+{
+};
+
+struct FSessionServiceLogUnsubscribe
+{
+};
+
+struct FSessionServicePing
+{
+    FString Username;
 
 };
 
@@ -31,12 +37,6 @@ struct FSessionServicePong
     FString SessionName;
     FString SessionOwner;
     bool Standalone;
-
-};
-
-struct FSessionServicePing
-{
-    FString Username;
 
 };
 

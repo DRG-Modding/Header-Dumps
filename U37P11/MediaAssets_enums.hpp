@@ -1,21 +1,3 @@
-enum class EMediaWebcamCaptureDeviceFilter {
-    None = 0,
-    DepthSensor = 1,
-    Front = 2,
-    Rear = 4,
-    Unknown = 8,
-    EMediaWebcamCaptureDeviceFilter_MAX = 9,
-};
-
-enum class EMediaVideoCaptureDeviceFilter {
-    None = 0,
-    Card = 1,
-    Software = 2,
-    Unknown = 4,
-    Webcam = 8,
-    EMediaVideoCaptureDeviceFilter_MAX = 9,
-};
-
 enum class EMediaAudioCaptureDeviceFilter {
     None = 0,
     Card = 1,
@@ -36,6 +18,13 @@ enum class EMediaPlayerTrack {
     EMediaPlayerTrack_MAX = 7,
 };
 
+enum class EMediaSoundChannels {
+    Mono = 0,
+    Stereo = 1,
+    Surround = 2,
+    EMediaSoundChannels_MAX = 3,
+};
+
 enum class EMediaSoundComponentFFTSize {
     Min_64 = 0,
     Small_256 = 1,
@@ -44,11 +33,22 @@ enum class EMediaSoundComponentFFTSize {
     EMediaSoundComponentFFTSize_MAX = 4,
 };
 
-enum class EMediaSoundChannels {
-    Mono = 0,
-    Stereo = 1,
-    Surround = 2,
-    EMediaSoundChannels_MAX = 3,
+enum class EMediaVideoCaptureDeviceFilter {
+    None = 0,
+    Card = 1,
+    Software = 2,
+    Unknown = 4,
+    Webcam = 8,
+    EMediaVideoCaptureDeviceFilter_MAX = 9,
+};
+
+enum class EMediaWebcamCaptureDeviceFilter {
+    None = 0,
+    DepthSensor = 1,
+    Front = 2,
+    Rear = 4,
+    Unknown = 8,
+    EMediaWebcamCaptureDeviceFilter_MAX = 9,
 };
 
 enum MediaTextureOrientation {

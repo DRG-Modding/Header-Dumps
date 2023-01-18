@@ -3,33 +3,32 @@
 
 #include "ChaosSolverEngine_enums.hpp"
 
-class UChaosDebugDrawComponent : public UActorComponent
+struct FBreakEventCallbackWrapper
 {
 };
 
-class UChaosEventListenerComponent : public UActorComponent
+struct FChaosBreakEvent
 {
+    class UPrimitiveComponent* Component;
+    FVector Location;
+    FVector Velocity;
+    FVector AngularVelocity;
+    float Mass;
+
+};
+
+struct FChaosDebugSubstepControl
+{
+    bool bPause;
+    bool bSubstep;
+    bool bStep;
+
 };
 
 struct FChaosHandlerSet
 {
     TSet<UObject*> ChaosHandlers;
 
-};
-
-struct FBreakEventCallbackWrapper
-{
-};
-
-class UChaosGameplayEventDispatcher : public UChaosEventListenerComponent
-{
-    TMap<class UPrimitiveComponent*, class FChaosHandlerSet> CollisionEventRegistrations;
-    TMap<class UPrimitiveComponent*, class FBreakEventCallbackWrapper> BreakEventRegistrations;
-
-};
-
-class IChaosNotifyHandlerInterface : public IInterface
-{
 };
 
 struct FChaosPhysicsCollisionInfo
@@ -45,24 +44,6 @@ struct FChaosPhysicsCollisionInfo
     FVector OtherAngularVelocity;
     float Mass;
     float OtherMass;
-
-};
-
-class UChaosSolverEngineBlueprintLibrary : public UBlueprintFunctionLibrary
-{
-
-    FHitResult ConvertPhysicsCollisionToHitResult(const FChaosPhysicsCollisionInfo& PhysicsCollision);
-};
-
-class UChaosSolver : public UObject
-{
-};
-
-struct FChaosDebugSubstepControl
-{
-    bool bPause;
-    bool bSubstep;
-    bool bStep;
 
 };
 
@@ -93,19 +74,38 @@ class AChaosSolverActor : public AActor
     void SetAsCurrentWorldSolver();
 };
 
-class UChaosSolverSettings : public UDeveloperSettings
+class IChaosNotifyHandlerInterface : public IInterface
 {
-    FSoftClassPath DefaultChaosSolverActorClass;
+};
+
+class UChaosDebugDrawComponent : public UActorComponent
+{
+};
+
+class UChaosEventListenerComponent : public UActorComponent
+{
+};
+
+class UChaosGameplayEventDispatcher : public UChaosEventListenerComponent
+{
+    TMap<class UPrimitiveComponent*, class FChaosHandlerSet> CollisionEventRegistrations;
+    TMap<class UPrimitiveComponent*, class FBreakEventCallbackWrapper> BreakEventRegistrations;
 
 };
 
-struct FChaosBreakEvent
+class UChaosSolver : public UObject
 {
-    class UPrimitiveComponent* Component;
-    FVector Location;
-    FVector Velocity;
-    FVector AngularVelocity;
-    float Mass;
+};
+
+class UChaosSolverEngineBlueprintLibrary : public UBlueprintFunctionLibrary
+{
+
+    FHitResult ConvertPhysicsCollisionToHitResult(const FChaosPhysicsCollisionInfo& PhysicsCollision);
+};
+
+class UChaosSolverSettings : public UDeveloperSettings
+{
+    FSoftClassPath DefaultChaosSolverActorClass;
 
 };
 

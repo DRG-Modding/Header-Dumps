@@ -1,18 +1,9 @@
-namespace ETouchIndex {
+namespace EConsoleForGamepadLabels {
     enum Type {
-        Touch1 = 0,
-        Touch2 = 1,
-        Touch3 = 2,
-        Touch4 = 3,
-        Touch5 = 4,
-        Touch6 = 5,
-        Touch7 = 6,
-        Touch8 = 7,
-        Touch9 = 8,
-        Touch10 = 9,
-        CursorPointerIndex = 10,
-        MAX_TOUCHES = 11,
-        ETouchIndex_MAX = 12,
+        None = 0,
+        XBoxOne = 1,
+        PS4 = 2,
+        EConsoleForGamepadLabels_MAX = 3,
     };
 }
 
@@ -38,6 +29,24 @@ enum class EControllerHand {
     EControllerHand_MAX = 18,
 };
 
+namespace ETouchIndex {
+    enum Type {
+        Touch1 = 0,
+        Touch2 = 1,
+        Touch3 = 2,
+        Touch4 = 3,
+        Touch5 = 4,
+        Touch6 = 5,
+        Touch7 = 6,
+        Touch8 = 7,
+        Touch9 = 8,
+        Touch10 = 9,
+        CursorPointerIndex = 10,
+        MAX_TOUCHES = 11,
+        ETouchIndex_MAX = 12,
+    };
+}
+
 namespace ETouchType {
     enum Type {
         Began = 0,
@@ -48,15 +57,6 @@ namespace ETouchType {
         Ended = 5,
         NumTypes = 6,
         ETouchType_MAX = 7,
-    };
-}
-
-namespace EConsoleForGamepadLabels {
-    enum Type {
-        None = 0,
-        XBoxOne = 1,
-        PS4 = 2,
-        EConsoleForGamepadLabels_MAX = 3,
     };
 }
 

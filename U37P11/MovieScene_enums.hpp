@@ -1,10 +1,7 @@
-enum class EMovieSceneKeyInterpolation {
-    Auto = 0,
-    User = 1,
-    Break = 2,
-    Linear = 3,
-    Constant = 4,
-    EMovieSceneKeyInterpolation_MAX = 5,
+enum class EEvaluationMethod {
+    Static = 0,
+    Swept = 1,
+    EEvaluationMethod_MAX = 2,
 };
 
 enum class EMovieSceneBlendType {
@@ -14,13 +11,6 @@ enum class EMovieSceneBlendType {
     Relative = 4,
     AdditiveFromBase = 8,
     EMovieSceneBlendType_MAX = 9,
-};
-
-enum class EMovieSceneCompletionMode {
-    KeepState = 0,
-    RestoreState = 1,
-    ProjectDefault = 2,
-    EMovieSceneCompletionMode_MAX = 3,
 };
 
 enum class EMovieSceneBuiltInEasing {
@@ -49,42 +39,33 @@ enum class EMovieSceneBuiltInEasing {
     EMovieSceneBuiltInEasing_MAX = 22,
 };
 
-enum class EEvaluationMethod {
-    Static = 0,
-    Swept = 1,
-    EEvaluationMethod_MAX = 2,
-};
-
-enum class EMovieSceneServerClientMask {
-    None = 0,
-    Server = 1,
-    Client = 2,
-    All = 3,
-    EMovieSceneServerClientMask_MAX = 4,
-};
-
-enum class EMovieSceneSequenceFlags {
-    None = 0,
-    Volatile = 1,
-    BlockingEvaluation = 2,
-    InheritedFlags = 1,
-    EMovieSceneSequenceFlags_MAX = 3,
-};
-
-enum class EUpdateClockSource {
-    Tick = 0,
-    Platform = 1,
-    Audio = 2,
-    RelativeTimecode = 3,
-    Timecode = 4,
-    Custom = 5,
-    EUpdateClockSource_MAX = 6,
+enum class EMovieSceneCompletionMode {
+    KeepState = 0,
+    RestoreState = 1,
+    ProjectDefault = 2,
+    EMovieSceneCompletionMode_MAX = 3,
 };
 
 enum class EMovieSceneEvaluationType {
     FrameLocked = 0,
     WithSubFrames = 1,
     EMovieSceneEvaluationType_MAX = 2,
+};
+
+enum class EMovieSceneKeyInterpolation {
+    Auto = 0,
+    User = 1,
+    Break = 2,
+    Linear = 3,
+    Constant = 4,
+    EMovieSceneKeyInterpolation_MAX = 5,
+};
+
+enum class EMovieSceneObjectBindingSpace {
+    Local = 0,
+    Root = 1,
+    Unused = 2,
+    EMovieSceneObjectBindingSpace_MAX = 3,
 };
 
 namespace EMovieScenePlayerStatus {
@@ -99,11 +80,27 @@ namespace EMovieScenePlayerStatus {
     };
 }
 
-enum class EMovieSceneObjectBindingSpace {
-    Local = 0,
-    Root = 1,
-    Unused = 2,
-    EMovieSceneObjectBindingSpace_MAX = 3,
+enum class EMovieScenePositionType {
+    Frame = 0,
+    Time = 1,
+    MarkedFrame = 2,
+    EMovieScenePositionType_MAX = 3,
+};
+
+enum class EMovieSceneSequenceFlags {
+    None = 0,
+    Volatile = 1,
+    BlockingEvaluation = 2,
+    InheritedFlags = 1,
+    EMovieSceneSequenceFlags_MAX = 3,
+};
+
+enum class EMovieSceneServerClientMask {
+    None = 0,
+    Server = 1,
+    Client = 2,
+    All = 3,
+    EMovieSceneServerClientMask_MAX = 4,
 };
 
 enum class ESectionEvaluationFlags {
@@ -113,11 +110,21 @@ enum class ESectionEvaluationFlags {
     ESectionEvaluationFlags_MAX = 3,
 };
 
-enum class EMovieScenePositionType {
-    Frame = 0,
-    Time = 1,
-    MarkedFrame = 2,
-    EMovieScenePositionType_MAX = 3,
+enum class ESpawnOwnership {
+    InnerSequence = 0,
+    MasterSequence = 1,
+    External = 2,
+    ESpawnOwnership_MAX = 3,
+};
+
+enum class EUpdateClockSource {
+    Tick = 0,
+    Platform = 1,
+    Audio = 2,
+    RelativeTimecode = 3,
+    Timecode = 4,
+    Custom = 5,
+    EUpdateClockSource_MAX = 6,
 };
 
 enum class EUpdatePositionMethod {
@@ -125,12 +132,5 @@ enum class EUpdatePositionMethod {
     Jump = 1,
     Scrub = 2,
     EUpdatePositionMethod_MAX = 3,
-};
-
-enum class ESpawnOwnership {
-    InnerSequence = 0,
-    MasterSequence = 1,
-    External = 2,
-    ESpawnOwnership_MAX = 3,
 };
 

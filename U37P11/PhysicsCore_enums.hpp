@@ -1,14 +1,8 @@
-enum ERadialImpulseFalloff {
-    RIF_Constant = 0,
-    RIF_Linear = 1,
-    RIF_MAX = 2,
-};
-
-enum class ESleepFamily {
-    Normal = 0,
-    Sensitive = 1,
-    Custom = 2,
-    ESleepFamily_MAX = 3,
+enum EAngularConstraintMotion {
+    ACM_Free = 0,
+    ACM_Limited = 1,
+    ACM_Locked = 2,
+    ACM_MAX = 3,
 };
 
 namespace EBodyCollisionResponse {
@@ -19,26 +13,12 @@ namespace EBodyCollisionResponse {
     };
 }
 
-enum EPhysicsType {
-    PhysType_Default = 0,
-    PhysType_Kinematic = 1,
-    PhysType_Simulated = 2,
-    PhysType_MAX = 3,
-};
-
 enum ECollisionTraceFlag {
     CTF_UseDefault = 0,
     CTF_UseSimpleAndComplex = 1,
     CTF_UseSimpleAsComplex = 2,
     CTF_UseComplexAsSimple = 3,
     CTF_MAX = 4,
-};
-
-enum ELinearConstraintMotion {
-    LCM_Free = 0,
-    LCM_Limited = 1,
-    LCM_Locked = 2,
-    LCM_MAX = 3,
 };
 
 namespace EConstraintFrame {
@@ -49,11 +29,20 @@ namespace EConstraintFrame {
     };
 }
 
-enum EAngularConstraintMotion {
-    ACM_Free = 0,
-    ACM_Limited = 1,
-    ACM_Locked = 2,
-    ACM_MAX = 3,
+namespace EFrictionCombineMode {
+    enum Type {
+        Average = 0,
+        Min = 1,
+        Multiply = 2,
+        Max = 3,
+    };
+}
+
+enum ELinearConstraintMotion {
+    LCM_Free = 0,
+    LCM_Limited = 1,
+    LCM_Locked = 2,
+    LCM_MAX = 3,
 };
 
 enum EPhysicalSurface {
@@ -124,12 +113,23 @@ enum EPhysicalSurface {
     EPhysicalSurface_MAX = 64,
 };
 
-namespace EFrictionCombineMode {
-    enum Type {
-        Average = 0,
-        Min = 1,
-        Multiply = 2,
-        Max = 3,
-    };
-}
+enum EPhysicsType {
+    PhysType_Default = 0,
+    PhysType_Kinematic = 1,
+    PhysType_Simulated = 2,
+    PhysType_MAX = 3,
+};
+
+enum ERadialImpulseFalloff {
+    RIF_Constant = 0,
+    RIF_Linear = 1,
+    RIF_MAX = 2,
+};
+
+enum class ESleepFamily {
+    Normal = 0,
+    Sensitive = 1,
+    Custom = 2,
+    ESleepFamily_MAX = 3,
+};
 

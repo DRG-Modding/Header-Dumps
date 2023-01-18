@@ -3,10 +3,140 @@
 
 #include "AugmentedReality_enums.hpp"
 
-class AARActor : public AActor
+struct FARCameraIntrinsics
 {
+    FIntPoint ImageResolution;
+    FVector2D FocalLength;
+    FVector2D PrincipalPoint;
 
-    class UARComponent* AddARComponent(TSubclassOf<class UARComponent> InComponentClass, const FGuid& NativeID);
+};
+
+struct FAREnvironmentProbeUpdatePayload
+{
+    FTransform WorldTransform;
+
+};
+
+struct FARFaceUpdatePayload
+{
+    FARSessionPayload SessionPayload;
+    FVector LeftEyePosition;
+    FVector RightEyePosition;
+    FVector LookAtTarget;
+
+};
+
+struct FARGeoAnchorUpdatePayload
+{
+    FARSessionPayload SessionPayload;
+    FTransform WorldTransform;
+    float Longitude;
+    float Latitude;
+    float AltitudeMeters;
+    EARAltitudeSource AltitudeSource;
+    FString AnchorName;
+
+};
+
+struct FARImageUpdatePayload
+{
+    FARSessionPayload SessionPayload;
+    FTransform WorldTransform;
+    class UARCandidateImage* DetectedImage;
+    FVector2D EstimatedSize;
+
+};
+
+struct FARMeshUpdatePayload
+{
+    FARSessionPayload SessionPayload;
+    FTransform WorldTransform;
+    EARObjectClassification ObjectClassification;
+
+};
+
+struct FARObjectUpdatePayload
+{
+    FTransform WorldTransform;
+
+};
+
+struct FARPlaneUpdatePayload
+{
+    FARSessionPayload SessionPayload;
+    FTransform WorldTransform;
+    FVector Center;
+    FVector Extents;
+    TArray<FVector> BoundaryVertices;
+    EARObjectClassification ObjectClassification;
+
+};
+
+struct FARPointUpdatePayload
+{
+};
+
+struct FARPose2D
+{
+    FARSkeletonDefinition SkeletonDefinition;
+    TArray<FVector2D> JointLocations;
+    TArray<bool> IsJointTracked;
+
+};
+
+struct FARPose3D
+{
+    FARSkeletonDefinition SkeletonDefinition;
+    TArray<FTransform> JointTransforms;
+    TArray<bool> IsJointTracked;
+    EARJointTransformSpace JointTransformSpace;
+
+};
+
+struct FARPoseUpdatePayload
+{
+    FTransform WorldTransform;
+    TArray<FTransform> JointTransforms;
+
+};
+
+struct FARQRCodeUpdatePayload
+{
+    FARSessionPayload SessionPayload;
+    FTransform WorldTransform;
+    FVector Extents;
+    FString QRCode;
+
+};
+
+struct FARSessionPayload
+{
+    int32 ConfigFlags;
+    class UMaterialInterface* DefaultMeshMaterial;
+    class UMaterialInterface* DefaultWireframeMeshMaterial;
+
+};
+
+struct FARSessionStatus
+{
+    FString AdditionalInfo;
+    EARSessionStatus Status;
+
+};
+
+struct FARSharedWorldReplicationState
+{
+    int32 PreviewImageOffset;
+    int32 ARWorldOffset;
+
+};
+
+struct FARSkeletonDefinition
+{
+    int32 NumJoints;
+    TArray<FName> JointNames;
+    TArray<int32> ParentIndices;
+
 };
 
 struct FARTraceResult
@@ -26,35 +156,75 @@ struct FARVideoFormat
 
 };
 
-struct FARCameraIntrinsics
+struct FTrackedGeometryGroup
 {
-    FIntPoint ImageResolution;
-    FVector2D FocalLength;
-    FVector2D PrincipalPoint;
+    class AARActor* ARActor;
+    class UARComponent* ARComponent;
+    class UARTrackedGeometry* TrackedGeometry;
 
 };
 
-struct FARSessionStatus
+class AARActor : public AActor
 {
-    FString AdditionalInfo;
-    EARSessionStatus Status;
 
+    class UARComponent* AddARComponent(TSubclassOf<class UARComponent> InComponentClass, const FGuid& NativeID);
 };
 
-struct FARSkeletonDefinition
+class AAROriginActor : public AActor
 {
-    int32 NumJoints;
-    TArray<FName> JointNames;
-    TArray<int32> ParentIndices;
-
 };
 
-struct FARPose2D
+class AARSharedWorldGameMode : public AGameMode
 {
-    FARSkeletonDefinition SkeletonDefinition;
-    TArray<FVector2D> JointLocations;
-    TArray<bool> IsJointTracked;
+    int32 BufferSizePerChunk;
 
+    void SetPreviewImageData(TArray<uint8> ImageData);
+    void SetARWorldSharingIsReady();
+    void SetARSharedWorldData(TArray<uint8> ARWorldData);
+    class AARSharedWorldGameState* GetARSharedWorldGameState();
+};
+
+class AARSharedWorldGameState : public AGameState
+{
+    TArray<uint8> PreviewImageData;
+    TArray<uint8> ARWorldData;
+    int32 PreviewImageBytesTotal;
+    int32 ARWorldBytesTotal;
+    int32 PreviewImageBytesDelivered;
+    int32 ARWorldBytesDelivered;
+
+    void K2_OnARWorldMapIsReady();
+};
+
+class AARSharedWorldPlayerController : public APlayerController
+{
+
+    void ServerMarkReadyForReceiving();
+    void ClientUpdatePreviewImageData(int32 Offset, const TArray<uint8>& Buffer);
+    void ClientUpdateARWorldData(int32 Offset, const TArray<uint8>& Buffer);
+    void ClientInitSharedWorld(int32 PreviewImageSize, int32 ARWorldDataSize);
+};
+
+class AARSkyLight : public ASkyLight
+{
+    class UAREnvironmentCaptureProbe* CaptureProbe;
+
+    void SetEnvironmentCaptureProbe(class UAREnvironmentCaptureProbe* InCaptureProbe);
+};
+
+class UARBaseAsyncTaskBlueprintProxy : public UBlueprintAsyncActionBase
+{
+};
+
+class UARBasicLightEstimate : public UARLightEstimate
+{
+    float AmbientIntensityLumens;
+    float AmbientColorTemperatureKelvin;
+    FLinearColor AmbientColor;
+
+    float GetAmbientIntensityLumens();
+    float GetAmbientColorTemperatureKelvin();
+    FLinearColor GetAmbientColor();
 };
 
 class UARBlueprintLibrary : public UBlueprintFunctionLibrary
@@ -123,39 +293,33 @@ class UARBlueprintLibrary : public UBlueprintFunctionLibrary
     bool AddManualEnvironmentCaptureProbe(FVector Location, FVector Extent);
 };
 
-class UARTraceResultLibrary : public UBlueprintFunctionLibrary
+class UARCandidateImage : public UDataAsset
 {
+    class UTexture2D* CandidateTexture;
+    FString FriendlyName;
+    float Width;
+    float Height;
+    EARCandidateImageOrientation Orientation;
 
-    class UARTrackedGeometry* GetTrackedGeometry(const FARTraceResult& TraceResult);
-    EARLineTraceChannels GetTraceChannel(const FARTraceResult& TraceResult);
-    FTransform GetLocalTransform(const FARTraceResult& TraceResult);
-    FTransform GetLocalToWorldTransform(const FARTraceResult& TraceResult);
-    FTransform GetLocalToTrackingTransform(const FARTraceResult& TraceResult);
-    float GetDistanceFromCamera(const FARTraceResult& TraceResult);
+    float GetPhysicalWidth();
+    float GetPhysicalHeight();
+    EARCandidateImageOrientation GetOrientation();
+    FString GetFriendlyName();
+    class UTexture2D* GetCandidateTexture();
 };
 
-class UARBaseAsyncTaskBlueprintProxy : public UBlueprintAsyncActionBase
+class UARCandidateObject : public UDataAsset
 {
-};
+    TArray<uint8> CandidateObjectData;
+    FString FriendlyName;
+    FBox BoundingBox;
 
-class UARSaveWorldAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
-{
-    FARSaveWorldAsyncTaskBlueprintProxyOnSuccess OnSuccess;
-    void ARSaveWorldPin(const TArray<uint8>& SavedWorld);
-    FARSaveWorldAsyncTaskBlueprintProxyOnFailed OnFailed;
-    void ARSaveWorldPin(const TArray<uint8>& SavedWorld);
-
-    class UARSaveWorldAsyncTaskBlueprintProxy* ARSaveWorld(class UObject* WorldContextObject);
-};
-
-class UARGetCandidateObjectAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
-{
-    FARGetCandidateObjectAsyncTaskBlueprintProxyOnSuccess OnSuccess;
-    void ARGetCandidateObjectPin(class UARCandidateObject* SavedObject);
-    FARGetCandidateObjectAsyncTaskBlueprintProxyOnFailed OnFailed;
-    void ARGetCandidateObjectPin(class UARCandidateObject* SavedObject);
-
-    class UARGetCandidateObjectAsyncTaskBlueprintProxy* ARGetCandidateObject(class UObject* WorldContextObject, FVector Location, FVector Extent);
+    void SetFriendlyName(FString NewName);
+    void SetCandidateObjectData(const TArray<uint8>& InCandidateObject);
+    void SetBoundingBox(const FBox& InBoundingBox);
+    FString GetFriendlyName();
+    TArray<uint8> GetCandidateObjectData();
+    FBox GetBoundingBox();
 };
 
 class UARComponent : public USceneComponent
@@ -174,57 +338,41 @@ class UARComponent : public USceneComponent
     class UMRMeshComponent* GetMRMesh();
 };
 
-struct FARSessionPayload
+class UARDependencyHandler : public UObject
 {
-    int32 ConfigFlags;
-    class UMaterialInterface* DefaultMeshMaterial;
-    class UMaterialInterface* DefaultWireframeMeshMaterial;
+
+    void StartARSessionLatent(class UObject* WorldContextObject, class UARSessionConfig* SessionConfig, FLatentActionInfo LatentInfo);
+    void RequestARSessionPermission(class UObject* WorldContextObject, class UARSessionConfig* SessionConfig, FLatentActionInfo LatentInfo, EARServicePermissionRequestResult& OutPermissionResult);
+    void InstallARService(class UObject* WorldContextObject, FLatentActionInfo LatentInfo, EARServiceInstallRequestResult& OutInstallResult);
+    class UARDependencyHandler* GetARDependencyHandler();
+    void CheckARServiceAvailability(class UObject* WorldContextObject, FLatentActionInfo LatentInfo, EARServiceAvailability& OutAvailability);
+};
+
+class UAREnvironmentCaptureProbe : public UARTrackedGeometry
+{
+    FVector Extent;
+    class UAREnvironmentCaptureProbeTexture* EnvironmentCaptureTexture;
+
+    FVector GetExtent();
+    class UAREnvironmentCaptureProbeTexture* GetEnvironmentCaptureTexture();
+};
+
+class UAREnvironmentCaptureProbeTexture : public UTextureCube
+{
+    EARTextureType TextureType;
+    float Timestamp;
+    FGuid ExternalTextureGuid;
+    FVector2D Size;
 
 };
 
-struct FARPlaneUpdatePayload
+class UAREnvironmentProbeComponent : public UARComponent
 {
-    FARSessionPayload SessionPayload;
-    FTransform WorldTransform;
-    FVector Center;
-    FVector Extents;
-    TArray<FVector> BoundaryVertices;
-    EARObjectClassification ObjectClassification;
+    FAREnvironmentProbeUpdatePayload ReplicatedPayload;
 
-};
-
-class UARPlaneComponent : public UARComponent
-{
-    FARPlaneUpdatePayload ReplicatedPayload;
-
-    void SetPlaneComponentDebugMode(EPlaneComponentDebugMode NewDebugMode);
-    void SetObjectClassificationDebugColors(const TMap<class EARObjectClassification, class FLinearColor>& InColors);
-    void ServerUpdatePayload(const FARPlaneUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FARPlaneUpdatePayload& Payload);
-    void ReceiveAdd(const FARPlaneUpdatePayload& Payload);
-    TMap<class EARObjectClassification, class FLinearColor> GetObjectClassificationDebugColors();
-};
-
-struct FARPointUpdatePayload
-{
-};
-
-class UARPointComponent : public UARComponent
-{
-    FARPointUpdatePayload ReplicatedPayload;
-
-    void ServerUpdatePayload(const FARPointUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FARPointUpdatePayload& Payload);
-    void ReceiveAdd(const FARPointUpdatePayload& Payload);
-};
-
-struct FARFaceUpdatePayload
-{
-    FARSessionPayload SessionPayload;
-    FVector LeftEyePosition;
-    FVector RightEyePosition;
-    FVector LookAtTarget;
-
+    void ServerUpdatePayload(const FAREnvironmentProbeUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FAREnvironmentProbeUpdatePayload& Payload);
+    void ReceiveAdd(const FAREnvironmentProbeUpdatePayload& Payload);
 };
 
 class UARFaceComponent : public UARComponent
@@ -240,118 +388,27 @@ class UARFaceComponent : public UARComponent
     void ReceiveAdd(const FARFaceUpdatePayload& Payload);
 };
 
-struct FARImageUpdatePayload
+class UARFaceGeometry : public UARTrackedGeometry
 {
-    FARSessionPayload SessionPayload;
-    FTransform WorldTransform;
-    class UARCandidateImage* DetectedImage;
-    FVector2D EstimatedSize;
+    FVector LookAtTarget;
+    bool bIsTracked;
+    TMap<EARFaceBlendShape, float> BlendShapes;
+    FTransform LeftEyeTransform;
+    FTransform RightEyeTransform;
 
+    FTransform GetWorldSpaceEyeTransform(EAREye eye);
+    FTransform GetLocalSpaceEyeTransform(EAREye eye);
+    float GetBlendShapeValue(EARFaceBlendShape BlendShape);
+    TMap<EARFaceBlendShape, float> GetBlendShapes();
 };
 
-class UARImageComponent : public UARComponent
+class UARGeoAnchor : public UARTrackedGeometry
 {
-    FARImageUpdatePayload ReplicatedPayload;
 
-    void SetImageComponentDebugMode(EImageComponentDebugMode NewDebugMode);
-    void ServerUpdatePayload(const FARImageUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FARImageUpdatePayload& Payload);
-    void ReceiveAdd(const FARImageUpdatePayload& Payload);
-};
-
-struct FARQRCodeUpdatePayload
-{
-    FARSessionPayload SessionPayload;
-    FTransform WorldTransform;
-    FVector Extents;
-    FString QRCode;
-
-};
-
-class UARQRCodeComponent : public UARComponent
-{
-    FARQRCodeUpdatePayload ReplicatedPayload;
-
-    void SetQRCodeComponentDebugMode(EQRCodeComponentDebugMode NewDebugMode);
-    void ServerUpdatePayload(const FARQRCodeUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FARQRCodeUpdatePayload& Payload);
-    void ReceiveAdd(const FARQRCodeUpdatePayload& Payload);
-};
-
-struct FARPoseUpdatePayload
-{
-    FTransform WorldTransform;
-    TArray<FTransform> JointTransforms;
-
-};
-
-class UARPoseComponent : public UARComponent
-{
-    FARPoseUpdatePayload ReplicatedPayload;
-
-    void SetPoseComponentDebugMode(EPoseComponentDebugMode NewDebugMode);
-    void ServerUpdatePayload(const FARPoseUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FARPoseUpdatePayload& Payload);
-    void ReceiveAdd(const FARPoseUpdatePayload& Payload);
-};
-
-struct FAREnvironmentProbeUpdatePayload
-{
-    FTransform WorldTransform;
-
-};
-
-class UAREnvironmentProbeComponent : public UARComponent
-{
-    FAREnvironmentProbeUpdatePayload ReplicatedPayload;
-
-    void ServerUpdatePayload(const FAREnvironmentProbeUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FAREnvironmentProbeUpdatePayload& Payload);
-    void ReceiveAdd(const FAREnvironmentProbeUpdatePayload& Payload);
-};
-
-struct FARObjectUpdatePayload
-{
-    FTransform WorldTransform;
-
-};
-
-class UARObjectComponent : public UARComponent
-{
-    FARObjectUpdatePayload ReplicatedPayload;
-
-    void ServerUpdatePayload(const FARObjectUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FARObjectUpdatePayload& Payload);
-    void ReceiveAdd(const FARObjectUpdatePayload& Payload);
-};
-
-struct FARMeshUpdatePayload
-{
-    FARSessionPayload SessionPayload;
-    FTransform WorldTransform;
-    EARObjectClassification ObjectClassification;
-
-};
-
-class UARMeshComponent : public UARComponent
-{
-    FARMeshUpdatePayload ReplicatedPayload;
-
-    void ServerUpdatePayload(const FARMeshUpdatePayload& NewPayload);
-    void ReceiveUpdate(const FARMeshUpdatePayload& Payload);
-    void ReceiveAdd(const FARMeshUpdatePayload& Payload);
-};
-
-struct FARGeoAnchorUpdatePayload
-{
-    FARSessionPayload SessionPayload;
-    FTransform WorldTransform;
-    float Longitude;
-    float Latitude;
-    float AltitudeMeters;
-    EARAltitudeSource AltitudeSource;
-    FString AnchorName;
-
+    float GetLongitude();
+    float GetLatitude();
+    EARAltitudeSource GetAltitudeSource();
+    float GetAltitudeMeters();
 };
 
 class UARGeoAnchorComponent : public UARComponent
@@ -362,16 +419,6 @@ class UARGeoAnchorComponent : public UARComponent
     void ServerUpdatePayload(const FARGeoAnchorUpdatePayload& NewPayload);
     void ReceiveUpdate(const FARGeoAnchorUpdatePayload& Payload);
     void ReceiveAdd(const FARGeoAnchorUpdatePayload& Payload);
-};
-
-class UARDependencyHandler : public UObject
-{
-
-    void StartARSessionLatent(class UObject* WorldContextObject, class UARSessionConfig* SessionConfig, FLatentActionInfo LatentInfo);
-    void RequestARSessionPermission(class UObject* WorldContextObject, class UARSessionConfig* SessionConfig, FLatentActionInfo LatentInfo, EARServicePermissionRequestResult& OutPermissionResult);
-    void InstallARService(class UObject* WorldContextObject, FLatentActionInfo LatentInfo, EARServiceInstallRequestResult& OutInstallResult);
-    class UARDependencyHandler* GetARDependencyHandler();
-    void CheckARServiceAvailability(class UObject* WorldContextObject, FLatentActionInfo LatentInfo, EARServiceAvailability& OutAvailability);
 };
 
 class UARGeoTrackingSupport : public UObject
@@ -385,27 +432,24 @@ class UARGeoTrackingSupport : public UObject
     bool AddGeoAnchorAtLocation(float Longitude, float Latitude, FString OptionalAnchorName);
 };
 
-class UCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
+class UARGetCandidateObjectAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
 {
-    FCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxyOnSuccess OnSuccess;
-    void GeoTrackingAvailabilityDelegate(bool bIsAvailable, FString Error);
-    FCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxyOnFailed OnFailed;
-    void GeoTrackingAvailabilityDelegate(bool bIsAvailable, FString Error);
+    FARGetCandidateObjectAsyncTaskBlueprintProxyOnSuccess OnSuccess;
+    void ARGetCandidateObjectPin(class UARCandidateObject* SavedObject);
+    FARGetCandidateObjectAsyncTaskBlueprintProxyOnFailed OnFailed;
+    void ARGetCandidateObjectPin(class UARCandidateObject* SavedObject);
 
-    void GeoTrackingAvailabilityDelegate__DelegateSignature(bool bIsAvailable, FString Error);
-    class UCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxy* CheckGeoTrackingAvailabilityAtLocation(class UObject* WorldContextObject, float Longitude, float Latitude);
-    class UCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxy* CheckGeoTrackingAvailability(class UObject* WorldContextObject);
+    class UARGetCandidateObjectAsyncTaskBlueprintProxy* ARGetCandidateObject(class UObject* WorldContextObject, FVector Location, FVector Extent);
 };
 
-class UGetGeoLocationAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
+class UARImageComponent : public UARComponent
 {
-    FGetGeoLocationAsyncTaskBlueprintProxyOnSuccess OnSuccess;
-    void GetGeoLocationDelegate(float Longitude, float Latitude, float Altitude, FString Error);
-    FGetGeoLocationAsyncTaskBlueprintProxyOnFailed OnFailed;
-    void GetGeoLocationDelegate(float Longitude, float Latitude, float Altitude, FString Error);
+    FARImageUpdatePayload ReplicatedPayload;
 
-    void GetGeoLocationDelegate__DelegateSignature(float Longitude, float Latitude, float Altitude, FString Error);
-    class UGetGeoLocationAsyncTaskBlueprintProxy* GetGeoLocationAtWorldPosition(class UObject* WorldContextObject, const FVector& WorldPosition);
+    void SetImageComponentDebugMode(EImageComponentDebugMode NewDebugMode);
+    void ServerUpdatePayload(const FARImageUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FARImageUpdatePayload& Payload);
+    void ReceiveAdd(const FARImageUpdatePayload& Payload);
 };
 
 class UARLifeCycleComponent : public USceneComponent
@@ -425,19 +469,28 @@ class UARLightEstimate : public UObject
 {
 };
 
-class UARBasicLightEstimate : public UARLightEstimate
+class UARMeshComponent : public UARComponent
 {
-    float AmbientIntensityLumens;
-    float AmbientColorTemperatureKelvin;
-    FLinearColor AmbientColor;
+    FARMeshUpdatePayload ReplicatedPayload;
 
-    float GetAmbientIntensityLumens();
-    float GetAmbientColorTemperatureKelvin();
-    FLinearColor GetAmbientColor();
+    void ServerUpdatePayload(const FARMeshUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FARMeshUpdatePayload& Payload);
+    void ReceiveAdd(const FARMeshUpdatePayload& Payload);
 };
 
-class AAROriginActor : public AActor
+class UARMeshGeometry : public UARTrackedGeometry
 {
+
+    bool GetObjectClassificationAtLocation(const FVector& InWorldLocation, EARObjectClassification& OutClassification, FVector& OutClassificationLocation, float MaxLocationDiff);
+};
+
+class UARObjectComponent : public UARComponent
+{
+    FARObjectUpdatePayload ReplicatedPayload;
+
+    void ServerUpdatePayload(const FARObjectUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FARObjectUpdatePayload& Payload);
+    void ReceiveAdd(const FARObjectUpdatePayload& Payload);
 };
 
 class UARPin : public UObject
@@ -459,6 +512,72 @@ class UARPin : public UObject
     FTransform GetLocalToTrackingTransform();
     FName GetDebugName();
     void DebugDraw(class UWorld* World, const FLinearColor& Color, float Scale, float PersistForSeconds);
+};
+
+class UARPlaneComponent : public UARComponent
+{
+    FARPlaneUpdatePayload ReplicatedPayload;
+
+    void SetPlaneComponentDebugMode(EPlaneComponentDebugMode NewDebugMode);
+    void SetObjectClassificationDebugColors(const TMap<class EARObjectClassification, class FLinearColor>& InColors);
+    void ServerUpdatePayload(const FARPlaneUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FARPlaneUpdatePayload& Payload);
+    void ReceiveAdd(const FARPlaneUpdatePayload& Payload);
+    TMap<class EARObjectClassification, class FLinearColor> GetObjectClassificationDebugColors();
+};
+
+class UARPlaneGeometry : public UARTrackedGeometry
+{
+    EARPlaneOrientation Orientation;
+    FVector Center;
+    FVector Extent;
+    TArray<FVector> BoundaryPolygon;
+    class UARPlaneGeometry* SubsumedBy;
+
+    class UARPlaneGeometry* GetSubsumedBy();
+    EARPlaneOrientation GetOrientation();
+    FVector GetExtent();
+    FVector GetCenter();
+    TArray<FVector> GetBoundaryPolygonInLocalSpace();
+};
+
+class UARPointComponent : public UARComponent
+{
+    FARPointUpdatePayload ReplicatedPayload;
+
+    void ServerUpdatePayload(const FARPointUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FARPointUpdatePayload& Payload);
+    void ReceiveAdd(const FARPointUpdatePayload& Payload);
+};
+
+class UARPoseComponent : public UARComponent
+{
+    FARPoseUpdatePayload ReplicatedPayload;
+
+    void SetPoseComponentDebugMode(EPoseComponentDebugMode NewDebugMode);
+    void ServerUpdatePayload(const FARPoseUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FARPoseUpdatePayload& Payload);
+    void ReceiveAdd(const FARPoseUpdatePayload& Payload);
+};
+
+class UARQRCodeComponent : public UARComponent
+{
+    FARQRCodeUpdatePayload ReplicatedPayload;
+
+    void SetQRCodeComponentDebugMode(EQRCodeComponentDebugMode NewDebugMode);
+    void ServerUpdatePayload(const FARQRCodeUpdatePayload& NewPayload);
+    void ReceiveUpdate(const FARQRCodeUpdatePayload& Payload);
+    void ReceiveAdd(const FARQRCodeUpdatePayload& Payload);
+};
+
+class UARSaveWorldAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
+{
+    FARSaveWorldAsyncTaskBlueprintProxyOnSuccess OnSuccess;
+    void ARSaveWorldPin(const TArray<uint8>& SavedWorld);
+    FARSaveWorldAsyncTaskBlueprintProxyOnFailed OnFailed;
+    void ARSaveWorldPin(const TArray<uint8>& SavedWorld);
+
+    class UARSaveWorldAsyncTaskBlueprintProxy* ARSaveWorld(class UObject* WorldContextObject);
 };
 
 class UARSessionConfig : public UDataAsset
@@ -545,44 +664,6 @@ class UARSessionConfig : public UDataAsset
     void AddCandidateImage(class UARCandidateImage* NewCandidateImage);
 };
 
-class AARSharedWorldGameMode : public AGameMode
-{
-    int32 BufferSizePerChunk;
-
-    void SetPreviewImageData(TArray<uint8> ImageData);
-    void SetARWorldSharingIsReady();
-    void SetARSharedWorldData(TArray<uint8> ARWorldData);
-    class AARSharedWorldGameState* GetARSharedWorldGameState();
-};
-
-class AARSharedWorldGameState : public AGameState
-{
-    TArray<uint8> PreviewImageData;
-    TArray<uint8> ARWorldData;
-    int32 PreviewImageBytesTotal;
-    int32 ARWorldBytesTotal;
-    int32 PreviewImageBytesDelivered;
-    int32 ARWorldBytesDelivered;
-
-    void K2_OnARWorldMapIsReady();
-};
-
-class AARSharedWorldPlayerController : public APlayerController
-{
-
-    void ServerMarkReadyForReceiving();
-    void ClientUpdatePreviewImageData(int32 Offset, const TArray<uint8>& Buffer);
-    void ClientUpdateARWorldData(int32 Offset, const TArray<uint8>& Buffer);
-    void ClientInitSharedWorld(int32 PreviewImageSize, int32 ARWorldDataSize);
-};
-
-class AARSkyLight : public ASkyLight
-{
-    class UAREnvironmentCaptureProbe* CaptureProbe;
-
-    void SetEnvironmentCaptureProbe(class UAREnvironmentCaptureProbe* InCaptureProbe);
-};
-
 class UARTexture : public UTexture
 {
     EARTextureType TextureType;
@@ -590,10 +671,6 @@ class UARTexture : public UTexture
     FGuid ExternalTextureGuid;
     FVector2D Size;
 
-};
-
-class UARTextureCameraImage : public UARTexture
-{
 };
 
 class UARTextureCameraDepth : public UARTexture
@@ -604,138 +681,23 @@ class UARTextureCameraDepth : public UARTexture
 
 };
 
-class UAREnvironmentCaptureProbeTexture : public UTextureCube
+class UARTextureCameraImage : public UARTexture
 {
-    EARTextureType TextureType;
-    float Timestamp;
-    FGuid ExternalTextureGuid;
-    FVector2D Size;
-
 };
 
 class UARTraceResultDummy : public UObject
 {
 };
 
-class UARTrackedGeometry : public UObject
-{
-    FGuid UniqueId;
-    FTransform LocalToTrackingTransform;
-    FTransform LocalToAlignedTrackingTransform;
-    EARTrackingState TrackingState;
-    class UMRMeshComponent* UnderlyingMesh;
-    EARObjectClassification ObjectClassification;
-    EARSpatialMeshUsageFlags SpatialMeshUsageFlags;
-    int32 LastUpdateFrameNumber;
-    FName DebugName;
-
-    bool IsTracked();
-    bool HasSpatialMeshUsageFlag(const EARSpatialMeshUsageFlags InFlag);
-    class UMRMeshComponent* GetUnderlyingMesh();
-    EARTrackingState GetTrackingState();
-    EARObjectClassification GetObjectClassification();
-    FString GetName();
-    FTransform GetLocalToWorldTransform();
-    FTransform GetLocalToTrackingTransform();
-    float GetLastUpdateTimestamp();
-    int32 GetLastUpdateFrameNumber();
-    FName GetDebugName();
-};
-
-class UARPlaneGeometry : public UARTrackedGeometry
-{
-    EARPlaneOrientation Orientation;
-    FVector Center;
-    FVector Extent;
-    TArray<FVector> BoundaryPolygon;
-    class UARPlaneGeometry* SubsumedBy;
-
-    class UARPlaneGeometry* GetSubsumedBy();
-    EARPlaneOrientation GetOrientation();
-    FVector GetExtent();
-    FVector GetCenter();
-    TArray<FVector> GetBoundaryPolygonInLocalSpace();
-};
-
-class UARTrackedPoint : public UARTrackedGeometry
-{
-};
-
-class UARTrackedImage : public UARTrackedGeometry
-{
-    class UARCandidateImage* DetectedImage;
-    FVector2D EstimatedSize;
-
-    FVector2D GetEstimateSize();
-    class UARCandidateImage* GetDetectedImage();
-};
-
-class UARTrackedQRCode : public UARTrackedImage
-{
-    FString QRCode;
-    int32 Version;
-
-};
-
-class UARFaceGeometry : public UARTrackedGeometry
-{
-    FVector LookAtTarget;
-    bool bIsTracked;
-    TMap<EARFaceBlendShape, float> BlendShapes;
-    FTransform LeftEyeTransform;
-    FTransform RightEyeTransform;
-
-    FTransform GetWorldSpaceEyeTransform(EAREye eye);
-    FTransform GetLocalSpaceEyeTransform(EAREye eye);
-    float GetBlendShapeValue(EARFaceBlendShape BlendShape);
-    TMap<EARFaceBlendShape, float> GetBlendShapes();
-};
-
-class UAREnvironmentCaptureProbe : public UARTrackedGeometry
-{
-    FVector Extent;
-    class UAREnvironmentCaptureProbeTexture* EnvironmentCaptureTexture;
-
-    FVector GetExtent();
-    class UAREnvironmentCaptureProbeTexture* GetEnvironmentCaptureTexture();
-};
-
-class UARTrackedObject : public UARTrackedGeometry
-{
-    class UARCandidateObject* DetectedObject;
-
-    class UARCandidateObject* GetDetectedObject();
-};
-
-struct FARPose3D
-{
-    FARSkeletonDefinition SkeletonDefinition;
-    TArray<FTransform> JointTransforms;
-    TArray<bool> IsJointTracked;
-    EARJointTransformSpace JointTransformSpace;
-
-};
-
-class UARTrackedPose : public UARTrackedGeometry
-{
-    FARPose3D TrackedPose;
-
-    FARPose3D GetTrackedPoseData();
-};
-
-class UARMeshGeometry : public UARTrackedGeometry
+class UARTraceResultLibrary : public UBlueprintFunctionLibrary
 {
 
-    bool GetObjectClassificationAtLocation(const FVector& InWorldLocation, EARObjectClassification& OutClassification, FVector& OutClassificationLocation, float MaxLocationDiff);
-};
-
-class UARGeoAnchor : public UARTrackedGeometry
-{
-
-    float GetLongitude();
-    float GetLatitude();
-    EARAltitudeSource GetAltitudeSource();
-    float GetAltitudeMeters();
+    class UARTrackedGeometry* GetTrackedGeometry(const FARTraceResult& TraceResult);
+    EARLineTraceChannels GetTraceChannel(const FARTraceResult& TraceResult);
+    FTransform GetLocalTransform(const FARTraceResult& TraceResult);
+    FTransform GetLocalToWorldTransform(const FARTraceResult& TraceResult);
+    FTransform GetLocalToTrackingTransform(const FARTraceResult& TraceResult);
+    float GetDistanceFromCamera(const FARTraceResult& TraceResult);
 };
 
 class UARTrackableNotifyComponent : public UActorComponent
@@ -785,52 +747,90 @@ class UARTrackableNotifyComponent : public UActorComponent
 
 };
 
+class UARTrackedGeometry : public UObject
+{
+    FGuid UniqueId;
+    FTransform LocalToTrackingTransform;
+    FTransform LocalToAlignedTrackingTransform;
+    EARTrackingState TrackingState;
+    class UMRMeshComponent* UnderlyingMesh;
+    EARObjectClassification ObjectClassification;
+    EARSpatialMeshUsageFlags SpatialMeshUsageFlags;
+    int32 LastUpdateFrameNumber;
+    FName DebugName;
+
+    bool IsTracked();
+    bool HasSpatialMeshUsageFlag(const EARSpatialMeshUsageFlags InFlag);
+    class UMRMeshComponent* GetUnderlyingMesh();
+    EARTrackingState GetTrackingState();
+    EARObjectClassification GetObjectClassification();
+    FString GetName();
+    FTransform GetLocalToWorldTransform();
+    FTransform GetLocalToTrackingTransform();
+    float GetLastUpdateTimestamp();
+    int32 GetLastUpdateFrameNumber();
+    FName GetDebugName();
+};
+
+class UARTrackedImage : public UARTrackedGeometry
+{
+    class UARCandidateImage* DetectedImage;
+    FVector2D EstimatedSize;
+
+    FVector2D GetEstimateSize();
+    class UARCandidateImage* GetDetectedImage();
+};
+
+class UARTrackedObject : public UARTrackedGeometry
+{
+    class UARCandidateObject* DetectedObject;
+
+    class UARCandidateObject* GetDetectedObject();
+};
+
+class UARTrackedPoint : public UARTrackedGeometry
+{
+};
+
+class UARTrackedPose : public UARTrackedGeometry
+{
+    FARPose3D TrackedPose;
+
+    FARPose3D GetTrackedPoseData();
+};
+
+class UARTrackedQRCode : public UARTrackedImage
+{
+    FString QRCode;
+    int32 Version;
+
+};
+
 class UARTypesDummyClass : public UObject
 {
 };
 
-class UARCandidateImage : public UDataAsset
+class UCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
 {
-    class UTexture2D* CandidateTexture;
-    FString FriendlyName;
-    float Width;
-    float Height;
-    EARCandidateImageOrientation Orientation;
+    FCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxyOnSuccess OnSuccess;
+    void GeoTrackingAvailabilityDelegate(bool bIsAvailable, FString Error);
+    FCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxyOnFailed OnFailed;
+    void GeoTrackingAvailabilityDelegate(bool bIsAvailable, FString Error);
 
-    float GetPhysicalWidth();
-    float GetPhysicalHeight();
-    EARCandidateImageOrientation GetOrientation();
-    FString GetFriendlyName();
-    class UTexture2D* GetCandidateTexture();
+    void GeoTrackingAvailabilityDelegate__DelegateSignature(bool bIsAvailable, FString Error);
+    class UCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxy* CheckGeoTrackingAvailabilityAtLocation(class UObject* WorldContextObject, float Longitude, float Latitude);
+    class UCheckGeoTrackingAvailabilityAsyncTaskBlueprintProxy* CheckGeoTrackingAvailability(class UObject* WorldContextObject);
 };
 
-class UARCandidateObject : public UDataAsset
+class UGetGeoLocationAsyncTaskBlueprintProxy : public UARBaseAsyncTaskBlueprintProxy
 {
-    TArray<uint8> CandidateObjectData;
-    FString FriendlyName;
-    FBox BoundingBox;
+    FGetGeoLocationAsyncTaskBlueprintProxyOnSuccess OnSuccess;
+    void GetGeoLocationDelegate(float Longitude, float Latitude, float Altitude, FString Error);
+    FGetGeoLocationAsyncTaskBlueprintProxyOnFailed OnFailed;
+    void GetGeoLocationDelegate(float Longitude, float Latitude, float Altitude, FString Error);
 
-    void SetFriendlyName(FString NewName);
-    void SetCandidateObjectData(const TArray<uint8>& InCandidateObject);
-    void SetBoundingBox(const FBox& InBoundingBox);
-    FString GetFriendlyName();
-    TArray<uint8> GetCandidateObjectData();
-    FBox GetBoundingBox();
-};
-
-struct FTrackedGeometryGroup
-{
-    class AARActor* ARActor;
-    class UARComponent* ARComponent;
-    class UARTrackedGeometry* TrackedGeometry;
-
-};
-
-struct FARSharedWorldReplicationState
-{
-    int32 PreviewImageOffset;
-    int32 ARWorldOffset;
-
+    void GetGeoLocationDelegate__DelegateSignature(float Longitude, float Latitude, float Altitude, FString Error);
+    class UGetGeoLocationAsyncTaskBlueprintProxy* GetGeoLocationAtWorldPosition(class UObject* WorldContextObject, const FVector& WorldPosition);
 };
 
 #endif

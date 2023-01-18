@@ -15,26 +15,6 @@ struct FBodyInstanceCore
 
 };
 
-class UPhysicalMaterial : public UObject
-{
-    float Friction;
-    float StaticFriction;
-    TEnumAsByte<EFrictionCombineMode::Type> FrictionCombineMode;
-    bool bOverrideFrictionCombineMode;
-    float Restitution;
-    TEnumAsByte<EFrictionCombineMode::Type> RestitutionCombineMode;
-    bool bOverrideRestitutionCombineMode;
-    float Density;
-    float SleepLinearVelocityThreshold;
-    float SleepAngularVelocityThreshold;
-    int32 SleepCounterThreshold;
-    float RaiseMassToPower;
-    float DestructibleDamageThresholdScale;
-    class UDEPRECATED_PhysicalMaterialPropertyBase* PhysicalMaterialProperty;
-    TEnumAsByte<EPhysicalSurface> SurfaceType;
-
-};
-
 class UBodySetupCore : public UObject
 {
     FName BoneName;
@@ -58,6 +38,26 @@ class UChaosPhysicalMaterial : public UObject
 
 class UDEPRECATED_PhysicalMaterialPropertyBase : public UObject
 {
+};
+
+class UPhysicalMaterial : public UObject
+{
+    float Friction;
+    float StaticFriction;
+    TEnumAsByte<EFrictionCombineMode::Type> FrictionCombineMode;
+    bool bOverrideFrictionCombineMode;
+    float Restitution;
+    TEnumAsByte<EFrictionCombineMode::Type> RestitutionCombineMode;
+    bool bOverrideRestitutionCombineMode;
+    float Density;
+    float SleepLinearVelocityThreshold;
+    float SleepAngularVelocityThreshold;
+    int32 SleepCounterThreshold;
+    float RaiseMassToPower;
+    float DestructibleDamageThresholdScale;
+    class UDEPRECATED_PhysicalMaterialPropertyBase* PhysicalMaterialProperty;
+    TEnumAsByte<EPhysicalSurface> SurfaceType;
+
 };
 
 class UPhysicsSettingsCore : public UDeveloperSettings

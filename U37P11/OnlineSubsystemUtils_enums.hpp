@@ -1,21 +1,3 @@
-enum class EInAppPurchaseStatus {
-    Invalid = 0,
-    Failed = 1,
-    Deferred = 2,
-    Canceled = 3,
-    Purchased = 4,
-    Restored = 5,
-    EInAppPurchaseStatus_MAX = 6,
-};
-
-enum class EOnlineProxyStoreOfferDiscountType {
-    NotOnSale = 0,
-    Percentage = 1,
-    DiscountAmount = 2,
-    PayAmount = 3,
-    EOnlineProxyStoreOfferDiscountType_MAX = 4,
-};
-
 enum class EBeaconConnectionState {
     Invalid = 0,
     Closed = 1,
@@ -34,6 +16,24 @@ enum class EClientRequestType {
     ReservationRemoveMembers = 6,
     AddOrUpdateReservation = 7,
     EClientRequestType_MAX = 8,
+};
+
+enum class EInAppPurchaseStatus {
+    Invalid = 0,
+    Failed = 1,
+    Deferred = 2,
+    Canceled = 3,
+    Purchased = 4,
+    Restored = 5,
+    EInAppPurchaseStatus_MAX = 6,
+};
+
+enum class EOnlineProxyStoreOfferDiscountType {
+    NotOnSale = 0,
+    Percentage = 1,
+    DiscountAmount = 2,
+    PayAmount = 3,
+    EOnlineProxyStoreOfferDiscountType_MAX = 4,
 };
 
 namespace EPartyReservationResult {

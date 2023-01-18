@@ -3,6 +3,15 @@
 
 #include "MediaUtils_enums.hpp"
 
+struct FMediaPlayerOptions
+{
+    FMediaPlayerTrackOptions Tracks;
+    FTimespan SeekTime;
+    EMediaPlayerOptionBooleanOverride PlayOnOpen;
+    EMediaPlayerOptionBooleanOverride Loop;
+
+};
+
 struct FMediaPlayerTrackOptions
 {
     int32 audio;
@@ -12,15 +21,6 @@ struct FMediaPlayerTrackOptions
     int32 Subtitle;
     int32 Text;
     int32 Video;
-
-};
-
-struct FMediaPlayerOptions
-{
-    FMediaPlayerTrackOptions Tracks;
-    FTimespan SeekTime;
-    EMediaPlayerOptionBooleanOverride PlayOnOpen;
-    EMediaPlayerOptionBooleanOverride Loop;
 
 };
 

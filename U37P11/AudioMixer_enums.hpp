@@ -14,12 +14,11 @@ enum class EMusicalNoteName {
     EMusicalNoteName_MAX = 12,
 };
 
-enum class ESubmixEffectDynamicsKeySource {
-    Default = 0,
-    AudioBus = 1,
-    Submix = 2,
-    Count = 3,
-    ESubmixEffectDynamicsKeySource_MAX = 4,
+enum class EQuarztClockManagerType {
+    AudioEngine = 0,
+    QuartzSubsystem = 1,
+    Count = 2,
+    EQuarztClockManagerType_MAX = 3,
 };
 
 enum class ESubmixEffectDynamicsChannelLinkMode {
@@ -28,6 +27,14 @@ enum class ESubmixEffectDynamicsChannelLinkMode {
     Peak = 2,
     Count = 3,
     ESubmixEffectDynamicsChannelLinkMode_MAX = 4,
+};
+
+enum class ESubmixEffectDynamicsKeySource {
+    Default = 0,
+    AudioBus = 1,
+    Submix = 2,
+    Count = 3,
+    ESubmixEffectDynamicsKeySource_MAX = 4,
 };
 
 enum class ESubmixEffectDynamicsPeakMode {
@@ -45,12 +52,5 @@ enum class ESubmixEffectDynamicsProcessorType {
     Gate = 3,
     Count = 4,
     ESubmixEffectDynamicsProcessorType_MAX = 5,
-};
-
-enum class EQuarztClockManagerType {
-    AudioEngine = 0,
-    QuartzSubsystem = 1,
-    Count = 2,
-    EQuarztClockManagerType_MAX = 3,
 };
 

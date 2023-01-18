@@ -3,14 +3,11 @@
 
 #include "GeometryCollectionEngine_enums.hpp"
 
-struct FChaosCollisionEventRequestSettings
+struct FChaosBreakingEventData
 {
-    int32 MaxNumberResults;
-    float MinMass;
-    float MinSpeed;
-    float MinImpulse;
-    float MaxDistance;
-    EChaosCollisionSortMethod SortMethod;
+    FVector Location;
+    FVector Velocity;
+    float Mass;
 
 };
 
@@ -22,27 +19,6 @@ struct FChaosBreakingEventRequestSettings
     float MinMass;
     float MaxDistance;
     EChaosBreakingSortMethod SortMethod;
-
-};
-
-struct FChaosTrailingEventRequestSettings
-{
-    int32 MaxNumberOfResults;
-    float MinMass;
-    float MinSpeed;
-    float MinAngularSpeed;
-    float MaxDistance;
-    EChaosTrailingSortMethod SortMethod;
-
-};
-
-struct FChaosTrailingEventData
-{
-    FVector Location;
-    FVector Velocity;
-    FVector AngularVelocity;
-    float Mass;
-    int32 ParticleIndex;
 
 };
 
@@ -58,60 +34,35 @@ struct FChaosCollisionEventData
 
 };
 
-struct FChaosBreakingEventData
+struct FChaosCollisionEventRequestSettings
+{
+    int32 MaxNumberResults;
+    float MinMass;
+    float MinSpeed;
+    float MinImpulse;
+    float MaxDistance;
+    EChaosCollisionSortMethod SortMethod;
+
+};
+
+struct FChaosTrailingEventData
 {
     FVector Location;
     FVector Velocity;
+    FVector AngularVelocity;
     float Mass;
+    int32 ParticleIndex;
 
 };
 
-class UChaosDestructionListener : public USceneComponent
+struct FChaosTrailingEventRequestSettings
 {
-    uint8 bIsCollisionEventListeningEnabled;
-    uint8 bIsBreakingEventListeningEnabled;
-    uint8 bIsTrailingEventListeningEnabled;
-    FChaosCollisionEventRequestSettings CollisionEventRequestSettings;
-    FChaosBreakingEventRequestSettings BreakingEventRequestSettings;
-    FChaosTrailingEventRequestSettings TrailingEventRequestSettings;
-    TSet<AChaosSolverActor*> ChaosSolverActors;
-    TSet<AGeometryCollectionActor*> GeometryCollectionActors;
-    FChaosDestructionListenerOnCollisionEvents OnCollisionEvents;
-    void OnChaosCollisionEvents(const TArray<FChaosCollisionEventData>& CollisionEvents);
-    FChaosDestructionListenerOnBreakingEvents OnBreakingEvents;
-    void OnChaosBreakingEvents(const TArray<FChaosBreakingEventData>& BreakingEvents);
-    FChaosDestructionListenerOnTrailingEvents OnTrailingEvents;
-    void OnChaosTrailingEvents(const TArray<FChaosTrailingEventData>& TrailingEvents);
-
-    void SortTrailingEvents(TArray<FChaosTrailingEventData>& TrailingEvents, EChaosTrailingSortMethod SortMethod);
-    void SortCollisionEvents(TArray<FChaosCollisionEventData>& CollisionEvents, EChaosCollisionSortMethod SortMethod);
-    void SortBreakingEvents(TArray<FChaosBreakingEventData>& BreakingEvents, EChaosBreakingSortMethod SortMethod);
-    void SetTrailingEventRequestSettings(const FChaosTrailingEventRequestSettings& InSettings);
-    void SetTrailingEventEnabled(bool bIsEnabled);
-    void SetCollisionEventRequestSettings(const FChaosCollisionEventRequestSettings& InSettings);
-    void SetCollisionEventEnabled(bool bIsEnabled);
-    void SetBreakingEventRequestSettings(const FChaosBreakingEventRequestSettings& InSettings);
-    void SetBreakingEventEnabled(bool bIsEnabled);
-    void RemoveGeometryCollectionActor(class AGeometryCollectionActor* GeometryCollectionActor);
-    void RemoveChaosSolverActor(class AChaosSolverActor* ChaosSolverActor);
-    bool IsEventListening();
-    void AddGeometryCollectionActor(class AGeometryCollectionActor* GeometryCollectionActor);
-    void AddChaosSolverActor(class AChaosSolverActor* ChaosSolverActor);
-};
-
-class AGeometryCollectionActor : public AActor
-{
-    class UGeometryCollectionComponent* GeometryCollectionComponent;
-    class UGeometryCollectionDebugDrawComponent* GeometryCollectionDebugDrawComponent;
-
-    bool RaycastSingle(FVector Start, FVector End, FHitResult& OutHit);
-};
-
-class UGeometryCollectionCache : public UObject
-{
-    FRecordedTransformTrack RecordedData;
-    class UGeometryCollection* SupportedCollection;
-    FGuid CompatibleCollectionState;
+    int32 MaxNumberOfResults;
+    float MinMass;
+    float MinSpeed;
+    float MinAngularSpeed;
+    float MaxDistance;
+    EChaosTrailingSortMethod SortMethod;
 
 };
 
@@ -140,70 +91,51 @@ struct FGeomComponentCacheParameters
 
 };
 
-struct FGeometryCollectionRepData
-{
-};
-
-class UGeometryCollectionComponent : public UMeshComponent
-{
-    class AChaosSolverActor* ChaosSolverActor;
-    class UGeometryCollection* RestCollection;
-    TArray<class AFieldSystemActor*> InitializationFields;
-    bool Simulating;
-    EObjectStateTypeEnum ObjectType;
-    bool EnableClustering;
-    int32 ClusterGroupIndex;
-    int32 MaxClusterLevel;
-    TArray<float> DamageThreshold;
-    EClusterConnectionTypeEnum ClusterConnectionType;
-    int32 CollisionGroup;
-    float CollisionSampleFraction;
-    float LinearEtherDrag;
-    float AngularEtherDrag;
-    class UChaosPhysicalMaterial* PhysicalMaterial;
-    EInitialVelocityTypeEnum InitialVelocityType;
-    FVector InitialLinearVelocity;
-    FVector InitialAngularVelocity;
-    class UPhysicalMaterial* PhysicalMaterialOverride;
-    FGeomComponentCacheParameters CacheParameters;
-    FGeometryCollectionComponentNotifyGeometryCollectionPhysicsStateChange NotifyGeometryCollectionPhysicsStateChange;
-    void NotifyGeometryCollectionPhysicsStateChange(class UGeometryCollectionComponent* FracturedComponent);
-    FGeometryCollectionComponentNotifyGeometryCollectionPhysicsLoadingStateChange NotifyGeometryCollectionPhysicsLoadingStateChange;
-    void NotifyGeometryCollectionPhysicsLoadingStateChange(class UGeometryCollectionComponent* FracturedComponent);
-    FGeometryCollectionComponentOnChaosBreakEvent OnChaosBreakEvent;
-    void OnChaosBreakEvent(const FChaosBreakEvent& BreakEvent);
-    float DesiredCacheTime;
-    bool CachePlayback;
-    FGeometryCollectionComponentOnChaosPhysicsCollision OnChaosPhysicsCollision;
-    void OnChaosPhysicsCollision(const FChaosPhysicsCollisionInfo& CollisionInfo);
-    bool bNotifyBreaks;
-    bool bNotifyCollisions;
-    bool bEnableReplication;
-    bool bEnableAbandonAfterLevel;
-    int32 ReplicationAbandonClusterLevel;
-    FGeometryCollectionRepData RepData;
-    class UBodySetup* DummyBodySetup;
-
-    void SetNotifyBreaks(bool bNewNotifyBreaks);
-    void ReceivePhysicsCollision(const FChaosPhysicsCollisionInfo& CollisionInfo);
-    void OnRep_RepData(const FGeometryCollectionRepData& OldData);
-    void NotifyGeometryCollectionPhysicsStateChange__DelegateSignature(class UGeometryCollectionComponent* FracturedComponent);
-    void NotifyGeometryCollectionPhysicsLoadingStateChange__DelegateSignature(class UGeometryCollectionComponent* FracturedComponent);
-    void NetAbandonCluster(int32 TransformIndex);
-    void ApplyPhysicsField(bool Enabled, EGeometryCollectionPhysicsTypeEnum Target, class UFieldSystemMetaData* MetaData, class UFieldNodeBase* Field);
-    void ApplyKinematicField(float Radius, FVector Position);
-};
-
-struct FGeometryCollectionDebugDrawWarningMessage
-{
-};
-
 struct FGeometryCollectionDebugDrawActorSelectedRigidBody
 {
     int32 ID;
     class AChaosSolverActor* Solver;
     class AGeometryCollectionActor* GeometryCollection;
 
+};
+
+struct FGeometryCollectionDebugDrawWarningMessage
+{
+};
+
+struct FGeometryCollectionRepData
+{
+};
+
+struct FGeometryCollectionSizeSpecificData
+{
+    float MaxSize;
+    ECollisionTypeEnum CollisionType;
+    EImplicitTypeEnum ImplicitType;
+    int32 MinLevelSetResolution;
+    int32 MaxLevelSetResolution;
+    int32 MinClusterLevelSetResolution;
+    int32 MaxClusterLevelSetResolution;
+    int32 CollisionObjectReductionPercentage;
+    float CollisionParticlesFraction;
+    int32 MaximumCollisionParticles;
+
+};
+
+struct FGeometryCollectionSource
+{
+    FSoftObjectPath SourceGeometryObject;
+    FTransform LocalTransform;
+    TArray<class UMaterialInterface*> SourceMaterial;
+
+};
+
+class AGeometryCollectionActor : public AActor
+{
+    class UGeometryCollectionComponent* GeometryCollectionComponent;
+    class UGeometryCollectionDebugDrawComponent* GeometryCollectionDebugDrawComponent;
+
+    bool RaycastSingle(FVector Start, FVector End, FHitResult& OutHit);
 };
 
 class AGeometryCollectionDebugDrawActor : public AActor
@@ -272,34 +204,48 @@ class AGeometryCollectionDebugDrawActor : public AActor
 
 };
 
-class UGeometryCollectionDebugDrawComponent : public UActorComponent
+class AGeometryCollectionRenderLevelSetActor : public AActor
 {
-    class AGeometryCollectionDebugDrawActor* GeometryCollectionDebugDrawActor;
-    class AGeometryCollectionRenderLevelSetActor* GeometryCollectionRenderLevelSetActor;
+    class UVolumeTexture* TargetVolumeTexture;
+    class UMaterial* RayMarchMaterial;
+    float SurfaceTolerance;
+    float Isovalue;
+    bool Enabled;
+    bool RenderVolumeBoundingBox;
 
 };
 
-struct FGeometryCollectionSource
+class UChaosDestructionListener : public USceneComponent
 {
-    FSoftObjectPath SourceGeometryObject;
-    FTransform LocalTransform;
-    TArray<class UMaterialInterface*> SourceMaterial;
+    uint8 bIsCollisionEventListeningEnabled;
+    uint8 bIsBreakingEventListeningEnabled;
+    uint8 bIsTrailingEventListeningEnabled;
+    FChaosCollisionEventRequestSettings CollisionEventRequestSettings;
+    FChaosBreakingEventRequestSettings BreakingEventRequestSettings;
+    FChaosTrailingEventRequestSettings TrailingEventRequestSettings;
+    TSet<AChaosSolverActor*> ChaosSolverActors;
+    TSet<AGeometryCollectionActor*> GeometryCollectionActors;
+    FChaosDestructionListenerOnCollisionEvents OnCollisionEvents;
+    void OnChaosCollisionEvents(const TArray<FChaosCollisionEventData>& CollisionEvents);
+    FChaosDestructionListenerOnBreakingEvents OnBreakingEvents;
+    void OnChaosBreakingEvents(const TArray<FChaosBreakingEventData>& BreakingEvents);
+    FChaosDestructionListenerOnTrailingEvents OnTrailingEvents;
+    void OnChaosTrailingEvents(const TArray<FChaosTrailingEventData>& TrailingEvents);
 
-};
-
-struct FGeometryCollectionSizeSpecificData
-{
-    float MaxSize;
-    ECollisionTypeEnum CollisionType;
-    EImplicitTypeEnum ImplicitType;
-    int32 MinLevelSetResolution;
-    int32 MaxLevelSetResolution;
-    int32 MinClusterLevelSetResolution;
-    int32 MaxClusterLevelSetResolution;
-    int32 CollisionObjectReductionPercentage;
-    float CollisionParticlesFraction;
-    int32 MaximumCollisionParticles;
-
+    void SortTrailingEvents(TArray<FChaosTrailingEventData>& TrailingEvents, EChaosTrailingSortMethod SortMethod);
+    void SortCollisionEvents(TArray<FChaosCollisionEventData>& CollisionEvents, EChaosCollisionSortMethod SortMethod);
+    void SortBreakingEvents(TArray<FChaosBreakingEventData>& BreakingEvents, EChaosBreakingSortMethod SortMethod);
+    void SetTrailingEventRequestSettings(const FChaosTrailingEventRequestSettings& InSettings);
+    void SetTrailingEventEnabled(bool bIsEnabled);
+    void SetCollisionEventRequestSettings(const FChaosCollisionEventRequestSettings& InSettings);
+    void SetCollisionEventEnabled(bool bIsEnabled);
+    void SetBreakingEventRequestSettings(const FChaosBreakingEventRequestSettings& InSettings);
+    void SetBreakingEventEnabled(bool bIsEnabled);
+    void RemoveGeometryCollectionActor(class AGeometryCollectionActor* GeometryCollectionActor);
+    void RemoveChaosSolverActor(class AChaosSolverActor* ChaosSolverActor);
+    bool IsEventListening();
+    void AddGeometryCollectionActor(class AGeometryCollectionActor* GeometryCollectionActor);
+    void AddChaosSolverActor(class AChaosSolverActor* ChaosSolverActor);
 };
 
 class UGeometryCollection : public UObject
@@ -332,14 +278,68 @@ class UGeometryCollection : public UObject
 
 };
 
-class AGeometryCollectionRenderLevelSetActor : public AActor
+class UGeometryCollectionCache : public UObject
 {
-    class UVolumeTexture* TargetVolumeTexture;
-    class UMaterial* RayMarchMaterial;
-    float SurfaceTolerance;
-    float Isovalue;
-    bool Enabled;
-    bool RenderVolumeBoundingBox;
+    FRecordedTransformTrack RecordedData;
+    class UGeometryCollection* SupportedCollection;
+    FGuid CompatibleCollectionState;
+
+};
+
+class UGeometryCollectionComponent : public UMeshComponent
+{
+    class AChaosSolverActor* ChaosSolverActor;
+    class UGeometryCollection* RestCollection;
+    TArray<class AFieldSystemActor*> InitializationFields;
+    bool Simulating;
+    EObjectStateTypeEnum ObjectType;
+    bool EnableClustering;
+    int32 ClusterGroupIndex;
+    int32 MaxClusterLevel;
+    TArray<float> DamageThreshold;
+    EClusterConnectionTypeEnum ClusterConnectionType;
+    int32 CollisionGroup;
+    float CollisionSampleFraction;
+    float LinearEtherDrag;
+    float AngularEtherDrag;
+    class UChaosPhysicalMaterial* PhysicalMaterial;
+    EInitialVelocityTypeEnum InitialVelocityType;
+    FVector InitialLinearVelocity;
+    FVector InitialAngularVelocity;
+    class UPhysicalMaterial* PhysicalMaterialOverride;
+    FGeomComponentCacheParameters CacheParameters;
+    FGeometryCollectionComponentNotifyGeometryCollectionPhysicsStateChange NotifyGeometryCollectionPhysicsStateChange;
+    void NotifyGeometryCollectionPhysicsStateChange(class UGeometryCollectionComponent* FracturedComponent);
+    FGeometryCollectionComponentNotifyGeometryCollectionPhysicsLoadingStateChange NotifyGeometryCollectionPhysicsLoadingStateChange;
+    void NotifyGeometryCollectionPhysicsLoadingStateChange(class UGeometryCollectionComponent* FracturedComponent);
+    FGeometryCollectionComponentOnChaosBreakEvent OnChaosBreakEvent;
+    void OnChaosBreakEvent(const FChaosBreakEvent& BreakEvent);
+    float DesiredCacheTime;
+    bool CachePlayback;
+    FGeometryCollectionComponentOnChaosPhysicsCollision OnChaosPhysicsCollision;
+    void OnChaosPhysicsCollision(const FChaosPhysicsCollisionInfo& CollisionInfo);
+    bool bNotifyBreaks;
+    bool bNotifyCollisions;
+    bool bEnableReplication;
+    bool bEnableAbandonAfterLevel;
+    int32 ReplicationAbandonClusterLevel;
+    FGeometryCollectionRepData RepData;
+    class UBodySetup* DummyBodySetup;
+
+    void SetNotifyBreaks(bool bNewNotifyBreaks);
+    void ReceivePhysicsCollision(const FChaosPhysicsCollisionInfo& CollisionInfo);
+    void OnRep_RepData(const FGeometryCollectionRepData& OldData);
+    void NotifyGeometryCollectionPhysicsStateChange__DelegateSignature(class UGeometryCollectionComponent* FracturedComponent);
+    void NotifyGeometryCollectionPhysicsLoadingStateChange__DelegateSignature(class UGeometryCollectionComponent* FracturedComponent);
+    void NetAbandonCluster(int32 TransformIndex);
+    void ApplyPhysicsField(bool Enabled, EGeometryCollectionPhysicsTypeEnum Target, class UFieldSystemMetaData* MetaData, class UFieldNodeBase* Field);
+    void ApplyKinematicField(float Radius, FVector Position);
+};
+
+class UGeometryCollectionDebugDrawComponent : public UActorComponent
+{
+    class AGeometryCollectionDebugDrawActor* GeometryCollectionDebugDrawActor;
+    class AGeometryCollectionRenderLevelSetActor* GeometryCollectionRenderLevelSetActor;
 
 };
 

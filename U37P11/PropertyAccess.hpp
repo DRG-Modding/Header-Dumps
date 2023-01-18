@@ -3,37 +3,6 @@
 
 #include "PropertyAccess_enums.hpp"
 
-class IPropertyAccess : public IInterface
-{
-};
-
-class IPropertyEventBroadcaster : public IInterface
-{
-};
-
-class IPropertyEventSubscriber : public IInterface
-{
-};
-
-struct FPropertyAccessSegment
-{
-    FName Name;
-    class UStruct* Struct;
-    TFieldPath<FProperty> Property;
-    class UFunction* Function;
-    int32 ArrayIndex;
-    uint16 Flags;
-
-};
-
-struct FPropertyAccessPath
-{
-    int32 PathSegmentStartIndex;
-    int32 PathSegmentCount;
-    uint8 bHasEvents;
-
-};
-
 struct FPropertyAccessCopy
 {
     int32 AccessIndex;
@@ -46,15 +15,6 @@ struct FPropertyAccessCopy
 struct FPropertyAccessCopyBatch
 {
     TArray<FPropertyAccessCopy> Copies;
-
-};
-
-struct FPropertyAccessIndirectionChain
-{
-    TFieldPath<FProperty> Property;
-    int32 IndirectionStartIndex;
-    int32 IndirectionEndIndex;
-    int32 EventId;
 
 };
 
@@ -71,6 +31,15 @@ struct FPropertyAccessIndirection
 
 };
 
+struct FPropertyAccessIndirectionChain
+{
+    TFieldPath<FProperty> Property;
+    int32 IndirectionStartIndex;
+    int32 IndirectionEndIndex;
+    int32 EventId;
+
+};
+
 struct FPropertyAccessLibrary
 {
     TArray<FPropertyAccessSegment> PathSegments;
@@ -82,6 +51,37 @@ struct FPropertyAccessLibrary
     TArray<FPropertyAccessIndirection> Indirections;
     TArray<int32> EventAccessIndices;
 
+};
+
+struct FPropertyAccessPath
+{
+    int32 PathSegmentStartIndex;
+    int32 PathSegmentCount;
+    uint8 bHasEvents;
+
+};
+
+struct FPropertyAccessSegment
+{
+    FName Name;
+    class UStruct* Struct;
+    TFieldPath<FProperty> Property;
+    class UFunction* Function;
+    int32 ArrayIndex;
+    uint16 Flags;
+
+};
+
+class IPropertyAccess : public IInterface
+{
+};
+
+class IPropertyEventBroadcaster : public IInterface
+{
+};
+
+class IPropertyEventSubscriber : public IInterface
+{
 };
 
 #endif

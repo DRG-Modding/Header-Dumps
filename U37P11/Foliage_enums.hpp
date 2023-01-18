@@ -7,6 +7,25 @@ enum class EFoliageScaling {
     EFoliageScaling_MAX = 5,
 };
 
+namespace ESimulationOverlap {
+    enum Type {
+        CollisionOverlap = 0,
+        ShadeOverlap = 1,
+        None = 2,
+        ESimulationOverlap_MAX = 3,
+    };
+}
+
+namespace ESimulationQuery {
+    enum Type {
+        None = 0,
+        CollisionOverlap = 1,
+        ShadeOverlap = 2,
+        AnyOverlap = 3,
+        ESimulationQuery_MAX = 4,
+    };
+}
+
 enum class EVertexColorMaskChannel {
     Red = 0,
     Green = 1,
@@ -24,23 +43,4 @@ enum FoliageVertexColorMask {
     FOLIAGEVERTEXCOLORMASK_Alpha = 4,
     FOLIAGEVERTEXCOLORMASK_MAX = 5,
 };
-
-namespace ESimulationQuery {
-    enum Type {
-        None = 0,
-        CollisionOverlap = 1,
-        ShadeOverlap = 2,
-        AnyOverlap = 3,
-        ESimulationQuery_MAX = 4,
-    };
-}
-
-namespace ESimulationOverlap {
-    enum Type {
-        CollisionOverlap = 0,
-        ShadeOverlap = 1,
-        None = 2,
-        ESimulationOverlap_MAX = 3,
-    };
-}
 

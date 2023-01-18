@@ -1,35 +1,6 @@
 #ifndef UE4SS_SDK_AssetRegistry_HPP
 #define UE4SS_SDK_AssetRegistry_HPP
 
-class UAssetRegistryImpl : public UObject
-{
-};
-
-struct FTagAndValue
-{
-    FName Tag;
-    FString Value;
-
-};
-
-class UAssetRegistryHelpers : public UObject
-{
-
-    FSoftObjectPath ToSoftObjectPath(const FAssetData& InAssetData);
-    FARFilter SetFilterTagsAndValues(const FARFilter& InFilter, const TArray<FTagAndValue>& InTagsAndValues);
-    bool IsValid(const FAssetData& InAssetData);
-    bool IsUAsset(const FAssetData& InAssetData);
-    bool IsRedirector(const FAssetData& InAssetData);
-    bool IsAssetLoaded(const FAssetData& InAssetData);
-    bool GetTagValue(const FAssetData& InAssetData, const FName& InTagName, FString& OutTagValue);
-    FString GetFullName(const FAssetData& InAssetData);
-    FString GetExportTextName(const FAssetData& InAssetData);
-    UClass* GetClass(const FAssetData& InAssetData);
-    TScriptInterface<class IAssetRegistry> GetAssetRegistry();
-    class UObject* GetAsset(const FAssetData& InAssetData);
-    FAssetData CreateAssetData(const class UObject* InAsset, bool bAllowBlueprintClass);
-};
-
 struct FAssetRegistryDependencyOptions
 {
     bool bIncludeSoftPackageReferences;
@@ -37,6 +8,13 @@ struct FAssetRegistryDependencyOptions
     bool bIncludeSearchableNames;
     bool bIncludeSoftManagementReferences;
     bool bIncludeHardManagementReferences;
+
+};
+
+struct FTagAndValue
+{
+    FName Tag;
+    FString Value;
 
 };
 
@@ -63,6 +41,28 @@ class IAssetRegistry : public IInterface
     FAssetData GetAssetByObjectPath(const FName ObjectPath, bool bIncludeOnlyOnDiskAssets);
     void GetAllCachedPaths(TArray<FString>& OutPathList);
     bool GetAllAssets(TArray<FAssetData>& OutAssetData, bool bIncludeOnlyOnDiskAssets);
+};
+
+class UAssetRegistryHelpers : public UObject
+{
+
+    FSoftObjectPath ToSoftObjectPath(const FAssetData& InAssetData);
+    FARFilter SetFilterTagsAndValues(const FARFilter& InFilter, const TArray<FTagAndValue>& InTagsAndValues);
+    bool IsValid(const FAssetData& InAssetData);
+    bool IsUAsset(const FAssetData& InAssetData);
+    bool IsRedirector(const FAssetData& InAssetData);
+    bool IsAssetLoaded(const FAssetData& InAssetData);
+    bool GetTagValue(const FAssetData& InAssetData, const FName& InTagName, FString& OutTagValue);
+    FString GetFullName(const FAssetData& InAssetData);
+    FString GetExportTextName(const FAssetData& InAssetData);
+    UClass* GetClass(const FAssetData& InAssetData);
+    TScriptInterface<class IAssetRegistry> GetAssetRegistry();
+    class UObject* GetAsset(const FAssetData& InAssetData);
+    FAssetData CreateAssetData(const class UObject* InAsset, bool bAllowBlueprintClass);
+};
+
+class UAssetRegistryImpl : public UObject
+{
 };
 
 #endif

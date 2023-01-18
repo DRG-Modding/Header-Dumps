@@ -18,16 +18,16 @@ class UAudioCapture : public UAudioGenerator
     bool GetAudioCaptureDeviceInfo(FAudioCaptureDeviceInfo& OutInfo);
 };
 
-class UAudioCaptureFunctionLibrary : public UBlueprintFunctionLibrary
-{
-
-    class UAudioCapture* CreateAudioCapture();
-};
-
 class UAudioCaptureComponent : public USynthComponent
 {
     int32 JitterLatencyFrames;
 
+};
+
+class UAudioCaptureFunctionLibrary : public UBlueprintFunctionLibrary
+{
+
+    class UAudioCapture* CreateAudioCapture();
 };
 
 #endif

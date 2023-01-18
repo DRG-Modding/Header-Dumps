@@ -3,15 +3,18 @@
 
 #include "MediaAssets_enums.hpp"
 
-class UMediaSource : public UObject
+struct FMediaCaptureDevice
 {
+    FText DisplayName;
+    FString URL;
 
-    bool Validate();
-    void SetMediaOptionString(const FName& Key, FString Value);
-    void SetMediaOptionInt64(const FName& Key, int64 Value);
-    void SetMediaOptionFloat(const FName& Key, float Value);
-    void SetMediaOptionBool(const FName& Key, bool Value);
-    FString GetUrl();
+};
+
+struct FMediaSoundComponentSpectralData
+{
+    float FrequencyHz;
+    float Magnitude;
+
 };
 
 class UBaseMediaSource : public UMediaSource
@@ -26,13 +29,6 @@ class UFileMediaSource : public UBaseMediaSource
     bool PrecacheFile;
 
     void SetFilePath(FString Path);
-};
-
-struct FMediaCaptureDevice
-{
-    FText DisplayName;
-    FString URL;
-
 };
 
 class UMediaBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
@@ -50,13 +46,6 @@ class UMediaComponent : public UActorComponent
 
     class UMediaTexture* GetMediaTexture();
     class UMediaPlayer* GetMediaPlayer();
-};
-
-class UMediaTimeStampInfo : public UObject
-{
-    FTimespan Time;
-    int64 SequenceIndex;
-
 };
 
 class UMediaPlayer : public UObject
@@ -184,13 +173,6 @@ class UMediaPlaylist : public UObject
     bool Add(class UMediaSource* MediaSource);
 };
 
-struct FMediaSoundComponentSpectralData
-{
-    float FrequencyHz;
-    float Magnitude;
-
-};
-
 class UMediaSoundComponent : public USynthComponent
 {
     EMediaSoundChannels Channels;
@@ -209,6 +191,17 @@ class UMediaSoundComponent : public USynthComponent
     class UMediaPlayer* GetMediaPlayer();
     float GetEnvelopeValue();
     bool BP_GetAttenuationSettingsToApply(FSoundAttenuationSettings& OutAttenuationSettings);
+};
+
+class UMediaSource : public UObject
+{
+
+    bool Validate();
+    void SetMediaOptionString(const FName& Key, FString Value);
+    void SetMediaOptionInt64(const FName& Key, int64 Value);
+    void SetMediaOptionFloat(const FName& Key, float Value);
+    void SetMediaOptionBool(const FName& Key, bool Value);
+    FString GetUrl();
 };
 
 class UMediaTexture : public UTexture
@@ -231,6 +224,13 @@ class UMediaTexture : public UTexture
     class UMediaPlayer* GetMediaPlayer();
     int32 GetHeight();
     float GetAspectRatio();
+};
+
+class UMediaTimeStampInfo : public UObject
+{
+    FTimespan Time;
+    int64 SequenceIndex;
+
 };
 
 class UPlatformMediaSource : public UMediaSource

@@ -3,15 +3,82 @@
 
 #include "Modio_enums.hpp"
 
+struct FModioApiKey
+{
+    FString ApiKey;
+
+};
+
+struct FModioAuthenticationParams
+{
+    FString AuthToken;
+    FString UserEmail;
+    bool bUserHasAcceptedTerms;
+
+};
+
+struct FModioCreateModFileParams
+{
+    FString PathToModRootDirectory;
+
+};
+
+struct FModioCreateModParams
+{
+    FString PathToLogoFile;
+    FString Name;
+    FString Summary;
+
+};
+
+struct FModioEditModParams
+{
+};
+
+struct FModioEmailAddress
+{
+};
+
+struct FModioEmailAuthCode
+{
+};
+
+struct FModioErrorCode
+{
+};
+
+struct FModioFileMetadata
+{
+    FModioFileMetadataID MetadataId;
+    FModioModID ModId;
+    FDateTime DateAdded;
+    EModioVirusScanStatus CurrentVirusScanStatus;
+    EModioVirusStatus CurrentVirusStatus;
+    int64 Filesize;
+    FString Filename;
+    FString Version;
+    FString Changelog;
+    FString MetadataBlob;
+
+};
+
+struct FModioFileMetadataID
+{
+};
+
+struct FModioFilterParams
+{
+};
+
 struct FModioGameID
 {
     int64 GameId;
 
 };
 
-struct FModioApiKey
+struct FModioImageWrapper
 {
-    FString ApiKey;
+    FString ImagePath;
 
 };
 
@@ -24,15 +91,208 @@ struct FModioInitializeOptions
 
 };
 
+struct FModioLink
+{
+    FString Text;
+    FString URL;
+    bool bRequired;
+
+};
+
+struct FModioMetadata
+{
+    FString Key;
+    FString Value;
+
+};
+
+struct FModioModCollectionEntry
+{
+};
+
+struct FModioModCreationHandle
+{
+};
+
+struct FModioModDependency
+{
+    FModioModID ModId;
+    FString ModName;
+
+};
+
+struct FModioModDependencyList
+{
+    FModioPagedResult PagedResult;
+    TArray<FModioModDependency> InternalList;
+
+};
+
 struct FModioModID
 {
 };
 
-struct FModioAuthenticationParams
+struct FModioModInfo
 {
-    FString AuthToken;
-    FString UserEmail;
-    bool bUserHasAcceptedTerms;
+    FModioModID ModId;
+    FString ProfileName;
+    FString ProfileSummary;
+    FString ProfileDescription;
+    FString ProfileDescriptionPlaintext;
+    FString ProfileUrl;
+    FModioUser ProfileSubmittedBy;
+    FDateTime ProfileDateAdded;
+    FDateTime ProfileDateUpdated;
+    FDateTime ProfileDateLive;
+    EModioMaturityFlags ProfileMaturityOption;
+    bool bVisible;
+    FString MetadataBlob;
+    FModioFileMetadata FileInfo;
+    TArray<FModioMetadata> MetadataKvp;
+    TArray<FModioModTag> Tags;
+    int32 NumGalleryImages;
+    FModioYoutubeURLList YoutubeURLs;
+    FModioSketchfabURLList SketchfabURLs;
+    FModioModStats Stats;
+
+};
+
+struct FModioModInfoList
+{
+    FModioPagedResult PagedResult;
+    TArray<FModioModInfo> InternalList;
+
+};
+
+struct FModioModManagementEvent
+{
+    FModioModID ID;
+    EModioModManagementEventType Event;
+    FModioErrorCode Status;
+
+};
+
+struct FModioModProgressInfo
+{
+    FModioUnsigned64 TotalDownloadSize;
+    FModioUnsigned64 CurrentlyDownloadedBytes;
+    FModioUnsigned64 TotalExtractedSizeOnDisk;
+    FModioUnsigned64 CurrentlyExtractedBytes;
+    FModioModID ID;
+
+};
+
+struct FModioModStats
+{
+    int64 PopularityRankPosition;
+    int64 PopularityRankTotalMods;
+    int64 DownloadsTotal;
+    int64 SubscribersTotal;
+    int64 RatingTotal;
+    int64 RatingPositive;
+    int64 RatingNegative;
+    int64 RatingPercentagePositive;
+    float RatingWeightedAggregate;
+    FString RatingDisplayText;
+
+};
+
+struct FModioModTag
+{
+    FString Tag;
+
+};
+
+struct FModioModTagInfo
+{
+    FString TagGroupName;
+    TArray<FString> TagGroupValues;
+    bool bAllowMultipleSelection;
+
+};
+
+struct FModioModTagOptions
+{
+    FModioPagedResult PagedResult;
+    TArray<FModioModTagInfo> InternalList;
+
+};
+
+struct FModioOptionalImage
+{
+};
+
+struct FModioOptionalModDependencyList
+{
+};
+
+struct FModioOptionalModID
+{
+};
+
+struct FModioOptionalModInfo
+{
+};
+
+struct FModioOptionalModInfoList
+{
+};
+
+struct FModioOptionalModProgressInfo
+{
+};
+
+struct FModioOptionalModTagOptions
+{
+};
+
+struct FModioOptionalTerms
+{
+};
+
+struct FModioOptionalUser
+{
+};
+
+struct FModioPagedResult
+{
+    int32 PageIndex;
+    int32 PageSize;
+    int32 PageCount;
+    int32 TotalResultCount;
+    int32 ResultCount;
+
+};
+
+struct FModioReportParams
+{
+};
+
+struct FModioSketchfabURLList
+{
+};
+
+struct FModioTerms
+{
+    FString AgreeButtonText;
+    FString DisagreeButtonText;
+    FModioLink WebsiteLink;
+    FModioLink TermsLink;
+    FModioLink PrivacyLink;
+    FModioLink ManageLink;
+
+};
+
+struct FModioUnsigned64
+{
+};
+
+struct FModioUser
+{
+    FModioUserID UserId;
+    FString Username;
+    FDateTime DateOnline;
+    FString ProfileUrl;
 
 };
 
@@ -40,15 +300,14 @@ struct FModioUserID
 {
 };
 
-struct FModioEmailAuthCode
+struct FModioValidationError
 {
+    FString FieldName;
+    FString ValidationFailureDescription;
+
 };
 
-struct FModioEmailAddress
-{
-};
-
-struct FModioFileMetadataID
+struct FModioYoutubeURLList
 {
 };
 
@@ -75,20 +334,6 @@ class UModioCommonTypesLibrary : public UBlueprintFunctionLibrary
     FString Conv_ApiKeyToString(FModioApiKey ApiKey);
 };
 
-struct FModioCreateModFileParams
-{
-    FString PathToModRootDirectory;
-
-};
-
-struct FModioCreateModParams
-{
-    FString PathToLogoFile;
-    FString Name;
-    FString Summary;
-
-};
-
 class UModioCreateModLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -104,10 +349,6 @@ class UModioCreateModLibrary : public UBlueprintFunctionLibrary
     void SetChangelogString(FModioCreateModFileParams& In, FString Changelog);
 };
 
-struct FModioEditModParams
-{
-};
-
 class UModioEditModLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -119,10 +360,6 @@ class UModioEditModLibrary : public UBlueprintFunctionLibrary
     void SetMaturityFlags(FModioEditModParams& In, EModioMaturityFlags MaturityFlags);
     void SetHomepageURL(FModioEditModParams& In, FString HomepageURL);
     void SetDescription(FModioEditModParams& In, FString Description);
-};
-
-struct FModioErrorCode
-{
 };
 
 class UModioErrorCodeLibrary : public UBlueprintFunctionLibrary
@@ -137,10 +374,6 @@ class UModioErrorConditionLibrary : public UBlueprintFunctionLibrary
 {
 
     bool ErrorCodeMatches(FModioErrorCode ErrorCode, EModioErrorCondition Condition);
-};
-
-struct FModioFilterParams
-{
 };
 
 class UModioExampleLibrary : public UBlueprintFunctionLibrary
@@ -171,12 +404,6 @@ class UModioFilterParamsLibrary : public UBlueprintFunctionLibrary
     FModioFilterParams ExcludingIDs(FModioFilterParams& Filter, const TArray<FModioModID>& IDs);
 };
 
-struct FModioImageWrapper
-{
-    FString ImagePath;
-
-};
-
 class UModioImageLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -188,95 +415,6 @@ class UModioImageLibrary : public UBlueprintFunctionLibrary
     FVector2D GetAvatarSize(class UTexture* avatar, EModioAvatarSize AvatarSize);
 };
 
-struct FModioModCollectionEntry
-{
-};
-
-struct FModioUser
-{
-    FModioUserID UserId;
-    FString Username;
-    FDateTime DateOnline;
-    FString ProfileUrl;
-
-};
-
-struct FModioFileMetadata
-{
-    FModioFileMetadataID MetadataId;
-    FModioModID ModId;
-    FDateTime DateAdded;
-    EModioVirusScanStatus CurrentVirusScanStatus;
-    EModioVirusStatus CurrentVirusStatus;
-    int64 Filesize;
-    FString Filename;
-    FString Version;
-    FString Changelog;
-    FString MetadataBlob;
-
-};
-
-struct FModioMetadata
-{
-    FString Key;
-    FString Value;
-
-};
-
-struct FModioModTag
-{
-    FString Tag;
-
-};
-
-struct FModioYoutubeURLList
-{
-};
-
-struct FModioSketchfabURLList
-{
-};
-
-struct FModioModStats
-{
-    int64 PopularityRankPosition;
-    int64 PopularityRankTotalMods;
-    int64 DownloadsTotal;
-    int64 SubscribersTotal;
-    int64 RatingTotal;
-    int64 RatingPositive;
-    int64 RatingNegative;
-    int64 RatingPercentagePositive;
-    float RatingWeightedAggregate;
-    FString RatingDisplayText;
-
-};
-
-struct FModioModInfo
-{
-    FModioModID ModId;
-    FString ProfileName;
-    FString ProfileSummary;
-    FString ProfileDescription;
-    FString ProfileDescriptionPlaintext;
-    FString ProfileUrl;
-    FModioUser ProfileSubmittedBy;
-    FDateTime ProfileDateAdded;
-    FDateTime ProfileDateUpdated;
-    FDateTime ProfileDateLive;
-    EModioMaturityFlags ProfileMaturityOption;
-    bool bVisible;
-    FString MetadataBlob;
-    FModioFileMetadata FileInfo;
-    TArray<FModioMetadata> MetadataKvp;
-    TArray<FModioModTag> Tags;
-    int32 NumGalleryImages;
-    FModioYoutubeURLList YoutubeURLs;
-    FModioSketchfabURLList SketchfabURLs;
-    FModioModStats Stats;
-
-};
-
 class UModioModCollectionLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -286,42 +424,11 @@ class UModioModCollectionLibrary : public UBlueprintFunctionLibrary
     FModioModID GetID(const FModioModCollectionEntry& Entry);
 };
 
-struct FModioPagedResult
-{
-    int32 PageIndex;
-    int32 PageSize;
-    int32 PageCount;
-    int32 TotalResultCount;
-    int32 ResultCount;
-
-};
-
-struct FModioModDependency
-{
-    FModioModID ModId;
-    FString ModName;
-
-};
-
-struct FModioModDependencyList
-{
-    FModioPagedResult PagedResult;
-    TArray<FModioModDependency> InternalList;
-
-};
-
 class UModioModDependenciesLibrary : public UBlueprintFunctionLibrary
 {
 
     FModioPagedResult GetPagedResult(const FModioModDependencyList& ModTags);
     TArray<FModioModDependency> GetDependencies(const FModioModDependencyList& ModTags);
-};
-
-struct FModioModInfoList
-{
-    FModioPagedResult PagedResult;
-    TArray<FModioModInfo> InternalList;
-
 };
 
 class UModioModInfoListLibrary : public UBlueprintFunctionLibrary
@@ -331,95 +438,11 @@ class UModioModInfoListLibrary : public UBlueprintFunctionLibrary
     TArray<FModioModInfo> GetMods(const FModioModInfoList& ModInfoList);
 };
 
-struct FModioModTagInfo
-{
-    FString TagGroupName;
-    TArray<FString> TagGroupValues;
-    bool bAllowMultipleSelection;
-
-};
-
-struct FModioModTagOptions
-{
-    FModioPagedResult PagedResult;
-    TArray<FModioModTagInfo> InternalList;
-
-};
-
 class UModioModTagOptionsLibrary : public UBlueprintFunctionLibrary
 {
 
     TArray<FModioModTagInfo> GetTags(const FModioModTagOptions& ModTags);
     FModioPagedResult GetPagedResult(const FModioModTagOptions& ModTags);
-};
-
-struct FModioOptionalUser
-{
-};
-
-struct FModioOptionalTerms
-{
-};
-
-struct FModioOptionalModTagOptions
-{
-};
-
-struct FModioOptionalModProgressInfo
-{
-};
-
-struct FModioOptionalModInfoList
-{
-};
-
-struct FModioOptionalModInfo
-{
-};
-
-struct FModioOptionalModID
-{
-};
-
-struct FModioOptionalModDependencyList
-{
-};
-
-struct FModioOptionalImage
-{
-};
-
-struct FModioLink
-{
-    FString Text;
-    FString URL;
-    bool bRequired;
-
-};
-
-struct FModioTerms
-{
-    FString AgreeButtonText;
-    FString DisagreeButtonText;
-    FModioLink WebsiteLink;
-    FModioLink TermsLink;
-    FModioLink PrivacyLink;
-    FModioLink ManageLink;
-
-};
-
-struct FModioUnsigned64
-{
-};
-
-struct FModioModProgressInfo
-{
-    FModioUnsigned64 TotalDownloadSize;
-    FModioUnsigned64 CurrentlyDownloadedBytes;
-    FModioUnsigned64 TotalExtractedSizeOnDisk;
-    FModioUnsigned64 CurrentlyExtractedBytes;
-    FModioModID ID;
-
 };
 
 class UModioOptionalLibrary : public UBlueprintFunctionLibrary
@@ -458,10 +481,6 @@ class UModioPopupContainer : public UUserWidget
     class UModioPopupBase* PopPopup(TSubclassOf<class UModioPopupBase> PopupClass);
 };
 
-struct FModioReportParams
-{
-};
-
 class UModioReportLibrary : public UBlueprintFunctionLibrary
 {
 
@@ -493,17 +512,6 @@ class UModioSettings : public UObject
     EModioEnvironment Environment;
     EModioLogLevel LogLevel;
     EModioPortal DefaultPortal;
-
-};
-
-struct FModioModCreationHandle
-{
-};
-
-struct FModioValidationError
-{
-    FString FieldName;
-    FString ValidationFailureDescription;
 
 };
 
@@ -571,14 +579,6 @@ class UModioUnsigned64Library : public UBlueprintFunctionLibrary
     float Conv_FModioUnsigned64ToFloat(const FModioUnsigned64& In);
     void BreakToComponents(const FModioUnsigned64& In, int32& High, int32& Low);
     FModioUnsigned64 Add(const FModioUnsigned64& LHS, const FModioUnsigned64& RHS);
-};
-
-struct FModioModManagementEvent
-{
-    FModioModID ID;
-    EModioModManagementEventType Event;
-    FModioErrorCode Status;
-
 };
 
 #endif

@@ -20,7 +20,7 @@ class UTOOLTIP_Season_Reward_C : public UUserWidget
     class UTextBlock* TextBlock_Title;
     class UReward* Reward;
 
-    void SetInfo(FText InTitle, FText InCategory, FText InDescription, class UPlayerCharacterID* InCharacterID, const bool inShowIcon);
+    void SetInfo(FText inTitle, FText InCategory, FText InDescription, class UPlayerCharacterID* inCharacterID, const bool inShowIcon);
     void SetData(class UMaterialInstanceDynamic* DynMat, class UReward* Reward, bool ShowCost, int32 Cost);
     void SetCount(int32 Count);
     void SetDataFromReward(class UReward* Reward, bool ShowCost, int32 Cost);

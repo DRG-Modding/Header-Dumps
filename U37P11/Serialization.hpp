@@ -1,18 +1,15 @@
 #ifndef UE4SS_SDK_Serialization_HPP
 #define UE4SS_SDK_Serialization_HPP
 
-struct FStructSerializerNumericTestStruct
+struct FStructSerializerArrayTestStruct
 {
-    int8 Int8;
-    int16 Int16;
-    int32 Int32;
-    int64 Int64;
-    uint8 UInt8;
-    uint16 UInt16;
-    uint32 UInt32;
-    uint64 UInt64;
-    float Float;
-    double Double;
+    TArray<int32> Int32Array;
+    TArray<uint8> ByteArray;
+    int32 StaticSingleElement;
+    int32 StaticInt32Array;
+    float StaticFloatArray;
+    TArray<FVector> VectorArray;
+    TArray<FStructSerializerBuiltinTestStruct> StructArray;
 
 };
 
@@ -31,19 +28,6 @@ struct FStructSerializerBooleanTestStruct
 
 };
 
-struct FStructSerializerObjectTestStruct
-{
-    UClass* Class;
-    TSubclassOf<class UMetaData> SubClass;
-    TSoftClassPtr<UMetaData> SoftClass;
-    class UObject* Object;
-    TWeakObjectPtr<class UMetaData> WeakObject;
-    TSoftObjectPtr<UMetaData> SoftObject;
-    FSoftClassPath ClassPath;
-    FSoftObjectPath ObjectPath;
-
-};
-
 struct FStructSerializerBuiltinTestStruct
 {
     FGuid Guid;
@@ -58,15 +42,13 @@ struct FStructSerializerBuiltinTestStruct
 
 };
 
-struct FStructSerializerArrayTestStruct
+struct FStructSerializerByteArray
 {
-    TArray<int32> Int32Array;
+    int32 Dummy1;
     TArray<uint8> ByteArray;
-    int32 StaticSingleElement;
-    int32 StaticInt32Array;
-    float StaticFloatArray;
-    TArray<FVector> VectorArray;
-    TArray<FStructSerializerBuiltinTestStruct> StructArray;
+    int32 Dummy2;
+    TArray<int8> Int8Array;
+    int32 Dummy3;
 
 };
 
@@ -76,6 +58,34 @@ struct FStructSerializerMapTestStruct
     TMap<class FString, class FString> StrToStr;
     TMap<class FString, class FVector> StrToVec;
     TMap<class FString, class FStructSerializerBuiltinTestStruct> StrToStruct;
+
+};
+
+struct FStructSerializerNumericTestStruct
+{
+    int8 Int8;
+    int16 Int16;
+    int32 Int32;
+    int64 Int64;
+    uint8 UInt8;
+    uint16 UInt16;
+    uint32 UInt32;
+    uint64 UInt64;
+    float Float;
+    double Double;
+
+};
+
+struct FStructSerializerObjectTestStruct
+{
+    UClass* Class;
+    TSubclassOf<class UMetaData> SubClass;
+    TSoftClassPtr<UMetaData> SoftClass;
+    class UObject* Object;
+    TWeakObjectPtr<class UMetaData> WeakObject;
+    TSoftObjectPtr<UMetaData> SoftObject;
+    FSoftClassPath ClassPath;
+    FSoftObjectPath ObjectPath;
 
 };
 
@@ -97,16 +107,6 @@ struct FStructSerializerTestStruct
     FStructSerializerArrayTestStruct Arrays;
     FStructSerializerMapTestStruct Maps;
     FStructSerializerSetTestStruct Sets;
-
-};
-
-struct FStructSerializerByteArray
-{
-    int32 Dummy1;
-    TArray<uint8> ByteArray;
-    int32 Dummy2;
-    TArray<int8> Int8Array;
-    int32 Dummy3;
 
 };
 

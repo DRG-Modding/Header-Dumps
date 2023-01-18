@@ -3,6 +3,35 @@
 
 #include "OculusMR_enums.hpp"
 
+struct FOculusMR_PlaneMeshTriangle
+{
+    FVector Vertex0;
+    FVector2D UV0;
+    FVector Vertex1;
+    FVector2D UV1;
+    FVector Vertex2;
+    FVector2D UV2;
+
+};
+
+struct FTrackedCamera
+{
+    int32 Index;
+    FString Name;
+    double UpdateTime;
+    float FieldOfView;
+    int32 SizeX;
+    int32 SizeY;
+    ETrackedDeviceType AttachedTrackedDevice;
+    FRotator CalibratedRotation;
+    FVector CalibratedOffset;
+    FRotator UserRotation;
+    FVector UserOffset;
+    FRotator RawRotation;
+    FVector RawOffset;
+
+};
+
 class AOculusMR_CastingCameraActor : public ASceneCapture2D
 {
     class UVRNotificationsComponent* VRNotificationComponent;
@@ -24,15 +53,16 @@ class AOculusMR_CastingCameraActor : public ASceneCapture2D
 
 };
 
-struct FOculusMR_PlaneMeshTriangle
+class UOculusMRFunctionLibrary : public UBlueprintFunctionLibrary
 {
-    FVector Vertex0;
-    FVector2D UV0;
-    FVector Vertex1;
-    FVector2D UV1;
-    FVector Vertex2;
-    FVector2D UV2;
 
+    bool SetTrackingReferenceComponent(class USceneComponent* Component);
+    bool SetMrcScalingFactor(float ScalingFactor);
+    bool IsMrcEnabled();
+    bool IsMrcActive();
+    class USceneComponent* GetTrackingReferenceComponent();
+    class UOculusMR_Settings* GetOculusMRSettings();
+    float GetMrcScalingFactor();
 };
 
 class UOculusMR_PlaneMeshComponent : public UMeshComponent
@@ -73,24 +103,6 @@ class UOculusMR_Settings : public UObject
     void BindToTrackedCameraIndexIfAvailable(int32 InTrackedCameraIndex);
 };
 
-struct FTrackedCamera
-{
-    int32 Index;
-    FString Name;
-    double UpdateTime;
-    float FieldOfView;
-    int32 SizeX;
-    int32 SizeY;
-    ETrackedDeviceType AttachedTrackedDevice;
-    FRotator CalibratedRotation;
-    FVector CalibratedOffset;
-    FRotator UserRotation;
-    FVector UserOffset;
-    FRotator RawRotation;
-    FVector RawOffset;
-
-};
-
 class UOculusMR_State : public UObject
 {
     FTrackedCamera TrackedCamera;
@@ -99,18 +111,6 @@ class UOculusMR_State : public UObject
     bool ChangeCameraStateRequested;
     bool BindToTrackedCameraIndexRequested;
 
-};
-
-class UOculusMRFunctionLibrary : public UBlueprintFunctionLibrary
-{
-
-    bool SetTrackingReferenceComponent(class USceneComponent* Component);
-    bool SetMrcScalingFactor(float ScalingFactor);
-    bool IsMrcEnabled();
-    bool IsMrcActive();
-    class USceneComponent* GetTrackingReferenceComponent();
-    class UOculusMR_Settings* GetOculusMRSettings();
-    float GetMrcScalingFactor();
 };
 
 #endif

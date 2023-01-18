@@ -1,14 +1,14 @@
-enum class ESubLevelStripMode {
-    ExactClass = 0,
-    IsChildOf = 1,
-    ESubLevelStripMode_MAX = 2,
-};
-
 enum class EFourPlayerSplitScreenType {
     Grid = 0,
     Vertical = 1,
     Horizontal = 2,
     EFourPlayerSplitScreenType_MAX = 3,
+};
+
+enum class ESubLevelStripMode {
+    ExactClass = 0,
+    IsChildOf = 1,
+    ESubLevelStripMode_MAX = 2,
 };
 
 namespace EThreePlayerSplitScreenType {

@@ -3,6 +3,70 @@
 
 #include "Foliage_enums.hpp"
 
+struct FFoliageTypeObject
+{
+    class UObject* FoliageTypeObject;
+    class UFoliageType* TypeInstance;
+    bool bIsAsset;
+    TSubclassOf<class UFoliageType_InstancedStaticMesh> Type;
+
+};
+
+struct FFoliageVertexColorChannelMask
+{
+    uint8 UseMask;
+    float MaskThreshold;
+    uint8 InvertMask;
+
+};
+
+struct FProceduralFoliageInstance
+{
+    FQuat Rotation;
+    FVector Location;
+    float Age;
+    FVector Normal;
+    float Scale;
+    class UFoliageType* Type;
+
+};
+
+class AInstancedFoliageActor : public AActor
+{
+};
+
+class AInteractiveFoliageActor : public AStaticMeshActor
+{
+    class UCapsuleComponent* CapsuleComponent;
+    FVector TouchingActorEntryPosition;
+    FVector FoliageVelocity;
+    FVector FoliageForce;
+    FVector FoliagePosition;
+    float FoliageDamageImpulseScale;
+    float FoliageTouchImpulseScale;
+    float FoliageStiffness;
+    float FoliageStiffnessQuadratic;
+    float FoliageDamping;
+    float MaxDamageImpulse;
+    float MaxTouchImpulse;
+    float MaxForce;
+    float Mass;
+
+    void CapsuleTouched(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& OverlapInfo);
+};
+
+class AProceduralFoliageBlockingVolume : public AVolume
+{
+    class AProceduralFoliageVolume* ProceduralFoliageVolume;
+
+};
+
+class AProceduralFoliageVolume : public AVolume
+{
+    class UProceduralFoliageComponent* ProceduralComponent;
+
+};
+
 class UFoliageInstancedStaticMeshComponent : public UHierarchicalInstancedStaticMeshComponent
 {
     FFoliageInstancedStaticMeshComponentOnInstanceTakePointDamage OnInstanceTakePointDamage;
@@ -18,14 +82,6 @@ class UFoliageStatistics : public UBlueprintFunctionLibrary
 
     int32 FoliageOverlappingSphereCount(class UObject* WorldContextObject, const class UStaticMesh* StaticMesh, FVector CenterPosition, float Radius);
     int32 FoliageOverlappingBoxCount(class UObject* WorldContextObject, const class UStaticMesh* StaticMesh, FBox Box);
-};
-
-struct FFoliageVertexColorChannelMask
-{
-    uint8 UseMask;
-    float MaskThreshold;
-    uint8 InvertMask;
-
 };
 
 class UFoliageType : public UObject
@@ -138,38 +194,8 @@ class UFoliageType_InstancedStaticMesh : public UFoliageType
 
 };
 
-class AInstancedFoliageActor : public AActor
-{
-};
-
-class AInteractiveFoliageActor : public AStaticMeshActor
-{
-    class UCapsuleComponent* CapsuleComponent;
-    FVector TouchingActorEntryPosition;
-    FVector FoliageVelocity;
-    FVector FoliageForce;
-    FVector FoliagePosition;
-    float FoliageDamageImpulseScale;
-    float FoliageTouchImpulseScale;
-    float FoliageStiffness;
-    float FoliageStiffnessQuadratic;
-    float FoliageDamping;
-    float MaxDamageImpulse;
-    float MaxTouchImpulse;
-    float MaxForce;
-    float Mass;
-
-    void CapsuleTouched(class UPrimitiveComponent* OverlappedComp, class AActor* Other, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& OverlapInfo);
-};
-
 class UInteractiveFoliageComponent : public UStaticMeshComponent
 {
-};
-
-class AProceduralFoliageBlockingVolume : public AVolume
-{
-    class AProceduralFoliageVolume* ProceduralFoliageVolume;
-
 };
 
 class UProceduralFoliageComponent : public UActorComponent
@@ -178,15 +204,6 @@ class UProceduralFoliageComponent : public UActorComponent
     float TileOverlap;
     class AVolume* SpawningVolume;
     FGuid ProceduralGuid;
-
-};
-
-struct FFoliageTypeObject
-{
-    class UObject* FoliageTypeObject;
-    class UFoliageType* TypeInstance;
-    bool bIsAsset;
-    TSubclassOf<class UFoliageType_InstancedStaticMesh> Type;
 
 };
 
@@ -201,27 +218,10 @@ class UProceduralFoliageSpawner : public UObject
     void Simulate(int32 NumSteps);
 };
 
-struct FProceduralFoliageInstance
-{
-    FQuat Rotation;
-    FVector Location;
-    float Age;
-    FVector Normal;
-    float Scale;
-    class UFoliageType* Type;
-
-};
-
 class UProceduralFoliageTile : public UObject
 {
     class UProceduralFoliageSpawner* FoliageSpawner;
     TArray<FProceduralFoliageInstance> InstancesArray;
-
-};
-
-class AProceduralFoliageVolume : public AVolume
-{
-    class UProceduralFoliageComponent* ProceduralComponent;
 
 };
 

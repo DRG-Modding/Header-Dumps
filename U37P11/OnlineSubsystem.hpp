@@ -3,41 +3,6 @@
 
 #include "OnlineSubsystem_enums.hpp"
 
-struct FNamedInterface
-{
-    FName InterfaceName;
-    class UObject* InterfaceObject;
-
-};
-
-struct FNamedInterfaceDef
-{
-    FName InterfaceName;
-    FString InterfaceClassName;
-
-};
-
-class UNamedInterfaces : public UObject
-{
-    TArray<FNamedInterface> NamedInterfaces;
-    TArray<FNamedInterfaceDef> NamedInterfaceDefs;
-
-};
-
-class ITurnBasedMatchInterface : public IInterface
-{
-
-    void OnMatchReceivedTurn(FString Match, bool bDidBecomeActive);
-    void OnMatchEnded(FString Match);
-};
-
-struct FInAppPurchaseProductRequest
-{
-    FString ProductIdentifier;
-    bool bIsConsumable;
-
-};
-
 struct FInAppPurchaseProductInfo
 {
     FString Identifier;
@@ -54,11 +19,46 @@ struct FInAppPurchaseProductInfo
 
 };
 
+struct FInAppPurchaseProductRequest
+{
+    FString ProductIdentifier;
+    bool bIsConsumable;
+
+};
+
 struct FInAppPurchaseRestoreInfo
 {
     FString Identifier;
     FString ReceiptData;
     FString TransactionIdentifier;
+
+};
+
+struct FNamedInterface
+{
+    FName InterfaceName;
+    class UObject* InterfaceObject;
+
+};
+
+struct FNamedInterfaceDef
+{
+    FName InterfaceName;
+    FString InterfaceClassName;
+
+};
+
+class ITurnBasedMatchInterface : public IInterface
+{
+
+    void OnMatchReceivedTurn(FString Match, bool bDidBecomeActive);
+    void OnMatchEnded(FString Match);
+};
+
+class UNamedInterfaces : public UObject
+{
+    TArray<FNamedInterface> NamedInterfaces;
+    TArray<FNamedInterfaceDef> NamedInterfaceDefs;
 
 };
 

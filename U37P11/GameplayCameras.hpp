@@ -3,41 +3,19 @@
 
 #include "GameplayCameras_enums.hpp"
 
-class UTestCameraShake : public UCameraShakeBase
-{
-};
-
-class USimpleCameraShakePattern : public UCameraShakePattern
-{
-    float Duration;
-    float BlendInTime;
-    float BlendOutTime;
-
-};
-
-class UConstantCameraShakePattern : public USimpleCameraShakePattern
-{
-    FVector LocationOffset;
-    FRotator RotationOffset;
-
-};
-
-class UCompositeCameraShakePattern : public UCameraShakePattern
-{
-    TArray<class UCameraShakePattern*> ChildPatterns;
-
-};
-
-class UDefaultCameraShakeBase : public UCameraShakeBase
-{
-};
-
 struct FFOscillator
 {
     float Amplitude;
     float Frequency;
     TEnumAsByte<EInitialOscillatorOffset> InitialOffset;
     EOscillatorWaveform Waveform;
+
+};
+
+struct FPerlinNoiseShaker
+{
+    float Amplitude;
+    float Frequency;
 
 };
 
@@ -55,6 +33,31 @@ struct FVOscillator
     FFOscillator Y;
     FFOscillator Z;
 
+};
+
+struct FWaveOscillator
+{
+    float Amplitude;
+    float Frequency;
+    EInitialWaveOscillatorOffsetType InitialOffsetType;
+
+};
+
+class UCompositeCameraShakePattern : public UCameraShakePattern
+{
+    TArray<class UCameraShakePattern*> ChildPatterns;
+
+};
+
+class UConstantCameraShakePattern : public USimpleCameraShakePattern
+{
+    FVector LocationOffset;
+    FRotator RotationOffset;
+
+};
+
+class UDefaultCameraShakeBase : public UCameraShakeBase
+{
 };
 
 class UMatineeCameraShake : public UCameraShakeBase
@@ -85,25 +88,18 @@ class UMatineeCameraShake : public UCameraShakeBase
     void BlueprintUpdateCameraShake(float DeltaTime, float alpha, const FMinimalViewInfo& POV, FMinimalViewInfo& ModifiedPOV);
 };
 
-class UMatineeCameraShakePattern : public UCameraShakePattern
-{
-};
-
-class UMovieSceneMatineeCameraShakeEvaluator : public UMovieSceneCameraShakeEvaluator
-{
-};
-
 class UMatineeCameraShakeFunctionLibrary : public UBlueprintFunctionLibrary
 {
 
     class UMatineeCameraShake* Conv_MatineeCameraShake(class UCameraShakeBase* CameraShake);
 };
 
-struct FPerlinNoiseShaker
+class UMatineeCameraShakePattern : public UCameraShakePattern
 {
-    float Amplitude;
-    float Frequency;
+};
 
+class UMovieSceneMatineeCameraShakeEvaluator : public UMovieSceneCameraShakeEvaluator
+{
 };
 
 class UPerlinNoiseCameraShakePattern : public USimpleCameraShakePattern
@@ -122,12 +118,16 @@ class UPerlinNoiseCameraShakePattern : public USimpleCameraShakePattern
 
 };
 
-struct FWaveOscillator
+class USimpleCameraShakePattern : public UCameraShakePattern
 {
-    float Amplitude;
-    float Frequency;
-    EInitialWaveOscillatorOffsetType InitialOffsetType;
+    float Duration;
+    float BlendInTime;
+    float BlendOutTime;
 
+};
+
+class UTestCameraShake : public UCameraShakeBase
+{
 };
 
 class UWaveOscillatorCameraShakePattern : public USimpleCameraShakePattern

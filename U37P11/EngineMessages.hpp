@@ -1,23 +1,10 @@
 #ifndef UE4SS_SDK_EngineMessages_HPP
 #define UE4SS_SDK_EngineMessages_HPP
 
-struct FEngineServiceNotification
-{
-    FString Text;
-    double TimeSeconds;
-
-};
-
-struct FEngineServiceTerminate
+struct FEngineServiceAuthDeny
 {
     FString Username;
-
-};
-
-struct FEngineServiceExecuteCommand
-{
-    FString Command;
-    FString Username;
+    FString UserToDeny;
 
 };
 
@@ -28,11 +15,22 @@ struct FEngineServiceAuthGrant
 
 };
 
-struct FEngineServiceAuthDeny
+struct FEngineServiceExecuteCommand
 {
+    FString Command;
     FString Username;
-    FString UserToDeny;
 
+};
+
+struct FEngineServiceNotification
+{
+    FString Text;
+    double TimeSeconds;
+
+};
+
+struct FEngineServicePing
+{
 };
 
 struct FEngineServicePong
@@ -47,8 +45,10 @@ struct FEngineServicePong
 
 };
 
-struct FEngineServicePing
+struct FEngineServiceTerminate
 {
+    FString Username;
+
 };
 
 #endif

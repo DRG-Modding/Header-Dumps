@@ -1,7 +1,13 @@
-enum class ESphericalLimitType {
-    Inner = 0,
-    Outer = 1,
-    ESphericalLimitType_MAX = 2,
+enum class AnimPhysAngularConstraintType {
+    Angular = 0,
+    Cone = 1,
+    AnimPhysAngularConstraintType_MAX = 2,
+};
+
+enum class AnimPhysLinearConstraintType {
+    Free = 0,
+    Limited = 1,
+    AnimPhysLinearConstraintType_MAX = 2,
 };
 
 enum class AnimPhysSimSpaceType {
@@ -13,16 +19,10 @@ enum class AnimPhysSimSpaceType {
     AnimPhysSimSpaceType_MAX = 5,
 };
 
-enum class AnimPhysLinearConstraintType {
-    Free = 0,
-    Limited = 1,
-    AnimPhysLinearConstraintType_MAX = 2,
-};
-
-enum class AnimPhysAngularConstraintType {
-    Angular = 0,
-    Cone = 1,
-    AnimPhysAngularConstraintType_MAX = 2,
+enum class CopyBoneDeltaMode {
+    Accumulate = 0,
+    Copy = 1,
+    CopyBoneDeltaMode_MAX = 2,
 };
 
 enum class EBlendListTransitionType {
@@ -31,11 +31,17 @@ enum class EBlendListTransitionType {
     EBlendListTransitionType_MAX = 2,
 };
 
-enum class EDrivenDestinationMode {
-    Bone = 0,
-    MorphTarget = 1,
-    MaterialParameter = 2,
-    EDrivenDestinationMode_MAX = 3,
+enum EBoneModificationMode {
+    BMM_Ignore = 0,
+    BMM_Replace = 1,
+    BMM_Additive = 2,
+    BMM_MAX = 3,
+};
+
+enum class EConstraintOffsetOption {
+    None = 0,
+    Offset_RefPose = 1,
+    EConstraintOffsetOption_MAX = 2,
 };
 
 enum class EDrivenBoneModificationMode {
@@ -45,16 +51,30 @@ enum class EDrivenBoneModificationMode {
     EDrivenBoneModificationMode_MAX = 3,
 };
 
-enum class EConstraintOffsetOption {
-    None = 0,
-    Offset_RefPose = 1,
-    EConstraintOffsetOption_MAX = 2,
+enum class EDrivenDestinationMode {
+    Bone = 0,
+    MorphTarget = 1,
+    MaterialParameter = 2,
+    EDrivenDestinationMode_MAX = 3,
 };
 
-enum class CopyBoneDeltaMode {
-    Accumulate = 0,
-    Copy = 1,
-    CopyBoneDeltaMode_MAX = 2,
+enum class EEasingFuncType {
+    Linear = 0,
+    Sinusoidal = 1,
+    Cubic = 2,
+    QuadraticInOut = 3,
+    CubicInOut = 4,
+    HermiteCubic = 5,
+    QuarticInOut = 6,
+    QuinticInOut = 7,
+    CircularIn = 8,
+    CircularOut = 9,
+    CircularInOut = 10,
+    ExpIn = 11,
+    ExpOut = 12,
+    ExpInOut = 13,
+    CustomCurve = 14,
+    EEasingFuncType_MAX = 15,
 };
 
 namespace EInterpolationBlend {
@@ -69,13 +89,6 @@ namespace EInterpolationBlend {
         MAX = 7,
     };
 }
-
-enum EBoneModificationMode {
-    BMM_Ignore = 0,
-    BMM_Replace = 1,
-    BMM_Additive = 2,
-    BMM_MAX = 3,
-};
 
 enum class EModifyCurveApplyMode {
     Add = 0,
@@ -105,86 +118,6 @@ enum class EPoseDriverType {
     EPoseDriverType_MAX = 3,
 };
 
-enum class ESnapshotSourceMode {
-    NamedSnapshot = 0,
-    SnapshotPin = 1,
-    ESnapshotSourceMode_MAX = 2,
-};
-
-enum ERefPoseType {
-    EIT_LocalSpace = 0,
-    EIT_Additive = 1,
-    EIT_MAX = 2,
-};
-
-enum class ESimulationSpace {
-    ComponentSpace = 0,
-    WorldSpace = 1,
-    BaseBoneSpace = 2,
-    ESimulationSpace_MAX = 3,
-};
-
-enum class EScaleChainInitialLength {
-    FixedDefaultLengthValue = 0,
-    Distance = 1,
-    ChainLength = 2,
-    EScaleChainInitialLength_MAX = 3,
-};
-
-namespace ESequenceEvalReinit {
-    enum Type {
-        NoReset = 0,
-        StartPosition = 1,
-        ExplicitTime = 2,
-        ESequenceEvalReinit_MAX = 3,
-    };
-}
-
-enum class ESplineBoneAxis {
-    None = 0,
-    X = 1,
-    Y = 2,
-    Z = 3,
-    ESplineBoneAxis_MAX = 4,
-};
-
-enum class ERotationComponent {
-    EulerX = 0,
-    EulerY = 1,
-    EulerZ = 2,
-    QuaternionAngle = 3,
-    SwingAngle = 4,
-    TwistAngle = 5,
-    ERotationComponent_MAX = 6,
-};
-
-enum class EEasingFuncType {
-    Linear = 0,
-    Sinusoidal = 1,
-    Cubic = 2,
-    QuadraticInOut = 3,
-    CubicInOut = 4,
-    HermiteCubic = 5,
-    QuarticInOut = 6,
-    QuinticInOut = 7,
-    CircularIn = 8,
-    CircularOut = 9,
-    CircularInOut = 10,
-    ExpIn = 11,
-    ExpOut = 12,
-    ExpInOut = 13,
-    CustomCurve = 14,
-    EEasingFuncType_MAX = 15,
-};
-
-enum class ERBFNormalizeMethod {
-    OnlyNormalizeAboveOne = 0,
-    AlwaysNormalize = 1,
-    NormalizeWithinMedian = 2,
-    NoNormalization = 3,
-    ERBFNormalizeMethod_MAX = 4,
-};
-
 enum class ERBFDistanceMethod {
     Euclidean = 0,
     Quaternion = 1,
@@ -204,9 +137,76 @@ enum class ERBFFunctionType {
     ERBFFunctionType_MAX = 6,
 };
 
+enum class ERBFNormalizeMethod {
+    OnlyNormalizeAboveOne = 0,
+    AlwaysNormalize = 1,
+    NormalizeWithinMedian = 2,
+    NoNormalization = 3,
+    ERBFNormalizeMethod_MAX = 4,
+};
+
 enum class ERBFSolverType {
     Additive = 0,
     Interpolative = 1,
     ERBFSolverType_MAX = 2,
+};
+
+enum ERefPoseType {
+    EIT_LocalSpace = 0,
+    EIT_Additive = 1,
+    EIT_MAX = 2,
+};
+
+enum class ERotationComponent {
+    EulerX = 0,
+    EulerY = 1,
+    EulerZ = 2,
+    QuaternionAngle = 3,
+    SwingAngle = 4,
+    TwistAngle = 5,
+    ERotationComponent_MAX = 6,
+};
+
+enum class EScaleChainInitialLength {
+    FixedDefaultLengthValue = 0,
+    Distance = 1,
+    ChainLength = 2,
+    EScaleChainInitialLength_MAX = 3,
+};
+
+namespace ESequenceEvalReinit {
+    enum Type {
+        NoReset = 0,
+        StartPosition = 1,
+        ExplicitTime = 2,
+        ESequenceEvalReinit_MAX = 3,
+    };
+}
+
+enum class ESimulationSpace {
+    ComponentSpace = 0,
+    WorldSpace = 1,
+    BaseBoneSpace = 2,
+    ESimulationSpace_MAX = 3,
+};
+
+enum class ESnapshotSourceMode {
+    NamedSnapshot = 0,
+    SnapshotPin = 1,
+    ESnapshotSourceMode_MAX = 2,
+};
+
+enum class ESphericalLimitType {
+    Inner = 0,
+    Outer = 1,
+    ESphericalLimitType_MAX = 2,
+};
+
+enum class ESplineBoneAxis {
+    None = 0,
+    X = 1,
+    Y = 2,
+    Z = 3,
+    ESplineBoneAxis_MAX = 4,
 };
 

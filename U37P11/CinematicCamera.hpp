@@ -11,6 +11,19 @@ struct FCameraFilmbackSettings
 
 };
 
+struct FCameraFocusSettings
+{
+    ECameraFocusMethod FocusMethod;
+    float ManualFocusDistance;
+    FCameraTrackingFocusSettings TrackingFocusSettings;
+    uint8 bDrawDebugFocusPlane;
+    FColor DebugFocusPlaneColor;
+    uint8 bSmoothFocusChanges;
+    float FocusSmoothingInterpSpeed;
+    float FocusOffset;
+
+};
+
 struct FCameraLensSettings
 {
     float MinFocalLength;
@@ -22,6 +35,17 @@ struct FCameraLensSettings
 
 };
 
+struct FCameraLookatTrackingSettings
+{
+    uint8 bEnableLookAtTracking;
+    uint8 bDrawDebugLookAtTrackingPosition;
+    float LookAtTrackingInterpSpeed;
+    TSoftObjectPtr<AActor> ActorToTrack;
+    FVector RelativeOffset;
+    uint8 bAllowRoll;
+
+};
+
 struct FCameraTrackingFocusSettings
 {
     TSoftObjectPtr<AActor> ActorToTrack;
@@ -30,16 +54,17 @@ struct FCameraTrackingFocusSettings
 
 };
 
-struct FCameraFocusSettings
+struct FNamedFilmbackPreset
 {
-    ECameraFocusMethod FocusMethod;
-    float ManualFocusDistance;
-    FCameraTrackingFocusSettings TrackingFocusSettings;
-    uint8 bDrawDebugFocusPlane;
-    FColor DebugFocusPlaneColor;
-    uint8 bSmoothFocusChanges;
-    float FocusSmoothingInterpSpeed;
-    float FocusOffset;
+    FString Name;
+    FCameraFilmbackSettings FilmbackSettings;
+
+};
+
+struct FNamedLensPreset
+{
+    FString Name;
+    FCameraLensSettings LensSettings;
 
 };
 
@@ -68,36 +93,11 @@ class ACameraRig_Rail : public AActor
     class USplineComponent* GetRailSplineComponent();
 };
 
-struct FCameraLookatTrackingSettings
-{
-    uint8 bEnableLookAtTracking;
-    uint8 bDrawDebugLookAtTrackingPosition;
-    float LookAtTrackingInterpSpeed;
-    TSoftObjectPtr<AActor> ActorToTrack;
-    FVector RelativeOffset;
-    uint8 bAllowRoll;
-
-};
-
 class ACineCameraActor : public ACameraActor
 {
     FCameraLookatTrackingSettings LookatTrackingSettings;
 
     class UCineCameraComponent* GetCineCameraComponent();
-};
-
-struct FNamedFilmbackPreset
-{
-    FString Name;
-    FCameraFilmbackSettings FilmbackSettings;
-
-};
-
-struct FNamedLensPreset
-{
-    FString Name;
-    FCameraLensSettings LensSettings;
-
 };
 
 class UCineCameraComponent : public UCameraComponent

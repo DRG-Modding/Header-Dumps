@@ -15,7 +15,7 @@ class UITM_CharacterData_C : public UUserWidget
     class UBorder* Holder_PlayerRank;
     class UVerticalBox* Holder_XP;
     class USizeBox* Holder_XPbar;
-    class UImage* ICON_CharacterLevel;
+    class UImage* Icon_CharacterLevel;
     class UImage* Image_2;
     class UImage* Image_6;
     class UBorder* OuterBorder;

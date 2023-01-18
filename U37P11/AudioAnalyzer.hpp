@@ -5,15 +5,15 @@ class UAudioAnalyzerAsset : public UObject
 {
 };
 
-class UAudioAnalyzerNRTSettings : public UAudioAnalyzerAsset
-{
-};
-
 class UAudioAnalyzerNRT : public UAudioAnalyzerAsset
 {
     class USoundWave* Sound;
     float DurationInSeconds;
 
+};
+
+class UAudioAnalyzerNRTSettings : public UAudioAnalyzerAsset
+{
 };
 
 #endif

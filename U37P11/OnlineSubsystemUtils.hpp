@@ -3,25 +3,212 @@
 
 #include "OnlineSubsystemUtils_enums.hpp"
 
-class UIpConnection : public UNetConnection
+struct FBlueprintSessionResult
 {
-    float SocketErrorDisconnectDelay;
+};
+
+struct FInAppPurchaseProductInfo2
+{
+    FString Identifier;
+    FString TransactionIdentifier;
+    FString DisplayName;
+    FString DisplayDescription;
+    FString DisplayPrice;
+    float RawPrice;
+    FString CurrencyCode;
+    FString CurrencySymbol;
+    FString DecimalSeparator;
+    FString GroupingSeparator;
+    FString ReceiptData;
+    TMap<class FString, class FString> DynamicFields;
 
 };
 
-class UIpNetDriver : public UNetDriver
+struct FInAppPurchaseProductRequest2
 {
-    uint8 LogPortUnreach;
-    uint8 AllowPlayerPortUnreach;
-    uint32 MaxPortCountToTry;
-    uint32 ServerDesiredSocketReceiveBufferBytes;
-    uint32 ServerDesiredSocketSendBufferBytes;
-    uint32 ClientDesiredSocketReceiveBufferBytes;
-    uint32 ClientDesiredSocketSendBufferBytes;
-    double MaxSecondsInReceive;
-    int32 NbPacketsBetweenReceiveTimeTest;
-    float ResolutionConnectionTimeout;
+    FString ProductIdentifier;
+    bool bIsConsumable;
 
+};
+
+struct FInAppPurchaseReceiptInfo
+{
+    FString ItemName;
+    FString ItemID;
+    FString ValidationInfo;
+
+};
+
+struct FInAppPurchaseReceiptInfo2
+{
+    FString ItemName;
+    FString ItemID;
+    FString ValidationInfo;
+
+};
+
+struct FInAppPurchaseRestoreInfo2
+{
+    FString ItemName;
+    FString ItemID;
+    FString ValidationInfo;
+
+};
+
+struct FOnlineProxyStoreOffer
+{
+    FString OfferId;
+    FText Title;
+    FText Description;
+    FText LongDescription;
+    FText RegularPriceText;
+    int32 RegularPrice;
+    FText PriceText;
+    int32 NumericPrice;
+    FString CurrencyCode;
+    FDateTime ReleaseDate;
+    FDateTime ExpirationDate;
+    EOnlineProxyStoreOfferDiscountType DiscountType;
+    TMap<class FString, class FString> DynamicFields;
+
+};
+
+struct FPIELoginSettingsInternal
+{
+    FString ID;
+    FString Token;
+    FString Type;
+    TArray<uint8> TokenBytes;
+
+};
+
+struct FPartyBeaconCrossplayPlatformMapping
+{
+    FString PlatformName;
+    FString PlatformType;
+
+};
+
+struct FPartyReservation
+{
+    int32 TeamNum;
+    FUniqueNetIdRepl PartyLeader;
+    TArray<FPlayerReservation> PartyMembers;
+    TArray<FPlayerReservation> RemovedPartyMembers;
+
+};
+
+struct FPlayerReservation
+{
+    FUniqueNetIdRepl UniqueId;
+    FString ValidationStr;
+    FString Platform;
+    bool bAllowCrossplay;
+    float ElapsedTime;
+
+};
+
+struct FSpectatorReservation
+{
+    FUniqueNetIdRepl SpectatorId;
+    FPlayerReservation Spectator;
+
+};
+
+class AOnlineBeacon : public AActor
+{
+    float BeaconConnectionInitialTimeout;
+    float BeaconConnectionTimeout;
+    class UNetDriver* NetDriver;
+
+};
+
+class AOnlineBeaconClient : public AOnlineBeacon
+{
+    class AOnlineBeaconHostObject* BeaconOwner;
+    class UNetConnection* BeaconConnection;
+    EBeaconConnectionState ConnectionState;
+
+    void ClientOnConnected();
+};
+
+class AOnlineBeaconHost : public AOnlineBeacon
+{
+    int32 ListenPort;
+    TArray<class AOnlineBeaconClient*> ClientActors;
+
+};
+
+class AOnlineBeaconHostObject : public AActor
+{
+    FString BeaconTypeName;
+    TSubclassOf<class AOnlineBeaconClient> ClientBeaconActorClass;
+    TArray<class AOnlineBeaconClient*> ClientActors;
+
+};
+
+class APartyBeaconClient : public AOnlineBeaconClient
+{
+    FString DestSessionId;
+    FPartyReservation PendingReservation;
+    EClientRequestType requestType;
+    bool bPendingReservationSent;
+    bool bCancelReservation;
+
+    void ServerUpdateReservationRequest(FString sessionId, const FPartyReservation& ReservationUpdate);
+    void ServerReservationRequest(FString sessionId, const FPartyReservation& Reservation);
+    void ServerRemoveMemberFromReservationRequest(FString sessionId, const FPartyReservation& ReservationUpdate);
+    void ServerCancelReservationRequest(const FUniqueNetIdRepl& PartyLeader);
+    void ServerAddOrUpdateReservationRequest(FString sessionId, const FPartyReservation& Reservation);
+    void ClientSendReservationUpdates(int32 NumRemainingReservations);
+    void ClientSendReservationFull();
+    void ClientReservationResponse(TEnumAsByte<EPartyReservationResult::Type> ReservationResponse);
+    void ClientCancelReservationResponse(TEnumAsByte<EPartyReservationResult::Type> ReservationResponse);
+};
+
+class APartyBeaconHost : public AOnlineBeaconHostObject
+{
+    class UPartyBeaconState* State;
+    bool bLogoutOnSessionTimeout;
+    float SessionTimeoutSecs;
+    float TravelSessionTimeoutSecs;
+
+};
+
+class ASpectatorBeaconClient : public AOnlineBeaconClient
+{
+    FString DestSessionId;
+    FSpectatorReservation PendingReservation;
+    ESpectatorClientRequestType requestType;
+    bool bPendingReservationSent;
+    bool bCancelReservation;
+
+    void ServerReservationRequest(FString sessionId, const FSpectatorReservation& Reservation);
+    void ServerCancelReservationRequest(const FUniqueNetIdRepl& Spectator);
+    void ClientSendReservationUpdates(int32 NumRemainingReservations);
+    void ClientSendReservationFull();
+    void ClientReservationResponse(TEnumAsByte<ESpectatorReservationResult::Type> ReservationResponse);
+    void ClientCancelReservationResponse(TEnumAsByte<ESpectatorReservationResult::Type> ReservationResponse);
+};
+
+class ASpectatorBeaconHost : public AOnlineBeaconHostObject
+{
+    class USpectatorBeaconState* State;
+    bool bLogoutOnSessionTimeout;
+    float SessionTimeoutSecs;
+    float TravelSessionTimeoutSecs;
+
+};
+
+class ATestBeaconClient : public AOnlineBeaconClient
+{
+
+    void ServerPong();
+    void ClientPing();
+};
+
+class ATestBeaconHost : public AOnlineBeaconHostObject
+{
 };
 
 class UAchievementBlueprintLibrary : public UBlueprintFunctionLibrary
@@ -102,10 +289,6 @@ class UEndTurnCallbackProxy : public UOnlineBlueprintCallProxyBase
     class UEndTurnCallbackProxy* EndTurn(class UObject* WorldContextObject, class APlayerController* PlayerController, FString MatchID, TScriptInterface<class ITurnBasedMatchInterface> TurnBasedMatchInterface);
 };
 
-struct FBlueprintSessionResult
-{
-};
-
 class UFindSessionsCallbackProxy : public UOnlineBlueprintCallProxyBase
 {
     FFindSessionsCallbackProxyOnSuccess OnSuccess;
@@ -140,21 +323,6 @@ class UInAppPurchaseCallbackProxy : public UObject
     class UInAppPurchaseCallbackProxy* CreateProxyObjectForInAppPurchase(class APlayerController* PlayerController, const FInAppPurchaseProductRequest& ProductRequest);
 };
 
-struct FInAppPurchaseProductRequest2
-{
-    FString ProductIdentifier;
-    bool bIsConsumable;
-
-};
-
-struct FInAppPurchaseReceiptInfo2
-{
-    FString ItemName;
-    FString ItemID;
-    FString ValidationInfo;
-
-};
-
 class UInAppPurchaseCallbackProxy2 : public UObject
 {
     FInAppPurchaseCallbackProxy2OnSuccess OnSuccess;
@@ -177,24 +345,6 @@ class UInAppPurchaseQueryCallbackProxy : public UObject
     class UInAppPurchaseQueryCallbackProxy* CreateProxyObjectForInAppPurchaseQuery(class APlayerController* PlayerController, const TArray<FString>& ProductIdentifiers);
 };
 
-struct FOnlineProxyStoreOffer
-{
-    FString OfferId;
-    FText Title;
-    FText Description;
-    FText LongDescription;
-    FText RegularPriceText;
-    int32 RegularPrice;
-    FText PriceText;
-    int32 NumericPrice;
-    FString CurrencyCode;
-    FDateTime ReleaseDate;
-    FDateTime ExpirationDate;
-    EOnlineProxyStoreOfferDiscountType DiscountType;
-    TMap<class FString, class FString> DynamicFields;
-
-};
-
 class UInAppPurchaseQueryCallbackProxy2 : public UObject
 {
     FInAppPurchaseQueryCallbackProxy2OnSuccess OnSuccess;
@@ -215,14 +365,6 @@ class UInAppPurchaseRestoreCallbackProxy : public UObject
     class UInAppPurchaseRestoreCallbackProxy* CreateProxyObjectForInAppPurchaseRestore(const TArray<FInAppPurchaseProductRequest>& ConsumableProductFlags, class APlayerController* PlayerController);
 };
 
-struct FInAppPurchaseRestoreInfo2
-{
-    FString ItemName;
-    FString ItemID;
-    FString ValidationInfo;
-
-};
-
 class UInAppPurchaseRestoreCallbackProxy2 : public UObject
 {
     FInAppPurchaseRestoreCallbackProxy2OnSuccess OnSuccess;
@@ -231,6 +373,27 @@ class UInAppPurchaseRestoreCallbackProxy2 : public UObject
     void InAppPurchaseRestoreResult2(EInAppPurchaseStatus PurchaseStatus, const TArray<FInAppPurchaseRestoreInfo2>& InAppPurchaseRestoreInfo);
 
     class UInAppPurchaseRestoreCallbackProxy2* CreateProxyObjectForInAppPurchaseRestore(const TArray<FInAppPurchaseProductRequest2>& ConsumableProductFlags, class APlayerController* PlayerController);
+};
+
+class UIpConnection : public UNetConnection
+{
+    float SocketErrorDisconnectDelay;
+
+};
+
+class UIpNetDriver : public UNetDriver
+{
+    uint8 LogPortUnreach;
+    uint8 AllowPlayerPortUnreach;
+    uint32 MaxPortCountToTry;
+    uint32 ServerDesiredSocketReceiveBufferBytes;
+    uint32 ServerDesiredSocketSendBufferBytes;
+    uint32 ClientDesiredSocketReceiveBufferBytes;
+    uint32 ClientDesiredSocketSendBufferBytes;
+    double MaxSecondsInReceive;
+    int32 NbPacketsBetweenReceiveTimeTest;
+    float ResolutionConnectionTimeout;
+
 };
 
 class UJoinSessionCallbackProxy : public UOnlineBlueprintCallProxyBase
@@ -279,52 +442,11 @@ class ULogoutCallbackProxy : public UBlueprintAsyncActionBase
     class ULogoutCallbackProxy* Logout(class UObject* WorldContextObject, class APlayerController* PlayerController);
 };
 
-class AOnlineBeacon : public AActor
-{
-    float BeaconConnectionInitialTimeout;
-    float BeaconConnectionTimeout;
-    class UNetDriver* NetDriver;
-
-};
-
-class AOnlineBeaconClient : public AOnlineBeacon
-{
-    class AOnlineBeaconHostObject* BeaconOwner;
-    class UNetConnection* BeaconConnection;
-    EBeaconConnectionState ConnectionState;
-
-    void ClientOnConnected();
-};
-
-class AOnlineBeaconHost : public AOnlineBeacon
-{
-    int32 ListenPort;
-    TArray<class AOnlineBeaconClient*> ClientActors;
-
-};
-
-class AOnlineBeaconHostObject : public AActor
-{
-    FString BeaconTypeName;
-    TSubclassOf<class AOnlineBeaconClient> ClientBeaconActorClass;
-    TArray<class AOnlineBeaconClient*> ClientActors;
-
-};
-
 class UOnlineEngineInterfaceImpl : public UOnlineEngineInterface
 {
     TMap<class FName, class FName> MappedUniqueNetIdTypes;
     TArray<FName> CompatibleUniqueNetIdTypes;
     FName VoiceSubsystemNameOverride;
-
-};
-
-struct FPIELoginSettingsInternal
-{
-    FString ID;
-    FString Token;
-    FString Type;
-    TArray<uint8> TokenBytes;
 
 };
 
@@ -339,60 +461,6 @@ class UOnlineSessionClient : public UOnlineSession
 {
     bool bIsFromInvite;
     bool bHandlingDisconnect;
-
-};
-
-struct FPlayerReservation
-{
-    FUniqueNetIdRepl UniqueId;
-    FString ValidationStr;
-    FString Platform;
-    bool bAllowCrossplay;
-    float ElapsedTime;
-
-};
-
-struct FPartyReservation
-{
-    int32 TeamNum;
-    FUniqueNetIdRepl PartyLeader;
-    TArray<FPlayerReservation> PartyMembers;
-    TArray<FPlayerReservation> RemovedPartyMembers;
-
-};
-
-class APartyBeaconClient : public AOnlineBeaconClient
-{
-    FString DestSessionId;
-    FPartyReservation PendingReservation;
-    EClientRequestType requestType;
-    bool bPendingReservationSent;
-    bool bCancelReservation;
-
-    void ServerUpdateReservationRequest(FString sessionId, const FPartyReservation& ReservationUpdate);
-    void ServerReservationRequest(FString sessionId, const FPartyReservation& Reservation);
-    void ServerRemoveMemberFromReservationRequest(FString sessionId, const FPartyReservation& ReservationUpdate);
-    void ServerCancelReservationRequest(const FUniqueNetIdRepl& PartyLeader);
-    void ServerAddOrUpdateReservationRequest(FString sessionId, const FPartyReservation& Reservation);
-    void ClientSendReservationUpdates(int32 NumRemainingReservations);
-    void ClientSendReservationFull();
-    void ClientReservationResponse(TEnumAsByte<EPartyReservationResult::Type> ReservationResponse);
-    void ClientCancelReservationResponse(TEnumAsByte<EPartyReservationResult::Type> ReservationResponse);
-};
-
-class APartyBeaconHost : public AOnlineBeaconHostObject
-{
-    class UPartyBeaconState* State;
-    bool bLogoutOnSessionTimeout;
-    float SessionTimeoutSecs;
-    float TravelSessionTimeoutSecs;
-
-};
-
-struct FPartyBeaconCrossplayPlatformMapping
-{
-    FString PlatformName;
-    FString PlatformType;
 
 };
 
@@ -434,38 +502,6 @@ class UShowLoginUICallbackProxy : public UBlueprintAsyncActionBase
     class UShowLoginUICallbackProxy* ShowExternalLoginUI(class UObject* WorldContextObject, class APlayerController* InPlayerController);
 };
 
-struct FSpectatorReservation
-{
-    FUniqueNetIdRepl SpectatorId;
-    FPlayerReservation Spectator;
-
-};
-
-class ASpectatorBeaconClient : public AOnlineBeaconClient
-{
-    FString DestSessionId;
-    FSpectatorReservation PendingReservation;
-    ESpectatorClientRequestType requestType;
-    bool bPendingReservationSent;
-    bool bCancelReservation;
-
-    void ServerReservationRequest(FString sessionId, const FSpectatorReservation& Reservation);
-    void ServerCancelReservationRequest(const FUniqueNetIdRepl& Spectator);
-    void ClientSendReservationUpdates(int32 NumRemainingReservations);
-    void ClientSendReservationFull();
-    void ClientReservationResponse(TEnumAsByte<ESpectatorReservationResult::Type> ReservationResponse);
-    void ClientCancelReservationResponse(TEnumAsByte<ESpectatorReservationResult::Type> ReservationResponse);
-};
-
-class ASpectatorBeaconHost : public AOnlineBeaconHostObject
-{
-    class USpectatorBeaconState* State;
-    bool bLogoutOnSessionTimeout;
-    float SessionTimeoutSecs;
-    float TravelSessionTimeoutSecs;
-
-};
-
 class USpectatorBeaconState : public UObject
 {
     FName SessionName;
@@ -474,17 +510,6 @@ class USpectatorBeaconState : public UObject
     bool bRestrictCrossConsole;
     TArray<FSpectatorReservation> Reservations;
 
-};
-
-class ATestBeaconClient : public AOnlineBeaconClient
-{
-
-    void ServerPong();
-    void ClientPing();
-};
-
-class ATestBeaconHost : public AOnlineBeaconHostObject
-{
 };
 
 class UTurnBasedBlueprintLibrary : public UBlueprintFunctionLibrary
@@ -500,31 +525,6 @@ class UVoipListenerSynthComponent : public USynthComponent
 {
 
     bool IsIdling();
-};
-
-struct FInAppPurchaseReceiptInfo
-{
-    FString ItemName;
-    FString ItemID;
-    FString ValidationInfo;
-
-};
-
-struct FInAppPurchaseProductInfo2
-{
-    FString Identifier;
-    FString TransactionIdentifier;
-    FString DisplayName;
-    FString DisplayDescription;
-    FString DisplayPrice;
-    float RawPrice;
-    FString CurrencyCode;
-    FString CurrencySymbol;
-    FString DecimalSeparator;
-    FString GroupingSeparator;
-    FString ReceiptData;
-    TMap<class FString, class FString> DynamicFields;
-
 };
 
 #endif
