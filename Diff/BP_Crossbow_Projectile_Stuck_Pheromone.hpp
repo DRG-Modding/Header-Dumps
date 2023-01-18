@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_BP_Crossbow_Projectile_Stuck_Pheromone_HPP
+#define UE4SS_SDK_BP_Crossbow_Projectile_Stuck_Pheromone_HPP
+
+class ABP_Crossbow_Projectile_Stuck_Pheromone_C : public ABP_Crossbow_Projectile_Stuck_C
+{
+};
+
+#endif

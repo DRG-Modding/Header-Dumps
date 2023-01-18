@@ -1,0 +1,11 @@
+#ifndef UE4SS_SDK_STRUCT_Lamp_HPP
+#define UE4SS_SDK_STRUCT_Lamp_HPP
+
+struct FSTRUCT_Lamp
+{
+    class UStaticMesh* Mesh_5_810D843249D7DE1B52FB01ABB4162425;
+    int32 Index_9_EFCB33BD44D01AA065228BA93009BCAF;
+
+};
+
+#endif
