@@ -1,8 +1,0 @@
-#ifndef UE4SS_SDK_STE_Grenade_Pheromone_PropogatedAttacker_HPP
-#define UE4SS_SDK_STE_Grenade_Pheromone_PropogatedAttacker_HPP
-
-class USTE_Grenade_Pheromone_PropogatedAttacker_C : public UStatusEffect
-{
-};
-
-#endif

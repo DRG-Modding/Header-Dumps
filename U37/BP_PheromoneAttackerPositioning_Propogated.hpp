@@ -1,8 +1,0 @@
-#ifndef UE4SS_SDK_BP_PheromoneAttackerPositioning_Propogated_HPP
-#define UE4SS_SDK_BP_PheromoneAttackerPositioning_Propogated_HPP
-
-class UBP_PheromoneAttackerPositioning_Propogated_C : public UEnemyAttackerPositioningComponent
-{
-};
-
-#endif
