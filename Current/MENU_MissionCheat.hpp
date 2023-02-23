@@ -42,7 +42,7 @@ class UMENU_MissionCheat_C : public UWindowWidget
     void SetMissionName(class UGeneratedMission* mission);
     void GetDifficulty(class UDifficultySetting*& Output);
     void RefreshSecondaries();
-    void GetSecondary(TSubclassOf<class UObjective>& Output);
+    void GetSecondary(TArray<class TSubclassOf<UObjective>>& Output);
     bool IsCustomMissionAllowed();
     void Get Warning B(class UMissionWarning*& Output);
     void Get Warning A(class UMissionWarning*& Output);

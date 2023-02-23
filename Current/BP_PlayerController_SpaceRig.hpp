@@ -56,7 +56,7 @@ class ABP_PlayerController_SpaceRig_C : public ABP_SR_PlayerControllerBase_C
     void GetPopupCrafting(class UWindowWidget*& Widget);
     void GetCrafting(class UWindowWidget*& Widget);
     void PreloadAssets();
-    bool hudVisible();
+    bool HUDVisible();
     void ChangeHUDVisible(bool IsHUDVisible, EHUDVisibilityReason reason);
     void SelectLastPlayedCharacter();
     void AddWidget(class UUserWidget*& Widget, int32 ZOrder, ESlateVisibility InVisibility);

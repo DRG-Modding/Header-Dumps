@@ -47,7 +47,7 @@ class UITM_Season_RewardImageSingle_C : public UUserWidget
     void SequenceEvent__ENTRYPOINTITM_Season_RewardImageSingle_1();
     void SequenceEvent__ENTRYPOINTITM_Season_RewardImageSingle_0();
     void SetupMaterial();
-    void Set Skin Icon(class UItemSkin* InSkin, class UMaterialInterface* InMaterial, TEnumAsByte<ENUM_SkinWidgetTypes::Type> InBucketIcon);
+    void Set Skin Icon(class UItemSkin* inSkin, class UMaterialInterface* InMaterial, TEnumAsByte<ENUM_SkinWidgetTypes::Type> InBucketIcon);
     void GetPickaxe(class UPlayerCharacterID* characterID, class UItemID*& Output);
     class UWidget* Get_Image_Main_ToolTipWidget();
     void AnimTick();

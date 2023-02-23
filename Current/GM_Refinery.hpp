@@ -13,7 +13,7 @@ class AGM_Refinery_C : public ABP_NetworkPlayGameMode_C
     void ReceiveBeginPlay();
     void OnMatchStarted_Event_0();
     void SpawnMissionCriticalItems(const ECriticalItemPass& pass);
-    void DropPodSpawned(class ADropPod* InDropPod);
+    void DropPodSpawned(class ADroppableOutpost* InDroppableOutpost);
     void Rocket Launched();
     void RefineryStateChanged(ERefineryState InRefineryState);
     void ExecuteUbergraph_GM_Refinery(int32 EntryPoint);

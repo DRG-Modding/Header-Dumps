@@ -5,7 +5,7 @@ class AGM_Motherlode_C : public ABP_NetworkPlayGameMode_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
     FVector SelectedSpawnLocation;
-    class ADropPod* MineHead;
+    class ADroppableOutpost* MineHead;
 
     void OnRep_SelectedSpawnLocation();
     void GetLandingZoneLocation(FVector& Output);

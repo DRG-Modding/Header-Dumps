@@ -4,9 +4,9 @@
 class ABP_BeachParty_Inflatable_InCave_C : public AGem
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UFirstPersonSkeletalMeshComponent* FirstPersonSkeletalMesh;
+    class USkeletalMeshComponent* ThirdPersonSkeletalMesh;
     class UOutlineComponent* outline;
-    class UFirstPersonStaticMeshComponent* FirstPersonStaticMesh;
-    class UStaticMeshComponent* ThirdPersonStaticMesh;
     class UPointLightComponent* PointLight;
     class UTerrainScannerStaticMesh* TerrainScannerStaticMesh;
     class USphereComponent* Sphere;

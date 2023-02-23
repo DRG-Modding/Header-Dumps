@@ -45,6 +45,7 @@ class UUI_Bar_OrderMenu_C : public UBarMenuWidget
     void BndEvt__MENU_SpaceRigTemplate_K2Node_ComponentBoundEvent_11_OnClosedClicked__DelegateSignature();
     void OnDrinkUnlocked(class UDrinkableDataAsset* Drink);
     void Construct();
+    void Hovered Drinkable type changed();
     void ExecuteUbergraph_UI_Bar_OrderMenu(int32 EntryPoint);
     void OnRoundSelected__DelegateSignature(class ASpaceRigBar* Bar, class UDrinkableDataAsset* RequestedDrink);
 };

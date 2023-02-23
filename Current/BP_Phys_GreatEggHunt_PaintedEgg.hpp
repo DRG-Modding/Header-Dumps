@@ -6,7 +6,6 @@ class ABP_Phys_GreatEggHunt_PaintedEgg_C : public AActor
     FPointerToUberGraphFrame UberGraphFrame;
     class UNiagaraComponent* Niagara;
     class UStaticMeshComponent* Mesh;
-    class UParticleSystemComponent* ParticleSystem;
     class UCapsuleComponent* UseCapsule;
     class UGravityChangedComponent* GravityChanged;
     class UInstantUsable* InstantUsable;

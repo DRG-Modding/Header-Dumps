@@ -30,7 +30,7 @@ class UWND_Skins_C : public UUserWidget
     bool HighlightFirstItem;
     class UItemSkin* DefaultSkin;
 
-    class UItemSkin* SelectSkinOrEquipped(class UItemSkin* InSkin);
+    class UItemSkin* SelectSkinOrEquipped(class UItemSkin* inSkin);
     void RefreshLoadout();
     void ClearSkins();
     void OnUnlockedSkin(class UItemSkin* SkinItem);
@@ -41,7 +41,7 @@ class UWND_Skins_C : public UUserWidget
     void IsWindowVisible(bool& Visible);
     void PopulateSkinWindow(bool& isEmpty);
     void SetWindowVisible(bool IsVisible, bool& VisibilityChanged, bool& NewVisibility);
-    void AddSkin(class UItemSkin* InSkin, TSubclassOf<class AActor> InItem, TSubclassOf<class APlayerCharacter> InPlayerCharacter, int32 InIndex, class UITM_SkinItem_C*& OutSkinWidget);
+    void AddSkin(class UItemSkin* inSkin, TSubclassOf<class AActor> InItem, TSubclassOf<class APlayerCharacter> InPlayerCharacter, int32 InIndex, class UITM_SkinItem_C*& OutSkinWidget);
     void SetSkinData(class UItemID* itemClass, class UPlayerCharacterID* PlayerCharacterClass);
     void BndEvt__Button_1_K2Node_ComponentBoundEvent_1_OnButtonClickedEvent__DelegateSignature();
     void PreConstruct(bool IsDesignTime);

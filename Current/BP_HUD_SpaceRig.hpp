@@ -46,6 +46,10 @@ class ABP_HUD_SpaceRig_C : public ASpaceRigHUD
     void Shouting Done();
     void SetupModWarnings]();
     void Setup Vanity Mastery Notification();
+    void Handle Event Rewards(class UFSDEvent* inEvent);
+    void Handle Event Popup(class UFSDEvent* inEvent);
+    void WaitAndTryNextNotification(float WaitDuration);
+    void OnLastWindowClosed();
     void ExecuteUbergraph_BP_HUD_SpaceRig(int32 EntryPoint);
 };
 

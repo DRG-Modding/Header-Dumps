@@ -61,7 +61,6 @@ class ALVL_SpaceRig_C : public ALevelScriptActor
     class ABP_DropPod_Rig_C* BP_DropPod_Rig_2_ExecuteUbergraph_LVL_SpaceRig_RefProperty;
     class AActor* TrashCompactorDirection_ExecuteUbergraph_LVL_SpaceRig_RefProperty;
     class ATriggerBox* TriggerBox_TrashCompactor_ExecuteUbergraph_LVL_SpaceRig_RefProperty;
-    class ASkeletalMeshActor* SK_Banner3_EdGraph_0_RefProperty;
     class ABP_Phys_Newsstand_FreeBeer_C* BP_Phys_Newsstand_FreeBeer4_EdGraph_0_RefProperty;
     class ABP_Phys_Newsstand_FreeBeer_C* BP_Phys_Newsstand_FreeBeer3_EdGraph_0_RefProperty;
     class ABP_Phys_Newsstand_FreeBeer_C* BP_Phys_Newsstand_FreeBeer2_EdGraph_0_RefProperty;
@@ -69,6 +68,7 @@ class ALVL_SpaceRig_C : public ALevelScriptActor
     class ABP_ConfettiPlane_C* BP_ConfettiPlane3_EdGraph_0_RefProperty;
     class ABP_ConfettiPlane_C* BP_ConfettiPlane2_EdGraph_0_RefProperty;
     class ABP_ConfettiPlane_C* BP_ConfettiPlane_4_EdGraph_0_RefProperty;
+    class ASkeletalMeshActor* SK_Banner3_EdGraph_0_RefProperty;
     class ABP_ModularLamp_C* BP_Lamp_BASE3_EdGraph_4_RefProperty;
     class ABP_ModularLamp_C* BP_Lamp_BASE2_5_EdGraph_4_RefProperty;
 

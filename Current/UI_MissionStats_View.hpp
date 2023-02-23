@@ -8,9 +8,9 @@ class UUI_MissionStats_View_C : public UUI_KPI_Tab_C
     class UBasic_ScrollBarBox_C* Basic_ScrollBarBox;
     class UVerticalBox* Header;
     class UUI_MissionStat_Preview_C* MissionStat_Preview;
-    class USpacer* Spacer_Left;
+    class USpacer* Spacer_left;
     class USpacer* Spacer_middle;
-    class USpacer* Spacer_Right;
+    class USpacer* Spacer_right;
     class UVerticalBox* StatsParent;
     class UTextBlock* StatTitle;
     class UUI_MissionStats_Categories_C* UI_MissionStats_Categories;

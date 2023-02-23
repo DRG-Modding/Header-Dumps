@@ -12,7 +12,7 @@ class UBP_ExpertDepositorLogic_C : public UPerkLogic
     bool InRange;
     class AFSDMiningHead* MineHead;
     class AFSDRefinery* Refinery;
-    class AMiningPod* DropPod;
+    class ATeamTransport* DropPod;
 
     void CheckInRange(const class AActor* OtherActor);
     FText GetAdditionalText(int32 Rank);

@@ -19,6 +19,7 @@ class UMenu_Cheats_C : public UWindowWidget
     class UButton* Button_Gunner;
     class UButton* Button_Info;
     class UButton* Button_Mission;
+    class UButton* Button_Mission_Mode;
     class UButton* Button_ReloadChar;
     class UButton* Button_Scout;
     class UButton* Button_SpawnMinimule;
@@ -80,6 +81,7 @@ class UMenu_Cheats_C : public UWindowWidget
     class UCheat_VanityTab_C* Cheat_VanityTab;
     class UButton* CleanSpawnPos;
     class UHorizontalBox* Content_Mission;
+    class UHorizontalBox* Content_MissionMode;
     class UWidgetSwitcher* ContentSwitcher;
     class UTextBlock* CritterPoolList;
     class UTextBlock* EnemyPool;
@@ -121,7 +123,7 @@ class UMenu_Cheats_C : public UWindowWidget
     void Get Character to change(FText Character, class UPlayerCharacterID*& character out);
     void DeselectTab(class UButton* Tab);
     void SelectTab(int32 Index, class UButton* TabButton);
-    void OnLoaded_A7093BF7410CE2BD47E9B6A07D503818(UClass* Loaded);
+    void OnLoaded_74B166684A86355CEB1C7CB4DA5525E2(UClass* Loaded);
     void BndEvt__Button_Close_K2Node_ComponentBoundEvent_62_OnButtonClickedEvent__DelegateSignature();
     void BndEvt__Button_General_K2Node_ComponentBoundEvent_323_OnButtonClickedEvent__DelegateSignature();
     void SelectFirstTab();
@@ -174,6 +176,8 @@ class UMenu_Cheats_C : public UWindowWidget
     void BndEvt__Button_Mission_K2Node_ComponentBoundEvent_13_OnButtonClickedEvent__DelegateSignature();
     void BndEvt__Menu_Cheats_AdvEnemySpawn_K2Node_ComponentBoundEvent_14_OnMenuOpenChangedEvent__DelegateSignature(bool bIsOpen);
     void BndEvt__Menu_Cheats_Cheat_ToggleInstantUsables_K2Node_ComponentBoundEvent_9_OnButtonClickedEvent__DelegateSignature();
+    void CreateAndAddContent(class UHorizontalBox* ToContent, TSoftClassPtr<UWidget> UI);
+    void BndEvt__Menu_Cheats_Button_Mission_Mode_K2Node_ComponentBoundEvent_15_OnButtonClickedEvent__DelegateSignature();
     void ExecuteUbergraph_Menu_Cheats(int32 EntryPoint);
 };
 

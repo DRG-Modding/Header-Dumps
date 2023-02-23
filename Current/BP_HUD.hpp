@@ -8,6 +8,7 @@ class ABP_HUD_C : public AFSDHUD
     TArray<class UWidget*> Widgets;
     class APlayerController* PlayerController;
     bool HudInitialized;
+    bool CanAddToViewport;
     class UFSDMainHUDWidget* HudWidget;
     TArray<class URadarPointComponent*> RadarPointsInQueue;
     class APlayerCharacter* PlayerCharacter;
@@ -16,16 +17,25 @@ class ABP_HUD_C : public AFSDHUD
     class UScreenOverlay_Afflictions_C* AfflictionWidget;
     class UBP_Invitation_C* InviteRequest;
     class UWindowWidget* QuickCheatMenu;
+    TSoftClassPtr<UFSDMainHUDWidget> HUD Class;
+    TSoftClassPtr<UWindowWidget> Escape Menu Class;
+    TSoftClassPtr<UWindowWidget> Cheat Menu Class;
+    TSoftClassPtr<UWindowWidget> Quick Cheat Menu Class;
+    TSoftClassPtr<UScreenOverlay_Afflictions_C> Affliction Class;
 
-    void PopEvent(class UWidget* EventWidget, bool Left);
+    void GetQuickCheatMenu(class UWindowWidget*& QuickCheatMenu);
+    void GetCheatMenu(class UWindowWidget*& CheatMenu);
+    void GetHUDWidget(class UFSDMainHUDWidget*& HudWidget);
+    void GetEscapeMenu(class UWindowWidget*& EscMenu);
+    void PopEvent(class UWidget* eventWidget, bool Left);
     void CreateEscMenu();
     void IsInitialized(bool& Out);
     void CreateQuickCheatsIfNotCreated();
-    void PushEvent(class UWidget* EventWidget, bool Left, bool& success);
+    void PushEvent(class UWidget* eventWidget, bool Left);
     void CreateCheatsIfNotCreated();
     void RemoveAllWidgetsFromParents();
     void AddAllWidgetToViewport();
-    void AddWidget(TSubclassOf<class UUserWidget> Class, class UWidget*& Widget);
+    void Add Widget Class(TSubclassOf<class UUserWidget> Class, class UWidget*& Widget);
     void PlayerSpawned(class APlayerCharacter* Player);
     void RadarPointAdded(class URadarPointComponent* radarPoint);
     void HandleSeamlessTravel();
@@ -36,7 +46,7 @@ class ABP_HUD_C : public AFSDHUD
     void OnShowMainMenu();
     void LoadEscapeMenu();
     void MenuLoaded();
-    void OnHit_Event(float Damage, const FDamageData& DamageData, bool anyHealthLost);
+    void On HUD Initialized();
     void QuickCheatMenuRequest();
     void CheatMenuRequest();
     void ExecuteUbergraph_BP_HUD(int32 EntryPoint);

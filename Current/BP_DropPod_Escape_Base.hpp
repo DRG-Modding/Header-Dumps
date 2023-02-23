@@ -57,14 +57,12 @@ class ABP_DropPod_Escape_Base_C : public ABP_DropPod_Base_C
     void LockCharactersInPod();
     void UserConstructionScript();
     void OnDroppodImpact();
-    void OnAllDwavesInsidePod(bool AllInside);
     void BndEvt__TriggerOutline_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
     void BndEvt__TriggerOutline_K2Node_ComponentBoundEvent_1_ComponentEndOverlapSignature__DelegateSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
     void OnDrillingStarted();
     void ReceiveBeginPlay();
     void OnDonkeyReachedDropShip();
     void OnDeparting();
-    void RecieveReturnTimerExpired();
     void OnPrepForTakeOff();
     void OnMuleLoaded();
     void OnCharacterEnter(class APlayerCharacter* Character);
@@ -72,11 +70,13 @@ class ABP_DropPod_Escape_Base_C : public ABP_DropPod_Base_C
     void HandleHurryShouts();
     void BndEvt__ResourceBank_K2Node_ComponentBoundEvent_0_ResourceBankEvent__DelegateSignature(class APlayerCharacter* User);
     void BndEvt__ResourceBank_K2Node_ComponentBoundEvent_1_ResourceBankEvent__DelegateSignature(class APlayerCharacter* User);
-    void RecieveReturnTimerFifteenSecondWarning();
-    void ForceTakeoff();
     void BndEvt__OxygenSource_K2Node_ComponentBoundEvent_9_OxygenActiveDelegate__DelegateSignature(bool IsActive);
     void OnRepDoorState();
     void OnMuleBayOpenedDispatch_Event_1();
+    void ForceTakeoff();
+    void RecieveReturnTimerFifteenSecondWarning();
+    void RecieveReturnTimerExpired();
+    void OnAllDwavesInsidePod(bool AllInside);
     void ExecuteUbergraph_BP_DropPod_Escape_Base(int32 EntryPoint);
 };
 

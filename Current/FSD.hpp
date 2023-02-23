@@ -374,6 +374,7 @@ struct FCampaignSave
     int32 ActiveCampaignWeek;
     FWeeklyCampaignItem WeeklySave;
     FWeeklyCampaignItem MaxtrixCoreHuntSave;
+    FWeeklyCampaignItem SeededRandomSave;
 
 };
 
@@ -1153,8 +1154,11 @@ struct FDeepDiveSaveRewardItem
 struct FDeepDiveTemplateItem
 {
     class UMissionTemplate* mission;
+    int32 Probability;
     TArray<class UMissionDuration*> AllowedDurations;
     TArray<class UMissionComplexity*> AllowedComplexities;
+    bool CanOnlyAppearOnce;
+    bool CanOnlyAppearOncePerDeepDiveSet;
 
 };
 
@@ -1586,6 +1590,7 @@ struct FFSDDeepDiveResponse
 struct FFSDEventRewardsSave
 {
     TSet<FGuid> EventsSeen;
+    TSet<FGuid> PopupsSeen;
 
 };
 
@@ -3106,6 +3111,13 @@ struct FPlatformComponent
 {
     TSubclassOf<class UActorComponent> ComponentClass;
     EPlatformComponentCriteria Criteria;
+
+};
+
+struct FPlatformSpecificEventPopup
+{
+    EFSDTargetPlatform TargetPlatform;
+    TSoftClassPtr<UFSDEventPopupWidget> PopupWidget;
 
 };
 
@@ -6225,6 +6237,7 @@ class ADisplayCase : public AActor
     int32 ContentIndex;
     class UDialogDataAsset* BeerMugShout;
 
+    void RefreshContent();
     void PlayReactionAnimation();
     void OnRep_ContentIndex();
     void InitializeCase();
@@ -6370,30 +6383,11 @@ class ADroneVacuumStream : public ADroneStream
     void Server_StartVacuumingPuddle(class AFoamPuddle* puddle);
 };
 
-class ADropPod : public AActor
+class ADropPod : public ATeamTransport
 {
-    float DropHeight;
-    FVector TargetLocation;
-    class UAutoCarverComponent* AutoCarver;
-    class UCurveFloat* DepartCurve;
-    float CarverRotationSpeed;
-    FVector CarverScale;
-    float DepartureTime;
-    FVector StartLocation;
-    EDropPodState State;
-    float DrillSpeed;
-    float FreeFallAcceleration;
-    float FreeFallSpeed;
+    FMiningPodDialogs Dialogs;
 
-    void StartDrilling();
-    void PrepForTakeOff();
-    void OnRep_State();
-    void OnPrepForTakeOff();
-    void OnDroppodImpact();
-    void OnDrillingStarted();
-    void OnDeparting();
-    class ADropPod* DropToMission(class UObject* WorldContextObject, TSubclassOf<class ADropPod> podClass, const FVector& Location);
-    void Depart();
+    FVector GetDonkeyReturnPickupLocation();
 };
 
 class ADropPodCalldownLocationItem : public AGenerationItem
@@ -6408,6 +6402,32 @@ class ADropRockCrackerPodsSpawner : public ADebrisLocationFinder
     TSoftClassPtr<APlagueMeteor> MeteorActorClass;
     TSoftClassPtr<AActor> RockCrackerIndicationClass;
 
+};
+
+class ADroppableOutpost : public AActor
+{
+    float DropHeight;
+    FVector TargetLocation;
+    class UAutoCarverComponent* AutoCarver;
+    class UCurveFloat* DepartCurve;
+    float CarverRotationSpeed;
+    FVector CarverScale;
+    float DepartureTime;
+    FVector StartLocation;
+    EDroppableOutpostState State;
+    float DrillSpeed;
+    float FreeFallAcceleration;
+    float FreeFallSpeed;
+
+    void StartDrilling();
+    void PrepForTakeOff();
+    void OnRep_State();
+    void OnPrepForTakeOff();
+    void OnDroppodImpact();
+    void OnDrillingStarted();
+    void OnDeparting();
+    class ADroppableOutpost* DropOutpostToMission(class UObject* WorldContextObject, TSubclassOf<class ADroppableOutpost> podClass, const FVector& Location);
+    void Depart();
 };
 
 class ADualAnimatedItem : public AItem
@@ -6889,9 +6909,9 @@ class AFSDGameMode : public AGameMode
     class UCritterManager* CritterManager;
     TArray<class AFSDPlayerController*> PlayerControllers;
     class UFormationsManagerComponent* FormationsManager;
-    TSoftClassPtr<AMiningPod> DropPodClass;
+    TSoftClassPtr<ATeamTransport> DropPodClass;
     TSoftClassPtr<AMolly> MuleClass;
-    TSoftClassPtr<AMiningPod> DropodEscapeClass;
+    TSoftClassPtr<ATeamTransport> DropodEscapeClass;
     TSoftClassPtr<ABosco> droneClass;
     TSoftClassPtr<UWidget> CheatUI;
     float ContinueCountdown;
@@ -6927,8 +6947,8 @@ class AFSDGameMode : public AGameMode
     class UEncounterManager* GetEncounterManager();
     FSoftObjectPath GetDropPodPath();
     FSoftObjectPath GetDropPodEscapePath();
-    TSubclassOf<class AMiningPod> GetDropPodEscapeClass();
-    TSubclassOf<class AMiningPod> GetDropPodClass();
+    TSubclassOf<class ATeamTransport> GetDropPodEscapeClass();
+    TSubclassOf<class ATeamTransport> GetDropPodClass();
     FSoftObjectPath GetDronePath();
     TSubclassOf<class ABosco> GetDroneClass();
     class UDifficultyManager* GetDifficultyManager();
@@ -6992,7 +7012,7 @@ class AFSDGameState : public AGameState
     FFSDGameStateOnPlayerCharacterRegistered OnPlayerCharacterRegistered;
     void PlayerCharacterDelegate(class APlayerCharacter* PlayerCharacter);
     int32 CurrentLevel;
-    class AMiningPod* EscapePod;
+    class ATeamTransport* EscapePod;
     FString FSDSessionID;
     FFSDGameStateOnBoscoReviveCounterChanged OnBoscoReviveCounterChanged;
     void BoscoReviveCounterChanged(int32 RevivesLeft);
@@ -7148,7 +7168,7 @@ class AFSDHUD : public AHUD
     void CameraDroneSpawned(class APlayerCameraDrone* Drone);
 };
 
-class AFSDMiningHead : public ADropPod
+class AFSDMiningHead : public ADroppableOutpost
 {
     class UResourceBank* ResourceBank;
 
@@ -7420,7 +7440,7 @@ class AFSDPostProcessingActor : public AActor
     void ApplyPostProcessingBlendable(class UObject* WorldContext, EPostProcessingType Type, TScriptInterface<class IBlendableInterface> InBlendableObject, float InWeight, const FName InID);
 };
 
-class AFSDRefinery : public ADropPod
+class AFSDRefinery : public ADroppableOutpost
 {
     FFSDRefineryOnRefineryStateChanged OnRefineryStateChanged;
     void RefineryStateDelegate(ERefineryState InRefineryState);
@@ -7741,7 +7761,7 @@ class AFlareGunProjectile : public AProjectile
     void OnRep_IsFlareOn();
     void OnFlareIgnite();
     void OnFlareExtinguish();
-    void OnDroppodImpact(class AMiningPod* DropPod);
+    void OnDroppodImpact(class ATeamTransport* DropPod);
     void Inhibit();
     void ActivateFlare();
 };
@@ -8357,6 +8377,7 @@ class AHalloweenSkull : public AEnemyDeepPathfinderCharacter
     float AlertedMovementTimeScale;
     float JawMovementSpeed;
 
+    void OnJawClosed();
     void OnAlert();
 };
 
@@ -9182,67 +9203,6 @@ class AMiniMule : public AMULE
     void CheatRepair();
 };
 
-class AMiningPod : public AActor
-{
-    float DropHeight;
-    FVector TargetLocation;
-    class UAutoCarverComponent* AutoCarver;
-    class UCurveFloat* DropCurve;
-    class UCurveFloat* DepartCurve;
-    class UCurveFloat* CarverDropCurve;
-    float CarverRotationSpeed;
-    FVector CarverScale;
-    FGameplayTagContainer GameplayTags;
-    class UBoxComponent* DwarfCheckerBox;
-    float DepartureTime;
-    FText DepartueCountdownName;
-    FMiningPodDialogs Dialogs;
-    EMiningPodMission MissionType;
-    bool WaitForPlayerSpawns;
-    bool HasLanded;
-    class UOutlineComponent* PodOutline;
-    FVector StartLocation;
-    EMiningPodState State;
-    EMiningPodRampState rampState;
-    float TargetDropTime;
-    float TargetDepartureTime;
-    float TimeToDrop;
-    class UObjectivesManager* ObjectivesManager;
-
-    class AMiningPod* SpawnPodAtLocation(class UObject* WorldContextObject, TSubclassOf<class AMiningPod> podClass, const FTransform& Transform);
-    void SetRampState(EMiningPodRampState rampState);
-    void SetMuleInstance(class AMolly* Donkey);
-    void RecieveReturnTimerFifteenSecondWarning();
-    void RecieveReturnTimerExpired();
-    void PrepForTakeOff();
-    void PowerUp();
-    void PoweredUp();
-    void OnRep_State();
-    void OnRep_RampState();
-    void OnPrepForTakeOff();
-    void OnPoweringUp();
-    void OnPoweredUp();
-    void OnHostInsidePod(bool isInside);
-    void OnDropStarted();
-    void OnDroppodImpact();
-    void OnDrillingStarted();
-    void OnDeparting();
-    void OnCountdownFinished();
-    void OnCountdownChanged(int32 newTime);
-    void OnAllDwavesInsidePod(bool AllInside);
-    int32 GetTimeToDeparture();
-    bool GetHasLanded();
-    FVector GetDonkeyReturnPickupLocation();
-    void ForceTakeoff();
-    void ExitSpacerig();
-    void DropToTarget(class UObject* WorldContextObject, TSubclassOf<class AMiningPod> podClass, const FTransform& dropLocation, int32 DropDelay);
-    class AMiningPod* DropToMission(class UObject* WorldContextObject, TSubclassOf<class AMiningPod> podClass, const FVector& Location);
-    void DepositAllPlayersMaterials();
-    void Depart();
-    void CorrectLocationsForSpawnedOnLocation();
-    FVector AdjustLandingLocationToGround(class UObject* WorldContextObjet, const FVector& initialLocation, float maxDownAdjustment);
-};
-
 class AMiningPodCalldownLocation : public AActor
 {
 };
@@ -9380,6 +9340,7 @@ class APLSTester : public AActor
     class UMissionDuration* limitDuration;
     class UMissionMutator* Mutator;
     TArray<class UMissionWarning*> Warnings;
+    TArray<class TSubclassOf<UObjective>> SecondaryObjectives;
     class USpecialEvent* SpecialEvent;
     class UBiome* Biome;
     class UMissionTemplate* MissionTemplate;
@@ -11559,6 +11520,65 @@ class ATargetDummyPawn : public AActor
 
 };
 
+class ATeamTransport : public AActor
+{
+    float DropHeight;
+    FVector TargetLocation;
+    class UAutoCarverComponent* AutoCarver;
+    class UCurveFloat* DropCurve;
+    class UCurveFloat* DepartCurve;
+    class UCurveFloat* CarverDropCurve;
+    float CarverRotationSpeed;
+    FVector CarverScale;
+    FGameplayTagContainer GameplayTags;
+    class UBoxComponent* DwarfCheckerBox;
+    float DepartureTime;
+    FText DepartueCountdownName;
+    EMiningPodMission MissionType;
+    bool WaitForPlayerSpawns;
+    bool HasLanded;
+    class UOutlineComponent* PodOutline;
+    FVector StartLocation;
+    EMiningPodState TransportState;
+    EMiningPodRampState rampState;
+    float TargetDropTime;
+    float TargetDepartureTime;
+    float TimeToDrop;
+    class UObjectivesManager* ObjectivesManager;
+
+    class ATeamTransport* SpawnPodAtLocation(class UObject* WorldContextObject, TSubclassOf<class ATeamTransport> podClass, const FTransform& Transform);
+    void SetRampState(EMiningPodRampState rampState);
+    void SetMuleInstance(class AMolly* Donkey);
+    void RecieveReturnTimerFifteenSecondWarning();
+    void RecieveReturnTimerExpired();
+    void PrepForTakeOff();
+    void PowerUp();
+    void PoweredUp();
+    void OnRep_State();
+    void OnRep_RampState();
+    void OnPrepForTakeOff();
+    void OnPoweringUp();
+    void OnPoweredUp();
+    void OnHostInsidePod(bool isInside);
+    void OnDropStarted();
+    void OnDroppodImpact();
+    void OnDrillingStarted();
+    void OnDeparting();
+    void OnCountdownFinished();
+    void OnCountdownChanged(int32 newTime);
+    void OnAllDwavesInsidePod(bool AllInside);
+    int32 GetTimeToDeparture();
+    bool GetHasLanded();
+    void ForceTakeoff();
+    void ExitSpacerig();
+    void DropToTarget(class UObject* WorldContextObject, TSubclassOf<class ATeamTransport> podClass, const FTransform& dropLocation, int32 DropDelay);
+    class ATeamTransport* DropToMission(class UObject* WorldContextObject, TSubclassOf<class ATeamTransport> podClass, const FVector& Location);
+    void DepositAllPlayersMaterials();
+    void Depart();
+    void CorrectLocationsForSpawnedOnLocation();
+    FVector AdjustLandingLocationToGround(class UObject* WorldContextObjet, const FVector& initialLocation, float maxDownAdjustment);
+};
+
 class ATentacleBase : public AEnemyPawn
 {
     class USplineComponent* SplineComponent;
@@ -11725,7 +11745,6 @@ class AThrowableItem : public AAnimatedItem
     float CooldownAfterThrow;
     bool CanThrowBeforeEquipAnimFinish;
     float CooldownAfterEquip;
-    bool AddPlayerVelocityToThrow;
     float ThrowDelay;
     FVector ThrowOffset;
     float CooldownLeft;
@@ -12283,6 +12302,7 @@ class IMissionModeManager : public IInterface
     int32 GetStage();
     void GetPerObjectiveXP(int32& perPrimary, int32& perSecondary);
     int32 GetNumberOfStages();
+    TSoftClassPtr<UWidget> GetMissionModeCheatUI();
     TSoftClassPtr<UUserWidget> GetMissionCompleteScreen(bool missionSuccessful);
     TSoftClassPtr<UUserWidget> GetMissionBarWidget();
     float GetHazardBonus(class UObject* WorldContextObject, class UGeneratedMission* mission);
@@ -16436,7 +16456,8 @@ class UDrinkableDataAsset : public USavableDataAsset
     int32 RequiredPlayerRank;
     bool ParticipatesInFreeBeerEvent;
     EDrinkableAlcoholStrength AlcoholStrength;
-    class UDrinkableDataAsset* SupporterEdition;
+    class UDrinkableDataAsset* SpecialEdition;
+    class UDLCBase* RequiredDLC;
     bool bPlayFireworks;
     class UMissionStat* StatConsumed;
     class UMissionStat* StatRoundOrdered;
@@ -16457,9 +16478,9 @@ class UDrinkableDataAsset : public USavableDataAsset
     bool MustBeUnlocked();
     bool IsUnlocked(class UObject* WorldContext);
     bool IsDrinkFree(class UObject* WorldContext);
-    bool HasSupporterEdition();
+    bool HasSpecialEdition();
+    class UDrinkableDataAsset* GetSpecialEdition(class UObject* WorldContext);
     class UTexture2D* GetDrinkableIcon();
-    class UDrinkableDataAsset* GetDrinkableEdition(class UObject* WorldContext, class APlayerController* Player);
     bool AreSpecialDrinksUnlocked(class UObject* WorldContext);
 };
 
@@ -17655,6 +17676,7 @@ class UFSDCheatManager : public UCheatManager
     void C_GiveAllGenericHeroItems();
     void C_GameDLC_ResetAnnouncements();
     void C_FSDEvent_SetDebugEvent(FString EventName);
+    void C_FSDEvent_ListEvents();
     void C_FSDEvent_ClearSeenRewards();
     void C_ForceCrash();
     void C_FixedPLSSeed(int32 Seed);
@@ -17743,10 +17765,10 @@ class UFSDEvent : public UDataAsset
 {
     FFSDEventOnActiveChanged OnActiveChanged;
     void FSDEventActivateChanged(const class UFSDEvent* InFsdEvent, bool InIsActive);
+    bool EnableDangerousSaveGameIDEditing;
+    FGuid SavegameID;
     FName EventName;
     EHolidayType EventType;
-    FGuid SavegameID;
-    bool bHasClaimableRewards;
     bool bFreeBeerEvent;
     bool bFreeBeerConfettiVisible;
     class UDrinkableDataAsset* SpecialEventBeer;
@@ -17759,7 +17781,9 @@ class UFSDEvent : public UDataAsset
     bool bIsEventDebrisInDeepDives;
     TArray<TSoftObjectPtr<UWorld>> SpacerigSublevels;
     TArray<TSoftObjectPtr<UWorld>> UnloadSpacerigSublevels;
+    bool bHasClaimableRewards;
     FClaimableRewardView ClaimableRewards;
+    TArray<FPlatformSpecificEventPopup> OptionalPopUpWindow;
     TArray<TSoftClassPtr<UCampaign>> Campaigns;
     TSoftObjectPtr<UTexture2D> TitleScreenOverride;
 
@@ -17769,6 +17793,7 @@ class UFSDEvent : public UDataAsset
     bool GiveRewards(class APlayerController* PlayerController);
     class UTexture2D* GetTitleScreenOverride();
     bool GetIsActive(class UObject* WorldContext);
+    class UFSDEventPopupWidget* CreatePopupWindow(class APlayerController* InPlayerController);
 };
 
 class UFSDEventCollection : public UDataAsset
@@ -17806,6 +17831,12 @@ class UFSDEventManager : public UGameInstanceSubsystem
     TArray<class UFSDEvent*> GetActiveEventHandlers();
     void FSDEventsRefreshDelegate__DelegateSignature();
     bool FSDEventsReady();
+};
+
+class UFSDEventPopupWidget : public UWindowWidget
+{
+    class UFSDEvent* FSDEvent;
+
 };
 
 class UFSDEventsHandler : public UObject
@@ -18502,6 +18533,8 @@ class UFSDLookupSessionId : public UOnlineBlueprintCallProxyBase
 class UFSDMainHUDWidget : public UUserWidget
 {
 
+    void PushEvent(class UWidget* eventWidget, bool Left);
+    void PopEvent(class UWidget* eventWidget, bool Left);
     void OnRadarPointAdded(class URadarPointComponent* Point);
     void AddRadarPoint(class URadarPointComponent* Point);
 };
@@ -20841,9 +20874,9 @@ class UInputFunctionLibrary : public UBlueprintFunctionLibrary
     bool IsMouseEventAction(const FPointerEvent& MouseEvent, const FName& ActionName, bool IgnoreCustomBindings);
     bool IsKeyEventActionAny(const FKeyEvent& KeyEvent, TArray<FName> ActionNames, bool IgnoreCustomBindings);
     bool IsKeyEventAction(const FKeyEvent& KeyEvent, FName ActionName, bool IgnoreCustomBindings);
+    bool IsInputActionDown(const class APlayerController* InPlayerController, FName InActionName);
     bool IsAxisMappedToDirectional(FName InActionName, FKey Key, int32 Direction, bool IgnoreCustomBindings);
     bool IsActionMappedTo(FName InActionName, FKey Key, bool IgnoreCustomBindings);
-    TArray<FKey> GetInputKeysBoundToAction(const FName& ActionName, EKeyBindingAxis Axis, bool IsGamePadKey);
     bool GetAxisMapping(FName InActionName, int32 Axis, bool InGamepadKeys, FInputAxisKeyMapping& OutResult);
     bool GetActionMapping(FName InActionName, bool InGamepadKeys, FInputActionKeyMapping& OutResult);
     bool FindInputDisplay(const class APlayerController* PlayerController, FName InputName, EFSDInputSource InputSource, int32 LayoutIndex, FInputDisplay& OutInputDisplay);
@@ -22016,7 +22049,7 @@ class UMissionTemplate : public USavableDataAsset
     int32 GetMissionTypeIndex();
     class UTexture2D* GetMissionImageLarge();
     class UTexture2D* GetMissionButtonImage();
-    class UGeneratedMission* GenerateMission(const class UObject* WorldContextObject, class UBiome* Biome, int32 Seed, int32 GlobalSeed, int32 missionIndex, class UMissionComplexity* limitComplexity, class UMissionDuration* limitDuration, class UMissionMutator* Mutator, TArray<class UMissionWarning*> Warnings, TSubclassOf<class UObjective> forceSecondary);
+    class UGeneratedMission* GenerateMission(const class UObject* WorldContextObject, class UBiome* Biome, int32 Seed, int32 GlobalSeed, int32 missionIndex, class UMissionComplexity* limitComplexity, class UMissionDuration* limitDuration, class UMissionMutator* Mutator, TArray<class UMissionWarning*> Warnings, TArray<class TSubclassOf<UObjective>> forceSecondary);
 };
 
 class UMissionWarning : public UDataAsset
@@ -24704,10 +24737,10 @@ class USalvageObjective : public UObjective
     class UDebrisPositioning* Positioning;
     TArray<TSoftObjectPtr<UDebrisBase>> Debris;
     TSoftClassPtr<AMiniMule> SalvageActor;
-    TSoftClassPtr<AMiningPod> DamagedPodClass;
+    TSoftClassPtr<ADropPod> DamagedPodClass;
     class UDebrisPositioning* DamagedPodPositioning;
     float DamagedPodMinDistanceToDropZone;
-    class AMiningPod* DamagedPod;
+    class ADropPod* DamagedPod;
     int32 ActorsToSalvage;
     int32 ActorsSalvaged;
     int32 RepairPoints;
@@ -25660,9 +25693,11 @@ class USoundMixManagerComponent : public UActorComponent
 class USpaceRigBarMenuItem : public UFSDUserWidget
 {
     class UDrinkableDataAsset* Drink;
+    bool SpecialEditionSelected;
 
     void Unselect();
     void Select();
+    class UDrinkableDataAsset* GetSelectedDrinkableType();
 };
 
 class USpawnActorFeature : public URoomFeature

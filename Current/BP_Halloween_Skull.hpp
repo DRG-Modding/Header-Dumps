@@ -4,11 +4,12 @@
 class ABP_Halloween_Skull_C : public AHalloweenSkull
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UNiagaraComponent* NS_Fire_SkullFlame_WS;
     class USphereComponent* Sphere;
     class UEnemyComponent* enemy;
     class UPawnSensingComponent* PawnSensing;
     class UPawnStatsComponent* PawnStats;
-    class UFSDAudioComponent* AudioScaredLoop;
+    class UFSDAudioComponent* AudioLoop;
     class UNiagaraComponent* NS_Fire_SkullFlame;
     class UPointLightComponent* PointLight;
     class UStaticMeshComponent* Mesh_Flame01;
@@ -20,6 +21,7 @@ class ABP_Halloween_Skull_C : public AHalloweenSkull
     class UTimelineComponent* ScaleUpFlames;
     float RunSpeedMod;
     FTimerHandle RunTimer;
+    float LastMoveSpeed;
 
     void ScaleUpFlames__FinishedFunc();
     void ScaleUpFlames__UpdateFunc();
@@ -31,6 +33,9 @@ class ABP_Halloween_Skull_C : public AHalloweenSkull
     void BndEvt__BP_Nisse_HealthComponent_K2Node_ComponentBoundEvent_3_DamageSig__DelegateSignature(float Amount);
     void BndEvt__BP_Nisse_HealthComponent_K2Node_ComponentBoundEvent_2_HitSig__DelegateSignature(float Damage, const FDamageData& DamageData, bool anyHealthLost);
     void BndEvt__BP_Halloween_Skull_HealthComponent_K2Node_ComponentBoundEvent_0_DeathSigDetailed__DelegateSignature(class UHealthComponent* HealthComponent, float damageAmount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
+    void ReceiveBeginPlay();
+    void ReceiveTick(float DeltaSeconds);
+    void OnJawClosed();
     void ExecuteUbergraph_BP_Halloween_Skull(int32 EntryPoint);
 };
 

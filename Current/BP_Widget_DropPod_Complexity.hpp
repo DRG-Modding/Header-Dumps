@@ -3,7 +3,7 @@
 
 class ABP_Widget_DropPod_Complexity_C : public AActor
 {
-    class UWidgetComponentCustomMaterial* WidgetComponentCustomMaterial;
+    class UWidgetComponent* Widget1;
     class USceneComponent* DefaultSceneRoot;
     class UWidget_DropPod_AltitudeMeter_C* Widget;
     float Duration;

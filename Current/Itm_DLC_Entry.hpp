@@ -28,6 +28,8 @@ class UITM_DLC_Entry_C : public UUserWidget
     void OnHoverEnd(class UITM_DLC_Entry_C* InEntry);
     class UMediaSource* Movie;
     bool IsHovering;
+    FITM_DLC_Entry_COnClicked OnClicked;
+    void OnClicked(class UITM_DLC_Entry_C* InEntry);
 
     void Hover(bool InHover, bool& OutChanged);
     void GetMediaPlayer(class UMediaPlayer*& MediaPlayer);
@@ -39,6 +41,7 @@ class UITM_DLC_Entry_C : public UUserWidget
     void Tick(FGeometry MyGeometry, float InDeltaTime);
     void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_ITM_DLC_Entry(int32 EntryPoint);
+    void OnClicked__DelegateSignature(class UITM_DLC_Entry_C* InEntry);
     void OnHoverEnd__DelegateSignature(class UITM_DLC_Entry_C* InEntry);
     void OnHoverBegin__DelegateSignature(class UITM_DLC_Entry_C* InEntry);
 };

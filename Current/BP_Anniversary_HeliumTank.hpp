@@ -4,11 +4,11 @@
 class ABP_Anniversary_HeliumTank_C : public AActor
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UNiagaraComponent* NS_Anniversary_HeliumSmoke_Const;
     class UInstantUsable* InstantUsable;
     class USphereComponent* Sphere;
     class UStaticMeshComponent* FrontPlane;
     class UStaticMeshComponent* SM_Screen_005;
-    class UParticleSystemComponent* P_GasCanister_air_Mule1;
     class UStaticMeshComponent* SM_GasCanister;
     class USceneComponent* DefaultSceneRoot;
     class UCurveFloat* PitchCurve;

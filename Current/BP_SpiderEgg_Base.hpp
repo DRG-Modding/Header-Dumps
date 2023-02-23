@@ -15,7 +15,7 @@ class ABP_SpiderEgg_Base_C : public AActor
     class UEnemyDescriptor* EnemyToSpawn;
     class UParticleSystem* EggBreakParticles;
     class UMaterialInterface* EggGooDecal;
-    bool OpenEgg;
+    bool CanOpen;
     bool OpenOnPlayerProximity;
     float ProximityOpenRange;
     float ProximityOpenDelayMax;

@@ -30,7 +30,7 @@ class UUI_InfoScreen_C : public UUserWidget
     class UTextBlock* TextBlock_2;
     class UTextBlock* TextBlock_3;
     class UUI_InfoScreen_DLCwidget_C* UI_InfoScreen_DLCwidget;
-    class UUI_InfoScreen_Overlay_DLC06_C* UI_InfoScreen_Overlay_DLC06_C_0;
+    class UUI_InfoScreen_Overlay_FocusedDLC_C* UI_InfoScreen_Overlay_FocusedDLC;
     class UUI_PatchNotes_C* UI_PatchNotes;
     FUI_InfoScreen_COnClose OnClose;
     void OnClose(class UUI_InfoScreen_C* Screen);

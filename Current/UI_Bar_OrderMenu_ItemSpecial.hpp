@@ -41,6 +41,7 @@ class UUI_Bar_OrderMenu_ItemSpecial_C : public USpaceRigBarMenuItem
     void OnDrinkUnlocked(class UDrinkableDataAsset* Drink);
     bool AreBeersFree;
 
+    class UDrinkableDataAsset* GetSelectedDrinkableType();
     bool HasPlayerRank();
     void GetTemporaryBuf(class UTemporaryBuff*& buff);
     void UpdateItemStatus();

@@ -77,7 +77,7 @@ class UHUD_Main_C : public UFSDMainHUDWidget
     class UVerticalBox* VBox_Events_Left;
     class UVerticalBox* VerticalBox_EventsAndSpeak;
     class APlayerCharacter* Character;
-    bool hudVisible;
+    bool HUDVisible;
     float FPS;
     class UObjective* ObjDummy;
     class UHUDVisibilityGroup* VG_Grenades;
@@ -92,9 +92,9 @@ class UHUD_Main_C : public UFSDMainHUDWidget
     void OnCameraModeChanged(ECharacterCameraMode NewCameraMode, ECharacterCameraMode OldCameraMode);
     void UpdateCurrentCanvas();
     void OnCharacterStateChanged(ECharacterState NewState);
-    void PushEvent(class UWidget* EventWidget, bool Left);
     void Setup HUD Elements();
-    void PopEvent(class UWidget* EventWidget, bool Left);
+    void PushEvent(class UWidget* eventWidget, bool Left);
+    void PopEvent(class UWidget* eventWidget, bool Left);
     void BndEvt__VG_Flashlight_K2Node_ComponentBoundEvent_2_VisibilityDelegate__DelegateSignature(class UHUDVisibilityGroup* Group, bool IsVisible);
     void BndEvt__VG_Flares_K2Node_ComponentBoundEvent_1_VisibilityDelegate__DelegateSignature(class UHUDVisibilityGroup* Group, bool IsVisible);
     void BndEvt__VG_Grenades_K2Node_ComponentBoundEvent_0_VisibilityDelegate__DelegateSignature(class UHUDVisibilityGroup* Group, bool IsVisible);

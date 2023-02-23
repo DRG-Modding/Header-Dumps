@@ -33,7 +33,7 @@ class UITM_SkinItem_C : public UUserWidget
 
     void SetIsDefaultItem(bool InDefault);
     void ClearEventHandlers();
-    void SetState(class UItemSkin* InSkin, bool InLocked, bool InHovered, bool InEquipped);
+    void SetState(class UItemSkin* inSkin, bool InLocked, bool InHovered, bool InEquipped);
     bool IsUnlocked();
     void Refresh();
     void BndEvt__SkinButton_K2Node_ComponentBoundEvent_1_OnButtonHoverEvent__DelegateSignature();

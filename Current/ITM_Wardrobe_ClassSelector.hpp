@@ -8,7 +8,7 @@ class UITM_Wardrobe_ClassSelector_C : public UUserWidget
     class UBasic_Menu_ColorBar_C* Basic_Menu_ColorBar_0;
     class UBasic_ButtonScalable2_C* BTN_Switch;
     class UTextBlock* DATA_CharacterLevel;
-    class UTextBlock* DATA_ClassName;
+    class UTextBlock* DATA_className;
     class UBorder* HeaderBG;
     class UImage* Image_3;
     class UITM_ItemUnlockedIcon_C* NotificationIcon;

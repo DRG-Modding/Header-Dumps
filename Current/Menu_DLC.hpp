@@ -18,6 +18,7 @@ class UMenu_DLC_C : public UWindowWidget
     void Construct();
     void OnVisibilityChanged_Event(ESlateVisibility InVisibility);
     void OnLastWindowClosed_Event();
+    void OnEntryClicked(class UITM_DLC_Entry_C* InEntry);
     void ExecuteUbergraph_Menu_DLC(int32 EntryPoint);
 };
 

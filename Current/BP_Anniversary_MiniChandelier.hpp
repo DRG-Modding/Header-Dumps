@@ -9,6 +9,7 @@ class ABP_Anniversary_MiniChandelier_C : public AActor
     class USceneComponent* Scene;
     TArray<class USkeletalMesh*> LampMeshes;
     class USkeletalMesh* UsedLampMesh;
+    FTimerHandle Timer;
 
     void OnRep_UsedLampMesh();
     void OnCollide();

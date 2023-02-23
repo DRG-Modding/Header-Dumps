@@ -6,7 +6,7 @@ class ABP_Salvage_Point_C : public AActor
     FPointerToUberGraphFrame UberGraphFrame;
     class USceneComponent* DefaultSceneRoot;
     uint8 SalvageState;
-    class AMiningPod* DropPod;
+    class ADropPod* DropPod;
 
     void SetSalvagePointState(uint8 State);
     void OnRep_State();

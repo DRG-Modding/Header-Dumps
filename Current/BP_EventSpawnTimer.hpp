@@ -30,7 +30,9 @@ class ABP_EventSpawnTimer_C : public AActor
     class UDialogDataAsset* EventSpawnShout;
     float DebugStartTime;
     bool IsSpawningInProgress;
+    FTimerHandle Handle_Debug;
 
+    void StopTimer();
     void CheckAllowedToSpawn(bool& Allowed);
     FTransform GetSpawnTransform();
     void ReceiveBeginPlay();

@@ -25,7 +25,7 @@ class UITM_SkinIcon_C : public UUserWidget
     void GetIsLocked(bool& IsLocked);
     void SetSize(float InSize);
     void SetFromMaterial(class UMaterialInterface* InMaterial, bool InIsLocked, bool inIsDefault, TEnumAsByte<ENUM_SkinWidgetTypes::Type> InBucketIcon);
-    void SetSkin(class UItemSkin* InSkin, bool InIsLocked, bool inIsDefault);
+    void SetSkin(class UItemSkin* inSkin, bool InIsLocked, bool inIsDefault);
     void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_ITM_SkinIcon(int32 EntryPoint);
 };

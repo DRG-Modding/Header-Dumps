@@ -27,6 +27,7 @@ class UUI_Bar_OrderMenu_Preview_C : public UUserWidget
     void Fade In();
     void Fade Out();
     void FadeOutFinished();
+    void Refresh Visuals();
     void ExecuteUbergraph_UI_Bar_OrderMenu_Preview(int32 EntryPoint);
     void OnPreviewItemChanged__DelegateSignature(class USpaceRigBarMenuItem* Previous Item, class USpaceRigBarMenuItem* New Item);
 };

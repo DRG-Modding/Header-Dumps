@@ -11,6 +11,7 @@ class ABP_GreatEggHunt_ThrowableEgg_C : public AThrowableActor
     float ImpulseStrength;
     FName ImpulseSocketName;
     float RotationSpeed;
+    class UFXSystemAsset* ExplosionParticles;
 
     void ReceiveBeginPlay();
     void Impact(class AActor* Other, FVector HitPosition);
@@ -19,6 +20,7 @@ class ABP_GreatEggHunt_ThrowableEgg_C : public AThrowableActor
     void ApplyForceSK(class USkeletalMeshComponent* Component, FVector Position);
     void ApplyForceSM(class UStaticMeshComponent* Component, FVector Position);
     void ReceiveTick(float DeltaSeconds);
+    void KillActorWithEffects();
     void ExecuteUbergraph_BP_GreatEggHunt_ThrowableEgg(int32 EntryPoint);
 };
 

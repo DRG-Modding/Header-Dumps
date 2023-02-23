@@ -27,7 +27,9 @@ class U_DLCclaimPopup_Base_C : public UUserWidget
     FText BottomText;
     F_DLCclaimPopup_Base_COnCloseClicked OnCloseClicked;
     void OnCloseClicked();
+    FText ButtonText;
 
+    void SetButtonText(FText InText);
     FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     void SetHeaderTexture(class UTexture2D* HeaderTexture);
     void SetBottomText(FText BottomText);

@@ -6,7 +6,7 @@ class AGM_Salvage_C : public ABP_NetworkPlayGameMode_C
     FPointerToUberGraphFrame UberGraphFrame;
     class UAudioComponent* UplinkComplete_Cue;
     class UAudioComponent* DroppodMuleReady_Cue;
-    class AMiningPod* DropPod;
+    class ADropPod* DropPod;
     class AEVENT_DropPodDefense_Base_C* DefenseEvent;
     TArray<class AActor*> MulesSalvaged;
     TArray<class ABP_Salvage_Point_C*> RepairPoints;

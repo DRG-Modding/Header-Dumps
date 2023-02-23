@@ -10,7 +10,7 @@ class UUI_Bar_SupporterLabel_C : public UUserWidget
     int32 Font Size;
     float Icon Size;
 
-    void SetDrinkable(class UDrinkableDataAsset* Drinkable, bool& IsSupporterEdition, class UDrinkableDataAsset*& OutDrinkable);
+    void SetDrinkable(class UDrinkableDataAsset* Drinkable, bool& IsSpecialEdition, class UDrinkableDataAsset*& OutDrinkable);
     void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_UI_Bar_SupporterLabel(int32 EntryPoint);
 };

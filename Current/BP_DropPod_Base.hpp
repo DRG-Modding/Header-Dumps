@@ -1,9 +1,26 @@
 #ifndef UE4SS_SDK_BP_DropPod_Base_HPP
 #define UE4SS_SDK_BP_DropPod_Base_HPP
 
-class ABP_DropPod_Base_C : public AMiningPod
+class ABP_DropPod_Base_C : public ADropPod
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UWidgetComponent* Widget_SeatMonitorRight1;
+    class UWidgetComponent* Widget_SeatMonitorLeft1;
+    class UChildActorComponent* Widget_RandomCode07;
+    class UChildActorComponent* Widget_RandomCode06;
+    class UChildActorComponent* Widget_RandomCode05;
+    class UChildActorComponent* Widget_RandomCode04;
+    class UChildActorComponent* Widget_RandomCode03;
+    class UChildActorComponent* Widget_Countdown2;
+    class UChildActorComponent* Widget_Countdown1;
+    class UChildActorComponent* Widget_RandomCode02;
+    class UChildActorComponent* Widget_RandomCode01;
+    class UChildActorComponent* Widget_MissionData1;
+    class UChildActorComponent* Widget_CaveData1;
+    class UChildActorComponent* Widget_DangerLevel02;
+    class UChildActorComponent* Widget_DangerLevel01;
+    class UChildActorComponent* Widget_ResourceScreen02;
+    class UChildActorComponent* Widget_ResourceScreen01;
     class UAutoCarverComponent* AutoCarverArm;
     class UAudioComponent* Audio_Molly_Loadbeam;
     class USkeletalMeshComponent* SK_DropPod_DroneBay;
@@ -17,11 +34,6 @@ class ABP_DropPod_Base_C : public AMiningPod
     class UStaticMeshComponent* DrillBlocker;
     class UPointLightComponent* light_filler2;
     class UPointLightComponent* light_filler1;
-    class UChildActorComponent* Widget_RandomCode6;
-    class UChildActorComponent* Widget_RandomCode5;
-    class UChildActorComponent* Widget_RandomCode4;
-    class UChildActorComponent* Widget_RandomCode3;
-    class UChildActorComponent* Widget_RandomCode1;
     class UPointLightComponent* light_readySign1;
     class USceneComponent* RedLights;
     class UStaticMeshComponent* StaticMesh17;
@@ -56,22 +68,12 @@ class ABP_DropPod_Base_C : public AMiningPod
     class UPointLightComponent* PointLight4;
     class UBoxComponent* InSidePodArea;
     class UOxygenSourceComponent* OxygenSource;
-    class UChildActorComponent* Widget_RandomCode2;
-    class UChildActorComponent* Widget_RandomCode;
-    class UChildActorComponent* Widget_MissionData;
-    class UChildActorComponent* Widget_CaveData;
-    class UChildActorComponent* Widget_DangerLevel2;
-    class UChildActorComponent* Widget_DangerLevel;
-    class UChildActorComponent* Widget_ResourceScreen2;
-    class UChildActorComponent* Widget_ResourceScreen;
     class UAudioComponent* AudioCenter;
     class UAudioComponent* AudioBack;
     class UAudioComponent* AudioFront;
     class UAudioComponent* AudioRight;
     class UAudioComponent* AudioLeft;
     class UAutoCarverComponent* PrettyCarver;
-    class UChildActorComponent* Widget_CountDown02;
-    class UChildActorComponent* Widget_CountDown01;
     class UTerrainPlacementComponent* terrainPlacement;
     class USphereComponent* KillSphere;
     class UBoxComponent* DwarfChecker;
@@ -90,8 +92,6 @@ class ABP_DropPod_Base_C : public AMiningPod
     class UChildActorComponent* Spawn1;
     class UChildActorComponent* Spawn4;
     class USkeletalMeshComponent* SK_DropPod_Drill;
-    class UWidgetComponent* Widget_SeatMonitorRight;
-    class UWidgetComponent* Widget_SeatMonitorLeft;
     class UPointLightComponent* PointLight1;
     class UPointLightComponent* PointLight;
     class USceneComponent* floorCollision;
@@ -155,6 +155,7 @@ class ABP_DropPod_Base_C : public AMiningPod
     bool CarvingComplete;
     bool MuleWasLoaded;
 
+    FVector GetDonkeyReturnPickupLocation();
     void OnRep_MuleSequenceComplete();
     void CollectMule(class AMULE* MULE);
     void OnRep_MuleUnloadTransform();
@@ -168,7 +169,6 @@ class ABP_DropPod_Base_C : public AMiningPod
     void DestroyIfClose(TArray<class AActor*>& Actors, float DistanceSQ);
     void RemoveDangerousCaveItems(float Distance);
     void SetAllPlayersAnsel(bool Active);
-    FVector GetDonkeyReturnPickupLocation();
     void SetDoorState(TEnumAsByte<DroppodDoorState::Type> DoorState);
     void GetCountDown(bool First, class ABP_Widget_DropPod_AltitudeMeter_C*& AsBP Count Down Actor);
     void OnRep_MuleInstance();
@@ -201,19 +201,19 @@ class ABP_DropPod_Base_C : public AMiningPod
     void DrillRotate();
     void OnCharacterEnter(class APlayerCharacter* Character);
     void OnCharacterExit(class APlayerCharacter* Character);
-    void SetMuleInstance(class AMolly* Donkey);
     void DropPodSetAnsel(bool Active);
     void AllSetAnsel(bool Active);
     void BndEvt__InSidePodArea_K2Node_ComponentBoundEvent_4_ComponentBeginOverlapSignature__DelegateSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
     void BndEvt__InSidePodArea_K2Node_ComponentBoundEvent_5_ComponentEndOverlapSignature__DelegateSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
     void MakeTruckerDicesMove();
-    void OnRep_RampState();
     void OnFirstPlayerLeftPod();
     void ReceiveDestroyed();
     void OnRepDoorState();
     void LowerMuleToGround();
     void OpenMuleBay();
     void OnMuleBayOpenedDispatch_Event_0();
+    void SetMuleInstance(class AMolly* Donkey);
+    void OnRep_RampState();
     void OnGeneratedMissionChanged(class UGeneratedMission* OutGeneratedMission);
     void ExecuteUbergraph_BP_DropPod_Base(int32 EntryPoint);
     void OnMuleBayOpenedDispatch__DelegateSignature();

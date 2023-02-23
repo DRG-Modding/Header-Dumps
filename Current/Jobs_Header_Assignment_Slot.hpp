@@ -4,6 +4,7 @@
 class UJobs_Header_Assignment_Slot_C : public UWND_Jobs_Entry_Base_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UVerticalBox* AssignmentSelected;
     class UBasic_ButtonCutCorner_C* B_StopAssignment;
     class UButton* Button_Outer;
     class UTextBlock* DATA_RewardBrief;

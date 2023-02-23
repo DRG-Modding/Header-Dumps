@@ -24,15 +24,16 @@ class UWND_Assignment_Popup_C : public UWindowWidget
     FWND_Assignment_Popup_CUpdated Updated;
     void Updated();
 
-    bool IsActiveButton(class UObject* InButton);
+    void UpdateActiveButton();
     FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
+    void SetData(class UCampaign* Campaign);
     void BndEvt__B_ClosePopup_K2Node_ComponentBoundEvent_0_OnClicked__DelegateSignature(class UBasic_ButtonCutCorner_C* Button);
     void BndEvt__B_StartAssignment_K2Node_ComponentBoundEvent_1_OnClicked__DelegateSignature(class UBasic_ButtonCutCorner_C* Button);
     void BndEvt__B_AbortAssignment_K2Node_ComponentBoundEvent_2_OnClicked__DelegateSignature(class UBasic_ButtonCutCorner_C* Button);
-    void SetData(class UCampaign* Campaign);
     void PreConstruct(bool IsDesignTime);
     void OnAnswer(bool Yes);
     void BndEvt__WND_Assignment_Popup_B_AcceptNoMissionAssignment_K2Node_ComponentBoundEvent_3_OnClicked__DelegateSignature(class UBasic_ButtonCutCorner_C* Button);
+    void OnClosed();
     void ExecuteUbergraph_WND_Assignment_Popup(int32 EntryPoint);
     void Updated__DelegateSignature();
 };

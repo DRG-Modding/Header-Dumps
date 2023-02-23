@@ -76,6 +76,7 @@ class ABP_HoopsGame_C : public AActor
     void On Player In Hoop(class APlayerCharacter* Player);
     void ReceiveTick(float DeltaSeconds);
     void OnSpaceballInHoop(int32 ScoreToAdd);
+    void All_PlayComboLostSFX();
     void ExecuteUbergraph_BP_HoopsGame(int32 EntryPoint);
 };
 

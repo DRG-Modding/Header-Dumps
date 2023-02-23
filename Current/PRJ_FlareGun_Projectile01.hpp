@@ -35,7 +35,7 @@ class APRJ_FlareGun_Projectile01_C : public AFlareGunProjectile
     void Light_Anim__UpdateFunc();
     void OnImpacted(bool PredictedImpact, const FHitResult& HitResult);
     void BndEvt__TerrainDetect_K2Node_ComponentBoundEvent_0_PointRemovedEvent__DelegateSignature(class USceneComponent* Point);
-    void OnDroppodImpact(class AMiningPod* DropPod);
+    void OnDroppodImpact(class ATeamTransport* DropPod);
     void HideAll();
     void OnFlareExtinguish();
     void OnUpdateShadowRadius();

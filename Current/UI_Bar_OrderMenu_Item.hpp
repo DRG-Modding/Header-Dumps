@@ -12,7 +12,9 @@ class UUI_Bar_OrderMenu_Item_C : public USpaceRigBarMenuItem
     class UImage* DrinkIcon;
     class UTextBlock* DrinkNameLabel;
     class UImage* ICON_BeerLicense;
+    class UCheckBox* OrderSpecialEdition;
     class USizeBox* SizeBox_3;
+    class UHorizontalBox* SpecialEditionBox;
     class UUI_Bar_DrinkCost_C* UI_Bar_DrinkCost;
     class UUI_Bar_LockWarning_C* UI_Bar_LockWarning;
     class UUI_Bar_PlayerRankWarning_C* UI_Bar_PlayerRankWarning;
@@ -32,7 +34,10 @@ class UUI_Bar_OrderMenu_Item_C : public USpaceRigBarMenuItem
     bool AreBeersFree;
     FUI_Bar_OrderMenu_Item_COnDrinkUnlocked OnDrinkUnlocked;
     void OnDrinkUnlocked(class UDrinkableDataAsset* Drink);
+    FUI_Bar_OrderMenu_Item_COnDrinkableTypeChanged OnDrinkableTypeChanged;
+    void OnDrinkableTypeChanged();
 
+    class UDrinkableDataAsset* GetSelectedDrinkableType();
     bool AreBeersFreee();
     bool HasPlayerRank();
     void GetTemporaryBuf(class UTemporaryBuff*& buff);
@@ -41,12 +46,9 @@ class UUI_Bar_OrderMenu_Item_C : public USpaceRigBarMenuItem
     bool IsInteractable();
     void No_0F2CD82B4BA6006B33BED8B78B16B74B();
     void Yes_0F2CD82B4BA6006B33BED8B78B16B74B();
-    void PreConstruct(bool IsDesignTime);
-    void Construct();
-    void OnCreditsChanged(int32 Credits);
-    void BndEvt__Button_0_K2Node_ComponentBoundEvent_21_OnButtonClickedEvent__DelegateSignature();
     void BndEvt__BuyButton_K2Node_ComponentBoundEvent_115_OnButtonHoverEvent__DelegateSignature();
     void BndEvt__BuyButton_K2Node_ComponentBoundEvent_0_OnButtonHoverEvent__DelegateSignature();
+    void BndEvt__Button_0_K2Node_ComponentBoundEvent_21_OnButtonClickedEvent__DelegateSignature();
     void OnPlayerProgressChanged(int32 Rank, int32 Stars);
     void Select();
     void Unselect();
@@ -54,7 +56,13 @@ class UUI_Bar_OrderMenu_Item_C : public USpaceRigBarMenuItem
     void BuyFailed();
     void TryUnlock();
     void OnUnlockAnimFinished_Event();
+    void OnCreditsChanged(int32 Credits);
+    void Construct();
+    void BndEvt__UI_Bar_OrderMenu_Item_OrderSpecialEdition_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bool bIsChecked);
+    void PreConstruct(bool IsDesignTime);
+    void Set Drinkable Visuals();
     void ExecuteUbergraph_UI_Bar_OrderMenu_Item(int32 EntryPoint);
+    void OnDrinkableTypeChanged__DelegateSignature();
     void OnDrinkUnlocked__DelegateSignature(class UDrinkableDataAsset* Drink);
     void OnSelected__DelegateSignature(class USpaceRigBarMenuItem* Item);
     void OnPurchaseDenied__DelegateSignature();

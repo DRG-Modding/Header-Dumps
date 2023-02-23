@@ -3,10 +3,10 @@
 
 class ABP_Screen_C : public AActor
 {
+    class UWidgetComponent* Widget;
     class UStaticMeshComponent* StaticMesh1;
     class UStaticMeshComponent* StaticMesh;
     class UStaticMeshComponent* Cube;
-    class UWidgetComponentCustomMaterial* WidgetComponentCustomMaterial;
     class USceneComponent* DefaultSceneRoot;
 
 };

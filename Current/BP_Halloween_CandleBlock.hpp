@@ -3,7 +3,6 @@
 
 class ABP_Halloween_CandleBlock_C : public AActor
 {
-    class UPointLightComponent* PointLight4;
     class UPointLightComponent* PointLight3;
     class UStaticMeshComponent* StaticMesh2;
     class UPointLightComponent* PointLight2;

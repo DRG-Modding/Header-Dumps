@@ -882,13 +882,13 @@ enum class EDroneState {
     EDroneState_MAX = 4,
 };
 
-enum class EDropPodState {
+enum class EDroppableOutpostState {
     WaitingToDrop = 0,
     Drilling = 1,
     Landed = 2,
     PrepTakeoff = 3,
     Departing = 4,
-    EDropPodState_MAX = 5,
+    EDroppableOutpostState_MAX = 5,
 };
 
 enum class EDualMachinePistolsUpgrades {

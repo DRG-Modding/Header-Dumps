@@ -24,7 +24,7 @@ class UUI_CallingMolly_C : public UUserWidget
     void OnCalledByChanged(class APlayerCharacter* PlayerCharacter);
     void Construct();
     void PreConstruct(bool IsDesignTime);
-    void OnTimeOut();
+    void OnTimeout();
     void PingIcon();
     void OnPingFinished();
     void ExecuteUbergraph_UI_CallingMolly(int32 EntryPoint);

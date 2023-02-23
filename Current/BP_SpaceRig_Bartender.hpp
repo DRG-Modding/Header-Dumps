@@ -4,6 +4,7 @@
 class ABP_SpaceRig_Bartender_C : public ASpaceRigBar
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class USkeletalMeshComponent* Hat_Easter;
     class USkeletalMeshComponent* Hat_Anniversary;
     class USkeletalMeshComponent* SK_Moustache_Rig_A_003;
     class USkeletalMeshComponent* Hat_LunarFestival;
