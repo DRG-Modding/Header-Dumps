@@ -18,6 +18,7 @@ class UUI_Forge_Schematic_OwnerIcon_C : public UUserWidget
     void FromSchematic(class USchematic* InSchematic);
     void SetMaxSize(int32 InWidth, int32 InHeight);
     void PreConstruct(bool IsDesignTime);
+    void Construct();
     void ExecuteUbergraph_UI_Forge_Schematic_OwnerIcon(int32 EntryPoint);
 };
 

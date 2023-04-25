@@ -5,7 +5,7 @@ class UBasic_ArrowButton02_C : public UUserWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
     class UImage* arrow_bracket;
-    class UButton* button_arrow;
+    class UButton* Button_Arrow;
     FBasic_ArrowButton02_COnClicked OnClicked;
     void OnClicked();
     float ButtonAngle;

@@ -6,7 +6,7 @@ class AGrenade_BouncyBoomerang_C : public ABouncyBoomerang
     FPointerToUberGraphFrame UberGraphFrame;
     class UNiagaraComponent* NS_Boomerang_Trail;
     class UUpgradableGearComponent* UpgradableGear;
-    class UParticleSystemComponent* Particle_Trail;
+    class UParticleSystemComponent* particle_Trail;
     class USceneComponent* LocalPivot;
     class UStaticMeshComponent* MeshComponent;
     class USceneComponent* BoomerangPivot;

@@ -30,7 +30,7 @@ class USCREEN_CharacterSelection_Clean_C : public USCREEN_CharacterSelection_Bas
     bool IsBeingClosed;
     bool OnCloseMenuHasBeenHandled;
 
-    void HighlightClassChallenges(TArray<class UObject*>& assetReferences, bool ShouldHighlight, class USeasonChallenge* Challenge);
+    void HighlightClassChallenges(TArray<class UObject*>& AssetReferences, bool ShouldHighlight, class USeasonChallenge* Challenge);
     FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     void OnCloseMenuReleased(bool& Handled);

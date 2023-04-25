@@ -18,8 +18,8 @@ class UHUD_Crosshair_MicrowaveGun_C : public UCrosshairWidget
     class UImage* DamageIndicatorBorderRightBottom;
     class UImage* DamageIndicatorBorderRightTop_1;
     class UImage* DmgindIcatorBottom;
-    class UImage* DmgIndicatorLeft;
-    class UImage* DmgIndicatorRight;
+    class UImage* DmgindIcatorLeft;
+    class UImage* DmgindIcatorRight;
     class UImage* DmgindIcatorTop;
     class UImage* Dot;
     class UImage* IndicatorLeft1;

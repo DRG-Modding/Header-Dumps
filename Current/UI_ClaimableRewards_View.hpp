@@ -22,8 +22,9 @@ class UUI_ClaimableRewards_View_C : public UClaimableRewardViewWidget
     FUI_ClaimableRewards_View_COnRewardsAndMissionControlFinished OnRewardsAndMissionControlFinished;
     void OnRewardsAndMissionControlFinished();
     bool RewardsAndMissionControlFinished;
-    TArray<class UUI_ClaimableRewards_Entry_C*> RewardEntries;
+    TArray<class UClaimableRewardEntryWidget*> RewardEntries;
 
+    void GetEntryWidgetClass(TSoftClassPtr<UUserWidget> InOverridetClass, TSubclassOf<class UClaimableRewardEntryWidget>& OutWidgetClass);
     void GetLine(class UHorizontalBox*& EntryBox);
     void SetupView(FClaimableRewardView InViewData);
     void TryFinish();

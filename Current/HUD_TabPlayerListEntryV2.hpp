@@ -7,7 +7,7 @@ class UHUD_TabPlayerListEntryV2_C : public UUserWidget
     class UITM_SupplyBar_C* AmmoBar;
     class UBorder* Border_CharacterLevel;
     class UBorder* Border_PlayerRank;
-    class UTextBlock* DATA_className;
+    class UTextBlock* DATA_ClassName;
     class UTextBlock* DATA_PlayerName;
     class UVerticalBox* InfoBox;
     class UITM_CharacterIcon_C* ITM_CharacterIcon;

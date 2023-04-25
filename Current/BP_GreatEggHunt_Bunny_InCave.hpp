@@ -1,7 +1,7 @@
-#ifndef UE4SS_SDK_BP_Easter_Bunny_InCave_HPP
-#define UE4SS_SDK_BP_Easter_Bunny_InCave_HPP
+#ifndef UE4SS_SDK_BP_GreatEggHunt_Bunny_InCave_HPP
+#define UE4SS_SDK_BP_GreatEggHunt_Bunny_InCave_HPP
 
-class ABP_Easter_Bunny_InCave_C : public AEnemyDeepPathfinderCharacter
+class ABP_GreatEggHunt_Bunny_InCave_C : public AEnemyDeepPathfinderCharacter
 {
     FPointerToUberGraphFrame UberGraphFrame;
     class UFSDAudioComponent* BunnyAlarmedEnd;
@@ -28,7 +28,7 @@ class ABP_Easter_Bunny_InCave_C : public AEnemyDeepPathfinderCharacter
     void BndEvt__BP_Nisse_HealthComponent_K2Node_ComponentBoundEvent_0_DeathSigDetailed__DelegateSignature(class UHealthComponent* HealthComponent, float damageAmount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
     void BndEvt__BP_Nisse_HealthComponent_K2Node_ComponentBoundEvent_3_DamageSig__DelegateSignature(float Amount);
     void ReceiveBeginPlay();
-    void ExecuteUbergraph_BP_Easter_Bunny_InCave(int32 EntryPoint);
+    void ExecuteUbergraph_BP_GreatEggHunt_Bunny_InCave(int32 EntryPoint);
 };
 
 #endif

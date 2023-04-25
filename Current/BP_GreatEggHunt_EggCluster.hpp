@@ -6,9 +6,12 @@ class ABP_GreatEggHunt_EggCluster_C : public AStaticMeshActor
     FPointerToUberGraphFrame UberGraphFrame;
     TArray<class UTexture*> Textures_Eggs;
     TArray<class UStaticMesh*> Meshes;
-    int32 Mesh (0-2);
+    FRandomStream RandomStream;
+    int32 RandomSeed;
 
-    void UserConstructionScript();
+    void OnRep_RandomSeed();
+    void OnRep_UsedTextures();
+    void OnRep_UsedMesh();
     void ReceiveBeginPlay();
     void ExecuteUbergraph_BP_GreatEggHunt_EggCluster(int32 EntryPoint);
 };

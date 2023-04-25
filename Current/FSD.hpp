@@ -143,6 +143,12 @@ struct FArmorHealthSubItem
 
 };
 
+struct FAssetsToLoadSettings
+{
+    TArray<TSoftClassPtr<AActor>> ActorsPermanently;
+
+};
+
 struct FAttachMeshesAfflictionItem
 {
     FName BoneName;
@@ -595,18 +601,13 @@ struct FCharacterViewScene
 
 };
 
-struct FClaimableRewardArray
-{
-    TArray<FClaimableRewardEntry> Entries;
-
-};
-
 struct FClaimableRewardEntry
 {
     FText Title;
     FText Text;
     TSoftObjectPtr<UObject> Image;
     TArray<class UReward*> Rewards;
+    TSoftClassPtr<UClaimableRewardEntryWidget> EntryWidgetOverride;
     FGuid SavegameID;
 
 };
@@ -3091,6 +3092,13 @@ struct FPipelineMovementData
 
 };
 
+struct FPitchedUsers
+{
+    class APlayerCharacter* Player;
+    float Timer;
+
+};
+
 struct FPlacementObstruction
 {
     float range;
@@ -3230,15 +3238,9 @@ struct FProjectileSwitch
 
 };
 
-struct FPromotionRewardsRank
-{
-    TArray<FClaimableRewardEntry> RewardsAllClasses;
-    TMap<class UPlayerCharacterID*, class FClaimableRewardArray> RewardsCharacterSpecific;
-
-};
-
 struct FPromotionRewardsSave
 {
+    int32 PendingPromotionGifts;
     TSet<FGuid> ClaimedRewards;
 
 };
@@ -8456,6 +8458,17 @@ class AHeavyParticleCannon : public AAmmoDrivenWeapon
     void IsHittngEnemyChanged(bool isHittingEnemy);
     void ChargeUpComplete();
     void ChargeChanged(bool isCharging);
+};
+
+class AHeliumTank : public AActor
+{
+    class UCurveFloat* PitchCurve;
+    TArray<FPitchedUsers> PitchedUsers;
+    class AHeliumTank* Leader;
+
+    void OnUsedBy(class APlayerCharacter* User, EInputKeys Key);
+    void OnShoutStarted(class APlayerCharacter* Player, class UAudioComponent* audio);
+    void OnRep_PitchedUsers();
 };
 
 class AHolidayThrowableItem : public AThrowableItem
@@ -14493,6 +14506,8 @@ class UCarvedResourceData : public UResourceData
     float UnitsPerCarver;
 
     class UCarvedResourceCreator* LoadResourceCreator();
+    float GetUnitsPerCarver();
+    float GetTargetAmount(class AProceduralSetup* pls);
 };
 
 class UCategoryID : public UDataAsset
@@ -14884,7 +14899,9 @@ class UClaimableRewardEntryWidget : public UUserWidget
     void WidgetDelegate__DelegateSignature(class UClaimableRewardEntryWidget* EntryWidget);
     void SignalRewardClaimed();
     void SetData(FClaimableRewardEntry InData);
+    void ReceiveMoveIn(float InStartDelay);
     void ReceiveDataChanged();
+    void MoveIn(float InStartDelay);
 };
 
 class UClaimableRewardViewWidget : public UUserWidget
@@ -15031,8 +15048,6 @@ class UCommunicationComponent : public UActorComponent
     FGameplayTagContainer KillShoutAllowedTags;
     bool bMissionControlPaused;
     class UAudioComponent* MissionControlAudioComponent;
-    FCommunicationComponentShoutCallback ShoutCallback;
-    void AudioCallback(class APlayerCharacter* Player, class UAudioComponent* audio);
     TArray<class UShoutWidget*> ActiveShouts;
     TArray<FActiveOutline> ActiveOutlines;
     class APlayerCharacter* Character;
@@ -19816,6 +19831,7 @@ class UGameData : public UObject
     class UPlayerCharacterID* DefaultCharacterID;
     class UPlayerCharacterID* DefaultEditorCharacterID;
     FGameplayTag XBoxExcludeRoomTag;
+    FAssetsToLoadSettings AssetsToLoad;
 
     void UnloadPreloadedAssets();
     void LoadDefaultAssetsBlocking(class UAsyncManager* AsyncManager);
@@ -23823,9 +23839,13 @@ class UProceduralResources : public UActorComponent
 {
 
     void GenerateResources();
+    void GenerateMissingCarvedResources_Async(const class AProceduralSetup*& setup, FLatentActionInfo LatentInfo);
+    void GenerateMissingCarvedResources();
     void GenerateCarvedResources_Async(const class AProceduralSetup*& setup, FLatentActionInfo LatentInfo);
     void GenerateCarvedResources();
     void CreateResourcesFromObjectives();
+    void CountGeneratedCarvedResources();
+    void CountFinalGeneratedCarvedResources();
 };
 
 class UProceduralSettings : public UDataAsset
@@ -23998,13 +24018,14 @@ class UProjectileUpgradeElement : public UItemUpgradeElement
 class UPromotionRewardsLibrary : public UBlueprintFunctionLibrary
 {
 
+    bool HasPendingPromotionRewards(class UObject* WorldContext);
     bool ClaimPromotionRewards(class UObject* WorldContext, class APlayerController* PlayerController, TArray<FClaimableRewardEntry>& OutRewards, bool& OutFirstPromotion);
 };
 
 class UPromotionRewardsSettings : public UDataAsset
 {
     TArray<FClaimableRewardEntry> FirstPromotionRewards;
-    TMap<int32, FPromotionRewardsRank> PromotionRanks;
+    TArray<FClaimableRewardEntry> SubsequentPromotionRewards;
 
 };
 
@@ -27481,6 +27502,7 @@ class UVeinResourceData : public UResourceData
     class UVeinResourceCreator* ResourceCreator;
 
     class UTerrainMaterial* GetTerrainMaterial();
+    float GetDesiredAmount(class AProceduralSetup* pls);
 };
 
 class UVictoryPose : public USavablePrimaryDataAsset

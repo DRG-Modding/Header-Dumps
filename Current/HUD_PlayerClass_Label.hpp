@@ -4,7 +4,7 @@
 class UHUD_PlayerClass_Label_C : public UUserWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UTextBlock* DATA_className;
+    class UTextBlock* DATA_ClassName;
     class UInvalidationBox* InvalidationBox_0;
 
     void UpdateCharacterName();

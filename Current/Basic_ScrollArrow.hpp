@@ -6,7 +6,7 @@ class UBasic_ScrollArrow_C : public UUserWidget
     FPointerToUberGraphFrame UberGraphFrame;
     class UImage* arrow_bracket;
     class UImage* arrow_main;
-    class UButton* button_arrow;
+    class UButton* Button_Arrow;
     class USizeBox* SizeBox_0;
     class USizeBox* SizeBox_1;
     FBasic_ScrollArrow_COnClicked OnClicked;

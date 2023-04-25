@@ -30,7 +30,7 @@ class AESI_SeasonBriefing_C : public AEnemyShowroomItem
     class UStaticMeshComponent* Tentacle3;
     class UStaticMeshComponent* Tentacle2;
     class UStaticMeshComponent* SM_Stone_007;
-    class UStaticMeshComponent* Tentacle;
+    class UStaticMeshComponent* tentacle;
     class UStaticMeshComponent* PlagueTower;
     class USceneComponent* Location;
     class USceneComponent* DefaultSceneRoot;

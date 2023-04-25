@@ -4,7 +4,7 @@
 class AAIC_TerminatorTentacle_C : public AFSDAIController
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class AENE_TerminatorTentacle_C* Tentacle;
+    class AENE_TerminatorTentacle_C* tentacle;
     class UBehaviorTree* Behavior;
     bool IsChildOfOtherTentacle;
 

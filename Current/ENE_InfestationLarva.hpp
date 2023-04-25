@@ -10,10 +10,9 @@ class AENE_InfestationLarva_C : public AEnemyDeepPathfinderCharacter
     class UOutlineComponent* outline;
     class UStaticMeshComponent* DropShadow;
     class UParticleSystemComponent* P_Larva_Move_Spray;
-    class UDamageComponent* Damage;
 
-    void OnMessageAI(FName TriggerName);
     void BndEvt__HealthComponent_K2Node_ComponentBoundEvent_0_DeathSig__DelegateSignature(class UHealthComponentBase* HealthComponent);
+    void OnMessageAI(FName TriggerName);
     void ExecuteUbergraph_ENE_InfestationLarva(int32 EntryPoint);
 };
 

@@ -4,7 +4,7 @@
 class ABP_FriendlyParasite_Mechanical_C : public ABP_FriendlyParasite_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UParticleSystemComponent* Particle_Trail;
+    class UParticleSystemComponent* particle_Trail;
     class UStaticMeshComponent* StaticMesh;
     class UAudioComponent* ShredderIdle;
     class UPointLightComponent* PointLight;

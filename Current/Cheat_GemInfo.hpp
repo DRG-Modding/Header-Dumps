@@ -9,7 +9,6 @@ class UCheat_GemInfo_C : public UFSDUserWidget
     class UGemResourceData* GemResource;
 
     void Construct();
-    void BndEvt__Button_0_K2Node_ComponentBoundEvent_13_OnButtonClickedEvent__DelegateSignature();
     void ExecuteUbergraph_Cheat_GemInfo(int32 EntryPoint);
 };
 

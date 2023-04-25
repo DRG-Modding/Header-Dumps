@@ -28,6 +28,7 @@ class UWND_CharacterRetirement_C : public UWindowWidget
     class UAudioComponent* FanfareAudio;
     class UAudioComponent* MissionControlAudio;
     FTimerHandle MissionControlTimer;
+    bool SkipRequested;
 
     FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     void StopAudio(class UAudioComponent* InAudioComponent);

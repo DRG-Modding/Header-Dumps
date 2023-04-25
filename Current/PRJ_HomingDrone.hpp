@@ -6,7 +6,7 @@ class APRJ_HomingDrone_C : public AHomingDroneBomb
     FPointerToUberGraphFrame UberGraphFrame;
     class UParticleSystemComponent* P_Homing_Drone_Jets2;
     class UParticleSystemComponent* P_Homing_Drone_Jets1;
-    class UParticleSystemComponent* Particle_Trail;
+    class UParticleSystemComponent* particle_Trail;
     class UParticleSystemComponent* P_Homing_Drone_Jets;
     class UAudioComponent* HomingDroneIdle_Cue;
     class UEnemyComponent* enemy;

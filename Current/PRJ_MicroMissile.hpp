@@ -8,7 +8,7 @@ class APRJ_MicroMissile_C : public AProjectile
     class UParticleSystemComponent* Particle_Exhaust_HighVelocity;
     class UPointLightComponent* Light_DistanceIndicator;
     class UPointLightComponent* Light_Exhaust;
-    class UParticleSystemComponent* Particle_Trail;
+    class UParticleSystemComponent* particle_Trail;
     class UPointLightComponent* UnstableFuelMixIndicator;
     class UAudioComponent* MicroMissileProjectileLoop_Cue;
     class UStaticMeshComponent* MeshRocket;

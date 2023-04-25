@@ -9,7 +9,7 @@ class UITM_Challenge_InfoBox_C : public UUserWidget
     class UBasic_Menu_ColorBar_C* Basic_Menu_ColorBar;
     class UImage* BG_Solid;
     class UButton* BTN_Info;
-    class UButton* button_arrow;
+    class UButton* Button_Arrow;
     class UGridPanel* Grid_Challenges;
     class UImage* Image_BG;
     class UOverlay* InfoOverlay;
@@ -18,7 +18,7 @@ class UITM_Challenge_InfoBox_C : public UUserWidget
     class USizeBox* SBOX_ButtonGFX;
     bool IsOpen;
     FITM_Challenge_InfoBox_COnChallengeHovered OnChallengeHovered;
-    void OnChallengeHovered(TArray<class UObject*>& assetReferences, bool InHovered, class USeasonChallenge* Challenge);
+    void OnChallengeHovered(TArray<class UObject*>& AssetReferences, bool InHovered, class USeasonChallenge* Challenge);
 
     void OnNewChallenge();
     void AddChallengeToGrid(FChallengeInfo ChallengeInfo, int32 Column, class UItm_SeasonChallenge_Small_C*& W_Challenge);
@@ -33,7 +33,7 @@ class UITM_Challenge_InfoBox_C : public UUserWidget
     void Construct();
     void Click();
     void ExecuteUbergraph_ITM_Challenge_InfoBox(int32 EntryPoint);
-    void OnChallengeHovered__DelegateSignature(TArray<class UObject*>& assetReferences, bool InHovered, class USeasonChallenge* Challenge);
+    void OnChallengeHovered__DelegateSignature(TArray<class UObject*>& AssetReferences, bool InHovered, class USeasonChallenge* Challenge);
 };
 
 #endif

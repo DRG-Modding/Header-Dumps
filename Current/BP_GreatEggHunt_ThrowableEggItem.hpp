@@ -8,6 +8,7 @@ class ABP_GreatEggHunt_ThrowableEggItem_C : public AHolidayThrowableItem
     class UMaterialInstance* UsedMaterial;
     class UMaterialInstance* OnSpawnMaterial;
     class UFXSystemAsset* OnExplosionParticles;
+    float ImpulseStrength;
 
     void OnRep_UsedMaterial();
     FVector GetThrowLocation();

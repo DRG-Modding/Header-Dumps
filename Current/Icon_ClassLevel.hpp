@@ -1,5 +1,5 @@
-#ifndef UE4SS_SDK_Icon_ClassLevel_DUPL_1_HPP
-#define UE4SS_SDK_Icon_ClassLevel_DUPL_1_HPP
+#ifndef UE4SS_SDK_Icon_ClassLevel_HPP
+#define UE4SS_SDK_Icon_ClassLevel_HPP
 
 class UIcon_ClassLevel_C : public UUserWidget
 {

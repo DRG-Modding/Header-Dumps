@@ -70,7 +70,7 @@ class U_SCREEN_MissionSelectionMK3_C : public UWindowWidget
     float BiomeHoverStartTime;
     TArray<class UImage*> ZoneOutlines;
 
-    void HighlightChallenges(const TArray<class UObject*>& assetReferences, bool ShouldHighlight, class USeasonChallenge* Challenge);
+    void HighlightChallenges(const TArray<class UObject*>& AssetReferences, bool ShouldHighlight, class USeasonChallenge* Challenge);
     void ClearServerListMissionRestrictions();
     FEventReply OnMouseButtonUp(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
     void UpdateMapPan(bool SnapToMouse);
@@ -111,7 +111,7 @@ class U_SCREEN_MissionSelectionMK3_C : public UWindowWidget
     void DifficultyChanged(class UDifficultySetting* NewDifficulty, class UGeneratedMission* mission);
     void StartupCameraPan();
     void OnStartSoloMission();
-    void BndEvt__ITM_Challenge_InfoBox_K2Node_ComponentBoundEvent_1_OnChallengeHovered__DelegateSignature(TArray<class UObject*>& assetReferences, bool InHovered, class USeasonChallenge* Challenge);
+    void BndEvt__ITM_Challenge_InfoBox_K2Node_ComponentBoundEvent_1_OnChallengeHovered__DelegateSignature(TArray<class UObject*>& AssetReferences, bool InHovered, class USeasonChallenge* Challenge);
     void ExecuteUbergraph__SCREEN_MissionSelectionMK3(int32 EntryPoint);
 };
 

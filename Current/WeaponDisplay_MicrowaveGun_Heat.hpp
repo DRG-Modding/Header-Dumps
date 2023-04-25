@@ -4,7 +4,7 @@
 class UWeaponDisplay_MicrowaveGun_Heat_C : public UUserWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UWidgetAnimation* OverHeat;
+    class UWidgetAnimation* Overheat;
     class UImage* Border;
     class UImage* Image;
     class UImage* Image_0;

@@ -8,7 +8,7 @@ class UITM_CharacterSwitcherBar_C : public UUserWidget
     class UBasic_Menu_ColorBar_C* Basic_Menu_ColorBar_0;
     class UBasic_ButtonScalable2_C* BTN_Switch;
     class UTextBlock* DATA_CharacterLevel;
-    class UTextBlock* DATA_className;
+    class UTextBlock* DATA_ClassName;
     class UBorder* HeaderBG;
     class UImage* Image_3;
     class UITM_ItemUnlockedIcon_C* ITM_ItemUnlockedIcon;

@@ -12,6 +12,8 @@ class ABP_GreatEggHunt_PickupPile_C : public AActor
 
     void OnRep_AnimationSettings();
     void BndEvt__BP_GreatEggHunt_PickupPile_InstantUsable_K2Node_ComponentBoundEvent_0_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);
+    void ReceiveBeginPlay();
+    void SetRandomAnimation();
     void ExecuteUbergraph_BP_GreatEggHunt_PickupPile(int32 EntryPoint);
 };
 

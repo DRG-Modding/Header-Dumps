@@ -23,11 +23,11 @@ class UUI_ClaimableRewards_Entry_C : public UClaimableRewardEntryWidget
     void PlayRevealAudio();
     void PreConstruct(bool IsDesignTime);
     void Construct();
-    void MoveIn(float StartDelay);
     void OnClaimAnimFinished();
     void BndEvt__ITM_BigButton_K2Node_ComponentBoundEvent_1_OnClicked__DelegateSignature();
     void OnPopupImageLoaded();
     void PlaySlamAudio();
+    void ReceiveMoveIn(float InStartDelay);
     void ExecuteUbergraph_UI_ClaimableRewards_Entry(int32 EntryPoint);
 };
 

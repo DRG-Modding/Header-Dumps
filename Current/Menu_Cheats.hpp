@@ -43,9 +43,7 @@ class UMenu_Cheats_C : public UWindowWidget
     class UCheat_JumpToNextRoom_C* Cheat_JumpToNextRoom;
     class UCheat_KillAll_C* Cheat_KillAll_20;
     class UCheat_LevelScale_C* Cheat_LevelScale;
-    class UCheat_MaterialInfo_C* Cheat_MaterialInfo_C_2;
-    class UCheat_MaterialInfo_C* Cheat_MaterialInfo_C_3;
-    class UCheat_MaterialInfo_C* Cheat_MaterialInfo_C_4;
+    class UCheat_MaterialInfo_C* Cheat_MaterialInfo;
     class UCheat_QuadPickAxe_C* Cheat_QuadPickAxe;
     class UCheat_QuickLight_C* Cheat_QuickLight;
     class UButton* Cheat_ResetAchievement;

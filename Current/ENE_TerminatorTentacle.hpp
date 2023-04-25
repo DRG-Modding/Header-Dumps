@@ -33,7 +33,7 @@ class AENE_TerminatorTentacle_C : public ATerminatorTentacle
     class USceneComponent* GetHeadRotator();
     class USceneComponent* GetHeadRoot();
     class USkeletalMeshComponent* GetMesh();
-    void GetTentacle(class AENE_TerminatorTentacle_C*& Tentacle);
+    void GetTentacle(class AENE_TerminatorTentacle_C*& tentacle);
     FVector GetTargetCenterMass();
     void HitTerrainAndStop(FVector TargetLocation, float Penetration, FVector& NewTargetLocation, bool& HitTerrain);
     void UserConstructionScript();
