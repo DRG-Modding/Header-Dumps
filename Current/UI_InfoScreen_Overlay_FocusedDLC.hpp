@@ -16,7 +16,6 @@ class UUI_InfoScreen_Overlay_FocusedDLC_C : public UUserWidget
     class UImage* DLCImage;
     class UImage* Glow1;
     class UImage* Glow2;
-    bool NewVar_0;
     class UGameDLC* dlc;
 
     void OpenDLCInSteamBrowser();

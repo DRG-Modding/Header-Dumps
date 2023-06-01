@@ -27,7 +27,7 @@ class UWND_Season_RewardClaimed_C : public UWindowWidget
     void OnWindowClose();
 
     void SetDataFromReward(class UReward* Reward);
-    void setup();
+    void Setup();
     void BndEvt__Button_0_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();
     void ExecuteUbergraph_WND_Season_RewardClaimed(int32 EntryPoint);
     void OnWindowClose__DelegateSignature();

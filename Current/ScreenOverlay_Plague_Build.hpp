@@ -13,8 +13,8 @@ class UScreenOverlay_Plague_Build_C : public UUserWidget
     float Timer;
 
     void Construct();
-    void OnCharacterStateChanged(ECharacterState NewState);
     void Tick(FGeometry MyGeometry, float InDeltaTime);
+    void OnCharacterStateChanged(ECharacterState NewState);
     void End Splat();
     void OnCameraModeChanged(ECharacterCameraMode NewCameraMode, ECharacterCameraMode OldCameraMode);
     void ExecuteUbergraph_ScreenOverlay_Plague_Build(int32 EntryPoint);

@@ -7,6 +7,7 @@ class UUI_Forge_SchematicList_C : public UUserWidget
     class UWidgetSwitcher* ContentSwitcher;
     class UOverlay* EmptyOverlay;
     class UOverlay* FullOverlay;
+    class UImage* Image;
     class UImage* Image_159;
     class UImage* Image_161;
     class UImage* Image_162;

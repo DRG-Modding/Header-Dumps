@@ -243,7 +243,7 @@ struct FMovieSceneEventSectionTemplate : public FMovieSceneEvalTemplate
 struct FMovieSceneEventTriggerData
 {
     FMovieSceneEventPtrs Ptrs;
-    FGuid ObjectBindingId;
+    FGuid ObjectBindingID;
 
 };
 

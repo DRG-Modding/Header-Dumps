@@ -34,6 +34,9 @@ class AENE_Spider_Exploding_C : public AENE_SpiderBase_Large_C
     void StopMontagesOnDeath();
     void CorrosiveDeath();
     void ChemicalExplosionDeath();
+    void Cooked Death();
+    void ExplodedDeath();
+    void OnExplosionFinished();
     void ExecuteUbergraph_ENE_Spider_Exploding(int32 EntryPoint);
 };
 

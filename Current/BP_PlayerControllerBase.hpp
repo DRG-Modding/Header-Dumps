@@ -21,7 +21,7 @@ class ABP_PlayerControllerBase_C : public AFSDPlayerController
     void SetHasShownCharacterSelector(bool HasShown);
     void ItemFilter(TSubclassOf<class AActor> itemClass, bool& Result);
     void SetClassAnalytics();
-    void SetUnlockAnalytics(TArray<class TSubclassOf<AActor>>& primary, TArray<class TSubclassOf<AActor>>& Secundary);
+    void SetUnlockAnalytics(TArray<class TSubclassOf<AActor>>& Primary, TArray<class TSubclassOf<AActor>>& Secundary);
     void GetUnlockedItems(EItemCategory Category, TArray<class TSubclassOf<AActor>>& Unlocked Items);
     void ReStartAnsel();
     void StartAnsel();

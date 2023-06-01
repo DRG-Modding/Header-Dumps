@@ -4,6 +4,11 @@
 class ABP_LaserEventStarter_C : public AEventStarterButton
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UMeshCarverComponent* MeshCarver;
+    class UStaticMeshComponent* Beam01_Detail03;
+    class UStaticMeshComponent* Beam01;
+    class UStaticMeshComponent* Beam01_Detail04;
+    class USceneComponent* Beam1;
     class UPathfinderCollisionComponent* PathfinderCollision1;
     class UPathfinderCollisionComponent* PathfinderCollision;
     class UOutlineComponent* outline;

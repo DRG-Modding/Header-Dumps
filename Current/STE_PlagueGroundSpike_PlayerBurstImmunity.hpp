@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_STE_PlagueGroundSpike_PlayerBurstImmunity_HPP
+#define UE4SS_SDK_STE_PlagueGroundSpike_PlayerBurstImmunity_HPP
+
+class USTE_PlagueGroundSpike_PlayerBurstImmunity_C : public UStatusEffect
+{
+};
+
+#endif

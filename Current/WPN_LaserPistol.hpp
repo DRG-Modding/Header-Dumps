@@ -26,7 +26,7 @@ class AWPN_LaserPistol_C : public ABurstWeapon
     void BndEvt__Hitscan_K2Node_ComponentBoundEvent_0_HitDelegate__DelegateSignature(const FHitResult& Hit, bool alwaysPenetrate);
     void Receive_IsFiringChanged(bool NewValue);
     void ReceiveBeginPlay();
-    void OnTemperatureChanged(float Temperature, bool Overheated);
+    void OnTemperatureChanged(float Temperature, bool overHeated);
     void ExecuteUbergraph_WPN_LaserPistol(int32 EntryPoint);
 };
 

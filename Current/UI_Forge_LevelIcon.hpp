@@ -14,7 +14,7 @@ class UUI_Forge_LevelIcon_C : public UUserWidget
 
     void GetLevel(int32& Level);
     void SetLevelFromSchematic(class USchematic* Schematic);
-    void SetLevel(int32 inLevel);
+    void SetLevel(int32 InLevel);
     void SetIconColor(TEnumAsByte<ENUM_MenuColors::Type> InColor);
     void SetSize(float InSize);
     void PreConstruct(bool IsDesignTime);

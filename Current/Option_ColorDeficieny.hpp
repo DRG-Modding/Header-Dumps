@@ -11,6 +11,7 @@ class UOption_ColorDeficieny_C : public UUserWidget
     class UScaleBox* ScaleBox_ColorDeficiency;
     class UHorizontalBox* Severity_Box;
     class UBasic_Slider_C* Severity_Slider;
+    class UTextBlock* Severity_Text;
     class UBasic_OptionSwitcher_C* Type_Selector;
 
     void ApplyAndSave();

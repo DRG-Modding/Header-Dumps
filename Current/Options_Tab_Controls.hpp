@@ -7,6 +7,7 @@ class UOptions_Tab_Controls_C : public UUserWidget
     class UBasic_Option_C* Basic_Option_C_0;
     class UBasic_Option_C* Basic_Option_C_1;
     class UBasic_ButtonWithControls_C* BTN_ResetToDefaults;
+    class UVerticalBox* Controller;
     class UVerticalBox* KeyboardAndMouse;
     class UBasic_Option_C* OpenChat;
     class UBasic_Option_C* OPT_Con_AimAcceleration;
@@ -45,12 +46,16 @@ class UOptions_Tab_Controls_C : public UUserWidget
     class UOptions_ToggleLaserpointer_C* Options_ToggleLaserpointer;
     class UOptions_ToggleTerrainScanner_C* Options_ToggleTerrainScanner;
     class UOptions_ZiplineGunEquipPrevious_C* Options_ZiplineGunEquipPrevious;
+    class UGridPanel* OrderPanel;
     class UOptions_MouseX_Sensitivity_C* UI_Sensitivity_172;
     FOptions_Tab_Controls_CSettingsChanged SettingsChanged;
     void SettingsChanged();
+    bool In Mouse Keyboard First;
 
+    void SetMouseKeyboardFirst(bool InMouseKeyboardFirst);
     void Construct();
     void BndEvt__BTN_ResetToDefaults_K2Node_ComponentBoundEvent_2_OnClicked__DelegateSignature();
+    void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_Options_Tab_Controls(int32 EntryPoint);
     void SettingsChanged__DelegateSignature();
 };

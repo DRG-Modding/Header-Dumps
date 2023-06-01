@@ -19,6 +19,7 @@ class UWnd_SeasonBriefing_C : public UWindowWidget
     bool IsRotatingLeft;
     TSoftClassPtr<AEnemyShowroomItem> ShowRoomBrief;
     class UAudioComponent* BriefingSound;
+    class USoundBase* Sound_SeasonBriefing;
 
     void OnLoaded_F236D25549C14A3D787E7F9A8268FFEB(UClass* Loaded);
     void OnLoaded_E25AAB194DE5E00F1D91D68D1A67E597(UClass* Loaded);

@@ -9,6 +9,7 @@ class UCheat_GiveBeerBuff_Row_C : public UUserWidget
     class UTemporaryBuff* myBeerBuff;
     FCheat_GiveBeerBuff_Row_COn BeerbuffRow checked On BeerbuffRow checked;
     void On BeerbuffRow checked(class UCheat_GiveBeerBuff_Row_C* Buff row to skip);
+    bool alreadyActive;
 
     void Set BeerBuff(class UTemporaryBuff* berr buff in);
     void BndEvt__CheckBox_0_K2Node_ComponentBoundEvent_64_OnCheckBoxComponentStateChanged__DelegateSignature(bool bIsChecked);

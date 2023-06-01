@@ -17,6 +17,7 @@ class U_MENU_Pickaxe_C : public UWindowWidget
     class UVerticalBox* Slots_Right;
     class UPlayerCharacterID* PlayerCharacter;
     float FadeInAnimTime;
+    bool PrevUseRandom;
 
     FEventReply OnMouseButtonUp(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
     void PlayIntroAnimations();

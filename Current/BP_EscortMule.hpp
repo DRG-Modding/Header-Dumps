@@ -147,6 +147,7 @@ class ABP_EscortMule_C : public AEscortMule
     bool IsPathReady;
     class UBP_BossFight_Heartstone_C* BossFight;
 
+    void AllCanistersFull(bool& areFull);
     void RepComponentDamage();
     void UpdateRepairBoxLook();
     void UpdateBoxDamageEmitter(class UNiagaraComponent* ParticlesLow, class UNiagaraComponent* ParticlesMedium, class UNiagaraComponent* ParticlesHigh, float HealthPercent);

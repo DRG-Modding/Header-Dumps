@@ -11,7 +11,10 @@ class UUI_HackingTool_Progress_C : public UUserWidget
     TArray<class UImage*> Transitions;
     FUI_HackingTool_Progress_COnNextStage OnNextStage;
     void OnNextStage(int32 InNewStage, int32 InTotalStages);
+    FVector2D BulletSize;
+    FVector2D SeparatorSize;
 
+    void Update(int32 InCurrent, int32 InMax);
     void GetMaxStages(int32& MaxStages);
     void GetCurrentStage(int32& CurrentStage);
     void NextStage();

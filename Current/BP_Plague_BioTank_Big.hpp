@@ -20,6 +20,7 @@ class ABP_Plague_BioTank_Big_C : public ADisplayCase
     bool MissionControlSpeak;
     float SeasonEventSpawnChance;
 
+    void GetSeasonBarrelSpawnChance(float& Out);
     void UpdateMeshesForHolidays();
     void ReceiveBeginPlay();
     void BndEvt__BP_Plague_BioTank_Big_InstantUsable_K2Node_ComponentBoundEvent_0_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);

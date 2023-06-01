@@ -13,6 +13,7 @@ class UITM_Wardrobe_ItemSlot_Base_C : public UUserWidget
     class UITM_ItemUnlockedIcon_C* Notification_NewItemAny;
     class UBorder* OuterBorder;
     class UButton* ShuffleButton;
+    class UButton* SleevelessButton;
     class UButton* SlotButton;
     class UScaleBox* SlotContentBox;
     class USizeBox* SlotSizer;
@@ -20,6 +21,7 @@ class UITM_Wardrobe_ItemSlot_Base_C : public UUserWidget
     class UOverlay* TextOverlay;
     class UBasic_Label_C* TextSubheader;
     class UUI_RandomizeIcon_C* UI_RandomizeIcon;
+    class UUI_ToggleSleevelessIcon_C* UI_ToggleSleevelessIcon;
     class UTexture2D* TypeIcon;
     int32 SlotSize;
     class UITM_Wardrobe_ItemSelector_C* Selector;
@@ -36,7 +38,10 @@ class UITM_Wardrobe_ItemSlot_Base_C : public UUserWidget
     void OnEquippedChanged();
     class UDialogDataAsset* ShoutOnEquipped;
     bool CanShuffle;
+    bool CanToggleType;
 
+    void UpdateToggleButton();
+    void ReceiveToggleType(bool& success);
     void ReceiveGetNumberOfItems(int32& Num);
     void ReceiveItemDLC(int32 Index, class UDLCBase*& FromDLC);
     void EquipRandomItem();
@@ -69,15 +74,18 @@ class UITM_Wardrobe_ItemSlot_Base_C : public UUserWidget
     void SetContentAsTexture(class UTexture2D* Texture);
     void SetContentAsWidget(class UWidget* InWidget);
     void UpdateSelectionBorder();
-    void BndEvt__SlotButton_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();
     void RefreshNextFrame();
+    void BndEvt__SlotButton_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();
     void PlayIntroAnim(bool IsLeftSide, float Duration);
-    void PreConstruct(bool IsDesignTime);
     void OnMouseEnter(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
     void OnMouseLeave(const FPointerEvent& MouseEvent);
     void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_1_OnButtonClickedEvent__DelegateSignature();
     void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_2_OnButtonHoverEvent__DelegateSignature();
     void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_3_OnButtonHoverEvent__DelegateSignature();
+    void PreConstruct(bool IsDesignTime);
+    void BndEvt__ITM_Wardrobe_ItemSlot_Base_SleevelessButton_K2Node_ComponentBoundEvent_4_OnButtonHoverEvent__DelegateSignature();
+    void BndEvt__ITM_Wardrobe_ItemSlot_Base_SleevelessButton_K2Node_ComponentBoundEvent_5_OnButtonHoverEvent__DelegateSignature();
+    void BndEvt__ITM_Wardrobe_ItemSlot_Base_SleevelessButton_K2Node_ComponentBoundEvent_6_OnButtonClickedEvent__DelegateSignature();
     void ExecuteUbergraph_ITM_Wardrobe_ItemSlot_Base(int32 EntryPoint);
     void OnEquippedChanged__DelegateSignature();
 };

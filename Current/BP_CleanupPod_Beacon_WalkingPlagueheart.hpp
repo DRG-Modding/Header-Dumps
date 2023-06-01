@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_BP_CleanupPod_Beacon_WalkingPlagueheart_HPP
+#define UE4SS_SDK_BP_CleanupPod_Beacon_WalkingPlagueheart_HPP
+
+class ABP_CleanupPod_Beacon_WalkingPlagueheart_C : public ABP_CleanupPod_Beacon_C
+{
+};
+
+#endif

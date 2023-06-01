@@ -17,7 +17,7 @@ class UITM_Wardrobe_ClassSelector_C : public UUserWidget
     class UUI_AdvancedLabel_C* UI_AdvancedLabel_1;
     class UUI_AdvancedLabel_C* UI_AdvancedLabel_164;
     FText HeaderText;
-    class UPlayerCharacterID* CurrentCharacter;
+    class UPlayerCharacterID* currentCharacter;
     FITM_Wardrobe_ClassSelector_COnCharacterChanged OnCharacterChanged;
     void OnCharacterChanged(TSubclassOf<class APlayerCharacter> Character);
     ECharselectionCameraLocation SelectionType;

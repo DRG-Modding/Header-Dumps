@@ -4,6 +4,7 @@
 class ULIB_MenuColors_C : public UBlueprintFunctionLibrary
 {
 
+    void MenuColorAndTint(FMenuColorAndTint InValue, class UObject* __WorldContext, FLinearColor& OutResult);
     void WindowColors(TEnumAsByte<ENUM_WindowColors::Type> InColor, class UObject* __WorldContext, FLinearColor& Color1, FLinearColor& Color2);
     void SelectTextColor(class UTextBlock* Text, TEnumAsByte<ENUM_MenuColors::Type> FALSE, TEnumAsByte<ENUM_MenuColors::Type> TRUE, bool Condition, class UObject* __WorldContext);
     void SetTextColor(class UTextBlock* Text, TEnumAsByte<ENUM_MenuColors::Type> Color, class UObject* __WorldContext);

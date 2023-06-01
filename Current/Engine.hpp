@@ -12725,7 +12725,7 @@ class UKismetMathLibrary : public UBlueprintFunctionLibrary
     float GetTotalDays(FTimespan A);
     FTimespan GetTimeOfDay(FDateTime A);
     float GetTAU();
-    void GetSlopeDegreeAngles(const FVector& MyRightYAxis, const FVector& FloorNormal, const FVector& upVector, float& OutSlopePitchDegreeAngle, float& OutSlopeRollDegreeAngle);
+    void GetSlopeDegreeAngles(const FVector& MyRightYAxis, const FVector& FloorNormal, const FVector& UpVector, float& OutSlopePitchDegreeAngle, float& OutSlopeRollDegreeAngle);
     int32 GetSeconds(FTimespan A);
     int32 GetSecond(FDateTime A);
     FVector2D GetRotated2D(FVector2D A, float AngleDeg);
@@ -18918,7 +18918,7 @@ class USplineComponent : public UPrimitiveComponent
     void SetRotationAtSplinePoint(int32 PointIndex, const FRotator& InRotation, TEnumAsByte<ESplineCoordinateSpace::Type> CoordinateSpace, bool bUpdateSpline);
     void SetLocationAtSplinePoint(int32 PointIndex, const FVector& InLocation, TEnumAsByte<ESplineCoordinateSpace::Type> CoordinateSpace, bool bUpdateSpline);
     void SetDrawDebug(bool bShow);
-    void SetDefaultUpVector(const FVector& upVector, TEnumAsByte<ESplineCoordinateSpace::Type> CoordinateSpace);
+    void SetDefaultUpVector(const FVector& UpVector, TEnumAsByte<ESplineCoordinateSpace::Type> CoordinateSpace);
     void SetClosedLoopAtPosition(bool bInClosedLoop, float Key, bool bUpdateSpline);
     void SetClosedLoop(bool bInClosedLoop, bool bUpdateSpline);
     void RemoveSplinePoint(int32 Index, bool bUpdateSpline);

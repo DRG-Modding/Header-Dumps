@@ -61,6 +61,7 @@ class UMENU_Credits_C : public UWindowWidget
     class UITM_CreditsEntry_C* ITM_CreditsEntry_C_39;
     class UITM_CreditsEntry_C* ITM_CreditsEntry_C_40;
     class UITM_CreditsEntry_C* ITM_CreditsEntry_C_41;
+    class UITM_CreditsEntry_C* ITM_CreditsEntry_C_42;
     class UITM_MenuBackground_C* ITM_MenuBackground;
     class UImage* LogoBig;
     class UWidgetSwitcher* MoreCreditsSwitch;

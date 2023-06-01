@@ -11,7 +11,7 @@ class AENE_FacilityTentacle_Burrowing_C : public AENE_FacilityTentacle_C
     class AActor* SpawnActor;
 
     void PlaceEndTentacles(FVector PlayerLocation, bool& success, class AActor*& SpawnedTentacle);
-    void GetTentacle(class AENE_FacilityTentacle_C*& tentacle);
+    void GetTentacle(class AENE_FacilityTentacle_C*& Tentacle);
     void FindGroundLocation(bool& success, FVector& Location);
     void BurrowingAttack(class AActor* AttackTarget, FVector BurrowLocation);
     void ChildTentacleDied(class UHealthComponentBase* HealthComponent);

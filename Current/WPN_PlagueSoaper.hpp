@@ -14,6 +14,7 @@ class AWPN_PlagueSoaper_C : public APlagueSoaperItem
     class USimpleObjectInfoComponent* SimpleObjectInfo;
     class UOutlineComponent* outline;
     bool ObjectiveIsComplete;
+    class AActor* hologramRef;
 
     void ReceiveBeginPlay();
     void BndEvt__PickupUsable_K2Node_ComponentBoundEvent_1_UsableChangedSignature__DelegateSignature(bool CanUse);

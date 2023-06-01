@@ -12,7 +12,7 @@ class AITM_CleanupDrop_C : public ACleanupPodItem
     void RecieveEquipped();
     void OnMarkerSpawned_Event(class AItemMarker* Marker);
     void ReceiveItemPlacerSpawned(class UItemPlacerAggregator* InItemPlacer);
-    void UpdateWidget(EPlaceableObstructionType reason, float timeLeft);
+    void UpdateWidget(EPlaceableObstructionType reason, float TimeLeft);
     void SetMarkerAndWidget(class AItemMarker* Marker);
     void ExecuteUbergraph_ITM_CleanupDrop(int32 EntryPoint);
 };

@@ -24,7 +24,6 @@ class ABP_Phys_KickableObject_Base_C : public AFSDPhysicsActor
     void BndEvt__InstantUsable_K2Node_ComponentBoundEvent_1_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);
     void ReceiveBeginPlay();
     void destroy();
-    void DestroyOvertime();
     void Play_Kick(class APlayerCharacter* Kicker);
     void Spawn Bronzehead Effects();
     void BndEvt__SimpleHealth_K2Node_ComponentBoundEvent_7_HitSig__DelegateSignature(float Damage, const FDamageData& DamageData, bool anyHealthLost);

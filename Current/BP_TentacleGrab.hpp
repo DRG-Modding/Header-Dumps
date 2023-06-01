@@ -6,7 +6,7 @@ class UBP_TentacleGrab_C : public UTentacleGrabAttack
     FPointerToUberGraphFrame UberGraphFrame;
     class USceneComponent* AttackLocation;
     class AActor* CurrentTarget;
-    class ATerminatorTentacle* tentacle;
+    class ATerminatorTentacle* Tentacle;
     bool InProgress;
     FBP_TentacleGrab_CStarted Started;
     void Started();

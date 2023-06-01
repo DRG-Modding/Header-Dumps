@@ -42,6 +42,7 @@ class AWPN_ChargeBlaster_C : public AChargedWeapon
     void ReceiveOverheatedChanged(bool isOverheated);
     void OnSkinChanged(class USkinEffect* Skin);
     void AddedToInventory(class APlayerCharacter* ItemOwner);
+    void RecieveFiredWeapon();
     void ExecuteUbergraph_WPN_ChargeBlaster(int32 EntryPoint);
 };
 

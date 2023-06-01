@@ -23,6 +23,7 @@ class ABP_SpacerigTrashCompactor_C : public AActor
     TArray<class UStaticMesh*> TrashList;
     TArray<class UStaticMesh*> DecorationsList;
     TArray<class UStaticMesh*> LeafLoverList;
+    TArray<class UStaticMesh*> RivalsList;
 
     void ChooseList();
     void AddStaticMeshes(TArray<FTransform>& Transforms);

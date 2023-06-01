@@ -9,7 +9,6 @@ class AWPN_Autocannon_C : public AAutoCannon
     class UDamageComponent* Damage;
     class UFirstPersonParticleSystemComponent* FirstPersonParticleSystem;
     class UFirstPersonPointLightComponent* Light_MuzzleFlash;
-    class UFirstPersonWidgetComponent* Widget_Overheat;
     class UFirstPersonWidgetComponent* Widget_Ammo;
     class UCrosshairAggregator* CrosshairAggregator;
     class UHitscanComponent* HitScan;

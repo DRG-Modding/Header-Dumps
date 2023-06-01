@@ -19,7 +19,6 @@ class ABP_Kickable_Base_C : public AActor
     void BndEvt__InstantUsable_K2Node_ComponentBoundEvent_1_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);
     void ReceiveBeginPlay();
     void destroy();
-    void DestroyOvertime();
     void Play_Kick(class APlayerCharacter* Kicker);
     void BndEvt__Kickable Mesh_K2Node_ComponentBoundEvent_8_ComponentHitSignature__DelegateSignature(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
     void Set Is Interactable(bool Can interact);

@@ -4,6 +4,8 @@
 class ABP_Ebonut_C : public ABP_Collectible_Base_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UStaticMeshComponent* SM_Carver_DropPodDrill001;
+    class ULevelGenerationCarverComponent* LevelGenerationCarver;
     class UPointLightComponent* PointLight1;
     class UTerrainPlacementComponent* terrainPlacement;
     class UPathfinderCollisionComponent* PathfinderWalkable;

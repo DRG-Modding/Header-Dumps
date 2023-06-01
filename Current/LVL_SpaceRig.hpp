@@ -14,8 +14,9 @@ class ALVL_SpaceRig_C : public ALevelScriptActor
     class UFSDAchievement* ForeignObjectsInTheLaunchbay;
     TArray<class TSubclassOf<UUserWidget>> Preload_Widgets;
     TArray<class UAudioComponent*> AmbientAudioComponents;
-    class USoundCue* AmbienceMusicCue;
     FLinearColor BarLightColor;
+    class USoundCue* CurrentAmbienceCue;
+    class USoundCue* DefaultAmbienceCue;
     class AStaticMeshActor* ForceShield_ExecuteUbergraph_LVL_SpaceRig_RefProperty;
     class AEmitter* P_SpaceRig_Smoke_2_ExecuteUbergraph_LVL_SpaceRig_RefProperty;
     class AStaticMeshActor* SaluteStatue_B2_ExecuteUbergraph_LVL_SpaceRig_RefProperty;
@@ -69,13 +70,12 @@ class ALVL_SpaceRig_C : public ALevelScriptActor
     class ABP_ConfettiPlane_C* BP_ConfettiPlane2_EdGraph_0_RefProperty;
     class ABP_ConfettiPlane_C* BP_ConfettiPlane_4_EdGraph_0_RefProperty;
     class ASkeletalMeshActor* SK_Banner3_EdGraph_0_RefProperty;
-    class ABP_ModularLamp_C* BP_Lamp_BASE3_EdGraph_4_RefProperty;
-    class ABP_ModularLamp_C* BP_Lamp_BASE2_5_EdGraph_4_RefProperty;
+    class ABP_ModularLamp_C* BP_Lamp_BASE3_EdGraph_2_RefProperty;
+    class ABP_ModularLamp_C* BP_Lamp_BASE2_5_EdGraph_2_RefProperty;
 
+    void UpdateAmbienceAudioComponents();
     void OnRep_BarLightColor();
-    void OnRep_AmbienceMusicCue();
-    void UpdateAmbientMusic(class UFSDEvent* Event);
-    void FindAmbienceMusicPlayers();
+    void GetEventOrDefaultAmbiance(class USoundCue*& OutAmbiance);
     void Set Beer Event Active(bool Is Active);
     void OnLoaded_C80486AD4277C47F32FE05A37AB96333(UClass* Loaded);
     void ReceiveBeginPlay();
@@ -96,7 +96,7 @@ class ALVL_SpaceRig_C : public ALevelScriptActor
     void StreamSubLevels();
     void BndEvt__LVL_SpaceRig_TriggerBox_TrashCompactor_K2Node_ActorBoundEvent_8_ActorBeginOverlapSignature__DelegateSignature(class AActor* OverlappedActor, class AActor* OtherActor);
     void SpawnTrashCompactor(float Seed);
-    void OnJukeboxStreamerModeChanged_Event_0(bool NewValue);
+    void OnStreamerModeChanged(bool NewValue);
     void HandleEventSpecifics();
     void ExecuteUbergraph_LVL_SpaceRig(int32 EntryPoint);
 };

@@ -8,9 +8,9 @@ class UUI_MissionStats_View_C : public UUI_KPI_Tab_C
     class UBasic_ScrollBarBox_C* Basic_ScrollBarBox;
     class UVerticalBox* Header;
     class UUI_MissionStat_Preview_C* MissionStat_Preview;
-    class USpacer* Spacer_left;
+    class USpacer* Spacer_Left;
     class USpacer* Spacer_middle;
-    class USpacer* Spacer_right;
+    class USpacer* Spacer_Right;
     class UVerticalBox* StatsParent;
     class UTextBlock* StatTitle;
     class UUI_MissionStats_Categories_C* UI_MissionStats_Categories;
@@ -23,8 +23,6 @@ class UUI_MissionStats_View_C : public UUI_KPI_Tab_C
     TArray<class UTexture2D*> CategoryIcons;
     TArray<class UTexture2D*> CategoryFilter;
     FTimerHandle StoreModeTimer;
-    class UMissionStat* WeaponLicenseAssignment;
-    int32 CompletedLicenses;
 
     void NextStoreMode();
     void SortStats(TArray<class UMissionStat*>& InStats, TArray<class UTexture2D*>& Categories, TArray<class UMissionStat*>& Sorted Stats);
@@ -36,7 +34,6 @@ class UUI_MissionStats_View_C : public UUI_KPI_Tab_C
     void OnHoverEnd_Event(class UUI_MissionStats_Item_C* Sender);
     void Setup Category Selection();
     void OnCategorySelectionChanged();
-    void UpdateWeaponLicenseStat();
     void ExecuteUbergraph_UI_MissionStats_View(int32 EntryPoint);
 };
 

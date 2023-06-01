@@ -5,6 +5,8 @@ class UABP_TP_Dwarf_C : public UPlayerTPAnimInstance
 {
     FPointerToUberGraphFrame UberGraphFrame;
     FAnimNode_Root AnimGraphNode_Root;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_32;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_31;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_30;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_29;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_28;
@@ -32,6 +34,12 @@ class UABP_TP_Dwarf_C : public UPlayerTPAnimInstance
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_6;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_5;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_4;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_69;
+    FAnimNode_BlendListByBool AnimGraphNode_BlendListByBool_49;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_68;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_67;
+    FAnimNode_LayeredBoneBlend AnimGraphNode_LayeredBoneBlend_4;
+    FAnimNode_StateResult AnimGraphNode_StateResult_17;
     FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_66;
     FAnimNode_TwoWayBlend AnimGraphNode_TwoWayBlend;
     FAnimNode_BlendSpacePlayer AnimGraphNode_BlendSpacePlayer;

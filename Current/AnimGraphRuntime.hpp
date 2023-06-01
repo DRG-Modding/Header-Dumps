@@ -894,7 +894,7 @@ class UKismetAnimationLibrary : public UBlueprintFunctionLibrary
     void K2_StartProfilingTimer();
     FVector K2_MakePerlinNoiseVectorAndRemap(float X, float Y, float Z, float RangeOutMinX, float RangeOutMaxX, float RangeOutMinY, float RangeOutMaxY, float RangeOutMinZ, float RangeOutMaxZ);
     float K2_MakePerlinNoiseAndRemap(float Value, float RangeOutMin, float RangeOutMax);
-    FTransform K2_LookAt(const FTransform& CurrentTransform, const FVector& TargetPosition, FVector LookAtVector, bool bUseUpVector, FVector upVector, float ClampConeInDegree);
+    FTransform K2_LookAt(const FTransform& CurrentTransform, const FVector& TargetPosition, FVector LookAtVector, bool bUseUpVector, FVector UpVector, float ClampConeInDegree);
     float K2_EndProfilingTimer(bool bLog, FString LogPrefix);
     float K2_DistanceBetweenTwoSocketsAndMapRange(const class USkeletalMeshComponent* Component, const FName SocketOrBoneNameA, TEnumAsByte<ERelativeTransformSpace> SocketSpaceA, const FName SocketOrBoneNameB, TEnumAsByte<ERelativeTransformSpace> SocketSpaceB, bool bRemapRange, float InRangeMin, float InRangeMax, float OutRangeMin, float OutRangeMax);
     FVector K2_DirectionBetweenSockets(const class USkeletalMeshComponent* Component, const FName SocketOrBoneNameFrom, const FName SocketOrBoneNameTo);

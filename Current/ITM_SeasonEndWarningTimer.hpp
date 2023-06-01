@@ -8,10 +8,22 @@ class UITM_SeasonEndWarningTimer_C : public UUserWidget
     class UVerticalBox* AnyTimeNowBox;
     class UVerticalBox* CountDownBox;
     class UTextBlock* countdownText;
+    class UVerticalBox* NowBox;
+    class UCanvasPanel* RootCanvas;
     class UWidgetSwitcher* StateSwitcher;
+    bool IsMonitoringSeasonEnd;
+    float LastUpdateCheck;
+    bool PendingUpdateCheck;
+    int32 PreviewState;
 
+    void Int2Text(int32 InValue, FText& OutText);
+    void SetPreviewState(int32 Index);
+    void OnCheckForUpdateComplete(bool IsUpdatePending);
     void Refresh();
     void Construct();
+    void Begin Monitoring();
+    void Stop Monitoring();
+    void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_ITM_SeasonEndWarningTimer(int32 EntryPoint);
 };
 

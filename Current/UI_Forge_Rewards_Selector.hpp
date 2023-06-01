@@ -18,7 +18,7 @@ class UUI_Forge_Rewards_Selector_C : public UUserWidget
     void Reset();
     void EndPickReward(class USchematic* InReward);
     void PopRandomReward(const TMap<class UPlayerCharacterID*, class USchematic*>& Rewards, FRandomStream Random, class UPlayerCharacterID*& OutCharacter, class USchematic*& OutReward);
-    void Begin Pick Reward(int32 inLevel, int32 InSeed);
+    void Begin Pick Reward(int32 InLevel, int32 InSeed);
     void Construct();
     void OnClicked(class USchematic* InSchematic);
     void OnIntroStarted();

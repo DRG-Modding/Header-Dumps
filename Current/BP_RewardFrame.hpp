@@ -4,6 +4,7 @@
 class ABP_RewardFrame_C : public AEventRewardFrame
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UMeshCarverComponent* MeshCarver;
     class UTerrainDetectComponent* TerrainDetect3;
     class UTerrainDetectComponent* TerrainDetect2;
     class UTerrainDetectComponent* TerrainDetect1;

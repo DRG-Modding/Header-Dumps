@@ -11,7 +11,7 @@ class ABP_EscortGarage_Beacon_C : public AActor
     class UTimelineComponent* FadeIn;
     float Fade_Opacity_F448C4A14DA9AD497475EFA962EB36DF;
     TEnumAsByte<ETimelineDirection::Type> Fade__Direction_F448C4A14DA9AD497475EFA962EB36DF;
-    class UTimelineComponent* Fade;
+    class UTimelineComponent* fade;
     TArray<class UMaterialInstanceDynamic*> Materials;
     bool FadingOut;
 

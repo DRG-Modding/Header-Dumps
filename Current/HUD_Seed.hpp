@@ -4,7 +4,6 @@
 class UHUD_Seed_C : public UUserWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UImage* Border;
     class UTextBlock* SeedLabel;
     bool IsModded;
 

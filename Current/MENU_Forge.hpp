@@ -70,7 +70,7 @@ class UMENU_Forge_C : public UWindowWidget
     void BndEvt__ButtonSkip_K2Node_ComponentBoundEvent_9_OnClicked__DelegateSignature();
     void BndEvt__MENU_Forge_Forge_Rewards_Selector_K2Node_ComponentBoundEvent_5_OnRewardSelected__DelegateSignature(class USchematic* InReward);
     void FinishMasteryReward();
-    void BndEvt__MENU_Forge_UI_Forge_MasteryBar_K2Node_ComponentBoundEvent_10_OnClaimClicked__DelegateSignature(int32 inLevel, int32 InSeed);
+    void BndEvt__MENU_Forge_UI_Forge_MasteryBar_K2Node_ComponentBoundEvent_10_OnClaimClicked__DelegateSignature(int32 InLevel, int32 InSeed);
     void ExecuteUbergraph_MENU_Forge(int32 EntryPoint);
 };
 

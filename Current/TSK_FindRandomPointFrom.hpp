@@ -9,7 +9,12 @@ class UTSK_FindRandomPointFrom_C : public UBTTask_BlueprintBase
     bool FindAtDistance;
     FBlackboardKeySelector FromLocationKey;
     FBlackboardKeySelector NewLocationKey;
+    float FlatGroundRadius;
+    float maxPathLength;
+    int32 MaxTries;
+    int32 CurrentTries;
 
+    void GetBestFlatGround(FVector Origin, FVector& Array Element);
     FVector GetLocation();
     void snap(bool SnapToCeiling, class UDeepPathfinderMovement* Pathfinder, FVector& Location);
     void ReceiveExecuteAI(class AAIController* OwnerController, class APawn* ControlledPawn);

@@ -40,6 +40,7 @@ class UMenu_Cheats_C : public UWindowWidget
     class UCheat_MiscUpgradesItem_C* Cheat_FourthItem;
     class UCheat_GiveBeerBuff_C* Cheat_GiveBeerBuff;
     class UCheat_God_C* Cheat_God;
+    class UCheat_InfiniteAmmo_C* Cheat_InfiniteAmmo;
     class UCheat_JumpToNextRoom_C* Cheat_JumpToNextRoom;
     class UCheat_KillAll_C* Cheat_KillAll_20;
     class UCheat_LevelScale_C* Cheat_LevelScale;

@@ -20,6 +20,8 @@ class UOptions_Tab_Gameplay_C : public UUserWidget
     class UOptions_CameraShake_C* Options_CameraShake;
     class UOptions_FOV_C* Options_FOV;
     class UOptions_Headbob_C* Options_Headbob;
+    class UOptions_HoldToBreakImmobilization_C* Options_HoldToBreakImmobilization;
+    class UOptions_HoldToFire_C* Options_HoldToFire;
     class UOptions_Language_C* Options_Language;
     class UOptions_LocalizationDebug_C* Options_LocalizationDebug;
     class UOptions_PhotosensitivityMode_C* Options_PhotosensitivityMode;

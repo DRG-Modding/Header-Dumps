@@ -17,10 +17,14 @@ class UWeaponDisplay_ChargeBlaster_Charge_C : public UUserWidget
     class UImage* Image_88;
     FLinearColor ChargeColorOff;
     FLinearColor ChargeColor1;
+    class AItem* Item;
 
     void Construct();
-    void SetChargeValue(float ChargeValue, bool Overheated, bool ready, bool FullCharge);
+    void SetChargeValue(float ChargeValue, bool overHeated, bool ready, bool FullCharge);
     void PreConstruct(bool IsDesignTime);
+    void Init(class AItem* Item);
+    void On UnEquipped();
+    void OnEquipped();
     void ExecuteUbergraph_WeaponDisplay_ChargeBlaster_Charge(int32 EntryPoint);
 };
 

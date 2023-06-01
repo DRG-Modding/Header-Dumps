@@ -49,6 +49,7 @@ class ABP_PlayerController_SpaceRig_C : public ABP_SR_PlayerControllerBase_C
     FBP_PlayerController_SpaceRig_COnCheatRequested OnCheatRequested;
     void OnCheatRequested();
 
+    void ResetCheats();
     class UEscapeMenuWindow* GetEscapeMenu();
     void ModdedSavegameCheck();
     void Change Savegame();
@@ -56,7 +57,7 @@ class ABP_PlayerController_SpaceRig_C : public ABP_SR_PlayerControllerBase_C
     void GetPopupCrafting(class UWindowWidget*& Widget);
     void GetCrafting(class UWindowWidget*& Widget);
     void PreloadAssets();
-    bool HUDVisible();
+    bool hudVisible();
     void ChangeHUDVisible(bool IsHUDVisible, EHUDVisibilityReason reason);
     void SelectLastPlayedCharacter();
     void AddWidget(class UUserWidget*& Widget, int32 ZOrder, ESlateVisibility InVisibility);

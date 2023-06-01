@@ -1,0 +1,94 @@
+#ifndef UE4SS_SDK_UI_JettyBoots_Game_HPP
+#define UE4SS_SDK_UI_JettyBoots_Game_HPP
+
+class UUI_JettyBoots_Game_C : public UUserWidget
+{
+    FPointerToUberGraphFrame UberGraphFrame;
+    class UUI_JettyBoots_Character_C* Character_Sprite;
+    class UCanvasPanel* Game_Canvas;
+    class USizeBox* Game_SizeBox;
+    class UCanvasPanel* Gates_Layer;
+    TArray<class UUI_JettyBoots_Obstacle_C*> Gates;
+    FVector2D DeathPos;
+    FVector2D CharacterPos;
+    bool JetBoostPressed;
+    int32 CanvasHeight;
+    int32 CharacterCenterX;
+    float ForwardSpeed;
+    int32 GateStartDistance;
+    TEnumAsByte<ENUM_JettyBoots_GameState::Type> GameState;
+    float DeltaTime;
+    float VerticalSpeed;
+    float StateTime;
+    FUI_JettyBoots_Game_COnDistanceChanged OnDistanceChanged;
+    void OnDistanceChanged(float InDistance);
+    FUI_JettyBoots_Game_COnProgressChanged OnProgressChanged;
+    void OnProgressChanged(int32 InCurrentGate, int32 InTotalGates);
+    int32 NextGate;
+    class USoundCue* AudioJetBoost;
+    class USoundCue* AudioGatesCleared;
+    class USoundCue* AudioPlayerDied;
+    class USoundCue* AudioCompleted;
+    class USceneComponent* Audio Scene Component;
+    class APlayerCharacter* PlayerCharacter;
+    int32 Seed;
+    FJettyBootsReplay LastReplay;
+    FUI_JettyBoots_Game_COnGameTicked OnGameTicked;
+    void OnGameTicked(int32 InLevelSeed, FVector2D InCharacterPosition, TEnumAsByte<ENUM_JettyBoots_GameState::Type> InGameState);
+    FUI_JettyBoots_Game_COnGameStateChanged OnGameStateChanged;
+    void OnGameStateChanged(TEnumAsByte<ENUM_JettyBoots_GameState::Type> InState, TEnumAsByte<ENUM_JettyBoots_GameState::Type> InPreviousState);
+    FUI_JettyBoots_Game_COnReplayStateChanged OnReplayStateChanged;
+    void OnReplayStateChanged(TEnumAsByte<ENUM_JettyBoots_GameState::Type> InGameState);
+    float UpForce;
+    float Gravity;
+    FUI_JettyBoots_Game_COnGateCleared OnGateCleared;
+    void OnGateCleared();
+    class UAudioComponent* JetBoostAudio;
+    FJettyBootSetting LevelSettings;
+    TSubclassOf<class UUI_JettyBoots_Obstacle_C> EndGateType;
+    FUI_JettyBoots_Game_COnPointsGathered OnPointsGathered;
+    void OnPointsGathered(int32 OutPoints);
+    class UDialogDataAsset* ShoutLevelCompleted;
+    class UDialogDataAsset* ShoutPlayerDied;
+
+    void InSafeZone(bool& OutValue);
+    void UpdateReplaying();
+    void ReceiveReplay(FJettyBootsReplay InReplay);
+    void StopGame();
+    void StartGameSeeded(int32 InSeed);
+    void SetNextGate(int32 InIndex);
+    void GetNextGateIndex(int32& OutIndex);
+    void Shout(class UDialogDataAsset* InShout);
+    void DoAudio(class USoundCue* InSound, class UAudioComponent* InOptionalAudioComponent, class UAudioComponent*& OutAudioComponent);
+    void GetBoostActive(bool& OutBoosting);
+    void SetGameState(TEnumAsByte<ENUM_JettyBoots_GameState::Type> InGameState);
+    void CheckCharacterState();
+    void SetCharacterPos(FVector2D InPos, bool InMoveCamera);
+    void GetStartPos(FVector2D& outPos);
+    void StartGame();
+    void CreateLevel(int32 InSeed);
+    void Tick(FGeometry MyGeometry, float InDeltaTime);
+    void PreConstruct(bool IsDesignTime);
+    void OnActionKey(bool InKeyDown);
+    void UpdateRunning();
+    void UpdatePlayerDied();
+    void UpdateRestarting();
+    void UpdateFinishing();
+    void EnterRunning();
+    void EnterPlayerDied();
+    void EnterFinishing();
+    void FX_PlayerDied();
+    void FX_LevelComplete();
+    void FX_JetBoost();
+    void FX_GateCleared();
+    void ExecuteUbergraph_UI_JettyBoots_Game(int32 EntryPoint);
+    void OnPointsGathered__DelegateSignature(int32 OutPoints);
+    void OnGateCleared__DelegateSignature();
+    void OnReplayStateChanged__DelegateSignature(TEnumAsByte<ENUM_JettyBoots_GameState::Type> InGameState);
+    void OnGameStateChanged__DelegateSignature(TEnumAsByte<ENUM_JettyBoots_GameState::Type> InState, TEnumAsByte<ENUM_JettyBoots_GameState::Type> InPreviousState);
+    void OnGameTicked__DelegateSignature(int32 InLevelSeed, FVector2D InCharacterPosition, TEnumAsByte<ENUM_JettyBoots_GameState::Type> InGameState);
+    void OnProgressChanged__DelegateSignature(int32 InCurrentGate, int32 InTotalGates);
+    void OnDistanceChanged__DelegateSignature(float InDistance);
+};
+
+#endif

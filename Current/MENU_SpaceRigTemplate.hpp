@@ -7,6 +7,7 @@ class UMENU_SpaceRigTemplate_C : public UUserWidget
     class UWidgetAnimation* AnimHideTopBar;
     class UWidgetAnimation* FadeIn;
     class UImage* BackForeground;
+    class UBasic_Popup_YesNoPrompt_C* Basic_Popup_YesNoPrompt;
     class UNamedSlot* BottomCenter;
     class UNamedSlot* BottomLeft;
     class UNamedSlot* ButtonsGoHere;

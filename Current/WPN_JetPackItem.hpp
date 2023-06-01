@@ -18,9 +18,9 @@ class AWPN_JetPackItem_C : public AJetPackItem
     void UserConstructionScript();
     void ThrusterAudioTimeLine__FinishedFunc();
     void ThrusterAudioTimeLine__UpdateFunc();
-    void ReceiveBeginPlay();
-    void OnRep_Active();
     void OnFuelChanged(float Value, float Delta);
+    void OnRep_Active();
+    void ReceiveBeginPlay();
     void ExecuteUbergraph_WPN_JetPackItem(int32 EntryPoint);
 };
 

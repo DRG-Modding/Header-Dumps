@@ -6,12 +6,16 @@ class UITM_WeaponAndPerkInfo_C : public UUserWidget
     FPointerToUberGraphFrame UberGraphFrame;
     class UWidgetAnimation* Enter;
     class UBasic_Window_CutCorner_Gradient_C* Basic_Window_CutCorner_Gradient;
+    class UGridPanel* GridPanel_LoadoutsOuter;
+    class UImage* Image_Randomizer;
     class UITM_PerkInfoBox_C* ITM_PerkInfoBox;
-    class UITM_WeaponInfo_C* ITM_WeaponInfo;
-    class UITM_WeaponInfo_C* ITM_WeaponInfo_C_1;
-    class UITM_WeaponInfo_C* ITM_WeaponInfo_C_2;
-    class UITM_WeaponInfo_C* ITM_WeaponInfo_C_3;
-    class UITM_WeaponInfo_C* ITM_WeaponInfo_C_4;
+    class UITM_WeaponInfo_C* ITM_WeaponInfo_Armor;
+    class UITM_WeaponInfo_C* ITM_WeaponInfo_ClassTool;
+    class UITM_WeaponInfo_C* ITM_WeaponInfo_Grenade;
+    class UITM_WeaponInfo_C* ITM_WeaponInfo_Mining;
+    class UITM_WeaponInfo_C* ITM_WeaponInfo_Prim;
+    class UITM_WeaponInfo_C* ITM_WeaponInfo_Secondary;
+    class UITM_WeaponInfo_C* ITM_WeaponInfo_Traversal;
 
     void Update();
     void PlayEnter();

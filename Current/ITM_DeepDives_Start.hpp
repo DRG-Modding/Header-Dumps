@@ -35,7 +35,7 @@ class UITM_DeepDives_Start_C : public UUserWidget
     void Construct();
     void PreConstruct(bool IsDesignTime);
     void BndEvt__Normal_Launcher_K2Node_ComponentBoundEvent_7_OnRefresh__DelegateSignature(bool success);
-    void OnTimeout();
+    void OnTimeOut();
     void RefreshTimeout(bool success);
     void BndEvt__Hard_Launcher_K2Node_ComponentBoundEvent_8_OnRefresh__DelegateSignature(bool success);
     void BndEvt__ITM_DeepDives_Start_PasswordField_K2Node_ComponentBoundEvent_9_OnTextCommitted__DelegateSignature(FText Text, uint8 CommitMethod);

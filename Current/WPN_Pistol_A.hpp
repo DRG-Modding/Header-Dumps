@@ -8,7 +8,6 @@ class AWPN_Pistol_A_C : public ABasicPistol
     class UFirstPersonStaticMeshComponent* FP_Animation_Mag;
     class UFirstPersonWidgetComponent* FirstPersonWidget;
     class UFirstPersonStaticMeshComponent* FirstPersonStaticMesh;
-    class UDamageComponent* Damage;
     class UFirstPersonStaticMeshComponent* FP_Mag;
     class UStaticMeshComponent* TP_Mag;
     class UPointLightComponent* MuzzlePointLight;

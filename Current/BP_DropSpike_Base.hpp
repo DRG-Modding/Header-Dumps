@@ -45,6 +45,7 @@ class ABP_DropSpike_Base_C : public AActor
     class USoundBase* SpikeBreakOffSound;
     class USoundBase* ImpactSound;
     bool CheckForGround;
+    float WaitBeforeInit;
 
     void StartChainReaction();
     void OnRep_DistanceToFloor();

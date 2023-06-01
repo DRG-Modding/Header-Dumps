@@ -8,7 +8,7 @@ class UWeaponDisplay_Overheat_C : public UUserWidget
     class UTextBlock* TextBlock_HeatValue;
     class UTextBlock* TextBlock_Status;
 
-    void SetHeatValue(float HeatPercentage, bool Overheated);
+    void SetHeatValue(float HeatPercentage, bool overHeated);
     void Construct();
     void ExecuteUbergraph_WeaponDisplay_Overheat(int32 EntryPoint);
 };

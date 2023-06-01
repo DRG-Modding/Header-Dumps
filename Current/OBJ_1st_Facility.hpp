@@ -14,7 +14,7 @@ class UOBJ_1st_Facility_C : public UFacilityObjective
     class UTexture2D* GetObjectiveIcon();
     void ReceiveBeginPlay();
     void OnCoreDeposited();
-    void Receive_AddEnemies(class AProceduralSetup* setup);
+    void Receive_AddEnemies(class AProceduralSetup* Setup);
     void OBJ_Updated(class UObjective* Objective);
     void ExecuteUbergraph_OBJ_1st_Facility(int32 EntryPoint);
 };

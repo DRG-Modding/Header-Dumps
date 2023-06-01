@@ -24,12 +24,12 @@ class UUI_Forge_MasteryBar_C : public UUserWidget
     FUI_Forge_MasteryBar_COnCountingFinished OnCountingFinished;
     void OnCountingFinished(uint8 Reward);
     FUI_Forge_MasteryBar_COnClaimClicked OnClaimClicked;
-    void OnClaimClicked(int32 inLevel, int32 InSeed);
+    void OnClaimClicked(int32 InLevel, int32 InSeed);
     bool ClaimButtonEnabled;
     bool MouseHovering;
 
     void SetClaimButtonEnabled(bool InEnabled);
-    void SetRewardFromLevel(int32 inLevel);
+    void SetRewardFromLevel(int32 InLevel);
     void StartCounting(int32 InStartLevel, float InStartXP);
     void SetLerpProgress(float Value);
     void SetFromSaveGame(bool animate);
@@ -44,7 +44,7 @@ class UUI_Forge_MasteryBar_C : public UUserWidget
     void OnMouseEnter(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
     void OnMouseLeave(const FPointerEvent& MouseEvent);
     void ExecuteUbergraph_UI_Forge_MasteryBar(int32 EntryPoint);
-    void OnClaimClicked__DelegateSignature(int32 inLevel, int32 InSeed);
+    void OnClaimClicked__DelegateSignature(int32 InLevel, int32 InSeed);
     void OnCountingFinished__DelegateSignature(uint8 Reward);
 };
 

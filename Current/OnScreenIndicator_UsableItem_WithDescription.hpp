@@ -4,7 +4,7 @@
 class UOnScreenIndicator_UsableItem_WithDescription_C : public UFSDUserWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UWidgetAnimation* Fade;
+    class UWidgetAnimation* fade;
     class UVerticalBox* holder;
     class UUI_AdvancedLabel_C* KeyLabel;
     class UProgressBar* Use_Progress;

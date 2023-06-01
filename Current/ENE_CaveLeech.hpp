@@ -28,6 +28,7 @@ class AENE_CaveLeech_C : public ACaveLeech
     TEnumAsByte<ETimelineDirection::Type> Emissive_off__Direction_E8DBA0094826FB48DB3D0A9B7129C074;
     class UTimelineComponent* Emissive_off;
     class UMaterialInstance* Emission ;
+    TArray<class UMaterialInterface*> LeechMats;
 
     void CreateDynamicMaterials();
     void PlayAudioHead(class USoundBase* NewSound);
@@ -48,6 +49,8 @@ class AENE_CaveLeech_C : public ACaveLeech
     void OnDeath();
     void OnFrozen(class AActor* Source);
     void OnUnFrozen();
+    void StopEmissiveOn();
+    void StopEmissiveOff();
     void ExecuteUbergraph_ENE_CaveLeech(int32 EntryPoint);
 };
 

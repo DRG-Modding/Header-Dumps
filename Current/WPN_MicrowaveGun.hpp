@@ -21,7 +21,7 @@ class AWPN_MicrowaveGun_C : public AMicrowaveWeapon
     void UserConstructionScript();
     void ReceiveBeginPlay();
     void AddedToInventory(class APlayerCharacter* ItemOwner);
-    void OnTemperatureChanged(float Temperature, bool Overheated);
+    void OnTemperatureChanged(float Temperature, bool overHeated);
     void CustomEvent1(const class UItemUpgrade* Event);
     void Receive_IsFiringChanged(bool NewValue);
     void HeatUpdated(float SmoothedTemperature);

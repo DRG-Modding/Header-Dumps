@@ -74,11 +74,11 @@ class UHackingTool_Chip_C : public UHackingToolWidget
     void Finished_303E4D8F4F741AD74469EFA59D1AD57C();
     void Finished_303E4D8F4F741AD74469EFA5F9ACB30F();
     void PreConstruct(bool IsDesignTime);
-    void ReceiveClick();
     void Shake(class UWidgetAnimation* InContinueAnimation, int32 NumLoopsToPlay, float PlaybackSpeed);
     void ReceiveHackingStarted();
     void BndEvt__Interface_Progress_K2Node_ComponentBoundEvent_0_OnNextStage__DelegateSignature(int32 InNewStage, int32 InTotalStages);
     void ReceiveHackingToolUnequipped();
+    void ReceiveActionClick();
     void ExecuteUbergraph_HackingTool_Chip(int32 EntryPoint);
 };
 

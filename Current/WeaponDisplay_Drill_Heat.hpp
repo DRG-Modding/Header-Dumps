@@ -9,9 +9,13 @@ class UWeaponDisplay_Drill_Heat_C : public UUserWidget
     class UImage* Image_131;
     class UTextBlock* TextBlock_440;
     class UTextBlock* TextBlock_HeatValue;
+    class AItem* Item;
 
-    void SetHeatValue(float HeatPercentage, bool Overheated);
+    void SetHeatValue(float HeatPercentage, bool overHeated);
     void Construct();
+    void Init(class AItem* Item);
+    void On UnEquipped();
+    void OnEquipped();
     void ExecuteUbergraph_WeaponDisplay_Drill_Heat(int32 EntryPoint);
 };
 

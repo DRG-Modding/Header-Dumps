@@ -24,7 +24,7 @@ class UTOOLTIP_Season_Reward_C : public UUserWidget
     void SetData(class UMaterialInstanceDynamic* DynMat, class UReward* Reward, bool ShowCost, int32 Cost);
     void SetCount(int32 Count);
     void SetDataFromReward(class UReward* Reward, bool ShowCost, int32 Cost);
-    void setup(bool ShowCost, int32 Cost);
+    void Setup(bool ShowCost, int32 Cost);
     void ExecuteUbergraph_TOOLTIP_Season_Reward(int32 EntryPoint);
 };
 

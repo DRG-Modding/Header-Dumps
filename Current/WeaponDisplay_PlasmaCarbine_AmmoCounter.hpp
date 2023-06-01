@@ -28,7 +28,7 @@ class UWeaponDisplay_PlasmaCarbine_AmmoCounter_C : public UWeaponDisplay_Base_Am
     void Total Ammo left changed(int32 Amount);
     void SetClipCount(int32 Value);
     void PreConstruct(bool IsDesignTime);
-    void SetHeatValue(float HeatPercentage, bool Overheated, float ThermalFeedbackLevel);
+    void SetHeatValue(float HeatPercentage, bool overHeated, float ThermalFeedbackLevel);
     void ExecuteUbergraph_WeaponDisplay_PlasmaCarbine_AmmoCounter(int32 EntryPoint);
 };
 

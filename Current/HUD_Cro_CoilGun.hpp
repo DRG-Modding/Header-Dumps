@@ -10,8 +10,8 @@ class UHUD_Cro_CoilGun_C : public UCrosshairWidget
     class UImage* CH_FullLeft;
     class UImage* CH_FullRight_1;
     class UImage* CH_FullTop;
-    class UImage* DmgindIcatorLeft;
-    class UImage* DmgindIcatorRight;
+    class UImage* DmgIndicatorLeft;
+    class UImage* DmgIndicatorRight;
     class UImage* Dot;
     class APlayerCharacter* Character;
     class UImage* CH Full Inner;

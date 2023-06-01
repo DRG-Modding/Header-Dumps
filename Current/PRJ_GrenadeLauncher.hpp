@@ -15,7 +15,7 @@ class APRJ_GrenadeLauncher_C : public AProjectile
     float ForcePush;
     bool Lit;
     float Speed;
-    FRuntimeFloatCurve KnockbackCurve;
+    FRuntimeFloatCurve KnockBackCurve;
     bool IsHyper;
     FVector HitWorldLocation;
     FName HitBoneName;

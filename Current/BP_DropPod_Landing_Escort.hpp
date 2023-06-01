@@ -8,6 +8,7 @@ class ABP_DropPod_Landing_Escort_C : public ABP_DropPod_Landing_C
 
     void OnFirstPlayerLeftPod();
     void BypassGarageSpawnDelay();
+    void ReceiveDestroyed();
     void ExecuteUbergraph_BP_DropPod_Landing_Escort(int32 EntryPoint);
 };
 

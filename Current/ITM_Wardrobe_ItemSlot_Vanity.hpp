@@ -11,6 +11,7 @@ class UITM_Wardrobe_ItemSlot_Vanity_C : public UITM_Wardrobe_ItemSlot_Base_C
     class UTexture2D* DefaultItemIcon;
     FText DefaultItemName;
 
+    void GetVanityItemsForWidget(TArray<class UVanityItem*>& Items);
     void ReceiveGetNumberOfItems(int32& Num);
     void ReceiveItemDLC(int32 Index, class UDLCBase*& FromDLC);
     FText GetItemName(class UVanityItem* InVanityItem);

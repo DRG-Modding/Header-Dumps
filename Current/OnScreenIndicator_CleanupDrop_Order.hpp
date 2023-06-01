@@ -9,7 +9,7 @@ class UOnScreenIndicator_CleanupDrop_Order_C : public UUserWidget
     class UTextBlock* Text_Cost;
     class UTextBlock* Text_Name;
 
-    void SetDetails(FText Name, EPlaceableObstructionType Obstruction, float timeLeft);
+    void SetDetails(FText Name, EPlaceableObstructionType Obstruction, float TimeLeft);
     void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_OnScreenIndicator_CleanupDrop_Order(int32 EntryPoint);
 };

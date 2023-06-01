@@ -15,7 +15,6 @@ class ABP_Plague_Spore_Tower_C : public APlagueInfectionNode
     class UStaticMeshComponent* StaticMesh;
     class ULevelGenerationCarverComponent* LevelGenerationCarverClearTower;
     class USceneComponent* DeathEffectLocation;
-    class UCapsuleComponent* ColliderCapsule;
     class UHealthDamageTracker* HealthDamageTracker;
     class UTerrainPlacementComponent* terrainPlacement;
     class USphereComponent* PlayerTrigger_STE;
@@ -46,6 +45,8 @@ class ABP_Plague_Spore_Tower_C : public APlagueInfectionNode
     class UHUD_ContagionSpike_Health_C* HealthWidget;
     class UEnemyGroupDescriptor* EnemyDescriptor;
     int32 TerrainDetectsRemoved;
+    TArray<class UStaticMesh*> TowerMeshArray;
+    int32 WavesLeft;
 
     void Set Health Bar Visible(bool InShowHealth);
     void ArePlayersInRange(float Distance, bool& InRange);

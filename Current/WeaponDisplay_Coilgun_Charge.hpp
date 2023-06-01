@@ -35,7 +35,7 @@ class UWeaponDisplay_Coilgun_Charge_C : public UWeaponDisplay_Base_AmmoCount_C
     void SequenceEvent__ENTRYPOINTWeaponDisplay_Coilgun_Charge_1();
     void SequenceEvent__ENTRYPOINTWeaponDisplay_Coilgun_Charge_0();
     void AmmoCountDownTick();
-    void SetChargeValue(float ChargeValue, bool Overheated, bool ready, bool FullCharge);
+    void SetChargeValue(float ChargeValue, bool overHeated, bool ready, bool FullCharge);
     void Construct();
     void PreConstruct(bool IsDesignTime);
     void Total Ammo left changed(int32 Amount);

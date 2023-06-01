@@ -24,11 +24,10 @@ class UMenu_Seasons_C : public UWindowWidget
     class UVerticalBox* HBox_Cheats;
     class UImage* Icon_Token;
     class UImage* Image_BlackgroundDim;
-    class UImage* Image_SeasonTitle;
+    class UITM_SeasonLogo_C* ITM_SeasonLogo;
     class UITM_SeasonMenu_BG_C* ITM_SeasonMenu_BG;
     class UUI_AdvancedLabel_C* OptionIconNext;
     class UUI_AdvancedLabel_C* OptionIconPrev;
-    class UITM_SeasonEndWarningTimer_C* SeasonEndWarning;
     class UTextBlock* Text_NumberOfTokens;
     class UUI_PlayerSpeaking_List_C* UI_PlayerSpeaking_List;
     class UImage* UnlockedIcon;

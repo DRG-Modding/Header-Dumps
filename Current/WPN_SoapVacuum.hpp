@@ -15,6 +15,7 @@ class AWPN_SoapVacuum_C : public ASoapVacuumItem
     FVector OriginalRelative;
     bool ObjectiveIsComplete;
     float EffectAlpha;
+    class AActor* hologramRef;
 
     class USceneComponent* GetVacuumSource();
     void ReceiveBeginPlay();

@@ -4,12 +4,12 @@
 class APRJ_Foam_C : public AProjectile
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UDamageComponent* Damage;
     class UNiagaraComponent* Niagara;
-    class UStaticMeshComponent* StaticMesh;
+    class UDamageComponent* Damage;
     TSubclassOf<class AActor> puddle;
+    TSubclassOf<class AActor> Puddle_WalkingPlagueheart;
 
-    void ReceiveBeginPlay();
+    class UInfectionPointCleaningComponent* GetCleaningPoints(FVector fromLocation);
     void OnImpacted(bool PredictedImpact, const FHitResult& HitResult);
     void ExecuteUbergraph_PRJ_Foam(int32 EntryPoint);
 };

@@ -5,7 +5,6 @@ class ABP_GuntowerActivationPlatfrom_C : public AGuntowerActivationPlatform
 {
     FPointerToUberGraphFrame UberGraphFrame;
     class UPathfinderCollisionComponent* PathfinderCollision;
-    class UStaticMeshComponent* Cylinder;
     class UAudioComponent* ProgressingSound;
     class USimpleObjectInfoComponent* SimpleObjectInfo;
     class UOutlineComponent* outline;

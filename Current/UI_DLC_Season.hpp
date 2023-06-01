@@ -11,7 +11,6 @@ class UUI_DLC_Season_C : public UUserWidget
     class UCanvasPanel* CanvasPanel_Outer;
     class UImage* DLCImage;
     class UImage* Shadow;
-    bool NewVar_0;
     class UGameDLC* dlc;
 
     void OpenDLCInSteamBrowser();

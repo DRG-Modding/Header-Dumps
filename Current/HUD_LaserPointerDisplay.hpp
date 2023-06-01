@@ -25,18 +25,21 @@ class UHUD_LaserPointerDisplay_C : public UUserWidget
     FHUD_LaserPointerDisplay_CScanComplete ScanComplete;
     void ScanComplete();
     bool IsScanVisible;
+    FTimerHandle Handle_Show;
 
     void SetIconAndTint(class UTexture2D* Texture, FLinearColor Tint);
     void UpdateCommands();
-    void Construct();
-    void OnEquipped();
-    void Update Display(FHitResult Hit, float Distance, FLaserPointerData Data);
+    void Finished_2FB3B1024A257294FCE363AC76E7AAF6();
     void Point Of Interest(class UTexture2D* Texture, FLinearColor Tint);
     void PreConstruct(bool IsDesignTime);
     void OnBoscoChanged(class ABosco* Bosco);
     void StartScan();
     void StopScan();
     void OnUnequipped();
+    void Update Display(FHitResult Hit, float Distance, FLaserPointerData Data);
+    void OnEquipped();
+    void Construct();
+    void StartShow();
     void ExecuteUbergraph_HUD_LaserPointerDisplay(int32 EntryPoint);
     void ScanComplete__DelegateSignature();
 };

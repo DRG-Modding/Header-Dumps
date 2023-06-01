@@ -53,7 +53,7 @@ class UITM_MisSel_MissionMapIcon_C : public UUserWidget
     void PreConstruct(bool IsDesignTime);
     void BndEvt__BTN_HostPublic_K2Node_ComponentBoundEvent_48_OnClicked__DelegateSignature();
     void OnTeamMemberCampaignMissionChangedEvent();
-    void ShowChallengeIcon(bool inHighlight, class UTexture2D* Icon, FLinearColor Color);
+    void ShowChallengeIcon(bool InHighlight, class UTexture2D* Icon, FLinearColor Color);
     void ExecuteUbergraph_ITM_MisSel_MissionMapIcon(int32 EntryPoint);
 };
 

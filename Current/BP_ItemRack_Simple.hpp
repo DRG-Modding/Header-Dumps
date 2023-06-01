@@ -4,11 +4,10 @@
 class ABP_ItemRack_Simple_C : public AActor
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class USkeletalMeshComponent* SkeletalMesh;
+    class UStaticMeshComponent* StaticMesh;
     class UInstantUsable* InstantUsable;
     class UBoxComponent* BoxCollider;
     class UCapsuleComponent* Capsule;
-    class USceneComponent* Scene;
     class USceneComponent* DefaultSceneRoot;
     TSoftClassPtr<UObject> itemClass;
 

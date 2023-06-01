@@ -1,0 +1,8 @@
+#ifndef UE4SS_SDK_STE_Proximity_Infection_WalkingPlagueHeart_HPP
+#define UE4SS_SDK_STE_Proximity_Infection_WalkingPlagueHeart_HPP
+
+class USTE_Proximity_Infection_WalkingPlagueHeart_C : public UStatusEffect
+{
+};
+
+#endif

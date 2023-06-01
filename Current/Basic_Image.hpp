@@ -27,6 +27,7 @@ class UBasic_Image_C : public UUserWidget
     void FadeIn(float InDuration);
     void GetBrushSize(FVector2D& Brush Image Size);
     void SetBrushSize(FVector2D DesiredSize);
+    void SetBrushFromSoftTexture(TSoftObjectPtr<UTexture2D> Texture, bool bMatchSize);
     class UMaterialInstanceDynamic* GetDynamicMaterial();
     void SetTintAndOpacity(TEnumAsByte<ENUM_MenuColors::Type> InTint, float InTintOpacity);
     void SetTintOpacity(float InOpacity);

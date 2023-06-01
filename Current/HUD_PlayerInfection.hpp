@@ -6,7 +6,7 @@ class UHUD_PlayerInfection_C : public UFSDUserWidget
     FPointerToUberGraphFrame UberGraphFrame;
     class UWidgetAnimation* Appear;
     class UWidgetAnimation* Pulse;
-    class UWidgetAnimation* Fade;
+    class UWidgetAnimation* fade;
     class UWidgetAnimation* Warning;
     class UImage* BG;
     class UImage* Glow;

@@ -8,7 +8,7 @@ class UITM_ObjectiveBox_InMission_C : public UUserWidget
     class UHUD_DefaultLabel_C* CounterText;
     class UHUD_DefaultLabel_C* ObjectiveText;
     class UObjective* Objective;
-    bool primary;
+    bool Primary;
 
     void UpdateText(const FText& InText, FText InCounterText, class UTexture2D* InCounterIcon, bool Completed);
     void Set Objective(class UObjective* Objective, bool IsPrimary);

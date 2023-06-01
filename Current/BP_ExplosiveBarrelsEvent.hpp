@@ -4,29 +4,14 @@
 class ABP_ExplosiveBarrelsEvent_C : public AExplosiveBarrelEvent
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UMeshCarverComponent* MeshCarver;
     class UPathfinderCollisionComponent* PathfinderCollision1;
     class UPathfinderCollisionComponent* PathfinderCollision;
     class UCapsuleComponent* Capsule1;
-    class USceneComponent* Beam4;
     class UChildActorComponent* Starter8;
     class UChildActorComponent* Starter7;
     class UChildActorComponent* Starter1;
     class UChildActorComponent* Starter2;
-    class USceneComponent* Beam3;
-    class USceneComponent* Beam2;
-    class USceneComponent* Beam1;
-    class UStaticMeshComponent* Beam05;
-    class UStaticMeshComponent* Beam01_Detail010;
-    class UStaticMeshComponent* Beam01_Detail09;
-    class UStaticMeshComponent* Beam03;
-    class UStaticMeshComponent* Beam01_Detail08;
-    class UStaticMeshComponent* Beam01_Detail07;
-    class UStaticMeshComponent* Beam02;
-    class UStaticMeshComponent* Beam01_Detail06;
-    class UStaticMeshComponent* Beam01_Detail05;
-    class UStaticMeshComponent* Beam01;
-    class UStaticMeshComponent* Beam01_Detail04;
-    class UStaticMeshComponent* Beam01_Detail03;
     class UStaticMeshComponent* StaticMesh;
     class ULevelGenerationCarverComponent* LevelGenerationCarver;
     class URoomCarverComponent* RoomCarver;

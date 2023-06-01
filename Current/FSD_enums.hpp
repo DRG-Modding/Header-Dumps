@@ -62,6 +62,15 @@ enum class EArmorDamageType {
     EArmorDamageType_MAX = 3,
 };
 
+enum class EArmorMeshType {
+    None = 0,
+    Default = 1,
+    DefaultBeardCompatible = 2,
+    Sleeveless = 4,
+    SleevelessBeardCompatible = 8,
+    EArmorMeshType_MAX = 9,
+};
+
 enum class EArmorSetArms {
     Invalid = 0,
     LeftShoulder = 1,
@@ -432,6 +441,12 @@ enum class EChatSenderType {
     Streamer = 3,
     Modder = 4,
     EChatSenderType_MAX = 5,
+};
+
+enum ECleanedStatus {
+    EInfected = 0,
+    EVacuumed = 1,
+    ECleanedStatus_MAX = 2,
 };
 
 enum class ECoilgunTraceEffect {
@@ -876,9 +891,9 @@ enum class EDroneActions {
 
 enum class EDroneState {
     EFollow = 0,
-    ECombat = 1,
-    EMining = 2,
-    EReviving = 3,
+    EMining = 1,
+    ELight = 2,
+    EMax = 3,
     EDroneState_MAX = 4,
 };
 
@@ -964,13 +979,6 @@ enum class EEnemyHealthScaling {
     ExtraLargeEnemyD = 6,
     NoScaling = 3,
     EEnemyHealthScaling_MAX = 7,
-};
-
-enum class EEnemyPlacementMask {
-    Ground = 0,
-    Spawner = 1,
-    Cieling = 2,
-    EEnemyPlacementMask_MAX = 3,
 };
 
 enum class EEnemySignificance {
@@ -1265,7 +1273,8 @@ enum class EHUDVisibilityGroups {
     Objectives = 12,
     TeamDisplay = 13,
     SentryGunDisplay = 14,
-    EHUDVisibilityGroups_MAX = 15,
+    VersionNumber = 15,
+    EHUDVisibilityGroups_MAX = 16,
 };
 
 enum class EHUDVisibilityMode {
@@ -1590,6 +1599,12 @@ enum class EMaggotAnimationState {
     EMaggotAnimationState_MAX = 2,
 };
 
+enum EMeshAttachType {
+    ECharacterMesh = 0,
+    ECamera = 1,
+    EMeshAttachType_MAX = 2,
+};
+
 enum class EMicroMissileLauncherFireMode {
     Normal = 0,
     Charge = 1,
@@ -1723,7 +1738,8 @@ enum EMovementCustomMode {
     MOVE_Custom_Track = 1,
     MOVE_Custom_CharacterStateControlled = 2,
     MOVE_Custom_TraversalTool = 3,
-    MOVE_Custom_MAX = 4,
+    MOVE_Custom_JetBoots = 4,
+    MOVE_Custom_MAX = 5,
 };
 
 enum class EMultiHitscanUpgradeType {
@@ -2498,6 +2514,12 @@ enum class EVolumeType {
     VoiceChat = 4,
     MissionControl = 5,
     EVolumeType_MAX = 6,
+};
+
+enum class EWeakpointGlowMode {
+    Set = 0,
+    Additive = 1,
+    EWeakpointGlowMode_MAX = 2,
 };
 
 enum class EWoodLouseState {

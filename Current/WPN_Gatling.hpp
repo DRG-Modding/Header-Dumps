@@ -23,7 +23,7 @@ class AWPN_Gatling_C : public AGatlingGun
     void RecieveUnequipped();
     void All_SpawnHeatBurst();
     void TriggerCriticalOverheat();
-    void OnTemperatureChanged(float Temperature, bool Overheated);
+    void OnTemperatureChanged(float Temperature, bool overHeated);
     void ReceiveBeginPlay();
     void OnSkinChanged(class USkinEffect* Skin);
     void BndEvt__WeaponImpact_K2Node_ComponentBoundEvent_1_HightAccelerationSignature__DelegateSignature();

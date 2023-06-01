@@ -86,6 +86,7 @@ class ABP_PlayerCharacter_C : public APlayerCharacter
     FTimerHandle SelfieMoveRightTimer;
     FTimerHandle SelfieMoveUpTimer;
 
+    void UpdateWeaponLicenseStat();
     class UUsableComponent* GetBeastMasterUsableComponent();
     void GotoNextSelfiePoint(bool ForceExitSelfieMode);
     void SetActiveSelfiePoint(class UBP_SelfiePoint_C* InSelfiePoint);
@@ -135,7 +136,6 @@ class ABP_PlayerCharacter_C : public APlayerCharacter
     void PrepareForEndScreen();
     void BndEvt__HealthComponent_K2Node_ComponentBoundEvent_0_HitSig__DelegateSignature(float Damage, const FDamageData& DamageData, bool anyHealthLost);
     void BndEvt__HealthComponent_K2Node_ComponentBoundEvent_1_HitSig__DelegateSignature(float Damage, const FDamageData& DamageData, bool anyHealthLost);
-    void Activate Temporary buff on server(class UTemporaryBuff* buff, class APlayerCharacter* Player);
     void Receive_ShowFieldMedicInstantReviveEffects();
     void InpAxisKeyEvt_MouseX_K2Node_InputAxisKeyEvent_0(float AxisValue);
     void InpAxisKeyEvt_MouseY_K2Node_InputAxisKeyEvent_1(float AxisValue);
@@ -147,6 +147,7 @@ class ABP_PlayerCharacter_C : public APlayerCharacter
     void TickSelfieMoveRight();
     void ReceivePossessed(class AController* NewController);
     void Cheat_Medical();
+    void Update MissionStats();
     void ExecuteUbergraph_BP_PlayerCharacter(int32 EntryPoint);
 };
 

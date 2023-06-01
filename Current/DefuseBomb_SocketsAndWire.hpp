@@ -11,7 +11,7 @@ class UDefuseBomb_SocketsAndWire_C : public UUserWidget
     class UBasic_Image_C* CutTarget;
     class UDefuseBomb_Socket_C* EndSocket;
     class UDefuseBomb_Socket_C* StartSocket;
-    class UDefuseBomb_Wire_C* Wire;
+    class UDefuseBomb_Wire_C* wire;
     FVector2D Start Pos;
     FVector2D StartTangent;
     FVector2D EndPos;

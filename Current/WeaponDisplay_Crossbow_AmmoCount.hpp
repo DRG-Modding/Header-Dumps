@@ -16,6 +16,9 @@ class UWeaponDisplay_Crossbow_AmmoCount_C : public UUserWidget
     void SetItem(class AItem* InItem);
     void OnAmountChanged(int32 Amount);
     void OnArrowChanged(bool InDefaultArrow);
+    void OnItemSet();
+    void OnCrossbowEquipped();
+    void OnCrossbowUnEquipped();
     void ExecuteUbergraph_WeaponDisplay_Crossbow_AmmoCount(int32 EntryPoint);
 };
 

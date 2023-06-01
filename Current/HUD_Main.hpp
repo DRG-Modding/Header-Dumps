@@ -38,6 +38,7 @@ class UHUD_Main_C : public UFSDMainHUDWidget
     class UHUD_Frozen_C* HUD_Frozen;
     class UHUD_Itembar_C* HUD_Itembar;
     class UHUD_ItemWheel_C* HUD_ItemWheel;
+    class UHUD_JetBootsFuel_Vertical_C* HUD_JetBootsFuel_Vertical;
     class UHUD_Milestone_Manager_C* HUD_KPI_Manager;
     class UHUD_MapTool_C* HUD_MapTool_208;
     class UHUD_MinersManualNotification_Manager_C* HUD_MinersManualNotification_Manager;
@@ -51,6 +52,7 @@ class UHUD_Main_C : public UFSDMainHUDWidget
     class UHUD_Radar2_C* HUD_Radar2;
     class UHUD_Resources_Player_C* HUD_Resources_Player;
     class UHUD_Resources_Team_C* HUD_Resources_Team;
+    class UHUD_Seed_C* HUD_Seed_1;
     class UHUD_SentryGunManager_C* HUD_SentryGunManager;
     class UHUD_TeamDisplay_Small_C* HUD_TeamDisplay_Small;
     class UHUD_ThrowCarriable_C* HUD_ThrowCarriable;
@@ -58,6 +60,7 @@ class UHUD_Main_C : public UFSDMainHUDWidget
     class UHUD_Warning_Manager_C* HUD_Warning_Manager;
     class URetainerBox* Retainer_BottomRight;
     class URetainerBox* Retainer_Chat;
+    class URetainerBox* Retainer_Seed;
     class URetainerBox* Retainer_TeamDisplay;
     class URetainerBox* Retainer_UpperLeft;
     class URetainerBox* Retainer_UpperRight;
@@ -77,13 +80,15 @@ class UHUD_Main_C : public UFSDMainHUDWidget
     class UVerticalBox* VBox_Events_Left;
     class UVerticalBox* VerticalBox_EventsAndSpeak;
     class APlayerCharacter* Character;
-    bool HUDVisible;
+    bool hudVisible;
     float FPS;
     class UObjective* ObjDummy;
     class UHUDVisibilityGroup* VG_Grenades;
     class UHUDVisibilityGroup* VG_Flares;
     class UHUDVisibilityGroup* VG_Flashlight;
+    class UHUDVisibilityGroup* VG_VersionNumber;
 
+    FText Get_TEMPtestSeedText_Text_0();
     void ToggleHUD(bool IsVisible, bool Instant);
     void Construct();
     void Tick(FGeometry MyGeometry, float InDeltaTime);
@@ -95,6 +100,7 @@ class UHUD_Main_C : public UFSDMainHUDWidget
     void Setup HUD Elements();
     void PushEvent(class UWidget* eventWidget, bool Left);
     void PopEvent(class UWidget* eventWidget, bool Left);
+    void BndEvt__HUD_Main_VG_VersionNumber_K2Node_ComponentBoundEvent_0_VisibilityDelegate__DelegateSignature(class UHUDVisibilityGroup* Group, bool IsVisible);
     void BndEvt__VG_Flashlight_K2Node_ComponentBoundEvent_2_VisibilityDelegate__DelegateSignature(class UHUDVisibilityGroup* Group, bool IsVisible);
     void BndEvt__VG_Flares_K2Node_ComponentBoundEvent_1_VisibilityDelegate__DelegateSignature(class UHUDVisibilityGroup* Group, bool IsVisible);
     void BndEvt__VG_Grenades_K2Node_ComponentBoundEvent_0_VisibilityDelegate__DelegateSignature(class UHUDVisibilityGroup* Group, bool IsVisible);

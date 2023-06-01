@@ -12,7 +12,8 @@ class U_MENU_Wardrobe_C : public UWindowWidget
     class UMENU_SpaceRigTemplate_C* MENU_SpaceRig;
     class UButton* ShuffleButton;
     class UUI_RandomizeIcon_C* ShuffleIcon;
-    class UITM_Wardrobe_ItemSlot_Vanity_C* Slot_Armor;
+    class UButton* SleevelessButton_1;
+    class UITM_Wardrobe_ItemSlot_ArmorVanity_C* Slot_Armor;
     class UITM_Wardrobe_ItemSlot_Vanity_C* Slot_ArmorColor;
     class UITM_Wardrobe_ItemSlot_Vanity_C* Slot_Beard;
     class UITM_Wardrobe_ItemSlot_Vanity_C* Slot_BeardColor;
@@ -27,6 +28,7 @@ class U_MENU_Wardrobe_C : public UWindowWidget
     class UPlayerCharacterID* PlayerCharacter;
     TArray<class UITM_Wardrobe_ItemSlot_Base_C*> ItemSlots;
     float FadeInAnimTime;
+    bool PrevUseRandom;
 
     void EquipRandomItems();
     void PlayIntroAnimations();
@@ -35,7 +37,7 @@ class U_MENU_Wardrobe_C : public UWindowWidget
     void RefreshSlots();
     void ReleaseRenderTargets();
     FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
-    void GetCharacter(class APlayerCharacter*& Character);
+    void GetCharacter(bool IgnorePreviewCharacter, class APlayerCharacter*& Character);
     void BndEvt__MENU_SpaceRig_K2Node_ComponentBoundEvent_0_OnClosedClicked__DelegateSignature();
     void ReceiveCloseCommand();
     void PreConstruct(bool IsDesignTime);

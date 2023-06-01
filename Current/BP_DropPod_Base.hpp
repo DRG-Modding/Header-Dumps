@@ -46,7 +46,6 @@ class ABP_DropPod_Base_C : public ADropPod
     class USkeletalMeshComponent* OreBox_Left;
     class USkeletalMeshComponent* OreBox_Right;
     class USkeletalMeshComponent* OreBox_Back;
-    class UChildActorComponent* BP_TruckerBalls1;
     class UChildActorComponent* BP_TruckerBalls;
     class UStaticMeshComponent* StaticMesh16;
     class UStaticMeshComponent* StaticMesh15;

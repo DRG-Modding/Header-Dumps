@@ -10,13 +10,13 @@ class UUI_BlackOverlay_C : public UFSDLevelLoadingPersistentWidget
     class UImage* ScaledImage;
     class UImage* Shadow;
     class UOverlay* TextOverlay;
-    float Fade;
+    float fade;
     bool ToSpaceRig;
     class UTexture* LoadingImage;
 
     void SetProgress(float InFade, bool InToSpacerig, class UTexture* InLoadingImage);
     void PreConstruct(bool IsDesignTime);
-    void SetFadeProgress(float Fade, bool ToSpaceRig, class UTexture* LoadingImage);
+    void SetFadeProgress(float fade, bool ToSpaceRig, class UTexture* LoadingImage);
     void ExecuteUbergraph_UI_BlackOverlay(int32 EntryPoint);
 };
 

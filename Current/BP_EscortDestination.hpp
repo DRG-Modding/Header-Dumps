@@ -146,6 +146,8 @@ class ABP_EscortDestination_C : public AEscortDestination
     int32 RandomPhase2;
     int32 RandomPhase4;
     int32 NumberOfPhaseOptions;
+    TArray<class APawn*> SpawnedFlyingRocks;
+    int32 RockStartStage;
 
     void Update Shell Break Sub Stage();
     void OnRep_OuterShellMiniBreakStage();
@@ -157,7 +159,7 @@ class ABP_EscortDestination_C : public AEscortDestination
     void DrillingComplete();
     void CountdownTimeChanged(float Progress);
     void NewStage();
-    void SpawnRocks(int32 SpawnCountPerGroup, int32 NumGroups);
+    void SpawnRocks(int32 SpawnCountPerGroup, int32 NumGroups, int32 StageAtStart);
     void GrowLaserClaws();
     void DoBrokenShellEffects();
     void OnObjectiveUpdated(class UObjective* Objective);
@@ -176,6 +178,8 @@ class ABP_EscortDestination_C : public AEscortDestination
     void SpawnEnergySprites();
     void SpawnSupportingWave();
     void SpawnFinalSupportingWave();
+    void RockEnemySpawned(class APawn* enemy);
+    void KillRemainingRocks();
     void ExecuteUbergraph_BP_EscortDestination(int32 EntryPoint);
 };
 

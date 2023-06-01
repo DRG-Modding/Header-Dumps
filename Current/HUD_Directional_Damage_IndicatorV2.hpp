@@ -16,7 +16,7 @@ class UHUD_Directional_Damage_IndicatorV2_C : public UUserWidget
     TArray<class AActor*> Enemies;
 
     void UpdatePoints();
-    float CalcFadeStrength(float timeLeft, float HitSize);
+    float CalcFadeStrength(float TimeLeft, float HitSize);
     void OnHit(float Damage, FDamageData& DamageData, bool anyHealthLost);
     void Tick(FGeometry MyGeometry, float InDeltaTime);
     void Construct();

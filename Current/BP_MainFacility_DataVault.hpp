@@ -34,7 +34,6 @@ class ABP_MainFacility_DataVault_C : public ATetherStation
     class UBP_FacilityElectricAttack_C* BP_FacilityElectricAttack;
     class UStaticMeshComponent* Shield;
     class USceneComponent* Center;
-    class UStaticMeshComponent* GunTower_Carver01;
     class UStaticMeshComponent* TerrainScannerBase;
     class USphereComponent* Sphere1;
     class UOutlineComponent* outline;

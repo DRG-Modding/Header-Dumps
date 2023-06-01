@@ -23,7 +23,7 @@ struct FMovieSceneBinding
 
 struct FMovieSceneBindingOverrideData
 {
-    FMovieSceneObjectBindingID ObjectBindingId;
+    FMovieSceneObjectBindingID ObjectBindingID;
     TWeakObjectPtr<class UObject> Object;
     bool bOverridesDefault;
 
@@ -183,7 +183,7 @@ struct FMovieSceneEvaluationFieldSegmentPtr : public FMovieSceneEvaluationFieldT
 
 struct FMovieSceneEvaluationFieldSharedEntityMetaData
 {
-    FGuid ObjectBindingId;
+    FGuid ObjectBindingID;
 
 };
 
@@ -248,7 +248,7 @@ struct FMovieSceneEvaluationMetaData
 
 struct FMovieSceneEvaluationOperand
 {
-    FGuid ObjectBindingId;
+    FGuid ObjectBindingID;
     FMovieSceneSequenceID SequenceID;
 
 };
@@ -270,7 +270,7 @@ struct FMovieSceneEvaluationTemplateSerialNumber
 
 struct FMovieSceneEvaluationTrack
 {
-    FGuid ObjectBindingId;
+    FGuid ObjectBindingID;
     uint16 EvaluationPriority;
     EEvaluationMethod EvaluationMethod;
     TWeakObjectPtr<class UMovieSceneTrack> SourceTrack;
@@ -597,7 +597,7 @@ struct FMovieSceneSpawnable
 struct FMovieSceneSubSectionData
 {
     TWeakObjectPtr<class UMovieSceneSubSection> Section;
-    FGuid ObjectBindingId;
+    FGuid ObjectBindingID;
     ESectionEvaluationFlags Flags;
 
 };

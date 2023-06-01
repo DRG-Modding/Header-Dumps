@@ -51,11 +51,11 @@ class UHackingTool_DefuseBomb_C : public UHackingToolWidget
     void Finished_0FEF1054496B26DF35D844906C248D31();
     void ShakeAndContinue(class UUserWidget* InWidget, class UWidgetAnimation* InAnimation);
     void UpdateTimeText();
-    void ReceiveClick();
     void ReceiveHackingStarted();
     void PreConstruct(bool IsDesignTime);
     void ReceiveHackingToolUnequipped();
     void Setup Bomb Event();
+    void ReceiveActionClick();
     void ExecuteUbergraph_HackingTool_DefuseBomb(int32 EntryPoint);
 };
 

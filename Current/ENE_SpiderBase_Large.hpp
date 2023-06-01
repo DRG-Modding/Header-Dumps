@@ -16,6 +16,7 @@ class AENE_SpiderBase_Large_C : public AENE_PF_SpiderBase_C
     class UNiagaraSystem* GibParticles;
     class ULimbDismembermentList* LimbDismemberment;
     class UFXSystemAsset* ChemExplosionParticles;
+    bool RagdolEnabled;
 
     void FindChemicalArrow(class ACrossbowProjectileStuck*& ChemicalArrow);
     void GetFXMeshScale(float& Scale);
@@ -30,7 +31,6 @@ class AENE_SpiderBase_Large_C : public AENE_PF_SpiderBase_C
     bool ShouldMelt(const TArray<class UDamageTag*>& TargetArray, class UDamageClass* DamageClass);
     void IsWeakPointDeath(class UFSDPhysicalMaterial* Material, bool& IsWeakPoint);
     void GetEnemySpawnedCount(int32& SpawnCount);
-    bool ShouldExplode(TArray<class UDamageTag*>& Tags);
     void SetAnimatedDeathType(int32 AnimationIndex);
     void TrySelectDeathAnimation(bool WasWeakpoint, int32& AnimationIndex, bool& HasSelectedAnimation);
     void SetDeathType(TEnumAsByte<Spider_DeathType::Type> DeathType);
@@ -50,23 +50,23 @@ class AENE_SpiderBase_Large_C : public AENE_PF_SpiderBase_C
     void SendRagdollImpulse(FVector_NetQuantize Impulse, uint8 BoneIndex);
     void PlayAnimatedDeath(int32 AnimationIndex);
     void ExplodedDeath();
-    void SpawnLegGib();
     void TrySpawnEnemies();
     void BurrowingEscape();
+    void SpawnLegGib();
     void GibbedDeath();
     void DeathDetailedBase(float Amount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
     void MakeElite();
     void CorrosiveDeath();
     void StartCorrosiveDissovle();
     void ChangeVisibility(bool bNewVisibility);
-    void Spawn Headshot Gibs(TEnumAsByte<Spider_DeathType::Type> DeathType);
     void Cooked Death();
     void All_Ragdoll(FVector_NetQuantize Impulse, const FVector_NetQuantize& Location, uint8 BoneIndex, uint8 limbIndex);
     void BreakLimb(uint8 BoneIndex);
     void BndEvt__ENE_SpiderBase_Large_HealthComponent_K2Node_ComponentBoundEvent_0_DeathSigDetailed__DelegateSignature(class UHealthComponent* HealthComponent, float damageAmount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
-    void OnDeathBase();
+    void Spawn Headshot Gibs(TEnumAsByte<Spider_DeathType::Type> DeathType);
     void OnRagdoll();
     void ChemicalExplosionDeath();
+    void OnDeathBase();
     void ExecuteUbergraph_ENE_SpiderBase_Large(int32 EntryPoint);
 };
 

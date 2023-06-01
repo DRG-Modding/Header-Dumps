@@ -13,9 +13,11 @@ class AITM_HackingTool_C : public AHackingToolItem
     void AudioOnFail(class USoundCue* InFailCue, class UDialogDataAsset* InShout);
     void ReceiveHackingStarted();
     void OnHackingCompleted(bool InSuccess);
-    void ReceiveClick();
     void OnRequestUnequip();
     void RecieveUnequipped();
+    void ReceiveActionClick();
+    void ReceivedActionPressed();
+    void ReceivedActionReleased();
     void ExecuteUbergraph_ITM_HackingTool(int32 EntryPoint);
 };
 

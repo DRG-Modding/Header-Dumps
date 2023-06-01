@@ -10,7 +10,7 @@ class UHUD_ObjectiveBox_Item_C : public UObjectiveWidget
     class UHUD_DefaultLabel_C* TEXT_ObjectiveCounter;
     class UHUD_DefaultLabel_C* TEXT_ObjectiveDesc;
     class UObjective* Objective;
-    bool primary;
+    bool Primary;
 
     void PreConstruct(bool IsDesignTime);
     void ReceiveObjectiveInitialized();

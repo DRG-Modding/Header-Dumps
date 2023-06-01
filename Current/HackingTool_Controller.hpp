@@ -14,10 +14,12 @@ class UHackingTool_Controller_C : public UHackingToolWidget
     void ReceivedHackingComplete(bool InSuccess);
     void SpawnHackingWidget(TSoftClassPtr<UHackingToolWidget> InWidget, class UHackingUsableComponent* InHackingUsable, class AHackingToolItem* InHackingTool);
     void PreConstruct(bool IsDesignTime);
-    void ReceiveClick();
     void StartHackingCustom(TSoftClassPtr<UHackingToolWidget> InWidget, class UHackingUsableComponent* InHackingUsable, class AHackingToolItem* InHackingTool);
     void ReceiveHackingStarted();
     void ReceiveHackingToolUnequipped();
+    void ReceiveActionClick();
+    void ReceiveActionPressed();
+    void ReceiveActionReleased();
     void ExecuteUbergraph_HackingTool_Controller(int32 EntryPoint);
 };
 

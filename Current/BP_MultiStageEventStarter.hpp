@@ -22,6 +22,7 @@ class ABP_MultiStageEventStarter_C : public AEventStarterButton
     void UserConstructionScript();
     void OnOpenedForUse(bool wasOpened);
     void ReceiveBeginPlay();
+    void BndEvt__BP_MultiStageEventStarter_Usable_K2Node_ComponentBoundEvent_0_UsedBySignature__DelegateSignature(class APlayerCharacter* User, EInputKeys Key);
     void ExecuteUbergraph_BP_MultiStageEventStarter(int32 EntryPoint);
 };
 

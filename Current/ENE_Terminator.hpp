@@ -27,7 +27,7 @@ class AENE_Terminator_C : public ATerminatorEnemy
     class UEnemyComponent* enemy;
     float Fade_Power_FDF03F13465CDEAA8A4FBFB39DB1FAEE;
     TEnumAsByte<ETimelineDirection::Type> Fade__Direction_FDF03F13465CDEAA8A4FBFB39DB1FAEE;
-    class UTimelineComponent* Fade;
+    class UTimelineComponent* fade;
     float Flutter_Power_D066B1464FF406390DEE3DBAB48540DE;
     TEnumAsByte<ETimelineDirection::Type> Flutter__Direction_D066B1464FF406390DEE3DBAB48540DE;
     class UTimelineComponent* Flutter;

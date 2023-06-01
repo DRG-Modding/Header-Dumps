@@ -8,8 +8,8 @@ class UHUD_DamageClass_Indicator_C : public UFSDUserWidget
     class UHorizontalBox* AfflictionBox_Right;
     class UHUD_PlayerInfection_C* HUD_PlayerInfection;
     class UHUD_PlayerTemperature_C* HUD_PlayerTemperature;
-    class USpacer* Spacer_left;
-    class USpacer* Spacer_right;
+    class USpacer* Spacer_Left;
+    class USpacer* Spacer_Right;
     bool IsOn;
     TMap<class UPawnAffliction*, class UHUD_DamageClass_Item_C*> Indicators;
 

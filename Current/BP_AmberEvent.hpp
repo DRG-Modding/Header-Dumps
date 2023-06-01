@@ -24,9 +24,8 @@ class ABP_AmberEvent_C : public AAmberEvent
     class USkeletalMeshComponent* SkeletalMesh;
     class UTerrainPlacementComponent* terrainPlacement;
 
-    void SpawnEnemies();
     void BndEvt__RestrictedResourceBank_K2Node_ComponentBoundEvent_0_ResourceBankEvent__DelegateSignature(class APlayerCharacter* User);
-    void ReceiveBeginPlay();
+    void SpawnEnemies();
     void OnEventFinished(bool eventSuccess);
     void OnEventTriggered();
     void ExecuteUbergraph_BP_AmberEvent(int32 EntryPoint);

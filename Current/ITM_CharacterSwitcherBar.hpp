@@ -17,7 +17,7 @@ class UITM_CharacterSwitcherBar_C : public UUserWidget
     class UUI_AdvancedLabel_C* UI_AdvancedLabel;
     class UUI_AdvancedLabel_C* UI_AdvancedLabel_164;
     FText HeaderText;
-    class UPlayerCharacterID* CurrentCharacter;
+    class UPlayerCharacterID* currentCharacter;
     FITM_CharacterSwitcherBar_COnCharacterChanged OnCharacterChanged;
     void OnCharacterChanged(TSubclassOf<class APlayerCharacter> Character);
     ECharselectionCameraLocation SelectionType;

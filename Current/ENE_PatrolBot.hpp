@@ -59,6 +59,7 @@ class AENE_PatrolBot_C : public APatrolBot
     void OnProjectileSpawned();
     void OnDisabled();
     void BndEvt__ENE_PatrolBot_HealthComponent_K2Node_ComponentBoundEvent_0_DeathSigDetailed__DelegateSignature(class UHealthComponent* HealthComponent, float damageAmount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
+    void BndEvt__ENE_PatrolBot_HackingUsable_K2Node_ComponentBoundEvent_1_ItemDelegate__DelegateSignature(class AItem* Item);
     void ExecuteUbergraph_ENE_PatrolBot(int32 EntryPoint);
 };
 

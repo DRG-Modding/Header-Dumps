@@ -28,6 +28,7 @@ class UWeaponDisplay_HeavyParticleCannon_AmmoCount_C : public UAmmoCountWidget
     class UAudioComponent* ChargingAudioComp;
     class UAudioComponent* FullyChargedAudioComp;
     float MappedAlpha;
+    class AItem* Particle Weapon;
 
     void SetData(int32 ClipSize, float ReloadDuration, int32 MaxAmmo);
     void Construct();
@@ -37,6 +38,9 @@ class UWeaponDisplay_HeavyParticleCannon_AmmoCount_C : public UAmmoCountWidget
     void DoItemEquipped();
     void UpdateTotalInfo(float Percent);
     void UpdateClipInfo(float Percent);
+    void Init(class AItem* ParticleWeapon);
+    void OnUnequipped();
+    void OnEquipped();
     void ExecuteUbergraph_WeaponDisplay_HeavyParticleCannon_AmmoCount(int32 EntryPoint);
 };
 

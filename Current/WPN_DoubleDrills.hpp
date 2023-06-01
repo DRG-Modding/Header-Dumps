@@ -19,7 +19,7 @@ class AWPN_DoubleDrills_C : public ADoubleDrillItem
 
     void GetGearStatEntry(class AFSDPlayerState* PlayerState, TArray<FGearStatEntry>& Stats);
     class USceneComponent* GetHeatingAudioSceneComponent();
-    void OnTemperatureChanged(float Temperature, bool Overheated);
+    void OnTemperatureChanged(float Temperature, bool overHeated);
     void Increase FOV();
     void Decrease FOV();
     void AddedToInventory(class APlayerCharacter* ItemOwner);

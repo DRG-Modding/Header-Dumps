@@ -96,7 +96,7 @@ class UAnimationSharingManager : public UObject
 
     void RegisterActorWithSkeletonBP(class AActor* InActor, const class USkeleton* SharingSkeleton);
     class UAnimationSharingManager* GetAnimationSharingManager(class UObject* WorldContextObject);
-    bool CreateAnimationSharingManager(class UObject* WorldContextObject, const class UAnimationSharingSetup* setup);
+    bool CreateAnimationSharingManager(class UObject* WorldContextObject, const class UAnimationSharingSetup* Setup);
     bool AnimationSharingEnabled();
 };
 

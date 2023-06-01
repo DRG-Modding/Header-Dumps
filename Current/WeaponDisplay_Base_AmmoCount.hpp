@@ -22,6 +22,8 @@ class UWeaponDisplay_Base_AmmoCount_C : public UUserWidget
     void Max Ammo Changed(int32 Amount);
     void Total Ammo left changed(int32 Amount);
     void Reload Time Tick(float Amount);
+    void OnItemUnequipped();
+    void OnItemEquipped();
     void ExecuteUbergraph_WeaponDisplay_Base_AmmoCount(int32 EntryPoint);
 };
 

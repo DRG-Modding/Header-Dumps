@@ -13,7 +13,7 @@ class AWPN_PlasmaCarbine_C : public APlasmaCarbine
     float Overheat_Ammo_Regen_Effect_6788C26846C5EA00DB58E08FBF311673;
     TEnumAsByte<ETimelineDirection::Type> Overheat_Ammo_Regen__Direction_6788C26846C5EA00DB58E08FBF311673;
     class UTimelineComponent* Overheat Ammo Regen;
-    float Overheat;
+    float OverHeat;
     bool HasOverheated;
     bool RegenAmmoOnOverheat;
     bool AoeOnOverheat;
@@ -34,7 +34,7 @@ class AWPN_PlasmaCarbine_C : public APlasmaCarbine
     void Overheat Ammo Regen__UpdateFunc();
     void ReceiveBeginPlay();
     void CustomEvent1(const class UItemUpgrade* Event);
-    void OnTemperatureChanged(float Temperature, bool Overheated);
+    void OnTemperatureChanged(float Temperature, bool overHeated);
     void Receive_IsFiringChanged(bool NewValue);
     void Receive_Overheated();
     void RecieveStartUsing();
