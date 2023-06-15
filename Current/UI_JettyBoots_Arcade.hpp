@@ -42,6 +42,7 @@ class UUI_JettyBoots_Arcade_C : public UJettyBootsArcadeWidget
     TArray<FJettyBootsScore> High Scores;
     FJettyBootsReplay LastReplay;
     int32 CurrentHighScore;
+    TSoftClassPtr<UUserWidget> EventWidgetPreview;
 
     void Check FSDEvents();
     void StartNextLevel();
@@ -68,6 +69,7 @@ class UUI_JettyBoots_Arcade_C : public UJettyBootsArcadeWidget
     void Construct();
     void Setup FSD Events();
     void GameOverAudio();
+    void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_UI_JettyBoots_Arcade(int32 EntryPoint);
     void OnLevelCompleted__DelegateSignature(class APlayerCharacter* InPlayer);
     void OnRestartingLevel__DelegateSignature(class APlayerCharacter* InPlayer);

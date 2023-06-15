@@ -40,6 +40,7 @@ class AENE_Spider_Lobber_Base_C : public AENE_SpiderBase_Large_C
     void OnRangedAttackNotify_Event_0();
     void StartFadeBody();
     void SetParametersFromFloat(float Param);
+    void OnRagdoll();
     void ExecuteUbergraph_ENE_Spider_Lobber_Base(int32 EntryPoint);
 };
 

@@ -18,9 +18,6 @@ class AENE_Spider_Tank_RockpoxPlague_C : public AENE_Spider_Tank_Normal_C
     class UStaticMeshComponent* InfectionPoint4;
     class UStaticMeshComponent* InfectionPoint3;
     class UStaticMeshComponent* InfectionPoint1;
-    int32 InfectionPointsDestroyed;
-    int32 InfectionPoints;
-    TSubclassOf<class UStatusEffect> DeathDoTSTE;
     TSubclassOf<class UStatusEffect> InfectionSTE;
 
     void ReceiveBeginPlay();

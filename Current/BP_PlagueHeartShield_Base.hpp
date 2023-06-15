@@ -11,7 +11,6 @@ class ABP_PlagueHeartShield_Base_C : public AActor
     class UStaticMeshComponent* OuterPoint_2;
     class UStaticMeshComponent* OuterPoint_1;
     class UDamageComponent* Damage;
-    class USimpleHealthComponent* SimpleHealth;
     class UInfectionPointCleaningComponent* InfectionPointCleaning;
     class UStaticMeshComponent* Shell;
     class USceneComponent* DefaultSceneRoot;
@@ -32,8 +31,12 @@ class ABP_PlagueHeartShield_Base_C : public AActor
     float InnerMeshStartScale;
     FBP_PlagueHeartShield_Base_COnLaserPointed OnLaserPointed;
     void OnLaserPointed();
+    bool IsDead;
+    FBP_PlagueHeartShield_Base_COnShieldDeath OnShieldDeath;
+    void OnShieldDeath(class ABP_PlagueHeartShield_Base_C* Shield);
 
     class UInfectionPointCleaningComponent* GetCleaningPoints(FVector fromLocation);
+    void OnRep_IsDead();
     void DestroyAttachedMeshes();
     void OnRep_Stage();
     void GrowInnerBoils__FinishedFunc();
@@ -41,12 +44,13 @@ class ABP_PlagueHeartShield_Base_C : public AActor
     void ReceiveBeginPlay();
     void BndEvt__BP_PlagueHeartShield_InfectionPointCleaning_K2Node_ComponentBoundEvent_0_Delegate__DelegateSignature();
     void OnStageChanged();
-    void BndEvt__BP_PlagueHeartShield_SimpleHealth_K2Node_ComponentBoundEvent_1_DeathSig__DelegateSignature(class UHealthComponentBase* HealthComponent);
     void BndEvt__BP_PlagueHeartShield_InfectionPointCleaning_K2Node_ComponentBoundEvent_4_Delegate__DelegateSignature();
     void GrowInnerBoilds();
     void InitPointCleaning();
     void Cheat Kill();
+    void OnDeath();
     void ExecuteUbergraph_BP_PlagueHeartShield_Base(int32 EntryPoint);
+    void OnShieldDeath__DelegateSignature(class ABP_PlagueHeartShield_Base_C* Shield);
     void OnLaserPointed__DelegateSignature();
     void OnPointVacuumed__DelegateSignature();
     void OnPointFoamed__DelegateSignature();

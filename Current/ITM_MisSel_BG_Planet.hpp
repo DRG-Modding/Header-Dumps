@@ -3,7 +3,7 @@
 
 class UITM_MisSel_BG_Planet_C : public UUserWidget
 {
-    class UImage* BGImage;
+    class UImage* BGimage;
 
 };
 

@@ -7,7 +7,9 @@ class UDEC_CanSeeTarget_C : public UBTDecorator_BlueprintBase
     FBlackboardKeySelector TargetKey;
     FVector EyeLocationOffset;
     TEnumAsByte<ETraceTypeQuery> TraceChannel;
+    FName FromSocket;
 
+    void GetStartLocation(class AActor* FromActor, FVector& NewParam);
     bool PerformConditionCheckAI(class AAIController* OwnerController, class APawn* ControlledPawn);
 };
 

@@ -3,6 +3,7 @@
 
 class AESI_WalkingPlagueheart_C : public AESI_Spider_Base_C
 {
+    class UNiagaraComponent* NS_MobilePlague_Tendrils;
     class UPointLightComponent* PointLight10;
     class UStaticMeshComponent* OuterPoint_9;
     class UPointLightComponent* PointLight9;
@@ -15,7 +16,6 @@ class AESI_WalkingPlagueheart_C : public AESI_Spider_Base_C
     class UStaticMeshComponent* OuterPoint_5;
     class UStaticMeshComponent* OuterPoint_4;
     class UPointLightComponent* PointLight5;
-    class UNiagaraComponent* NS_MobilePlague_Tendrils;
     class UStaticMeshComponent* Shell_A;
     class USkeletalMeshComponent* Head_C;
     class USkeletalMeshComponent* Head_A;

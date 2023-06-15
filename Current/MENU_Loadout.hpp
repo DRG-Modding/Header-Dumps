@@ -17,8 +17,7 @@ class UMENU_Loadout_C : public UWindowWidget
     class UITM_Loadout_PerksEquip_C* ITM_Loadout_PerksEquip;
     class UITM_LoadoutSelectorBar_C* ITM_LoadoutSelectorBar;
     class UMENU_SpaceRigTemplate_C* MENU_SpaceRigTemplate;
-    class UButton* ShuffleButton;
-    class UUI_RandomizeIcon_C* ShuffleIcon;
+    class UUI_RandomizeLoadoutWithUndo_C* UI_RandomizeLoadoutWithUndo;
     class UVerticalBox* VerticalBox_Left;
     class UVerticalBox* VerticalBox_Right;
     FMENU_Loadout_CCharacterSelected CharacterSelected;
@@ -48,9 +47,7 @@ class UMENU_Loadout_C : public UWindowWidget
     void ReceiveSelectNextCommand();
     void ReceiveSelectPreviousCommand();
     void BndEvt__ITM_LoadoutSelectorBar_K2Node_ComponentBoundEvent_1_NewLoadoutSelected__DelegateSignature();
-    void BndEvt__MENU_Loadout_ShuffleButton_K2Node_ComponentBoundEvent_2_OnButtonClickedEvent__DelegateSignature();
-    void BndEvt__MENU_Loadout_ShuffleButton_K2Node_ComponentBoundEvent_3_OnButtonHoverEvent__DelegateSignature();
-    void BndEvt__MENU_Loadout_ShuffleButton_K2Node_ComponentBoundEvent_4_OnButtonHoverEvent__DelegateSignature();
+    void LoadoutRefreshed();
     void On Unhovered_Event(class UITM_Loadout_ItemWindow_C* Item);
     void On Hovered(class UITM_Loadout_ItemWindow_C* Item);
     void Open Item Window(class UITM_Loadout_ItemWindow_C* Item);

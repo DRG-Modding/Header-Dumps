@@ -101,7 +101,7 @@ class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
     void TrySpawnEnemies();
     void BndEvt__ENE_WalkingPlagueheart_HealthComponent_K2Node_ComponentBoundEvent_0_DamageSig__DelegateSignature(float Amount);
     void EventOnScatterBarf();
-    void OnShieldDeath(class UHealthComponentBase* HealthComponent);
+    void OnShieldDeath(class ABP_PlagueHeartShield_Base_C* Shield);
     void OnFlee();
     void OnShieldCleaned(class ABP_PlagueHeartShield_Base_C* Shield);
     void OnSpawnStinkCloud();
@@ -123,6 +123,7 @@ class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
     void KillB();
     void KillC();
     void Force Flee();
+    void TestDeath();
     void ExecuteUbergraph_ENE_WalkingPlagueheart(int32 EntryPoint);
     void UpdateShieldStatus__DelegateSignature(TArray<class ABP_PlagueHeartShield_Base_C*>& Shield);
 };

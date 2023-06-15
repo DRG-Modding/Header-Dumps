@@ -4,6 +4,9 @@
 class ABP_WalkingPlagueheart_SlimeTrailPuddle_C : public APlaguePuddle
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UTerrainDetectComponent* TerrainDetect2;
+    class UTerrainDetectComponent* TerrainDetect1;
+    class UTerrainDetectComponent* TerrainDetect;
     class UFSDAudioComponent* PuddleIdleAudio;
     class UPointLightComponent* PointLight;
     class UNiagaraComponent* Niagara;
@@ -18,10 +21,18 @@ class ABP_WalkingPlagueheart_SlimeTrailPuddle_C : public APlaguePuddle
     bool isFoamed;
     class ABP_PlagueWormPod_C* SpawnedWormpod;
     class AENE_WalkingPlagueheart_C* walkingPlagueheartRef;
+    int32 numberOfTerrainDetectorsClear;
 
+    void BP_WalkingPlagueheart_SlimeTrailPuddle_AutoGenFunc(class AActor* DestroyedActor);
     void OnRep_isFoamed();
     void ReceiveBeginPlay();
     void Receive_OnVacuumed();
+    void BndEvt__BP_WalkingPlagueheart_SlimeTrailPuddle_TerrainDetect_K2Node_ComponentBoundEvent_0_PointRemovedEvent__DelegateSignature(class USceneComponent* Point);
+    void BndEvt__BP_WalkingPlagueheart_SlimeTrailPuddle_TerrainDetect2_K2Node_ComponentBoundEvent_1_PointRemovedEvent__DelegateSignature(class USceneComponent* Point);
+    void BndEvt__BP_WalkingPlagueheart_SlimeTrailPuddle_TerrainDetect1_K2Node_ComponentBoundEvent_2_PointRemovedEvent__DelegateSignature(class USceneComponent* Point);
+    void OnDestroy(class AActor* DestroyedActor);
+    void ReceiveActorBeginOverlap(class AActor* OtherActor);
+    void PlayStepOnCueAll(class APlayerCharacter* Player);
     void ExecuteUbergraph_BP_WalkingPlagueheart_SlimeTrailPuddle(int32 EntryPoint);
 };
 

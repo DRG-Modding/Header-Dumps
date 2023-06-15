@@ -16,11 +16,11 @@ class UWND_Joining_C : public UWindowWidget
     FEventReply OnKeyUp(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     void BeginFadeOut(float Duration);
-    void BndEvt__Button_Close_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
-    void PreConstruct(bool IsDesignTime);
     void HideCancel();
     void OnShown();
     void Close();
+    void PreConstruct(bool IsDesignTime);
+    void BndEvt__Button_Close_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
     void ExecuteUbergraph_WND_Joining(int32 EntryPoint);
 };
 

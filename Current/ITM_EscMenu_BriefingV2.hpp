@@ -15,7 +15,7 @@ class UITM_EscMenu_BriefingV2_C : public UUserWidget
     class UButton* Button_MissionType;
     class UButton* Button_Spacerig;
     class UTextBlock* DATA_MissionTime;
-    class UTextBlock* DataMissionName;
+    class UTextBlock* DATAMissionName;
     class UImage* Image_Campaign;
     class UImage* Image_MissionTerminal;
     class UImage* Image_Separator;

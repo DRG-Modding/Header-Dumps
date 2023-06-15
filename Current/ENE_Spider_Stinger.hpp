@@ -4,6 +4,8 @@
 class AENE_Spider_Stinger_C : public AENE_SpiderBase_Large_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UPointLightComponent* PointLight_Tail;
+    class UPointLightComponent* PointLight_Weakpoint;
     class UCapsuleComponent* Capsule;
     class UStingerIdleAudioComponent* StingerIdleAudio;
     class USplineMeshComponent* Extender;

@@ -12,9 +12,9 @@ class U_MENU_Pickaxe_C : public UWindowWidget
     class UITM_Pickaxe_Slot_C* ITM_Pickaxe_PaintJob;
     class UMENU_SpaceRigTemplate_C* MENU_SpaceRig;
     class UButton* ShuffleButton;
-    class UUI_RandomizeIcon_C* ShuffleIcon;
     class UVerticalBox* Slots_Left;
     class UVerticalBox* Slots_Right;
+    class UUI_RandomizeLoadoutWithUndo_C* UI_RandomizeLoadoutWithUndo;
     class UPlayerCharacterID* PlayerCharacter;
     float FadeInAnimTime;
     bool PrevUseRandom;
@@ -36,9 +36,7 @@ class U_MENU_Pickaxe_C : public UWindowWidget
     void SetCharacter(class UPlayerCharacterID* PlayerCharacter);
     void OnClosed();
     void OnEquippedChanged();
-    void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
-    void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_4_OnButtonHoverEvent__DelegateSignature();
-    void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_5_OnButtonHoverEvent__DelegateSignature();
+    void LoadoutRefreshed();
     void ExecuteUbergraph__MENU_Pickaxe(int32 EntryPoint);
 };
 

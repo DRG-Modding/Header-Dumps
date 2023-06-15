@@ -9,7 +9,7 @@ class UUI_JettyBoots_HighScore_C : public UUserWidget
     class UBasic_Label_C* Score_Label;
     int32 Preview;
 
-    void SetHighScore(int32 InIndex, FJettyBootsScore InHighscore, bool InHighlight);
+    void SetHighScore(int32 InIndex, FJettyBootsScore InHighscore, bool inHighlight);
     void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_UI_JettyBoots_HighScore(int32 EntryPoint);
 };

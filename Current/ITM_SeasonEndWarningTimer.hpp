@@ -16,6 +16,7 @@ class UITM_SeasonEndWarningTimer_C : public UUserWidget
     bool PendingUpdateCheck;
     int32 PreviewState;
 
+    void On Request Season End Complete(FDateTime EndTime, bool validExpireTime);
     void Int2Text(int32 InValue, FText& OutText);
     void SetPreviewState(int32 Index);
     void OnCheckForUpdateComplete(bool IsUpdatePending);

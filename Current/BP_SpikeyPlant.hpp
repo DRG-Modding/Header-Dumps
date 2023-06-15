@@ -33,9 +33,12 @@ class ABP_SpikeyPlant_C : public AActor
     bool PlayerIsNearby;
     int32 SpikeSeed;
     TArray<FTransform> SpikeTransforms;
+    FTransform CurrentTransform;
+    FCSGRaycastHitInfo Hit;
 
-    void OnRep_SpikeSeed();
-    void Set Spikes to terrain();
+    void FindSpikeLocation();
+    void AddSpikeAndCollision(const FTransform WorldTransform, bool IsFirstSpike);
+    void OnRep_SpikeTransforms();
     void OnRep_IsExtruded();
     void UserConstructionScript();
     void Extrude spikes__FinishedFunc();

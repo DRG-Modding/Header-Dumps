@@ -1625,9 +1625,6 @@ struct FFSDEventRewardsSave
 struct FFSDEventsResponse
 {
     TArray<FString> ActiveEvents;
-    FString SeasonExpirationTimeSteam;
-    FString SeasonExpirationTimeSony;
-    FString SeasonExpirationTimeGDK;
     TArray<FBackendNotification> Notifications;
 
 };
@@ -1643,6 +1640,14 @@ struct FFSDLocalizedChatMessage
 
 struct FFSDPlatformHelper
 {
+};
+
+struct FFSDSeasonExpiryResponse
+{
+    FString SeasonExpirationTimeSteam;
+    FString SeasonExpirationTimeSony;
+    FString SeasonExpirationTimeGDK;
+
 };
 
 struct FFSDServerListEntryModModel
@@ -2145,6 +2150,7 @@ struct FGDStats
     class UPawnStat* ColdResistance;
     class UPawnStat* MeleeAttackDamage;
     class UPawnStat* MovementSpeed;
+    class UPawnStat* AirControl;
     class UPawnStat* SprintSpeed;
     class UPawnStat* CarryingSpeedModifier;
     class UPawnStat* ReviveSpeed;
@@ -3041,6 +3047,13 @@ struct FOptionsInSaveGame
 
 };
 
+struct FOverlapPair
+{
+    class APlayerCharacter* Player;
+    class AActor* Overlap;
+
+};
+
 struct FOxygenCallback
 {
     FOxygenCallbackDelegate Delegate;
@@ -3878,6 +3891,7 @@ struct FSeasonalEventEntry
     class USpecialEvent* SpecialEvent;
     TArray<class UMissionTemplate*> BannedMissions;
     TArray<class UMutator*> BannedMutators;
+    int32 RequiredMainCampaignProgress;
 
 };
 
@@ -4782,6 +4796,7 @@ class AAdicPuddle : public AActor
     TSubclassOf<class UStatusEffect> InflictedStatusEffect;
     float LifeTime;
 
+    void Receive_OnPlayerBeginOverlap(class APlayerCharacter* Player);
     void OnPuddleEndOverLap(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
     void OnPuddleBeginOverLap(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
@@ -4915,6 +4930,8 @@ class AAmmoDrivenWeapon : public AAnimatedItem
     void AmmoDrivenGenericEvent();
     float SupplyStatusWeight;
     float CycleTimeLeft;
+    bool UseCustomReloadDelay;
+    float CustomReloadDelay;
     float ReloadTimeLeft;
     bool AutomaticReload;
     bool CanReload;
@@ -12622,6 +12639,10 @@ class ISpawnReleasedActor : public IInterface
     bool OnSpawnRelease_Attached(class AActor* Parent);
 };
 
+class IStatusAddedComponent : public IInterface
+{
+};
+
 class ISteerable : public IInterface
 {
 };
@@ -13653,9 +13674,14 @@ class UBTDecorator_AttackInRange : public UBTDecorator_BlackboardBase
 class UBTDecorator_CanSeeTarget : public UBTDecorator
 {
     bool UseAsync;
+    bool DebugDraw;
     float MaxRange;
+    float Interval;
     FVector EyeLocationOffset;
+    FName EyeSocketName;
     FBlackboardKeySelector TargetKey;
+    TEnumAsByte<ECollisionChannel> TraceChannel;
+    bool UseTargetable;
 
 };
 
@@ -16004,6 +16030,8 @@ class UDamageSettings : public UDataAsset
     class USoundCue* ArmorShatterSound;
     TArray<FDecalData> ImpactDecals;
     FRuntimeFloatCurve ArmorToArmorDamageBreakingCurve;
+    float RadialHealthArmorDamageFalloff;
+    int32 HealthArmorBonesAffectedByRadialDamage;
     class UDamageTag* DetonateFrozen;
     class UDamageTag* DetonateOnFire;
     class UDamageTag* DirectHit;
@@ -17086,6 +17114,13 @@ class UEncounterSpecialEventSpawner : public USpecialEventSpawner
 
 };
 
+class UEndStatusEffectOnLanding : public UActorComponent
+{
+    TWeakObjectPtr<class UStatusEffect> EffectToCancel;
+
+    void OnOwnerStateChanged(ECharacterState State);
+};
+
 class UEnemyAnimInstance : public UAnimInstance
 {
     FEnemyAnimInstanceOnRangedAttackNotify OnRangedAttackNotify;
@@ -18124,6 +18159,7 @@ class UFSDEventManager : public UGameInstanceSubsystem
     bool BackendNotificationEventValid;
 
     void TryGetJettyBootSettings(bool& OutHasSettings, FJettyBootEventSettings& OutSettings);
+    void RequestSeasonEndTime(FRequestSeasonEndTimeOnComplete OnComplete);
     bool IsEventTypeActive(const EHolidayType FSDEvent);
     bool IsEventActive(const class UFSDEvent* FSDEvent);
     bool GetSeasonExpiryDate(FDateTime& ExpiryDate);
@@ -18361,6 +18397,7 @@ class UFSDGameInstance : public UGameInstance
     void SetViewer3DClass(TSubclassOf<class AActor> NewClass, ECharselectionCameraLocation Location);
     void SetSteamServerJoinStatus(ESteamServerJoinStatus NewStatus);
     void SetSteamSearchRegion(ESteamSearchRegion NewRegion);
+    void SetShouldAdvertiseInServerlist(bool bShouldAdvertise);
     void SetServerSearchOptions(const FFSDServerSearchOptions& options);
     void SetServerSearchActive(bool Active);
     void SetSelectedMission(class UGeneratedMission* mission, bool updateSessionSettings);
@@ -19748,6 +19785,7 @@ class UFlatDamageUpgrade : public UItemUpgrade
     float Damage;
     class UDamageClass* DamageClass;
     TSubclassOf<class AActor> RequiredClass;
+    bool MergeWithOtherFlatDamageUpgrades;
     class UDamageCondition* Condition;
 
     FUpgradeValues GetUpgradedValue(TSubclassOf<class AActor> Item, class AFSDPlayerState* Player, class UDamageClass* DamageClass);
@@ -21146,6 +21184,7 @@ class UInfectionMasterComponent : public UActorComponent
 
     void OnRep_RandomSeed();
     void OnDeath(class UHealthComponentBase* enemy);
+    void InfectionPointDestroyed(FName Name);
     void DealWeakpointDamage(const FName& SocketName);
 };
 
@@ -21848,7 +21887,6 @@ class UJetBootsSettings : public UDataAsset
     float JetFuelRechargeRate;
     float JetFuelRechargeDelay;
     float OutOfFuelRechargeDelay;
-    bool DisableGravityWhenUsing;
 
 };
 
@@ -23111,6 +23149,12 @@ class UOverheatingAggregator : public UItemAggregator
     bool GetIsOverheated();
 };
 
+class UOverlapTrackingSubsystem : public UWorldSubsystem
+{
+    TArray<FOverlapPair> Overlaps;
+
+};
+
 class UOxygenComponent : public UActorComponent
 {
     FOxygenComponentOnOxygenChanged OnOxygenChanged;
@@ -23381,6 +23425,7 @@ class UPerkFunctionLibrary : public UBlueprintFunctionLibrary
 
     void SplitPerksByUsage(const TArray<class UPerkAsset*>& perks, TArray<class UPerkAsset*>& OutPassivePerks, TArray<class UPerkAsset*>& OutActivePerks);
     TArray<class UPerkAsset*> SortPerksByUsage(TArray<class UPerkAsset*>& perks);
+    void RandomizePerkLoadout(class APlayerCharacter* Player);
     bool IsPerkTierUnLocked(class UObject* WorldContext, int32 Tier);
     int32 GetRequiredPerkClaimsForTier(int32 Tier);
     void GetPerkTierState(class UObject* WorldContext, int32 Tier, bool& TierUnLocked, int32& NextRequiredCount, int32& NextProgressCount);
@@ -23484,6 +23529,7 @@ class UPickaxeFunctionLibrary : public UBlueprintFunctionLibrary
 {
 
     bool RemovePickaxePartFromOwned(class UObject* WorldContextObject, const class UPickaxePart* part);
+    void RandomizePickaxe(class APlayerCharacter* Player);
     bool IsPickaxePartEquipped(class UObject* WorldContextObject, EPickaxePartLocation Location, class UPickaxePart* part, class UItemID* pickaxeID);
     void GivePickaxePart(class UObject* WorldContextObject, class UPickaxePart* part);
     TArray<class UPickaxePart*> GetUnlockedPickaxeParts(class UObject* WorldContextObject, EPickaxePartLocation Category);
@@ -24552,6 +24598,7 @@ class UPuddleTrackerComponent : public UActorComponent
 {
 
     void OnPuddleDestroyed(class AActor* DestroyedActor);
+    void GetPuddles(TArray<class AActor*>& Locations);
     void GetPuddleLocations(TArray<FVector>& Locations);
     void AddPuddle(class AActor* puddle);
 };
@@ -26484,19 +26531,13 @@ class USplineHookAttack : public USpecialAttackComponent
     TWeakObjectPtr<class AActor> SyncedTarget;
     FName TailSocket;
     FName HeadSocket;
+    class UPointLightComponent* GrabLight;
+    class USoundCue* GrabbedIndicationSound;
     class UAnimMontage* HeadAnimation;
-    class UAnimMontage* TailAnimation;
     class UDamageComponent* Damage;
-    float KnockBackHorizontalForce;
-    float HorizontalScaleMultiplier;
-    float KnockBackVerticalForce;
-    float OptimalDistance;
-    float VerticalScaleMultiplier;
-    float MinHorizontalPower;
-    float MinVerticalPower;
-    float HeightDiffPower;
-    bool AbsoluteKnockBack;
-    bool ScaleByHeightDiff;
+    float ForwardPlacement;
+    float DesiredLaunchAngle;
+    float AdjustmentStartDistance;
     float AttackDuration;
     float MaxAngle;
     float AttackOnProgress;
@@ -26507,7 +26548,7 @@ class USplineHookAttack : public USpecialAttackComponent
     bool Lead;
     bool Using;
 
-    void Server_DamageTarget(class AActor* Target);
+    void SetTailLight(class UPointLightComponent* Light);
     void OnRep_Using();
     FVector GetTargetLocation();
     FVector GetTargetDirection();

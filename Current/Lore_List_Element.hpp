@@ -19,7 +19,7 @@ class ULore_List_Element_C : public UUserWidget
     class UWidgetSwitcher* WidgetSwitcher_Navigation;
     FText Header;
     FText SubText;
-    class UTexture2D* BGImage;
+    class UTexture2D* BGimage;
     FLinearColor BackgroundColor;
     class UTexture2D* FrontImage;
     FObjectiveMissionIcon MissionIcon;

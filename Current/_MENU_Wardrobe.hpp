@@ -10,8 +10,6 @@ class U_MENU_Wardrobe_C : public UWindowWidget
     class UITM_DragRotateCharacter_C* ITM_DragRotateCharacter;
     class UITM_LoadoutSelectorBar_C* ITM_LoadoutSelectorBar;
     class UMENU_SpaceRigTemplate_C* MENU_SpaceRig;
-    class UButton* ShuffleButton;
-    class UUI_RandomizeIcon_C* ShuffleIcon;
     class UButton* SleevelessButton_1;
     class UITM_Wardrobe_ItemSlot_ArmorVanity_C* Slot_Armor;
     class UITM_Wardrobe_ItemSlot_Vanity_C* Slot_ArmorColor;
@@ -25,6 +23,7 @@ class U_MENU_Wardrobe_C : public UWindowWidget
     class UITM_Wardrobe_ItemSlot_VictoryMoves_C* Slot_VictoryMoves;
     class UVerticalBox* SlotsLeftBox;
     class UVerticalBox* SlotsRightBox;
+    class UUI_RandomizeLoadoutWithUndo_C* UI_RandomizeLoadoutWithUndo;
     class UPlayerCharacterID* PlayerCharacter;
     TArray<class UITM_Wardrobe_ItemSlot_Base_C*> ItemSlots;
     float FadeInAnimTime;
@@ -42,16 +41,14 @@ class U_MENU_Wardrobe_C : public UWindowWidget
     void ReceiveCloseCommand();
     void PreConstruct(bool IsDesignTime);
     void OnShown();
-    void BndEvt__ITM_LoadoutSelectorBar_K2Node_ComponentBoundEvent_2_NewLoadoutSelected__DelegateSignature();
     void BndEvt__ClassSelector_K2Node_ComponentBoundEvent_0_OnCharacterChanged__DelegateSignature(TSubclassOf<class APlayerCharacter> Character);
+    void BndEvt__ITM_LoadoutSelectorBar_K2Node_ComponentBoundEvent_2_NewLoadoutSelected__DelegateSignature();
     void Refresh();
     void SetCharacter(class UPlayerCharacterID* PlayerCharacter);
     void OnClosed();
     void Construct();
     void OnEquippedChanged_Event_0();
-    void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
-    void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_4_OnButtonHoverEvent__DelegateSignature();
-    void BndEvt__ShuffleButton_K2Node_ComponentBoundEvent_5_OnButtonHoverEvent__DelegateSignature();
+    void LoadoutRefreshed();
     void ExecuteUbergraph__MENU_Wardrobe(int32 EntryPoint);
 };
 

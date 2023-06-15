@@ -24,9 +24,9 @@ class AENE_Spider_Grunt_RockpoxPlague_C : public AENE_Spider_Grunt_Base_C
     TSubclassOf<class UStatusEffect> InfectionSTE;
     TSubclassOf<class AActor> AcidCloudClass;
 
+    void BndEvt__ENE_Spider_Grunt_TentacleInfection_ArmorHealthDamage_K2Node_ComponentBoundEvent_0_AmorPartDestroyedDelegate__DelegateSignature(FName Name);
     void ReceiveBeginPlay();
     void PopAllWeakPoints(class UHealthComponentBase* HealthComponent);
-    void BndEvt__ENE_Spider_Grunt_TentacleInfection_ArmorHealthDamage_K2Node_ComponentBoundEvent_0_AmorPartDestroyedDelegate__DelegateSignature(FName Name);
     void DeathDetailedBase(float Amount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
     void ExecuteUbergraph_ENE_Spider_Grunt_RockpoxPlague(int32 EntryPoint);
 };
