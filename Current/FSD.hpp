@@ -527,7 +527,9 @@ struct FCharacterSave
     int32 SelectedLoadout;
     FItemLoadout Loadout;
     TArray<FItemLoadout> Loadouts;
+    TArray<FUpgradeLoadout> ItemUpgradeLoadouts;
     FItemLoadout RandomWeaponLoadout;
+    FUpgradeLoadout RandomItemUpgradeLoadouts;
     FVictoryPoseSave VictoryPose;
 
 };
@@ -2462,6 +2464,13 @@ struct FHeroInfo
     FText HeroShortDescription;
     FText HeroLongDescription;
     FText SwitchToMessage;
+
+};
+
+struct FHitscanDelayedImpact
+{
+    class USoundCue* ImpactSound;
+    class USoundCue* FirstPersonImpactSound;
 
 };
 
@@ -12890,7 +12899,7 @@ class UActorFunctionLibrary : public UBlueprintFunctionLibrary
     void FSDDumpCallStack(FString Msg);
     class APlayerCharacter* FindNearestPlayerCharacter(class UObject* WorldContextObject, FVector fromLocation, float MaxRadius, bool MustBeAlive, bool MustBeUnparalyzed, bool MustHaveLineOfSight);
     FVector FindLatejoinDroppodLocation(class AFSDGameMode* GameMode);
-    class AActor* FindClosestEnemyFromLocation(const FVector& fromLocation, float range, bool LineOfSightCheck, class UObject* WorldContextObject, const TArray<class AActor*>& IgnoredActors, const FVector& Offset);
+    class AActor* FindClosestEnemyFromLocation(const FVector& fromLocation, float range, bool LineOfSightCheck, class UObject* WorldContextObject, const TArray<class AActor*>& IgnoredActors, const FVector& Offset, bool onlyTargetable);
     class AActor* FindClosestEnemyFromActorWithSkipChance(class AActor* FromActor, float range, float SkipChance, bool LineOfSightCheck, const FGameplayTagQuery& tagQuery, FVector Offset);
     class AActor* FindClosestEnemyFromActor(class AActor* FromActor, float range, bool LineOfSightCheck, const FGameplayTagQuery& tagQuery, const FVector& Offset);
     FVector FindCharacterTeleportLocation(class UObject* WorldContextObject, const FVector& closeToLocation, float desiredDistance);
@@ -19096,9 +19105,7 @@ class UFSDSaveGame : public USaveGame
     int32 LastBoughtDailyDealSeed;
     FForgingSave Forging;
     FDrinkSave Drinks;
-    TMap<class FGuid, class FItemUpgradeSelection> ItemUpgradeSelections;
     TArray<FUpgradeLoadout> ItemUpgradeLoadouts;
-    FUpgradeLoadout RandomItemUpgradeLoadouts;
     bool bIgnoreRandomLoadout;
     TArray<FGuid> PurchasedItemUpgrades;
     TArray<FGuid> UnlockedItems;
@@ -19116,7 +19123,7 @@ class UFSDSaveGame : public USaveGame
     FItemUINotifications ItemUINotifications;
     FString RejoinSessionId;
     bool FirstRejoinAttempt;
-    bool HaveSkinsBeenReset;
+    bool HaveItemUpgradesBeenFixed;
     bool bHasOpenedDeepDiveTerminal;
     FResourcesSave Resources;
     bool FirstSession;
@@ -21048,6 +21055,7 @@ class UHitscanComponent : public UHitscanBaseComponent
     class USoundCue* ImpactSound;
     bool IgnoreAlwaysPenetrate;
     TArray<class AActor*> DamagedActorCache;
+    TArray<FHitscanDelayedImpact> DelayedImpacts;
 
     void Server_RegisterRicochetHit_Terrain(FVector_NetQuantize Origin, FVector_NetQuantize Location, FVector_NetQuantizeNormal Normal, class UFSDPhysicalMaterial* PhysMaterial);
     void Server_RegisterRicochetHit_Destructable(FVector_NetQuantize Origin, FVector_NetQuantize Location, FVector_NetQuantizeNormal Normal, class UPrimitiveComponent* Target, class UFSDPhysicalMaterial* PhysMaterial, uint8 BoneIndex);
@@ -22072,6 +22080,7 @@ class ULineSpikeAttack : public USpecialAttackComponent
     TSubclassOf<class AActor> SpikeClass;
     bool TentaclesBurried;
     float MaxStepUpheight;
+    float firstSpikeDelay;
     float MaxDistanceToGround;
     float DistanceBetweenSpikes;
     float TimeBetweenSpikes;
@@ -23118,12 +23127,6 @@ class UOverclockShematicItem : public USchematicItem
 class UOverclockUpgrade : public UCombinedUpgrade
 {
     class USchematicCategory* SchematicCategory;
-
-};
-
-class UOverclockingUnlockReward : public UUnlockReward
-{
-    TSubclassOf<class AActor> Item;
 
 };
 
@@ -26498,6 +26501,7 @@ class USpiderLobberAnimInstance : public UShootingSpiderAnimInstance
     float LiquidInBumTimeToMax;
     float LiquidInBumTimeToMaxShort;
 
+    void SetAttackIndex(int32 Index);
     void ResetLiquidInBum();
     void OnDeath(class UHealthComponentBase* InHealthComponent);
 };

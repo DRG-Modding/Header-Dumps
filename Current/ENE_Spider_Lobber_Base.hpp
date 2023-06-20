@@ -26,7 +26,9 @@ class AENE_Spider_Lobber_Base_C : public AENE_SpiderBase_Large_C
     float CurrentButtPointsEmissive;
     float LastButtEmissive;
     float LastButtPointsEmissive;
+    int32 AttackIndex;
 
+    void OnRep_AttackIndex();
     void IsFirstAttack(bool& IsFirst);
     void InitDynamicMaterials();
     void SpawnFragments();
@@ -41,6 +43,7 @@ class AENE_Spider_Lobber_Base_C : public AENE_SpiderBase_Large_C
     void StartFadeBody();
     void SetParametersFromFloat(float Param);
     void OnRagdoll();
+    void OnMessageAI(FName TriggerName);
     void ExecuteUbergraph_ENE_Spider_Lobber_Base(int32 EntryPoint);
 };
 

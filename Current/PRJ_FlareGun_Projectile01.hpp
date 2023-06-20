@@ -24,6 +24,7 @@ class APRJ_FlareGun_Projectile01_C : public AFlareGunProjectile
     FScaledEffect DamageEffect;
     float LightIntensity_Spot;
     bool bFallToGround;
+    FHitResult ImpactHit;
 
     void OnRep_bFallToGround();
     void SpawnImpact();

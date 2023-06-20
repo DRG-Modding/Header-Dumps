@@ -5,6 +5,15 @@ class UABP_Spider_Shooting_C : public UShootingSpiderAnimInstance
 {
     FPointerToUberGraphFrame UberGraphFrame;
     FAnimNode_Root AnimGraphNode_Root;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_18;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_17;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_16;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_15;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_14;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_13;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_12;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_11;
+    FAnimNode_TransitionResult AnimGraphNode_TransitionResult_10;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_9;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_8;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_7;
@@ -15,6 +24,12 @@ class UABP_Spider_Shooting_C : public UShootingSpiderAnimInstance
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_2;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult_1;
     FAnimNode_TransitionResult AnimGraphNode_TransitionResult;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_9;
+    FAnimNode_StateResult AnimGraphNode_StateResult_5;
+    FAnimNode_SequenceEvaluator AnimGraphNode_SequenceEvaluator;
+    FAnimNode_TwoWayBlend AnimGraphNode_TwoWayBlend;
+    FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_8;
+    FAnimNode_StateResult AnimGraphNode_StateResult_4;
     FAnimNode_BlendSpacePlayer AnimGraphNode_BlendSpacePlayer_2;
     FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_7;
     FAnimNode_BlendListByBool AnimGraphNode_BlendListByBool_1;

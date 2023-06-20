@@ -14,7 +14,7 @@ class ADBA_IceCaves_C : public ADebrisDataActor
     class UDebrisItemComponent* I_FrostGeyser--10K(20-80)_5K(50-70);
     class UDebrisItemComponent* I_IceFormation2Platuaes--DISABLED;
     class UDebrisDataComponent* C_FlatRocks--10K(60-90);
-    class USceneComponent* Rocks;
+    class USceneComponent* rocks;
     class UDebrisItemComponent* I_ClawRockFormation--10K(50-75);
     class UDebrisItemComponent* I_ClawRockFormation_Dense--10K(75-100);
     class UDebrisItemComponent* I_Glaciers--5K(40-70)__A(1-5);

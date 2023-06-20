@@ -4,6 +4,9 @@
 class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class USphereComponent* ProximityInfectionSphereTrigger;
+    class USphereComponent* UsableSphere;
+    class UCapsuleComponent* Capsule;
     class UTentacleManagerComponent* TentacleManager;
     class UArrowComponent* KnockBackRotation3;
     class UArrowComponent* KnockBackRotation2;
@@ -12,7 +15,6 @@ class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
     class UStingerIdleAudioComponent* IdleAudioManager;
     class UPuddleTrackerComponent* PuddleTracker;
     class UBodyRotationManagerComponent* BodyRotationManager;
-    class USphereComponent* ProximityInfectionSphereTrigger;
     class UStatusEffectTriggerComponent* StatusEffectTrigger;
     class UPointLightComponent* PointLight10;
     class UStaticMeshComponent* InnerPoint_C5;
@@ -50,11 +52,9 @@ class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
     class UChildActorComponent* Shield_B;
     class UNiagaraComponent* NS_MobilePlague_GroundEffect;
     class UArmorHealthDamageComponent* ArmorHealthDamage;
-    class UCapsuleComponent* Capsule;
     class UFSDAudioComponent* TentacleMove;
     class UInstantUsable* SpawnCleaningPodUsable;
     class ULineSpikeAttack* LineSpikeAttack;
-    class USphereComponent* UsableSphere;
     class UPointLightComponent* PointLight;
     class UMeleeAttackComponent* MeleeAttack;
     class USpawnActorWithDebrisPosComponent* SpawnActorWithDebrisPos;
