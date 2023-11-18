@@ -73,8 +73,6 @@ class UABP_FP_Dwarf_C : public UPlayerFPAnimInstance
     FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_7;
     FAnimNode_StateResult AnimGraphNode_StateResult_2;
     FAnimNode_TwoWayBlend AnimGraphNode_TwoWayBlend;
-    FAnimNode_RefPose AnimGraphNode_LocalRefPose;
-    FAnimNode_LayeredBoneBlend AnimGraphNode_LayeredBoneBlend;
     FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_6;
     FAnimNode_SequencePlayer AnimGraphNode_SequencePlayer_5;
     FAnimNode_BlendListByBool AnimGraphNode_BlendListByBool_3;

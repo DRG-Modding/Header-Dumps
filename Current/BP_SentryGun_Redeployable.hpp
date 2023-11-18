@@ -4,6 +4,8 @@
 class ABP_SentryGun_Redeployable_C : public ARedeployableSentryGun
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UChildActorComponent* ArcIndicator;
+    class UChildActorComponent* EMPIndicator;
     class UBoxComponent* SpecialAttackCollider;
     class UParticleSystemComponent* SpecialAttackParticleSystem;
     class UWidgetComponent* AmmoCountWidget;
@@ -56,6 +58,8 @@ class ABP_SentryGun_Redeployable_C : public ARedeployableSentryGun
     void UpdateShadows();
     void BndEvt__Hitscan_K2Node_ComponentBoundEvent_2_WeaponFiredDelegate__DelegateSignature(const FVector& Location);
     void ReceiveAmmoChanged(int32 Delta, int32 currentAmount);
+    void SetEMPIndicatorActive(bool Active);
+    void SetArcIndicatorActive(bool Active);
     void ExecuteUbergraph_BP_SentryGun_Redeployable(int32 EntryPoint);
 };
 

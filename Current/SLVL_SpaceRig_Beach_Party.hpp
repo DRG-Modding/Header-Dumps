@@ -10,6 +10,7 @@ class ASLVL_SpaceRig_Beach_Party_C : public ALevelScriptActor
     void FindAmbientMusicPlayers();
     void ReceiveBeginPlay();
     void OnJukeboxStreamerModeChanged_Event_0(bool NewValue);
+    void CrankFun();
     void ExecuteUbergraph_SLVL_SpaceRig_Beach_Party(int32 EntryPoint);
 };
 

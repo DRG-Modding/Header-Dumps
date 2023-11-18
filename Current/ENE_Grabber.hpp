@@ -20,6 +20,7 @@ class AENE_Grabber_C : public AFlyingLifter
     void Death_Corrosive();
     void Death_Normal();
     void BndEvt__ENE_Grabber_HealthComponent_K2Node_ComponentBoundEvent_0_DeathSigDetailed__DelegateSignature(class UHealthComponent* HealthComponent, float damageAmount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
+    void FadeMaterials();
     void ExecuteUbergraph_ENE_Grabber(int32 EntryPoint);
 };
 

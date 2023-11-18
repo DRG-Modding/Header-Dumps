@@ -4,6 +4,7 @@
 class ABP_SentryItem_PlaceMarker_C : public AItemMarker
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UChildActorComponent* ArcIndicator;
     class USkeletalMeshComponent* SkeletalMesh;
     class USceneComponent* Scene;
     class UStaticMeshComponent* RightLine;
@@ -21,6 +22,7 @@ class ABP_SentryItem_PlaceMarker_C : public AItemMarker
     void UserConstructionScript();
     void ReceiveBeginPlay();
     void OnMarkerValidChanged(bool Valid);
+    void SetArcIndicatorActive(bool Active);
     void ExecuteUbergraph_BP_SentryItem_PlaceMarker(int32 EntryPoint);
 };
 

@@ -5,8 +5,6 @@ class ABP_Plague_Spore_Tower_C : public APlagueInfectionNode
 {
     FPointerToUberGraphFrame UberGraphFrame;
     class ULevelGenerationCarverComponent* LevelGenerationCarver_ScabArea_All;
-    class ULevelGenerationCarverComponent* LevelGenerationCarver_Individual;
-    class UStaticMeshComponent* Sphere_SizeVisual;
     class UNiagaraComponent* deathEffect;
     class UTerrainDetectComponent* TerrainDetect3;
     class UTerrainDetectComponent* TerrainDetect2;
@@ -14,7 +12,6 @@ class ABP_Plague_Spore_Tower_C : public APlagueInfectionNode
     class UTerrainDetectComponent* TerrainDetect;
     class UStaticMeshComponent* StaticMesh;
     class ULevelGenerationCarverComponent* LevelGenerationCarverClearTower;
-    class USceneComponent* DeathEffectLocation;
     class UHealthDamageTracker* HealthDamageTracker;
     class UTerrainPlacementComponent* terrainPlacement;
     class USphereComponent* PlayerTrigger_STE;

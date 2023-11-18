@@ -5,6 +5,7 @@ class ULoreScreen_Spacerig_C : public ULoreScreen_Master_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
     class UButton_Spacerig_Map_Circle_C* AbyssBar;
+    class UButton_Spacerig_Map_Circle_C* ArcadeArea;
     class UButton_Spacerig_Map_Circle_C* AssignmentTerminal;
     class UCanvasPanel* CanvasPanel_Holder;
     class UButton_Spacerig_Map_Circle_C* DeepDives;

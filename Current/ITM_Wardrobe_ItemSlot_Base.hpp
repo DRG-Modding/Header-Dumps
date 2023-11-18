@@ -62,7 +62,7 @@ class UITM_Wardrobe_ItemSlot_Base_C : public UUserWidget
     void GetItemWidgets(TArray<class UWidget*>& ItemWidgets, TArray<int32>& NewItemIndices, int32& OutSelectedIndex);
     void ReceiveReleaseResource(class UWidget* InWidget);
     void SetTextToLeft(bool Index);
-    void Initialize(class UPlayerCharacterID* inCharacterID);
+    void Initialize(class UPlayerCharacterID* InCharacterID);
     void SetTypeIcon(class UTexture2D* Texture);
     void SetSlotName(const FText Title);
     void SetSlotSize(int32 InSize);

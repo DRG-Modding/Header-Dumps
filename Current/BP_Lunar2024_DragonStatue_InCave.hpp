@@ -1,7 +1,7 @@
-#ifndef UE4SS_SDK_BP_Lunar_RabbitStatue_InCave_HPP
-#define UE4SS_SDK_BP_Lunar_RabbitStatue_InCave_HPP
+#ifndef UE4SS_SDK_BP_Lunar2024_DragonStatue_InCave_HPP
+#define UE4SS_SDK_BP_Lunar2024_DragonStatue_InCave_HPP
 
-class ABP_Lunar_RabbitStatue_InCave_C : public AGem
+class ABP_Lunar2024_DragonStatue_InCave_C : public AGem
 {
     FPointerToUberGraphFrame UberGraphFrame;
     class UNiagaraComponent* Niagara;
@@ -47,7 +47,7 @@ class ABP_Lunar_RabbitStatue_InCave_C : public AGem
     void BndEvt__BP_InCaveOktoberfestMug_Box_K2Node_ComponentBoundEvent_6_ComponentHitSignature__DelegateSignature(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
     void Receive_OnDeposited(class APlayerCharacter* fromPlayer, class AActor* toActor);
     void TalkToSelf();
-    void ExecuteUbergraph_BP_Lunar_RabbitStatue_InCave(int32 EntryPoint);
+    void ExecuteUbergraph_BP_Lunar2024_DragonStatue_InCave(int32 EntryPoint);
 };
 
 #endif

@@ -24,7 +24,7 @@ class ABP_JukeBox_C : public AActor
     class UTimelineComponent* Timeline_0;
     float RotationSpeed;
     bool Can Use;
-    int32 MusicIndex;
+    int32 musicIndex;
     FVector Scale;
     TArray<TSoftObjectPtr<USoundBase>> MusicList;
     class UFSDAchievement* PartyTimeAchievement;

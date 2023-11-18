@@ -3,8 +3,11 @@
 
 class AWPN_RecallableSentryGun_C : public ARecallableSentryGunItem
 {
+    FPointerToUberGraphFrame UberGraphFrame;
 
     void GetGearStatEntry(class AFSDPlayerState* PlayerState, TArray<FGearStatEntry>& Stats);
+    void SetArcIndicatorActive(bool Active);
+    void ExecuteUbergraph_WPN_RecallableSentryGun(int32 EntryPoint);
 };
 
 #endif

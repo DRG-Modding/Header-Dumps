@@ -10,6 +10,7 @@ class UBasic_Window_CutCorner_C : public UUserWidget
     FMargin ContentPadding;
     float BackgroundOpacity;
     TEnumAsByte<ENUM_MenuColors::Type> ColorbarTint;
+    bool ShowBar;
 
     void PreConstruct(bool IsDesignTime);
     void SetBackgroundTint(FLinearColor InColorAndOpacity);

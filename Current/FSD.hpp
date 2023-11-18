@@ -399,6 +399,7 @@ struct FCarveWithColliderOperationData
     class UTerrainMaterial* Material;
     ECarveFilterType CarveFilter;
     FMatrixWithExactSync Transform;
+    class ULevelGenerationCarverComponent* LevelGenerationComponent;
     float ExpensiveNoise;
     EPreciousMaterialOptions Precious;
     CarveOptionsCellSize CarveCellSize;
@@ -414,6 +415,7 @@ struct FCarveWithSTLMeshOperationData
     ECarveFilterType CarveFilter;
     EPreciousMaterialOptions Precious;
     FMatrixWithExactSync Transform;
+    class ULevelGenerationCarverComponent* LevelGenerationComponent;
 
 };
 
@@ -2288,6 +2290,7 @@ struct FGeneratedInstantCarvers
 struct FGeneratedMissionGroup
 {
     TArray<class UGeneratedMission*> AvailableMissions;
+    bool OptedOutOfSeasonContent;
 
 };
 
@@ -2400,6 +2403,7 @@ struct FHUDElements
     FHUDElementData Objectives;
     FHUDElementData TeamDisplay;
     FHUDElementData SentryGunDisplay;
+    FHUDElementData VersionNumber;
 
 };
 
@@ -2519,6 +2523,15 @@ struct FInfluenceSphere
 {
     class UCaveInfluencer* Influencer;
     float Radius;
+
+};
+
+struct FInputDirectionSet
+{
+    TArray<EThawInputDirection> Directions;
+    int32 InputCount;
+    bool IsSequence;
+    int32 MaxSubsequentDuplicates;
 
 };
 
@@ -2741,6 +2754,7 @@ struct FLevelGenerationCarver
     class UStaticMesh* ConvexCarver;
     class UStaticMeshCarver* StaticMeshCarver;
     float ConvexExpensiveNoise;
+    class ULevelGenerationCarverComponent* Componenet;
     CarveOptionsCellSize CarveCellSize;
     class UTerrainMaterial* TerrainMaterial;
     ECarveFilterType Filter;
@@ -2751,6 +2765,23 @@ struct FLevelGenerationCarver
 struct FLevelGenerationCarverLists
 {
     TArray<FLevelGenerationCarver> Carvers;
+
+};
+
+struct FLightStrobeChannel
+{
+    TWeakObjectPtr<class UPointLightComponent> Light;
+    TWeakObjectPtr<class UMaterialInstanceDynamic> Mid;
+    TWeakObjectPtr<class UMeshComponent> Mesh;
+    FName ParamName;
+    float MinIntensity;
+    float MaxIntensity;
+    float TimeScale;
+    float MaterialMultiplier;
+    FRuntimeFloatCurve StrobingCurve;
+    EStrobingMode Mode;
+    EStrobeMaterialMode MaterialMode;
+    int32 Loops;
 
 };
 
@@ -3245,6 +3276,7 @@ struct FPlanetZoneItem
     TArray<class UGeneratedMission*> missions;
     class UPlanetZone* Zone;
     bool HasSpecialEvent;
+    bool WouldHaveSpecialEvent;
 
 };
 
@@ -3878,9 +3910,12 @@ struct FSeasonSave
 
 struct FSeasonSaveEntry
 {
+    int32 CountSeasonContentDisabled;
+    int32 CountSeasonContentReenabled;
     int32 XP;
     int32 Tokens;
     TArray<FRewardsClaimed> RewardsClaimed;
+    bool bSeasonCompletedAnnounced;
     bool HasClaimedAllRewards;
     int32 RewardsClaimedAfterMaxLevel;
     TMap<int32, bool> NodesBought;
@@ -3892,6 +3927,7 @@ struct FSeasonSaveEntry
     int32 PlagueHeartsUsed;
     float TimePlayedAtSeasonStart;
     float ChallengesCompletedAtSeasonStart;
+    bool OptedOutOfSeasonContent;
 
 };
 
@@ -4115,6 +4151,7 @@ struct FSplineSegmentCarveOperationData
     class UTerrainMaterial* Material;
     ECarveFilterType CarveFilter;
     EPreciousMaterialOptions Precious;
+    class ULevelGenerationCarverComponent* LevelGenerationComponent;
 
 };
 
@@ -4649,6 +4686,22 @@ struct FWeaponHitCounterEffectItem
 
 };
 
+struct FWeaponMaintenance
+{
+    TArray<FWeaponMaintenanceEntry> Entries;
+    int32 MaxLevel;
+
+};
+
+struct FWeaponMaintenanceEntry
+{
+    FGuid WeaponID;
+    int32 XP;
+    int32 Level;
+    bool LevelUpNotification;
+
+};
+
 struct FWeeklyCampaignItem
 {
     int32 LastCompletedWeek;
@@ -4800,6 +4853,7 @@ class AActivationObject : public AActor
 
 class AAdicPuddle : public AActor
 {
+    TWeakObjectPtr<class UPrimitiveComponent> TriggerCollider;
     class USphereComponent* SphereTrigger;
     class USoundBase* SpawnSound;
     TSubclassOf<class UStatusEffect> InflictedStatusEffect;
@@ -4932,6 +4986,7 @@ class AAmmoDrivenWeapon : public AAnimatedItem
     float ReloadDuration;
     int32 AmmoCount;
     int32 ClipCount;
+    int32 ManualHeatReductionAmmo;
     float FireInputBufferTime;
     float AutoReloadDuration;
     class USoundCue* AutoReloadCompleteCue;
@@ -4950,6 +5005,9 @@ class AAmmoDrivenWeapon : public AAnimatedItem
     float EndOfBurstRecoilMultiplier;
     bool HasAutomaticFire;
     bool IsFiring;
+    bool ManualHeatReductionOnReload;
+    int32 MaxManualHeatReductionCharges;
+    float ManualHeatReductionValue;
     EAmmoWeaponState WeaponState;
 
     void Upgraded_Blueprint_Implementation(const TArray<class UItemUpgrade*>& upgrades);
@@ -6053,6 +6111,7 @@ class ACrossbowProjectileStuck : public AFSDPhysicsActor
     class USphereComponent* LaserCollider;
     class ACrossbowProjectileBase* BaseProjectile;
 
+    void UsableChanged(bool CanUse);
     void OnUsedBy(class APlayerCharacter* Player, EInputKeys Key);
     void OnRep_BansheePulseEnabled();
     void MatchParentDestroy(class UHealthComponentBase* destroyed);
@@ -6510,6 +6569,7 @@ class ADrinkableItem : public AAnimatedItem
     class UDrinkableDataAsset* DrinkableData;
 
     void OnRep_DrinkableData();
+    void OnCameraModeChanged(ECharacterCameraMode NewCameraMode, ECharacterCameraMode OldCameraMode);
     void Consume();
     void ClientConsumed();
     bool CheckCanSalute();
@@ -6650,11 +6710,15 @@ class ADualWieldWeapon : public AAmmoDrivenWeapon
 
 class AElectricalSMG : public AAmmoDrivenWeapon
 {
+    TArray<class ARedeployableSentryGun*> SentriesWithActiveIndicators;
+    TSubclassOf<class ARedeployableSentryGun> SentryGunClass;
     TSubclassOf<class UStatusEffect> AoEStatusEffect;
     class UParticleSystem* AoEParticle;
     class USoundCue* AoESound;
     float AoEStatusEffectChance;
     float AoEStatusEffectRange;
+    bool TurretPlasmaLineEnabled;
+    bool TurretEMPDischargeEnabled;
 
     void OnTargetDamaged(class UHealthComponentBase* Health, float Amount, class UPrimitiveComponent* HitComponent, class UFSDPhysicalMaterial* PhysicalMaterial);
     void OnStatusEffectPushed(class UHealthComponentBase* Health);
@@ -7263,6 +7327,7 @@ class AFSDGameState : public AGameState
     bool missionAborted;
     int32 CountdownRemaining;
     FText countdownText;
+    int32 HostGlobalSeed;
     bool CanCarryOverResources;
     FFSDGameStateSessionLeaderChanged SessionLeaderChanged;
     void CurrentLeaderChanged(const class APlayerState* PlayerState);
@@ -8669,6 +8734,8 @@ class AHeliumTank : public AActor
 
 class AHolidayThrowableItem : public AThrowableItem
 {
+
+    void CameraModeUpdated(ECharacterCameraMode NewCameraMode, ECharacterCameraMode OldCameraMode);
 };
 
 class AHomingDroneBomb : public AProjectile
@@ -8839,6 +8906,7 @@ class AItem : public AActor
     bool CameraShakeOnEquip;
     class UCurveFloat* HeatCurve;
     float ManualHeatPerUse;
+    float HeatOnStartUse;
     float CooldownRate;
     float ManualCooldownDelay;
     float UnjamDuration;
@@ -9074,6 +9142,7 @@ class ALaserPointerItem : public AAnimatedItem
     TSubclassOf<class ALaserPointerMarker> MarkerType;
     TSubclassOf<class ALaserPointerMarker> SecondaryMarkerType;
     TWeakObjectPtr<class ALaserPointerMarker> ActiveMarker;
+    FGameplayTagContainer enemyTags;
     TSubclassOf<class ALaserPointerWaypoint> WaypointType;
     int32 MaxWaypoints;
     TArray<class ALaserPointerWaypoint*> Waypoints;
@@ -9147,6 +9216,7 @@ class ALineCutterProjectile : public AProjectile
     bool DestroyOnTerrainCollision;
     bool IsDead;
     bool bHasReversedDirection;
+    bool bIsHoming;
     float FlyStraighTime;
     EImpactDecalSize EletricDecalSize;
     EImpactDecalSize ImpactDecalSize;
@@ -9600,6 +9670,7 @@ class APLSTester : public AActor
     int32 MissionSeed;
     int32 GlobalSeed;
     int32 GlobalMissionIndex;
+    bool OptOutOfSeasonContent;
     class UMissionComplexity* limitComplexity;
     class UMissionDuration* limitDuration;
     class UMissionMutator* Mutator;
@@ -10114,6 +10185,7 @@ class APlagueMeteorSpawner : public ADebrisLocationFinder
 
 class APlaguePuddle : public AAdicPuddle
 {
+    uint16 MaxPlaguePiles;
 
     void Receive_OnVacuumed();
 };
@@ -10691,6 +10763,7 @@ class AProceduralSetup : public AActor
     bool UsePerLevelCritterSpawning;
     FString LastCompletedPLSPass;
 
+    void StartMusicAndAmbient(int32 Music);
     void StartGenerationOnClient(class AFSDPlayerController* client);
     void SpawnSpecialEvents();
     void SpawnObjectiveEncounter();
@@ -10760,6 +10833,7 @@ class AProjectile : public AProjectileBase
     void OnImpact(const FHitResult& HitResult);
     void OnBounce(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
     class UFSDPhysicalMaterial* FindBoneIndexFromArmor(const FHitResult& HitResult, int32& outBoneIndex);
+    void DisableHoming();
 };
 
 class AProjectileBase : public AActor
@@ -10988,6 +11062,7 @@ class ARecallableSentryGunItem : public ARecallableItem
     void RecallableSentryGunItemSignature(class ARecallableSentryGunItem* Item);
     FRecallableSentryGunItemOnSelectedItemChanged OnSelectedItemChanged;
     void RecallableSentryGunSignature(class ARecallableSentryGun* SentryGun);
+    TArray<class ARedeployableSentryGun*> SentriesWithActiveIndicators;
     int32 MaxSentryCount;
     float MinDistanceBetweenSentries;
     FText RecallHoldDescription;
@@ -10996,10 +11071,12 @@ class ARecallableSentryGunItem : public ARecallableItem
     class UItemPlacerAggregator* ItemPlacer;
     TArray<class UItemUpgrade*> upgrades;
     TSubclassOf<class AItem> LoadoutClass;
+    TSubclassOf<class ARedeployableSentryGun> SentryGunObjectClass;
     float SupplyStatusWeight;
     float SentryAngleRestriction;
     bool bIsUpgraded;
 
+    void SetArcIndicatorActive(bool Active);
     void ReceiveItemUpgraded();
     void RecallableSentryGunSignature__DelegateSignature(class ARecallableSentryGun* SentryGun);
     void RecallableSentryGunItemSignature__DelegateSignature(class ARecallableSentryGunItem* Item);
@@ -11034,6 +11111,8 @@ class ARedeployableSentryGun : public ASentryGun
 
     void ToggleOutlineAndIcon(bool Visible);
     void SetSentryGunOwner(class APlayerCharacter* Character);
+    void SetEMPIndicatorActive(bool Active);
+    void SetArcIndicatorActive(bool Active);
     void ReceiveOnStateChanged();
     void ReceiveOnSentryGunOwnerChanged();
     void ReceiveOnDismantled();
@@ -13761,10 +13840,10 @@ class UBTDecorator_IsFacing : public UBTDecorator_BlackboardBase
 
 class UBTDecorator_IsUnderCeiling : public UBTDecorator
 {
-    float Height;
-    float Angle;
-    bool TryCalcFromSocket;
+    FName ProjectileAttackName;
     FName SocketName;
+    float Acceptance;
+    float TraceWidth;
     bool DrawDebug;
     FBlackboardKeySelector TargetKey;
 
@@ -14540,6 +14619,7 @@ class UCampaign : public UObject
     class UGameActivityAssignmentType* CampaignActivity;
     TSubclassOf<class UCampaign> ReplacesOldCampaignCampaign;
     ECampaignMutators Mutators;
+    TArray<class UMissionWarning*> BannedWarnings;
 
     bool IsComplete();
     bool IsCampaignComplete(class UObject* WorldContext, TSubclassOf<class UCampaign> Campaign);
@@ -14868,6 +14948,26 @@ class UCaveScriptComponent : public UActorComponent
 
 class UCellIdFunctionLibrary : public UBlueprintFunctionLibrary
 {
+};
+
+class UCharacterBreakOutState : public UCharacterStateComponent
+{
+    FCharacterBreakOutStateOnThawInputsUpdated OnThawInputsUpdated;
+    void ThawInputsDelegate(const TArray<EThawInputDirection>& Inputs, bool Initial);
+    FCharacterBreakOutStateOnBreakOutInputSuccess OnBreakOutInputSuccess;
+    void ThawInputPressedDelegate(EThawInputDirection Direction);
+    FCharacterBreakOutStateOnBreakOutInputFailed OnBreakOutInputFailed;
+    void ThawInputPressedDelegate(EThawInputDirection Direction);
+    TArray<FInputDirectionSet> DirectionSets;
+    class USoundCue* SuccessSound;
+    class USoundCue* FailSound;
+    float ErrorGracePeriod;
+    float HoldToBreakTime;
+    float WrongInputPenaltyTime;
+    float InitialWaitPeriod;
+    bool UseLegacy;
+    bool ResetOnFail;
+
 };
 
 class UCharacterCameraController : public UActorComponent
@@ -16517,7 +16617,6 @@ class UDestructibleSubHealthComponent : public USubHealthComponent
     float MaxHealth;
     float RadialDamageResistance;
     bool AllowInderectDamage;
-    bool PassthroughDamageWhenDisabled;
     float Damage;
     class USceneComponent* ArmorComponent;
     FDestructibleSubHealthComponentOnDestroyed OnDestroyed;
@@ -17166,6 +17265,7 @@ class UEnemyBufferComponent : public UActorComponent
     float BuffRadius;
     int32 MaxBuffedTargets;
     FGameplayTagQuery BuffQuery;
+    TSubclassOf<class AActor> SubclassBuffQuery;
     TArray<class AFSDPawn*> BuffTargets;
     TArray<class UParticleSystemComponent*> ParticleInstances;
 
@@ -17904,6 +18004,8 @@ class UFSDCheatManager : public UCheatManager
     void Cheat_AddCredits(class UObject* WorldContextObject, int32 Amount);
     void C_Windows_PrintStack();
     void C_Windows_CloseAll();
+    void C_WeaponMaintenance_Reset();
+    void C_WeaponMaintenance_AddXP(int32 XP);
     void C_VanityMasteryResetXP();
     void C_VanityMasteryAddXP(int32 Number);
     void C_UnlockOverclocking();
@@ -17928,6 +18030,7 @@ class UFSDCheatManager : public UCheatManager
     void C_ToggleFadingEnabled();
     void C_ToggleFadingDebug();
     void C_ToggleCanShowBlood();
+    void C_TestSpecialEventChance();
     void C_StopMovement(bool shouldMove);
     void C_SpawnScriptedWaveIndex(int32 Index);
     void C_SpawnScriptedWave();
@@ -17953,7 +18056,10 @@ class UFSDCheatManager : public UCheatManager
     void C_Seasons_ResetReroll();
     void C_Seasons_ResetPlagueHeartsCollected();
     void C_Seasons_IncrementChallenge(int32 Index);
+    void C_Seasons_CompleteSeasonAlmost();
+    void C_Seasons_CompleteSeason();
     void C_Seasons_CompleteScripChallenge(int32 Number);
+    void C_Seasons_ClearSeasonCompletedAnnounced();
     void C_Seasons_ClearChallenges();
     void C_Seasons_ClearAllProgress();
     void C_Seasons_AddXP(int32 Number);
@@ -17996,7 +18102,10 @@ class UFSDCheatManager : public UCheatManager
     void C_Promotion_ClearRewardsSeen();
     void C_ProjectileDrawPaths();
     void C_ProjectileDebugPrintToggle();
+    void C_PrintLoadout();
+    void C_PlayNewMusic(int32 songIndex);
     void C_MissionMap_TestDistribution();
+    void C_MissionMap_SetSeed(int32 Seed);
     void C_MissionMap_Rotate();
     void C_MissionMap_ForceWarning(int32 Index);
     void C_MissionMap_ForceAnomaly(int32 Index);
@@ -18320,7 +18429,8 @@ class UFSDGameInstance : public UGameInstance
     TWeakObjectPtr<class AMolly> Donkey;
     FFSDGameInstanceOnBoscoChanged OnBoscoChanged;
     void BoscoChanged(class ABosco* Bosco);
-    bool DEBUGSpawnRandomMissions;
+    bool DEBUGUseDebugSeedForMissions;
+    bool DEBUGAutoRotateMissions;
     int32 DEBUGFixedPLSSeed;
     int32 DEBUGSeedOverride;
     bool CanPlayOnline;
@@ -18396,6 +18506,7 @@ class UFSDGameInstance : public UGameInstance
     class USoundSubmix* ControllerSpeakerSubmix;
 
     void UpdateGlobelMissionSeed();
+    void UpdateDebugSeed();
     void StopPhotographyInputProcessor();
     void StopPersonalAnalytics();
     void SteamServerJoinStatusDelegate__DelegateSignature(ESteamServerJoinStatus Status);
@@ -18420,6 +18531,7 @@ class UFSDGameInstance : public UGameInstance
     void SetGlobalMissionSeed(int32 Seed);
     void SetFSDPassword(FString pw);
     void SetEligableForRetirementAssignment(bool eligable);
+    void SetDebugSeed(int32 Seed);
     void SetCharacterSelectionWorldVisible(bool V, ECharselectionCameraLocation cameraLocation, bool resetHud, ECharacterSelectorItemStatus itemStatus);
     void SetCharacterSelectionSwitcher(class ACharacterSelectionSwitcher* switcher);
     void SendSteamInfo();
@@ -18472,6 +18584,7 @@ class UFSDGameInstance : public UGameInstance
     class UMutator* GetFirstMutator(TSubclassOf<class UMutator> mutatorClass);
     FString GetDisconnectErrorCode();
     TArray<FNetworkConnectionInfo> GetConnectionInfo();
+    int32 GetCommonGlobalMissionSeed();
     class APlayerCharacter* GetCharacterSelectorCharacter();
     void GameUserSettingsChanged();
     void DonkeyCharacterDelegate__DelegateSignature(class AMolly* InDonkey);
@@ -18537,6 +18650,7 @@ class UFSDGameUserSettings : public UGameUserSettings
     float NvidiaDlssSharpness;
     float FSDResolutionScale;
     ENVidiaReflexMode ReflexMode;
+    float WeaponSpwayScale;
     class USoundClass* soundClassCharacterVoices;
     class USoundClass* soundClassMissionControl;
     class USoundClass* soundClassMaster;
@@ -18630,6 +18744,7 @@ class UFSDGameUserSettings : public UGameUserSettings
     bool ToggleShowUpgradeExtraDetails();
     void ToggleModdingServerFilter(uint8 ServerFilter, bool Enable);
     void SetZiplineGunAutoSwitch(bool shouldAutoSwitch);
+    void SetWeaponSwayScale(float Scale);
     void SetVSyncEnabledToBeApplied(bool bEnable);
     void SetVolume(EVolumeType volumeType, float Volume);
     void SetVoiceChatEnabled(bool bEnable);
@@ -18669,6 +18784,7 @@ class UFSDGameUserSettings : public UGameUserSettings
     void SetMouseYSensitivity(float newSensitivity);
     void SetMouseXSensitivity(float newSensitivity);
     void SetModdingSortBy(uint8 SortField, bool SortAscending);
+    void SetLensFlaresEnabled(bool Enabled);
     void SetJukeboxStreamerMode(bool InStreamerMode);
     void SetInvertMouseWheel(bool invertMouseWheel);
     void SetInvertMouse(bool InvertMouse);
@@ -18698,6 +18814,7 @@ class UFSDGameUserSettings : public UGameUserSettings
     void SetChatEnabledOnController(bool InEnabled);
     void SetCanShowBlood(bool bloodAllowed);
     void SetCameraShakeScale(float CameraShakeScale);
+    void SetBloomEnabled(bool Enabled);
     void SetAutoRefreshServerlist(bool Value);
     bool SetAudioOutputDevice(class UObject* WorldContextObject, FString DeviceID);
     bool SetAudioInputDevice(FString DeviceName);
@@ -18723,6 +18840,7 @@ class UFSDGameUserSettings : public UGameUserSettings
     void InitializeDifficultySelection(class UObject* WorldContext, const TArray<class UDifficultySetting*> StartSelection);
     bool HasAudioOutputDeviceChanged(FString& AudioDeviceChangedTo);
     bool GetZiplineGunAutoSwitch();
+    float GetWeaponSwayScale();
     bool GetVSyncEnabledToBeApplied();
     float GetVolume(EVolumeType volumeType);
     bool GetUseToggleTerrainScanner();
@@ -18759,6 +18877,7 @@ class UFSDGameUserSettings : public UGameUserSettings
     float GetMouseYSensitivity();
     float GetMouseXSensitivity();
     bool GetModdingServerFilterEnabled(uint8 ServerFilter);
+    bool GetLensFlaresEnabled();
     bool GetIsDifficultySelected(class UDifficultySetting* Difficulty);
     bool GetInvertMouseWheel();
     bool GetInvertMouse();
@@ -18788,6 +18907,7 @@ class UFSDGameUserSettings : public UGameUserSettings
     float GetChatFadeTime();
     bool GetChatEnabledOnController();
     float GetCameraShakeScale();
+    bool GetBloomEnabled();
     bool GetAvaliableAudioOutputDevices(class UObject* WorldContextObject, TArray<FString>& AudioDevices);
     bool GetAvaliableAudioInputDevices(TArray<FString>& AudioDevices);
     bool GetAvailableScreenResolutionsForNonPrimaryMonitors(TArray<FIntPoint>& Resolutions);
@@ -19090,6 +19210,9 @@ class UFSDSaveGame : public USaveGame
     FFSDEventRewardsSave FSDEventRewardsSave;
     FSeasonSave SeasonSave;
     FGameDLCSave GameDLCSave;
+    FFSDSaveGameOnWeaponMaintenanceChanged OnWeaponMaintenanceChanged;
+    void WeaponMaintenanceChanged();
+    FWeaponMaintenance WeaponMaintenance;
     int32 SaveCreatedInPatch;
     FString AnonymousID;
     int32 PerkPoints;
@@ -19535,7 +19658,7 @@ class UFacilityObjective : public UObjective
     FSubObjective GetCurrentObjective();
     void GeneratorActivated();
     void FirstGeneratorEncounterSpawn(class APawn* spawned);
-    void DropOverCharger(class AProceduralSetup* Setup, int32 roomIndex, const FVector& facilityLocation, float idealRange, float idealZDistance, class UDebrisPositioning* DebrisPositioning, TSubclassOf<class ARessuplyPod> generatorClass);
+    void DropOverCharger(class AProceduralSetup* Setup, int32 roomIndex, const FVector& facilityLocation, float idealRange, float idealZDistance, class UDebrisPositioning* DebrisPositioning, TSubclassOf<class ARessuplyPod> generatorClass, bool AddImportantLocation);
     void ChangeObjective();
     void AddShieldGenerator(class AActor* charger, int32 roomIndex);
 };
@@ -20004,16 +20127,15 @@ class UFrozenPawnImpactComponent : public UActorComponent
     void OnFreezeImpact(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };
 
-class UFrozenStateComponent : public UCharacterStateComponent
+class UFrozenStateComponent : public UCharacterBreakOutState
 {
-    FRandRange DeFrostAmount;
     class USoundBase* AudioFreeFromIce;
     class UFSDPhysicalMaterial* IcePhysicalMaterial;
     class UFSDPhysicalMaterial* DwarfFleshMaterial;
     float SlowAnimationSpeed;
-    float HoldToBreakTime;
+    FRandRange DeFrostAmount;
 
-    void Server_ThawPlayer();
+    void Server_ThawPlayer(float Percent);
     void ReceiveOnDefrosting();
 };
 
@@ -20120,8 +20242,10 @@ class UGameDLCSettings : public UDataAsset
 
 class UGameData : public UObject
 {
+    class UKPISettings* KPI_Settings;
     FGVisibilityGroups VisibilityGroups;
     class UPromotionRewardsSettings* PromotionRewardsSettings;
+    class UWeaponMaintenanceSettings* WeaponMaintenanceSettings;
     class UFSDEventCollection* FsdEventsSettings;
     class UGameActivitySettings* GameActivitySettings;
     class UDanceSettings* DanceSettings;
@@ -20157,9 +20281,6 @@ class UGameData : public UObject
     class UDailyDealSettings* DailyDealSettings;
     class UTerrainMaterialSettings* TerrainMaterialSettings;
     class USaveGameSettings* SaveGameSettings;
-    FGDMissionStats MissionStats;
-    FGDMilestones Milestones;
-    FGDPerks perks;
     FGDItemCategoryIDs ItemCategoryIDs;
     TArray<class UTexture2D*> LoadoutIconList;
     class UMinersManual* MinersManual;
@@ -20188,6 +20309,9 @@ class UGameData : public UObject
     TArray<class UPlayerCharacterID*> GetRankedHeroIDs();
     FText GetPlayerRankName(int32 Rank);
     class UPlayerCharacterID* GetPlayerCharacterID(const FGuid& ID);
+    FGDPerks GetPerkData();
+    FGDMissionStats GetMissionStats();
+    FGDMilestones GetMileStonesData();
     class UInventoryList* GetInventoryList(class UPlayerCharacterID* characterID);
     class UDifficultySetting* GetDifficultySetting(int32 Index);
     int32 GetDifficultyIndex(class UDifficultySetting* Difficulty);
@@ -20196,6 +20320,7 @@ class UGameData : public UObject
     FRetirementCostItem GetCharacterRetirementCost(class UObject* WorldContext, class UPlayerCharacterID* ID);
     TArray<class UHUDVisibilityGroup*> GetAllVisibilityGroups();
     TArray<class UMissionStat*> GetAllMissionStats();
+    TArray<class UMilestoneAsset*> GetAllMilestones();
     TArray<class UMissionStat*> GetAllInfirmaryStats();
 };
 
@@ -20246,7 +20371,6 @@ class UGameModeFunctionLibrary : public UBlueprintFunctionLibrary
 {
 
     bool IsCloseToImportantLocation(class AFSDGameState* GameState, const FVector& Location);
-    FTransform FindRandomEscapePodLocation(class UObject* WorldContextObject);
     FTransform FindEscapePodLocationAtDistance(class UObject* WorldContextObject, float Distance, float aboveDistanceBias, class AActor* optionalFrom);
     void AddSeamlessTravelEventKey(class UObject* WorldContextObject, class USeamlessTravelEventKey* Key);
 };
@@ -20359,6 +20483,7 @@ class UGeneratedMission : public UObject
     TSubclassOf<class UMissionDNA> MissionDNA;
     EMissionStructure MissionStructure;
     bool IsInSeasonEventZone;
+    bool WouldBeInSeasonEventZone;
     bool CanHaveMutators;
     TSoftObjectPtr<ULevelSequence> LoaderLevelSequence;
 
@@ -20374,6 +20499,12 @@ class UGeneratedMission : public UObject
     class UMissionDNA* GetMissionDNA();
     class AProceduralSetup* CreatePLS(int32 Seed);
     bool AreMissionsEqual(class UGeneratedMission* Other);
+};
+
+class UGenerationCleanupComponent : public UActorComponent
+{
+
+    void OnCarverCallback();
 };
 
 class UGenerationComponent : public UPrimitiveComponent
@@ -20493,7 +20624,7 @@ class UGoogleAnalyticsWrapper : public UObject
     void RecordGADeepDiveStageHit(FString Key, bool Rank, int32 StageTime, int32 TimeSinceStartOfDive, int32 TotalTime, int32 NitraLeft);
     void RecordGaChallengeReroll(int32 ChallengeIndex, class USeasonChallenge* Challenge);
     void RecordExtraFailInfo(FString MissionName, FString Stage, FString ExtraText);
-    void RecordCustomGAEvent(FString EventCategory, FString EventAction, FString EventLabel, const int32 EventValue, FString TrackingId);
+    void RecordCustomGAEvent(FString EventCategory, FString EventAction, FString EventLabel, const int32 EventValue, FString TrackingID);
     void RecordContinuousDamage(class AActor* DamageCauser);
     void RecordBossFightEnd(FString BossName, bool WasBossKilled, int32 BossKills);
     FString ProcessCampaignName(UClass* Campaign);
@@ -20738,7 +20869,7 @@ class UHUDWarningWidget : public UFSDUserWidget
 class UHackableBuildingObjective : public UObjective
 {
 
-    void DropOverCharger(class AProceduralSetup* Setup, const FVector& buildingLocation, float idealRange, float idealZDistance, class UDebrisPositioning* DebrisPositioning, TSubclassOf<class ARessuplyPod> generatorClass);
+    void DropOverCharger(class AProceduralSetup* Setup, const FVector& buildingLocation, float idealRange, float idealZDistance, class UDebrisPositioning* DebrisPositioning, TSubclassOf<class ARessuplyPod> generatorClass, bool AddImportantLocation);
 };
 
 class UHackingToolWidget : public UUserWidget
@@ -21156,7 +21287,7 @@ class UInDangerComponent : public UActorComponent
     bool GetIsActive();
 };
 
-class UInfectedStateComponent : public UCharacterStateComponent
+class UInfectedStateComponent : public UCharacterBreakOutState
 {
     FRandRange CleanseAmount;
     class USoundBase* AudioFreeOfInfection;
@@ -21166,7 +21297,6 @@ class UInfectedStateComponent : public UCharacterStateComponent
     class UAnimMontage* InfectedMontage;
     class UAnimMontage* InfectedAndBreakingFreeMontage;
     float BreakingFreeMontageDuration;
-    float HoldToBreakTime;
 
     void Server_Breakout();
     void ReceiveOnCleansing();
@@ -21331,7 +21461,7 @@ class UInventoryBase : public UActorComponent
 {
     TArray<class AActor*> ActorsSelectable;
     TArray<class AActor*> ActorsNonSelectable;
-    FEquippedActorData EquippedActor;
+    FEquippedActorData ReplicatedEquippedActor;
     class AActor* LastEquippedActors;
 
     void Server_SetEquippedActor(const FEquippedActorData& Actor, bool CallClientDelayed);
@@ -21545,7 +21675,7 @@ class UItemData : public UPrimaryDataAsset
     TMap<UResourceData*, float> ResourceCost;
     int32 RequiredCharacterLevel;
 
-    class UTexture2D* GetPreviewImage();
+    class UTexture2D* GetPreviewImage(class UObject* WorldContext);
     TSubclassOf<class AActor> GetPreviewActorClass();
     TArray<FCraftingCost> GetCraftingCost();
 };
@@ -21916,6 +22046,14 @@ class UJettyBootsArcadeWidget : public UUserWidget
 {
 };
 
+class UKPISettings : public UDataAsset
+{
+    FGDMissionStats MissionStats;
+    FGDMilestones Milestones;
+    FGDPerks perks;
+
+};
+
 class UKeepCleaningStrategy : public UStandardExitStrategy
 {
 };
@@ -21991,8 +22129,11 @@ class ULevelGenerationCarverComponent : public UPrimitiveComponent
     CarveOptionsCellSize CarveCellSize;
     bool PreviewEnabled;
     bool CarvingDisabled;
+    bool DestroyOwnerOnCarve;
+    bool DestroySelfAndChilded;
     bool SelfActivate;
 
+    void OnCarvedCallback();
 };
 
 class ULevelGenerationCarverComponent2 : public UPrimitiveComponent
@@ -22013,6 +22154,19 @@ class ULevelGenerationDebris : public UActorComponent
     float range;
     bool SelfActivate;
 
+};
+
+class ULightStrobingComponent : public UActorComponent
+{
+    FLightStrobeChannel DefaultChannel;
+    float PhotosensitiveMultiplier;
+    bool AutoSetup;
+
+    FLightStrobeChannel GetChannel(int32 Index);
+    void AddStrobeChannel(const FLightStrobeChannel& Channel);
+    void AddMesh(class UMeshComponent* Mesh, int32 Channel);
+    void AddMaterial(class UMaterialInstanceDynamic* Mid, int32 Channel);
+    void AddLight(class UPointLightComponent* Light, int32 Channel);
 };
 
 class ULimbDismembermentList : public UDataAsset
@@ -22081,6 +22235,7 @@ class ULineSpikeAttack : public USpecialAttackComponent
     bool TentaclesBurried;
     float MaxStepUpheight;
     float firstSpikeDelay;
+    float firstSpikeExtraDistance;
     float MaxDistanceToGround;
     float DistanceBetweenSpikes;
     float TimeBetweenSpikes;
@@ -22445,7 +22600,7 @@ class UMissionDuration : public UDataAsset
 class UMissionFunctionLibrary : public UBlueprintFunctionLibrary
 {
 
-    int32 GetGlobalMissionSeed();
+    FDateTime GetGlobalMissionBaseTime();
 };
 
 class UMissionGenerationManager : public UGameInstanceSubsystem
@@ -22455,6 +22610,7 @@ class UMissionGenerationManager : public UGameInstanceSubsystem
 
     TArray<class UGeneratedMission*> GetMissions(int32 Seed);
     class UGeneratedMission* GetMissionFromSeeds(int32 GlobalSeed, int32 MissionSeed);
+    TArray<class UGeneratedMission*> GetAvailableMissionsWithSeasonContentCheck(bool HasOptedOutOfSeasonContent);
     TArray<class UGeneratedMission*> GetAvailableMissions();
 };
 
@@ -22769,7 +22925,7 @@ class UMusicManager : public UWorldSubsystem
     void StopHandle(FMusicHandle Handle);
     void StopCategory(class UMusicCategory* Category);
     void SetIsPaused(bool IsPaused);
-    FMusicHandle PlayLibrary(class UMusicLibrary* library);
+    FMusicHandle PlayLibrary(class UMusicLibrary* library, int32 musicIndex);
     FMusicHandle Play(class USoundBase* Music, class UMusicCategory* Category);
 };
 
@@ -23019,6 +23175,7 @@ class UObjectivesManager : public UActorComponent
 
     void OnObjectiveChanged(class UObjective* obj);
     bool HasRequiredSecondaryObjective();
+    TArray<class UObjective*> GetSecondaryObjectives();
     class UObjective* GetSecondaryObjective();
     class UObjective* GetPrimaryObjective();
     void ExitPodDescending();
@@ -23428,7 +23585,7 @@ class UPerkFunctionLibrary : public UBlueprintFunctionLibrary
 
     void SplitPerksByUsage(const TArray<class UPerkAsset*>& perks, TArray<class UPerkAsset*>& OutPassivePerks, TArray<class UPerkAsset*>& OutActivePerks);
     TArray<class UPerkAsset*> SortPerksByUsage(TArray<class UPerkAsset*>& perks);
-    void RandomizePerkLoadout(class APlayerCharacter* Player);
+    void RandomizePerkLoadout(class UObject* WorldContext, class UPlayerCharacterID* characterID);
     bool IsPerkTierUnLocked(class UObject* WorldContext, int32 Tier);
     int32 GetRequiredPerkClaimsForTier(int32 Tier);
     void GetPerkTierState(class UObject* WorldContext, int32 Tier, bool& TierUnLocked, int32& NextRequiredCount, int32& NextProgressCount);
@@ -23532,7 +23689,7 @@ class UPickaxeFunctionLibrary : public UBlueprintFunctionLibrary
 {
 
     bool RemovePickaxePartFromOwned(class UObject* WorldContextObject, const class UPickaxePart* part);
-    void RandomizePickaxe(class APlayerCharacter* Player);
+    void RandomizePickaxe(class UObject* WorldContextObject, class UPlayerCharacterID* PlayerId);
     bool IsPickaxePartEquipped(class UObject* WorldContextObject, EPickaxePartLocation Location, class UPickaxePart* part, class UItemID* pickaxeID);
     void GivePickaxePart(class UObject* WorldContextObject, class UPickaxePart* part);
     TArray<class UPickaxePart*> GetUnlockedPickaxeParts(class UObject* WorldContextObject, EPickaxePartLocation Category);
@@ -23541,6 +23698,7 @@ class UPickaxeFunctionLibrary : public UBlueprintFunctionLibrary
     FPickaxeSet GetEquippedPickaxeSet(class UObject* WorldContextObject, class UItemID* pickaxeID);
     class UPickaxePart* GetEquippedPickaxePart(class UObject* WorldContextObject, EPickaxePartLocation partLocation, class UItemID* pickaxeID);
     void EquipPickaxePart(class UObject* WorldContextObject, class UPickaxePart* part, EPickaxePartLocation partLocation, class UItemID* pickaxeID);
+    void CopyPastePickaxeLoadout(class UObject* WorldContextObject, class UPlayerCharacterID* PlayerId, int32 fromIndex, int32 toIndex);
 };
 
 class UPickaxeHandlePart : public UPickaxeMeshPart
@@ -25434,8 +25592,8 @@ class USaveGameStateComponent : public UActorComponent
     void OnRep_ActiveCampaignMission();
     void ItemUpgradeEquipSignature__DelegateSignature(TSubclassOf<class AActor> itemClass, class UItemUpgrade* Upgrade);
     void ItemUpgradeCraftSignature__DelegateSignature(class UItemUpgrade* Upgrade);
+    bool IsActiveCampaignMission(class UGeneratedMission* mission);
     FCharacterProgress GetCharacterStat(class UPlayerCharacterID* characterID);
-    class UGeneratedMission* GetActiveCampaignMission();
     void CreditsChangedDelegate__DelegateSignature();
 };
 
@@ -25625,6 +25783,7 @@ class USeason : public USavableDataAsset
 {
     FText SeasonName;
     int32 SeasonNumber;
+    TSoftObjectPtr<UTexture2D> SeasonIcon;
     TArray<FSeasonLevel> Levels;
     FSeasonLevel RewardAfterAllLevels;
     TArray<FUnassignedReward> UnassignedRewards;
@@ -25755,6 +25914,8 @@ class USeasonsSubsystem : public UGameInstanceSubsystem
     FSeasonMissionResult LatestMissionSeasonResult;
 
     FTimespan TimeToNewChallenge();
+    void SetSeasonCompletedAnnounced(bool IsAnnounced);
+    void SetHasOptedOutOfSeasonContent(bool hasOptedOut);
     void RerollChallenge(int32 Index);
     void OnStatChanged(class UObject* WorldContext, class UMissionStat* Stat, float Value);
     void OnScripChallengeCompleted(class UObject* WorldContext, class UMissionStat* Stat, float Value);
@@ -25763,6 +25924,7 @@ class USeasonsSubsystem : public UGameInstanceSubsystem
     bool IsNodeBought(int32 TreeOfVanityNodeID);
     void InitializeStatsAndChallenges();
     bool HasUnclaimedRewards(int32& Level);
+    bool HasOptedOutOfSeasonContent();
     bool HasClaimedLevelRewards(int32 startLevel, int32 numberOfLevels);
     bool HasClaimedAllRewards();
     int32 GetUnusedHearts();
@@ -25774,6 +25936,7 @@ class USeasonsSubsystem : public UGameInstanceSubsystem
     void GetSeasonLevelFromXP(int32 XP, int32& Level, float& currentLevelPercent, int32& currentLevelXP, int32& LevelXPTotal);
     void GetSeasonLevel(int32& Level, float& currentLevelPercent, int32& currentLevelXP, int32& LevelXPTotal);
     bool GetSeasonExpiryDate(FDateTime& ExpiryDate);
+    bool GetSeasonCompletedAnnounced();
     void GetSeasonBought(bool& isBought);
     void GetScriptChallengeInfo(int32& Completed, int32& claimed, int32& Total);
     int32 GetNumberOfTokens(class UObject* WorldContextObject);
@@ -25797,6 +25960,7 @@ class USeasonsSubsystem : public UGameInstanceSubsystem
     void CHEAT_ResetReroll();
     void CHEAT_AddChallenge();
     bool CanRerollChallenge();
+    bool CanOptOutOfSeasonContent();
     bool BuyTreeNode(class UObject* WorldContextObject, class AFSDPlayerController* Player, int32 TreeOfVanityNodeID);
 };
 
@@ -26402,6 +26566,7 @@ class USpecialEvent : public UDataAsset
     float Weight;
     TArray<class UMissionTemplate*> BannedMissions;
     class USpecialEventSpawner* EventSpawner;
+    bool IsPartOfCurrentSeason;
 
 };
 
@@ -26541,6 +26706,7 @@ class USplineHookAttack : public USpecialAttackComponent
     class UDamageComponent* Damage;
     float ForwardPlacement;
     float DesiredLaunchAngle;
+    float MaxAngledForce;
     float AdjustmentStartDistance;
     float AttackDuration;
     float MaxAngle;
@@ -26548,6 +26714,7 @@ class USplineHookAttack : public USpecialAttackComponent
     float AttackDelay;
     float LeadMultiplier;
     float AquireLocationTime;
+    float OnSuccessCooldown;
     bool ShowGrabArea;
     bool Lead;
     bool Using;
@@ -26557,6 +26724,7 @@ class USplineHookAttack : public USpecialAttackComponent
     FVector GetTargetLocation();
     FVector GetTargetDirection();
     bool GetHasAquiredTarget();
+    void ClearSuccessCooldown();
 };
 
 class USplineTrailComponent : public USceneComponent
@@ -26884,6 +27052,7 @@ class USubHealthComponent : public UActorComponent
     FSubHealthComponentOnCanTakeDamageChanged OnCanTakeDamageChanged;
     void SubHealthComponentDelegate(class USubHealthComponent* subHealth);
     EHealthbarType HealthbarType;
+    bool PassthroughDamageWhenDisabled;
     EEnemyHealthScaling EnemyHealthScaling;
 
     void SetCanTakeDamage(bool canTakeDamage);
@@ -27791,7 +27960,7 @@ class UUpgradableGearComponent : public UActorComponent
     bool GetMasteryForLevel(const TArray<FMasteryItem>& masteryLevels, int32 Level, FMasteryItem& outLevel);
     TArray<FUpgradeTier> GetItemUpgradeTiers(TSubclassOf<class AActor> itemClass);
     EItemUpgradeStatus GetItemUpgradeStatus(class UObject* WorldContextObject, TSubclassOf<class AActor> itemClass, class UItemUpgrade* ItemUpgrade, class UPlayerCharacterID* characterID);
-    TArray<class UItemUpgrade*> GetItemUpgrades(TSubclassOf<class AActor> itemClass, TSubclassOf<class UItemUpgrade> upgradeClass, class AFSDPlayerState* Player, uint8 upgradeIndex);
+    TArray<class UItemUpgrade*> GetItemUpgradesFromSave(TSubclassOf<class AActor> itemClass, TSubclassOf<class UItemUpgrade> upgradeClass, class AFSDPlayerState* Player, uint8 upgradeIndex);
     TSubclassOf<class AActor> GetItemPreviewClassFromActor(TSubclassOf<class AActor> Actor);
     TSubclassOf<class AActor> GetItemPreviewClass(class UItemID* ItemID);
     bool GetItemMasteryForLevel(class UItemID* ItemID, int32 Level, FMasteryItem& outLevel);
@@ -28028,6 +28197,7 @@ class UVanityAnimInstance : public UAnimInstance
     FVector ExternalForce;
     float ExternalForceMultiplier;
     float MaxForce;
+    bool AlwaysShowAnimEffects;
     TArray<FVanityAnimEffect> VanityAnimEffects;
 
     void UpdateMeshes();
@@ -28393,6 +28563,43 @@ class UWeaponImpactComponent : public UActorComponent
 
     void EnableImpactCheckhing(class USkeletalMeshComponent* cmp);
     void DisableImpactChecking();
+};
+
+class UWeaponMaintenanceAquisition : public UItemAquisitionBase
+{
+};
+
+class UWeaponMaintenanceItemWidget : public UUserWidget
+{
+    class UItemID* WeaponID;
+    class UPlayerCharacterID* characterID;
+    class UItemSkin* Reward;
+    class UItemData* WeaponData;
+    EWeaponMaintenanceState MaintenanceState;
+    int32 MaintenanceLevel;
+    int32 MaintenanceXP;
+    int32 MaintenanceTargetXP;
+
+    void SetWeapon(class UObject* WorldContext, class UItemID* InWeaponID, class UPlayerCharacterID* InCharacterID);
+    void RefreshFromSavegame(class UObject* WorldContext);
+    void Receive_RefreshedFromSavegame();
+    void Receive_CanLevelUp();
+    bool LevelUp(class UObject* WorldContext);
+    int32 GetMaxLevel();
+};
+
+class UWeaponMaintenanceSettings : public UDataAsset
+{
+    TArray<int32> LevelXPRequirements;
+    TArray<class UItemSkin*> LevelRewards;
+    FSpaceRigNotification WeaponUnlockedNotification;
+
+};
+
+class UWeaponMaintenanceTabWidget : public UWindowWidget
+{
+
+    bool HasNewNotifications(class UObject* WorldContext);
 };
 
 class UWeaponSwitchProjectileUpgrade : public UItemUpgrade

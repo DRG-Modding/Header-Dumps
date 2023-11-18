@@ -17,6 +17,8 @@ class UBasic_Image_C : public UUserWidget
     FVector2D BasicToolTipPosition;
     FVector2D BasicToolTipAlignment;
 
+    void ScaleToFitY(float InHeight);
+    void ScaleToFitX(float InWidth);
     void SetBasicToolTip(FText BasicToolTipText, FVector2D BasicToolTipPosition, FVector2D BasicToolTipAlignment);
     class UWidget* GetBasicToolTip();
     void SetDynamicMaterialValues();

@@ -45,7 +45,7 @@ class APRJ_OmmoranEnergySprite_C : public AHomingDroneBomb
     void ReceiveBeginPlay();
     void BndEvt__CollisionComponent_K2Node_ComponentBoundEvent_1_ComponentBeginOverlapSignature__DelegateSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
     void ResetTargeting();
-    void DisableHoming();
+    void TurnHomingOff();
     void BndEvt__Health_K2Node_ComponentBoundEvent_0_DeathSig__DelegateSignature(class UHealthComponentBase* HealthComponent);
     void OnImpacted(bool PredictedImpact, const FHitResult& HitResult);
     void ForceResetTargeting();

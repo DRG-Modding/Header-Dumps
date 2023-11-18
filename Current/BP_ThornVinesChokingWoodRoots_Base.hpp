@@ -3,6 +3,7 @@
 
 class ABP_ThornVinesChokingWoodRoots_Base_C : public AActor
 {
+    class UGenerationCleanupComponent* GenerationCleanup;
     class ULevelGenerationCarverComponent* LevelGenerationCarver_ThornVine;
     class ULevelGenerationCarverComponent* LevelGenerationCarver_BaseRoot;
     class UStaticMeshComponent* StaticMesh3;

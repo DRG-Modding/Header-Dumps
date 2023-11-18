@@ -23,6 +23,7 @@ class UConsoleScreen_Season01_C : public UUserWidget
     void OnClaimStatusChanged(bool AllClaimed);
     void OnTokensChanged(int32 NumberOfTokens, int32 Change);
     void Construct();
+    void OnWeaponMaintenanceChanged();
     void ExecuteUbergraph_ConsoleScreen_Season01(int32 EntryPoint);
 };
 

@@ -70,6 +70,7 @@ class U_SCREEN_MissionSelectionMK3_C : public UWindowWidget
     float BiomeHoverStartTime;
     TArray<class UImage*> ZoneOutlines;
 
+    TArray<class UGeneratedMission*> GetAvailableMissions();
     void HighlightChallenges(const TArray<class UObject*>& AssetReferences, bool ShouldHighlight, class USeasonChallenge* Challenge);
     void ClearServerListMissionRestrictions();
     FEventReply OnMouseButtonUp(FGeometry MyGeometry, const FPointerEvent& MouseEvent);

@@ -10,7 +10,7 @@ class UHUD_SpaceRig_Notification_C : public UUserWidget
     class UImage* Glow;
     class UTextBlock* Header;
     class UImage* NotificationIcon;
-    class UTextBlock* NotificationLabel;
+    class URichTextBlock* NotificationRichLabel;
     FSpaceRigNotification Notification;
 
     void PreConstruct(bool IsDesignTime);

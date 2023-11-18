@@ -4,10 +4,11 @@
 class UHUD_CrossHair_NewSawedOffShotgunDynamic_C : public UUserWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
-    class UImage* Image_78;
-    class UImage* Image_79;
+    class UImage* LeftBracket;
     class UNamedSlot* LeftCH;
+    class UImage* RightBracket;
     class UNamedSlot* RightCH;
+    class UImage* ShapedShellsCrosshair;
     class UImage* Shell1A;
     class UImage* Shell1B;
     class UImage* Shell2A;
@@ -15,13 +16,15 @@ class UHUD_CrossHair_NewSawedOffShotgunDynamic_C : public UUserWidget
     float Opacity High;
     class APlayerCharacter* Character;
     float Opacity Low;
+    float Opacity Very Low;
+    bool IsAccurate;
 
-    void PreConstruct(bool IsDesignTime);
-    void SetData(class AAmmoDrivenWeapon* Weapon);
-    void OnClipCountChanged(int32 Amount);
     void Construct();
     void OnDamagedEnemy_Event(const TScriptInterface<class IHealth>& EnemyHealth, float Damage, float DamageModifier, float HealthRemaining, bool IsWeakPoint, bool IsRadial);
     void OnSpreadChanged(float HorizontalSpread, float VerticalSpread, bool isAtRest);
+    void OnClipCountChanged(int32 Amount);
+    void SetData(class AAmmoDrivenWeapon* Weapon);
+    void PreConstruct(bool IsDesignTime);
     void ExecuteUbergraph_HUD_CrossHair_NewSawedOffShotgunDynamic(int32 EntryPoint);
 };
 

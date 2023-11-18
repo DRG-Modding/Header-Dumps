@@ -12,6 +12,7 @@ class AENE_Spider_Boss_Base_C : public AENE_SpiderBase_Large_C
     class UFSDAchievement* BigGameHunter;
     int32 PlayerKills;
     FName AnalyticsName;
+    float Movement Speed Penalty Reduction;
 
     void Check Without A Paddle Achievement();
     void DifficultyAsInt(int32& Difficulty);

@@ -8,7 +8,7 @@ class ABP_FireCrackerItem_C : public AHolidayThrowableItem
 
     void ReceiveItemThrown(class AThrowableActor* thrownActor);
     void RemovedFromInventory(class ACharacter* oldCharacter);
-    void RecieveEquipped();
+    void OnReceiveEquippedFinished();
     void ExecuteUbergraph_BP_FireCrackerItem(int32 EntryPoint);
 };
 

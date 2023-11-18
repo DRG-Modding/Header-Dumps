@@ -22,6 +22,8 @@ class AENE_Spider_Boss_Heavy_C : public AENE_Spider_Boss_Base_C
     class UAlignEnemyComponent* AlignEnemy;
     TEnumAsByte<Spider_Boss_Heavy_State::Type> HeavyTankState;
     class UNiagaraComponent* WhirlwindParticles;
+    FENE_Spider_Boss_Heavy_COnStateChanged OnStateChanged;
+    void OnStateChanged(TEnumAsByte<Spider_Boss_Heavy_State::Type> State);
 
     bool GetIsTargetable();
     void SetupWeakspotGlow();
@@ -47,6 +49,7 @@ class AENE_Spider_Boss_Heavy_C : public AENE_Spider_Boss_Base_C
     void SpawnProjectile(TSubclassOf<class AActor> Actor, const FTransform& Transform);
     void SetPhysicsAsset(class UPhysicsAsset* NewPhysicsAsset);
     void ExecuteUbergraph_ENE_Spider_Boss_Heavy(int32 EntryPoint);
+    void OnStateChanged__DelegateSignature(TEnumAsByte<Spider_Boss_Heavy_State::Type> State);
 };
 
 #endif

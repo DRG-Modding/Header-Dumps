@@ -9,7 +9,7 @@ class UITM_MisSel_PlanetZone_C : public UUserWidget
     class UBasic_Menu_MinimalWindow_C* Basic_Menu_MinimalWindow;
     class UBasic_Menu_MinimalWindow_C* BasicWindow_Minimal;
     class UImage* IMG_Padlock;
-    class UImage* IMG_Shadow;
+    class UImage* Img_Shadow;
     class UImage* IMG_TooltipArrow;
     class UButton* MainButton;
     class UVerticalBox* VertBox-Tooltip;
@@ -19,6 +19,7 @@ class UITM_MisSel_PlanetZone_C : public UUserWidget
     class UImage* I_AnimatedPlague;
     FVector2D ZoneCenter;
 
+    TArray<class UGeneratedMission*> GetAvailableMissions();
     void Refresh();
     void PreConstruct(bool IsDesignTime);
     void BndEvt__MainButton_K2Node_ComponentBoundEvent_0_OnButtonHoverEvent__DelegateSignature();

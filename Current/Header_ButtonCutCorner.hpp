@@ -7,6 +7,7 @@ class UHeader_ButtonCutCorner_C : public UUserWidget
     class UBorder* Background;
     class UButton* Button_0;
     class UImage* Image_Outline;
+    class UImage* Notification;
     class USizeBox* Sizer;
     class UTextBlock* TXT_ButtonText;
     FText ButtonText;
@@ -21,6 +22,8 @@ class UHeader_ButtonCutCorner_C : public UUserWidget
     void OnReleased();
     bool IsSelected;
     bool TopRightCorner;
+    FMargin TextPadding;
+    bool ShowNotification;
 
     void IsPressed(bool& IsPressed);
     void SetButtonText(FText Text);
@@ -34,6 +37,8 @@ class UHeader_ButtonCutCorner_C : public UUserWidget
     void Toggle(bool IsToggleOn);
     void Update Look();
     void Click();
+    void ToggleNotificationIcon(bool InShow);
+    void Construct();
     void ExecuteUbergraph_Header_ButtonCutCorner(int32 EntryPoint);
     void OnReleased__DelegateSignature();
     void OnPressed__DelegateSignature();

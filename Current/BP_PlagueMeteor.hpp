@@ -4,6 +4,7 @@
 class ABP_PlagueMeteor_C : public APlagueMeteor
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UAutoCarverComponent* AutoCarver1;
     class UDamageComponent* EndExplosionDamage;
     class UStaticMeshComponent* CrevasseCarver;
     class UFSDAudioComponent* PlagueMeteorIdleSound;
@@ -101,6 +102,7 @@ class ABP_PlagueMeteor_C : public APlagueMeteor
     void TestDestroy();
     void Impacted_Latejoin();
     void DestroyAndSpawnHearts_FailSafe();
+    void BndEvt__BP_PlagueMeteor_AutoCarver1_K2Node_ComponentBoundEvent_1_CarveDoneDelegate__DelegateSignature();
     void ExecuteUbergraph_BP_PlagueMeteor(int32 EntryPoint);
 };
 

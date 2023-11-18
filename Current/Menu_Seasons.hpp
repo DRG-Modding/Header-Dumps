@@ -13,6 +13,7 @@ class UMenu_Seasons_C : public UWindowWidget
     class UHeader_ButtonCutCorner_C* BTN_EndFlow_Little;
     class UHeader_ButtonCutCorner_C* BTN_EndFlow_Medium;
     class UHeader_ButtonCutCorner_C* BTN_EndFlow_Much;
+    class UHeader_ButtonCutCorner_C* BTN_Maintenance;
     class UHeader_ButtonCutCorner_C* BTN_NewChallenge;
     class UHeader_ButtonCutCorner_C* BTN_ResetRenew;
     class UHeader_ButtonCutCorner_C* BTN_ResetReroll;
@@ -30,11 +31,11 @@ class UMenu_Seasons_C : public UWindowWidget
     class UUI_AdvancedLabel_C* OptionIconPrev;
     class UTextBlock* Text_NumberOfTokens;
     class UUI_PlayerSpeaking_List_C* UI_PlayerSpeaking_List;
-    class UImage* UnlockedIcon;
     class UVerticalBox* VerticalBox_Cheats;
     class UWnd_SeasonBriefing_C* Wnd_SeasonBriefing;
     class UWND_SeasonOverview_C* WND_SeasonOverview;
     class UWND_TreeOfVanity_C* WND_TreeOfVanity;
+    class UWND_WeaponMaintenance_C* WND_WeaponMaintenance;
     class UHeader_ButtonCutCorner_C* SelectedButton;
     class UMissionStat* CellStat;
     class UMissionStat* RackStat;
@@ -70,6 +71,9 @@ class UMenu_Seasons_C : public UWindowWidget
     void PreConstruct(bool IsDesignTime);
     void HideScripExclamation(bool InHide);
     void BndEvt__CloseButton_K2Node_ComponentBoundEvent_12_OnClicked__DelegateSignature();
+    void BndEvt__Menu_Seasons_BTN_Maintenance_K2Node_ComponentBoundEvent_13_OnClicked__DelegateSignature(class UHeader_ButtonCutCorner_C* Button);
+    void UpdateWeaponMaintenance();
+    void BndEvt__Menu_Seasons_Wnd_WeaponMaintenance_K2Node_ComponentBoundEvent_14_OnWeaponMaintenanceChanged__DelegateSignature();
     void ExecuteUbergraph_Menu_Seasons(int32 EntryPoint);
 };
 

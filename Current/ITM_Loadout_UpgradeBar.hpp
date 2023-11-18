@@ -11,7 +11,7 @@ class UITM_Loadout_UpgradeBar_C : public UUserWidget
     class UITM_UpgGear_UpgIconSingle_C* ITM_UpgGear_UpgIconSingle_3;
     TArray<class UITM_UpgGear_UpgIconSingle_C*> UpgradeWidgets;
 
-    void ShowItemUpgrades(class UPlayerCharacterID* inCharacterID, TSubclassOf<class AActor> InItemClass, class AFSDPlayerState* InPlayerState, bool EnableHoverTooltip);
+    void ShowItemUpgrades(class UPlayerCharacterID* InCharacterID, TSubclassOf<class AActor> InItemClass, class AFSDPlayerState* InPlayerState, bool EnableHoverTooltip);
     void GetUpgradeFromList(int32 Index, TArray<class UItemUpgrade*>& upgrades, class UItemUpgrade*& Output);
     void Construct();
     void PreConstruct(bool IsDesignTime);

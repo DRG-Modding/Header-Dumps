@@ -11,6 +11,7 @@ class AENE_Spider_ShieldTank_C : public AENE_Spider_Tank_Base_C
     class UTremorAttackComponent* TremorAttack;
     class UBoxComponent* Box;
     class UAlignEnemyComponent* AlignEnemy;
+    float MovementSpeedPenaltyReduction;
 
     void UserConstructionScript();
     void All_PlayImpactSound(class AActor* Actor);

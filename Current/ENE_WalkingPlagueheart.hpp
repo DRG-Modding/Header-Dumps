@@ -4,6 +4,7 @@
 class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class USpawnActorWithDebrisPosComponent* SpawnActorWithDebrisPos2;
     class USphereComponent* ProximityInfectionSphereTrigger;
     class USphereComponent* UsableSphere;
     class UCapsuleComponent* Capsule;
@@ -61,7 +62,6 @@ class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
     class USphereComponent* Sphere;
     class AActor* TargetActor;
     bool IsHealthbarVisible;
-    FMusicHandle Handle_Music;
     class UEnemyGroupDescriptor* EnemyDescriptor;
     FName Key_LeashLocation;
     float SlimeTrailBarfCooldown;
@@ -81,8 +81,10 @@ class AENE_WalkingPlagueheart_C : public AENE_SpiderBase_Large_C
     TArray<class AActor*> Blockers;
     class USkeletalMeshComponent* NewVar_0_0;
     TArray<class AActor*> AttachedActorsOnDeath;
+    int32 WeakspotCount;
 
     class UInfectionPointCleaningComponent* GetCleaningPoints(FVector fromLocation);
+    void AddBoots();
     void GetAttachedActorsIfValid(class AActor* Actor, TArray<class AActor*>& AttachedActors);
     void KnockbackFromShield(class ABP_PlagueHeartShield_Base_C* Shield);
     void UpdateIsBlocked();

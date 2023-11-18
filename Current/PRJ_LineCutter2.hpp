@@ -55,6 +55,7 @@ class APRJ_LineCutter2_C : public ALineCutterProjectile
     void LeaveTrail();
     void StartSpawningTrail();
     void OnInitialized();
+    void OnPenetrated(bool PredictedPenetration, const FHitResult& HitResult);
     void ExecuteUbergraph_PRJ_LineCutter2(int32 EntryPoint);
 };
 

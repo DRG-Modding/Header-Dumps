@@ -4,8 +4,8 @@
 class ABP_Phys_Pumpkin_C : public AActor
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UNiagaraComponent* NS_Halloween_LightBugs_Const;
     class UStaticMeshComponent* Mesh;
-    class UParticleSystemComponent* ParticleSystem;
     class UCapsuleComponent* UseCapsule;
     class UGravityChangedComponent* GravityChanged;
     class UInstantUsable* InstantUsable;

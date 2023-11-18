@@ -8,6 +8,7 @@ class ABP_PlagueMeteorTimer_C : public ABP_EventSpawnTimer_C
 
     FTransform GetSpawnTransform();
     void PreEventSpawn();
+    void All_PlayWarningSound();
     void ExecuteUbergraph_BP_PlagueMeteorTimer(int32 EntryPoint);
 };
 

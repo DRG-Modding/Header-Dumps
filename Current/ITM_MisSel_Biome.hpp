@@ -10,7 +10,7 @@ class UITM_MisSel_Biome_C : public UUserWidget
     class UBasic_Menu_MinimalWindow_C* BasicWindow_Minimal;
     class UCanvasPanel* CanvasPanel_Outer;
     class UITM_SeasonChallengeIcon_C* Icon_Challenge;
-    class UImage* IMG_Shadow;
+    class UImage* Img_Shadow;
     class UITM_Campaign_Icon_C* ITM_Campaign_Icon;
     class UButton* MainButton;
     class UHorizontalBox* MissionsAvailiable;

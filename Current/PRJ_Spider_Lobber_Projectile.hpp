@@ -4,6 +4,7 @@
 class APRJ_Spider_Lobber_Projectile_C : public APRJ_Base_Spider_Lobber_Projectile_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class USimpleHealthComponent* SimpleHealth;
     class UProjectileExplosion* ProjectileExplosion;
     float Timeline_0_NewTrack_0_1997C95D415B8B6775FF2BACB50CF47A;
     TEnumAsByte<ETimelineDirection::Type> Timeline_0__Direction_1997C95D415B8B6775FF2BACB50CF47A;
@@ -16,6 +17,7 @@ class APRJ_Spider_Lobber_Projectile_C : public APRJ_Base_Spider_Lobber_Projectil
     void OnImpacted(bool PredictedImpact, const FHitResult& HitResult);
     void All_SpawnEffects(FVector_NetQuantize Location, FVector_NetQuantizeNormal Normal);
     void SpawnEffects(const FVector& Location, const FVector& Normal);
+    void BndEvt__PRJ_Spider_Lobber_Projectile_SimpleHealth_K2Node_ComponentBoundEvent_0_DeathSig__DelegateSignature(class UHealthComponentBase* HealthComponent);
     void ExecuteUbergraph_PRJ_Spider_Lobber_Projectile(int32 EntryPoint);
 };
 

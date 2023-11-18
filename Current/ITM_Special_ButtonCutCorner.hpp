@@ -11,6 +11,7 @@ class UITM_Special_ButtonCutCorner_C : public UUserWidget
     class UImage* LeftIcon;
     class UOverlay* Overlay_Icon;
     class UOverlay* Overlay_Outer;
+    class UHorizontalBox* RootHorizontalBox;
     class USizeBox* SizeBox_Icon;
     class USizeBox* Sizer;
     class UUI_AdvancedLabel_C* UI_AdvancedLabel;
@@ -18,6 +19,7 @@ class UITM_Special_ButtonCutCorner_C : public UUserWidget
     FITM_Special_ButtonCutCorner_COnClicked OnClicked;
     void OnClicked();
     FText ControllerOverrideText;
+    FSlateFontInfo Font;
     int32 Font Size;
     float Width (minimum);
     float Height;
@@ -30,7 +32,10 @@ class UITM_Special_ButtonCutCorner_C : public UUserWidget
     TEnumAsByte<ENUM_MenuColors::Type> NormalColor;
     TEnumAsByte<ENUM_MenuColors::Type> SelectedColor;
     TEnumAsByte<ENUM_MenuColors::Type> IconColor;
+    bool FlipHorizontally;
+    float FrameOpacity;
 
+    void SetFlipHorizontally(bool FlipButton);
     void IsPressed(bool& IsPressed);
     void SetButtonText(FText Text, FText OverrideControllerText);
     void SetFontSize(int32 FontSize);

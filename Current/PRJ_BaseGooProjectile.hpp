@@ -19,10 +19,7 @@ class APRJ_BaseGooProjectile_C : public AGooGunProjectile
     bool ExplosivePuddles;
     class USoundBase* CreatureImpactSound;
 
-    void BndEvt__MovementComponent_K2Node_ComponentBoundEvent_0_OnProjectileBounceDelegate__DelegateSignature(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
     void OnImpacted(bool PredictedImpact, const FHitResult& HitResult);
-    void MakeBouncy();
-    void DoEffects(FVector_NetQuantize Location, FVector_NetQuantizeNormal Normal);
     void OnUpgradeElementAdded(class UProjectileUpgradeElement* element);
     void DestroyProjectile();
     void ExecuteUbergraph_PRJ_BaseGooProjectile(int32 EntryPoint);

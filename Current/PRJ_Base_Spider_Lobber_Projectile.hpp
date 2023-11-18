@@ -6,7 +6,6 @@ class APRJ_Base_Spider_Lobber_Projectile_C : public AGooGunProjectile
     FPointerToUberGraphFrame UberGraphFrame;
     class UNiagaraComponent* P_SpiderLobber_Projecitle_Trail_TEMP_Converted;
     class UNiagaraComponent* GooParticle;
-    class UStaticMeshComponent* SK_ShootingPlant_Projectile;
     class UAudioComponent* audio;
     class UDamageComponent* Damage;
     int32 MaxBounces;

@@ -15,6 +15,9 @@ class APRJ_MicroMissile_PlasmaBurster_C : public APRJ_MicroMissile_C
     void OnInitialized();
     void BndEvt__PRJ_MicroMissile_PlasmaBurster_MovementComponent_K2Node_ComponentBoundEvent_0_OnProjectileBounceDelegate__DelegateSignature(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
     void BndEvt__PRJ_MicroMissile_PlasmaBurster_MovementComponent_K2Node_ComponentBoundEvent_1_OnProjectileStopDelegate__DelegateSignature(const FHitResult& ImpactResult);
+    void Server_DamageTarget(class AActor* Target, const FVector& Location, class UPrimitiveComponent* HitComponent, class UFSDPhysicalMaterial* PhysMat);
+    void TryDoDamage(class AActor* Target, const FVector& Location, class UPrimitiveComponent* HitComponent, class UFSDPhysicalMaterial* PhysMat);
+    void ReceiveTick(float DeltaSeconds);
     void ExecuteUbergraph_PRJ_MicroMissile_PlasmaBurster(int32 EntryPoint);
 };
 

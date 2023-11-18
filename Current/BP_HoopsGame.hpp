@@ -4,6 +4,7 @@
 class ABP_HoopsGame_C : public AActor
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UBoxComponent* Box2;
     class UBoxComponent* R;
     class UBoxComponent* E;
     class UBoxComponent* Box1;
@@ -77,6 +78,7 @@ class ABP_HoopsGame_C : public AActor
     void ReceiveTick(float DeltaSeconds);
     void OnSpaceballInHoop(int32 ScoreToAdd);
     void All_PlayComboLostSFX();
+    void BndEvt__BP_HoopsGame_Box2_K2Node_ComponentBoundEvent_1_ComponentBeginOverlapSignature__DelegateSignature(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
     void ExecuteUbergraph_BP_HoopsGame(int32 EntryPoint);
 };
 

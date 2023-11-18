@@ -4,6 +4,7 @@
 class UITM_MisSel_BiomeBase_C : public UUserWidget
 {
 
+    void RemovePlagueOverlay();
     void AddPlagueOverlay();
     void GetBasePanel(class UCanvasPanel*& Panel);
 };

@@ -4,6 +4,7 @@
 class ABP_CozyTreeHollow_Base_C : public AActor
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UGenerationCleanupComponent* GenerationCleanup;
     class UBillboardComponent* SugarChunksLocation;
     class UTerrainPlacementComponent* terrainPlacement;
     class UStaticMeshComponent* StaticMesh_Entrance;

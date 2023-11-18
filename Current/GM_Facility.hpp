@@ -9,7 +9,6 @@ class AGM_Facility_C : public ABP_NetworkPlayGameMode_C
     class ABP_MainFacility_DataVault_C* mainFacility;
     TSubclassOf<class AActor> ActivatorClass;
     TSubclassOf<class AActor> FacilityClass;
-    TSubclassOf<class ARessuplyPod> FacilityGeneratorClass;
     class UEWC_Base_C* WaveMusic;
     TArray<int32> RoomsToSpawnIn;
     int32 activations;
@@ -18,6 +17,7 @@ class AGM_Facility_C : public ABP_NetworkPlayGameMode_C
     TArray<class UEWC_OverloadShieldGenerator_Facility_C*> ActiveWaves;
     FMusicHandle MusicHandle;
     int32 GeneratorsCalled;
+    TSubclassOf<class ARessuplyPod> Facility Generator Class;
 
     void StopOverChargerWave(class ABP_Facility_PowerStation_GeneratorBase_C* WaveOrigin);
     void GetGeneratorRooms(TArray<int32>& Array);

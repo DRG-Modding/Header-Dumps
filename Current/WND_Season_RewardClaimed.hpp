@@ -13,6 +13,7 @@ class UWND_Season_RewardClaimed_C : public UWindowWidget
     class UBasic_Menu_ColorBar_C* Basic_Menu_ColorBar_3;
     class UBorder* Border_Glow;
     class UButton* Button_0;
+    class UOverlay* CustomOverlay;
     class UImage* Image_Background_Black;
     class UImage* Image_Background_Smoke;
     class UImage* Image_SelectedArrow;
@@ -29,6 +30,9 @@ class UWND_Season_RewardClaimed_C : public UWindowWidget
     void SetDataFromReward(class UReward* Reward);
     void Setup();
     void BndEvt__Button_0_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature();
+    void SetDataFromSkin(class UItemSkin* InSkin, class UItemID* InOptionalItem, class UPlayerCharacterID* InOptionalCharacter);
+    void ClearCustomOverlays();
+    void AddCustomOverlay(class UUserWidget* InCustomWidget, TEnumAsByte<EHorizontalAlignment> HorizontalAlignment, TEnumAsByte<EVerticalAlignment> VerticalAlignment, FMargin Padding);
     void ExecuteUbergraph_WND_Season_RewardClaimed(int32 EntryPoint);
     void OnWindowClose__DelegateSignature();
 };

@@ -51,6 +51,7 @@ class UWND_SeasonLevels_C : public UUserWidget
     void ScrollWheelDown();
     void OnRewardClaimed(class UReward* Reward);
     void OnShown();
+    void OnRewardWindowClosed();
     void ExecuteUbergraph_WND_SeasonLevels(int32 EntryPoint);
     void RewardClaimed__DelegateSignature(class UReward* Reward);
 };

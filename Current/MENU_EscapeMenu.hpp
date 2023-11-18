@@ -15,6 +15,7 @@ class UMENU_EscapeMenu_C : public UEscapeMenuWindow
     class UHeader_ButtonCutCorner_C* BTN_DummyModding;
     class UBasic_ButtonCutCorner_C* BTN_Exit;
     class UITM_Special_ButtonCutCorner_C* BTN_Leave;
+    class UHeader_ButtonCutCorner_C* BTN_Merch;
     class UHeader_ButtonCutCorner_C* BTN_MinersManual;
     class UHeader_ButtonCutCorner_C* BTN_Modding;
     class UHeader_ButtonCutCorner_C* BTN_News;
@@ -59,7 +60,10 @@ class UMENU_EscapeMenu_C : public UEscapeMenuWindow
     class UMenu_DLC_C* Menu_DLC;
     class UMENU_DummyModding_C* MENU_DummyModding;
     bool IsLeftCtrlDown;
+    class UMENU_Merch_C* MENU_Merch;
 
+    void Remove Buttons If Condition(TArray<class UHeader_ButtonCutCorner_C*>& InButtons, bool InCondition);
+    void Remove Button If Condition(class UHeader_ButtonCutCorner_C* InButton, bool InCondition);
     void Should Modding Menu be Enabled(bool& Result);
     FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     void OnMinersManualOpen(class UObject* IdentifyingObject, bool Open Specific Page, EMinersManualSinglePage page);
@@ -106,6 +110,7 @@ class UMENU_EscapeMenu_C : public UEscapeMenuWindow
     void BndEvt__BTN_DLC_K2Node_ComponentBoundEvent_7_OnClicked__DelegateSignature(class UHeader_ButtonCutCorner_C* Button);
     void BndEvt__BTN_DummyModding_K2Node_ComponentBoundEvent_9_OnClicked__DelegateSignature(class UHeader_ButtonCutCorner_C* Button);
     void OpenMinersManualFromID(EMinersManualSection Section, const FGuid& ID);
+    void BndEvt__MENU_EscapeMenu_BTN_Merch_K2Node_ComponentBoundEvent_10_OnClicked__DelegateSignature(class UHeader_ButtonCutCorner_C* Button);
     void OnMinersManualClosed(class UWindowWidget* Window);
     void OnCreditsClicked();
     void OnInputSourceChanged(EFSDInputSource InputSource);

@@ -14,10 +14,11 @@ class ABP_MeteorShowerTimer_C : public ABP_EventSpawnTimer_C
     void ReceiveBeginPlay();
     void SpawnedMeteor(class AActor* spawned);
     void SpawnSequenceComplete();
-    void PreEventSpawn();
     void MetorSpawned(class AActor* Actor);
     void SpawnFailed();
     void AssignPlagueHeart();
+    void PreEventSpawn();
+    void All_PlayWarningSound();
     void ExecuteUbergraph_BP_MeteorShowerTimer(int32 EntryPoint);
 };
 

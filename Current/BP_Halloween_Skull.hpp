@@ -4,6 +4,12 @@
 class ABP_Halloween_Skull_C : public AHalloweenSkull
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UOutlineComponent* outline;
+    class USphereComponent* ColdSphere_Close;
+    class USphereComponent* ColdSphere_Far;
+    class UPointLightComponent* PointLight_Far;
+    class UStatusEffectTriggerComponent* ColdStatusEffectTrigger_Close;
+    class UStatusEffectTriggerComponent* ColdStatusEffectTrigger_Far;
     class UNiagaraComponent* NS_Fire_SkullFlame_WS;
     class USphereComponent* Sphere;
     class UEnemyComponent* enemy;
@@ -22,7 +28,9 @@ class ABP_Halloween_Skull_C : public AHalloweenSkull
     float RunSpeedMod;
     FTimerHandle RunTimer;
     float LastMoveSpeed;
+    float AudioUpdateTime;
 
+    void UserConstructionScript();
     void ScaleUpFlames__FinishedFunc();
     void ScaleUpFlames__UpdateFunc();
     void Timeline_0__FinishedFunc();
@@ -34,8 +42,8 @@ class ABP_Halloween_Skull_C : public AHalloweenSkull
     void BndEvt__BP_Nisse_HealthComponent_K2Node_ComponentBoundEvent_2_HitSig__DelegateSignature(float Damage, const FDamageData& DamageData, bool anyHealthLost);
     void BndEvt__BP_Halloween_Skull_HealthComponent_K2Node_ComponentBoundEvent_0_DeathSigDetailed__DelegateSignature(class UHealthComponent* HealthComponent, float damageAmount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
     void ReceiveBeginPlay();
-    void ReceiveTick(float DeltaSeconds);
     void OnJawClosed();
+    void UpdateSpeedForAudio();
     void ExecuteUbergraph_BP_Halloween_Skull(int32 EntryPoint);
 };
 

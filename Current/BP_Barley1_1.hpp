@@ -3,8 +3,6 @@
 
 class ABP_Barley1_1_C : public ABP_Collectible_Barley_B1_C
 {
-    class USphereComponent* Sphere_0;
-
 };
 
 #endif

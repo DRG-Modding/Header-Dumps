@@ -31,6 +31,8 @@ class UITM_LoadoutSelectorBar_C : public UUserWidget
     bool CopyVanityLoadoutOnPaste;
     bool CopyWeaponLoadoutOnPaste;
     class UBasic_Popup_YesNoPrompt_C* YesNoPopup;
+    bool CopyPickaxeLoadoutOnPaste;
+    int32 PastedButtonIdx;
 
     void GetToolTipText(FText& Headline, FText& Text);
     void Get Selected Button(class UITM_LoadoutSelectButton_C*& Button, int32& Index);

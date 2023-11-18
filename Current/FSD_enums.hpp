@@ -33,17 +33,20 @@ enum class EAmmoDrivenWeapnUpgradeType {
     RateOfFire = 2,
     ReloadSpeed = 3,
     RecoilMultiplier = 4,
-    BurstCount = 5,
-    BurstRateOfFire = 6,
-    ActivateBurstFireMode = 7,
-    ActivateAutomaticFireMode = 8,
-    HeatUpRateModifier = 9,
-    AutoReloadDuration = 10,
-    RecoilMass = 11,
-    OverheatOnReload = 12,
-    ShotCost = 13,
-    CustomEvent1 = 14,
-    EAmmoDrivenWeapnUpgradeType_MAX = 15,
+    RecoilMultiplierV = 5,
+    RecoilMultiplierH = 6,
+    BurstCount = 7,
+    BurstRateOfFire = 8,
+    ActivateBurstFireMode = 9,
+    ActivateAutomaticFireMode = 10,
+    HeatUpRateModifier = 11,
+    AutoReloadDuration = 12,
+    RecoilMass = 13,
+    OverheatOnReload = 14,
+    ShotCost = 15,
+    CustomEvent1 = 16,
+    HeatReductionOnReload = 17,
+    EAmmoDrivenWeapnUpgradeType_MAX = 18,
 };
 
 enum class EAmmoWeaponState {
@@ -612,7 +615,8 @@ enum class ECryoSprayUpgrades {
     FrozenTargetsCanShatter = 4,
     AoECold = 5,
     LongReach = 6,
-    ECryoSprayUpgrades_MAX = 7,
+    SprayWidth = 7,
+    ECryoSprayUpgrades_MAX = 8,
 };
 
 enum class ECustomUsableType {
@@ -1558,7 +1562,8 @@ enum class ELineCutterProjectileUpgradeType {
     RollUntilStop = 9,
     Yawing = 10,
     PlasmaTrail = 11,
-    ELineCutterProjectileUpgradeType_MAX = 12,
+    Homing = 12,
+    ELineCutterProjectileUpgradeType_MAX = 13,
 };
 
 enum class ELineCutterUpgradeType {
@@ -2347,6 +2352,18 @@ enum class ESteamServerJoinStatus {
     ESteamServerJoinStatus_MAX = 2,
 };
 
+enum class EStrobeMaterialMode {
+    Material = 0,
+    Mesh = 1,
+    EStrobeMaterialMode_MAX = 2,
+};
+
+enum class EStrobingMode {
+    Intensity = 0,
+    AttenuationRadius = 1,
+    EStrobingMode_MAX = 2,
+};
+
 enum class ETargetStateDamageBonusType {
     Frozen = 0,
     OnFire = 1,
@@ -2400,6 +2417,15 @@ enum class ETetherMessageDirection {
     Backward = 1,
     Both = 2,
     ETetherMessageDirection_MAX = 3,
+};
+
+enum class EThawInputDirection {
+    EForward = 0,
+    ERight = 1,
+    EBack = 2,
+    ELeft = 3,
+    ENA = 4,
+    EThawInputDirection_MAX = 5,
 };
 
 enum class EThrowableInput {
@@ -2520,6 +2546,14 @@ enum class EWeakpointGlowMode {
     Set = 0,
     Additive = 1,
     EWeakpointGlowMode_MAX = 2,
+};
+
+enum class EWeaponMaintenanceState {
+    Locked = 0,
+    Maintaining = 1,
+    LevelUp = 2,
+    Finished = 3,
+    EWeaponMaintenanceState_MAX = 4,
 };
 
 enum class EWoodLouseState {

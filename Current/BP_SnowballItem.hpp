@@ -9,7 +9,6 @@ class ABP_SnowballItem_C : public AHolidayThrowableItem
     void ReceiveItemThrown(class AThrowableActor* thrownActor);
     void RemovedFromInventory(class ACharacter* oldCharacter);
     void OnReceiveEquippedFinished();
-    void RecieveEquipped();
     void ExecuteUbergraph_BP_SnowballItem(int32 EntryPoint);
 };
 

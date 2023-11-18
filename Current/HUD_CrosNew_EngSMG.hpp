@@ -13,6 +13,7 @@ class UHUD_CrosNew_EngSMG_C : public UCrosshairWidget
     float OpacityHigh;
     class APlayerCharacter* Character;
     float Opacity Low;
+    float MagicSpreadMultiplier;
 
     void SetData(class AItem* Item);
     void OnSpreadChanged(float HorizontalSpread, float VerticalSpread, bool isAtRest);

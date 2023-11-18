@@ -4,6 +4,7 @@
 class APRJ_FlareGun_Projectile01_C : public AFlareGunProjectile
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UAudioComponent* Lit_Fuse_Cue;
     class UDamageComponent* Damage1;
     class UStaticMeshComponent* Arrow;
     class USpotLightComponent* SpotLight_Shadow_3;
@@ -25,6 +26,7 @@ class APRJ_FlareGun_Projectile01_C : public AFlareGunProjectile
     float LightIntensity_Spot;
     bool bFallToGround;
     FHitResult ImpactHit;
+    class UAudioComponent* FlareBurnAudio;
 
     void OnRep_bFallToGround();
     void SpawnImpact();

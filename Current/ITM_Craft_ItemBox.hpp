@@ -27,7 +27,7 @@ class UITM_Craft_ItemBox_C : public UUserWidget
     bool IsHovering;
 
     void RefreshCanAfford();
-    void FreeRendertarget();
+    void FreeRenderTarget();
     void CreateResources(TScriptInterface<class ICraftable> InItem);
     void SetCostColor();
     void SetRankRequirements();

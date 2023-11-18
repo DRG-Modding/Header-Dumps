@@ -17,7 +17,7 @@ class UITM_Craft_ItemIcon_C : public UUserWidget
     class UPlayerCharacterID* characterID;
 
     void GetBorderColor(FLinearColor& OutputColor);
-    void FreeRendertarget();
+    void FreeRenderTarget();
     void SetIconTexture(class UObject* Object);
     void GetPlayerState(class AFSDPlayerState*& AsFSDPlayer State);
     void SetData(TScriptInterface<class ICraftable> Item, TSubclassOf<class APlayerCharacter> CharacterClass);

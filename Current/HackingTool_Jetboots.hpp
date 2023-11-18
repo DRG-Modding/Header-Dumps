@@ -4,6 +4,7 @@
 class UHackingTool_Jetboots_C : public UHackingToolWidget
 {
     FPointerToUberGraphFrame UberGraphFrame;
+    class UWidgetAnimation* AnimEnableInterface;
     class UWidgetAnimation* AnimFindChip;
     class UWidgetAnimation* AnimZoom;
     class UUI_HackingTool_Chip_C* Chip;
@@ -12,6 +13,7 @@ class UHackingTool_Jetboots_C : public UHackingToolWidget
     class UUI_HackingTool_Header_C* Interface_Header;
     class UUI_HackingTool_Progress_C* Interface_Progress;
     class UUI_JettyBoots_Game_C* JettyBoots_Game;
+    class UCanvasPanel* UI_Canvas;
     class UAudioComponent* AmbientAudioComponent;
     class UJettyBootSettings* LevelSettings;
 
@@ -26,6 +28,7 @@ class UHackingTool_Jetboots_C : public UHackingToolWidget
     void ReceiveHackingToolUnequipped();
     void BndEvt__HackingTool_Jetboots_JettyBoots_Game_K2Node_ComponentBoundEvent_5_OnGameStateChanged__DelegateSignature(TEnumAsByte<ENUM_JettyBoots_GameState::Type> InState, TEnumAsByte<ENUM_JettyBoots_GameState::Type> InPreviousState);
     void DoIntro();
+    void DoAnimEnableInterface();
     void ExecuteUbergraph_HackingTool_Jetboots(int32 EntryPoint);
 };
 

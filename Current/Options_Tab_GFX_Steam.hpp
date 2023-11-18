@@ -10,12 +10,14 @@ class UOptions_Tab_GFX_Steam_C : public UUserWidget
     class UBasic_Option_C* Basic_Option_1;
     class UBasic_Option_C* OPT_AAType;
     class UBasic_Option_C* OPT_AntiAliasing;
+    class UBasic_Option_C* OPT_Bloom;
     class UBasic_Option_C* OPT_DX12;
     class UBasic_Option_C* OPT_Effects;
     class UOptions_FullScreen_C* OPT_FullScreen;
     class UBasic_Option_C* OPT_Gamma;
     class UBasic_Option_C* OPT_HDR;
     class UBasic_Option_C* OPT_HDR_Gamma;
+    class UBasic_Option_C* OPT_LensFlare;
     class UBasic_Option_C* OPT_OverallQuality;
     class UBasic_Option_C* OPT_PostProcessing;
     class UBasic_Option_C* OPT_Reflex;
@@ -26,6 +28,7 @@ class UOptions_Tab_GFX_Steam_C : public UUserWidget
     class UBasic_Option_C* OPT_Sharpening;
     class UBasic_Option_C* OPT_TextureResolution;
     class UBasic_Option_C* OPT_ViewDistance;
+    class UOptions_Bloom_C* Options_Bloom;
     class UOptions_FullScreen_Resolutions_C* Options_FullScreen_Resolutions;
     class UOptions_FullScreen_UWP_C* Options_FullScreen_UWP;
     class UOptions_GFX_Gamma_C* Options_GFX_Gamma;
@@ -34,6 +37,7 @@ class UOptions_Tab_GFX_Steam_C : public UUserWidget
     class UOptions_GFX_Sharpening_C* Options_GFX_Sharpening;
     class UOptions_GFX_Upscaling_C* Options_GFX_Upscaling;
     class UOptions_HDR_C* Options_HDR;
+    class UOptions_LensFlare_C* Options_LensFlare;
     class UOptions_Reflex_C* Options_Reflex;
     class UOptions_Scalability_AntiAliasingType_C* Options_Scalability_AntiAliasingType;
     class UOptions_Scalability_ViewDistance_C* Options_Scalability_ViewDistance;

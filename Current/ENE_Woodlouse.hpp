@@ -25,6 +25,7 @@ class AENE_Woodlouse_C : public AWoodLouse
     void SetCookMaterialSettings();
     void OnRep_DeathType();
     void SetDeathType(TEnumAsByte<Spider_DeathType::Type> NewParam);
+    void BndEvt__HealthComponent_K2Node_ComponentBoundEvent_0_DeathSig__DelegateSignature(class UHealthComponentBase* HealthComponent);
     void OnMessageAI(FName TriggerName);
     void Fizzle();
     void SwitchedState(EWoodLouseState CurrentState);
@@ -32,7 +33,6 @@ class AENE_Woodlouse_C : public AWoodLouse
     void ChangePhysicsAsset();
     void IncrementCommunityGoal();
     void BndEvt__ENE_SpiderBase_Large_HealthComponent_K2Node_ComponentBoundEvent_0_DeathSigDetailed__DelegateSignature(class UHealthComponent* HealthComponent, float damageAmount, const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
-    void BndEvt__HealthComponent_K2Node_ComponentBoundEvent_0_DeathSig__DelegateSignature(class UHealthComponentBase* HealthComponent);
     void DeathDetailedBase(const FDamageData& DamageData, const TArray<class UDamageTag*>& Tags);
     void NormalDeath();
     void ChemicalExplosionDeath();

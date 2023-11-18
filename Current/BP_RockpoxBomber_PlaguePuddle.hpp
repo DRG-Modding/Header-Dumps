@@ -3,6 +3,7 @@
 
 class ABP_RockpoxBomber_PlaguePuddle_C : public AAdicPuddle
 {
+    class UBoxComponent* BoxTrigger;
     class UNiagaraComponent* NS_Plague_Goo_Puddle;
     class USimpleObjectInfoComponent* SimpleObjectInfo;
     class USphereComponent* Sphere4;
@@ -11,6 +12,7 @@ class ABP_RockpoxBomber_PlaguePuddle_C : public AAdicPuddle
     class USphereComponent* Sphere1;
     class UParticleSystemComponent* ParticleSystem;
 
+    void UserConstructionScript();
 };
 
 #endif

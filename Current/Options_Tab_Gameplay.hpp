@@ -16,6 +16,7 @@ class UOptions_Tab_Gameplay_C : public UUserWidget
     class UBasic_Option_C* OPT_Servername;
     class UBasic_Option_C* OPT_StreamerTag;
     class UBasic_Option_C* OPT_TutorialHiints;
+    class UBasic_Option_C* OPT_WeaponSway;
     class UOption_ColorDeficieny_C* Option_ColorDeficieny;
     class UOptions_CameraShake_C* Options_CameraShake;
     class UOptions_FOV_C* Options_FOV;
@@ -29,6 +30,7 @@ class UOptions_Tab_Gameplay_C : public UUserWidget
     class UOptions_ShowSubtitles_C* Options_ShowSubtitles;
     class UOptions_TutorialHints_C* Options_TutorialHints;
     class UOptions_UseStreamerProgram_C* Options_UseStreamerProgram;
+    class UOptions_WeaponSway_C* Options_WeaponSway;
     class UOptions_GameServerName_C* UI_GameServerName;
     FOptions_Tab_Gameplay_CSettingsChanged SettingsChanged;
     void SettingsChanged();

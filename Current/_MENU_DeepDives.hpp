@@ -17,6 +17,7 @@ class U_MENU_DeepDives_C : public UWindowWidget
     class UWidget* ActivePage;
     FTimerHandle UpdateTimeHandle;
     TSoftObjectPtr<UDialogDataAsset> FirstTimeShout;
+    class UAudioComponent* AmbianceAudio;
 
     FEventReply OnKeyDown(FGeometry MyGeometry, FKeyEvent InKeyEvent);
     FEventReply OnMouseButtonDown(FGeometry MyGeometry, const FPointerEvent& MouseEvent);

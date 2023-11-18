@@ -1,7 +1,7 @@
-#ifndef UE4SS_SDK_BP_Coilgun_HellfireSegment_HPP
-#define UE4SS_SDK_BP_Coilgun_HellfireSegment_HPP
+#ifndef UE4SS_SDK_BP_Coilgun_HellfireSegment_OLD_HPP
+#define UE4SS_SDK_BP_Coilgun_HellfireSegment_OLD_HPP
 
-class ABP_Coilgun_HellfireSegment_C : public ABP_Coilgun_Trailsegment_Base_C
+class ABP_Coilgun_HellfireSegment_OLD_C : public ABP_Coilgun_Trailsegment_Base_C
 {
     FPointerToUberGraphFrame UberGraphFrame;
     class USphereComponent* Sphere;
@@ -14,7 +14,7 @@ class ABP_Coilgun_HellfireSegment_C : public ABP_Coilgun_Trailsegment_Base_C
     void ReceiveBeginPlay();
     void OnEndEffects();
     void OnStartEffects();
-    void ExecuteUbergraph_BP_Coilgun_HellfireSegment(int32 EntryPoint);
+    void ExecuteUbergraph_BP_Coilgun_HellfireSegment_OLD(int32 EntryPoint);
 };
 
 #endif

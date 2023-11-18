@@ -21,12 +21,14 @@ class UHUD_MapTool_C : public UUserWidget
     class UUI_AdvancedLabel_C* ZoomLabel;
     class APlayerCharacter* Character;
     bool MapVisible;
-    bool ForwardPlayMode;
+    float AnimScrub;
+    float AnimScrubPrev;
 
     void Construct();
     void OnToggleMapTool(bool Visible);
     void PreConstruct(bool IsDesignTime);
     void OnMainTurnOnFinished();
+    void Tick(FGeometry MyGeometry, float InDeltaTime);
     void ExecuteUbergraph_HUD_MapTool(int32 EntryPoint);
 };
 

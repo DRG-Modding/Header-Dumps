@@ -25,10 +25,12 @@ class UUI_RandomizeLoadoutWithUndo_C : public UUserWidget
     FUI_RandomizeLoadoutWithUndo_CLoadoutRefreshed LoadoutRefreshed;
     void LoadoutRefreshed();
     bool IsButtonsOut;
+    class UPlayerCharacterID* characterID;
 
+    void GetCharacterID(class UPlayerCharacterID*& characterID);
     void GetCharacter(class APlayerCharacter*& AsPlayer Character);
-    void BndEvt__UI_RandomizeLoadoutWithUndo_Button_Undo_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
     void BndEvt__UI_RandomizeLoadoutWithUndo_ShuffleButton_K2Node_ComponentBoundEvent_2_OnButtonClickedEvent__DelegateSignature();
+    void BndEvt__UI_RandomizeLoadoutWithUndo_Button_Undo_K2Node_ComponentBoundEvent_3_OnButtonClickedEvent__DelegateSignature();
     void BndEvt__UI_RandomizeLoadoutWithUndo_ShuffleButton_K2Node_ComponentBoundEvent_1_OnButtonHoverEvent__DelegateSignature();
     void BndEvt__UI_RandomizeLoadoutWithUndo_ShuffleButton_K2Node_ComponentBoundEvent_0_OnButtonHoverEvent__DelegateSignature();
     void SetHovered(bool IsHovered);
@@ -43,6 +45,7 @@ class UUI_RandomizeLoadoutWithUndo_C : public UUserWidget
     void Clear();
     void Construct();
     void OnHoverAnimFinished();
+    void SetCharacter(class UPlayerCharacterID* characterID);
     void ExecuteUbergraph_UI_RandomizeLoadoutWithUndo(int32 EntryPoint);
     void LoadoutRefreshed__DelegateSignature();
 };

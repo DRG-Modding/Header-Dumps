@@ -19,6 +19,7 @@ class U_MENU_CheatConsole_C : public UWindowWidget
     class UBasic_ButtonScalable2_C* Basic_ResetSchematics;
     class UBasic_ButtonScalable2_C* Basic_ResetUpgrades;
     class UBasic_ButtonScalable2_C* Basic_RotateDeepDive;
+    class UBasic_ButtonScalable2_C* Basic_RotateMissionOnce;
     class UBasic_ButtonScalable2_C* Basic_RotateMissions;
     class UBasic_ButtonScalable2_C* Basic_ShowAllCreatures;
     class UBasic_ButtonScalable2_C* Basic_StartMission;
@@ -63,6 +64,7 @@ class U_MENU_CheatConsole_C : public UWindowWidget
     void BndEvt__Basic_RotateDeepDive_K2Node_ComponentBoundEvent_12_OnClicked__DelegateSignature();
     void BndEvt__Basic_CompleteCampaign_K2Node_ComponentBoundEvent_13_OnClicked__DelegateSignature();
     void BndEvt__Button_CustomMission_K2Node_ComponentBoundEvent_14_OnClicked__DelegateSignature();
+    void BndEvt___MENU_CheatConsole_Basic_RotateMissionOnce_K2Node_ComponentBoundEvent_16_OnClicked__DelegateSignature();
     void ExecuteUbergraph__MENU_CheatConsole(int32 EntryPoint);
 };
 

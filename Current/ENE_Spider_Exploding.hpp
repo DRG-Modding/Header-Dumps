@@ -15,7 +15,6 @@ class AENE_Spider_Exploding_C : public AENE_SpiderBase_Large_C
 
     void SetRagdollImpulse(FDamageData& DamageData, TArray<class UDamageTag*>& Tags);
     bool GetIsTargetable();
-    bool ShouldExplode(TArray<class UDamageTag*>& Tags);
     float GetDistanceToLocalPlayer();
     void DamageAndCarve();
     void PlayRumbeAndShake();

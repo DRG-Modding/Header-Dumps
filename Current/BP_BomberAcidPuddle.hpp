@@ -3,6 +3,7 @@
 
 class ABP_BomberAcidPuddle_C : public AAdicPuddle
 {
+    class UBoxComponent* BoxTrigger;
     class USimpleObjectInfoComponent* SimpleObjectInfo;
     class USphereComponent* Sphere4;
     class USphereComponent* Sphere3;
@@ -10,6 +11,7 @@ class ABP_BomberAcidPuddle_C : public AAdicPuddle
     class USphereComponent* Sphere1;
     class UParticleSystemComponent* ParticleSystem;
 
+    void UserConstructionScript();
 };
 
 #endif

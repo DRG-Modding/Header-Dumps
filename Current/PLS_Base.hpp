@@ -16,7 +16,7 @@ class APLS_Base_C : public AProceduralSetup
     void SpawnCriticalItems(ECriticalItemPass pass);
     bool HasSelectedCharacter();
     void CallGenerationComplete(int32 pass, TEnumAsByte<PLS_Passes::Type> PLS Pass);
-    void PlayMusicAndAmbient();
+    void PlayMusicAndAmbient(int32 musicIndex);
     void SaveInitialState();
     void CreateCaveGraph();
     void GetRandomRoom(TArray<class URoomGenerator*>& Rooms, bool RemoveRoom, class URoomGenerator*& Room);
@@ -50,6 +50,7 @@ class APLS_Base_C : public AProceduralSetup
     void Generate_Pass_6();
     void Generate_CriticalLargePass();
     void Generate_CriticalLargePass_Client();
+    void StartMusicAndAmbient(int32 Music);
     void ExecuteUbergraph_PLS_Base(int32 EntryPoint);
     void CompletedGenerationPass__DelegateSignature(int32 pass, TEnumAsByte<PLS_Passes::Type> PLS Pass);
 };

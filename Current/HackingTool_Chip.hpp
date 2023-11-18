@@ -34,7 +34,6 @@ class UHackingTool_Chip_C : public UHackingToolWidget
     class UUI_HackingTool_Button_C* Interface_Button;
     class UUI_HackingTool_Header_C* Interface_Header;
     class UUI_HackingTool_Progress_C* Interface_Progress;
-    class UUI_HackingTool_Background_C* UI_HackingTool_Background;
     class UVerticalBox* VerticalBar_Canvas;
     class UUI_ImageTinted_C* VerticalBar_Solid;
     class UUI_ImageTinted_C* VerticalBar_Tail;
